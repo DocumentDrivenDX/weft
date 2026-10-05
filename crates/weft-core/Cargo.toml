@@ -24,3 +24,6 @@ path = "../../tests/register-backend/registry.rs"
 [[test]]
 name = "backend-pipeline"
 path = "../../tests/register-backend/pipeline.rs"
+[[test]]
+name="compile-envelope"
+path="../../tests/compile/envelope.rs"

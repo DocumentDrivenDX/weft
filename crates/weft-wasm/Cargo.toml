@@ -1,0 +1,12 @@
+[package]
+name="weft-wasm"
+version.workspace=true
+edition.workspace=true
+publish.workspace=true
+[lib]
+crate-type=["cdylib"]
+[features]
+test-third=["weft-runtime/test-third"]
+[dependencies]
+weft-runtime={path="../weft-runtime"}
+wasm-bindgen="=0.2.105"

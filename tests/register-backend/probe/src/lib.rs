@@ -102,3 +102,23 @@ pub fn backend_json(raw: &str) -> String {
     })
     .unwrap()
 }
+/// Explicit test-build composition; input/model data never selects executable code.
+pub fn fixture_registry() -> weft_core::backend::Registry {
+    fixture::registry(
+        weft_core::backend::Status::Supported,
+        fixture::Behavior::Normal,
+    )
+}
+/// Test-build registry with independently selectable supported/candidate declarations.
+pub fn compile_fixture_registry() -> weft_core::backend::Registry {
+    let mut registry = fixture_registry();
+    let mut manifest = fixture::manifest(weft_core::backend::Status::Candidate);
+    manifest.backend_id = "test.third.candidate".into();
+    registry
+        .register(fixture::Third {
+            manifest,
+            behavior: fixture::Behavior::Normal,
+        })
+        .unwrap();
+    registry
+}

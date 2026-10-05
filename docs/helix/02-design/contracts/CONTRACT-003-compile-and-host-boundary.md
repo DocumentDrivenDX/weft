@@ -135,3 +135,42 @@ resolution. The same record name in two modules requires an explicit namespace.
 Two module documents in one logical query are allowed only if the chosen backend
 maps both. Preserve unrelated extension content and compare exact reports through
 native Python/browser; neither wrapper may implement its own resolver or emitter.
+
+## B-004 executable boundary in progress
+
+The pure Rust `compile::Compiler` owns an explicitly registered backend registry
+and `compile_json` dispatches the exact 0.1/0.2 interface/dialect pairs. Unknown
+members, malformed versions/options, duplicate JSON, limits and stale model or
+binding bytes refuse atomically. Body/schema validation precedes resolution;
+binding byte pins are checked before resolution. Recoverability is added at the
+public boundary. Default runtime composition has no production backends until
+B-005/B-006; it never invents or falls back to a mapping.
+
+The unreleased draft 0.1 response schema now names B-003's actual backend interface
+0.2 and permits targetContext plus per-operation qualification declarations/
+assessments. This is initial public-schema finalization, not compatibility evidence
+for a released 0.1 response implementation. Source dialect/IR 0.1 remains unchanged.
+[The 0.2 response schema](compile-response-v0.2.schema.json) uses explicit scalar,
+type-graph value and related-key representations. Value/related carriers are typed
+JSON text decoded through retained descriptors with exact numeric string leaves;
+optional availability alone never authorizes native null.
+
+Native package names are `weft-sql` / Python `weft.compile_json`, Rust
+`weft-core` plus pure `weft-runtime` composition, and `weft-wasm` for browser
+embedding. They are foundation version 0.1.0, not released support claims. Python
+and WASM wrappers implement transport only. An explicit `test-third` build feature
+links the fixture backend for conformance; content cannot activate it. Full native
+Python, real-browser wrapper, artifact/schema and platform evidence remains the
+B-004 exit gate. A successful build alone does not qualify either host surface.
+
+### Browser scalar transport and fatal host failure
+
+The thin browser wrapper accepts JSON as a Unicode scalar string and rejects
+unpaired UTF-16 surrogates before wasm-bindgen encoding. It binds an explicitly
+initialized trusted module. It performs no name/type/backend interpretation.
+A WebAssembly RuntimeError retires that wrapper permanently: subsequent calls
+return the same blocked `WFT-BACKEND-FAILURE` host-action diagnostic without
+re-entering WASM. The fatal envelope uses interface 0.1 because a damaged host
+cannot reliably determine the active request version; hosts must create a fresh
+module context/realm to recover. Ordinary compiler refusals retain the selected
+request interface version and do not poison the instance.

@@ -4,6 +4,7 @@ pub mod application_resolve;
 pub mod application_syntax;
 pub mod backend;
 mod backend_emission;
+pub mod compile;
 pub mod error;
 mod exact;
 pub mod ir;
