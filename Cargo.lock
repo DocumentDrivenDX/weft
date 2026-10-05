@@ -940,6 +940,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "weft-backend-probe"
+version = "0.0.0"
+dependencies = [
+ "serde_json",
+ "wasm-bindgen",
+ "weft-core",
+]
+
+[[package]]
 name = "weft-core"
 version = "0.1.0"
 dependencies = [

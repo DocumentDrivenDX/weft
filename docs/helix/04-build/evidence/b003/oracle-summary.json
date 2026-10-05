@@ -1,0 +1,10 @@
+{
+  "cases": 26,
+  "sqlExecutions": 7,
+  "sqlite": "3.53.1",
+  "rowsPerExecution": 9,
+  "bagDuplicates": true,
+  "exactUnicode": true,
+  "physicalHomeVariants": true,
+  "productionQualification": false
+}
