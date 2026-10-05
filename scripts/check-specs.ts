@@ -22,7 +22,7 @@ for (const file of files.filter(f => f.endsWith('.md'))) {
   const end = body.indexOf('\n---\n', 4);
   assert(end > 0, `${file}: unclosed frontmatter`);
   const meta = YAML.parse(body.slice(4, end)).ddx;
-  assert(meta?.id && meta.type && meta.activity && meta.status === 'draft' && meta.authoring?.home === 'repo', `${file}: incomplete draft metadata`);
+  assert(meta?.id && meta.type && meta.activity && (meta.status === 'draft' || (meta.id === 'ADR-001' && meta.status === 'accepted')) && meta.authoring?.home === 'repo', `${file}: incomplete metadata`);
   assert(!artifacts.has(meta.id), `Duplicate artifact ${meta.id}`);
   artifacts.set(meta.id, {file, meta, body});
 }
@@ -88,5 +88,5 @@ for (const c of cases) {
   if (c.setup.rows) await read(`docs/helix/03-test/fixtures/${c.setup.rows}`);
 }
 assert(cases.length >= 636 && structuralNegatives > 0, 'Corpus floor / deliberate negatives missing');
-console.log(`Checked ${artifacts.size} draft artifacts, ${schemas.length} schemas, ${criteria.size} planned criteria and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
+console.log(`Checked ${artifacts.size} governed artifacts, ${schemas.length} schemas, ${criteria.size} planned criteria and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
 console.log('No compiler, database or embedding tests were executed.');

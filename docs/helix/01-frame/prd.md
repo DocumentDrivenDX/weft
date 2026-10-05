@@ -110,8 +110,8 @@ No broader SQL/version/backend support follows from the project name.
 
 ## Technical Context
 
-Rust core/PyO3/WASM is the proposed direction in ADR-001; dependency/toolchain
-versions are deliberately unselected until the embedding spike. UMF 0.7.0 is the
+Rust core/PyO3/WASM is selected for the foundation by ADR-001 after B-001;
+dependency/toolchain versions are pinned for that bounded experiment. UMF 0.7.0 is the
 initial model profile. Target engine versions and production binding contracts
 are mandatory release gates, not assumptions derived from sibling spike evidence.
 
@@ -134,7 +134,7 @@ costs: prove both early.
 ## Open Questions
 
 Q1: What production binding revisions and engine profiles can each owner supply?
-Q2: Which Rust/toolchain/parser/PyO3 versions pass both embedding environments?
+Q2: B-001 records passing pinned versions on one platform. Which additional Python/OS/browser versions will be qualified for release?
 Q3: Which Python OS/architecture/ABI and browser support matrix ships first?
 Q4: What numeric domains/backend aggregate bounds receive initial conformance?
 Q5: What license/package names and maintenance commitments should be adopted?

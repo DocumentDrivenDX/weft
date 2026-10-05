@@ -21,7 +21,7 @@ ddx:
 
 ## Scope
 
-Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-003, TD-001 through TD-006 and TP-001. This repository bootstrap delivers specifications and fixture validation only. ADRs remain proposed. No compiler implementation or storage compatibility is claimed.
+Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-003, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 and public contracts remain draft/proposed. No production storage compatibility is claimed.
 
 ## Shared Constraints
 
@@ -52,8 +52,12 @@ No tracker items are created by this bootstrap. The slices are ready for work-it
 
 ## Risks and Rollbacks
 
-Rust packaging/toolchain feasibility is unproven: decide through B-001 before broad implementation. Missing backend layouts block claims, not frontend progress. Keep adapters separately registered so an unsupported profile can be disabled without changing logical semantics. Version incompatible changes; preserve prior corpus and evidence.
+Rust packaging/toolchain feasibility has bounded B-001 evidence on one platform; broader wheel/browser matrices remain unqualified. Missing backend layouts block claims, not frontend progress. Keep adapters separately registered so an unsupported profile can be disabled without changing logical semantics. Version incompatible changes; preserve prior corpus and evidence.
 
 ## Exit Criteria
 
 All P0 story criteria pass; both initial adapters have qualified native profiles; native Python and real browser embedding pass; support inventory names exact versions and domains; no candidate-only claim is advertised as supported. Release procedures, package ownership and license are decided before distribution.
+
+## Execution status
+
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.

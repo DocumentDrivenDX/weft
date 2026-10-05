@@ -1,0 +1,9 @@
+{
+  "cases": 597,
+  "numericCases": 575,
+  "python": "3.12.14",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "extension": "weft_spike/weft_spike.abi3.so",
+  "extensionBytes": 6298112,
+  "nativePythonOnlySmoke": "passed separately with empty executable PATH and subprocess.Popen disabled"
+}

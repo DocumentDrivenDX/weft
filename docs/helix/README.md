@@ -2,7 +2,7 @@
 
 The active flow is `helix` under `docs/helix/`. Catalog binding for this bootstrap: installed HELIX **0.15.0**, full plugin `workflows/graph.yml`; templates and methodology are resolved from that plugin and are not vendored here.
 
-All governed documents are drafts; ADRs contain proposed decisions. No target SQL execution, Python wheel, WASM compiler or production storage binding is implemented by this bootstrap.
+Public contracts and requirements remain drafts. ADR-001 selects Rust after the bounded B-001 spike; ADR-002 remains proposed. A local native Python wheel and browser WASM experiment now exist. No target database execution or production storage binding is implemented.
 
 | Activity | Read first |
 |---|---|
@@ -15,4 +15,4 @@ All governed documents are drafts; ADRs contain proposed decisions. No target SQ
 
 The five JSON schemas and EBNF live beside their governing contracts. Stable `ddx.id` and `ddx.links` record local traceability. Sibling project evidence is cited as sources; this bootstrap does not invent a cross-flow catalog.
 
-First implementation gate: the native Python/browser spike. Parallel independent progress can prepare the frontend oracle and obtain owner-approved Truss binding and Ashlar layout profiles. Open questions are recorded in the PRD and contracts. In particular, synthetic fixture bindings do not select Ashlar's production layout or declare a supported engine version.
+B-001 passed on its recorded platform; see [execution evidence](04-build/evidence/B-001-native-python-browser.md). Next implementation gate: B-002, model resolution, parser and typed IR. Parallel independent progress can prepare the frontend oracle and obtain owner-approved Truss binding and Ashlar layout profiles. Open questions are recorded in the PRD and contracts. In particular, synthetic fixture bindings do not select Ashlar's production layout or declare a supported engine version.

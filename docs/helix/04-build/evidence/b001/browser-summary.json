@@ -1,0 +1,24 @@
+{
+  "cases": 597,
+  "browser": "153.0.8010.12",
+  "playwrightVersion": "1.62.1",
+  "wasmBytes": 5270652,
+  "wasmSha256": "d7e5530cf0b840ae093d1539054c903d1ba8fd4a57386c4b546af942da88f87b",
+  "jsGlueBytes": 6420,
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    }
+  ],
+  "initialMemoryBytes": 1441792,
+  "finalMemoryBytes": 1769472,
+  "networkRequests": [
+    "http://weft.spike.test/",
+    "http://weft.spike.test/spike.wasm",
+    "http://weft.spike.test/spike.js"
+  ],
+  "nodeGlobals": false,
+  "byteParity": true
+}

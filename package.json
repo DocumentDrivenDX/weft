@@ -3,6 +3,12 @@
   "private": true,
   "type": "module",
   "packageManager": "bun@1.4.2",
-  "scripts": {"specs:check": "bun scripts/check-specs.ts"},
-  "devDependencies": {"ajv": "8.17.1", "yaml": "2.8.1"}
+  "scripts": {
+    "specs:check": "bun scripts/check-specs.ts"
+  },
+  "devDependencies": {
+    "ajv": "8.17.1",
+    "playwright": "1.62.1",
+    "yaml": "2.8.1"
+  }
 }

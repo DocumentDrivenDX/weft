@@ -3,7 +3,7 @@ ddx:
   id: ADR-001
   type: adr
   activity: design
-  status: draft
+  status: accepted
   authoring:
     home: repo
   links:
@@ -13,7 +13,7 @@ ddx:
 
 # ADR-001: Rust core with native Python and browser bindings
 
-**Status:** Proposed. **Date:** 2026-10-05. **Decider:** Project owner.
+**Status:** Accepted for the compiler foundation after B-001. **Date:** 2026-10-05. **Decider:** Project owner.
 
 ## Context
 
@@ -24,16 +24,16 @@ language and Truss's accepted TypeScript decision do not govern this separate to
 
 ## Decision
 
-Propose one pure Rust compiler core, PyO3/maturin native Python packaging, and
+Use one pure Rust compiler core, PyO3/maturin native Python packaging, and
 WebAssembly with a thin TypeScript wrapper. Treat direct native Python calls and
 real-browser WASM calls as mandatory acceptance, not future wrapper promises.
-Pin toolchain/dependencies only after SPIKE-001 proves the portable boundary.
+B-001 proves a bounded portable boundary on macOS arm64/Python 3.12.14/Chromium 153.0.8010.12. Pin Rust 1.90.0, sqlparser 0.63.0, PyO3 0.27.1, maturin 1.9.6 and wasm-bindgen 0.2.105 for this foundation; broader platform support remains unqualified.
 
 ## Alternatives
 
 | Option | Benefit | Cost / disposition |
 | --- | --- | --- |
-| Rust with thin bindings | One implementation in-process across hosts | Rust UMF interpretation and platform packaging need conformance; proposed |
+| Rust with thin bindings | One implementation in-process across hosts | Rust UMF interpretation and platform packaging need conformance; selected after B-001 |
 | TypeScript with sidecar/service | Reuses UMF TypeScript directly | JavaScript runtime/process boundary in Python; rejected for native Python requirement |
 | Separate Python/TypeScript compilers | Native APIs in each language | Duplicated semantics and drift; rejected |
 
@@ -55,3 +55,7 @@ same core; do not weaken FR-10 silently. Versions/OS/browser matrix remain open.
 
 [Research](../../00-discover/research.md), [PRD](../../01-frame/prd.md),
 [architecture](../architecture.md), PyO3 and wasm-bindgen official guides.
+
+## B-001 evidence and decision
+
+[Execution evidence](../../04-build/evidence/B-001-native-python-browser.md) records shared-source Rust/Python/browser byte parity across 597 scenarios, exact values and explicit refusals. Proceed to B-002 with one Rust core and thin bindings. This decision establishes an implementation direction; it does not accept the draft public contracts or assert full UMF, language, backend or wheel-matrix conformance. Parser acceptance still requires Weft-specific gating.
