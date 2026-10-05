@@ -54,3 +54,7 @@ No database migrations. Add fixtures/refusal tests first, implement the smallest
 story components, execute the mapped evidence, then review conformance. A rejected
 new profile/version rolls back by unregistering it; retained models are untouched.
 Keep source-language/IR/backend versions separate and refuse stale caches.
+
+## B-002 implementation
+
+`crates/weft-core/src/` contains independent bounded syntax parsing, pinned compile-time UMF envelope validation, selected-member resolution and versioned typed IR. `tests/frontend/` owns independent bag/Decimal and browser/schema probes. [Evidence](../../04-build/evidence/B-002-frontend.md) qualifies frontend assertions only; production SQL emission and all new application-read outcomes remain subsequent slices. Selected nonempty Field references are refused in 0.1 rather than assigning unknown semantics.

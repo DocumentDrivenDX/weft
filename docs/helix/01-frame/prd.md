@@ -148,3 +148,18 @@ Every FR maps to a story and planned observable tests; exact contracts are in
 02-design. No release is complete until both native backends and both embedding
 paths pass their selected profiles. Draft specifications require review; all
 compiler/backend support claims remain unverified until evidence exists.
+
+## Application-read requirements incorporated from PR #2
+
+The owner requested that [the merged discovery input](../00-discover/application-read-requirements-input.md) be accounted for in design and implementation. These are now required outcomes, not optional roadmap suggestions. Preserve Weft SQL 0.1 compatibility and introduce a versioned 0.2 application-read profile with independent fixtures. FEAT-005 and US-007 own this cohesive subsystem; CONTRACT-004 defines its boundary.
+
+| ID | Priority | Required outcome |
+|---|---|---|
+| FR-13 | P0 | Whole-entity projection has deterministic declared-member order and explicit absent/null/value, list and structured-value descriptors |
+| FR-14 | P0 | Bounded deterministic reads support complete-key ascending order, LIMIT and exact ordered key comparisons/keyset continuation |
+| FR-15 | P0 | COUNT(*) with GROUP BY returns exact integers; empty global count is zero and empty grouped count has no rows |
+| FR-16 | P0 | Relationship filtering by target key, bounded related-key projection with truncation, and inverse traversal are explicit and preserve multiplicity |
+| FR-17 | P0 | Source parameters are typed against UMF fields and bound as data; literal grammar and exactness remain normative |
+| FR-18 | P0 | Named normative application-read subsets, positive/refusal fixtures and construct diagnostics let hosts recognize supported queries without widening semantics |
+
+Backend requirements include Truss key lookups/property filters/ordered scans and Ashlar gold mappings with host publication positions. Production layout, ordering, presence and relationship guarantees require selected binding evidence. User-requested language behavior must not be simulated by SQL text forwarding or uncertified fixture profiles.

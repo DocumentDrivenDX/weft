@@ -33,8 +33,10 @@ Input is Weft SQL plus explicitly supplied pinned UMF modules; output is target 
 |---|---|---|---|
 | B-001 | SPIKE-001 native Python/browser | None | Pin toolchain; actual extension and browser compile/refusal parity; decide ADR-001 |
 | B-002 | US-001 model resolution, parser, typed IR | B-001 | Independent oracle, corpus semantic/refusal tests; finalize versioned Rust IR representation |
-| B-003 | US-002 registry, binding validation, capabilities | B-002 | Third synthetic plugin; exact typed trait and manifest contract; finalize ADR-002 |
-| B-004 | US-005 compile envelope and embeddings | B-003 | All 636 requests across Rust/Python/browser; precise UTF-8 spans and deterministic diagnostics |
+| B-002A | US-007 versioned application-read frontend | B-002 | CONTRACT-004, independent member/presence/order/count/relationship/parameter fixtures |
+| B-003 | US-002 registry, binding validation, capabilities | B-002A | Third synthetic plugin; exact typed trait and manifest contract; finalize ADR-002 |
+| B-004 | US-005 compile envelope and embeddings | B-002A | US-007 versioned application-read frontend | B-002 | CONTRACT-004, independent member/presence/order/count/relationship/parameter fixtures |
+| B-003 | All 636 requests across Rust/Python/browser; precise UTF-8 spans and deterministic diagnostics |
 | B-005 | US-003 Truss adapter | B-003, accepted Truss storage binding | Native PostgreSQL exact results, storage boundaries and host obligations |
 | B-006 | US-004 Ashlar adapter | B-003, accepted Ashlar layout/binding | Native Databricks exact results, numeric/collation/publication boundaries |
 | B-007 | US-006 qualification and release matrix | B-004–006 | All 24 ACs, expanded corpus, property/fuzz/mutation gates and versioned evidence |
@@ -56,8 +58,12 @@ Rust packaging/toolchain feasibility has bounded B-001 evidence on one platform;
 
 ## Exit Criteria
 
-All P0 story criteria pass; both initial adapters have qualified native profiles; native Python and real browser embedding pass; support inventory names exact versions and domains; no candidate-only claim is advertised as supported. Release procedures, package ownership and license are decided before distribution.
+All 30 P0 story criteria pass; both initial adapters have qualified native profiles; native Python and real browser embedding pass; support inventory names exact versions and domains; no candidate-only claim is advertised as supported. Release procedures, package ownership and license are decided before distribution.
 
 ## Execution status
 
-B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A and B-003 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+
+## PR #2 scope update
+
+B-002 establishes the unchanged 0.1 frontend. The next separately reviewed slice B-002A adds the owner-requested application-read extension before backend contracts are finalized. B-003 through B-007 must include its typed representations, capabilities, host obligations and native tests. A production backend cannot advertise complete entity/relationship/paging support without corresponding binding evidence.

@@ -44,7 +44,7 @@ const criteria = new Set<string>();
 for (const story of allocation) {
   const us = [...artifacts.values()].find(a => a.meta.id === story.story);
   const stp = [...artifacts.values()].find(a => a.meta.id === `STP-${story.story.slice(3)}`);
-  assert(us && stp && story.criteria.length === 4, `${story.story}: missing story/test allocation`);
+  assert(us && stp && story.criteria.length > 0, `${story.story}: missing story/test allocation`);
   for (const criterion of story.criteria) {
     assert(!criteria.has(criterion.id), `Duplicate criterion ${criterion.id}`);
     assert(us.body.includes(criterion.id) && stp.body.includes(criterion.id) && stp.body.includes(criterion.plannedTest), `Missing trace ${criterion.id}`);
@@ -52,7 +52,7 @@ for (const story of allocation) {
     criteria.add(criterion.id);
   }
 }
-assert(criteria.size === 24, 'Expected 24 criteria');
+assert(criteria.size === 30, 'Expected 30 criteria after the application-read input');
 const schemaDir = 'docs/helix/02-design/contracts';
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 const schemas = [];

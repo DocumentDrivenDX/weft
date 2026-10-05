@@ -18,3 +18,5 @@ bun run specs:check
 ```
 
 This checks document traceability, public JSON schemas and fixture integrity. It does not execute a compiler or database. See the [build plan](docs/helix/04-build/implementation-plan.md) for the implementation gates.
+
+The [0.1 frontend](crates/weft-core/) resolves all 636 specification cases to typed logical plans or explicit refusals. [B-002 evidence](docs/helix/04-build/evidence/B-002-frontend.md) includes independent bag evaluation and browser parity. Production SQL emission and [PR #2 application-read capabilities](docs/helix/02-design/contracts/CONTRACT-004-application-reads.md) are next governed slices.

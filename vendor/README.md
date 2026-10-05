@@ -1,0 +1,5 @@
+# Dependency patch: ahash 0.8.12
+
+Source copied from the pinned crates.io ahash 0.8.12 package, with its MIT/Apache licenses. One manifest change selects upstream's `no-rng` default feature instead of `runtime-rng`. No hashing source is modified. This removes runtime entropy from the schema validator, including native builds, without adding browser crypto imports. Cargo.lock selects this local patch. Runtime/file/HTTP resolution remains disabled in jsonschema.
+
+This is an internal hash-table choice, not cryptographic randomness or a security feature. Input bytes, nesting/value counts and query sizes remain bounded; public identities/capabilities/serialization use ordered structures. Do not reuse this internal hasher for security-sensitive randomness. Re-evaluate upstream dependency features on upgrades; the WASM import probe and independent schema/oracle checks are required. The remaining direct WASM getrandom dependency selects its unsupported backend so accidental entropy use fails rather than calling the host.

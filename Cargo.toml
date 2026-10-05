@@ -1,5 +1,5 @@
 [workspace]
-members = ["spikes/b001/core", "spikes/b001/python", "spikes/b001/wasm"]
+members = ["tests/frontend/wasm-probe","crates/weft-core", "spikes/b001/core", "spikes/b001/python", "spikes/b001/wasm"]
 resolver = "2"
 [workspace.package]
 version = "0.1.0"
@@ -10,3 +10,6 @@ serde = { version = "=1.0.228", features = ["derive"] }
 serde_json = { version = "=1.0.145", features = ["arbitrary_precision", "raw_value"] }
 sha2 = "=0.10.9"
 sqlparser = { version = "=0.63.0", default-features = false, features = ["std"] }
+
+[patch.crates-io]
+ahash = { path = "vendor/ahash" }

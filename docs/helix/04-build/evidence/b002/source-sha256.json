@@ -1,0 +1,14 @@
+{
+  "crates/weft-core/src/ir.rs": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f",
+  "crates/weft-core/src/error.rs": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa",
+  "crates/weft-core/src/resolve.rs": "88966402ca65de16c5056806d468a9079e1f3fd623a7d10feafbbba0149b9902",
+  "crates/weft-core/src/lib.rs": "d1d730b65e7a66ebd80bef23b9593398d57d2251e5df2ef14ab6875ad57cfaa2",
+  "crates/weft-core/src/json.rs": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+  "crates/weft-core/src/syntax.rs": "e8a582f460d50f525cde83f85c1522896a3b809d0004f87d177a26b6b50e0056",
+  "crates/weft-core/src/model.rs": "9f7fc52cf1dd2699601bd8ab6714c02d09322a5d876f8198fb697fb4390d8f26",
+  "crates/weft-core/src/exact.rs": "97934f708fec6281ffd48b185fdd921c9a2ce4a9a0182ffb09755114922a68f1",
+  "crates/weft-core/src/bin/frontend.rs": "95469b6c18c6e50832f5beb8038fce512e58415676a84278630fcb6494392050",
+  "Cargo.lock": "b19c5317e0a252c03b4e2563b772fd8113322dc623c8a8866e17e81d3d29bcde",
+  "spec/upstream/umf-0.7.0.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+  "vendor/ahash/Cargo.toml": "b7d68dbac6096d63748886353cadb023c60f2cba231b0c36ffed40d2bff7207b"
+}
