@@ -1,0 +1,20 @@
+(* Normative input grammar for CONTRACT-001. Keywords are case-insensitive.
+   Whitespace separates tokens. All input must be consumed. *)
+query       = SELECT, projection, { COMMA, projection }, FROM, source,
+              { [ INNER ], JOIN, source, ON, predicates },
+              [ WHERE, predicates ], [ GROUP, BY, column, { COMMA, column } ],
+              [ SEMICOLON ], EOF ;
+projection  = ( column | SUM, LPAREN, column, RPAREN ), [ AS, identifier ] ;
+source      = relation, [ [ AS ], identifier ] ;
+relation    = identifier, [ DOT, identifier ] ;
+column      = identifier, DOT, identifier ;
+predicates  = predicate, { AND, predicate } ;
+predicate   = column, EQUALS, ( column | string | number | TRUE | FALSE ) ;
+identifier  = unquoted | quoted ;
+unquoted    = ( ascii_letter | UNDERSCORE ), { ascii_letter | digit | UNDERSCORE } ;
+quoted      = DOUBLE_QUOTE, { unicode_scalar_except_quote_or_NUL | doubled_quote }, DOUBLE_QUOTE ;
+string      = SINGLE_QUOTE, { unicode_scalar_except_single_quote_or_NUL | doubled_single_quote }, SINGLE_QUOTE ;
+number      = [ MINUS ], digit, { digit }, [ DOT, digit, { digit } ] ;
+(* Every keyword token is reserved in unquoted identifier positions.
+   No source numeric exponent, source parameter marker, comments or backslash
+   escape convention is accepted. Surrogates/invalid UTF-8 are rejected. *)

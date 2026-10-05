@@ -1,0 +1,76 @@
+{
+  "Customer": [
+    {
+      "id": "18446744073709551615",
+      "name": "Alice",
+      "active": "true"
+    },
+    {
+      "id": "2",
+      "name": "Bob",
+      "active": "false"
+    },
+    {
+      "id": "3",
+      "name": "isolated",
+      "active": "true"
+    },
+    {
+      "id": "4",
+      "name": "é",
+      "active": "false"
+    },
+    {
+      "id": "5",
+      "name": "é",
+      "active": "false"
+    },
+    {
+      "id": "6",
+      "name": "trail ",
+      "active": "true"
+    },
+    {
+      "id": "7",
+      "name": "trail",
+      "active": "true"
+    },
+    {
+      "id": "8",
+      "name": "",
+      "active": "true"
+    },
+    {
+      "id": "9",
+      "name": "x'; DROP TABLE objects; --",
+      "active": "true"
+    },
+    {
+      "id": "10",
+      "name": "😀",
+      "active": "false"
+    }
+  ],
+  "Orders": [
+    {
+      "customer_id": "18446744073709551615",
+      "total": "9007199254740993.12"
+    },
+    {
+      "customer_id": "18446744073709551615",
+      "total": "0.10"
+    },
+    {
+      "customer_id": "18446744073709551615",
+      "total": "0.20"
+    },
+    {
+      "customer_id": "2",
+      "total": "1.00"
+    },
+    {
+      "customer_id": "2",
+      "total": "1.00"
+    }
+  ]
+}

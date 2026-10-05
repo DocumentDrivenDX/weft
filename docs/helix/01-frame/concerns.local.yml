@@ -1,0 +1,4 @@
+# Project-local selections; architectural choices are draft until their gates pass.
+slots:
+  language-runtime: rust-portable-core
+  architecture-style: compiler-with-plugins

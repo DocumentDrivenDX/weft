@@ -1,0 +1,124 @@
+{
+  "umf": "0.7.0",
+  "id": "sales-fixture",
+  "vocabularies": {
+    "future.vendor": {
+      "version": "99.0.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "sales",
+      "namespace": "sales",
+      "elements": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "customer-id"
+            },
+            {
+              "module": "sales",
+              "element": "customer-name"
+            },
+            {
+              "module": "sales",
+              "element": "customer-active"
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "orders",
+          "name": "Orders",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "order-customer"
+            },
+            {
+              "module": "sales",
+              "element": "order-total"
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "customer-id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "integer",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          }
+        },
+        {
+          "id": "customer-name",
+          "name": "name",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "customer-active",
+          "name": "active",
+          "kind": "field",
+          "scalarType": "boolean",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "order-customer",
+          "name": "customer_id",
+          "kind": "field",
+          "scalarType": "integer",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          }
+        },
+        {
+          "id": "order-total",
+          "name": "total",
+          "kind": "field",
+          "scalarType": "decimal",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "precision": 28,
+            "scale": 2
+          }
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "future.vendor": {
+      "unknown": [
+        "keep",
+        {
+          "payload": "opaque"
+        }
+      ]
+    }
+  }
+}

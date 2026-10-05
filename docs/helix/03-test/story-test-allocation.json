@@ -1,0 +1,182 @@
+[
+  {
+    "story": "US-001",
+    "testPrefix": "resolve-logical-query",
+    "criteria": [
+      {
+        "id": "US-001-AC1",
+        "plannedTest": "join_group_sum",
+        "assertion": "Identity-qualified plan; duplicate join rows contribute to SUM.",
+        "state": "planned"
+      },
+      {
+        "id": "US-001-AC2",
+        "plannedTest": "module_name_resolution",
+        "assertion": "Distinct identities; no fallback to first match.",
+        "state": "planned"
+      },
+      {
+        "id": "US-001-AC3",
+        "plannedTest": "dialect_refusals",
+        "assertion": "Unsupported nodes never pass from parser to lowering.",
+        "state": "planned"
+      },
+      {
+        "id": "US-001-AC4",
+        "plannedTest": "relational_exactness",
+        "assertion": "Exact independent result bags and nullable empty SUM.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-002",
+    "testPrefix": "register-backend",
+    "criteria": [
+      {
+        "id": "US-002-AC1",
+        "plannedTest": "third_backend_registration",
+        "assertion": "No frontend backend-ID switch; explicit registry selection.",
+        "state": "planned"
+      },
+      {
+        "id": "US-002-AC2",
+        "plannedTest": "capability_negotiation",
+        "assertion": "No fallback; missing manifest/interface versions identify refusal.",
+        "state": "planned"
+      },
+      {
+        "id": "US-002-AC3",
+        "plannedTest": "candidate_qualification",
+        "assertion": "Candidate cannot masquerade as verified conformance.",
+        "state": "planned"
+      },
+      {
+        "id": "US-002-AC4",
+        "plannedTest": "plugin_trust_boundary",
+        "assertion": "Injection/version/failure guards; trusted registration only.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-003",
+    "testPrefix": "truss-postgresql",
+    "criteria": [
+      {
+        "id": "US-003-AC1",
+        "plannedTest": "truss_native_corpus",
+        "assertion": "Native prepared SQL and independent exact result agreement.",
+        "state": "planned"
+      },
+      {
+        "id": "US-003-AC2",
+        "plannedTest": "truss_mapping_boundaries",
+        "assertion": "Stable property identities; storage ID is not logical key.",
+        "state": "planned"
+      },
+      {
+        "id": "US-003-AC3",
+        "plannedTest": "truss_semantic_refusals",
+        "assertion": "Selected unknown/native unsupported meanings remain explicit.",
+        "state": "planned"
+      },
+      {
+        "id": "US-003-AC4",
+        "plannedTest": "truss_host_obligations",
+        "assertion": "No default JSON/float decoding; context obligations observable.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-004",
+    "testPrefix": "ashlar-databricks",
+    "criteria": [
+      {
+        "id": "US-004-AC1",
+        "plannedTest": "ashlar_native_corpus",
+        "assertion": "Exact native corpus comparison; no smaller-engine substitute.",
+        "state": "planned"
+      },
+      {
+        "id": "US-004-AC2",
+        "plannedTest": "ashlar_layout_boundaries",
+        "assertion": "Explicit accepted layout; no inferred JSONB or edge deduplication.",
+        "state": "planned"
+      },
+      {
+        "id": "US-004-AC3",
+        "plannedTest": "ashlar_numeric_collation",
+        "assertion": "Native settings, domain boundaries and error outcomes agree.",
+        "state": "planned"
+      },
+      {
+        "id": "US-004-AC4",
+        "plannedTest": "ashlar_publication_obligations",
+        "assertion": "No mixed-publication/service-principal fallback.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-005",
+    "testPrefix": "native-embedding",
+    "criteria": [
+      {
+        "id": "US-005-AC1",
+        "plannedTest": "python_inprocess",
+        "assertion": "Direct extension import/call; no Node/Bun/server required.",
+        "state": "planned"
+      },
+      {
+        "id": "US-005-AC2",
+        "plannedTest": "wasm_browser_parity",
+        "assertion": "Actual browser instance; identical canonical reports.",
+        "state": "planned"
+      },
+      {
+        "id": "US-005-AC3",
+        "plannedTest": "artifact_exact_transport",
+        "assertion": "No binary64 conversion; parameter/result metadata complete.",
+        "state": "planned"
+      },
+      {
+        "id": "US-005-AC4",
+        "plannedTest": "wrapper_failure_parity",
+        "assertion": "Thin wrappers never recreate resolver/lowering semantics.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-006",
+    "testPrefix": "qualify-and-evolve",
+    "criteria": [
+      {
+        "id": "US-006-AC1",
+        "plannedTest": "support_evidence_audit",
+        "assertion": "Missing/failed/skipped evidence cannot count as supported.",
+        "state": "planned"
+      },
+      {
+        "id": "US-006-AC2",
+        "plannedTest": "pin_and_version_guards",
+        "assertion": "SHA-256 bytes and identity guards; no implicit migrations.",
+        "state": "planned"
+      },
+      {
+        "id": "US-006-AC3",
+        "plannedTest": "unknown_content_retention",
+        "assertion": "Original bytes/content recoverable; no opaque-to-known inference.",
+        "state": "planned"
+      },
+      {
+        "id": "US-006-AC4",
+        "plannedTest": "resource_and_fuzz_guards",
+        "assertion": "Duplicate keys, bounds, nesting, malformed text and plugin failures.",
+        "state": "planned"
+      }
+    ]
+  }
+]
