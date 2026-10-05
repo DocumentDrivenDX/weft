@@ -9,3 +9,12 @@ serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true
 jsonschema = { version = "=0.56.0", default-features = false, features = ["macros", "arbitrary-precision"] }
+[[test]]
+name = "application-syntax"
+path = "../../tests/application/syntax.rs"
+[[test]]
+name = "application-model"
+path = "../../tests/application/model.rs"
+[[test]]
+name = "application-resolve"
+path = "../../tests/application/resolve.rs"

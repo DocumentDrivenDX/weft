@@ -198,19 +198,69 @@ fn lex(sql: &str) -> Result<Vec<Token>> {
     }
     Ok(tokens)
 }
-struct Parser {
+pub(crate) struct Parser {
     tokens: Vec<Token>,
     index: usize,
     end: usize,
 }
 impl Parser {
-    fn peek_word(&self, s: &str) -> bool {
+    pub(crate) fn peek_identifier(&self) -> bool {
+        matches!(
+            self.tokens.get(self.index),
+            Some(Token {
+                kind: Kind::Quoted(_),
+                ..
+            })
+        ) || matches!(self.tokens.get(self.index),Some(Token{kind:Kind::Word(v),..}) if !keyword(v))
+    }
+
+    pub(crate) fn new(sql: &str) -> Result<Self> {
+        Ok(Self {
+            tokens: lex(sql)?,
+            index: 0,
+            end: sql.len(),
+        })
+    }
+    pub(crate) fn finish_application(&mut self) -> Result<()> {
+        if self.peek_symbol(';') {
+            self.symbol(';')?;
+        }
+        if self.index != self.tokens.len() {
+            let construct = match &self.tokens[self.index].kind {
+                Kind::Word(v) => v.as_str(),
+                Kind::Symbol('>') => ">",
+                Kind::Symbol('*') => "*",
+                _ => "unrecognized syntax",
+            };
+            return Err(error(
+                "WFT-UNSUPPORTED",
+                &format!("Excluded application construct: {construct}"),
+                &self.span(),
+            ));
+        }
+        Ok(())
+    }
+    pub(crate) fn finish(&mut self) -> Result<()> {
+        if self.peek_symbol(';') {
+            self.symbol(';')?;
+        }
+        if self.index != self.tokens.len() {
+            return Err(error(
+                "WFT-UNSUPPORTED",
+                "Trailing syntax is outside this dialect",
+                &self.span(),
+            ));
+        }
+        Ok(())
+    }
+
+    pub(crate) fn peek_word(&self, s: &str) -> bool {
         matches!(self.tokens.get(self.index),Some(Token{kind:Kind::Word(v),..}) if v==s)
     }
-    fn peek_symbol(&self, c: char) -> bool {
+    pub(crate) fn peek_symbol(&self, c: char) -> bool {
         matches!(self.tokens.get(self.index),Some(Token{kind:Kind::Symbol(v),..}) if *v==c)
     }
-    fn span(&self) -> Span {
+    pub(crate) fn span(&self) -> Span {
         self.tokens
             .get(self.index)
             .map(|t| t.span.clone())
@@ -228,7 +278,7 @@ impl Parser {
         self.index += 1;
         Ok(t)
     }
-    fn word(&mut self, s: &str) -> Result<()> {
+    pub(crate) fn word(&mut self, s: &str) -> Result<()> {
         if self.peek_word(s) {
             self.index += 1;
             Ok(())
@@ -244,7 +294,7 @@ impl Parser {
             ))
         }
     }
-    fn symbol(&mut self, c: char) -> Result<()> {
+    pub(crate) fn symbol(&mut self, c: char) -> Result<()> {
         if self.peek_symbol(c) {
             self.index += 1;
             Ok(())
@@ -260,7 +310,7 @@ impl Parser {
             ))
         }
     }
-    fn name(&mut self) -> Result<Name> {
+    pub(crate) fn name(&mut self) -> Result<Name> {
         let t = self.take()?;
         match t.kind {
             Kind::Word(v) if !keyword(&v) => Ok(Name {
@@ -280,7 +330,7 @@ impl Parser {
             )),
         }
     }
-    fn column(&mut self) -> Result<Column> {
+    pub(crate) fn column(&mut self) -> Result<Column> {
         let alias = self.name()?;
         self.symbol('.')?;
         let field = self.name()?;
@@ -290,7 +340,7 @@ impl Parser {
         };
         Ok(Column { alias, field, span })
     }
-    fn source(&mut self) -> Result<Source> {
+    pub(crate) fn source(&mut self) -> Result<Source> {
         let first = self.name()?;
         let (namespace, name) = if self.peek_symbol('.') {
             self.index += 1;
@@ -320,7 +370,7 @@ impl Parser {
             alias,
         })
     }
-    fn literal(&mut self) -> Result<Literal> {
+    pub(crate) fn literal(&mut self) -> Result<Literal> {
         let start = self.span().start;
         let negative = self.peek_symbol('-');
         if negative {

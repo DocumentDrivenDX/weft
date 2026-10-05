@@ -15,7 +15,7 @@ ddx:
 
 # CONTRACT-004: Versioned application reads
 
-**Versions:** proposed `weft-sql/0.2.0`, `weft-ir/0.2.0`, `weft-compile/0.2.0` and recognizer profile `weft-application-read/0.2.0`. **Status:** required product outcomes; draft concrete extension, not implemented support. The owner requested incorporation of [PR #2's discovery input](../../00-discover/application-read-requirements-input.md).
+**Versions:** proposed `weft-sql/0.2.0`, `weft-ir/0.2.0`, `weft-compile/0.2.0` and recognizer profile `weft-application-read/0.2.0`. **Status:** required product outcomes; draft concrete extension with B-002A frontend evidence; public/native backend support remains unqualified. The owner requested incorporation of [PR #2's discovery input](../../00-discover/application-read-requirements-input.md).
 
 ## Purpose and Scope
 
@@ -31,7 +31,7 @@ Lists have ordered items and a recursively declared item Field type, following `
 
 ## Bounded deterministic reads and keyset continuation
 
-Application entity-page profile requires `ORDER BY` the complete fields of an authored unique key, in its declared order and ASC, plus `LIMIT n`. `n` is a positive literal integer up to a declared profile bound; propose 1,000 as the initial application safety maximum, with compiler rejection above it. Backend ordering must prove exact numeric order or a stated exact text order/collation and selected key uniqueness/stability. No OFFSET or hidden row cut. General 0.1 queries remain governed by their own unbounded semantics.
+Application entity-page profile requires `ORDER BY` the complete fields of an authored unique key, in its declared order and ASC, plus `LIMIT n`. `n` is a positive literal integer up to a declared profile bound; 1,000 is the initial application safety maximum, with compiler rejection above it or for quoted/fractional/negative bounds. Backend ordering must prove exact numeric order or a stated exact text order/collation and selected key uniqueness/stability. No OFFSET or hidden row cut. General 0.1 queries remain governed by their own unbounded semantics.
 
 Scalar `key_column > literal_or_parameter` supports single-field key continuation. Composite continuation uses `(key_col1,key_col2,...) > (value1,value2,...)` with lexicographic comparison in the same complete key order. A conjunction of independent `>` comparisons is not a composite keyset cursor. Tuple arity/type mismatch refuses. Cursor context includes model/binding revisions and publication/snapshot assumptions; concurrent mutations can change pages unless the host supplies a consistent read context. Never claim cross-page snapshot stability solely from ORDER BY.
 
@@ -59,4 +59,65 @@ Truss requires qualified type/key/property-home scans, exact missing/null/list d
 
 ## Compatibility, Diagnostics and Validation
 
-B-002A must finalize profile maxima, grammar and JSON schemas; these concrete extension details remain draft until that executable slice. Backend interfaces must include capabilities for whole-entity member representations, presence, key order/tuple comparison, limit, count, relationships and parameters. Unsupported selected meaning, representation, ordering or obligations blocks atomically with a named construct. Independent fixtures cover all US-007 criteria, including composite keys, inverse names, absence/null/empty-list distinctions and unchanged 0.1 refusals. No native backend or release support is implied by this contract.
+B-002A implements the draft frontend extension against the [0.2 grammar](weft-sql-v0.2.ebnf), [typed plan schema](logical-plan-v0.2.schema.json), [request schema](compile-request-v0.2.schema.json) and [value carrier schema](application-result-v0.2.schema.json). These structures and maxima have structural, independent result, resource/refusal and real-browser component evidence in [B-002A](../../04-build/evidence/B-002A-application-reads.md); public/native backend qualification remains incomplete. Backend interfaces must include capabilities for whole-entity member representations, presence, key order/tuple comparison, limit, count, relationships and parameters. Unsupported selected meaning, representation, ordering or obligations blocks atomically with a named construct. Independent fixtures cover all US-007 criteria, including composite keys, inverse names, absence/null/empty-list distinctions and unchanged 0.1 refusals. No native backend or release support is implied by this contract.
+
+
+## Executable draft details for B-002A
+
+The explicit 0.2 frontend retains 0.1 relational operations and adds COUNT(*),
+whole-entity expansion, related reads, comparison, ordering, bounds and named
+parameters. No version is inferred. The test frontend report remains distinct
+from CONTRACT-003's public compile response; B-004 implements that boundary.
+A named profile is supplied as `readProfile: {version:
+"weft-application-read/0.2.0", subset: "entity-page"}` (or `count-summary` /
+`related-entity-page`). Omitting it selects the general 0.2 dialect, which does
+not imply boundedness or deterministic pages.
+
+The typed IR is a sequence of relational stages: source and ordered inner joins,
+conjunctive filters, aggregation when indicated, projection, order, then limit.
+Joins preserve bag duplicates; HAS_RELATED is existential. Global aggregates
+produce one row on empty input; grouped aggregates produce none. Ordering fields
+remain available through the relational stages even when not projected. An
+entity page identifies its selected authored `pageKey` as well as ordering
+fields; a backend must qualify that identity's uniqueness/stability. All fields
+in a tuple comparison retain their order; parameter domains are attached at each
+use, with validation against every domain before a plan can be returned.
+
+Named input bindings are `{family:"integer", value:"18446744073709551615"}` (or
+boolean/string/decimal). Keys are ASCII identifiers and case-folded; duplicate
+folded names refuse. Parameter markers are unquoted. Boolean values are exactly
+`true` / `false`; exact numbers match `-?[0-9]+(\.[0-9]+)?`, without exponent,
+plus sign, whitespace or implicit rounding. String values preserve Unicode and
+quote characters and exclude NUL in this initial text profile. All values stay
+typed data; they are never SQL fragments. Each occurrence can require a narrower
+field domain than another occurrence of the same parameter.
+
+`entity-page` excludes joins and aggregation, requires one source and a complete,
+unambiguous authored key in ASC order with a positive LIMIT through 1,000.
+Cursors compare that entire ordered key to a literal/parameter tuple.
+`related-entity-page` has the same page constraints and requires a related
+projection or predicate. `entity-page` excludes both. `count-summary` requires
+COUNT(*) with optional grouped scalar projections and equality filters; inner
+joins are permitted. It excludes SUM, entity/related projections, related filters
+and cursor predicates. A global count excludes ORDER/LIMIT because it produces
+one row; grouped count requires the complete grouping tuple in its declared order
+and LIMIT. A grouping tuple is a unique result key even when it is not an entity
+key. Backend text order must be qualified; exact logical text ordering in fixtures
+uses Unicode scalar order, without normalization, trimming or locale folding.
+
+The initial relationship traversal subset has one source, one target, directed
+semantics, an explicitly named target key, known owned/independent lifecycle and
+no association Record. Other selected variants refuse explicitly. Source key selection (and inverse target
+key selection) uses a sole primary key, otherwise a sole authored key; ambiguity
+refuses. Descriptors retain both multiplicities and lifecycle in their authored
+orientation plus the inverse flag. Backend capability assessment must retain
+these obligations; descriptors alone do not prove storage enforcement.
+
+The descriptor graph is bounded to 4,096 reachable identities and depth 128 per
+selected root, with cycles referring to prior identities. Availability is separate
+from scalar type: a scalar descriptor's `nullable:false` describes its ideal
+value domain and cannot authorize dropping absent/null distinctions. Ordered lists,
+map string keys, structured members and exact numeric leaves need qualified
+carriers/decoders. Native null permission must be explicit in the eventual binding
+and output descriptor. The result schema models allowed envelope shapes, not
+permission to use every state for every field.

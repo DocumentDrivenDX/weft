@@ -21,7 +21,7 @@ ddx:
 
 ## Scope
 
-Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-003, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 and public contracts remain draft/proposed. No production storage compatibility is claimed.
+Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 and public contracts remain draft/proposed. No production storage compatibility is claimed.
 
 ## Shared Constraints
 
@@ -35,11 +35,10 @@ Input is Weft SQL plus explicitly supplied pinned UMF modules; output is target 
 | B-002 | US-001 model resolution, parser, typed IR | B-001 | Independent oracle, corpus semantic/refusal tests; finalize versioned Rust IR representation |
 | B-002A | US-007 versioned application-read frontend | B-002 | CONTRACT-004, independent member/presence/order/count/relationship/parameter fixtures |
 | B-003 | US-002 registry, binding validation, capabilities | B-002A | Third synthetic plugin; exact typed trait and manifest contract; finalize ADR-002 |
-| B-004 | US-005 compile envelope and embeddings | B-002A | US-007 versioned application-read frontend | B-002 | CONTRACT-004, independent member/presence/order/count/relationship/parameter fixtures |
-| B-003 | All 636 requests across Rust/Python/browser; precise UTF-8 spans and deterministic diagnostics |
+| B-004 | US-005 compile envelope and embeddings | B-003 | Original and application-read requests across Rust/Python/browser; precise UTF-8 spans and deterministic diagnostics |
 | B-005 | US-003 Truss adapter | B-003, accepted Truss storage binding | Native PostgreSQL exact results, storage boundaries and host obligations |
 | B-006 | US-004 Ashlar adapter | B-003, accepted Ashlar layout/binding | Native Databricks exact results, numeric/collation/publication boundaries |
-| B-007 | US-006 qualification and release matrix | B-004–006 | All 24 ACs, expanded corpus, property/fuzz/mutation gates and versioned evidence |
+| B-007 | US-006 qualification and release matrix | B-004–006 | All 30 ACs, expanded corpus, property/fuzz/mutation gates and versioned evidence |
 
 ## Issue Decomposition
 
@@ -62,7 +61,7 @@ All 30 P0 story criteria pass; both initial adapters have qualified native profi
 
 ## Execution status
 
-B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A and B-003 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
 
 ## PR #2 scope update
 
