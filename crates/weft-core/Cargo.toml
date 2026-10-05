@@ -18,3 +18,9 @@ path = "../../tests/application/model.rs"
 [[test]]
 name = "application-resolve"
 path = "../../tests/application/resolve.rs"
+[[test]]
+name = "backend-registry"
+path = "../../tests/register-backend/registry.rs"
+[[test]]
+name = "backend-pipeline"
+path = "../../tests/register-backend/pipeline.rs"

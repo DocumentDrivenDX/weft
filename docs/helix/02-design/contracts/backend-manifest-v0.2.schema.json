@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json",
+  "type": "object",
+  "properties": {
+    "backendId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "backendVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interfaceVersion": {
+      "const": "weft-backend/0.2.0"
+    },
+    "bindingProfile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engineVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sessionSettings": {
+            "type": "object"
+          },
+          "storageLayoutRevision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publicationRevision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "engine",
+          "engineVersion",
+          "sessionSettings",
+          "storageLayoutRevision",
+          "publicationRevision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "logicalDomain": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "resultDomain": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parameters": {
+                  "type": "object"
+                },
+                "owner": {
+                  "enum": [
+                    "host",
+                    "backend"
+                  ]
+                },
+                "failureCode": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "parameters",
+                "owner",
+                "failureCode"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "candidate",
+              "unsupported"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "targetProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "languageProfiles": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "uniqueItems": true,
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "dialectProfile": {
+                      "const": "weft-sql/0.1.0"
+                    },
+                    "irVersion": {
+                      "const": "weft-ir/0.1.0"
+                    }
+                  },
+                  "required": [
+                    "dialectProfile",
+                    "irVersion"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "dialectProfile": {
+                      "const": "weft-sql/0.2.0"
+                    },
+                    "irVersion": {
+                      "const": "weft-ir/0.2.0"
+                    }
+                  },
+                  "required": [
+                    "dialectProfile",
+                    "irVersion"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "logicalDomain",
+          "resultDomain",
+          "constraints",
+          "obligations",
+          "status",
+          "evidence",
+          "targetProfiles",
+          "languageProfiles"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "languageProfiles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "dialectProfile": {
+                "const": "weft-sql/0.1.0"
+              },
+              "irVersion": {
+                "const": "weft-ir/0.1.0"
+              }
+            },
+            "required": [
+              "dialectProfile",
+              "irVersion"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dialectProfile": {
+                "const": "weft-sql/0.2.0"
+              },
+              "irVersion": {
+                "const": "weft-ir/0.2.0"
+              }
+            },
+            "required": [
+              "dialectProfile",
+              "irVersion"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "backendId",
+    "backendVersion",
+    "interfaceVersion",
+    "bindingProfile",
+    "targetProfiles",
+    "capabilities",
+    "evidence",
+    "languageProfiles"
+  ],
+  "additionalProperties": false
+}

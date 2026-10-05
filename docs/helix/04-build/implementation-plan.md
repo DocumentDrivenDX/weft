@@ -21,7 +21,7 @@ ddx:
 
 ## Scope
 
-Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 and public contracts remain draft/proposed. No production storage compatibility is claimed.
+Implement the Weft compiler governed by the PRD, CONTRACT-001 through CONTRACT-004, TD-001 through TD-006 and TP-001. The bootstrap delivered specifications and fixture validation. B-001 now passes its bounded embedding gate; ADR-001 selects Rust for the foundation. The spike is not the public compiler; ADR-002 now accepts the structural backend boundary; public contracts remain draft specifications with scoped executable evidence. No production storage compatibility is claimed.
 
 ## Shared Constraints
 
@@ -61,7 +61,7 @@ All 30 P0 story criteria pass; both initial adapters have qualified native profi
 
 ## Execution status
 
-B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003: complete for the registered library boundary; [evidence](evidence/B-003-backend-interface.md). B-004 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
 
 ## PR #2 scope update
 

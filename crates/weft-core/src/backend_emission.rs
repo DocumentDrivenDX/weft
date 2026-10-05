@@ -1,0 +1,383 @@
+//! Validate backend metadata against the resolved logical outputs.
+use crate::{
+    backend::{Column, Emission, Plan, Representation, ScalarCarrier, ScalarDecoder, Selection},
+    error::{Diagnostic, Result},
+    ir::{Family, Identity, LogicalType, Node},
+};
+fn fail(message: &str) -> Diagnostic {
+    Diagnostic::new("WFT-EMIT", "emit", message)
+}
+enum Expected<'a> {
+    Scalar(&'a LogicalType),
+    Field(&'a Identity),
+    Related(&'a crate::application_model::RelationshipRead, u16),
+}
+fn scalar(column: &Column, expected: &LogicalType) -> bool {
+    match &column.representation {
+        Representation::Scalar {
+            logical_type,
+            carrier,
+            decoder,
+        } => {
+            logical_type == expected
+                && column.nullable == expected.nullable
+                && matches!(
+                    (&expected.family, carrier, decoder),
+                    (Family::String, ScalarCarrier::Text, ScalarDecoder::Text)
+                        | (
+                            Family::Boolean,
+                            ScalarCarrier::Boolean,
+                            ScalarDecoder::Boolean
+                        )
+                        | (Family::Boolean, ScalarCarrier::Text, ScalarDecoder::Boolean)
+                        | (
+                            Family::Integer,
+                            ScalarCarrier::Text,
+                            ScalarDecoder::ExactInteger
+                        )
+                        | (
+                            Family::Decimal,
+                            ScalarCarrier::Text,
+                            ScalarDecoder::ExactDecimal
+                        )
+                )
+        }
+        _ => false,
+    }
+}
+pub(crate) fn validate(
+    plan: Plan<'_>,
+    emission: &Emission,
+    selection: &Selection,
+    assessments: &[crate::backend::Assessment],
+) -> Result<()> {
+    if emission.sql.trim().is_empty()
+        || emission.sql.len() > 1024 * 1024
+        || emission.sql.contains('\0')
+        || emission.parameters.len() > 1024
+    {
+        return Err(fail("Emission SQL or parameter bounds are invalid"));
+    }
+    for (index, p) in emission.parameters.iter().enumerate() {
+        if p.position != index + 1 || !p.origin.is_object() || p.logical_type.nullable {
+            return Err(fail(
+                "Parameter slots require contiguous positions, typed origins and non-null values",
+            ));
+        }
+        validate_parameter(&p.value, &p.logical_type)?;
+    }
+    let expected: Vec<(&str, Expected<'_>)> = match plan {
+        Plan::V01(p) => {
+            let Node::Project { outputs, .. } = &p.root else {
+                return Err(fail("Resolved 0.1 plan needs a projection root"));
+            };
+            outputs
+                .iter()
+                .map(|o| {
+                    (
+                        o.name.as_str(),
+                        Expected::Scalar(o.expression.logical_type()),
+                    )
+                })
+                .collect()
+        }
+        Plan::V02(p) => p
+            .outputs
+            .iter()
+            .map(|o| {
+                (
+                    o.name.as_str(),
+                    match &o.expression {
+                        crate::application_ir::Expression::Field { identity, .. } => {
+                            Expected::Field(identity)
+                        }
+                        crate::application_ir::Expression::Count { logical_type }
+                        | crate::application_ir::Expression::Sum { logical_type, .. } => {
+                            Expected::Scalar(logical_type)
+                        }
+                        crate::application_ir::Expression::RelatedKeys {
+                            relationship,
+                            bound,
+                            ..
+                        } => Expected::Related(relationship, *bound),
+                    },
+                )
+            })
+            .collect(),
+    };
+    if emission.columns.len() != expected.len() {
+        return Err(fail(
+            "Emission must describe every logical output exactly once",
+        ));
+    }
+    for (index, (column, (name, expected))) in emission.columns.iter().zip(expected).enumerate() {
+        if column.position != index + 1
+            || column.output_name != name
+            || column.source_identities.is_empty()
+            || column.source_identities.iter().any(|id| {
+                !selection.fields.contains(id)
+                    && !selection.records.contains(id)
+                    && !selection.types.contains(id)
+            })
+        {
+            return Err(fail(
+                "Result columns must retain output order, names and selected source identities",
+            ));
+        }
+        let valid = match expected {
+            Expected::Scalar(t) => scalar(column, t),
+            Expected::Field(identity) => {
+                let Plan::V02(p) = plan else { unreachable!() };
+                let descriptor = p
+                    .type_graph
+                    .iter()
+                    .find(|d| &d.identity == identity)
+                    .ok_or_else(|| fail("Projected Field lacks its type descriptor"))?;
+                match (&descriptor.shape, &column.representation) {
+                    (
+                        crate::application_model::Shape::Scalar { logical_type },
+                        Representation::Scalar { .. },
+                    ) if descriptor.availability.as_deref() == Some("required") => {
+                        scalar(column, logical_type)
+                    }
+                    (
+                        _,
+                        Representation::Value {
+                            descriptor,
+                            native_null,
+                        },
+                    ) => {
+                        descriptor == identity
+                            && !column.nullable
+                            && (!native_null
+                                || assessments.iter().any(|a| {
+                                    a.id == "value.nativeNull"
+                                        && a.status != crate::backend::Status::Unsupported
+                                }))
+                    }
+                    _ => false,
+                }
+            }
+            Expected::Related(r, bound) => match &column.representation {
+                Representation::RelatedKeys {
+                    relationship,
+                    key,
+                    bound: b,
+                } => {
+                    relationship == &r.identity
+                        && *b == bound
+                        && key.id == r.target_key.id
+                        && key.fields == r.target_key.fields
+                        && key.types == r.target_key.types
+                        && !column.nullable
+                }
+                _ => false,
+            },
+        };
+        if !valid {
+            return Err(fail("Result representation changes logical type, presence, relationship key or exact numeric decoding"));
+        }
+    }
+    Ok(())
+}
+fn validate_parameter(value: &str, t: &LogicalType) -> Result<()> {
+    let kind = match t.family {
+        Family::String => {
+            if value.contains('\0') {
+                return Err(fail("String parameter contains NUL"));
+            }
+            crate::syntax::LiteralKind::String
+        }
+        Family::Boolean => {
+            if value != "true" && value != "false" {
+                return Err(fail("Boolean parameter is not canonical exact text"));
+            }
+            crate::syntax::LiteralKind::Boolean
+        }
+        Family::Integer | Family::Decimal => {
+            let unsigned = value.strip_prefix('-').unwrap_or(value);
+            let mut parts = unsigned.split('.');
+            let whole = parts.next().unwrap_or("");
+            let frac = parts.next();
+            if whole.is_empty()
+                || !whole.bytes().all(|b| b.is_ascii_digit())
+                || frac.is_some_and(|f| f.is_empty() || !f.bytes().all(|b| b.is_ascii_digit()))
+                || parts.next().is_some()
+            {
+                return Err(fail("Numeric parameter is not exact base-ten text"));
+            }
+            if t.family == Family::Integer {
+                let w = &t.facets["integerWidth"];
+                if !w["bits"].as_u64().is_some_and(|b| (1..=64).contains(&b))
+                    || !w["signed"].is_boolean()
+                {
+                    return Err(fail("Integer parameter needs an explicit bounded width"));
+                }
+            } else {
+                let p = t.facets["precision"].as_u64();
+                let s = t.facets["scale"].as_u64();
+                if !p.is_some_and(|p| (1..=28).contains(&p)) || !s.is_some_and(|s| s <= p.unwrap())
+                {
+                    return Err(fail("Decimal parameter needs an explicit exact domain"));
+                }
+            }
+            crate::syntax::LiteralKind::Number
+        }
+    };
+    crate::exact::literal(
+        &crate::syntax::Literal {
+            value: value.into(),
+            kind,
+            span: crate::ir::Span { start: 0, end: 0 },
+        },
+        t,
+    )
+    .map_err(|_| fail("Backend parameter value exceeds its declared logical domain"))?;
+    Ok(())
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    #[test]
+    fn exact_numeric_slots_refuse_invalid_domains_and_lexemes() {
+        let integer = LogicalType {
+            family: Family::Integer,
+            facets: json!({"integerWidth":{"bits":64,"signed":false}}),
+            nullable: false,
+        };
+        for v in ["0", "18446744073709551615", "0001"] {
+            assert!(validate_parameter(v, &integer).is_ok());
+        }
+        for v in [
+            "-1",
+            "18446744073709551616",
+            "1e2",
+            "+1",
+            "1.0",
+            "1; DROP TABLE x",
+        ] {
+            assert!(validate_parameter(v, &integer).is_err());
+        }
+        let decimal = LogicalType {
+            family: Family::Decimal,
+            facets: json!({"precision":28,"scale":2}),
+            nullable: false,
+        };
+        assert!(validate_parameter("9007199254740993.12", &decimal).is_ok());
+        assert!(validate_parameter("1.2000", &decimal).is_ok());
+        assert!(validate_parameter("1.201", &decimal).is_err());
+        let unbounded = LogicalType {
+            family: Family::Integer,
+            facets: json!({}),
+            nullable: false,
+        };
+        assert!(validate_parameter("1", &unbounded).is_err());
+    }
+    #[test]
+    fn numeric_results_require_exact_text_decoders() {
+        let t = LogicalType {
+            family: Family::Integer,
+            facets: json!({}),
+            nullable: false,
+        };
+        let mut c = Column {
+            position: 1,
+            output_name: "count".into(),
+            representation: Representation::Scalar {
+                logical_type: t.clone(),
+                carrier: ScalarCarrier::Text,
+                decoder: ScalarDecoder::ExactInteger,
+            },
+            source_identities: vec![],
+            nullable: false,
+        };
+        assert!(scalar(&c, &t));
+        c.representation = Representation::Scalar {
+            logical_type: t.clone(),
+            carrier: ScalarCarrier::Boolean,
+            decoder: ScalarDecoder::ExactInteger,
+        };
+        assert!(!scalar(&c, &t));
+        c.representation = Representation::Scalar {
+            logical_type: t.clone(),
+            carrier: ScalarCarrier::Text,
+            decoder: ScalarDecoder::Text,
+        };
+        assert!(!scalar(&c, &t));
+    }
+    #[test]
+    fn presence_and_native_null_require_qualified_descriptors() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/application/fixtures/cases.json"
+        ))
+        .unwrap();
+        let req = &cases[0]["request"];
+        let modules = serde_json::from_value(req["modules"].clone()).unwrap();
+        let (_, p) = crate::prepare_and_resolve_application(
+            req["sql"].as_str().unwrap(),
+            modules,
+            Default::default(),
+            None,
+        )
+        .unwrap();
+        let selection = Selection {
+            fields: p
+                .outputs
+                .iter()
+                .map(|o| {
+                    if let crate::application_ir::Expression::Field { identity, .. } = &o.expression
+                    {
+                        identity.clone()
+                    } else {
+                        panic!("fixture")
+                    }
+                })
+                .collect(),
+            types: p.type_graph.iter().map(|d| d.identity.clone()).collect(),
+            ..Default::default()
+        };
+        let mut e = Emission {
+            sql: "SELECT fixture".into(),
+            parameters: vec![],
+            obligations: vec![],
+            columns: p
+                .outputs
+                .iter()
+                .enumerate()
+                .map(|(index, o)| {
+                    let crate::application_ir::Expression::Field { identity, .. } = &o.expression
+                    else {
+                        panic!("fixture")
+                    };
+                    Column {
+                        position: index + 1,
+                        output_name: o.name.clone(),
+                        representation: Representation::Value {
+                            descriptor: identity.clone(),
+                            native_null: false,
+                        },
+                        source_identities: vec![identity.clone()],
+                        nullable: false,
+                    }
+                })
+                .collect(),
+        };
+        assert!(validate(Plan::V02(&p), &e, &selection, &[]).is_ok());
+        if let Representation::Value { native_null, .. } = &mut e.columns[3].representation {
+            *native_null = true;
+        }
+        assert!(validate(Plan::V02(&p), &e, &selection, &[]).is_err());
+        let capability = crate::backend::Assessment {
+            id: "value.nativeNull".into(),
+            status: crate::backend::Status::Supported,
+            evidence: vec!["fixture".into()],
+            obligations: vec![],
+        };
+        assert!(validate(Plan::V02(&p), &e, &selection, &[capability]).is_ok());
+        if let Representation::Value { descriptor, .. } = &mut e.columns[0].representation {
+            descriptor.element = "wrong".into();
+        }
+        assert!(validate(Plan::V02(&p), &e, &selection, &[]).is_err());
+    }
+}

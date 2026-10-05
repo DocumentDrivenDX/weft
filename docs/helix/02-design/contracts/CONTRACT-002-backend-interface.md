@@ -15,7 +15,7 @@ ddx:
 
 # CONTRACT-002: Registered backend interface
 
-**Type:** plugin/library. **Version:** `weft-backend/0.1.0`. **Status:** draft.
+**Type:** plugin/library. **Version:** `weft-backend/0.2.0` (implemented library boundary; retained 0.1 schema is historical). **Status:** draft.
 
 ## Purpose and Scope and Boundaries
 
@@ -39,15 +39,12 @@ No operation may fetch modules, access databases, choose a fallback or reinterpr
 Weft names. Backends must resolve every selected record/field to physical access
 through supplied mappings and verify UMF/model/binding pins. Implementation code
 may be linked or explicitly registered; manifest/binding content MUST NOT select
-an executable path/import URL. Dynamic native ABI loading is outside v0.1.
-The Rust trait and its exact IR/target-plan types must be finalized together with
-this contract before backend implementation; the five operations above fix the
-behavior boundary, not a released binary ABI.
+an executable path/import URL. Dynamic native ABI loading is outside v0.2.
+The finalized Rust trait uses associated Mapping and TargetPlan types in `crates/weft-core/src/backend.rs`; the five operations fix a typed library boundary, not a released binary ABI.
 
-[backend-manifest.schema.json](backend-manifest.schema.json) defines its structural
+[backend-manifest-v0.2.schema.json](backend-manifest-v0.2.schema.json) defines its structural
 shape; semantic guards bind capabilities to target profiles and require evidence
-for supported status. A manifest contains backendId, backendVersion, interfaceVersion, dialectProfile,
-irVersion, bindingProfile, targetProfiles, capabilities and evidence. A target
+for supported status. A manifest contains backendId, backendVersion, interfaceVersion, languageProfiles (exact dialectProfile/irVersion pairs), bindingProfile, targetProfiles, capabilities and evidence. A target
 profile names engine/version, relevant session settings, collation/numeric rules
 and storage-layout/publication revisions. A capability names operation ID, logical
 domain, result domain, constraints, required obligations, conformance status and
@@ -118,3 +115,51 @@ not its FieldRef or source SQL. A Databricks profile lacking proven exact SUM
 blocks by default and may emit only an explicitly requested candidate.
 Require registration independence, malformed/unknown manifest guards, injected
 identifier/SQL-fragment refusal and independent native result comparison.
+
+## B-003 finalized library interface
+
+The implemented application frontend adds explicit 0.2 plans. B-003 implements
+`weft-backend/0.2.0` alongside the retained 0.1 schema; this does not redefine prior
+0.1 evidence. Its [manifest schema](backend-manifest-v0.2.schema.json) declares
+exact `languageProfiles` dialect/IR pairs and binds each capability to declared
+target and language profiles. Registration snapshots and validates the manifest;
+unknown members, repeated IDs, mismatched pairs, missing domains and supported
+capabilities without declared evidence refuse. A declared evidence ID remains a
+trusted qualification reference; the compiler does not fetch or execute it.
+
+The Rust `Backend` trait in `crates/weft-core/src/backend.rs` uses associated
+`Mapping` and `TargetPlan` types. Each registered implementation owns those types;
+the heterogeneous registry erases them only around its generic adapter, which
+runs validate-binding, assess, lower and emit in order. `Plan` borrows either typed
+IR version. Bindings stay bounded raw JSON with exact byte digest and retained
+content. Selected records, fields, type-graph identities and relationship IDs
+must receive explicit coverage. Plugins validate their own physical mapping
+semantics and unknown selected members; common identity coverage alone does not
+prove that physical mappings or existing data are correct.
+
+Assessment must cover every required operation exactly once, against the selected
+profile. Unsupported always refuses. Candidate requires explicit opt-in and cannot
+be upgraded to supported by assessment. Manifest/assessment obligations survive
+emission; conflicting requirements under one obligation ID refuse. No fallback
+backend is selected. Default Rust unwind panics are normalized atomically;
+non-unwinding aborts and WASM traps require wrapper/host normalization, which is
+part of B-004 qualification, not a capability established by native unwind tests.
+
+This library interface passes B-003 component/native/browser gates; [evidence](../../04-build/evidence/B-003-backend-interface.md) qualifies the exact subset. ADR-002 accepts the structural boundary. Public compile wrappers, production mappings and target-native qualification remain B-004 through B-007. No production mapping is invented here.
+
+The registry also checks emitted column count/order/name, logical type,
+selected source identities, exact numeric carrier/decoder pairing and typed
+parameter lexical/domain validity. Slot positions are contiguous; target SQL is
+bounded to one MiB and never silently clipped. These structural checks do not
+prove the SQL implements the plan; independent/native result gates remain required.
+
+Binding validation may declare additional required capability IDs, for example
+`value.nativeNull` when a recognized physical/native profile requires explicit
+null-state decoding. They receive the same complete assessment, evidence and
+candidate gates as frontend-required operations. An optional UMF field alone
+cannot authorize that capability. Value/related representations use typed JSON
+text carriers with exact string numeric leaves; their decoders follow retained
+type/key descriptors, not generic JSON-number conversion. The emitted qualification
+retains both the selected declaration (domains/constraints/obligations/evidence)
+and its per-query assessment. Obligation data is validated and conflicting IDs
+refuse before an artifact is returned.

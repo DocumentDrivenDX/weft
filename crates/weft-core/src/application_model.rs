@@ -310,7 +310,7 @@ impl Catalog {
         })
     }
 }
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RelationshipIdentity {
     pub document_id: String,

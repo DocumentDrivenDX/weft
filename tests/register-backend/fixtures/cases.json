@@ -1,0 +1,877 @@
+[
+  {
+    "id": "required-string-01",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "required-string-02",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.2.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "quoted-label",
+    "request": {
+      "sql": "SELECT c.name AS \"😀label\" FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "injection-label",
+    "request": {
+      "sql": "SELECT c.name AS \"label\"\"; DROP TABLE x; --\" FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "candidate-opt-in",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "candidate": true,
+      "allowCandidate": true
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "candidate-default-refusal",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "candidate": true
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY"
+    }
+  },
+  {
+    "id": "missing-backend",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "backendId": "not.registered"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BACKEND-MISSING"
+    }
+  },
+  {
+    "id": "stale-backend",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "backendVersion": "0.0.0"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BACKEND-VERSION"
+    }
+  },
+  {
+    "id": "missing-target-profile",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "targetProfile": "unknown"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BACKEND-VERSION"
+    }
+  },
+  {
+    "id": "missing-coverage",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "missing-coverage"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BINDING"
+    }
+  },
+  {
+    "id": "missing-assessment",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "missing-assessment"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY"
+    }
+  },
+  {
+    "id": "empty-sql",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "empty-sql"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "wrong-label",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "wrong-label"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "wrong-type",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "wrong-type"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "wrong-carrier",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "wrong-carrier"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "bad-slots",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "bad-slots"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "parameter-lexical",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "parameter-lexical"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-EMIT"
+    }
+  },
+  {
+    "id": "lower-failure",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "behavior": "lower-failure"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY"
+    }
+  },
+  {
+    "id": "unsupported-filter",
+    "request": {
+      "sql": "SELECT c.name FROM Customer c WHERE c.name='Alice'",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ]
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY"
+    }
+  },
+  {
+    "id": "unsupported-numeric",
+    "request": {
+      "sql": "SELECT c.id FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer-id\"},\"column\":\"numeric_id\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "4269466ec4eccaf9fcd63882d551ef13ca943adf03ec43c79be1e91892fab591"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY"
+    }
+  },
+  {
+    "id": "alternate-home",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer-name\"},\"column\":\"renamed_name\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "d879c2c3ae48ce319487256d824a7036939801d174eb4d331664206df12b63a2"
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "alternate-table",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers_v2\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer-name\"},\"column\":\"display_name\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "f8142639d9d37042d4c410aac3c878659015fd2d187ec7306c9e9658fb59b0bb"
+    },
+    "expected": {
+      "status": "emitted",
+      "rows": [
+        [
+          "Alice"
+        ],
+        [
+          "Alice"
+        ],
+        [
+          "é"
+        ],
+        [
+          "é"
+        ],
+        [
+          "trail"
+        ],
+        [
+          "trail "
+        ],
+        [
+          ""
+        ],
+        [
+          "'; DROP TABLE fixture_customers; --"
+        ],
+        [
+          "😀"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "selected-sql-fragment",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer-name\"},\"column\":\"display_name\",\"sql\":\"SELECT * FROM privileged\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "1f9abc77f6771b669828438c8ee328c3f1b3b1fef8a00519ea34e48ef64c28bb"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BINDING"
+    }
+  },
+  {
+    "id": "identifier-injection",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers; DROP TABLE x\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer-name\"},\"column\":\"display_name\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "05582a173346b08746a2f86dc6186bbb4e2987b21da0aa016ff45811ef37e6cf"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BINDING"
+    }
+  },
+  {
+    "id": "stale-model-revision",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\":[{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"umfVersion\":\"0.7.0\",\"sha256\":\"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}],\"record\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"fixture-r1\",\"module\":\"sales\",\"element\":\"customer\"},\"table\":\"fixture_customers\"},\"field\":{\"identity\":{\"documentId\":\"sales-fixture\",\"revision\":\"stale\",\"module\":\"sales\",\"element\":\"customer-name\"},\"column\":\"display_name\"},\"extensions\":{\"unknown\":\"retained\"}}",
+      "bindingSha256": "9746efe6136220bced201ff84e2155b8d75e1875fae569e98c3e983afc9fa44c"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-BINDING"
+    }
+  },
+  {
+    "id": "bad-binding-digest",
+    "request": {
+      "sql": "SELECT c.name AS label FROM Customer c",
+      "dialect": "weft-sql/0.1.0",
+      "modules": [
+        {
+          "documentJson": "{\"umf\":\"0.7.0\",\"id\":\"sales-fixture\",\"vocabularies\":{\"future.vendor\":{\"version\":\"99.0.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"customer-name\"},{\"module\":\"sales\",\"element\":\"customer-active\"}],\"extensions\":{}},{\"id\":\"orders\",\"name\":\"Orders\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"order-customer\"},{\"module\":\"sales\",\"element\":\"order-total\"}],\"extensions\":{}},{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"customer-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"customer-active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{}},{\"id\":\"order-customer\",\"name\":\"customer_id\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":false}}},{\"id\":\"order-total\",\"name\":\"total\",\"kind\":\"field\",\"scalarType\":\"decimal\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"facets\":{\"precision\":28,\"scale\":2}}]}],\"extensions\":{\"future.vendor\":{\"unknown\":[\"keep\",{\"payload\":\"opaque\"}]}}}",
+          "pin": {
+            "documentId": "sales-fixture",
+            "revision": "fixture-r1",
+            "umfVersion": "0.7.0",
+            "sha256": "e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125"
+          },
+          "selectedModuleIds": [
+            "sales"
+          ]
+        }
+      ],
+      "bindingJson": "{\"pins\": [{\"documentId\": \"sales-fixture\", \"revision\": \"fixture-r1\", \"umfVersion\": \"0.7.0\", \"sha256\": \"e372e0512e257fd8f0fbe040f88bd55725394fc027842d33a98460e19683d125\"}], \"record\": {\"identity\": {\"documentId\": \"sales-fixture\", \"revision\": \"fixture-r1\", \"module\": \"sales\", \"element\": \"customer\"}, \"table\": \"fixture_customers\"}, \"field\": {\"identity\": {\"documentId\": \"sales-fixture\", \"revision\": \"fixture-r1\", \"module\": \"sales\", \"element\": \"customer-name\"}, \"column\": \"display_name\"}, \"extensions\": {\"unknown\": \"retained\"}}",
+      "bindingSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "expected": {
+      "status": "blocked",
+      "code": "WFT-PIN"
+    }
+  }
+]

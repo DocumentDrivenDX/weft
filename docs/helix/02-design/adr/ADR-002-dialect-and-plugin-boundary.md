@@ -3,7 +3,7 @@ ddx:
   id: ADR-002
   type: adr
   activity: design
-  status: draft
+  status: accepted
   authoring:
     home: repo
   links:
@@ -13,7 +13,7 @@ ddx:
 
 # ADR-002: One logical dialect, independently registered backends
 
-**Status:** Proposed. **Date:** 2026-10-05. **Decider:** Project owner.
+**Status:** Accepted for the compiler foundation. **Date:** 2026-10-05. **Decider:** Project owner.
 
 ## Context
 
@@ -47,3 +47,22 @@ A third test backend must compile a typed plan without frontend edits. Both
 initial backends must execute the same expected-result corpus, including refusal
 and exactness boundaries, against pinned layouts/engines before support is claimed.
 No convenience fallback may replace an unsupported operation.
+
+
+## B-003 decision evidence
+
+The pure Rust associated-type backend trait and explicit registry support typed
+0.1/0.2 plans without frontend backend-ID switches. The third fixture plugin has
+native schema/version/pin/capability/coverage/emission/refusal tests, independent
+SQLite execution of its simple string-projection SQL and real Chromium byte
+parity. [B-003 evidence](../../04-build/evidence/B-003-backend-interface.md) records
+exact versions, inputs and qualification limits. This accepts the structural
+boundary, not production engine/layout compatibility or package distribution.
+
+Rust plugins are linked or explicitly registered by trusted host/build code;
+Python and browser wrappers consume that same compiler core. Content cannot load
+code. Dynamic native ABI loading and Python/JavaScript callback plugins are not
+part of this version. Weft owns logical compilation and backend lower/emit;
+Truss/Ashlar owners supply their versioned mappings, physical mechanics and host
+execution/native evidence. Backend distribution and public packaging ownership
+remain an integration/release decision.
