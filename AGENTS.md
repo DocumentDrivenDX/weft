@@ -13,11 +13,11 @@ read .helix.yml, and engage the installed HELIX skill for governed work.
   meaning. Backends own physical mappings, target SQL and execution obligations.
 - Never silently lose meaning. Preserve unknown model content; block selected
   semantics that cannot be established. Qualify claims by versions/subset/evidence.
-- Rust is the proposed compiler core; native Python and browser WASM bindings
+- Rust is the selected compiler foundation following B-001; native Python and browser WASM bindings
   must share that core. No JavaScript sidecar is permitted for the Python API.
 - Keep connections, credentials, data execution, authorization and publication
   enforcement in hosts/backends. Model content never loads executable plugins.
 - The v0.1 grammar is a bounded first delivery slice, not Weft's product ceiling.
   New capabilities extend governed language/plan contracts and conformance data.
-- The bootstrap is specifications only. Do not report compiler, plugin, Python,
+- Implementation starts with an isolated B-001 spike, not a released compiler. Do not report broader compiler, plugin, Python,
   browser or database support without fresh executable evidence.

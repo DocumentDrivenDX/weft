@@ -1,0 +1,82 @@
+   Compiling weft-spike-core v0.1.0 (/private/tmp/weft-b001/spikes/b001/core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.72s
+     Running unittests src/lib.rs (target/debug/deps/weft_spike_core-7a9976b812f05a5b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/bin/report.rs (target/debug/deps/report-dd207c1fa4484abf)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/boundary.rs (target/debug/deps/boundary-ae558422d12e4093)
+
+running 3 tests
+test duplicate_keys_are_not_discarded ... ok
+test malformed_or_large_requests_refuse_atomically ... ok
+test numeric_corpus_uses_independent_expected_domains ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+   Doc-tests weft_spike_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.31s
+🔗 Found pyo3 bindings with abi3 support
+🐍 Not using a specific python interpreter
+📡 Using build options bindings from pyproject.toml
+💻 Using `MACOSX_DEPLOYMENT_TARGET=11.0` for aarch64-apple-darwin by default
+   Compiling weft-spike-core v0.1.0 (/private/tmp/weft-b001/spikes/b001/core)
+   Compiling weft-spike-python v0.1.0 (/private/tmp/weft-b001/spikes/b001/python)
+    Finished `release` profile [optimized] target(s) in 6.38s
+📦 Built wheel for abi3 Python ≥ 3.9 to /private/tmp/weft-b001/target/wheels/weft_spike-0.1.0-cp39-abi3-macosx_11_0_arm64.whl
+Processing ./target/wheels/weft_spike-0.1.0-cp39-abi3-macosx_11_0_arm64.whl
+Installing collected packages: weft-spike
+  Attempting uninstall: weft-spike
+    Found existing installation: weft-spike 0.1.0
+    Uninstalling weft-spike-0.1.0:
+      Successfully uninstalled weft-spike-0.1.0
+Successfully installed weft-spike-0.1.0
+   Compiling weft-spike-core v0.1.0 (/private/tmp/weft-b001/spikes/b001/core)
+   Compiling weft-spike-wasm v0.1.0 (/private/tmp/weft-b001/spikes/b001/wasm)
+    Finished `release` profile [optimized] target(s) in 4.03s
+{
+  "cases": 597,
+  "numericCases": 575,
+  "python": "3.12.14",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "extension": "/private/tmp/weft-toolchain/venv/lib/python3.12/site-packages/weft_spike/weft_spike.abi3.so",
+  "extensionBytes": 6298112,
+  "nativePythonOnlySmoke": "run separately by python_only.py"
+}
+Native Python direct-call smoke passed with empty executable PATH and subprocesses disabled.
+{
+  "cases": 597,
+  "browser": "153.0.8010.12",
+  "playwrightVersion": "see pinned package",
+  "wasmBytes": 5270652,
+  "wasmSha256": "d7e5530cf0b840ae093d1539054c903d1ba8fd4a57386c4b546af942da88f87b",
+  "jsGlueBytes": 6420,
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    }
+  ],
+  "initialMemoryBytes": 1441792,
+  "finalMemoryBytes": 1769472,
+  "networkRequests": [
+    "http://weft.spike.test/",
+    "http://weft.spike.test/spike.wasm",
+    "http://weft.spike.test/spike.js"
+  ],
+  "nodeGlobals": false,
+  "byteParity": true
+}

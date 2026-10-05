@@ -1,0 +1,22 @@
+{
+  "spikes/b001/core/src/lib.rs": {
+    "bytes": 15386,
+    "sha256": "d3ff7598621703f941317d1b0d80ac48c86e74598d4811c9a9c4e473425315f7"
+  },
+  "Cargo.lock": {
+    "bytes": 10028,
+    "sha256": "cf57d0d069e497caea80194415893d0ed9c62e74d63c1c59969c8eca31094abd"
+  },
+  "target/wheels/weft_spike-0.1.0-cp39-abi3-macosx_11_0_arm64.whl": {
+    "bytes": 2333651,
+    "sha256": "d7e4ce452f2c31afd5b5f4dfdc3868ddd3db27001f17266a0d0495e08855bbe6"
+  },
+  "target/b001/web/weft_spike_wasm_bg.wasm": {
+    "bytes": 5270652,
+    "sha256": "d7e5530cf0b840ae093d1539054c903d1ba8fd4a57386c4b546af942da88f87b"
+  },
+  "target/b001/web/weft_spike_wasm.js": {
+    "bytes": 6420,
+    "sha256": "60152f13f7c162b59a5e5879e9fff1ce9701c53f4cc65a58f135dd1129e81c85"
+  }
+}

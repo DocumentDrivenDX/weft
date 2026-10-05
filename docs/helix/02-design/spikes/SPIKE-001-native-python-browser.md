@@ -40,5 +40,5 @@ ADR-001/tool choices before compiler implementation proceeds.
 ## Output and Decision
 
 Output is an execution evidence record with versions, bytes/hashes, commands,
-observations and limitations. No evidence exists at bootstrap. Product language
+observations and limitations. The bootstrap had no evidence. B-001 execution is now recorded in [the evidence report](../../04-build/evidence/B-001-native-python-browser.md); its tested embedding gate passes with the stated subset and platform limitations. Product language
 and backend contracts remain authoritative regardless of parser acceptance.
