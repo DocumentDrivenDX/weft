@@ -61,7 +61,7 @@ All 30 P0 story criteria pass; both initial adapters have qualified native profi
 
 ## Execution status
 
-B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003: complete for the registered library boundary; [evidence](evidence/B-003-backend-interface.md). B-004 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003: complete for the registered library boundary; [evidence](evidence/B-003-backend-interface.md). B-004: complete for the public envelope and native Python/browser component scope; [evidence](evidence/B-004-compile-embeddings.md). B-005 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
 
 ## PR #2 scope update
 

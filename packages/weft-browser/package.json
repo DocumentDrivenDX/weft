@@ -1,0 +1,1 @@
+{"name":"@documentdrivendx/weft","version":"0.1.0","private":true,"type":"module","exports":"./src/index.ts","description":"Browser transport for the pure Weft WASM compiler; unpublished foundation"}

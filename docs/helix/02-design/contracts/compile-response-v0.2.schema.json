@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response.schema.json",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
   "oneOf": [
     {
       "type": "object",
       "properties": {
         "interfaceVersion": {
-          "const": "weft-compile/0.1.0"
+          "const": "weft-compile/0.2.0"
         },
         "diagnostics": {
           "type": "array",
@@ -125,7 +125,7 @@
       "type": "object",
       "properties": {
         "interfaceVersion": {
-          "const": "weft-compile/0.1.0"
+          "const": "weft-compile/0.2.0"
         },
         "diagnostics": {
           "type": "array",
@@ -233,7 +233,7 @@
           "const": "compiled"
         },
         "dialect": {
-          "const": "weft-sql/0.1.0"
+          "const": "weft-sql/0.2.0"
         },
         "compilerVersion": {
           "type": "string",
@@ -303,7 +303,7 @@
           "pattern": "^[0-9a-f]{64}$"
         },
         "logicalPlan": {
-          "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan.schema.json"
+          "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json"
         },
         "sql": {
           "type": "string",
@@ -362,6 +362,8 @@
         },
         "columns": {
           "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
           "items": {
             "type": "object",
             "properties": {
@@ -373,45 +375,231 @@
                 "type": "string",
                 "minLength": 1
               },
-              "logicalType": {
-                "type": "object",
-                "properties": {
-                  "family": {
-                    "enum": [
-                      "boolean",
-                      "string",
-                      "integer",
-                      "decimal"
-                    ]
+              "representation": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "logicalType": {
+                        "type": "object",
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "boolean",
+                              "string",
+                              "integer",
+                              "decimal"
+                            ]
+                          },
+                          "facets": {
+                            "type": "object"
+                          },
+                          "nullable": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "family",
+                          "facets",
+                          "nullable"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "carrier": {
+                        "enum": [
+                          "text",
+                          "boolean"
+                        ]
+                      },
+                      "decoder": {
+                        "enum": [
+                          "text",
+                          "boolean",
+                          "exact-integer",
+                          "exact-decimal"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "logicalType",
+                      "carrier",
+                      "decoder"
+                    ],
+                    "additionalProperties": false
                   },
-                  "facets": {
-                    "type": "object"
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "value"
+                      },
+                      "descriptor": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "element": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "element"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "nativeNull": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "descriptor",
+                      "nativeNull"
+                    ],
+                    "additionalProperties": false
                   },
-                  "nullable": {
-                    "type": "boolean"
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "relatedKeys"
+                      },
+                      "relationship": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "relationship": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "relationship"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "key": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "documentId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "revision": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "module": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "element": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "documentId",
+                                "revision",
+                                "module",
+                                "element"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          },
+                          "types": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "family": {
+                                  "enum": [
+                                    "boolean",
+                                    "string",
+                                    "integer",
+                                    "decimal"
+                                  ]
+                                },
+                                "facets": {
+                                  "type": "object"
+                                },
+                                "nullable": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "family",
+                                "facets",
+                                "nullable"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields",
+                          "types"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "relationship",
+                      "key",
+                      "bound"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "family",
-                  "nullable"
-                ],
-                "additionalProperties": false
-              },
-              "nullable": {
-                "type": "boolean"
-              },
-              "carrier": {
-                "enum": [
-                  "text",
-                  "boolean"
-                ]
-              },
-              "decoder": {
-                "enum": [
-                  "exact-integer",
-                  "exact-decimal",
-                  "text",
-                  "boolean"
                 ]
               },
               "sourceIdentities": {
@@ -446,27 +634,19 @@
                 },
                 "minItems": 1
               },
-              "aggregate": {
-                "enum": [
-                  "sum",
-                  null
-                ]
+              "nullable": {
+                "type": "boolean"
               }
             },
             "required": [
               "position",
               "outputName",
-              "logicalType",
-              "nullable",
-              "carrier",
-              "decoder",
+              "representation",
               "sourceIdentities",
-              "aggregate"
+              "nullable"
             ],
             "additionalProperties": false
-          },
-          "minItems": 1,
-          "maxItems": 256
+          }
         },
         "obligations": {
           "type": "array",

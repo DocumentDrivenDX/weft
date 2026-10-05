@@ -1,0 +1,10 @@
+[package]
+name="weft-runtime"
+version.workspace=true
+edition.workspace=true
+publish.workspace=true
+[features]
+test-third=["dep:weft-backend-probe"]
+[dependencies]
+weft-core={path="../weft-core"}
+weft-backend-probe={path="../../tests/register-backend/probe",optional=true}
