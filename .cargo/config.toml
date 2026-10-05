@@ -1,0 +1,4 @@
+# jsonschema's unused target dependency still compiles getrandom. Runtime entropy
+# is disabled in the documented ahash dependency patch; accidental calls fail.
+[target.wasm32-unknown-unknown]
+rustflags = ['--cfg', 'getrandom_backend="unsupported"']

@@ -303,7 +303,7 @@
               "items": {
                 "$ref": "#/$defs/expression"
               },
-              "minItems": 1
+              "minItems": 0
             }
           },
           "required": [
@@ -312,7 +312,23 @@
             "groups",
             "aggregates"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "groups": {
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "aggregates": {
+                  "minItems": 1
+                }
+              }
+            }
+          ]
         },
         {
           "type": "object",

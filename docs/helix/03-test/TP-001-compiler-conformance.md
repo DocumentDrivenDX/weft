@@ -51,7 +51,7 @@ Factories generate small models and rows with fixed recorded seeds. Shrink faili
 
 | Gate | Minimum | Enforcement |
 |---|---|---|
-| Story acceptance | All 24 P0 criteria have passing named tests | Traceability audit; no planned-only criterion qualifies |
+| Story acceptance | All 30 P0 criteria have passing named tests | Traceability audit; no planned-only criterion qualifies |
 | Initial corpus | All 636 cases evaluated, deliberate structural negatives included | No unexplained skip or changed expected output |
 | Expanded release corpus | At least 1,000 distinct assertions across frontend/backend/runtime matrices | Counts are a floor, not evidence of semantic completeness |
 | Property checks | At least 10,000 deterministic generated cases per release plus persisted regressions | Record seed, generator version and failures |
@@ -71,7 +71,7 @@ P0 paths: model pins and identity; parse/resolve/type; exact numeric overflow; m
 | Host embeddings | STP-005 | Cross-runtime end-to-end |
 | Version/evidence/unknowns/bounds | STP-006 | Contract/property |
 
-Each STP owns its four criterion rows; `story-test-allocation.json` records the 24 stable IDs and planned test names. Test implementation must carry those IDs. Allocation does not imply coverage.
+Each STP owns its four criterion rows; `story-test-allocation.json` records the 30 stable IDs and planned test names. Test implementation must carry those IDs. Allocation does not imply coverage.
 
 ## Implementation Order
 
@@ -92,3 +92,7 @@ Engine numeric ranges, aggregate widening, collation and session settings can di
 ## Build Handoff
 
 Current executable command: `bun run specs:check` validates documents, schemas, allocations and fixture integrity only. Compiler commands will be added when their runners exist, with exact execution evidence. Release blocks on unresolved P0 criteria, missing native evidence, semantic mismatches, unreviewed binding profiles or undocumented skips. A candidate artifact can be explicitly requested for experimentation; it is not release conformance.
+
+## Application-read extension
+
+STP-007 allocates the six PR #2 outcomes to frontend/oracle, host and native-backend layers. Preserve 0.1 corpus expectations and add separate 0.2 profile fixtures; no planned criterion is counted as covered by incorporation into the PRD.

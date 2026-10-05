@@ -135,3 +135,9 @@ GROUP BY c.name
 This is Weft SQL. A backend may read catalog property IDs or typed warehouse
 columns, but must preserve the same named logical fields, bag and exact totals.
 `SELECT name FROM Customer` and `SELECT * FROM Customer` block in v0.1.
+
+## B-002 concrete Rust representation
+
+The versioned representation is `crates/weft-core/src/ir.rs`: `LogicalPlan`, `Node`, `Expression`, `LogicalType`, `Identity`, `ModelPin` and `Span`. Serde encodes node/expression enum tags as schema `op` strings and uses camelCase member names. Binary expression variants box operands; nodes box inputs; scans allocate `s0`, `s1`, ... in source order. No physical identifiers occur in IR.
+
+Default output names are the UMF field name and `sum` for an unnamed aggregate; AS supplies the parsed identifier value. Duplicate output names block. GROUP BY without SUM is supported with an aggregate node containing groups and an empty aggregate list; an aggregate node must have at least one group or aggregate. Global SUM is nullable; grouped SUM is non-null for the required input subset. SUM result facets carry decimal scale without a precision bound, or no integer width bound; argument facets remain on FieldRef. Numeric equality compares exact values within the same family even if input field domains differ. Required capability IDs are `scan`, `project`, `innerJoin`, `filter`, `equal`, `and`, `group`, `sum` and `type.<family>` as used, sorted and unique. These IDs are logical needs, not backend support declarations.
