@@ -22,9 +22,9 @@ try {
   return route.fulfill({contentType:path.endsWith('.wasm')?'application/wasm':'text/javascript',body:await readFile(resolve(root,files[path]))});
  });
  await page.goto(base);
- const corpus=JSON.parse(await readFile(resolve(root,'docs/helix/03-test/fixtures/cases.json'),'utf8'));
+ const corpus=JSON.parse(await readFile(resolve(root,process.env.WEFT_FRONTEND_CORPUS || 'docs/helix/03-test/fixtures/cases.json'),'utf8'));
  const cases=corpus.map(c=>({id:c.id,request:JSON.stringify(c.request)}));
- const reports=JSON.parse(await readFile(resolve(root,'target/b002/reports.json'),'utf8'));
+ const reports=JSON.parse(await readFile(resolve(root,process.env.WEFT_FRONTEND_REPORTS || 'target/b002/reports.json'),'utf8'));
  const expected=reports.map(r=>r.raw);
  const results=await page.evaluate(async ({base,cases})=> {
   const bytes=await (await fetch(base+'/spike.wasm')).arrayBuffer();
@@ -45,6 +45,6 @@ try {
  if(requests.some(r=>!r.startsWith(base))) throw new Error('External network request');
  const wasm=await readFile(resolve(root,'target/b002/web/weft_frontend_probe_bg.wasm'));
  const summary={cases:cases.length,browser:await browser.version(),playwrightVersion,wasmBytes:wasm.length,wasmSha256:createHash('sha256').update(wasm).digest('hex'),jsGlueBytes:(await stat(resolve(root,'target/b002/web/weft_frontend_probe.js'))).size,imports:results.imports,initialMemoryBytes:results.initialMemoryBytes,finalMemoryBytes:results.finalMemoryBytes,networkRequests:requests,nodeGlobals:false,byteParity:true};
- await writeFile(resolve(root,'target/b002/browser-summary.json'),JSON.stringify(summary,null,2)+'\n');
+ await writeFile(resolve(root,process.env.WEFT_FRONTEND_BROWSER_SUMMARY || 'target/b002/browser-summary.json'),JSON.stringify(summary,null,2)+'\n');
  console.log(JSON.stringify(summary,null,2));
 } finally {await browser.close();}

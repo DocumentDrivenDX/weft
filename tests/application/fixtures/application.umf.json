@@ -1,0 +1,290 @@
+{
+  "umf": "0.7.0",
+  "id": "sales-fixture",
+  "vocabularies": {
+    "future.vendor": {
+      "version": "99.0.0"
+    }
+  },
+  "modules": [
+    {
+      "id": "sales",
+      "namespace": "sales",
+      "elements": [
+        {
+          "id": "customer",
+          "name": "Customer",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "customer-id"
+            },
+            {
+              "module": "sales",
+              "element": "customer-name"
+            },
+            {
+              "module": "sales",
+              "element": "customer-active"
+            },
+            {
+              "module": "sales",
+              "element": "nickname"
+            },
+            {
+              "module": "sales",
+              "element": "tags"
+            },
+            {
+              "module": "sales",
+              "element": "address"
+            }
+          ],
+          "extensions": {},
+          "keys": [
+            {
+              "id": "customer-pk",
+              "name": "customer-pk",
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "customer-id"
+                }
+              ],
+              "primary": true
+            }
+          ]
+        },
+        {
+          "id": "orders",
+          "name": "Orders",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "order-id"
+            },
+            {
+              "module": "sales",
+              "element": "order-customer"
+            },
+            {
+              "module": "sales",
+              "element": "order-total"
+            }
+          ],
+          "extensions": {},
+          "keys": [
+            {
+              "id": "order-pk",
+              "name": "order-pk",
+              "fields": [
+                {
+                  "module": "sales",
+                  "element": "order-id"
+                }
+              ],
+              "primary": true
+            }
+          ]
+        },
+        {
+          "id": "customer-id",
+          "name": "id",
+          "kind": "field",
+          "scalarType": "integer",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          }
+        },
+        {
+          "id": "customer-name",
+          "name": "name",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "customer-active",
+          "name": "active",
+          "kind": "field",
+          "scalarType": "boolean",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "order-customer",
+          "name": "customer_id",
+          "kind": "field",
+          "scalarType": "integer",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          }
+        },
+        {
+          "id": "order-total",
+          "name": "total",
+          "kind": "field",
+          "scalarType": "decimal",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "precision": 28,
+            "scale": 2
+          }
+        },
+        {
+          "id": "order-id",
+          "name": "id",
+          "kind": "field",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "scalarType": "integer"
+        },
+        {
+          "id": "nickname",
+          "name": "nickname",
+          "kind": "field",
+          "nullability": "absent-allowed",
+          "cardinality": "one",
+          "extensions": {},
+          "scalarType": "string"
+        },
+        {
+          "id": "tags",
+          "name": "tags",
+          "kind": "field",
+          "nullability": "required",
+          "cardinality": "array",
+          "extensions": {},
+          "itemType": {
+            "module": "sales",
+            "element": "tag-item"
+          }
+        },
+        {
+          "id": "tag-item",
+          "name": "item",
+          "kind": "field",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "scalarType": "string"
+        },
+        {
+          "id": "address",
+          "name": "address",
+          "kind": "field",
+          "nullability": "absent-allowed",
+          "cardinality": "one",
+          "extensions": {},
+          "references": [
+            {
+              "role": "record-type",
+              "module": "sales",
+              "element": "address-record"
+            }
+          ]
+        },
+        {
+          "id": "address-record",
+          "name": "Address",
+          "kind": "record",
+          "members": [
+            {
+              "module": "sales",
+              "element": "street"
+            },
+            {
+              "module": "sales",
+              "element": "zip"
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "street",
+          "name": "street",
+          "kind": "field",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {},
+          "scalarType": "string"
+        },
+        {
+          "id": "zip",
+          "name": "zip",
+          "kind": "field",
+          "nullability": "absent-allowed",
+          "cardinality": "one",
+          "extensions": {},
+          "scalarType": "string"
+        }
+      ],
+      "relationships": [
+        {
+          "id": "customer-orders",
+          "name": "orders",
+          "source": [
+            {
+              "module": "sales",
+              "element": "customer"
+            }
+          ],
+          "target": [
+            {
+              "module": "sales",
+              "element": "orders",
+              "key": "order-pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true,
+          "inverse": "customer"
+        }
+      ]
+    }
+  ],
+  "extensions": {
+    "future.vendor": {
+      "unknown": [
+        "keep",
+        {
+          "payload": "opaque"
+        }
+      ]
+    }
+  }
+}

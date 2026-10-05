@@ -1,0 +1,9 @@
+{
+  "authoredResults": 18,
+  "exactDecimals": true,
+  "bagCounts": true,
+  "duplicateEdges": true,
+  "inverseTraversal": true,
+  "absenceAndEmptyList": true,
+  "nativeExecution": false
+}

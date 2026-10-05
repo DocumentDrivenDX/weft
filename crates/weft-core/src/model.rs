@@ -18,7 +18,7 @@ pub struct ModuleInput {
 #[derive(Debug, Clone)]
 pub struct Catalog {
     pub inputs: Vec<ModuleInput>,
-    documents: Vec<Value>,
+    pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
 pub struct Record {
@@ -199,67 +199,71 @@ impl Catalog {
             )
             .at(&name.span)
         })?;
-        let err = || {
-            Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported")
-                .at(&name.span)
-        };
-        if field["kind"] != "field"
-            || field["nullability"] != "required"
-            || field["cardinality"] != "one"
-            || field.get("itemType").is_some()
-            || field.get("recordType").is_some()
-            || field["references"]
-                .as_array()
-                .is_some_and(|r| !r.is_empty())
-        {
-            return Err(err());
-        }
-        let family = match field["scalarType"].as_str() {
-            Some("boolean") => Family::Boolean,
-            Some("string") => Family::String,
-            Some("integer") => Family::Integer,
-            Some("decimal") => Family::Decimal,
-            _ => return Err(err()),
-        };
-        let facets = field.get("facets").cloned().unwrap_or(json!({}));
-        let allowed: &[&str] = match family {
-            Family::Integer => &["integerWidth"],
-            Family::Decimal => &["precision", "scale"],
-            _ => &[],
-        };
-        if facets
-            .as_object()
-            .unwrap()
-            .keys()
-            .any(|k| !allowed.contains(&k.as_str()))
-        {
-            return Err(err());
-        }
-        if family == Family::Integer {
-            let width = &facets["integerWidth"];
-            let bits = width["bits"].as_u64().ok_or_else(err)?;
-            if !(1..=64).contains(&bits)
-                || !width["signed"].is_boolean()
-                || width.as_object().is_none_or(|m| m.len() != 2)
-            {
-                return Err(err());
-            }
-        }
-        if family == Family::Decimal {
-            let p = facets["precision"].as_u64().ok_or_else(err)?;
-            let s = facets["scale"].as_u64().ok_or_else(err)?;
-            if !(1..=28).contains(&p) || s > p {
-                return Err(err());
-            }
-        }
+        let logical_type = scalar_type(field, name)?;
         Ok((
             identity,
-            LogicalType {
-                family,
-                facets,
-                nullable: false,
-            },
+            logical_type,
             field["name"].as_str().unwrap().into(),
         ))
     }
+}
+
+pub(crate) fn scalar_type(field: &Value, name: &Name) -> Result<LogicalType> {
+    let err = || {
+        Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported").at(&name.span)
+    };
+    if field["kind"] != "field"
+        || field["nullability"] != "required"
+        || field["cardinality"] != "one"
+        || field.get("itemType").is_some()
+        || field.get("recordType").is_some()
+        || field["references"]
+            .as_array()
+            .is_some_and(|r| !r.is_empty())
+    {
+        return Err(err());
+    }
+    let family = match field["scalarType"].as_str() {
+        Some("boolean") => Family::Boolean,
+        Some("string") => Family::String,
+        Some("integer") => Family::Integer,
+        Some("decimal") => Family::Decimal,
+        _ => return Err(err()),
+    };
+    let facets = field.get("facets").cloned().unwrap_or(json!({}));
+    let allowed: &[&str] = match family {
+        Family::Integer => &["integerWidth"],
+        Family::Decimal => &["precision", "scale"],
+        _ => &[],
+    };
+    if facets
+        .as_object()
+        .unwrap()
+        .keys()
+        .any(|k| !allowed.contains(&k.as_str()))
+    {
+        return Err(err());
+    }
+    if family == Family::Integer {
+        let width = &facets["integerWidth"];
+        let bits = width["bits"].as_u64().ok_or_else(err)?;
+        if !(1..=64).contains(&bits)
+            || !width["signed"].is_boolean()
+            || width.as_object().is_none_or(|m| m.len() != 2)
+        {
+            return Err(err());
+        }
+    }
+    if family == Family::Decimal {
+        let p = facets["precision"].as_u64().ok_or_else(err)?;
+        let s = facets["scale"].as_u64().ok_or_else(err)?;
+        if !(1..=28).contains(&p) || s > p {
+            return Err(err());
+        }
+    }
+    Ok(LogicalType {
+        family,
+        facets,
+        nullable: false,
+    })
 }

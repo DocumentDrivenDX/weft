@@ -1,0 +1,13 @@
+{
+  "customer": [
+    {"customer-id":"1","customer-name":"Alice","customer-active":"true","nickname":{"state":"absent"},"tags":["x","x"],"address":{"state":"value","value":{"street":"Main","zip":{"state":"absent"}}}},
+    {"customer-id":"2","customer-name":"Bob","customer-active":"false","nickname":{"state":"value","value":""},"tags":[],"address":{"state":"absent"}},
+    {"customer-id":"3","customer-name":"isolated","customer-active":"true","nickname":{"state":"value","value":"I"},"tags":[""],"address":{"state":"absent"}}
+  ],
+  "orders": [
+    {"order-id":"1","order-customer":"1","order-total":"9007199254740993.12"},
+    {"order-id":"2","order-customer":"1","order-total":"0.10"},
+    {"order-id":"3","order-customer":"2","order-total":"1.00"}
+  ],
+  "edges": [["1","1"],["1","2"],["1","2"],["2","3"]]
+}

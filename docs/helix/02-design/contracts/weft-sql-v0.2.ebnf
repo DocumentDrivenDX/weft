@@ -1,0 +1,24 @@
+(* Weft SQL 0.2.0. Lexical names/literals retain CONTRACT-001 0.1 rules.
+   All names resolve against supplied modules. This grammar alone cannot prove
+   profile acceptance. Bounds are integer literals from 1 through 1000. *)
+query = "SELECT", projection, {",", projection}, "FROM", source,
+        { ["INNER"], "JOIN", source, "ON", equality, {"AND", equality} },
+        ["WHERE", predicate, {"AND", predicate}],
+        ["GROUP", "BY", column, {",", column}],
+        ["ORDER", "BY", column, ["ASC"], {",", column, ["ASC"]}],
+        ["LIMIT", bound], [";"] ;
+projection = ( column | "SUM", "(", column, ")" | "COUNT", "(", "*", ")"
+             | "RELATED_KEYS", "(", column, ",", bound, ")" ), ["AS", identifier]
+             | identifier, ".", "*" ;
+source = [identifier, "."], identifier, [["AS"], identifier] ;
+column = identifier, ".", identifier ;
+parameter = ":", unquoted_identifier ;
+value = literal | parameter | column ;
+equality = column, "=", column ;
+predicate = column, ("=" | ">"), value
+          | "(", column, {",", column}, ")", ">", "(", value, {",", value}, ")"
+          | "HAS_RELATED", "(", column, ",", "KEY", "(", key_value, {",", key_value}, ")", ")" ;
+key_value = literal | parameter ;
+bound = positive_integer_literal ;
+(* Tuple equality, DESC, OFFSET, OR, comments, outer joins and DISTINCT remain
+   excluded. Named profiles further restrict constructs and require model checks. *)
