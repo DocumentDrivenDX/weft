@@ -204,6 +204,68 @@ impl Graph {
         }
         Ok(())
     }
+    /// Match every record-member presence artifact to its separately admitted
+    /// original definition and authored Field. Keys are original artifact pointers.
+    pub fn verify_record_presence(
+        &self,
+        definitions: &BTreeMap<String, crate::presence_definition::Definition>,
+    ) -> Result<()> {
+        let nodes = self.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Missing graph nodes"))?;
+        let by_id: BTreeMap<_, _> = nodes
+            .iter()
+            .enumerate()
+            .filter_map(|(index, node)| node["nodeId"].as_str().map(|id| (id, (index, node))))
+            .collect();
+        let mut used = BTreeSet::new();
+        for (index, node) in nodes
+            .iter()
+            .enumerate()
+            .filter(|(_, node)| node["shape"]["kind"] == "record")
+        {
+            let members = node["shape"]["members"]
+                .as_array()
+                .ok_or_else(|| fail("Missing record members"))?;
+            for (member_index, member) in members.iter().enumerate() {
+                let path =
+                    format!("/nodes/{index}/shape/members/{member_index}/presenceDefinition");
+                let definition = definitions.get(&path).ok_or_else(|| {
+                    fail("Record member lacks selected original presence meaning")
+                })?;
+                let (child_index, child) = by_id
+                    .get(
+                        member["valueNodeId"]
+                            .as_str()
+                            .ok_or_else(|| fail("Invalid member reference"))?,
+                    )
+                    .ok_or_else(|| fail("Missing record member value node"))?;
+                let presence = checked_json(&definition.original_json)
+                    .map_err(|_| fail("Original presence JSON refused"))?;
+                if self
+                    .artifacts
+                    .get(&path)
+                    .is_none_or(|bytes| bytes != definition.original_json.as_bytes())
+                    || presence["acceptedDefinition"] != child["authoredDefinition"]
+                    || self
+                        .artifacts
+                        .get(&format!("/nodes/{child_index}/authoredDefinition"))
+                        .is_none_or(|bytes| bytes != &definition.accepted_definition)
+                {
+                    return Err(fail(
+                        "Record member presence differs from original authored field",
+                    ));
+                }
+                used.insert(path);
+            }
+        }
+        if used.len() != definitions.len() {
+            return Err(fail(
+                "Unrelated record presence definitions cannot enter graph admission",
+            ));
+        }
+        Ok(())
+    }
     pub fn parse(raw: &str, profile: &Value, accepted: &[u8]) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -593,6 +655,58 @@ mod tests {
         let mut wrong = value;
         wrong["nodes"][0]["codecDefinition"] = authored;
         assert!(parse(&wrong).unwrap().verify_leaf_codecs(&codecs).is_err());
+    }
+    #[test]
+    fn record_presence_is_bound_to_exact_original_member_and_field() {
+        use crate::presence_definition::Definition;
+        let mut value = fixture();
+        let schema: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/upstream/presence-definition.schema.json"
+        ))
+        .unwrap();
+        let mut presence = json!({});
+        for (key, rule) in schema["properties"].as_object().unwrap() {
+            if let Some(constant) = rule.get("const") {
+                presence[key] = constant.clone();
+            }
+        }
+        presence["profile"] = value["profile"].clone();
+        presence["acceptedDefinition"] = value["nodes"][0]["authoredDefinition"].clone();
+        let definition =
+            Definition::parse(&presence.to_string(), &presence["profile"], b"{}").unwrap();
+        let bytes = definition.original_json.as_bytes();
+        value["nodes"][1]["shape"]["members"][0]["presenceDefinition"] = json!({"identity":"selected-presence","bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+        let path = "/nodes/1/shape/members/0/presenceDefinition";
+        let definitions = BTreeMap::from([(path.into(), definition)]);
+        parse(&value)
+            .unwrap()
+            .verify_record_presence(&definitions)
+            .unwrap();
+        assert!(parse(&value)
+            .unwrap()
+            .verify_record_presence(&BTreeMap::new())
+            .is_err());
+        let mut wrong = value.clone();
+        wrong["nodes"][0]["authoredDefinition"]["identity"] = json!("foreign-field");
+        assert!(parse(&wrong)
+            .unwrap()
+            .verify_record_presence(&definitions)
+            .is_err());
+        let mut wrong = value.clone();
+        wrong["nodes"][1]["shape"]["members"][0]["presenceDefinition"] =
+            wrong["acceptedDefinition"].clone();
+        assert!(parse(&wrong)
+            .unwrap()
+            .verify_record_presence(&definitions)
+            .is_err());
+        let mut misplaced = BTreeMap::new();
+        let definition =
+            Definition::parse(&presence.to_string(), &presence["profile"], b"{}").unwrap();
+        misplaced.insert("/unrelated/presence".into(), definition);
+        assert!(parse(&value)
+            .unwrap()
+            .verify_record_presence(&misplaced)
+            .is_err());
     }
     fn fixture() -> Value {
         let artifact = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});

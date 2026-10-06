@@ -1071,3 +1071,20 @@ refuses those IDs. Unknown obligations, foreign node/profile/value and corrupted
 embedded join digest refuse. All 45 Rust tests pass. Inventory-byte interpretation,
 codec/native procedure qualification and actual SQL integration remain separate
 B-005 work; this correspondence API grants no production compatibility.
+
+### Recursive record-member presence correspondence (2026-10-06)
+
+Value-graph admission now connects every record member's original presence
+artifact to a separately admitted presence definition and the referenced authored
+Field. Exact original presence JSON bytes and complete accepted authored artifact
+identity/bytes must match. Missing, misplaced or unrelated selections refuse.
+Indexed node lookup keeps member correspondence finite without repeated graph
+scans or cyclic expansion.
+
+A cyclic record admits its exact selected presence definition. Controls refuse
+missing registration, foreign authored artifact identity, replaced presence bytes
+and a definition registered at another member path. All 46 Rust tests pass.
+This binds meaning custody only; field availability and native-null capability
+remain separately interpreted, and no native absence/visibility enforcement or
+SQL integration is inferred. The candidate retains synthetic definitions until
+its registered real-profile admission is connected.
