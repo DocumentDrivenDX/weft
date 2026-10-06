@@ -119,6 +119,21 @@ impl RecordAdmission {
     pub fn identity(&self) -> &Identity {
         &self.owner
     }
+    pub fn verify_property(
+        &self,
+        property: &crate::property_definition::PropertyAdmission,
+    ) -> Result<()> {
+        property.verify_binding_basis(&self.binding_sha256)?;
+        if property.owner != self.owner
+            || property.owner_catalog_id != self.catalog_id
+            || property.home.owner_mapping() != self.mapping
+        {
+            return Err(fail(
+                "Property home differs from independently admitted Record source",
+            ));
+        }
+        Ok(())
+    }
 }
 /// Prepare every scan, including fieldless counts. Property/value/comparator
 /// and host obligations remain separately admitted. Parameters commit atomically.
@@ -307,6 +322,27 @@ mod tests {
         let mut parameters = Parameters::default();
         let sources = lower(&context, &records, &mut parameters).unwrap();
         assert_eq!(sources.len(), 1);
+        let mut fieldless_parameters = Parameters::default();
+        let empty_properties = BTreeMap::new();
+        let prepared = crate::registered_access::prepare(
+            &context,
+            &records,
+            &empty_properties,
+            &BTreeMap::new(),
+            &mut fieldless_parameters,
+        )
+        .unwrap();
+        assert_eq!(prepared.scans.len(), 1);
+        assert!(prepared.accesses.is_empty());
+        assert!(prepared
+            .scans
+            .values()
+            .next()
+            .unwrap()
+            .structural_check_sql
+            .is_empty());
+        assert_eq!(fieldless_parameters.into_slots().len(), 1);
+
         let source = &sources[&plan.source.occurrence];
         assert!(source.sql.ends_with(".\"object\" AS \"weft_scan_0\""));
         assert!(!source.sql.contains("props"));

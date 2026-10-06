@@ -8,6 +8,10 @@ assert len(emission['structuralChecks']) == 2
 assert emission['namespace'] == 'pg_temp'
 quote = lambda s: "'" + s.replace("'", "''") + "'"
 values = ','.join(quote(p['value']) for p in emission['parameters'])
+for p in emission['parameters']:
+    assert p['origin']['use'] in ('admitted-owner-scan','admitted-jsonb-member')
+    assert p['logicalType']['family'] == ('integer' if p['origin']['use'] == 'admitted-owner-scan' else 'string')
+types = ','.join('int4' if p['origin']['use'] == 'admitted-owner-scan' else 'text' for p in emission['parameters'])
 results = []
 cases = [('empty',[],None), ('valid-bag',['A','A','','é ','é'],None)]
 cases += [(name,[],root) for name,root in [('array','\'[]\''),('json-null','\'null\''),('number','\'42\''),('sql-null','NULL')]]
@@ -18,9 +22,9 @@ for name, names, invalid in cases:
     sql += "INSERT INTO object VALUES (100,-2,'[]');\n"
     if invalid is not None: sql += f'INSERT INTO object VALUES (200,-1,{invalid});\n'
     for i,check in enumerate(emission['structuralChecks']):
-        sql += f'PREPARE check_{i}(int4,text,int4,text) AS {check}; EXECUTE check_{i}({values});\n'
+        sql += f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({values});\n'
     if invalid is None:
-        sql += f"PREPARE query(int4,text,int4,text) AS {emission['sql']}; EXECUTE query({values});\n"
+        sql += f"PREPARE query({types}) AS {emission['sql']}; EXECUTE query({values});\n"
     sql += 'ROLLBACK;\n'
     output = subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode()
     rows = list(csv.reader(io.StringIO(output)))

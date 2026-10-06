@@ -187,6 +187,16 @@ pub fn lower<'a>(
     requests: &[Request],
     parameters: &mut Parameters,
 ) -> Result<Vec<Access<'a>>> {
+    lower_with_owners(context, properties, comparators, requests, None, parameters)
+}
+fn lower_with_owners<'a>(
+    context: &Context<'_>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
+    comparators: &BTreeMap<String, Definition>,
+    requests: &[Request],
+    owners: Option<&BTreeMap<String, std::sync::Arc<crate::property_definition::OwnerSource>>>,
+    parameters: &mut Parameters,
+) -> Result<Vec<Access<'a>>> {
     admit_context(context, properties, comparators)?;
     let reads = self::requests(context.plan)?;
     let mut scans = BTreeMap::new();
@@ -262,7 +272,13 @@ pub fn lower<'a>(
             .ok_or_else(|| fail("Access request lacks original owned property"))?;
         let alias = &aliases[&request.scan];
         let mapping = property.home.owner_mapping();
-        let owner_source = if let Some((original_mapping, original_id, source)) =
+        let owner_source = if let Some(owners) = owners {
+            std::sync::Arc::clone(
+                owners
+                    .get(&request.scan)
+                    .ok_or_else(|| fail("Missing independent owner source"))?,
+            )
+        } else if let Some((original_mapping, original_id, source)) =
             owner_sources.get(&request.scan)
         {
             if original_mapping != &mapping || original_id != &property.owner_catalog_id {
@@ -320,6 +336,59 @@ pub fn lower<'a>(
     }
     *parameters = staged;
     Ok(result)
+}
+/// Complete Record/property source preparation. Execution and value-result
+/// realization remain host/backend obligations, independently of this plan.
+#[derive(Debug)]
+pub struct Prepared<'a> {
+    pub scans: BTreeMap<String, PhysicalScan>,
+    pub accesses: Vec<Access<'a>>,
+}
+pub fn prepare<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
+    comparators: &BTreeMap<String, Definition>,
+    parameters: &mut Parameters,
+) -> Result<Prepared<'a>> {
+    let mut staged = parameters.clone();
+    let owners: BTreeMap<_, _> = crate::record_definition::lower(context, records, &mut staged)?
+        .into_iter()
+        .map(|(scan, source)| (scan, std::sync::Arc::new(source)))
+        .collect();
+    for (owner, identity) in crate::comparator_requirements::collect_reads(context.plan)? {
+        let record_key =
+            serde_json::to_string(&owner).map_err(|_| fail("Record identity encoding refused"))?;
+        let record = records
+            .get(&record_key)
+            .ok_or_else(|| fail("Read lacks independent Record admission"))?;
+        let property = properties
+            .get(&registration_key(&owner, &identity))
+            .ok_or_else(|| fail("Read lacks original property admission"))?;
+        record.verify_property(property)?;
+    }
+    let selected = requests(context.plan)?;
+    let accesses = lower_with_owners(
+        context,
+        properties,
+        comparators,
+        &selected,
+        Some(&owners),
+        &mut staged,
+    )?;
+    let scans = owners
+        .into_iter()
+        .map(|(occurrence, owner)| {
+            let locations: Vec<_> = accesses
+                .iter()
+                .filter(|access| access.scan == occurrence)
+                .map(|access| &access.location)
+                .collect();
+            (occurrence, physical_scan(&owner, &locations))
+        })
+        .collect();
+    *parameters = staged;
+    Ok(Prepared { scans, accesses })
 }
 /// Physical scan assembly, with integrity prerequisites deliberately separate.
 #[derive(Debug)]

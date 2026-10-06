@@ -1814,3 +1814,35 @@ recursive decoding/result publication and adopted Truss profile remain separate
 before B-005 acceptance. The captured count is a source component control, not
 full public compiler/result ABI execution. Python/browser packages were not
 rebuilt, and no story criterion or merge gate is closed.
+
+### Atomic combined Record/property preparation (2026-10-06)
+
+One preparation API now admits every independent Record source, checks selected
+property homes against that original owner/catalog/mapping/binding cut, and
+prepares field accesses using the Record sources. Self-join occurrences share
+their own source across properties; no second owner-source parameter is allocated.
+Fieldless count scans are retained with no property access or inferred property
+integrity checks. Structural prerequisites remain owner-wide and separate from
+result selection. All parameters commit only after Record, property and comparator
+admission and source assembly succeed.
+
+Extended controls check projection source reuse, two self-join source/member
+pairs, mismatched owning Record, fieldless count preparation and comparator
+refusal after both Record sources are staged with zero parameter leakage.
+All 63 crate tests pass. An optional WEFT_COMBINED_CAPTURE emits the actual
+combined self-join query, owner-wide checks and reordered unchanged slots.
+[Captured fixture](../../../../tests/truss-postgresql/fixtures/combined-preparation-emission.json)
+passes all six PostgreSQL 17.9 cases through the
+[native harness](../../../../tests/truss-postgresql/owner-preflight-native.py).
+The harness derives int4/text prepare domains from original parameter origins
+and checks their logical families, preserving both previous and new allocation
+orders. Empty/valid exact bags pass; array/JSON-null/number/SQL-null owned roots
+are detected before the fixture runs its result query. [Receipt](B-005-combined-preparation-native.json)
+pins all changed preparation sources, capture, harness and native observations.
+
+This combines preparation components, not the full public backend/result bridge.
+The native self-join callback remains the explicit synthetic string-equality
+control. Source/native domain and recursive decoder realization, native visibility,
+full host enforcement and adopted Truss profile qualification remain open before
+B-005 acceptance. Python/browser packages were not rebuilt; no story criterion
+or final merge gate is closed.

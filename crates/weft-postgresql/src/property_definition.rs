@@ -1102,6 +1102,80 @@ mod tests {
             binding_value: &admitted.value,
             selection: &selection,
         };
+        let record_index = admitted.value["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|entity| entity["logical"] == json!(record.identity))
+            .unwrap();
+        let record_source = crate::record_definition::RecordAdmission::admit(
+            &admitted,
+            record_index,
+            &catalog,
+            crate::record_definition::Selection {
+                inventory: &inventory,
+                relation_identity: "object-table",
+                discriminator_identity: "object-type",
+                relations: &relations,
+                columns: &columns,
+            },
+        )
+        .unwrap();
+        record_source
+            .verify_property(&properties[&registration])
+            .unwrap();
+        let record_registry = BTreeMap::from([(
+            serde_json::to_string(record_source.identity()).unwrap(),
+            record_source,
+        )]);
+        let mut combined_parameters = crate::Parameters::default();
+        let combined = crate::registered_access::prepare(
+            &context,
+            &record_registry,
+            &properties,
+            &BTreeMap::new(),
+            &mut combined_parameters,
+        )
+        .unwrap();
+        assert_eq!(combined.scans.len(), 1);
+        assert_eq!(combined.accesses.len(), 1);
+        assert_eq!(combined_parameters.into_slots().len(), 2);
+        assert_eq!(
+            combined.scans.values().next().unwrap().source.sql,
+            combined.accesses[0].owner_source.sql
+        );
+        assert_eq!(
+            combined
+                .scans
+                .values()
+                .next()
+                .unwrap()
+                .structural_check_sql
+                .len(),
+            1
+        );
+        let other_index = admitted.value["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|entity| entity["logical"] != json!(record.identity))
+            .unwrap();
+        let other_record = crate::record_definition::RecordAdmission::admit(
+            &admitted,
+            other_index,
+            &catalog,
+            crate::record_definition::Selection {
+                inventory: &inventory,
+                relation_identity: "object-table",
+                discriminator_identity: "object-type",
+                relations: &relations,
+                columns: &columns,
+            },
+        )
+        .unwrap();
+        assert!(other_record
+            .verify_property(&properties[&registration])
+            .is_err());
         crate::comparator_requirements::admit_context(&context, &properties, &comparisons).unwrap();
         crate::comparator_requirements::admit_context(&context, &properties, &BTreeMap::new())
             .unwrap();
@@ -1202,6 +1276,90 @@ mod tests {
             plan: weft_core::backend::Plan::V01(&self_plan),
             ..context
         };
+        let mut combined_self_parameters = crate::Parameters::default();
+        let combined_self = crate::registered_access::prepare(
+            &self_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            &mut combined_self_parameters,
+        )
+        .unwrap();
+        assert_eq!(combined_self.scans.len(), 2);
+        assert_eq!(combined_self.accesses.len(), 2);
+        if let Ok(path) = std::env::var("WEFT_COMBINED_CAPTURE") {
+            let input = match &self_plan.root {
+                weft_core::ir::Node::Project { input, .. } => input.as_ref(),
+                _ => panic!("fixture project"),
+            };
+            let assembled = crate::relational::assemble_sources(
+                input,
+                &mut combined_self_parameters,
+                |node, _| {
+                    if let weft_core::ir::Node::Scan { occurrence, .. } = node {
+                        Ok(combined_self.scans[occurrence].source.clone())
+                    } else {
+                        panic!("scan")
+                    }
+                },
+                |expression, parameters| {
+                    crate::registered_access::render_expression(
+                        expression,
+                        &combined_self.accesses,
+                        parameters,
+                        |node, operands, access, _| {
+                            Ok(match node {
+                                weft_core::ir::Expression::Field { .. } => access
+                                    .unwrap()
+                                    .scalar_storage
+                                    .as_ref()
+                                    .unwrap()
+                                    .carrier
+                                    .clone(),
+                                weft_core::ir::Expression::Equal { .. } => {
+                                    format!("({} = {})", operands[0], operands[1])
+                                }
+                                _ => panic!("fixture expression"),
+                            })
+                        },
+                    )
+                },
+            )
+            .unwrap();
+            let sql = format!(
+                "SELECT {} AS left_name, {} AS right_name FROM {} WHERE {}",
+                combined_self.accesses[0]
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier,
+                combined_self.accesses[1]
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier,
+                assembled.sql,
+                assembled.filters.join(" AND ")
+            );
+            let checks: Vec<_> = combined_self
+                .scans
+                .values()
+                .flat_map(|scan| scan.structural_check_sql.iter())
+                .collect();
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":sql,"structuralChecks":checks,"parameters":combined_self_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"]})).unwrap()).unwrap();
+        }
+
+        assert_eq!(combined_self_parameters.into_slots().len(), 4);
+        let mut refused_combined = crate::Parameters::default();
+        assert!(crate::registered_access::prepare(
+            &self_context,
+            &record_registry,
+            &properties,
+            &BTreeMap::new(),
+            &mut refused_combined
+        )
+        .is_err());
+        assert!(refused_combined.into_slots().is_empty());
         let mut self_parameters = crate::Parameters::default();
         let self_accesses = crate::registered_access::lower(
             &self_context,

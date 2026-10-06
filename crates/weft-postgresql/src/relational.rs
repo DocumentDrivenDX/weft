@@ -4,7 +4,7 @@ use weft_core::{
     error::{Diagnostic, Result},
     ir::{Expression, Node},
 };
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Source {
     pub sql: String,
     pub filters: Vec<String>,
