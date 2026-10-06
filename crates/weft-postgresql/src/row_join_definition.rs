@@ -447,16 +447,16 @@ impl Definition {
     }
 }
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use serde_json::json;
-    struct Fixture {
-        value: Value,
-        artifacts: BTreeMap<String, OriginalArtifact>,
-        relations: BTreeMap<String, String>,
-        columns: BTreeMap<String, Column>,
+    pub(crate) struct Fixture {
+        pub(crate) value: Value,
+        pub(crate) artifacts: BTreeMap<String, OriginalArtifact>,
+        pub(crate) relations: BTreeMap<String, String>,
+        pub(crate) columns: BTreeMap<String, Column>,
     }
-    fn fixture(edge: bool) -> Fixture {
+    pub(crate) fn fixture(edge: bool) -> Fixture {
         let bundle: Value = serde_json::from_str(include_str!(
             "../../../tests/truss-postgresql/upstream/row-join-schema-bundle.json"
         ))
@@ -568,7 +568,7 @@ mod tests {
             columns,
         }
     }
-    fn parse(value: &Value, f: &Fixture) -> Result<Definition> {
+    pub(crate) fn parse(value: &Value, f: &Fixture) -> Result<Definition> {
         Definition::parse(
             &value.to_string(),
             Selection {

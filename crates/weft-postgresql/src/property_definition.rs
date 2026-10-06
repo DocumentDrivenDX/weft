@@ -1416,6 +1416,172 @@ mod tests {
         )
         .is_err());
 
+        // Positive native-home coupling using the same original UMF field.
+        let mut row_fixture = crate::row_join_definition::tests::fixture(false);
+        row_fixture.value["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+        row_fixture
+            .artifacts
+            .get_mut("layoutInventory")
+            .unwrap()
+            .identity = inventory.identity.clone();
+        let row_join =
+            crate::row_join_definition::tests::parse(&row_fixture.value, &row_fixture).unwrap();
+        let row_template: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/binding-row.json"
+        ))
+        .unwrap();
+        let mut row_home: Value = serde_json::from_slice(
+            &STANDARD
+                .decode(
+                    row_template["properties"][0]["homeDefinition"]["bytesBase64"]
+                        .as_str()
+                        .unwrap(),
+                )
+                .unwrap(),
+        )
+        .unwrap();
+        row_home["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+        row_home["ownerCatalogId"] = binding["properties"][index]["ownerTypeId"].clone();
+        row_home["propertyCatalogId"] = binding["properties"][index]["propertyId"].clone();
+        row_home["valueDefinition"] = binding["properties"][index]["valueDefinition"].clone();
+        row_home["presenceDefinition"] = binding["properties"][index]["presenceDefinition"].clone();
+        row_home["joinProfile"] = row_fixture.value["profile"].clone();
+        row_home["joinDefinition"] =
+            artifact("selected-row-join", row_join.original_json.as_bytes());
+        for (role, key) in [
+            ("state", "stateRelationPhysicalIdentity"),
+            ("node", "nodeRelationPhysicalIdentity"),
+            ("scalar", "scalarRelationPhysicalIdentity"),
+        ] {
+            row_home[key] = row_fixture.value[role]["relationPhysicalIdentity"].clone();
+        }
+        let row_obligations = BTreeSet::from([row_home["storedDomainObligation"]
+            .as_str()
+            .unwrap()
+            .to_string()]);
+        let mut row_binding = binding.clone();
+        row_binding["properties"][index]["home"] = json!("row");
+        row_binding["properties"][index]["homeDefinition"] =
+            artifact("selected-row-home", row_home.to_string().as_bytes());
+        let row_json = row_binding.to_string();
+        let row_admission = Admission::parse(&row_json, &input.profile).unwrap();
+        let row_property = admit_property(
+            &row_admission,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            PhysicalSelection {
+                profile: &pin,
+                inventory: &inventory,
+                relations: &row_fixture.relations,
+                columns: &row_fixture.columns,
+                row_join: Some(&row_join),
+                obligations: &row_obligations,
+                edge_association: None,
+            },
+        )
+        .unwrap();
+        let row_properties = BTreeMap::from([(registration.clone(), row_property)]);
+        let row_input = weft_core::backend::BindingInput {
+            profile: input.profile.clone(),
+            sha256: sha256(row_json.as_bytes()),
+            json: row_json,
+        };
+        let row_context = weft_core::backend::Context {
+            binding: &row_input,
+            binding_value: &row_binding,
+            ..context
+        };
+        let mut row_parameters = crate::Parameters::default();
+        let row_accesses = crate::registered_access::lower_plan(
+            &row_context,
+            &row_properties,
+            &comparisons,
+            &mut row_parameters,
+        )
+        .unwrap();
+        assert_eq!(row_accesses.len(), 1);
+        let codec = row_properties[&registration]
+            .value
+            .graph
+            .artifacts
+            .get("/nodes/0/codecDefinition")
+            .unwrap();
+        let codec_hex: String = codec.iter().map(|byte| format!("{byte:02x}")).collect();
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_ROW_CAPTURE") {
+            let crate::registered_access::Location::Row(location) = &row_accesses[0].location
+            else {
+                panic!("native fixture home")
+            };
+            let scan = crate::registered_access::scan_source(
+                match &plan.root {
+                    weft_core::ir::Node::Project { input, .. } => input,
+                    _ => panic!("fixture projection"),
+                },
+                &row_accesses,
+            )
+            .unwrap();
+            let sql = format!(
+                "SELECT {} FROM {} WHERE {}",
+                location
+                    .scalar_observation()
+                    .custody_projection()
+                    .join(", "),
+                scan.source.sql,
+                scan.source.filters.join(" AND ")
+            );
+            std::fs::write(
+                path,
+                serde_json::to_vec_pretty(&json!({
+                    "sql":sql,"parameters":row_parameters.clone().into_slots(),"codecHex":codec_hex,
+                    "ownerTypeId":row_properties[&registration].owner_catalog_id,
+                    "propertyId":row_properties[&registration].property_catalog_id,
+                }))
+                .unwrap(),
+            )
+            .unwrap();
+        }
+        let cells = [
+            Some("true"),
+            Some("string"),
+            Some("é  "),
+            None,
+            None,
+            None,
+            Some(codec_hex.as_str()),
+            Some("fe00"),
+        ];
+        let mut native_budget = crate::row_custody::Budget {
+            remaining_bytes: 16384,
+            remaining_cells: 16,
+        };
+        let selected_native = crate::row_custody::admit_property(
+            &row_properties[&registration],
+            &row_accesses[0],
+            &cells,
+            &mut native_budget,
+        )
+        .unwrap();
+        assert!(
+            matches!(selected_native.observation,crate::row_custody::Observation::Scalar { payload:crate::row_custody::Payload::Text(ref text),ref source_bytes,.. } if text=="é  " && source_bytes==&[254,0])
+        );
+        assert_eq!(
+            selected_native.presence_bytes,
+            row_properties[&registration]
+                .value
+                .presence
+                .original_json
+                .as_bytes()
+        );
+        assert!(crate::row_custody::admit_property(
+            &properties[&registration],
+            &row_accesses[0],
+            &cells,
+            &mut native_budget
+        )
+        .is_err());
+
         let changed_admission = Admission::parse(&changed_input.json, &input.profile).unwrap();
         let changed_property = admit_property(
             &changed_admission,
