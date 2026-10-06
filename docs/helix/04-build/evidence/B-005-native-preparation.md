@@ -1216,3 +1216,18 @@ before success. All 52 Rust tests pass; existing test functions gained these
 controls without inflating the function count. Registry domain/evidence payloads
 remain synthetic. This gate is not yet wired into public candidate lowering and
 does not establish native codecs, runtime authority or profile adoption.
+
+### Admitted home selector custody (2026-10-06)
+
+Composed home admission retains the verified props relation, props column and
+discriminator column as PostgreSQL Identifier values alongside the literal member
+and owner kind. Row admission retains the complete original admitted join JSON
+bytes alongside access mode and owner kind. Lowering can consume this captured
+selection without fetching names from a changed registry after admission. The
+original inventory and host/native qualification requirements remain unchanged.
+
+The authored Customer.name integration checks exact quoted selectors and literal
+property member. All 52 PostgreSQL crate tests pass (31 library, four binding,
+17 compiler); no public candidate behavior or embedding ABI changed. Captured
+selectors are an integration foundation, not emitted real-profile SQL or native
+profile qualification.

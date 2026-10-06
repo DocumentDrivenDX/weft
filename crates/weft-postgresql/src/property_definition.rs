@@ -38,10 +38,14 @@ pub enum HomeAdmission {
     Props {
         member: String,
         record_kind: crate::row_join_definition::RecordKind,
+        relation: crate::Identifier,
+        props_column: crate::Identifier,
+        discriminator_column: crate::Identifier,
     },
     Row {
         access: String,
         record_kind: crate::row_join_definition::RecordKind,
+        original_join_json: String,
     },
 }
 #[derive(Debug)]
@@ -117,6 +121,7 @@ pub fn admit_home(
         return Ok(HomeAdmission::Row {
             access: home["access"].as_str().unwrap().into(),
             record_kind,
+            original_join_json: join.original_json.clone(),
         });
     }
     if selected.row_join.is_some() {
@@ -162,6 +167,9 @@ pub fn admit_home(
     Ok(HomeAdmission::Props {
         member: home["memberName"].as_str().unwrap().into(),
         record_kind,
+        relation: crate::Identifier::new(relation_name)?,
+        props_column: crate::Identifier::new("props")?,
+        discriminator_column: crate::Identifier::new(discriminator)?,
     })
 }
 pub fn admit_property(
@@ -556,7 +564,24 @@ mod tests {
             physical(),
         )
         .unwrap();
-        assert!(matches!(property.home, HomeAdmission::Props { .. }));
+        match &property.home {
+            HomeAdmission::Props {
+                relation,
+                props_column,
+                discriminator_column,
+                member,
+                ..
+            } => {
+                assert_eq!(relation.sql(), "\"object\"");
+                assert_eq!(props_column.sql(), "\"props\"");
+                assert_eq!(discriminator_column.sql(), "\"type_id\"");
+                assert_eq!(
+                    member,
+                    binding["properties"][index]["propertyId"].as_str().unwrap()
+                );
+            }
+            _ => panic!("fixture props home"),
+        }
         assert_eq!(property.owner, record.identity);
         assert_eq!(property.identity, member.identity);
         let mut foreign = binding.clone();
