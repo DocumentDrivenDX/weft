@@ -1350,3 +1350,20 @@ and WEFT_ROW_LOCATION_CAPTURE set to an explicit file; run the Python harness
 with that file against owned weft-b005-pg17. All 54 crate tests also pass without
 the capture environment. The twenty executions are separate physical-component
 evidence, not additional application story acceptances or production claims.
+
+### Native scalar observation custody (2026-10-06)
+
+Captured row-root locations now expose raw scalar observations for the registered
+decoder: payload presence/kind, native text and boolean, numeric_value rendered
+as text, independent original numeric_token, and codec/source bytea rendered as
+lossless hex. The four unrelated binary/temporal/opaque slots remain visible
+through an explicit all-NULL prerequisite for the selected four-family subset.
+This projection does not decode native temporal or opaque content, expand scalar
+support, enforce typed-slot exclusivity or establish source/native correspondence.
+The original numeric token is never replaced by the native numeric rendering.
+
+The original object/edge location controls verify independent token/native-text
+expressions, codec/source custody and unrelated-slot checks. All 54 crate tests
+pass. No new native observation execution is claimed; decoding, exact source
+grammar/facets, source/native equality, codec-byte identity and final publication
+remain separately required by Truss CONTRACT-010's row scalar matrix.

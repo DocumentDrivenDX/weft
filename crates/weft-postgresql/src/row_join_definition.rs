@@ -43,6 +43,50 @@ pub struct RootLocation {
     pub node_alias: crate::Identifier,
     pub scalar_alias: crate::Identifier,
 }
+/// Raw custody for a selected scalar decoder. Native numeric output is text;
+/// the original token remains independent. This is not a decoded logical value.
+#[derive(Debug)]
+pub struct ScalarObservation {
+    pub present: String,
+    pub kind: String,
+    pub text: String,
+    pub boolean: String,
+    pub native_numeric_text: String,
+    pub original_numeric_token: String,
+    pub codec_bytes_hex: String,
+    pub source_bytes_hex: String,
+    pub other_payloads_absent: String,
+}
+impl RootLocation {
+    pub fn scalar_observation(&self) -> ScalarObservation {
+        let scalar = self.scalar_alias.sql();
+        let column = |name: &str| format!("{scalar}.\"{name}\"");
+        let hex = |name: &str| format!("pg_catalog.encode({},'hex')", column(name));
+        ScalarObservation {
+            present: format!("({} IS NOT NULL)", column("node_id")),
+            kind: column("scalar_kind"),
+            text: column("text_value"),
+            boolean: column("boolean_value"),
+            native_numeric_text: format!("{}::pg_catalog.text", column("numeric_value")),
+            original_numeric_token: column("numeric_token"),
+            codec_bytes_hex: hex("codec_definition_bytes"),
+            source_bytes_hex: hex("original_source_bytes"),
+            other_payloads_absent: format!(
+                "({})",
+                [
+                    "binary_value",
+                    "temporal_text",
+                    "temporal_instant",
+                    "opaque_bytes"
+                ]
+                .iter()
+                .map(|name| format!("{} IS NULL", column(name)))
+                .collect::<Vec<_>>()
+                .join(" AND ")
+            ),
+        }
+    }
+}
 /// Use the captured admitted join bytes, never a fresh registry lookup.
 pub(crate) fn root_location(
     raw: &str,
@@ -487,6 +531,22 @@ mod tests {
             )
             .unwrap();
             assert_eq!(location.joins.len(), 3);
+            let observation = location.scalar_observation();
+            assert_eq!(
+                observation.native_numeric_text,
+                "\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text"
+            );
+            assert_eq!(
+                observation.original_numeric_token,
+                "\"weft_scalar_3\".\"numeric_token\""
+            );
+            assert!(observation.codec_bytes_hex.ends_with("'hex')"));
+            assert!(observation
+                .source_bytes_hex
+                .contains("\"original_source_bytes\""));
+            assert!(observation
+                .other_payloads_absent
+                .contains("\"opaque_bytes\" IS NULL"));
             assert!(location.structural_integrity.contains("count(*)"));
             assert!(location
                 .structural_integrity
