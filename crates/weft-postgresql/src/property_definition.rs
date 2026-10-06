@@ -1256,6 +1256,7 @@ mod tests {
             _ => panic!("fixture project"),
         };
         let mut integrity = Vec::new();
+        let mut structural_checks = Vec::new();
         let assembled = crate::relational::assemble_sources(
             input,
             &mut automatic_parameters,
@@ -1263,6 +1264,10 @@ mod tests {
                 let scan = crate::registered_access::scan_source(node, &automatic)?;
                 assert_eq!(scan.source.filters.len(), 1);
                 assert_eq!(scan.structural_integrity.len(), 1);
+                assert_eq!(scan.structural_check_sql.len(), 1);
+                assert!(scan.structural_check_sql[0].ends_with("IS DISTINCT FROM TRUE"));
+                assert!(!scan.structural_check_sql[0].contains("INNER JOIN"));
+                structural_checks.extend(scan.structural_check_sql);
                 integrity.extend(scan.structural_integrity);
                 Ok(scan.source)
             },
@@ -1315,7 +1320,7 @@ mod tests {
                 assembled.sql,
                 assembled.filters.join(" AND ")
             );
-            std::fs::write(path, serde_json::to_vec(&json!({"sql":sql,"parameters":automatic_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"],"integrity":integrity})).unwrap()).unwrap();
+            std::fs::write(path, serde_json::to_vec(&json!({"sql":sql,"parameters":automatic_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"],"integrity":integrity,"structuralChecks":structural_checks})).unwrap()).unwrap();
         }
 
         let mut rejected_parameters = crate::Parameters::default();

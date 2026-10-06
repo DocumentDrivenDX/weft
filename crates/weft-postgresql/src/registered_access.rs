@@ -326,6 +326,10 @@ pub fn lower<'a>(
 pub struct PhysicalScan {
     pub source: crate::relational::Source,
     pub structural_integrity: Vec<String>,
+    /// Must observe zero violations before query execution/publication under the
+    /// same admitted complete visibility and transaction context. These inspect
+    /// all selected owners independently of query joins/filters/limits.
+    pub structural_check_sql: Vec<String>,
 }
 pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan> {
     let Node::Scan {
@@ -379,6 +383,16 @@ pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan>
     } else {
         format!("({} {})", first.owner_source.sql, joins.join(" "))
     };
+    let structural_integrity: Vec<_> = integrity.into_iter().collect();
+    let structural_check_sql = structural_integrity
+        .iter()
+        .map(|check| {
+            format!(
+        "SELECT count(*) AS violations FROM {sql} WHERE {} AND ({check}) IS DISTINCT FROM TRUE",
+        first.owner_source.discriminator,
+    )
+        })
+        .collect();
     Ok(PhysicalScan {
         source: crate::relational::Source {
             sql,
@@ -386,7 +400,8 @@ pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan>
             groups: vec![],
             aggregated: false,
         },
-        structural_integrity: integrity.into_iter().collect(),
+        structural_integrity,
+        structural_check_sql,
     })
 }
 /// Render a typed expression with exact occurrence-qualified physical accesses.

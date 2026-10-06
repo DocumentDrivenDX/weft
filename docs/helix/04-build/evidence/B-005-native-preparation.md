@@ -1721,3 +1721,33 @@ procedures, decode the public result ABI or adopt a Truss deployment profile.
 Fieldless record mapping, complete recursive result bridge, original-profile
 public backend and full native/host qualification remain open. Python/browser
 packages were not rebuilt; no story acceptance or B-005 merge gate is closed.
+
+### Owner-wide structural preflight queries (2026-10-06)
+
+Physical scan preparation now returns executable count-of-violation SQL for
+its separately retained structural prerequisites. Each check covers the complete
+selected owner source and property joins, using only the original owner-type
+selector. Query filters, joins to other logical scans, grouping and limits never
+restrict this scope. IS DISTINCT FROM TRUE treats unknown/SQL NULL checks as
+violations. Hosts must establish zero violations before query execution and
+publication in the same admitted complete visibility/transaction context; these
+checks do not create that context or authorize an incomplete RLS view.
+
+The actual original-property preparation control captures both occurrence-wide
+checks with the self-join query and unchanged parameters. All 62 crate tests pass.
+[Native harness](../../../../tests/truss-postgresql/owner-preflight-native.py)
+executes the [captured SQL](../../../../tests/truss-postgresql/fixtures/owner-scan-preflight-emission.json)
+on PostgreSQL 17.9. Six independent fixtures cover empty and valid seven-row bags,
+then selected array, JSON null, number and SQL NULL roots. Each corrupt root gives
+one violation for each occurrence; the fixture does not execute the result query.
+An unrelated malformed owner root contributes no violation. These selected bad
+roots have no usable name for the result join, demonstrating why owner-wide checks
+must precede query selection. [Receipt](B-005-owner-preflight-native.json) pins
+source/capture/harness and exact native observations.
+
+This evidence qualifies only structural check emission/execution over synthetic
+props roots. Source/native codec and payload-domain checks, required/optional
+presence, recursive decoding, complete visibility enforcement, general host
+publication gating and adopted Truss profile integration remain separate. Native
+row structural check query composition is emitted but not exercised by these six
+fixtures. No Python/browser package rebuild or B-005 acceptance claim is made.
