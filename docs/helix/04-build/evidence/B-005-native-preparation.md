@@ -1941,3 +1941,7 @@ props rows. Original domain/codec/presence qualification, general publication
 and coherent native observation, numeric/row/recursive result realization and
 adopted Truss profile remain open. Python/browser packages were not rebuilt;
 no complete public decoder, story acceptance or B-005 merge-gate claim is made.
+
+### Prepared-read payload collection (2026-10-06)
+
+`result_definition::read_payload_observations` collects owner-wide payload SQL and original codec/presence bytes for every prepared access, independently of projected output membership. This enables later SELECT assembly to retain checks for predicate/join/group/aggregate reads. Repeated occurrence/property entries and missing original property registrations refuse; each entry rechecks private binding custody through `property_projection`. The existing admitted self-join fixture checks both occurrences, retained originals and missing-registration refusal. All 66 PostgreSQL crate tests passed (`cargo test -p weft-postgresql`; local log `/private/tmp/weft-read-payload-tests.log`). No new native execution occurred. Required non-null scalar JSONB roots are the current executable bridge subset; native row, optional/null and recursive bridges still refuse and remain required B-005 work. Physical payload observations do not prove source grammar, facets, numeric correspondence, complete visibility, coherent execution or publication authority. B-005 remains unqualified and PR #7 remains draft.

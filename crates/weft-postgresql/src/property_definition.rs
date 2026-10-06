@@ -1323,6 +1323,22 @@ mod tests {
         )
         .is_err());
 
+        let read_payloads =
+            crate::result_definition::read_payload_observations(&combined_self, &properties)
+                .unwrap();
+        assert_eq!(read_payloads.len(), 2);
+        assert_ne!(read_payloads[0].scan, read_payloads[1].scan);
+        assert!(read_payloads
+            .iter()
+            .all(|observation| observation.sql.contains("jsonb_typeof")
+                && !observation.codec_bytes.is_empty()
+                && !observation.presence_bytes.is_empty()));
+        assert!(crate::result_definition::read_payload_observations(
+            &combined_self,
+            &std::collections::BTreeMap::new(),
+        )
+        .is_err());
+
         let projections: Vec<_> = combined_self
             .accesses
             .iter()

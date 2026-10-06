@@ -45,6 +45,41 @@ pub struct ScalarProjection {
     pub codec_bytes: Vec<u8>,
     pub presence_bytes: Vec<u8>,
 }
+/// Payload observations for every prepared read, including predicate-only reads.
+/// These are physical prerequisites, not source/domain or host qualification.
+#[derive(Debug)]
+pub struct ReadPayloadObservation {
+    pub scan: String,
+    pub field: weft_core::ir::Identity,
+    pub sql: String,
+    pub codec_bytes: Vec<u8>,
+    pub presence_bytes: Vec<u8>,
+}
+pub fn read_payload_observations(
+    prepared: &crate::registered_access::Prepared<'_>,
+    properties: &std::collections::BTreeMap<String, PropertyAdmission>,
+) -> Result<Vec<ReadPayloadObservation>> {
+    let mut observations = Vec::new();
+    let mut seen = std::collections::BTreeSet::new();
+    for access in &prepared.accesses {
+        let key = crate::comparator_requirements::registration_key(&access.owner, &access.field);
+        if !seen.insert((access.scan.clone(), key.clone())) {
+            return Err(fail("Repeated prepared payload read"));
+        }
+        let property = properties
+            .get(&key)
+            .ok_or_else(|| fail("Payload read lacks original property admission"))?;
+        let projection = property_projection(property, access, 1, "weft_payload")?;
+        observations.push(ReadPayloadObservation {
+            scan: access.scan.clone(),
+            field: access.field.clone(),
+            sql: projection.payload_check_sql,
+            codec_bytes: projection.codec_bytes,
+            presence_bytes: projection.presence_bytes,
+        });
+    }
+    Ok(observations)
+}
 pub fn property_projection(
     property: &PropertyAdmission,
     access: &crate::registered_access::Access<'_>,
