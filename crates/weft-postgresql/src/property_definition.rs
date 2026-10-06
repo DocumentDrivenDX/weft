@@ -165,6 +165,40 @@ pub struct LeafStorage {
     pub storage_integrity: String,
 }
 impl PropertyAdmission {
+    /// Presence is observed under the original field availability, before codec
+    /// decoding. An observed present value is not yet a publishable logical value.
+    pub fn observe_props_presence<'a>(
+        &self,
+        root: Option<&'a Value>,
+    ) -> Result<presence_definition::Presence<'a>> {
+        let HomeAdmission::Props { member, .. } = &self.home else {
+            return Err(Diagnostic::new(
+                "WFT-CAPABILITY",
+                "decode",
+                "Native row presence requires its selected row procedure",
+            ));
+        };
+        let descriptor = self
+            .value
+            .descriptors
+            .iter()
+            .find(|descriptor| descriptor.identity == self.identity)
+            .ok_or_else(|| fail("Original property descriptor is missing"))?;
+        let nullable = match &descriptor.shape {
+            Shape::Scalar { logical_type } => logical_type.nullable,
+            _ => false, // No compound native-null profile is admitted by this gate.
+        };
+        let observed = self.value.presence.observe(root, member, nullable)?;
+        match (descriptor.availability.as_deref(), &observed) {
+            (Some("required"), presence_definition::Presence::Absent) => Err(Diagnostic::new(
+                "WFT-OBLIGATION",
+                "decode",
+                "Required original property is absent",
+            )),
+            (Some("required" | "absent-allowed"), _) => Ok(observed),
+            _ => Err(fail("Original field availability is not established")),
+        }
+    }
     pub fn verify_binding_basis(&self, original_binding_sha256: &str) -> Result<()> {
         if self.original_binding_sha256 != original_binding_sha256 {
             return Err(fail(
@@ -790,6 +824,17 @@ mod tests {
         assert!(property
             .verify_binding_basis(&weft_core::json::sha256(b"another original binding"))
             .is_err());
+        let member_name = binding["properties"][index]["propertyId"].as_str().unwrap();
+        let present_root = json!({member_name:""});
+        assert!(
+            matches!(property.observe_props_presence(Some(&present_root)).unwrap(),presence_definition::Presence::Present(value) if value=="")
+        );
+        assert!(property.observe_props_presence(Some(&json!({}))).is_err());
+        assert!(property
+            .observe_props_presence(Some(&json!({member_name:null})))
+            .is_err());
+        assert!(property.observe_props_presence(Some(&json!([]))).is_err());
+        assert!(property.observe_props_presence(None).is_err());
         assert_eq!(property.owner, record.identity);
         assert_eq!(property.identity, member.identity);
         let mut foreign = binding.clone();

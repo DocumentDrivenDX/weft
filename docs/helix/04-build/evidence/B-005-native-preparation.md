@@ -1530,3 +1530,21 @@ agrees with root extraction, and an invalid node index refuses. Full crate tests
 pass 57; node-lookup refinements then pass their targeted integration. These are
 component tests with synthetic registry domain evidence. Full recursive/row
 result integration and deployed Truss qualification still gate B-005 acceptance.
+
+### Original owned-property presence observation (2026-10-06)
+
+Property admission now exposes props presence observation through its admitted
+literal member and original presence definition. The root Field descriptor's
+required/absent-allowed availability controls absence; an absent required Field
+is an obligation refusal. Scalar authored nullability remains distinct from
+availability, and explicit JSON null still requires separately qualified native
+null semantics. Compound native null is not inferred from field availability.
+Native row homes refuse this JSONB procedure and need their separately selected
+row presence rules.
+
+The original required Customer.name fixture accepts empty text as present and
+refuses missing member, explicit JSON null, array root and SQL-null root. All
+57 PostgreSQL crate tests pass. A present raw JSON value still requires exact
+codec/source/native/type admission before publication; this observer does not
+qualify authorized visibility, native-null support or complete result decoding.
+Full backend/result integration and Truss profile qualification remain open.
