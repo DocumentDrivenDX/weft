@@ -352,8 +352,42 @@ fn lower_with_owners<'a>(
 /// realization remain host/backend obligations, independently of this plan.
 #[derive(Debug)]
 pub struct Prepared<'a> {
+    context_pin: String,
+    parameter_pin: String,
     pub scans: BTreeMap<String, PhysicalScan>,
     pub accesses: Vec<Access<'a>>,
+}
+fn context_pin(context: &Context<'_>) -> Result<String> {
+    let plan = match context.plan {
+        Plan::V01(plan) => serde_json::to_value(plan),
+        Plan::V02(plan) => serde_json::to_value(plan),
+    }
+    .map_err(|_| fail("Prepared plan encoding refused"))?;
+    let bytes = serde_json::to_vec(&(context.plan.language(), plan, &context.binding.sha256))
+        .map_err(|_| fail("Prepared context encoding refused"))?;
+    Ok(weft_core::json::sha256(&bytes))
+}
+fn parameter_pin(parameters: &Parameters) -> Result<String> {
+    Ok(weft_core::json::sha256(
+        &serde_json::to_vec(&parameters.clone().into_slots())
+            .map_err(|_| fail("Prepared parameter encoding refused"))?,
+    ))
+}
+impl Prepared<'_> {
+    pub(crate) fn verify_context(
+        &self,
+        context: &Context<'_>,
+        parameters: &Parameters,
+    ) -> Result<()> {
+        if self.context_pin != context_pin(context)?
+            || self.parameter_pin != parameter_pin(parameters)?
+        {
+            return Err(fail(
+                "Prepared source plan, binding or parameter custody differs",
+            ));
+        }
+        Ok(())
+    }
 }
 pub fn prepare<'a>(
     context: &Context<'_>,
@@ -398,8 +432,15 @@ pub fn prepare<'a>(
             (occurrence, physical_scan(&owner, &locations))
         })
         .collect();
+    let context_pin = context_pin(context)?;
+    let parameter_pin = parameter_pin(&staged)?;
     *parameters = staged;
-    Ok(Prepared { scans, accesses })
+    Ok(Prepared {
+        scans,
+        accesses,
+        context_pin,
+        parameter_pin,
+    })
 }
 /// Physical scan assembly, with integrity prerequisites deliberately separate.
 #[derive(Debug)]

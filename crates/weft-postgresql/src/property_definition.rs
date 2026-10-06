@@ -1305,6 +1305,79 @@ mod tests {
         .unwrap();
         assert_eq!(combined_self.scans.len(), 2);
         assert_eq!(combined_self.accesses.len(), 2);
+        let self_parameters_before =
+            serde_json::to_value(combined_self_parameters.clone().into_slots()).unwrap();
+        let selected = crate::select_definition::assemble(
+            &self_context,
+            &combined_self,
+            &properties,
+            &comparisons,
+            &mut combined_self_parameters,
+            |node, operands, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => panic!("self-join fixture callback"),
+            },
+        )
+        .unwrap();
+        if let Ok(path) = std::env::var("WEFT_SELECT_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({
+                "sql":selected.sql,"columns":selected.columns,
+                "checks":selected.structural_checks.iter().cloned().chain(selected.payload_checks.iter().map(|observation| observation.sql.clone())).collect::<Vec<_>>(),
+                "parameters":combined_self_parameters.clone().into_slots(),
+            })).unwrap()).unwrap();
+        }
+        assert!(selected.sql.contains("INNER JOIN"));
+        assert!(selected.sql.contains(" WHERE "));
+        assert_eq!(selected.columns.len(), 2);
+        assert_eq!(selected.payload_checks.len(), 2);
+        assert!(!selected.structural_checks.is_empty());
+        assert_eq!(
+            serde_json::to_value(combined_self_parameters.clone().into_slots()).unwrap(),
+            self_parameters_before
+        );
+        assert!(crate::select_definition::assemble(
+            &context,
+            &combined_self,
+            &properties,
+            &comparisons,
+            &mut combined_self_parameters,
+            |_, _, _, _| panic!("stale context reached native callback"),
+        )
+        .is_err());
+        assert!(crate::select_definition::assemble(
+            &self_context,
+            &combined_self,
+            &properties,
+            &comparisons,
+            &mut combined_self_parameters,
+            |node, _, _, parameters| {
+                parameters.push(
+                    node.logical_type().clone(),
+                    "fixture".into(),
+                    json!({"fixture":true}),
+                )?;
+                Err(weft_core::error::Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "emit",
+                    "selected callback refusal",
+                ))
+            },
+        )
+        .is_err());
+        assert_eq!(
+            serde_json::to_value(combined_self_parameters.clone().into_slots()).unwrap(),
+            self_parameters_before
+        );
+
         let changed_admission = Admission::parse(&changed_input.json, &input.profile).unwrap();
         let changed_property = admit_property(
             &changed_admission,

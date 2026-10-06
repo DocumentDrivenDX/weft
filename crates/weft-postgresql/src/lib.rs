@@ -231,3 +231,5 @@ pub mod relational;
 pub mod record_definition;
 
 pub mod result_definition;
+
+pub mod select_definition;
