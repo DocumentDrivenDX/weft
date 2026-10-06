@@ -1367,3 +1367,29 @@ expressions, codec/source custody and unrelated-slot checks. All 54 crate tests
 pass. No new native observation execution is claimed; decoding, exact source
 grammar/facets, source/native equality, codec-byte identity and final publication
 remain separately required by Truss CONTRACT-010's row scalar matrix.
+
+### Typed row slot prerequisites and native custody controls (2026-10-06)
+
+Scalar observations now emit explicit four-family physical payload prerequisites:
+selected scalar tag/payload presence; unrelated payload slots NULL; required
+codec/source bytes present; numeric families retain both native numeric text
+and original token. These checks grant no source grammar, facet, comparison or
+source/native equality capability. Root/subtree integrity and original codec-byte
+identity remain independently required.
+
+WEFT_ROW_PAYLOAD_CAPTURE records exact Rust-emitted expressions from the existing
+original object/edge definition fixtures. row-payload-native.py independently
+constructs 68 cases on PostgreSQL 17.9: valid carriers, absent selected columns,
+wrong token slots, wrong kind, mixed payloads, absent codec/source and present
+unrelated binary bytes. Exact byte hex and numeric/token custody agree with the
+authored oracle. Four numeric value/token mismatch cases deliberately satisfy
+physical slot structure, proving that the separate source/native semantic check
+is still mandatory. These must never be treated as publishable logical values.
+
+The original capture and native JSON receipt preserve expression/harness/generated
+SQL hashes, exact engine version and all observations. Reproduce the crate tests
+with WEFT_ROW_PAYLOAD_CAPTURE set to a file, then run row-payload-native.py with
+that capture and explicit output receipt path against owned weft-b005-pg17.
+A test-only Family moved-value error was corrected before execution. All 54
+PostgreSQL crate tests pass. This is native component evidence, not acceptance
+of a deployed Truss profile or an application/story support claim.

@@ -57,6 +57,44 @@ pub struct ScalarObservation {
     pub source_bytes_hex: String,
     pub other_payloads_absent: String,
 }
+impl ScalarObservation {
+    /// Physical slot requirements only; source grammar, facets and equality follow.
+    pub fn payload_integrity(&self, family: weft_core::ir::Family) -> String {
+        use weft_core::ir::Family;
+        let (kind, selected, unused) = match family {
+            Family::String => (
+                "string",
+                format!("{} IS NOT NULL", self.text),
+                format!(
+                    "{} IS NULL AND {} IS NULL AND {} IS NULL",
+                    self.boolean, self.native_numeric_text, self.original_numeric_token
+                ),
+            ),
+            Family::Boolean => (
+                "boolean",
+                format!("{} IS NOT NULL", self.boolean),
+                format!(
+                    "{} IS NULL AND {} IS NULL AND {} IS NULL",
+                    self.text, self.native_numeric_text, self.original_numeric_token
+                ),
+            ),
+            Family::Integer | Family::Decimal => (
+                if family == Family::Integer {
+                    "integer"
+                } else {
+                    "decimal"
+                },
+                format!(
+                    "{} IS NOT NULL AND {} IS NOT NULL",
+                    self.native_numeric_text, self.original_numeric_token
+                ),
+                format!("{} IS NULL AND {} IS NULL", self.text, self.boolean),
+            ),
+        };
+        format!("({} AND {}='{kind}' AND ({selected}) AND ({unused}) AND {} AND {} IS NOT NULL AND {} IS NOT NULL)",
+            self.present, self.kind, self.other_payloads_absent, self.codec_bytes_hex, self.source_bytes_hex)
+    }
+}
 impl RootLocation {
     pub fn scalar_observation(&self) -> ScalarObservation {
         let scalar = self.scalar_alias.sql();
@@ -517,6 +555,7 @@ mod tests {
     #[test]
     fn root_locations_keep_object_and_edge_ownership_and_atomic_slots() {
         let mut captures = Vec::new();
+        let mut payload_captures = Vec::new();
         for edge in [false, true] {
             let f = fixture(edge);
             let mut parameters = crate::Parameters::default();
@@ -547,6 +586,12 @@ mod tests {
             assert!(observation
                 .other_payloads_absent
                 .contains("\"opaque_bytes\" IS NULL"));
+            let payloads: Vec<_> = [weft_core::ir::Family::String, weft_core::ir::Family::Boolean,
+                weft_core::ir::Family::Integer, weft_core::ir::Family::Decimal].iter()
+                .map(|family|json!({"family":family,"integrity":observation.payload_integrity(family.clone())})).collect();
+            payload_captures.push(json!({"kind":if edge {"edge"} else {"object"},"payloads":payloads,
+                "numeric":observation.native_numeric_text,"token":observation.original_numeric_token,
+                "codec":observation.codec_bytes_hex,"source":observation.source_bytes_hex}));
             assert!(location.structural_integrity.contains("count(*)"));
             assert!(location
                 .structural_integrity
@@ -598,6 +643,9 @@ mod tests {
             )
             .is_err());
             assert_eq!(parameters.into_slots().len(), 1023);
+        }
+        if let Ok(path) = std::env::var("WEFT_ROW_PAYLOAD_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&payload_captures).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ROW_LOCATION_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
