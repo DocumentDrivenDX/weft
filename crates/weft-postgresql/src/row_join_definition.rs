@@ -58,6 +58,33 @@ pub struct ScalarObservation {
     pub other_payloads_absent: String,
 }
 impl ScalarObservation {
+    /// Private observation columns for the selected source/native decoder.
+    /// Native NULL remains NULL; empty strings/byte sequences remain present.
+    /// This is not Weft Column metadata or an adopted public decoder ABI.
+    pub fn custody_projection(&self) -> Vec<String> {
+        [
+            (
+                "scalar_present",
+                format!("{}::pg_catalog.text", self.present),
+            ),
+            ("scalar_kind", self.kind.clone()),
+            ("text_value", self.text.clone()),
+            (
+                "boolean_value",
+                format!("{}::pg_catalog.text", self.boolean),
+            ),
+            ("native_numeric_text", self.native_numeric_text.clone()),
+            (
+                "original_numeric_token",
+                self.original_numeric_token.clone(),
+            ),
+            ("codec_bytes_hex", self.codec_bytes_hex.clone()),
+            ("source_bytes_hex", self.source_bytes_hex.clone()),
+        ]
+        .into_iter()
+        .map(|(name, expression)| format!("{expression} AS \"{name}\""))
+        .collect()
+    }
     /// Physical slot requirements only; source grammar, facets and equality follow.
     pub fn payload_integrity(&self, family: weft_core::ir::Family) -> String {
         use weft_core::ir::Family;
@@ -587,12 +614,15 @@ mod tests {
             assert!(observation
                 .other_payloads_absent
                 .contains("\"opaque_bytes\" IS NULL"));
+            let custody = observation.custody_projection();
+            assert_eq!(custody.len(), 8);
+            assert!(custody[5].contains("numeric_token"));
             let payloads: Vec<_> = [weft_core::ir::Family::String, weft_core::ir::Family::Boolean,
                 weft_core::ir::Family::Integer, weft_core::ir::Family::Decimal].iter()
                 .map(|family|json!({"family":family,"integrity":observation.payload_integrity(family.clone())})).collect();
             payload_captures.push(json!({"kind":if edge {"edge"} else {"object"},"payloads":payloads,
                 "numeric":observation.native_numeric_text,"token":observation.original_numeric_token,
-                "codec":observation.codec_bytes_hex,"source":observation.source_bytes_hex}));
+                "codec":observation.codec_bytes_hex,"source":observation.source_bytes_hex,"custody":custody}));
             assert!(location.structural_integrity.contains("count(*)"));
             assert!(location
                 .structural_integrity
