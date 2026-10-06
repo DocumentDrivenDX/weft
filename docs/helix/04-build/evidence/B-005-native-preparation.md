@@ -764,3 +764,33 @@ remain unchanged. Accepted owner definitions require a separately implemented
 semantic interpreter and joint evidence; assigning the synthetic pin to genuine
 owner data is not adoption. Live host policy/revision/publication enforcement and
 owner source/resource qualification still gate B-005 completion and merge.
+
+### Updated local-draft integration handoff (2026-10-06)
+
+The current Truss worktree supplies concrete read-context, presence, recursive
+value graph, JSONB leaf-codec and row-join grammars. Publication is not the
+implementation dependency: these local drafts are available for pinned design
+work. Adoption and native qualification remain separate final story gates.
+
+Weft also has unfinished integration work. Its candidate currently registers
+empty synthetic definitions; it must add original-definition interpretation and
+complete graph/inventory/profile correspondence before these authored resources
+can compile. This work cannot be replaced by assigning real owner definitions
+the synthetic pin. Numeric-token readback and operation-specific comparator
+assessment must be explicit; current JSON-number fixtures do not prove that
+profile. Native row token/source columns need their original codec mapping,
+independently of the already tested typed numeric projection. Read-context
+requirements must resolve through actual registered bridge meanings, preserving
+the existing parameter/decoder/obligation ABI.
+
+Truss owns populated producer/registry/native enforcement resources and joint
+profile adoption. Weft owns semantic admission, safe lowering and result-bridge
+conformance against those originals. No new UMF capability or duplicate Truss
+execution adapter is required. Full recursive/non-JSONB scope remains intact.
+These next implementation inputs are draft resources pinned here for review:
+
+- `truss-read-context-definition-v0.1.proposal.schema.json`: SHA-256 `01eef30067e6ce3ff3957475e163e8c9e870d1fa36b67c94aa6b2fe11d5e14cb`.
+- `truss-presence-definition-v0.1.proposal.schema.json`: SHA-256 `08270a400dceb28e855ead142e31cfad1a30fd116d84b5380022fa3de4542f11`.
+- `truss-value-definition-v0.1.proposal.schema.json`: SHA-256 `ae6d9227ddfe82bd531e3fb2754382f4bbe898ef20afc8690a197d78a16d62f3`.
+- `truss-jsonb-leaf-codec-v0.1.proposal.schema.json`: SHA-256 `ba3088c60b154de39b1985da7d283ffdbb93cb4f59c0df4d80a12462f319de77`.
+- `truss-row-join-definition-v0.1.proposal.schema.json`: SHA-256 `ddc7528dd546dfc76092076613fa612caee55a45ed51f46a553675b6f4e9d2b1`.
