@@ -155,6 +155,55 @@ impl Graph {
         }
         Ok(())
     }
+    /// Bind each scalar to its separately admitted original leaf codec. Compound
+    /// codecs and operation capabilities remain independent admissions.
+    pub fn verify_leaf_codecs(
+        &self,
+        codecs: &BTreeMap<String, crate::leaf_codec_definition::Definition>,
+    ) -> Result<()> {
+        let nodes = self.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Missing graph nodes"))?;
+        let scalar_count = nodes
+            .iter()
+            .filter(|node| node["shape"]["kind"] == "scalar")
+            .count();
+        if scalar_count != codecs.len() {
+            return Err(fail(
+                "Leaf codec selection differs from graph scalar closure",
+            ));
+        }
+        for (index, node) in nodes
+            .iter()
+            .enumerate()
+            .filter(|(_, node)| node["shape"]["kind"] == "scalar")
+        {
+            let codec = codecs
+                .get(
+                    node["nodeId"]
+                        .as_str()
+                        .ok_or_else(|| fail("Invalid scalar node ID"))?,
+                )
+                .ok_or_else(|| fail("Scalar node has no selected leaf codec"))?;
+            let codec_value = checked_json(&codec.original_json)
+                .map_err(|_| fail("Original leaf codec JSON refused"))?;
+            if self
+                .artifacts
+                .get(&format!("/nodes/{index}/codecDefinition"))
+                .is_none_or(|bytes| bytes != codec.original_json.as_bytes())
+                || node["codecProfile"] != codec_value["profile"]
+                || node["authoredDefinition"] != codec_value["authoredDefinition"]
+                || node["shape"]["family"] != codec_value["rule"]["family"]
+                || node["shape"]["storageRepresentation"]
+                    != codec_value["rule"]["storageRepresentation"]
+            {
+                return Err(fail(
+                    "Scalar node differs from original selected leaf codec",
+                ));
+            }
+        }
+        Ok(())
+    }
     pub fn parse(raw: &str, profile: &Value, accepted: &[u8]) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -487,6 +536,63 @@ mod tests {
             .unwrap()
             .verify_descriptors(&descriptors, &root)
             .is_err());
+    }
+    #[test]
+    fn graph_scalar_requires_its_exact_admitted_leaf_codec() {
+        use crate::leaf_codec_definition::{Definition, OriginalArtifact, Selection};
+        let pin = fixture()["profile"].clone();
+        let authored = fixture()["acceptedDefinition"].clone();
+        let leaf = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored,"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":authored,"nativeDomainProfile":pin,"nativeDomainDefinition":authored,"rule":{"family":"string","storageRepresentation":"json-string","encoding":"preserve-unicode-scalars","decodedCarrierKind":"string"},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
+        let originals: BTreeMap<String, OriginalArtifact> = [
+            "authoredDefinition",
+            "sourceInterpretationDefinition",
+            "nativeDomainDefinition",
+        ]
+        .into_iter()
+        .map(|key| {
+            (
+                key.into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            )
+        })
+        .collect();
+        let codec = Definition::parse(
+            &leaf.to_string(),
+            Selection {
+                profile: &pin,
+                source_profile: &pin,
+                native_profile: &pin,
+                original_artifacts: &originals,
+            },
+        )
+        .unwrap();
+        let mut value = fixture();
+        value["nodes"].as_array_mut().unwrap().truncate(1);
+        value["nodes"][0]["shape"] =
+            json!({"kind":"scalar","family":"string","storageRepresentation":"json-string"});
+        let bytes = codec.original_json.as_bytes();
+        value["nodes"][0]["codecDefinition"] = json!({"identity":"selected-leaf","bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+        let codecs = BTreeMap::from([("root".into(), codec)]);
+        parse(&value).unwrap().verify_leaf_codecs(&codecs).unwrap();
+        assert!(parse(&value)
+            .unwrap()
+            .verify_leaf_codecs(&BTreeMap::new())
+            .is_err());
+        let mut wrong = value.clone();
+        wrong["nodes"][0]["shape"]["storageRepresentation"] = json!("json-number");
+        assert!(parse(&wrong).unwrap().verify_leaf_codecs(&codecs).is_err());
+        let mut wrong = value.clone();
+        wrong["nodes"][0]["codecProfile"]["identity"] = json!("foreign");
+        assert!(parse(&wrong).unwrap().verify_leaf_codecs(&codecs).is_err());
+        let mut wrong = value.clone();
+        wrong["nodes"][0]["authoredDefinition"]["identity"] = json!("foreign");
+        assert!(parse(&wrong).unwrap().verify_leaf_codecs(&codecs).is_err());
+        let mut wrong = value;
+        wrong["nodes"][0]["codecDefinition"] = authored;
+        assert!(parse(&wrong).unwrap().verify_leaf_codecs(&codecs).is_err());
     }
     fn fixture() -> Value {
         let artifact = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});

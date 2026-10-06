@@ -926,3 +926,20 @@ pass. Fixture evidence remains synthetic: registration/custody does not validate
 the contents of source/native/adoption artifacts, qualify a native codec, authorize
 operations or establish deployment adoption. Source/facet and native procedure
 interpretation, graph integration, decoding and SQL lowering remain B-005 work.
+
+### Scalar graph-to-leaf codec correspondence (2026-10-06)
+
+Value-graph admission can now bind the exact scalar closure to separately admitted
+leaf codecs. Each scalar node requires its registered codec under its own node ID;
+missing or unrelated selections refuse. Original codec artifact bytes must equal
+the admitted leaf definition JSON, and the node codec profile, complete authored
+artifact, family and storage representation must match that original definition.
+This connects the previously separate graph and leaf admission boundaries without
+allowing source or representation substitution. Compound codecs remain separate.
+
+A positive exact selection passes. Negative controls cover a missing codec, changed
+storage representation, foreign codec profile, foreign authored artifact identity
+and substituted codec bytes. All 34 Rust tests pass. This is correspondence, not
+source/native procedure qualification: it grants no comparison, key, predicate or
+aggregate capability. Candidate SQL integration and live/native enforcement remain
+required before B-005 completion.
