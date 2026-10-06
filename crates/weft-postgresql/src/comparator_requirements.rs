@@ -272,6 +272,41 @@ pub fn admit(
     }
     Ok(())
 }
+/// Shared backend context gate before SQL lowering. The core separately validates
+/// capability coverage; property custody cannot be reused across binding cuts.
+pub fn admit_context(
+    context: &weft_core::backend::Context<'_>,
+    properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    definitions: &BTreeMap<String, Definition>,
+) -> Result<()> {
+    if weft_core::json::sha256(context.binding.json.as_bytes()) != context.binding.sha256
+        || weft_core::json::checked_json(&context.binding.json)
+            .map_err(|_| fail("Original context binding JSON refused"))?
+            != *context.binding_value
+    {
+        return Err(fail("Context binding checksum or decoded original differs"));
+    }
+    for (key, property) in properties {
+        if *key != registration_key(&property.owner, &property.identity) {
+            return Err(fail(
+                "Property registration key differs from original ownership",
+            ));
+        }
+        property.verify_binding_basis(&context.binding.sha256)?;
+    }
+    for identity in &context.selection.fields {
+        if !properties
+            .values()
+            .any(|property| &property.identity == identity)
+        {
+            return Err(fail(
+                "Selected logical field lacks an admitted original property",
+            ));
+        }
+    }
+    let requirements = collect(context.plan)?;
+    admit_properties(&requirements, properties, definitions)
+}
 /// Link requested operations to the original admitted owned property and its
 /// exact value/native-domain selection before allowing target lowering.
 pub fn admit_properties(

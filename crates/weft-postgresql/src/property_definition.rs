@@ -50,6 +50,7 @@ pub enum HomeAdmission {
 }
 #[derive(Debug)]
 pub struct PropertyAdmission {
+    original_binding_sha256: String,
     pub owner: Identity,
     pub identity: Identity,
     pub owner_catalog_id: String,
@@ -116,6 +117,14 @@ pub struct LeafStorage {
     pub storage_integrity: String,
 }
 impl PropertyAdmission {
+    pub fn verify_binding_basis(&self, original_binding_sha256: &str) -> Result<()> {
+        if self.original_binding_sha256 != original_binding_sha256 {
+            return Err(fail(
+                "Admitted property belongs to a different original binding basis",
+            ));
+        }
+        Ok(())
+    }
     pub fn row_root_location(
         &self,
         namespace: &crate::Identifier,
@@ -368,6 +377,7 @@ pub fn admit_property(
         ));
     }
     Ok(PropertyAdmission {
+        original_binding_sha256: weft_core::json::sha256(binding.original_json.as_bytes()),
         owner,
         identity,
         owner_catalog_id: property["ownerTypeId"].as_str().unwrap().into(),
@@ -725,6 +735,12 @@ mod tests {
             slots[0].value,
             binding["properties"][index]["propertyId"].as_str().unwrap()
         );
+        property
+            .verify_binding_basis(&weft_core::json::sha256(admitted.original_json.as_bytes()))
+            .unwrap();
+        assert!(property
+            .verify_binding_basis(&weft_core::json::sha256(b"another original binding"))
+            .is_err());
         assert_eq!(property.owner, record.identity);
         assert_eq!(property.identity, member.identity);
         let mut foreign = binding.clone();
@@ -883,6 +899,59 @@ mod tests {
         )]);
         let properties = BTreeMap::from([(registration.clone(), property)]);
         admit_properties(&requirements, &properties, &comparisons).unwrap();
+        let (_, plan) =
+            weft_core::prepare_and_resolve("SELECT c.name FROM Customer c", catalog.inputs.clone())
+                .unwrap();
+        let manifest = <crate::candidate::Candidate as weft_core::backend::Backend>::describe(
+            &crate::candidate::Candidate,
+        )
+        .unwrap();
+        let input = weft_core::backend::BindingInput {
+            profile: binding["bindingProfileId"].as_str().unwrap().into(),
+            json: admitted.original_json.clone(),
+            sha256: weft_core::json::sha256(admitted.original_json.as_bytes()),
+        };
+        let selection = weft_core::backend::Selection {
+            fields: vec![member.identity.clone()],
+            records: vec![record.identity.clone()],
+            ..Default::default()
+        };
+        let context = weft_core::backend::Context {
+            catalog: &catalog,
+            plan: weft_core::backend::Plan::V01(&plan),
+            target: &manifest.target_profiles[0],
+            binding: &input,
+            binding_value: &admitted.value,
+            selection: &selection,
+        };
+        crate::comparator_requirements::admit_context(&context, &properties, &comparisons).unwrap();
+        assert!(crate::comparator_requirements::admit_context(
+            &context,
+            &BTreeMap::new(),
+            &comparisons
+        )
+        .is_err());
+        let mut changed = binding.clone();
+        changed["basis"]["namespace"] = json!("later_schema");
+        // A valid namespace change still changes the exact original binding basis.
+        let changed_json = changed.to_string();
+        Admission::parse(&changed_json, &input.profile).unwrap();
+        let changed_input = weft_core::backend::BindingInput {
+            profile: input.profile.clone(),
+            sha256: weft_core::json::sha256(changed_json.as_bytes()),
+            json: changed_json,
+        };
+        let changed_context = weft_core::backend::Context {
+            binding: &changed_input,
+            binding_value: &changed,
+            ..context
+        };
+        assert!(crate::comparator_requirements::admit_context(
+            &changed_context,
+            &properties,
+            &comparisons
+        )
+        .is_err());
         assert!(admit_properties(&requirements, &BTreeMap::new(), &comparisons).is_err());
         let mut wrong_artifact = value_artifact.clone();
         wrong_artifact["identity"] = json!("another-original-graph");

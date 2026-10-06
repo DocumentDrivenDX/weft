@@ -1420,3 +1420,24 @@ Source and native parsers, full original definition/domain admission and source
 custody must precede witness equality. Million-exponent mathematics is not a
 PostgreSQL storage claim. Decoder/public backend integration and deployed native
 profile qualification remain open.
+
+### Original property admission bound to backend invocation context (2026-10-06)
+
+Every composed property now privately retains SHA-256 of its complete original
+binding bytes. verify_binding_basis refuses reuse under another binding cut.
+The new comparator_requirements::admit_context gate accepts the shared backend
+Context, verifies its raw binding checksum/decoded original, checks owner-qualified
+registration keys and every property's exact original basis, requires admitted
+properties for selected fields, and collects/admit-checks requested operations
+against their coupled original properties/comparators. Coverage of compound
+descriptors, relationships, capabilities and host obligations remains separately
+required by the core/backend contract; this helper is not the finished backend.
+
+The authored Customer.name integration constructs an actual resolved projection
+Context and accepts the exact original basis. Missing selected property and
+a schema-admitted namespace change with a fresh correct checksum refuse before
+lowering, even though the selected property graph remains unchanged. Direct basis
+verification also refuses foreign bytes. The full crate suite passes 56 tests;
+the strengthened valid namespace-control then passes its targeted integration.
+The public candidate still consumes only its fixed synthetic profile; registered
+context-gate invocation by a complete backend and wrapper qualification remain open.
