@@ -556,6 +556,7 @@ mod tests {
     fn root_locations_keep_object_and_edge_ownership_and_atomic_slots() {
         let mut captures = Vec::new();
         let mut payload_captures = Vec::new();
+        let mut scan_captures = Vec::new();
         for edge in [false, true] {
             let f = fixture(edge);
             let mut parameters = crate::Parameters::default();
@@ -618,13 +619,41 @@ mod tests {
             parse(&f.value, &f).unwrap();
             captures.push(json!({"kind":if edge {"edge"} else {"object"},
                 "joins":location.joins,"integrity":location.structural_integrity}));
+            let selected = parse(&f.value, &f).unwrap();
+            let owner_mapping = crate::property_definition::OwnerMapping {
+                record_kind: selected.record_kind.clone(),
+                relation: crate::Identifier::new(
+                    f.value["owner"]["relationName"].as_str().unwrap(),
+                )
+                .unwrap(),
+                discriminator_column: crate::Identifier::new(if edge {
+                    "rel_type_id"
+                } else {
+                    "type_id"
+                })
+                .unwrap(),
+            };
+            let owner_source = owner_mapping
+                .source(
+                    &crate::Identifier::new("schema.with.dot").unwrap(),
+                    &crate::Identifier::new("owner").unwrap(),
+                    "-1",
+                    &mut parameters,
+                )
+                .unwrap();
+            let row_location = crate::registered_access::Location::Row(location);
+            let scan = crate::registered_access::physical_scan(&owner_source, &[&row_location]);
+            assert_eq!(scan.structural_check_sql.len(), 1);
+            assert!(scan.structural_check_sql[0].contains("LEFT JOIN"));
+            assert!(!scan.source.filters[0].contains("count(*)"));
+            scan_captures.push(json!({"kind":if edge {"edge"} else {"object"},"sql":scan.source.sql,"filter":scan.source.filters[0],"check":scan.structural_check_sql[0],"parameters":parameters.clone().into_slots()}));
             let slots = parameters.into_slots();
             assert_eq!(
                 slots
                     .iter()
                     .map(|slot| slot.value.as_str())
                     .collect::<Vec<_>>(),
-                vec!["-1", "42"]
+                vec!["-1", "42", "-1"]
             );
             let mut parameters = crate::Parameters::default();
             for _ in 0..1023 {
@@ -643,6 +672,9 @@ mod tests {
             )
             .is_err());
             assert_eq!(parameters.into_slots().len(), 1023);
+        }
+        if let Ok(path) = std::env::var("WEFT_ROW_SCAN_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&scan_captures).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ROW_PAYLOAD_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&payload_captures).unwrap()).unwrap();

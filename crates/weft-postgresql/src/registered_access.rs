@@ -350,8 +350,7 @@ pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan>
         )
     })?;
     let mut fields = BTreeSet::new();
-    let mut joins = Vec::new();
-    let mut integrity = BTreeSet::new();
+    let mut locations = Vec::new();
     for access in selected {
         if &access.owner != record
             || access.owner_alias != first.owner_alias
@@ -368,7 +367,20 @@ pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan>
         ) {
             return Err(fail("Duplicate scan field access"));
         }
-        match &access.location {
+        locations.push(&access.location);
+    }
+    Ok(physical_scan(&first.owner_source, &locations))
+}
+/// Trusted physical composition reused by admitted owner and row-home controls.
+/// Original occurrence/owner checks are performed by scan_source before this.
+pub(crate) fn physical_scan(
+    owner: &crate::property_definition::OwnerSource,
+    locations: &[&Location],
+) -> PhysicalScan {
+    let mut joins = Vec::new();
+    let mut integrity = BTreeSet::new();
+    for location in locations {
+        match location {
             Location::Props(location) => {
                 integrity.insert(location.root_integrity.clone());
             }
@@ -379,30 +391,24 @@ pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan>
         }
     }
     let sql = if joins.is_empty() {
-        first.owner_source.sql.clone()
+        owner.sql.clone()
     } else {
-        format!("({} {})", first.owner_source.sql, joins.join(" "))
+        format!("({} {})", owner.sql, joins.join(" "))
     };
     let structural_integrity: Vec<_> = integrity.into_iter().collect();
-    let structural_check_sql = structural_integrity
-        .iter()
-        .map(|check| {
-            format!(
-        "SELECT count(*) AS violations FROM {sql} WHERE {} AND ({check}) IS DISTINCT FROM TRUE",
-        first.owner_source.discriminator,
-    )
-        })
-        .collect();
-    Ok(PhysicalScan {
+    let structural_check_sql = structural_integrity.iter().map(|check| format!(
+        "SELECT count(*) AS violations FROM {sql} WHERE {} AND ({check}) IS DISTINCT FROM TRUE", owner.discriminator,
+    )).collect();
+    PhysicalScan {
         source: crate::relational::Source {
             sql,
-            filters: vec![first.owner_source.discriminator.clone()],
+            filters: vec![owner.discriminator.clone()],
             groups: vec![],
             aggregated: false,
         },
         structural_integrity,
         structural_check_sql,
-    })
+    }
 }
 /// Render a typed expression with exact occurrence-qualified physical accesses.
 /// The trusted native callback still owns codecs, literals and operations. A

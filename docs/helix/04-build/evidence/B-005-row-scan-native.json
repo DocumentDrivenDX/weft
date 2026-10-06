@@ -1,0 +1,76 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "b311011154ec491e46b07e09958221e1df1581f1df0d8f506f0fcb11fee464a6",
+  "sqlSha256": "335b56e9c36c11860b300bdd520dd0b736b7ecaf760bf8c255d2fb95cb4100b7",
+  "harnessSha256": "99b0ebc1fe9aad200971c404897232e0a73ac4e628302df95b13eb6e3ff707af",
+  "scope": "Rust-emitted owner-wide row-home structural count queries on synthetic unconstrained tables; not row codec, host visibility, logical edge selection or native Truss profile qualification",
+  "scenarios": 20,
+  "observations": {
+    "object:absent": [
+      "0"
+    ],
+    "object:valid": [
+      "0"
+    ],
+    "object:missing-root": [
+      "1"
+    ],
+    "object:duplicate-state": [
+      "2"
+    ],
+    "object:duplicate-root": [
+      "2"
+    ],
+    "object:duplicate-scalar": [
+      "2"
+    ],
+    "object:parented-root": [
+      "1"
+    ],
+    "object:null-state-id": [
+      "1"
+    ],
+    "object:wrong-owner": [
+      "0"
+    ],
+    "object:compound-root": [
+      "0"
+    ],
+    "edge:absent": [
+      "0"
+    ],
+    "edge:valid": [
+      "0"
+    ],
+    "edge:missing-root": [
+      "1"
+    ],
+    "edge:duplicate-state": [
+      "2"
+    ],
+    "edge:duplicate-root": [
+      "2"
+    ],
+    "edge:duplicate-scalar": [
+      "2"
+    ],
+    "edge:parented-root": [
+      "1"
+    ],
+    "edge:null-state-id": [
+      "1"
+    ],
+    "edge:wrong-owner": [
+      "0"
+    ],
+    "edge:compound-root": [
+      "0"
+    ]
+  },
+  "sourceSha256": {
+    "crates/weft-postgresql/src/registered_access.rs": "67986a85a5f48b8eb0b7bde2b9478b7d7367a1ea43d66f1e7533db2f3eeebf94",
+    "crates/weft-postgresql/src/row_join_definition.rs": "cdb33c6ad3e79c9d032b8fe1efa99d176001bd1cc9fe502c720e2b79ed12ed52"
+  },
+  "rustCrateTests": 62,
+  "testLogSha256": "2868a3418173470fb845996d03e470bf85e554e60b6fca8dbd5f9ff032525e30"
+}

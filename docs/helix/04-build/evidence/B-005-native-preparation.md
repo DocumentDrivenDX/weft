@@ -1751,3 +1751,31 @@ presence, recursive decoding, complete visibility enforcement, general host
 publication gating and adopted Truss profile integration remain separate. Native
 row structural check query composition is emitted but not exercised by these six
 fixtures. No Python/browser package rebuild or B-005 acceptance claim is made.
+
+### Owner-wide native row structural preflights (2026-10-06)
+
+Physical location composition is shared between original scan access planning
+and the original row-join controls. The latter now capture complete object/edge
+owner sources, original LEFT JOIN chains and owner-wide structural violation
+queries using three unchanged catalog parameters. Owner names derive from the
+validated original selector inventory; full property/context/codec admission
+remains a separate boundary. All 62 crate tests pass.
+
+[Native harness](../../../../tests/truss-postgresql/row-scan-native.py) executes
+[actual captured Rust queries](../../../../tests/truss-postgresql/fixtures/row-scan-emission.json)
+against minimal unconstrained PostgreSQL 17.9 tables. Twenty cases cover both
+physical owner kinds with absent/valid state, missing root, duplicate state/root/
+scalar, parented root, null state ID, wrong owner and compound root. Every valid
+case gives zero violations; corrupt cases give the independently specified one
+or two violations according to actual LEFT JOIN multiplicity. Wrong-type owner
+rows are also installed and excluded solely by the original owner discriminator.
+[Receipt](B-005-row-scan-native.json) pins capture, generated native SQL, harness,
+source and exact observed counts. Transactions roll back all synthetic objects.
+
+These checks establish structural query composition/execution only. Absence and
+compound roots deliberately pass these structural controls without proving
+required/optional presence or complete value validity. Row payload/source/native
+codec checks, complete visibility, host publication gating and adopted native
+Truss qualification remain open. Edge physical fixtures do not grant logical
+edge property selection. Python/browser packages were not rebuilt, and B-005
+acceptance remains pending.
