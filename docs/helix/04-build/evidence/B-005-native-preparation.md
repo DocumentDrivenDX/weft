@@ -1191,3 +1191,28 @@ actual application corpus. Candidate SQL is unchanged: the helper is still a
 pre-lowering integration boundary rather than a newly qualified target profile.
 Exact property-to-comparator value/native-definition correspondence remains next
 in the integration path; no physical domain is inferred from shared Field meaning.
+
+### Original Record ownership and property-comparator correspondence (2026-10-06)
+
+Composed property admission now resolves its physical owner catalog mapping to
+the complete original Record identity. The Record and Field must belong to the
+same selected document/revision cut; original Record membership must explicitly
+reference that Field. Owner source and accepted Record definition must match the
+original module, preserving full retained content. The admitted result retains
+owner/Field identities and the complete original value-definition artifact.
+
+Operation admission now connects owner-qualified requirements to admitted
+properties and comparators. Each requested scalar must match its original
+descriptor/type, complete value artifact and the leaf codec's exact native-domain
+profile/definition. Separately registered comparator meanings cannot substitute
+a different property artifact or native domain merely because the scalar family
+is the same. Source-domain procedure semantics remain independently required.
+
+The existing authored Customer.name integration exercises the connected gate and
+refuses another owner without membership, a replaced accepted Record, missing
+property selection, changed graph artifact identity and independently registered
+different native-domain profile. A test-source moved-value error was corrected
+before success. All 52 Rust tests pass; existing test functions gained these
+controls without inflating the function count. Registry domain/evidence payloads
+remain synthetic. This gate is not yet wired into public candidate lowering and
+does not establish native codecs, runtime authority or profile adoption.

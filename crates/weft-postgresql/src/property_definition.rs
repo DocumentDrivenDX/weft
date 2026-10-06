@@ -19,6 +19,7 @@ pub struct Selection<'a> {
 }
 #[derive(Debug)]
 pub struct ValueAdmission {
+    pub definition_artifact: Value,
     pub graph: Graph,
     pub presence: presence_definition::Definition,
     pub descriptors: Vec<Descriptor>,
@@ -45,6 +46,8 @@ pub enum HomeAdmission {
 }
 #[derive(Debug)]
 pub struct PropertyAdmission {
+    pub owner: Identity,
+    pub identity: Identity,
     pub value: ValueAdmission,
     pub home: HomeAdmission,
 }
@@ -169,6 +172,62 @@ pub fn admit_property(
     value: Selection<'_>,
     physical: PhysicalSelection<'_>,
 ) -> Result<PropertyAdmission> {
+    let property = binding.value["properties"]
+        .get(index)
+        .ok_or_else(|| fail("Missing selected property"))?;
+    let identity: Identity = serde_json::from_value(property["logical"].clone())
+        .map_err(|_| fail("Invalid property identity"))?;
+    let (entity_index, entity) = binding.value["entities"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .find(|(_, entity)| entity["typeId"] == property["ownerTypeId"])
+        .ok_or_else(|| fail("Property owner has no entity mapping"))?;
+    let owner: Identity = serde_json::from_value(entity["logical"].clone())
+        .map_err(|_| fail("Invalid property owner identity"))?;
+    if owner.document_id != identity.document_id || owner.revision != identity.revision {
+        return Err(fail(
+            "Property owner and Field are not in the same original source cut",
+        ));
+    }
+    let input = catalog
+        .inputs
+        .iter()
+        .find(|input| {
+            input.pin.document_id == owner.document_id
+                && input.pin.revision == owner.revision
+                && input.selected_module_ids.contains(&owner.module)
+        })
+        .ok_or_else(|| fail("Property owner is outside original selected model"))?;
+    let document =
+        checked_json(&input.document_json).map_err(|_| fail("Original owner document refused"))?;
+    let record = document["modules"]
+        .as_array()
+        .and_then(|modules| modules.iter().find(|module| module["id"] == owner.module))
+        .and_then(|module| module["elements"].as_array())
+        .and_then(|elements| {
+            elements
+                .iter()
+                .find(|element| element["id"] == owner.element)
+        })
+        .ok_or_else(|| fail("Original property owner record is missing"))?;
+    if record["kind"] != "record"
+        || record["members"].as_array().is_none_or(|members| {
+            !members.iter().any(|member| {
+                member["module"] == identity.module && member["element"] == identity.element
+            })
+        })
+    {
+        return Err(fail("Original Record does not declare the mapped Field"));
+    }
+    if binding.decoded_json(&format!("/entities/{entity_index}/source"))? != document
+        || binding.decoded_json(&format!("/entities/{entity_index}/acceptedDefinition"))? != *record
+    {
+        return Err(fail(
+            "Mapped owner source/definition differs from original Record",
+        ));
+    }
     let value = admit_value(binding, index, catalog, descriptors, value)?;
     let home = admit_home(binding, index, physical)?;
     if matches!(&home,HomeAdmission::Row{access,..} if access=="scalar-root")
@@ -180,7 +239,12 @@ pub fn admit_property(
             "Compound value cannot use scalar-root native storage",
         ));
     }
-    Ok(PropertyAdmission { value, home })
+    Ok(PropertyAdmission {
+        owner,
+        identity,
+        value,
+        home,
+    })
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
@@ -299,6 +363,7 @@ pub fn admit_value(
         ));
     }
     Ok(ValueAdmission {
+        definition_artifact: property["valueDefinition"].clone(),
         graph,
         presence,
         descriptors,
@@ -427,7 +492,7 @@ mod tests {
             }
         }
         presence["profile"] = pin.clone();
-        presence["acceptedDefinition"] = authored;
+        presence["acceptedDefinition"] = authored.clone();
         binding["properties"][index]["valueDefinition"] =
             artifact("original-value-graph", graph.to_string().as_bytes());
         binding["properties"][index]["presenceDefinition"] =
@@ -492,6 +557,148 @@ mod tests {
         )
         .unwrap();
         assert!(matches!(property.home, HomeAdmission::Props { .. }));
+        assert_eq!(property.owner, record.identity);
+        assert_eq!(property.identity, member.identity);
+        let mut foreign = binding.clone();
+        let other = foreign["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|entity| entity["logical"] != json!(record.identity))
+            .unwrap()["typeId"]
+            .clone();
+        foreign["properties"][index]["ownerTypeId"] = other;
+        let foreign = Admission::parse(
+            &foreign.to_string(),
+            binding["bindingProfileId"].as_str().unwrap(),
+        )
+        .unwrap();
+        assert!(admit_property(
+            &foreign,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            physical()
+        )
+        .is_err());
+        let mut foreign = binding.clone();
+        let owner_index = foreign["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|entity| entity["logical"] == json!(record.identity))
+            .unwrap();
+        foreign["entities"][owner_index]["acceptedDefinition"] = artifact("replaced-record", b"{}");
+        let foreign = Admission::parse(
+            &foreign.to_string(),
+            binding["bindingProfileId"].as_str().unwrap(),
+        )
+        .unwrap();
+        assert!(admit_property(
+            &foreign,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            physical()
+        )
+        .is_err());
+
+        use crate::{
+            comparator_requirements::{admit_properties, registration_key, Requirement},
+            native_comparator_definition::{
+                Definition as Comparator, Operation, Selection as ComparatorSelection,
+            },
+        };
+        let logical = if let Shape::Scalar { logical_type } = &descriptors[0].shape {
+            logical_type.clone()
+        } else {
+            panic!("fixture scalar")
+        };
+        let value_artifact = property.value.definition_artifact.clone();
+        let graph_bytes = property.value.graph.original_json.as_bytes().to_vec();
+        let make_comparator = |value_artifact: Value,
+                               graph_bytes: &[u8],
+                               native_profile: &Value| {
+            let comparator = json!({"interfaceVersion":"truss-native-comparator/0.1.0","profile":pin,"valueDefinition":value_artifact,"sourceDomainDefinition":authored,"nativeDomainProfile":native_profile,"nativeDomainDefinition":empty,"operatorInventory":empty,"strategy":{"kind":"unicode-text-C","nativeType":"pg_catalog.text","encoding":"UTF8","collation":"pg_catalog.C","normalization":"none"},"castOutcome":"exact-or-error","nullOperands":"refuse","absentOperands":"refuse","qualification":empty});
+            let originals = BTreeMap::from([
+                (
+                    "valueDefinition".into(),
+                    OriginalArtifact {
+                        identity: value_artifact["identity"].as_str().unwrap().into(),
+                        bytes: graph_bytes.to_vec(),
+                    },
+                ),
+                (
+                    "sourceDomainDefinition".into(),
+                    OriginalArtifact {
+                        identity: authored["identity"].as_str().unwrap().into(),
+                        bytes: bytes.clone(),
+                    },
+                ),
+                (
+                    "nativeDomainDefinition".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+                (
+                    "operatorInventory".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+                (
+                    "qualification".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+            ]);
+            Comparator::parse(
+                &comparator.to_string(),
+                ComparatorSelection {
+                    profile: &pin,
+                    native_profile,
+                    original_artifacts: &originals,
+                    operations: &BTreeSet::from([Operation::Equality]),
+                },
+                &logical,
+            )
+            .unwrap()
+        };
+        let registration = registration_key(&record.identity, &member.identity);
+        let requirements = vec![Requirement {
+            owner: record.identity.clone(),
+            identity: member.identity.clone(),
+            logical_type: logical.clone(),
+            operations: BTreeSet::from([Operation::Equality]),
+        }];
+        let comparisons = BTreeMap::from([(
+            registration.clone(),
+            make_comparator(value_artifact.clone(), &graph_bytes, &pin),
+        )]);
+        let properties = BTreeMap::from([(registration.clone(), property)]);
+        admit_properties(&requirements, &properties, &comparisons).unwrap();
+        assert!(admit_properties(&requirements, &BTreeMap::new(), &comparisons).is_err());
+        let mut wrong_artifact = value_artifact.clone();
+        wrong_artifact["identity"] = json!("another-original-graph");
+        let wrong = BTreeMap::from([(
+            registration.clone(),
+            make_comparator(wrong_artifact, &graph_bytes, &pin),
+        )]);
+        assert!(admit_properties(&requirements, &properties, &wrong).is_err());
+        let mut native_profile = pin.clone();
+        native_profile["identity"] = json!("another-native-domain");
+        let wrong = BTreeMap::from([(
+            registration,
+            make_comparator(value_artifact, &graph_bytes, &native_profile),
+        )]);
+        assert!(admit_properties(&requirements, &properties, &wrong).is_err());
         let empty_columns = BTreeMap::new();
         let mut missing = physical();
         missing.columns = &empty_columns;

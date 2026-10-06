@@ -272,6 +272,62 @@ pub fn admit(
     }
     Ok(())
 }
+/// Link requested operations to the original admitted owned property and its
+/// exact value/native-domain selection before allowing target lowering.
+pub fn admit_properties(
+    requirements: &[Requirement],
+    properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    definitions: &BTreeMap<String, Definition>,
+) -> Result<()> {
+    admit(requirements, definitions)?;
+    for requirement in requirements {
+        let key = registration_key(&requirement.owner, &requirement.identity);
+        let property = properties
+            .get(&key)
+            .ok_or_else(|| fail("Requested comparator has no admitted owned property"))?;
+        if property.owner != requirement.owner || property.identity != requirement.identity {
+            return Err(fail(
+                "Comparator registration substitutes property ownership",
+            ));
+        }
+        let descriptor = property
+            .value
+            .descriptors
+            .iter()
+            .find(|descriptor| descriptor.identity == requirement.identity)
+            .ok_or_else(|| fail("Comparator root has no original descriptor"))?;
+        if !matches!(&descriptor.shape,weft_core::application_model::Shape::Scalar{logical_type} if logical_type==&requirement.logical_type)
+        {
+            return Err(fail(
+                "Comparator property is not the exact resolved scalar domain",
+            ));
+        }
+        let comparator = weft_core::json::checked_json(&definitions[&key].original_json)
+            .map_err(|_| fail("Original comparator JSON refused"))?;
+        if comparator["valueDefinition"] != property.value.definition_artifact {
+            return Err(fail(
+                "Comparator value artifact differs from original property definition",
+            ));
+        }
+        let graph = &property.value.graph;
+        let bytes = graph
+            .artifacts
+            .get(&format!("/nodes/{}/codecDefinition", graph.root))
+            .ok_or_else(|| fail("Comparator property root lacks original leaf codec"))?;
+        let leaf = weft_core::json::checked_json(
+            std::str::from_utf8(bytes).map_err(|_| fail("Original leaf codec is not UTF-8"))?,
+        )
+        .map_err(|_| fail("Original leaf codec JSON refused"))?;
+        if comparator["nativeDomainProfile"] != leaf["nativeDomainProfile"]
+            || comparator["nativeDomainDefinition"] != leaf["nativeDomainDefinition"]
+        {
+            return Err(fail(
+                "Comparator native domain differs from admitted property leaf codec",
+            ));
+        }
+    }
+    Ok(())
+}
 #[cfg(test)]
 mod tests {
     use super::*;
