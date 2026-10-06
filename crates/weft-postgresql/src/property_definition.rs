@@ -1236,6 +1236,22 @@ mod tests {
         assert_eq!(accesses.len(), 1);
         assert_eq!(accesses[0].value_layout.nodes.len(), 1);
         assert_eq!(accesses[0].value_layout.root, 0);
+        let mut row_budget = crate::row_custody::Budget {
+            remaining_bytes: 4096,
+            remaining_cells: 8,
+        };
+        assert!(crate::row_custody::admit_property(
+            &properties[&registration],
+            &accesses[0],
+            &[Some("false"), None, None, None, None, None, None, None],
+            &mut row_budget,
+        )
+        .is_err());
+        assert_eq!(
+            row_budget.remaining_cells, 8,
+            "Wrong storage home cannot consume native decoding work"
+        );
+        assert_eq!(row_budget.remaining_bytes, 4096);
         let captured_storage = accesses[0].scalar_storage.as_ref().unwrap();
         assert!(captured_storage.storage_integrity.ends_with("='string')"));
         assert!(captured_storage

@@ -1,0 +1,11 @@
+{
+  "scope": "Original-property coupling and wrong-home refusal for private row scalar observation admission; positive original-row property integration and semantic decoder remain pending",
+  "sourcePins": {
+    "crates/weft-postgresql/src/row_custody.rs": "533be57cc82deee64c16c6d49d8465ba7e9083996fdce3138dc90f2a5c2b9587",
+    "crates/weft-postgresql/src/property_definition.rs": "d0a44234ff8a0a91f883dd8d8e66e92422f358c5dbfa4f579d8d2d76a70b9154"
+  },
+  "rustTestLogSha256": "15dac7fc491f3d6c4c41488cfb01542b047ceec77257cfbd91cbc897fe015cfb",
+  "rustTestsPassed": 70,
+  "nativeExecution": false,
+  "positiveOriginalRowIntegration": false
+}

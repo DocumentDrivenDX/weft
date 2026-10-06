@@ -27,6 +27,59 @@ pub enum Observation {
         source_bytes: Vec<u8>,
     },
 }
+/// Original-property custody, still awaiting its selected semantic decoder.
+#[derive(Debug)]
+pub struct SelectedObservation<'a> {
+    pub observation: Observation,
+    pub presence_bytes: &'a [u8],
+}
+/// Derive family/codec from the original property; observations cannot select
+/// their own logical type. Physical absence remains uninterpreted here.
+pub fn admit_property<'a>(
+    property: &'a crate::property_definition::PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    cells: &[Option<&str>],
+    budget: &mut Budget,
+) -> Result<SelectedObservation<'a>> {
+    access.verify_property(property)?;
+    if !matches!(access.location, crate::registered_access::Location::Row(_))
+        || !matches!(
+            property.home,
+            crate::property_definition::HomeAdmission::Row { .. }
+        )
+    {
+        return Err(fail(
+            "Native scalar observation requires its original row home",
+        ));
+    }
+    // Checks graph custody and full descriptor closure, without granting a codec.
+    crate::result_definition::property_column(property, 1, "weft_native_custody")?;
+    let descriptor = property
+        .value
+        .descriptors()
+        .iter()
+        .find(|descriptor| descriptor.identity == property.identity)
+        .ok_or_else(|| fail("Native observation lacks original root descriptor"))?;
+    let weft_core::application_model::Shape::Scalar { logical_type } = &descriptor.shape else {
+        return Err(fail(
+            "Compound native observation requires its selected tree decoder",
+        ));
+    };
+    let codec = property
+        .value
+        .graph
+        .artifacts
+        .get(&format!(
+            "/nodes/{}/codecDefinition",
+            property.value.graph.root,
+        ))
+        .ok_or_else(|| fail("Native observation lacks original root codec bytes"))?;
+    let observation = admit(cells, logical_type.family.clone(), codec, budget)?;
+    Ok(SelectedObservation {
+        observation,
+        presence_bytes: property.value.presence.original_json.as_bytes(),
+    })
+}
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-DECODE", "decode", message)
 }
