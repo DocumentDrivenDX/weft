@@ -1265,3 +1265,23 @@ a byte-different codec before parameter allocation. All 52 PostgreSQL crate test
 pass. Numeric/boolean branch implementation is not new native qualification;
 independent registered domain procedures, recursive and row lowering, result
 bridge and public backend integration remain required before B-005 acceptance.
+
+### Four-family extraction controls and native primitive probe (2026-10-06)
+
+Leaf extraction SQL now lives with the original codec interpreter, reused by
+composed property emission. A four-family Rust control changes the parsed rule
+projection and verifies original-rule extraction, boolean CASE guarding and text
+carriers for Unicode/integer/decimal. All 53 crate tests pass (32 library, four
+binding, 17 compiler).
+
+The independent leaf-storage-primitives.sql probe ran through prepared text member
+selection on the owned PostgreSQL 17.9 container. Ten rows returned the expected
+physical observations: é😀 with two trailing spaces retained; false as native
+boolean false; 18446744073709551615 and -0.00 retained as exact string tokens;
+a JSON number retained its number kind; invalid boolean text never entered the
+boolean cast. Missing returned present=false; JSON null returned present=true
+and kind=null; array and SQL-null roots returned unknown presence. This verifies
+native extraction primitives, not compiler-generated full queries, token-domain
+admission, complete-result publication, deployed codec adoption or native profile
+qualification. Reproduce with psql -X -q --csv -v ON_ERROR_STOP=1 against the owned
+fixture container using tests/truss-postgresql/leaf-storage-primitives.sql.

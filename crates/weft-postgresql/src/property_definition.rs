@@ -138,19 +138,7 @@ impl PropertyAdmission {
             return Err(fail("Selected extraction codec differs from admitted root"));
         }
         let location = self.home.props_location(owner_alias, parameters)?;
-        let original_codec = checked_json(&codec.original_json)
-            .map_err(|_| fail("Original extraction codec JSON refused"))?;
-        let (kind, carrier) = match original_codec["rule"]["family"].as_str() {
-            Some("boolean") => ("boolean", format!(
-                "CASE WHEN pg_catalog.jsonb_typeof({})='boolean' THEN {}::pg_catalog.bool ELSE NULL END",
-                location.leaf, location.text)),
-            Some("string" | "integer" | "decimal") => ("string", location.text.clone()),
-            _ => return Err(fail("Original extraction family is unknown")),
-        };
-        let storage_integrity = format!(
-            "({} AND pg_catalog.jsonb_typeof({})='{kind}')",
-            location.root_integrity, location.leaf
-        );
+        let (carrier, storage_integrity) = codec.storage_expressions(&location)?;
         Ok(LeafStorage {
             location,
             carrier,

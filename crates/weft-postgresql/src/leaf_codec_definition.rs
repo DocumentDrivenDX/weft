@@ -39,6 +39,27 @@ fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
 impl Definition {
+    /// Physical extraction only: callers must couple this codec to its admitted
+    /// graph and qualify source/native domains before publishing the carrier.
+    pub(crate) fn storage_expressions(
+        &self,
+        location: &crate::property_definition::PropsLocation,
+    ) -> Result<(String, String)> {
+        let original_codec = checked_json(&self.original_json)
+            .map_err(|_| fail("Original extraction codec JSON refused"))?;
+        let (kind, carrier) = match original_codec["rule"]["family"].as_str() {
+            Some("boolean") => ("boolean", format!(
+                "CASE WHEN pg_catalog.jsonb_typeof({})='boolean' THEN {}::pg_catalog.bool ELSE NULL END",
+                location.leaf, location.text)),
+            Some("string" | "integer" | "decimal") => ("string", location.text.clone()),
+            _ => return Err(fail("Original extraction family is unknown")),
+        };
+        let storage_integrity = format!(
+            "({} AND pg_catalog.jsonb_typeof({})='{kind}')",
+            location.root_integrity, location.leaf
+        );
+        Ok((carrier, storage_integrity))
+    }
     pub fn parse(raw: &str, selected: Selection<'_>) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -205,6 +226,42 @@ mod tests {
                     .collect()
             );
             assert_eq!(definition.original_json, value.to_string());
+        }
+    }
+    #[test]
+    fn all_leaf_storage_rules_preserve_carriers_and_guard_boolean_casts() {
+        let location = crate::property_definition::PropsLocation {
+            root: "owner.props".into(),
+            leaf: "(owner.props -> $1::text)".into(),
+            text: "(owner.props ->> $1::text)".into(),
+            present: "presence".into(),
+            native_null: "native_null".into(),
+            root_integrity: "root_ok".into(),
+        };
+        for family in ["string", "boolean", "integer", "decimal"] {
+            let (value, originals) = fixture(family);
+            let mut definition = parse(&value, &originals).unwrap();
+            // Extraction uses captured original rules rather than this mutable projection.
+            definition.rule = Rule::Boolean;
+            let (carrier, integrity) = definition.storage_expressions(&location).unwrap();
+            let kind = if family == "boolean" {
+                "boolean"
+            } else {
+                "string"
+            };
+            assert_eq!(
+                integrity,
+                format!(
+                    "(root_ok AND pg_catalog.jsonb_typeof({})='{kind}')",
+                    location.leaf
+                )
+            );
+            if family == "boolean" {
+                assert_eq!(carrier, format!("CASE WHEN pg_catalog.jsonb_typeof({})='boolean' THEN {}::pg_catalog.bool ELSE NULL END", location.leaf, location.text));
+            } else {
+                assert_eq!(carrier, location.text);
+                assert!(!carrier.contains("numeric"));
+            }
         }
     }
     #[test]
