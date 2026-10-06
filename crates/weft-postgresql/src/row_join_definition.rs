@@ -472,6 +472,7 @@ mod tests {
     }
     #[test]
     fn root_locations_keep_object_and_edge_ownership_and_atomic_slots() {
+        let mut captures = Vec::new();
         for edge in [false, true] {
             let f = fixture(edge);
             let mut parameters = crate::Parameters::default();
@@ -509,6 +510,9 @@ mod tests {
             } else {
                 "\"type_id\""
             }));
+            parse(&f.value, &f).unwrap();
+            captures.push(json!({"kind":if edge {"edge"} else {"object"},
+                "joins":location.joins,"integrity":location.structural_integrity}));
             let slots = parameters.into_slots();
             assert_eq!(
                 slots
@@ -534,6 +538,9 @@ mod tests {
             )
             .is_err());
             assert_eq!(parameters.into_slots().len(), 1023);
+        }
+        if let Ok(path) = std::env::var("WEFT_ROW_LOCATION_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
         }
     }
     #[test]

@@ -1324,3 +1324,29 @@ before parameter mutation. Object/edge component controls check the prerequisite
 count/root structure and probe-alias refusal, preserving atomic slot custody.
 All 54 PostgreSQL crate tests pass. This turn adds no native corruption result or
 profile qualification; native execution of emitted prerequisites remains required.
+
+### Native execution of emitted row structural prerequisites (2026-10-06)
+
+The original object/edge row-location Rust test now supports explicit test-only
+emission capture through WEFT_ROW_LOCATION_CAPTURE. Each definition fixture
+passes its original registration gate; emitted joins/prerequisite bytes are
+captured directly rather than rebuilt in the host. The saved capture is
+tests/truss-postgresql/fixtures/row-location-emission.json. The independent Python
+harness row-location-native.py executes those expressions with unchanged prepared
+int catalog parameters against rollback-isolated unconstrained fixture tables.
+
+Twenty scenarios (ten per owner kind) pass on PostgreSQL 17.9. Duplicate state,
+root and payload rows produce false prerequisites on every observed duplicate;
+missing/parented roots and NULL state IDs refuse. Independent absence, valid
+roots and compound roots without scalar payload pass the structural subset.
+Foreign owner state remains absent for the selected full tuple; this is not proof
+of authorization visibility. Exact scenario membership/counts are independently
+authored. The JSON receipt records original capture, generated SQL and harness
+hashes plus the actual engine version and all observations. No full Truss native
+profile, recursive codec, typed payload domain or publication gate is qualified.
+
+Reproduce capture with cargo test -p weft-postgresql --locked root_locations_keep
+and WEFT_ROW_LOCATION_CAPTURE set to an explicit file; run the Python harness
+with that file against owned weft-b005-pg17. All 54 crate tests also pass without
+the capture environment. The twenty executions are separate physical-component
+evidence, not additional application story acceptances or production claims.

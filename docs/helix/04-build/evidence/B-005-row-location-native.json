@@ -1,0 +1,76 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "6abbef82fecdf8c03a008fa8ccbd4414556076c47c8a9dcaf15d510ea3e5a541",
+  "sqlSha256": "7a1280b97994fbd59f136c533628f31ca32ea1fb3771cf2ee5aae82e9a4ff459",
+  "harnessSha256": "d93c4689dbd229ac28dc0fb6ec9277ed97f329107f1eed2aaded88c3a6543658",
+  "scope": "Rust-emitted physical root structural predicates on synthetic unconstrained tables; not native Truss profile qualification",
+  "scenarios": 20,
+  "observations": {
+    "object:absent": [
+      "t"
+    ],
+    "object:valid": [
+      "t"
+    ],
+    "object:missing-root": [
+      "f"
+    ],
+    "object:duplicate-state": [
+      "f",
+      "f"
+    ],
+    "object:duplicate-root": [
+      "f",
+      "f"
+    ],
+    "object:duplicate-scalar": [
+      "f",
+      "f"
+    ],
+    "object:parented-root": [
+      "f"
+    ],
+    "object:null-state-id": [
+      "f"
+    ],
+    "object:wrong-owner": [
+      "t"
+    ],
+    "object:compound-root": [
+      "t"
+    ],
+    "edge:absent": [
+      "t"
+    ],
+    "edge:valid": [
+      "t"
+    ],
+    "edge:missing-root": [
+      "f"
+    ],
+    "edge:duplicate-state": [
+      "f",
+      "f"
+    ],
+    "edge:duplicate-root": [
+      "f",
+      "f"
+    ],
+    "edge:duplicate-scalar": [
+      "f",
+      "f"
+    ],
+    "edge:parented-root": [
+      "f"
+    ],
+    "edge:null-state-id": [
+      "f"
+    ],
+    "edge:wrong-owner": [
+      "t"
+    ],
+    "edge:compound-root": [
+      "t"
+    ]
+  }
+}
