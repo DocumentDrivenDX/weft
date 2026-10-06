@@ -538,3 +538,64 @@ fn unknown_execution_basis_profiles_refuse_before_sql() {
         assert!(response.get("sql").is_none());
     }
 }
+
+#[test]
+fn selected_page_and_relationship_keys_cannot_replace_registered_meaning() {
+    use base64::{engine::general_purpose::STANDARD, Engine};
+    let compiler = compiler();
+    let cases: Vec<Value> =
+        serde_json::from_str(include_str!("fixtures/application-cases.json")).unwrap();
+    for case in cases
+        .iter()
+        .filter(|case| {
+            case["id"].as_str().unwrap().ends_with("-props")
+                && (case["request"]["sql"]
+                    .as_str()
+                    .unwrap()
+                    .contains("RELATED_KEYS")
+                    || case["id"] == "whole-entity-props")
+        })
+        .take(3)
+    {
+        let selected_keys = if case["id"] == "whole-entity-props" {
+            vec![0]
+        } else {
+            vec![0, 1]
+        };
+        for key_index in selected_keys {
+            for member in [
+                "comparisonProfile",
+                "encodingProfile",
+                "comparisonDefinition",
+                "encodingDefinition",
+            ] {
+                let mut request = case["request"].clone();
+                let mut binding: Value =
+                    serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap())
+                        .unwrap();
+                // Change endpoints independently so the page key cannot mask a target-key gap.
+                {
+                    let key = &mut binding["keys"][key_index];
+                    if member.ends_with("Profile") {
+                        key[member]["identity"] = json!("unregistered.key.meaning");
+                    } else {
+                        let bytes = b"{\"meaning\":\"replacement\"}";
+                        key[member]["bytesBase64"] = json!(STANDARD.encode(bytes));
+                        key[member]["sha256"] = json!(weft_core::json::sha256(bytes));
+                    }
+                }
+                let raw = binding.to_string();
+                request["target"]["bindingJson"] = json!(raw);
+                request["target"]["bindingSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+                let response = run(&compiler, &request);
+                assert_eq!(
+                    response["status"], "blocked",
+                    "{} {member}: {response}",
+                    case["id"]
+                );
+                assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
+                assert!(response.get("sql").is_none());
+            }
+        }
+    }
+}

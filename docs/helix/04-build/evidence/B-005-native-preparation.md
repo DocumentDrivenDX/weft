@@ -997,3 +997,27 @@ were corrected before this successful run. This helper is not yet called by
 candidate lowering: the synthetic candidate binding remains separate until
 real profile admission is integrated. No native/embedding rerun or production
 qualification is claimed for this standalone pure compiler addition.
+
+### Selected key meaning admission in the candidate compiler (2026-10-06)
+
+Integration inspection found an actual refusal gap: selected page and relationship
+keys could replace their comparison/encoding profile or definition while fixed
+candidate SQL retained its own key semantics. A regression compiled an altered
+page key and failed the expected-refusal assertion before the implementation fix.
+An initial test-source reference comparison error was corrected before that red
+behavioral observation.
+
+Shared candidate key admission now requires its explicit synthetic registered
+comparison/encoding profiles and exact original `{}` definition bytes, ordered
+property mapping and full authored key correspondence under its entity. Page
+keys and both independently typed relationship endpoints use that admission.
+Unselected keys are not treated as requested semantics. This refuses foreign
+meaning rather than pretending the fixed candidate implements it.
+
+The regression changes profiles and rehashed definitions for a page plus forward
+and inverse RELATED_KEYS cases, mutating endpoint keys independently so a page
+key failure cannot mask a target-key gap. All 42 Rust tests pass, including the
+existing valid application/relational compiler corpus. Native SQL templates and
+public ABIs are unchanged; native and embedding checks were not rerun for this
+admission-only fix. Real selected-profile graph/codec/comparator integration and
+qualified host execution remain required before B-005 is merged.

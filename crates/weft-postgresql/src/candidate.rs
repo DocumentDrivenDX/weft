@@ -52,6 +52,68 @@ fn original_element(
         .clone();
     Ok((document, element))
 }
+fn validate_key(
+    mapping: &Admission,
+    owner_identity: &Identity,
+    key: &weft_core::application_model::AuthoredKey,
+) -> Result<()> {
+    let (entity_index, entity) = mapping.value["entities"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .find(|(_, entity)| entity["logical"] == json!(owner_identity))
+        .ok_or_else(|| fail("Key owner mapping is missing"))?;
+    let owner = &entity["typeId"];
+    let (index, physical) = mapping.value["keys"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .enumerate()
+        .find(|(_, physical)| &physical["ownerTypeId"] == owner && physical["keyId"] == key.id)
+        .ok_or_else(|| fail("Authored key mapping is missing"))?;
+    let expected = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+    for kind in ["comparison", "encoding"] {
+        if physical[format!("{kind}Profile")] != expected
+            || mapping
+                .artifacts
+                .get(&format!("/keys/{index}/{kind}Definition"))
+                .is_none_or(|bytes| bytes != b"{}")
+        {
+            return Err(fail(
+                "Selected key comparison or encoding meaning is not registered for this candidate",
+            ));
+        }
+    }
+    let ordered = key
+        .fields
+        .iter()
+        .map(|field| {
+            mapping.value["properties"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|property| {
+                    &property["ownerTypeId"] == owner && property["logical"] == json!(field)
+                })
+                .map(|property| property["propertyId"].clone())
+                .ok_or_else(|| fail("Key property mapping is missing"))
+        })
+        .collect::<Result<Vec<_>>>()?;
+    if physical["orderedPropertyIds"] != json!(ordered) {
+        return Err(fail("Key property order differs from authored key"));
+    }
+    let definition =
+        mapping.decoded_json(&format!("/entities/{entity_index}/acceptedDefinition"))?;
+    let authored = definition["keys"]
+        .as_array()
+        .and_then(|keys| keys.iter().find(|authored| authored["id"] == key.id))
+        .ok_or_else(|| fail("Accepted entity lacks authored key"))?;
+    if mapping.decoded_json(&format!("/keys/{index}/acceptedDefinition"))? != *authored {
+        return Err(fail("Accepted key differs from its original entity key"));
+    }
+    Ok(())
+}
 fn obligations() -> Vec<Obligation> {
     vec![Obligation {
         id: "truss.candidate.context".into(),
@@ -237,58 +299,7 @@ impl Backend for Candidate {
         }
         if let Plan::V02(plan) = c.plan {
             if let Some(key) = &plan.page_key {
-                let entity = admitted.value["entities"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .find(|e| e["logical"] == json!(plan.source.record))
-                    .ok_or_else(|| fail("Page owner mapping is missing"))?;
-                let owner = &entity["typeId"];
-                let (index, physical) = admitted.value["keys"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .enumerate()
-                    .find(|(_, k)| &k["ownerTypeId"] == owner && k["keyId"] == key.id)
-                    .ok_or_else(|| fail("Authored page key mapping is missing"))?;
-                let ordered = key
-                    .fields
-                    .iter()
-                    .map(|field| {
-                        admitted.value["properties"]
-                            .as_array()
-                            .unwrap()
-                            .iter()
-                            .find(|p| &p["ownerTypeId"] == owner && p["logical"] == json!(field))
-                            .map(|p| p["propertyId"].clone())
-                            .ok_or_else(|| fail("Page key property mapping is missing"))
-                    })
-                    .collect::<Result<Vec<_>>>()?;
-                if physical["orderedPropertyIds"] != json!(ordered) {
-                    return Err(fail(
-                        "Page key property order differs from the authored key",
-                    ));
-                }
-                let entity_index = admitted.value["entities"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .position(|e| e == entity)
-                    .unwrap();
-                let definition = admitted
-                    .decoded_json(&format!("/entities/{entity_index}/acceptedDefinition"))?;
-                let authored = definition["keys"]
-                    .as_array()
-                    .and_then(|keys| keys.iter().find(|k| k["id"] == key.id))
-                    .ok_or_else(|| {
-                        fail("Accepted entity definition lacks the authored page key")
-                    })?;
-                if admitted.decoded_json(&format!("/keys/{index}/acceptedDefinition"))? != *authored
-                {
-                    return Err(fail(
-                        "Accepted physical key definition differs from its entity key",
-                    ));
-                }
+                validate_key(&admitted, &plan.source.record, key)?;
             }
         }
         Ok(Validated {

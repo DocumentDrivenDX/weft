@@ -51,6 +51,7 @@ pub(super) fn validate(
     };
     // Endpoint keys have independent arities. Never zip source and target keys.
     for (role, record, key) in roles {
+        validate_key(mapping, record, key)?;
         let owner = &mapping.value["entities"]
             .as_array()
             .unwrap()
