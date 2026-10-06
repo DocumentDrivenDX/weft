@@ -37,6 +37,70 @@ fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
 impl Definition {
+    /// Compose the admitted join with its enclosing original property home.
+    /// This does not establish the runtime procedure behind a host obligation.
+    pub fn verify_home(
+        &self,
+        binding: &crate::binding::Admission,
+        index: usize,
+        registered_obligations: &BTreeSet<String>,
+        edge_association_profile: Option<&Value>,
+    ) -> Result<()> {
+        let home = binding.original_home_definition(index)?;
+        let property = &binding.value["properties"][index];
+        let definition = checked_json(&self.original_json)
+            .map_err(|_| fail("Original row join JSON refused"))?;
+        if property["home"] != "row"
+            || home["recordKind"] != definition["recordKind"]
+            || home["joinProfile"] != definition["profile"]
+            || home["layoutInventory"] != definition["layoutInventory"]
+            || home["valueDefinition"] != property["valueDefinition"]
+            || home["presenceDefinition"] != property["presenceDefinition"]
+        {
+            return Err(fail(
+                "Row home differs from its original selected join/value/presence",
+            ));
+        }
+        for (role, key) in [
+            ("state", "stateRelationPhysicalIdentity"),
+            ("node", "nodeRelationPhysicalIdentity"),
+            ("scalar", "scalarRelationPhysicalIdentity"),
+        ] {
+            if home[key] != definition[role]["relationPhysicalIdentity"] {
+                return Err(fail("Row home redirects an admitted join relation"));
+            }
+        }
+        let artifact = &home["joinDefinition"];
+        let encoded = artifact["bytesBase64"]
+            .as_str()
+            .ok_or_else(|| fail("Original join artifact is not base64 text"))?;
+        let bytes = STANDARD
+            .decode(encoded)
+            .map_err(|_| fail("Original join artifact base64 refused"))?;
+        if STANDARD.encode(&bytes) != encoded
+            || artifact["sha256"] != sha256(&bytes)
+            || bytes != self.original_json.as_bytes()
+        {
+            return Err(fail(
+                "Row home join artifact differs from admitted original bytes",
+            ));
+        }
+        if !registered_obligations.contains(home["storedDomainObligation"].as_str().unwrap()) {
+            return Err(fail(
+                "Row home stored-domain obligation has no registered meaning",
+            ));
+        }
+        if self.record_kind == RecordKind::Edge
+            && (edge_association_profile
+                .is_none_or(|profile| &home["edgeAssociationProfile"] != profile)
+                || home["edgeAssociationDefinition"] != definition["edgeAssociationDefinition"])
+        {
+            return Err(fail(
+                "Row home edge association differs from registered original meaning",
+            ));
+        }
+        Ok(())
+    }
     pub fn parse(raw: &str, selected: Selection<'_>) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -352,5 +416,77 @@ mod tests {
             .unwrap()
             .remove("edgeAssociationDefinition");
         assert!(parse(&value, &fixture(true)).is_err());
+    }
+    #[test]
+    fn original_home_composes_exact_join_without_using_candidate_physical_ids() {
+        use crate::binding::Admission;
+        let mut f = fixture(false);
+        let mut binding: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/binding-row.json"
+        ))
+        .unwrap();
+        f.value["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+        f.artifacts.get_mut("layoutInventory").unwrap().identity = binding["basis"]
+            ["layoutInventory"]["identity"]
+            .as_str()
+            .unwrap()
+            .into();
+        let definition = parse(&f.value, &f).unwrap();
+        let home_bytes = STANDARD
+            .decode(
+                binding["properties"][0]["homeDefinition"]["bytesBase64"]
+                    .as_str()
+                    .unwrap(),
+            )
+            .unwrap();
+        let mut home: Value = serde_json::from_slice(&home_bytes).unwrap();
+        home["joinProfile"] = f.value["profile"].clone();
+        let bytes = definition.original_json.as_bytes();
+        home["joinDefinition"] = json!({"identity":"original-selected-join","bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+        for (role, key) in [
+            ("state", "stateRelationPhysicalIdentity"),
+            ("node", "nodeRelationPhysicalIdentity"),
+            ("scalar", "scalarRelationPhysicalIdentity"),
+        ] {
+            home[key] = f.value[role]["relationPhysicalIdentity"].clone();
+        }
+        let admit = |home: &Value| {
+            let mut bound = binding.clone();
+            let bytes = home.to_string().into_bytes();
+            bound["properties"][0]["homeDefinition"]["bytesBase64"] =
+                json!(STANDARD.encode(&bytes));
+            bound["properties"][0]["homeDefinition"]["sha256"] = json!(sha256(&bytes));
+            Admission::parse(&bound.to_string(), "candidate-test-binding/0.1.0").unwrap()
+        };
+        let obligations =
+            BTreeSet::from([home["storedDomainObligation"].as_str().unwrap().to_string()]);
+        let admitted = admit(&home);
+        definition
+            .verify_home(&admitted, 0, &obligations, None)
+            .unwrap();
+        assert!(admitted.property_home(0).is_err()); // Fixed candidate IDs remain a distinct profile.
+        assert!(definition
+            .verify_home(&admitted, 0, &BTreeSet::new(), None)
+            .is_err());
+        let mut wrong = home.clone();
+        wrong["nodeRelationPhysicalIdentity"] = json!("foreign-node");
+        assert!(definition
+            .verify_home(&admit(&wrong), 0, &obligations, None)
+            .is_err());
+        let mut wrong = home.clone();
+        wrong["joinDefinition"]["sha256"] = json!("0".repeat(64));
+        assert!(definition
+            .verify_home(&admit(&wrong), 0, &obligations, None)
+            .is_err());
+        let mut wrong = home.clone();
+        wrong["joinProfile"]["identity"] = json!("foreign-profile");
+        assert!(definition
+            .verify_home(&admit(&wrong), 0, &obligations, None)
+            .is_err());
+        let mut wrong = home;
+        wrong["valueDefinition"]["identity"] = json!("foreign-value");
+        assert!(definition
+            .verify_home(&admit(&wrong), 0, &obligations, None)
+            .is_err());
     }
 }

@@ -201,6 +201,34 @@ pub enum PropertyHome {
 impl Admission {
     /// Decode explicit location meaning. Inventory/codec/guard qualification is
     /// intentionally a separate backend assessment, not established by this tag.
+    /// Read original home correspondence without applying a fixed candidate's
+    /// physical IDs. A registered backend must resolve the returned selectors.
+    pub fn original_home_definition(&self, index: usize) -> Result<Value> {
+        let property = self.value["properties"]
+            .get(index)
+            .ok_or_else(|| fail("Missing property mapping"))?;
+        let home = self.decoded_json(&format!("/properties/{index}/homeDefinition"))?;
+        if !OwnerShape::is_valid(&home)
+            || home["ownerCatalogId"] != property["ownerTypeId"]
+            || home["propertyCatalogId"] != property["propertyId"]
+            || home["layoutInventory"] != self.value["basis"]["layoutInventory"]
+        {
+            return Err(fail(
+                "Original home grammar or owner/property/inventory differs",
+            ));
+        }
+        native(&home["ownerCatalogId"], 32)?;
+        native(&home["propertyCatalogId"], 32)?;
+        let matches = match property["home"].as_str() {
+            Some("props") => home["interfaceVersion"] == "truss-property-home/0.1.0",
+            Some("row") => home["interfaceVersion"] == "truss-row-home/0.1.0",
+            _ => false,
+        };
+        if !matches {
+            return Err(fail("Declared home and original definition disagree"));
+        }
+        Ok(home)
+    }
     pub fn property_home(&self, index: usize) -> Result<PropertyHome> {
         let property = self.value["properties"]
             .get(index)

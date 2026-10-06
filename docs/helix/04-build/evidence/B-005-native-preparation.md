@@ -1049,3 +1049,25 @@ do not qualify native constraints, authorized visibility or publication, and
 edge definition admission does not add a logical edge-property query feature.
 Candidate lowering still uses its separate synthetic mapping until real-profile
 integration is completed.
+
+### Original property-home to native-join correspondence (2026-10-06)
+
+Binding admission now exposes original home shape/owner/property/inventory
+correspondence separately from fixed synthetic candidate physical IDs. Existing
+candidate property_home admission retains its original restrictions. A registered
+physical definition may therefore be checked without renaming it into candidate
+fixtures or granting the candidate arbitrary selector support.
+
+The admitted row join composes with the enclosing home by exact record kind,
+profile, layout inventory, state/node/scalar physical identities and original
+join artifact bytes/base64/hash. Home value/presence artifacts must equal the
+property artifacts. Stored-domain obligations require explicit registered IDs;
+edge definitions additionally require registered association profile and exact
+association definition. Registry membership does not discharge host procedures.
+
+A complete original selector fixture with distinct physical IDs admits through
+the registered join correspondence while fixed candidate lowering correctly
+refuses those IDs. Unknown obligations, foreign node/profile/value and corrupted
+embedded join digest refuse. All 45 Rust tests pass. Inventory-byte interpretation,
+codec/native procedure qualification and actual SQL integration remain separate
+B-005 work; this correspondence API grants no production compatibility.
