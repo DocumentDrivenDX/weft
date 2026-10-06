@@ -217,3 +217,5 @@ pub mod native_comparator_definition;
 pub mod comparator_requirements;
 
 pub mod row_join_definition;
+
+pub mod property_definition;

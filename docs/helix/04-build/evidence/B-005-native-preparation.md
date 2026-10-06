@@ -1123,3 +1123,30 @@ the standalone real-definition APIs through wrappers or qualify Truss host dutie
 The fresh browser artifact is 10,394,193 bytes with SHA-256
 `d8a418d3fdcd0e5ad9147b247b1598fa099fb9731697dcbdd15efb584eb4c5c0`,
 verified in Chromium 153.0.8010.12 through Playwright 1.62.1.
+
+### Composed original property value admission (2026-10-06)
+
+A pure property value admission gate now consumes the enclosing binding, original
+selected catalog, frontend descriptors and separately registered value/presence/
+leaf/record-presence meanings. It computes the exact authored closure from frontend
+descriptors before inspecting the storage graph; binding-selected nodes cannot
+shrink the required closure. Cycles terminate by full identity. Missing or
+duplicate frontend identities refuse.
+
+Admission checks selected profile correspondence and original owning source
+document, then graph artifact custody, original authored definitions, resolved
+topology, leaf codecs and all record-member presence. Root presence must preserve
+the binding's full accepted artifact identity/bytes. The result retains original
+graph/presence JSON and the frontend descriptor closure. This composes value gates
+only; physical props/native-join and operation admission remain separate, and the
+function does not claim whole-backend qualification.
+
+A test uses an actual authored Customer.name Field from the existing pinned
+compiler corpus, resolves it through the frontend, and composes full graph, leaf
+and presence definitions. Empty/incompatible frontend closure and substituted
+source document refuse. A cyclic closure test proves finite dependency discovery
+and missing-dependency refusal. An initial test supplied an unnormalized unquoted
+Name and was corrected before success. All 50 Rust tests pass. Source/native
+interpretation registry payloads remain synthetic; candidate lowering has not
+been broadened to these definitions, and no native/embedding run is claimed for
+this standalone addition.
