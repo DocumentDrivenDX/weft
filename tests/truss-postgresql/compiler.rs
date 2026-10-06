@@ -471,3 +471,39 @@ fn unknown_selected_codec_cannot_reuse_candidate_type_directed_decoding() {
         }
     }
 }
+
+#[test]
+fn unknown_native_join_profile_cannot_select_fixed_row_joins() {
+    use base64::{engine::general_purpose::STANDARD, Engine};
+    let compiler = compiler();
+    let cases: Vec<Value> =
+        serde_json::from_str(include_str!("fixtures/application-cases.json")).unwrap();
+    let mut request =
+        cases.iter().find(|c| c["id"] == "global-sum-row").unwrap()["request"].clone();
+    let mut binding: Value =
+        serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    let property = binding["properties"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|p| p["logical"]["element"] == "order-total")
+        .unwrap();
+    let artifact = &mut property["homeDefinition"];
+    let mut definition: Value = serde_json::from_slice(
+        &STANDARD
+            .decode(artifact["bytesBase64"].as_str().unwrap())
+            .unwrap(),
+    )
+    .unwrap();
+    definition["joinProfile"]["identity"] = json!("unregistered.row.join");
+    let bytes = definition.to_string().into_bytes();
+    artifact["bytesBase64"] = json!(STANDARD.encode(&bytes));
+    artifact["sha256"] = json!(weft_core::json::sha256(&bytes));
+    let raw = binding.to_string();
+    request["target"]["bindingJson"] = json!(raw);
+    request["target"]["bindingSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+    let response = run(&compiler, &request);
+    assert_eq!(response["status"], "blocked");
+    assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
+    assert!(response.get("sql").is_none());
+}

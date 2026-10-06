@@ -730,3 +730,20 @@ exercises registration. All refuse with WFT-BINDING and no SQL. All 76 unchanged
 application fixtures still compile. SQL/result/obligation bytes for registered
 fixtures are unchanged; no new owner/native authority is inferred. B-005 stays
 in draft PR #7 with owner adoption and live host-enforcement gates open.
+
+### Selected native join profile registration (2026-10-06)
+
+A new public compile mutation test first demonstrated that an unknown native join
+profile could still select fixed row joins. With a correctly rehashed home and
+binding, the pre-fix response was compiled rather than the required refusal.
+Candidate assessment now requires the registered synthetic join pin and exact
+empty fixture definition bytes/hash. Unknown profile meanings refuse before SQL;
+these restrictions do not qualify an original Truss producer or owner join body.
+
+Twenty-one Rust tests pass after the fix, including all 76 unchanged application
+requests. The focused test has recorded red/green evidence in host logs. An initial
+command used an underscore instead of the declared hyphenated Cargo test target;
+that invocation was corrected before obtaining the actual failing assertion.
+Registered fixture SQL/result/obligation bytes are unchanged. Adopted owner join
+and association resource interpretation and live host enforcement remain open.
+The candidate remains draft PR #7, with no B-005 merge or B-006 start.

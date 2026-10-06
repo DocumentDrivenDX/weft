@@ -191,6 +191,14 @@ impl Backend for Candidate {
                 }
                 if matches!(admitted.property_home(i)?, PropertyHome::Row { .. }) {
                     let home = admitted.decoded_json(&format!("/properties/{i}/homeDefinition"))?;
+                    if home["joinProfile"] != expected
+                        || home["joinDefinition"]["sha256"] != expected["sha256"]
+                        || home["joinDefinition"]["bytesBase64"] != "e30="
+                    {
+                        return Err(fail(
+                            "Selected native join profile is not registered for this candidate",
+                        ));
+                    }
                     if home["storedDomainObligation"] != "truss.candidate.context" {
                         return Err(fail(
                             "Selected row home names an unregistered stored-domain obligation",
