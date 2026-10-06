@@ -1,4 +1,4 @@
-//! Compose original value admissions. Physical and operation admission follow separately.
+//! Compose original value and home admissions. Operation/native qualification follows.
 use crate::{
     binding::Admission, leaf_codec_definition, presence_definition, value_definition::Graph,
 };
@@ -22,6 +22,165 @@ pub struct ValueAdmission {
     pub graph: Graph,
     pub presence: presence_definition::Definition,
     pub descriptors: Vec<Descriptor>,
+}
+pub struct PhysicalSelection<'a> {
+    pub profile: &'a Value,
+    pub inventory: &'a leaf_codec_definition::OriginalArtifact,
+    pub relations: &'a BTreeMap<String, String>,
+    pub columns: &'a BTreeMap<String, crate::row_join_definition::Column>,
+    pub row_join: Option<&'a crate::row_join_definition::Definition>,
+    pub obligations: &'a BTreeSet<String>,
+    pub edge_association: Option<(&'a Value, &'a leaf_codec_definition::OriginalArtifact)>,
+}
+#[derive(Debug)]
+pub enum HomeAdmission {
+    Props {
+        member: String,
+        record_kind: crate::row_join_definition::RecordKind,
+    },
+    Row {
+        access: String,
+        record_kind: crate::row_join_definition::RecordKind,
+    },
+}
+#[derive(Debug)]
+pub struct PropertyAdmission {
+    pub value: ValueAdmission,
+    pub home: HomeAdmission,
+}
+/// Registered metadata must already correspond to original inventory bytes.
+/// This function checks selectors against that metadata; it does not create it.
+pub fn admit_home(
+    binding: &Admission,
+    index: usize,
+    selected: PhysicalSelection<'_>,
+) -> Result<HomeAdmission> {
+    use crate::row_join_definition::RecordKind;
+    let home = binding.original_home_definition(index)?;
+    let property = &binding.value["properties"][index];
+    let inventory = &binding.value["basis"]["layoutInventory"];
+    if &property["homeProfile"] != selected.profile
+        || inventory["identity"] != selected.inventory.identity
+        || binding
+            .artifacts
+            .get("/basis/layoutInventory")
+            .is_none_or(|bytes| bytes != &selected.inventory.bytes)
+    {
+        return Err(fail(
+            "Home profile or original inventory differs from registration",
+        ));
+    }
+    let edge = home["recordKind"] == "edge";
+    let record_kind = if edge {
+        RecordKind::Edge
+    } else {
+        RecordKind::Object
+    };
+    if edge {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        let (profile, original) = selected
+            .edge_association
+            .ok_or_else(|| fail("Edge home lacks registered association meaning"))?;
+        let artifact = &home["edgeAssociationDefinition"];
+        let encoded = artifact["bytesBase64"].as_str().unwrap();
+        let bytes = STANDARD
+            .decode(encoded)
+            .map_err(|_| fail("Edge association artifact base64 refused"))?;
+        if &home["edgeAssociationProfile"] != profile
+            || artifact["identity"] != original.identity
+            || bytes != original.bytes
+            || STANDARD.encode(&bytes) != encoded
+            || artifact["sha256"] != weft_core::json::sha256(&bytes)
+        {
+            return Err(fail(
+                "Edge home association differs from original registered selection",
+            ));
+        }
+    } else if selected.edge_association.is_some() {
+        return Err(fail(
+            "Object home cannot consume edge association selection",
+        ));
+    }
+    if property["home"] == "row" {
+        let join = selected
+            .row_join
+            .ok_or_else(|| fail("Native row home has no admitted original join"))?;
+        join.verify_home(
+            binding,
+            index,
+            selected.obligations,
+            selected.edge_association.map(|(profile, _)| profile),
+        )?;
+        return Ok(HomeAdmission::Row {
+            access: home["access"].as_str().unwrap().into(),
+            record_kind,
+        });
+    }
+    if selected.row_join.is_some() {
+        return Err(fail("Props home cannot consume native row join selection"));
+    }
+    let relation = home["relationPhysicalIdentity"].as_str().unwrap();
+    let relation_name = if edge { "edge" } else { "object" };
+    let discriminator = if edge { "rel_type_id" } else { "type_id" };
+    if home["relationName"] != relation_name
+        || home["discriminatorColumnName"] != discriminator
+        || selected
+            .relations
+            .get(relation)
+            .is_none_or(|name| name != relation_name)
+        || home["memberName"] != property["propertyId"]
+        || home["valueProfile"] != property["valueProfile"]
+        || home["presenceProfile"] != property["presenceProfile"]
+    {
+        return Err(fail(
+            "Props owner/member/value/presence differs from registered home",
+        ));
+    }
+    let props_id = home["propsColumnPhysicalIdentity"].as_str().unwrap();
+    let discriminator_id = home["discriminatorColumnPhysicalIdentity"]
+        .as_str()
+        .unwrap();
+    if props_id == discriminator_id {
+        return Err(fail(
+            "Props and discriminator cannot alias one physical column",
+        ));
+    }
+    for (id, name) in [(props_id, "props"), (discriminator_id, discriminator)] {
+        if selected
+            .columns
+            .get(id)
+            .is_none_or(|column| column.relation_identity != relation || column.name != name)
+        {
+            return Err(fail(
+                "Props column differs from original physical association",
+            ));
+        }
+    }
+    Ok(HomeAdmission::Props {
+        member: home["memberName"].as_str().unwrap().into(),
+        record_kind,
+    })
+}
+pub fn admit_property(
+    binding: &Admission,
+    index: usize,
+    catalog: &Catalog,
+    descriptors: &[Descriptor],
+    value: Selection<'_>,
+    physical: PhysicalSelection<'_>,
+) -> Result<PropertyAdmission> {
+    let value = admit_value(binding, index, catalog, descriptors, value)?;
+    let home = admit_home(binding, index, physical)?;
+    if matches!(&home,HomeAdmission::Row{access,..} if access=="scalar-root")
+        && value.graph.value["nodes"][value.graph.root]["shape"]["kind"] != "scalar"
+    {
+        return Err(Diagnostic::new(
+            "WFT-CAPABILITY",
+            "lower",
+            "Compound value cannot use scalar-root native storage",
+        ));
+    }
+    Ok(PropertyAdmission { value, home })
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
@@ -289,6 +448,62 @@ mod tests {
         let value = admit_value(&admitted, index, &catalog, &descriptors, select()).unwrap();
         assert_eq!(value.descriptors.len(), 1);
         assert_eq!(value.presence.accepted_definition, bytes);
+        let inventory = leaf_codec_definition::OriginalArtifact {
+            identity: binding["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: b"{}".to_vec(),
+        };
+        let relations = BTreeMap::from([("object-table".into(), "object".into())]);
+        let columns = BTreeMap::from([
+            (
+                "object-props".into(),
+                crate::row_join_definition::Column {
+                    relation_identity: "object-table".into(),
+                    name: "props".into(),
+                },
+            ),
+            (
+                "object-type".into(),
+                crate::row_join_definition::Column {
+                    relation_identity: "object-table".into(),
+                    name: "type_id".into(),
+                },
+            ),
+        ]);
+        let obligations = BTreeSet::new();
+        let physical = || PhysicalSelection {
+            profile: &pin,
+            inventory: &inventory,
+            relations: &relations,
+            columns: &columns,
+            row_join: None,
+            obligations: &obligations,
+            edge_association: None,
+        };
+        let property = admit_property(
+            &admitted,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            physical(),
+        )
+        .unwrap();
+        assert!(matches!(property.home, HomeAdmission::Props { .. }));
+        let empty_columns = BTreeMap::new();
+        let mut missing = physical();
+        missing.columns = &empty_columns;
+        assert!(admit_home(&admitted, index, missing).is_err());
+        let foreign_inventory = leaf_codec_definition::OriginalArtifact {
+            identity: inventory.identity.clone(),
+            bytes: b"changed".to_vec(),
+        };
+        let mut missing = physical();
+        missing.inventory = &foreign_inventory;
+        assert!(admit_home(&admitted, index, missing).is_err());
+
         assert!(admit_value(&admitted, index, &catalog, &[], select()).is_err());
         let mut wrong_binding = binding.clone();
         wrong_binding["properties"][index]["source"] = artifact("foreign-source", b"{}");
@@ -303,5 +518,38 @@ mod tests {
             item: member.identity,
         };
         assert!(admit_value(&admitted, index, &catalog, &wrong, select()).is_err());
+    }
+    #[test]
+    fn native_home_cannot_enter_props_path_without_original_join() {
+        let binding: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/binding-row.json"
+        ))
+        .unwrap();
+        let admitted = Admission::parse(
+            &binding.to_string(),
+            binding["bindingProfileId"].as_str().unwrap(),
+        )
+        .unwrap();
+        let inventory = leaf_codec_definition::OriginalArtifact {
+            identity: binding["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: b"{}".to_vec(),
+        };
+        assert!(admit_home(
+            &admitted,
+            0,
+            PhysicalSelection {
+                profile: &binding["properties"][0]["homeProfile"],
+                inventory: &inventory,
+                relations: &BTreeMap::new(),
+                columns: &BTreeMap::new(),
+                row_join: None,
+                obligations: &BTreeSet::new(),
+                edge_association: None
+            }
+        )
+        .is_err());
     }
 }

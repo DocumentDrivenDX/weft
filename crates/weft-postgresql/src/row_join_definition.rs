@@ -464,6 +464,31 @@ mod tests {
         definition
             .verify_home(&admitted, 0, &obligations, None)
             .unwrap();
+        let inventory = OriginalArtifact {
+            identity: binding["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: b"{}".to_vec(),
+        };
+        let home_admission = crate::property_definition::admit_home(
+            &admitted,
+            0,
+            crate::property_definition::PhysicalSelection {
+                profile: &binding["properties"][0]["homeProfile"],
+                inventory: &inventory,
+                relations: &f.relations,
+                columns: &f.columns,
+                row_join: Some(&definition),
+                obligations: &obligations,
+                edge_association: None,
+            },
+        )
+        .unwrap();
+        assert!(matches!(
+            home_admission,
+            crate::property_definition::HomeAdmission::Row { .. }
+        ));
         assert!(admitted.property_home(0).is_err()); // Fixed candidate IDs remain a distinct profile.
         assert!(definition
             .verify_home(&admitted, 0, &BTreeSet::new(), None)

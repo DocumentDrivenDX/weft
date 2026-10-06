@@ -1150,3 +1150,23 @@ Name and was corrected before success. All 50 Rust tests pass. Source/native
 interpretation registry payloads remain synthetic; candidate lowering has not
 been broadened to these definitions, and no native/embedding run is claimed for
 this standalone addition.
+
+### Composed value and original physical-home admission (2026-10-06)
+
+Property admission now combines the value gate with explicit registered home
+selection. Original home profile and inventory identity/bytes must match. Props
+selectors resolve relation/props/discriminator physical IDs to their registered
+relation/name associations; object and edge discriminators differ, columns cannot
+alias and member/value/presence pins stay tied to the enclosing property. Edge
+association requires its original registered profile/artifact in either home.
+Native rows consume their admitted original join and registered obligations; they
+cannot fall back to props. Compound roots refuse scalar-root row access.
+
+The authored props-field integration passes with independently supplied physical
+metadata and refuses missing columns/changed inventory. The existing complete
+original row-join fixture now passes through the composed physical-home gate,
+while a row binding lacking a selected join refuses. All 51 Rust tests pass.
+Registered metadata correspondence to inventory bytes, native types/procedures,
+operation admission and actual SQL wiring remain explicit requirements; static
+home admission cannot create these proofs. Candidate compilation remains on its
+separate synthetic profile and this change adds no logical edge-property support.
