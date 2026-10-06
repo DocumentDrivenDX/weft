@@ -1021,3 +1021,31 @@ existing valid application/relational compiler corpus. Native SQL templates and
 public ABIs are unchanged; native and embedding checks were not rerun for this
 admission-only fix. Real selected-profile graph/codec/comparator integration and
 qualified host execution remain required before B-005 is merged.
+
+### Original native row-join selector admission foundation (2026-10-06)
+
+The complete owner row-join grammar is frozen separately with its acceptance
+dependency. Root SHA-256
+`ddc7528dd546dfc76092076613fa612caee55a45ed51f46a553675b6f4e9d2b1`
+is recorded in row-join-source-pins.json. Static admission checks the registered
+profile, unique physical relations and columns, exact relation/name association
+for every owner/state/node/scalar selector, and original identity/byte custody
+for layout inventory, stored domain, all constraint evidence and conditional edge
+association. Numeric-token, codec-definition and original-source columns cannot
+be omitted or redirected into typed numeric columns. Original JSON/artifact bytes
+remain retained under explicit candidate bounds.
+
+The registry supplies selected physical inventory entries; their correspondence
+to original inventory bytes remains a separately required procedure. This module
+does not fabricate that correspondence by reading names or table tags. Closed
+selector rules distinguish object ID/type from edge ID/relationship and require
+edge association only for edge definitions.
+
+Positive object and edge definition controls pass. Negative controls refuse
+redirected payload columns, columns from another relation, missing original
+source columns, wrong owner join, rehashed inventory and missing/contaminating
+edge association. All 44 Rust tests pass. These are static mapping controls; they
+do not qualify native constraints, authorized visibility or publication, and
+edge definition admission does not add a logical edge-property query feature.
+Candidate lowering still uses its separate synthetic mapping until real-profile
+integration is completed.

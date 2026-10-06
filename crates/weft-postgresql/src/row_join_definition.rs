@@ -1,0 +1,356 @@
+//! Static physical selector correspondence for original row-home join definitions.
+use crate::leaf_codec_definition::OriginalArtifact;
+use base64::{engine::general_purpose::STANDARD, Engine};
+use serde_json::Value;
+use std::collections::{BTreeMap, BTreeSet};
+use weft_core::{
+    error::{Diagnostic, Result},
+    json::{checked_json, sha256},
+};
+#[jsonschema::validator(path = "../../tests/truss-postgresql/upstream/row-join-schema-bundle.json")]
+struct Shape;
+#[derive(Debug, Clone)]
+pub struct Column {
+    pub relation_identity: String,
+    pub name: String,
+}
+/// The registry must establish this inventory's correspondence to its original
+/// bytes. Shape validation alone cannot construct this trusted selection.
+pub struct Selection<'a> {
+    pub profile: &'a Value,
+    pub original_artifacts: &'a BTreeMap<String, OriginalArtifact>,
+    pub relations: &'a BTreeMap<String, String>,
+    pub columns: &'a BTreeMap<String, Column>,
+}
+#[derive(Debug, PartialEq, Eq)]
+pub enum RecordKind {
+    Object,
+    Edge,
+}
+#[derive(Debug)]
+pub struct Definition {
+    pub original_json: String,
+    pub original_artifacts: BTreeMap<String, Vec<u8>>,
+    pub record_kind: RecordKind,
+}
+fn fail(message: &str) -> Diagnostic {
+    Diagnostic::new("WFT-BINDING", "binding", message)
+}
+impl Definition {
+    pub fn parse(raw: &str, selected: Selection<'_>) -> Result<Self> {
+        if raw.len() > 4 * 1024 * 1024 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "binding",
+                "Row join exceeds candidate byte bound",
+            ));
+        }
+        let value =
+            checked_json(raw).map_err(|_| fail("Malformed or duplicate-member row join"))?;
+        if !Shape::is_valid(&value) || &value["profile"] != selected.profile {
+            return Err(fail("Row join grammar or registered profile differs"));
+        }
+        let record_kind = if value["recordKind"] == "object" {
+            RecordKind::Object
+        } else {
+            RecordKind::Edge
+        };
+        let mut relations = BTreeSet::new();
+        let mut columns = BTreeSet::new();
+        for role in ["owner", "state", "node", "scalar"] {
+            let relation = &value[role];
+            let id = relation["relationPhysicalIdentity"].as_str().unwrap();
+            if !relations.insert(id)
+                || selected
+                    .relations
+                    .get(id)
+                    .is_none_or(|name| relation["relationName"] != *name)
+            {
+                return Err(fail(
+                    "Row join relation differs from original registered physical inventory",
+                ));
+            }
+            let mut check = |physical: &Value, name: &str| -> Result<()> {
+                let column_id = physical
+                    .as_str()
+                    .ok_or_else(|| fail("Column physical identity is not text"))?;
+                if !columns.insert(column_id.to_string())
+                    || selected
+                        .columns
+                        .get(column_id)
+                        .is_none_or(|column| column.relation_identity != id || column.name != name)
+                {
+                    return Err(fail(
+                        "Row join column differs from its original relation/name association",
+                    ));
+                }
+                Ok(())
+            };
+            if role == "owner" {
+                check(&relation["idColumnPhysicalIdentity"], "id")?;
+                check(
+                    &relation["discriminatorColumnPhysicalIdentity"],
+                    if record_kind == RecordKind::Object {
+                        "type_id"
+                    } else {
+                        "rel_type_id"
+                    },
+                )?;
+            } else {
+                for (name, physical) in relation["columns"].as_object().unwrap() {
+                    check(physical, name)?;
+                }
+            }
+        }
+        let mut paths = vec![
+            "layoutInventory".to_string(),
+            "storedDomainDefinition".into(),
+        ];
+        for index in 0..value["constraintEvidence"].as_array().unwrap().len() {
+            paths.push(format!("constraintEvidence/{index}"));
+        }
+        if record_kind == RecordKind::Edge {
+            paths.push("edgeAssociationDefinition".into());
+        }
+        if paths.len() != selected.original_artifacts.len() {
+            return Err(fail("Row join original artifact closure differs"));
+        }
+        let mut artifacts = BTreeMap::new();
+        let mut total = 0usize;
+        for path in paths {
+            let mut artifact = &value;
+            for component in path.split('/') {
+                artifact = if let Some(array) = artifact.as_array() {
+                    array
+                        .get(
+                            component
+                                .parse::<usize>()
+                                .map_err(|_| fail("Invalid artifact index"))?,
+                        )
+                        .ok_or_else(|| fail("Missing original artifact"))?
+                } else {
+                    &artifact[component]
+                };
+            }
+            let encoded = artifact["bytesBase64"].as_str().unwrap();
+            let bytes = STANDARD
+                .decode(encoded)
+                .map_err(|_| fail("Row join artifact base64 refused"))?;
+            total = total
+                .checked_add(bytes.len())
+                .ok_or_else(|| fail("Row join artifact accounting overflow"))?;
+            if total > 4 * 1024 * 1024 {
+                return Err(Diagnostic::new(
+                    "WFT-LIMIT",
+                    "binding",
+                    "Row join artifact bound exceeded",
+                ));
+            }
+            if STANDARD.encode(&bytes) != encoded
+                || artifact["sha256"] != sha256(&bytes)
+                || selected
+                    .original_artifacts
+                    .get(&path)
+                    .is_none_or(|original| {
+                        original.bytes != bytes || artifact["identity"] != original.identity
+                    })
+            {
+                return Err(fail(
+                    "Row join artifact differs from original registered selection",
+                ));
+            }
+            artifacts.insert(path, bytes);
+        }
+        Ok(Self {
+            original_json: raw.into(),
+            original_artifacts: artifacts,
+            record_kind,
+        })
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    struct Fixture {
+        value: Value,
+        artifacts: BTreeMap<String, OriginalArtifact>,
+        relations: BTreeMap<String, String>,
+        columns: BTreeMap<String, Column>,
+    }
+    fn fixture(edge: bool) -> Fixture {
+        let bundle: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/upstream/row-join-schema-bundle.json"
+        ))
+        .unwrap();
+        let schema = &bundle["$defs"]["resource1"];
+        let mut value = json!({});
+        for (key, rule) in schema["properties"].as_object().unwrap() {
+            if let Some(constant) = rule.get("const") {
+                value[key] = constant.clone();
+            }
+        }
+        let pin = json!({"identity":"fixture","version":"0.1.0","sha256":sha256(b"{}")});
+        let artifact = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});
+        value["profile"] = pin;
+        value["recordKind"] = json!(if edge { "edge" } else { "object" });
+        value["ownerJoin"] = json!(if edge {
+            "edge-id-and-relationship"
+        } else {
+            "object-id-and-type"
+        });
+        let mut relations = BTreeMap::new();
+        let mut columns = BTreeMap::new();
+        for role in ["owner", "state", "node", "scalar"] {
+            let name = if role == "owner" {
+                if edge {
+                    "edge"
+                } else {
+                    "object"
+                }
+            } else {
+                schema["properties"][role]["properties"]["relationName"]["const"]
+                    .as_str()
+                    .unwrap()
+            };
+            let id = format!("relation:{name}");
+            relations.insert(id.clone(), name.into());
+            let mut relation = json!({"relationPhysicalIdentity":id,"relationName":name});
+            if role == "owner" {
+                for (key, name) in [
+                    ("idColumnPhysicalIdentity", "id"),
+                    (
+                        "discriminatorColumnPhysicalIdentity",
+                        if edge { "rel_type_id" } else { "type_id" },
+                    ),
+                ] {
+                    let cid = format!("{id}:{name}");
+                    columns.insert(
+                        cid.clone(),
+                        Column {
+                            relation_identity: id.clone(),
+                            name: name.into(),
+                        },
+                    );
+                    relation[key] = json!(cid);
+                }
+            } else {
+                relation["columns"] = json!({});
+                for name in schema["properties"][role]["properties"]["columns"]["properties"]
+                    .as_object()
+                    .unwrap()
+                    .keys()
+                {
+                    let cid = format!("{id}:{name}");
+                    columns.insert(
+                        cid.clone(),
+                        Column {
+                            relation_identity: id.clone(),
+                            name: name.clone(),
+                        },
+                    );
+                    relation["columns"][name] = json!(cid);
+                }
+            }
+            value[role] = relation;
+        }
+        let mut artifacts: BTreeMap<String, OriginalArtifact> = [
+            "layoutInventory",
+            "storedDomainDefinition",
+            "constraintEvidence/0",
+        ]
+        .into_iter()
+        .map(|key| {
+            (
+                key.into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            )
+        })
+        .collect();
+        value["layoutInventory"] = artifact.clone();
+        value["storedDomainDefinition"] = artifact.clone();
+        value["constraintEvidence"] = json!([artifact]);
+        if edge {
+            value["edgeAssociationDefinition"] = artifact;
+            artifacts.insert(
+                "edgeAssociationDefinition".into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            );
+        }
+        Fixture {
+            value,
+            artifacts,
+            relations,
+            columns,
+        }
+    }
+    fn parse(value: &Value, f: &Fixture) -> Result<Definition> {
+        Definition::parse(
+            &value.to_string(),
+            Selection {
+                profile: &f.value["profile"],
+                original_artifacts: &f.artifacts,
+                relations: &f.relations,
+                columns: &f.columns,
+            },
+        )
+    }
+    #[test]
+    fn complete_native_selector_closure_retains_originals_for_both_owner_kinds() {
+        for edge in [false, true] {
+            let f = fixture(edge);
+            let definition = parse(&f.value, &f).unwrap();
+            assert_eq!(
+                definition.record_kind,
+                if edge {
+                    RecordKind::Edge
+                } else {
+                    RecordKind::Object
+                }
+            );
+            assert_eq!(definition.original_json, f.value.to_string());
+            assert_eq!(
+                definition.original_artifacts.len(),
+                if edge { 4 } else { 3 }
+            );
+        }
+    }
+    #[test]
+    fn redirected_columns_foreign_inventory_missing_tokens_and_wrong_owner_refuse() {
+        let f = fixture(false);
+        let mut value = f.value.clone();
+        value["scalar"]["columns"]["numeric_token"] =
+            value["scalar"]["columns"]["numeric_value"].clone();
+        assert!(parse(&value, &f).is_err());
+        let mut value = f.value.clone();
+        value["node"]["columns"]["state_id"] = value["state"]["columns"]["state_id"].clone();
+        assert!(parse(&value, &f).is_err());
+        let mut value = f.value.clone();
+        value["scalar"]["columns"]
+            .as_object_mut()
+            .unwrap()
+            .remove("original_source_bytes");
+        assert!(parse(&value, &f).is_err());
+        let mut value = f.value.clone();
+        value["ownerJoin"] = json!("edge-id-and-relationship");
+        assert!(parse(&value, &f).is_err());
+        let mut value = f.value.clone();
+        value["layoutInventory"] = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"changed"),"sha256":sha256(b"changed")});
+        assert!(parse(&value, &f).is_err());
+        let mut value = f.value.clone();
+        value["edgeAssociationDefinition"] = value["layoutInventory"].clone();
+        assert!(parse(&value, &f).is_err());
+        let mut value = fixture(true).value;
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("edgeAssociationDefinition");
+        assert!(parse(&value, &fixture(true)).is_err());
+    }
+}
