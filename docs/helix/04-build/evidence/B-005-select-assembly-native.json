@@ -39,9 +39,9 @@
     }
   ],
   "sourcePins": {
-    "crates/weft-postgresql/src/select_definition.rs": "3468305ea174dcfd60afa6f09449b5c344ab6e126218311d96417c5ad45f7aad",
+    "crates/weft-postgresql/src/select_definition.rs": "77f8ca4a52c08cf579f1cda5c11a52e5589d16df40b26f14a35c94268747280c",
     "crates/weft-postgresql/src/registered_access.rs": "69beb4401f32dd8046278a76dfede2f2cc73a278efdd9f79b8266ab64b7bc57a",
-    "crates/weft-postgresql/src/property_definition.rs": "ce8551dc1cfddf733609e8cd0f886d66774912a922e233b9797e546d6197ebe2"
+    "crates/weft-postgresql/src/property_definition.rs": "283f9feb9070e9bba5f276a62a10e13c7dd34d484cc7b6b06985504e21c6681b"
   },
-  "rustTestLogSha256": "f7c4fc49e678347943079cb220f11eacb7585a42c71553019733782dbb45e535"
+  "rustTestLogSha256": "c5fb0b567e058fca9a5da568ad0bb13ab1ac2e4fd1a5bdf8bdf977e39297c9a8"
 }

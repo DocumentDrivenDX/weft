@@ -1307,6 +1307,7 @@ mod tests {
         assert_eq!(combined_self.accesses.len(), 2);
         let self_parameters_before =
             serde_json::to_value(combined_self_parameters.clone().into_slots()).unwrap();
+        let mut native_fields = 0;
         let selected = crate::select_definition::assemble(
             &self_context,
             &combined_self,
@@ -1314,13 +1315,16 @@ mod tests {
             &comparisons,
             &mut combined_self_parameters,
             |node, operands, access, _| match node {
-                weft_core::ir::Expression::Field { .. } => Ok(access
-                    .unwrap()
-                    .scalar_storage
-                    .as_ref()
-                    .unwrap()
-                    .carrier
-                    .clone()),
+                weft_core::ir::Expression::Field { .. } => {
+                    native_fields += 1;
+                    Ok(access
+                        .unwrap()
+                        .scalar_storage
+                        .as_ref()
+                        .unwrap()
+                        .carrier
+                        .clone())
+                }
                 weft_core::ir::Expression::Equal { .. } => {
                     Ok(format!("({} = {})", operands[0], operands[1]))
                 }
@@ -1335,6 +1339,10 @@ mod tests {
                 "parameters":combined_self_parameters.clone().into_slots(),
             })).unwrap()).unwrap();
         }
+        assert_eq!(
+            native_fields, 2,
+            "Only join operands use the native callback"
+        );
         assert!(selected.sql.contains("INNER JOIN"));
         assert!(selected.sql.contains(" WHERE "));
         assert_eq!(selected.columns.len(), 2);
@@ -1377,6 +1385,20 @@ mod tests {
             serde_json::to_value(combined_self_parameters.clone().into_slots()).unwrap(),
             self_parameters_before
         );
+
+        let mut changed_parameters = combined_self_parameters.clone();
+        changed_parameters
+            .push(logical.clone(), "extra".into(), json!({"fixture":true}))
+            .unwrap();
+        assert!(crate::select_definition::assemble(
+            &self_context,
+            &combined_self,
+            &properties,
+            &comparisons,
+            &mut changed_parameters,
+            |_, _, _, _| panic!("changed parameters reached callback"),
+        )
+        .is_err());
 
         let changed_admission = Admission::parse(&changed_input.json, &input.profile).unwrap();
         let changed_property = admit_property(

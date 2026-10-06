@@ -77,6 +77,32 @@ pub fn assemble<'a>(
                 "SELECT value requires its selected recursive result bridge",
             ));
         }
+        if let Expression::Field { scan, identity, .. } = &output.expression {
+            let access = prepared
+                .accesses
+                .iter()
+                .find(|access| &access.scan == scan && &access.field == identity)
+                .ok_or_else(|| fail("Projected field lacks exact prepared access"))?;
+            let key = crate::comparator_requirements::registration_key(&access.owner, identity);
+            let property = properties
+                .get(&key)
+                .ok_or_else(|| fail("Projected field lacks original property admission"))?;
+            let projection = crate::result_definition::property_projection(
+                property,
+                access,
+                column.position,
+                &column.output_name,
+            )?;
+            if serde_json::to_value(&projection.column)
+                .map_err(|_| fail("Projection metadata encoding refused"))?
+                != serde_json::to_value(column)
+                    .map_err(|_| fail("Projection metadata encoding refused"))?
+            {
+                return Err(fail("Projected codec and output metadata differ"));
+            }
+            projections.push(projection.sql);
+            continue;
+        }
         let expression = crate::registered_access::render_expression(
             &output.expression,
             &prepared.accesses,
