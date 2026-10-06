@@ -1643,3 +1643,22 @@ All 61 crate tests pass. [Receipt](B-005-selected-expression.json) pins the brid
 extended control and test log. No database or embedding rerun is claimed for this
 standalone original-profile preparation API. Public registered backend/result
 integration and original native Truss profile qualification remain pending.
+
+### Complete lexicographic comparator operands (2026-10-06)
+
+Original-profile comparator collection now requires both equality and ordering
+for field-valued right operands of lexicographic comparison, retaining each
+field's original record owner. Previously only left columns were collected.
+Empty or unequal tuple arity and unequal original logical types refuse before
+admission; no truncated zip or family-only comparison is accepted.
+
+A regression control starts with an actual resolved Customer/Orders count join,
+then constructs a programmatic lexicographic predicate using those two original
+field operands. Both owner-qualified requirements include equality/ordering and
+are covered by read admission. Empty, unequal-length and mismatched-type controls
+refuse. The programmatic predicate is a collector control, not a new SQL syntax
+or execution support claim. All 62 crate tests pass (41 library, four binding,
+17 compiler), including original application-corpus requirement collection.
+[Receipt](B-005-comparator-operands.json) pins changed source and the test log.
+No native engine or embedding rerun is claimed; original-profile integration
+and native Truss qualification remain open.

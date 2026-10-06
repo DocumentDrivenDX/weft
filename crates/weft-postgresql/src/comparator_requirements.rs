@@ -123,10 +123,28 @@ fn predicate(
                 field(all, owners, f, Operation::Equality)?;
             }
         }
-        app::Predicate::LexicographicGreater { columns, .. } => {
-            for f in columns {
+        app::Predicate::LexicographicGreater { columns, values } => {
+            if columns.is_empty() || columns.len() != values.len() {
+                return Err(fail(
+                    "Lexicographic comparison needs equal nonempty operand tuples",
+                ));
+            }
+            for (left, right) in columns.iter().zip(values) {
+                let right_type = match right {
+                    app::Value::Field { field } => &field.logical_type,
+                    app::Value::Literal { logical_type, .. }
+                    | app::Value::Parameter { logical_type, .. } => logical_type,
+                };
+                if &left.logical_type != right_type {
+                    return Err(fail(
+                        "Lexicographic operand types differ from the original comparison",
+                    ));
+                }
                 for operation in [Operation::Equality, Operation::Ordering] {
-                    field(all, owners, f, operation)?;
+                    field(all, owners, left, operation)?;
+                    if let app::Value::Field { field: right } = right {
+                        field(all, owners, right, operation)?;
+                    }
                 }
             }
         }
@@ -523,6 +541,71 @@ mod tests {
             }
         }
         assert!(ordered > 0 && sums > 0 && keys > 0);
+    }
+    #[test]
+    fn lexicographic_field_operands_require_both_owned_comparators() {
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
+        ))
+        .unwrap();
+        let inputs = serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
+        let catalog = Catalog::prepare(inputs).unwrap();
+        let mut plan = application_resolve::resolve(
+            &catalog,
+            application_syntax::parse(
+                "SELECT COUNT(*) AS count FROM Customer c JOIN Orders o ON c.id = o.customer_id",
+            )
+            .unwrap(),
+            BTreeMap::new(),
+            Some(app::ReadProfile {
+                version: "weft-application-read/0.2.0".into(),
+                subset: app::Subset::CountSummary,
+            }),
+        )
+        .unwrap();
+        let (left, right) = match &plan.joins[0].on[0] {
+            app::Predicate::Equal {
+                left,
+                right: app::Value::Field { field },
+            } => (left.clone(), field.clone()),
+            _ => panic!("resolved field join"),
+        };
+        plan.filters.push(app::Predicate::LexicographicGreater {
+            columns: vec![left.clone()],
+            values: vec![app::Value::Field {
+                field: right.clone(),
+            }],
+        });
+        let requirements = collect(Plan::V02(&plan)).unwrap();
+        assert_eq!(requirements.len(), 2);
+        for requirement in &requirements {
+            assert!(requirement.operations.contains(&Operation::Equality));
+            assert!(requirement.operations.contains(&Operation::Ordering));
+        }
+        let reads = collect_reads(Plan::V02(&plan)).unwrap();
+        for requirement in requirements {
+            assert!(reads.contains(&(requirement.owner, requirement.identity)));
+        }
+        for invalid in [
+            app::Predicate::LexicographicGreater {
+                columns: vec![],
+                values: vec![],
+            },
+            app::Predicate::LexicographicGreater {
+                columns: vec![left.clone()],
+                values: vec![],
+            },
+        ] {
+            plan.filters = vec![invalid];
+            assert!(collect(Plan::V02(&plan)).is_err());
+        }
+        let mut wrong_type = right;
+        wrong_type.logical_type.family = weft_core::ir::Family::String;
+        plan.filters = vec![app::Predicate::LexicographicGreater {
+            columns: vec![left],
+            values: vec![app::Value::Field { field: wrong_type }],
+        }];
+        assert!(collect(Plan::V02(&plan)).is_err());
     }
     #[test]
     fn plain_projection_does_not_invent_comparison_and_grouping_requires_equality() {

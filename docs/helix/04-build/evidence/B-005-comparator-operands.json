@@ -1,0 +1,8 @@
+{
+  "scope": "Original-profile operation collector component; no new source dialect or native support",
+  "rustCrateTests": 62,
+  "sha256": {
+    "crates/weft-postgresql/src/comparator_requirements.rs": "89e2e1629c4bef07a43385700f66369ddb9c6d9a6cec94171fabb03086198846"
+  },
+  "testLogSha256": "ff60f3ac932c0fec7718af66ea9d7338c2252e7098838f9efa44105b3904dd50"
+}
