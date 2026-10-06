@@ -1,0 +1,93 @@
+{
+  "check": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $3::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+  "codecSha256": "355369d57cb6215471ee7220415907d80050188f3dc83ad7fe60bbae9ca0c1dc",
+  "column": {
+    "nullable": false,
+    "outputName": "left_name",
+    "position": 1,
+    "representation": {
+      "carrier": "text",
+      "decoder": "text",
+      "kind": "scalar",
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      }
+    },
+    "sourceIdentities": [
+      {
+        "documentId": "sales-fixture",
+        "element": "customer-name",
+        "module": "sales",
+        "revision": "fixture-r1"
+      }
+    ]
+  },
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 2,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "1",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 3,
+      "value": "1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "1",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 4,
+      "value": "1"
+    }
+  ],
+  "presenceSha256": "9fd32fe5a135ca89b447df0ebacf94da65a170539ebdfc35c850f54ca473e102",
+  "sql": "SELECT ((\"weft_scan_0\".\"props\" ->> $3::pg_catalog.text))::pg_catalog.text AS \"left_name\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+}

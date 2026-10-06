@@ -35,6 +35,69 @@ pub fn property_column(
         .ok_or_else(|| fail("Result lacks original root descriptor"))?;
     column(descriptor, position, output_name)
 }
+/// A physical scalar projection plus mandatory owner-wide payload observation.
+/// Original codec/presence bytes remain separate source/native admission inputs.
+#[derive(Debug)]
+pub struct ScalarProjection {
+    pub sql: String,
+    pub column: Column,
+    pub payload_check_sql: String,
+    pub codec_bytes: Vec<u8>,
+    pub presence_bytes: Vec<u8>,
+}
+pub fn property_projection(
+    property: &PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    position: usize,
+    output_name: &str,
+) -> Result<ScalarProjection> {
+    access.verify_property(property)?;
+    let column = property_column(property, position, output_name)?;
+    if !matches!(column.representation, Representation::Scalar { .. }) {
+        return Err(Diagnostic::new(
+            "WFT-CAPABILITY",
+            "emit",
+            "Selected value needs its recursive/presence result bridge",
+        ));
+    }
+    let crate::registered_access::Location::Props(location) = &access.location else {
+        return Err(Diagnostic::new(
+            "WFT-CAPABILITY",
+            "emit",
+            "Native row projection needs its original source/codec result bridge",
+        ));
+    };
+    // Recompute from this property's captured codec; an access cannot substitute
+    // its own scalar carrier/template for another admitted source definition.
+    let storage = property
+        .value
+        .props_scalar_storage(location)?
+        .ok_or_else(|| fail("Scalar result lacks original scalar storage codec"))?;
+    let codec_bytes = property
+        .value
+        .graph
+        .artifacts
+        .get(&format!(
+            "/nodes/{}/codecDefinition",
+            property.value.graph.root
+        ))
+        .ok_or_else(|| fail("Result lacks original codec bytes"))?
+        .clone();
+    Ok(ScalarProjection {
+        sql: format!(
+            "({})::pg_catalog.text AS {}",
+            storage.carrier,
+            crate::Identifier::new(output_name)?.sql()
+        ),
+        payload_check_sql: format!(
+            "SELECT count(*) AS violations FROM {} WHERE {} AND ({}) IS DISTINCT FROM TRUE",
+            access.owner_source.sql, access.owner_source.discriminator, storage.storage_integrity
+        ),
+        codec_bytes,
+        presence_bytes: property.value.presence.original_json.as_bytes().to_vec(),
+        column,
+    })
+}
 fn column(descriptor: &Descriptor, position: usize, output_name: &str) -> Result<Column> {
     if position == 0 || output_name.is_empty() || output_name.contains('\0') {
         return Err(fail("Result position or output name is invalid"));

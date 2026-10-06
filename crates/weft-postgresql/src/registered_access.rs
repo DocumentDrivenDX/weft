@@ -24,6 +24,7 @@ pub enum Location {
 }
 #[derive(Debug)]
 pub struct Access<'a> {
+    original_binding_sha256: String,
     pub scan: String,
     pub field: Identity,
     pub owner: Identity,
@@ -32,6 +33,15 @@ pub struct Access<'a> {
     pub location: Location,
     pub scalar_storage: Option<crate::property_definition::ScalarStorage>,
     pub value_layout: std::sync::Arc<crate::value_definition::Layout<'a>>,
+}
+impl Access<'_> {
+    pub fn verify_property(&self, property: &PropertyAdmission) -> Result<()> {
+        property.verify_binding_basis(&self.original_binding_sha256)?;
+        if self.owner != property.owner || self.field != property.identity {
+            return Err(fail("Access substitutes original property ownership"));
+        }
+        Ok(())
+    }
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "lower", message)
@@ -324,6 +334,7 @@ fn lower_with_owners<'a>(
             layout
         };
         result.push(Access {
+            original_binding_sha256: property.binding_sha256().into(),
             scan: request.scan.clone(),
             field: request.field.clone(),
             owner: owner.clone(),

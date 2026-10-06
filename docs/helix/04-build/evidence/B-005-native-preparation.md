@@ -1908,3 +1908,36 @@ Full public artifact/decoder registration, executable original codec conversion,
 recursive value admission, qualified host observation/publication and adopted
 Truss profile remain open. No Python/browser rebuild, complete result ABI claim,
 story acceptance or B-005 merge-gate completion is made.
+
+### Scalar projection with owner-wide payload preflight (2026-10-06)
+
+The result bridge now emits a required non-null props scalar as the existing
+text-carrier column, recomputing extraction from its captured original codec.
+Each projection retains original codec/presence bytes and emits a separate
+owner-wide physical payload violation query. This query uses only the original
+owner source/discriminator; result joins/filters cannot restrict its observation.
+Wrong payload kinds and absent required scalar slots are not converted to a
+successful SQL NULL result. Numeric-token extraction remains physical text;
+selected source grammar/facets and native domain admission remain mandatory.
+
+Prepared accesses now retain their private original binding checksum. Result
+emission verifies that checksum plus original owner/Field before coupling access
+to a property. A second valid property admission from a changed namespace/binding
+cut is refused against the earlier access despite equal logical identity.
+Optional/nullable/compound value and native row result paths explicitly require
+their own selected bridge; they cannot reuse the props scalar template.
+
+All 66 crate tests pass. [Native harness](../../../../tests/truss-postgresql/scalar-projection-native.py)
+executes [fresh Rust-captured projection/preflight SQL](../../../../tests/truss-postgresql/fixtures/scalar-projection-emission.json)
+on PostgreSQL 17.9. Nine cases cover empty and exact duplicate/Unicode/trailing-
+space/empty-string output, followed by required absence, JSON null, boolean,
+number, array, object and malformed-root violations. Each invalid owned fixture
+has one violation and no result query is executed; an unrelated owner's wrong
+payload contributes no violation. [Receipt](B-005-scalar-projection-native.json)
+pins sources, capture, harness and exact native observations.
+
+This is required string projection and physical payload evidence on synthetic
+props rows. Original domain/codec/presence qualification, general publication
+and coherent native observation, numeric/row/recursive result realization and
+adopted Truss profile remain open. Python/browser packages were not rebuilt;
+no complete public decoder, story acceptance or B-005 merge-gate claim is made.

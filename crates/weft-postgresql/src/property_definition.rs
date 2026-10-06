@@ -267,6 +267,9 @@ impl PropertyAdmission {
             _ => Err(fail("Original field availability is not established")),
         }
     }
+    pub(crate) fn binding_sha256(&self) -> &str {
+        &self.original_binding_sha256
+    }
     pub fn verify_binding_basis(&self, original_binding_sha256: &str) -> Result<()> {
         if self.original_binding_sha256 != original_binding_sha256 {
             return Err(fail(
@@ -1302,6 +1305,49 @@ mod tests {
         .unwrap();
         assert_eq!(combined_self.scans.len(), 2);
         assert_eq!(combined_self.accesses.len(), 2);
+        let changed_admission = Admission::parse(&changed_input.json, &input.profile).unwrap();
+        let changed_property = admit_property(
+            &changed_admission,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            physical(),
+        )
+        .unwrap();
+        assert!(crate::result_definition::property_projection(
+            &changed_property,
+            &combined_self.accesses[0],
+            1,
+            "changed_cut"
+        )
+        .is_err());
+
+        let projections: Vec<_> = combined_self
+            .accesses
+            .iter()
+            .enumerate()
+            .map(|(index, access)| {
+                crate::result_definition::property_projection(
+                    &properties[&registration],
+                    access,
+                    index + 1,
+                    if index == 0 {
+                        "left_name"
+                    } else {
+                        "right_name"
+                    },
+                )
+                .unwrap()
+            })
+            .collect();
+        assert!(projections[0].payload_check_sql.contains("jsonb_typeof"));
+        assert!(!projections[0].payload_check_sql.contains("INNER JOIN"));
+        assert_eq!(projections[0].column.position, 1);
+        assert_eq!(projections[1].column.position, 2);
+        assert!(!projections[0].codec_bytes.is_empty());
+        assert!(!projections[0].presence_bytes.is_empty());
+
         let output_columns =
             crate::result_definition::projection_columns(&self_context, &properties, &comparisons)
                 .unwrap();
@@ -1339,6 +1385,16 @@ mod tests {
         )
         .is_err());
 
+        if let Ok(path) = std::env::var("WEFT_SCALAR_PROJECTION_CAPTURE") {
+            let native_source = &combined_self.scans[&combined_self.accesses[0].scan].source;
+            let sql = format!(
+                "SELECT {} FROM {} WHERE {}",
+                projections[0].sql,
+                native_source.sql,
+                native_source.filters.join(" AND ")
+            );
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":sql,"check":projections[0].payload_check_sql,"parameters":combined_self_parameters.clone().into_slots(),"column":projections[0].column,"codecSha256":sha256(&projections[0].codec_bytes),"presenceSha256":sha256(&projections[0].presence_bytes)})).unwrap()).unwrap();
+        }
         if let Ok(path) = std::env::var("WEFT_COMBINED_CAPTURE") {
             let input = match &self_plan.root {
                 weft_core::ir::Node::Project { input, .. } => input.as_ref(),
