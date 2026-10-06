@@ -843,3 +843,27 @@ not original host-procedure evidence, live enforcement or profile adoption.
 Current candidate compilation remains on synthetic definitions; wiring real
 read-context/value/presence/native-join meanings through a registered profile and
 result bridge remains required before B-005 completion. No compiler ABI changed.
+
+### Original recursive value-graph admission foundation (2026-10-06)
+
+The value-definition draft grammar and acceptance dependency are frozen separately
+in value-definition-schema-bundle.json with original source hashes recorded in
+value-definition-source-pins.json. The root SHA-256 is
+`ae6d9227ddfe82bd531e3fb2754382f4bbe898ef20afc8690a197d78a16d62f3`.
+Earlier binding and read-context snapshots remain unchanged.
+
+The pure Rust graph admission preserves original JSON and decoded artifact bytes,
+checks selected profile and accepted-definition correspondence, and validates
+canonical base64/digests under explicit candidate byte/work bounds. Node IDs and
+authored identities must be unique; references resolve without expanding cyclic
+types. Structured nodes reference records, record field identities match their
+referenced nodes, literal member names remain unique and ordered, and every node
+is reachable from the root.
+
+A positive cyclic graph test first failed against a pending implementation, then
+passed. Negative controls cover dangling references, duplicate IDs/identities,
+unreachable nodes and corrupted artifact digests. All 28 Rust tests pass. This
+is structural graph admission, not qualification of codec meaning or complete
+original UMF facet/source correspondence. Integration into candidate compilation,
+operation-specific codec interpretation and native host enforcement remain work
+for B-005; no adopted Truss profile or production compatibility is claimed.
