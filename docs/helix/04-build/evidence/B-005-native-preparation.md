@@ -1441,3 +1441,22 @@ verification also refuses foreign bytes. The full crate suite passes 56 tests;
 the strengthened valid namespace-control then passes its targeted integration.
 The public candidate still consumes only its fixed synthetic profile; registered
 context-gate invocation by a complete backend and wrapper qualification remain open.
+
+### Owner-qualified read coverage independent of comparator grants (2026-10-06)
+
+collect_reads now records original owning Record/Field tuples for every relational
+field expression and application projection, including compound outputs, plus
+fields required by predicates/keys/relationships/aggregates. It reuses the resolved
+plan and retains independent owners of a shared authored Field. Context admission
+requires each exact tuple's property registration before operation-specific
+comparator admission. Identity-only selected-field coverage can no longer stand
+in for the correct owning property's admission. Plain projection does not require
+or grant equality/order/key/SUM merely to read a stored value.
+
+The 76-case application corpus checks every projected field and requested
+operation's tuple appears in read coverage. Relational controls verify one plain
+projection with zero comparator requirements and a shared Field under two owners
+with distinct read admissions. The composed original-property Context accepts
+plain projection with an empty comparator registry; its targeted integration
+passes after the full 56-test crate suite. Registered full-backend invocation,
+recursive result decoding and native/profile/host qualification remain unfinished.

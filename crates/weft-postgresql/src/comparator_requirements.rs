@@ -272,6 +272,83 @@ pub fn admit(
     }
     Ok(())
 }
+/// Include projection-only and compound reads without requiring comparator grants.
+pub fn collect_reads(plan: Plan<'_>) -> Result<Vec<(Identity, Identity)>> {
+    let mut all: BTreeMap<String, (Identity, Identity)> = collect(plan)?
+        .into_iter()
+        .map(|requirement| {
+            (
+                registration_key(&requirement.owner, &requirement.identity),
+                (requirement.owner, requirement.identity),
+            )
+        })
+        .collect();
+    let mut owners = BTreeMap::new();
+    let mut reads = Vec::new();
+    match plan {
+        Plan::V01(plan) => {
+            let mut nodes = vec![&plan.root];
+            let mut expressions = Vec::new();
+            while let Some(node) = nodes.pop() {
+                match node {
+                    Node::Scan {
+                        occurrence, record, ..
+                    } => scan(&mut owners, occurrence, record)?,
+                    Node::InnerJoin { left, right, on } => {
+                        nodes.extend([left.as_ref(), right.as_ref()]);
+                        expressions.push(on);
+                    }
+                    Node::Filter { input, predicate } => {
+                        nodes.push(input);
+                        expressions.push(predicate);
+                    }
+                    Node::Aggregate {
+                        input,
+                        groups,
+                        aggregates,
+                    } => {
+                        nodes.push(input);
+                        expressions.extend(groups);
+                        expressions.extend(aggregates);
+                    }
+                    Node::Project { input, outputs } => {
+                        nodes.push(input);
+                        expressions.extend(outputs.iter().map(|output| &output.expression));
+                    }
+                }
+            }
+            while let Some(expression) = expressions.pop() {
+                match expression {
+                    Expression::Field { scan, identity, .. } => reads.push((scan, identity)),
+                    Expression::Equal { left, right, .. } | Expression::And { left, right, .. } => {
+                        expressions.extend([left.as_ref(), right.as_ref()])
+                    }
+                    Expression::Sum { argument, .. } => expressions.push(argument),
+                    Expression::Literal { .. } => {}
+                }
+            }
+        }
+        Plan::V02(plan) => {
+            scan(&mut owners, &plan.source.occurrence, &plan.source.record)?;
+            for join in &plan.joins {
+                scan(&mut owners, &join.right.occurrence, &join.right.record)?;
+            }
+            for output in &plan.outputs {
+                if let app::Expression::Field { scan, identity } = &output.expression {
+                    reads.push((scan, identity));
+                }
+            }
+        }
+    }
+    for (occurrence, identity) in reads {
+        let owner = owner(&owners, occurrence)?;
+        all.insert(
+            registration_key(owner, identity),
+            (owner.clone(), identity.clone()),
+        );
+    }
+    Ok(all.into_values().collect())
+}
 /// Shared backend context gate before SQL lowering. The core separately validates
 /// capability coverage; property custody cannot be reused across binding cuts.
 pub fn admit_context(
@@ -301,6 +378,16 @@ pub fn admit_context(
         {
             return Err(fail(
                 "Selected logical field lacks an admitted original property",
+            ));
+        }
+    }
+    for (owner, identity) in collect_reads(context.plan)? {
+        let property = properties
+            .get(&registration_key(&owner, &identity))
+            .ok_or_else(|| fail("Resolved read lacks its exact admitted owning property"))?;
+        if property.owner != owner || property.identity != identity {
+            return Err(fail(
+                "Resolved read substitutes admitted property ownership",
             ));
         }
     }
@@ -401,6 +488,27 @@ mod tests {
             )
             .unwrap();
             let requirements = collect(Plan::V02(&plan)).unwrap();
+            let reads = collect_reads(Plan::V02(&plan)).unwrap();
+            for output in &plan.outputs {
+                if let app::Expression::Field { scan, identity } = &output.expression {
+                    let owner = if scan == &plan.source.occurrence {
+                        &plan.source.record
+                    } else {
+                        &plan
+                            .joins
+                            .iter()
+                            .find(|join| &join.right.occurrence == scan)
+                            .unwrap()
+                            .right
+                            .record
+                    };
+                    assert!(reads.contains(&(owner.clone(), identity.clone())));
+                }
+            }
+            for requirement in &requirements {
+                assert!(reads.contains(&(requirement.owner.clone(), requirement.identity.clone())));
+            }
+
             for requirement in &requirements {
                 ordered += usize::from(requirement.operations.contains(&Operation::Ordering));
                 sums += usize::from(requirement.operations.contains(&Operation::Sum));
@@ -425,6 +533,10 @@ mod tests {
         let (_, plan) =
             weft_core::prepare_and_resolve(&query_text, catalog.inputs.clone()).unwrap();
         assert!(collect(Plan::V01(&plan)).unwrap().is_empty());
+        let reads = collect_reads(Plan::V01(&plan)).unwrap();
+        assert_eq!(reads.len(), 1);
+        assert_eq!(reads[0].0.element, "customer");
+        assert_eq!(reads[0].1.element, "customer-name");
         let query_text = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name";
         let (_, plan) =
             weft_core::prepare_and_resolve(&query_text, catalog.inputs.clone()).unwrap();
@@ -544,6 +656,10 @@ mod tests {
         let (_,plan)=weft_core::prepare_and_resolve("SELECT c.name AS customer_name, o.name AS order_name FROM Customer c JOIN Orders o ON c.name = o.name",inputs).unwrap();
         let requirements = collect(Plan::V01(&plan)).unwrap();
         assert_eq!(requirements.len(), 2);
+        let reads = collect_reads(Plan::V01(&plan)).unwrap();
+        assert_eq!(reads.len(), 2);
+        assert_eq!(reads[0].1, reads[1].1);
+        assert_ne!(reads[0].0, reads[1].0);
         assert_eq!(requirements[0].identity, requirements[1].identity);
         assert_ne!(requirements[0].owner, requirements[1].owner);
         assert_ne!(

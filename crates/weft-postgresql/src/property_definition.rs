@@ -925,6 +925,8 @@ mod tests {
             selection: &selection,
         };
         crate::comparator_requirements::admit_context(&context, &properties, &comparisons).unwrap();
+        crate::comparator_requirements::admit_context(&context, &properties, &BTreeMap::new())
+            .unwrap();
         assert!(crate::comparator_requirements::admit_context(
             &context,
             &BTreeMap::new(),
