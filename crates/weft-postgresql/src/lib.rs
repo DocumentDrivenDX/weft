@@ -3,6 +3,7 @@ pub mod binding;
 pub mod candidate;
 pub mod collection;
 mod json_codec;
+pub mod presence_definition;
 mod row_codec;
 pub mod structured;
 mod tree;

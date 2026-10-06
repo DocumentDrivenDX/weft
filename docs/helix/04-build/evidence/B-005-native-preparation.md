@@ -794,3 +794,27 @@ These next implementation inputs are draft resources pinned here for review:
 - `truss-value-definition-v0.1.proposal.schema.json`: SHA-256 `ae6d9227ddfe82bd531e3fb2754382f4bbe898ef20afc8690a197d78a16d62f3`.
 - `truss-jsonb-leaf-codec-v0.1.proposal.schema.json`: SHA-256 `ba3088c60b154de39b1985da7d283ffdbb93cb4f59c0df4d80a12462f319de77`.
 - `truss-row-join-definition-v0.1.proposal.schema.json`: SHA-256 `ddc7528dd546dfc76092076613fa612caee55a45ed51f46a553675b6f4e9d2b1`.
+
+### Original presence-definition interpreter foundation (2026-10-06)
+
+The current Truss presence grammar is frozen separately as
+`upstream/presence-definition.schema.json`, SHA-256
+`08270a400dceb28e855ead142e31cfad1a30fd116d84b5380022fa3de4542f11`.
+A pure Rust definition interpreter preserves exact original JSON and accepted
+source bytes, checks closed grammar constants, registered-profile correspondence,
+canonical base64/digest custody and byte-for-byte authored-definition agreement.
+It has a candidate four-MiB definition transport bound.
+
+Independent presence tests first failed against the unimplemented admission.
+The implementation then passes absence, empty string/list/record, false boolean,
+SQL/null/nonobject storage-root refusal, changed source/profile and altered
+coercion/default meanings. Observation borrows original values rather than cloning
+or normalizing them. Authored nonnullable JSON null is an integrity refusal;
+authored nullable JSON null still refuses capability because separate native-null
+qualification is not established. This preserves availability versus nullability.
+
+Twenty-four Rust tests pass. This is a standalone interpretation foundation,
+not new compile support: current candidate registration still selects synthetic
+fixtures. Value graph, native join and read-context interpretation, complete
+source/profile/resource correspondence and compile/result-bridge integration
+remain required. No Truss host authority or profile adoption is inferred.
