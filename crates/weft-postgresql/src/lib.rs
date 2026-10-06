@@ -209,3 +209,5 @@ mod tests {
         assert_eq!(slots[1023].origin, json!({"literal":1023}));
     }
 }
+
+pub mod leaf_codec_definition;

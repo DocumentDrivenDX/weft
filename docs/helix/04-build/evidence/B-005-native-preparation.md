@@ -902,3 +902,27 @@ was corrected before this successful run. This compares resolved logical topolog
 only: storage names, presence/availability, facets, representation and codec
 capabilities still need their separate selected-profile admission. Candidate SQL
 is not yet wired to this standalone graph API.
+
+### Original JSONB leaf-codec selection foundation (2026-10-06)
+
+The owner JSONB leaf-codec grammar is frozen in a separate offline closure. Its
+root SHA-256 is
+`ba3088c60b154de39b1985da7d283ffdbb93cb4f59c0df4d80a12462f319de77`;
+leaf-codec-source-pins.json records both original schema resources. Previous
+owner snapshots remain unchanged.
+
+Static Rust admission checks the exact registered codec, source-interpretation
+and native-domain profiles, then canonical base64/hash and original identity/byte
+correspondence for every selected artifact. Numeric token rules additionally
+require the explicitly registered original numeric-adoption evidence. Missing or
+unrelated artifact selections refuse. Integer and decimal decoded-carrier kinds
+must match the rule family even though the shape schema permits either spelling.
+Original JSON and decoded artifact bytes remain retained under candidate bounds.
+
+All four authored rule families are interpreted into distinct static rules. Tests
+refuse rehashed source substitution, native artifact identity substitution, unknown
+profiles, family changes, missing numeric evidence and coercion. All 33 Rust tests
+pass. Fixture evidence remains synthetic: registration/custody does not validate
+the contents of source/native/adoption artifacts, qualify a native codec, authorize
+operations or establish deployment adoption. Source/facet and native procedure
+interpretation, graph integration, decoding and SQL lowering remain B-005 work.
