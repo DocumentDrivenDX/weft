@@ -712,3 +712,21 @@ B-006. Qualification still requires the adopted original binding/codec/bridge
 resources and actual live policy/revision/authority execution evidence. The
 profile-reference question remains pending while independent candidate work
 continues where it can advance those requirements.
+
+### Selected codec/profile registration (2026-10-06)
+
+Selected property value and presence pins must now match the explicitly registered
+synthetic candidate profile and its empty fixture definitions. An unknown profile
+cannot reuse the candidate type-directed codec merely because artifact hashes and
+home/property correspondence are valid. This is a restriction of the candidate
+profile; it does not adopt the synthetic placeholders as Truss owner resources.
+A future accepted owner profile requires its own original definition interpreter
+and native evidence, not renaming an arbitrary profile into this fixture pin.
+
+Twenty Rust tests pass. Four public compile mutations change the selected value
+or presence profile across both homes. Props mutations also update and rehash the
+home's corresponding profile, preserving correspondence so rejection specifically
+exercises registration. All refuse with WFT-BINDING and no SQL. All 76 unchanged
+application fixtures still compile. SQL/result/obligation bytes for registered
+fixtures are unchanged; no new owner/native authority is inferred. B-005 stays
+in draft PR #7 with owner adoption and live host-enforcement gates open.

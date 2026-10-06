@@ -171,6 +171,17 @@ impl Backend for Candidate {
                 return Err(fail("Selected field mapping is missing"));
             }
             for i in indexes {
+                // These are the registered synthetic codec pins for this candidate,
+                // never a claim that an arbitrary owner profile has been adopted.
+                let expected = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+                for kind in ["value", "presence"] {
+                    if admitted.value["properties"][i][format!("{kind}Profile")] != expected
+                        || admitted.decoded_json(&format!("/properties/{i}/{kind}Definition"))?
+                            != json!({})
+                    {
+                        return Err(fail("Selected value or presence profile is not registered for this candidate"));
+                    }
+                }
                 let (document, element) = original_element(c, field)?;
                 if admitted.decoded_json(&format!("/properties/{i}/source"))? != document
                     || admitted.decoded_json(&format!("/properties/{i}/acceptedDefinition"))?
