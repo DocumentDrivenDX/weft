@@ -19,10 +19,58 @@ pub struct Selection<'a> {
 }
 #[derive(Debug)]
 pub struct ValueAdmission {
+    admitted_leaf_codecs: BTreeMap<String, leaf_codec_definition::Definition>,
     pub definition_artifact: Value,
     pub graph: Graph,
     pub presence: presence_definition::Definition,
     pub descriptors: Vec<Descriptor>,
+}
+impl ValueAdmission {
+    /// Scalar extraction uses the captured registry meaning; compound roots
+    /// return no scalar template and require recursive decoding.
+    pub fn props_scalar_storage(&self, location: &PropsLocation) -> Result<Option<ScalarStorage>> {
+        self.props_node_storage(self.graph.root, location)
+    }
+    /// The supplied location must correspond to this node in the recursive
+    /// decoder; original field/slot/presence correspondence is checked separately.
+    pub fn props_node_storage(
+        &self,
+        index: usize,
+        location: &PropsLocation,
+    ) -> Result<Option<ScalarStorage>> {
+        let node = self.graph.value["nodes"]
+            .get(index)
+            .ok_or_else(|| fail("Selected codec node is outside original graph"))?;
+        if node["shape"]["kind"] != "scalar" {
+            return Ok(None);
+        }
+        let codec = self
+            .admitted_leaf_codecs
+            .get(
+                node["nodeId"]
+                    .as_str()
+                    .ok_or_else(|| fail("Original codec node ID is missing"))?,
+            )
+            .ok_or_else(|| fail("Captured original node codec is missing"))?;
+        let original = self
+            .graph
+            .artifacts
+            .get(&format!("/nodes/{index}/codecDefinition"))
+            .ok_or_else(|| fail("Original node codec artifact is missing"))?;
+        if original != codec.original_json.as_bytes() {
+            return Err(fail("Captured node codec differs from original graph"));
+        }
+        let (carrier, storage_integrity) = codec.storage_expressions(location)?;
+        Ok(Some(ScalarStorage {
+            carrier,
+            storage_integrity,
+        }))
+    }
+}
+#[derive(Debug)]
+pub struct ScalarStorage {
+    pub carrier: String,
+    pub storage_integrity: String,
 }
 pub struct PhysicalSelection<'a> {
     pub profile: &'a Value,
@@ -503,6 +551,7 @@ pub fn admit_value(
         ));
     }
     Ok(ValueAdmission {
+        admitted_leaf_codecs: selected.leaf_codecs.clone(),
         definition_artifact: property["valueDefinition"].clone(),
         graph,
         presence,
@@ -798,6 +847,19 @@ mod tests {
             )
             .unwrap();
         assert_eq!(storage.carrier, storage.location.text);
+        assert!(property
+            .value
+            .props_node_storage(usize::MAX, &storage.location)
+            .is_err());
+        assert_eq!(
+            property
+                .value
+                .props_node_storage(property.value.graph.root, &storage.location)
+                .unwrap()
+                .unwrap()
+                .carrier,
+            storage.carrier
+        );
         assert!(storage.storage_integrity.ends_with("='string')"));
         assert!(!storage.carrier.contains("numeric"));
         let mut substituted = Leaf::parse(
@@ -964,6 +1026,11 @@ mod tests {
         )
         .unwrap();
         assert_eq!(accesses.len(), 1);
+        let captured_storage = accesses[0].scalar_storage.as_ref().unwrap();
+        assert!(captured_storage.storage_integrity.ends_with("='string')"));
+        assert!(captured_storage
+            .carrier
+            .contains("\"weft_scan_0\".\"props\" ->> $1"));
         assert!(matches!(
             &accesses[0].location,
             crate::registered_access::Location::Props(_)

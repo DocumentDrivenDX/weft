@@ -28,6 +28,7 @@ pub struct Access {
     pub field: Identity,
     pub owner_alias: Identifier,
     pub location: Location,
+    pub scalar_storage: Option<crate::property_definition::ScalarStorage>,
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "lower", message)
@@ -256,11 +257,16 @@ pub fn lower(
                 Location::Row(property.row_root_location(&namespace, alias, index, &mut staged)?)
             }
         };
+        let scalar_storage = match &location {
+            Location::Props(location) => property.value.props_scalar_storage(location)?,
+            Location::Row(_) => None, // Row source/native codec correspondence is separate.
+        };
         result.push(Access {
             scan: request.scan.clone(),
             field: request.field.clone(),
             owner_alias: alias.clone(),
             location,
+            scalar_storage,
         });
     }
     *parameters = staged;

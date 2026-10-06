@@ -22,14 +22,14 @@ pub struct Selection<'a> {
     pub native_profile: &'a Value,
     pub original_artifacts: &'a BTreeMap<String, OriginalArtifact>,
 }
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Rule {
     UnicodeString,
     Boolean,
     IntegerToken,
     DecimalToken,
 }
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Definition {
     pub original_json: String,
     pub original_artifacts: BTreeMap<String, Vec<u8>>,

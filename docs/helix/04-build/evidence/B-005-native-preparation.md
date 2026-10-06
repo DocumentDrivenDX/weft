@@ -1507,3 +1507,26 @@ before successful verification. All 57 crate tests pass (36 library, four bindin
 17 compiler), with documentation checks also passing. Original codec/relational
 result integration, target-subquery lowering and native/profile/host qualification
 remain required for B-005 acceptance.
+
+### Captured codec extraction attached to access planning (2026-10-06)
+
+Value admission privately captures the already admitted leaf-codec closure.
+Registered physical access planning now attaches scalar props carrier and
+storage-kind expressions using those captured original definitions, with exact
+codec-byte correspondence against the admitted graph. No later registry lookup
+or caller-provided family chooses extraction. Compound roots return no scalar
+template and retain their existing graph for recursive lowering; native row
+source/native decoding remains separate rather than reusing JSONB codecs.
+
+props_node_storage exposes the same exact captured lookup by original graph
+node index for recursive decoder composition, refusing an out-of-graph index.
+Root extraction delegates to it. Slot/presence/path correspondence, source/native
+grammars/domains and public result decoding remain independent prerequisites;
+no scalar template is evidence of complete-value admission or publication.
+
+The original projection Context now produces its quoted scan/member carrier and
+string storage check through the complete access planner. Original node lookup
+agrees with root extraction, and an invalid node index refuses. Full crate tests
+pass 57; node-lookup refinements then pass their targeted integration. These are
+component tests with synthetic registry domain evidence. Full recursive/row
+result integration and deployed Truss qualification still gate B-005 acceptance.
