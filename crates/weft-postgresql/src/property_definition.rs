@@ -23,9 +23,12 @@ pub struct ValueAdmission {
     pub definition_artifact: Value,
     pub graph: Graph,
     pub presence: presence_definition::Definition,
-    pub descriptors: Vec<Descriptor>,
+    pub(crate) descriptors: Vec<Descriptor>,
 }
 impl ValueAdmission {
+    pub fn descriptors(&self) -> &[Descriptor] {
+        &self.descriptors
+    }
     /// Scalar extraction uses the captured registry meaning; compound roots
     /// return no scalar template and require recursive decoding.
     pub fn props_scalar_storage(&self, location: &PropsLocation) -> Result<Option<ScalarStorage>> {
@@ -908,6 +911,18 @@ mod tests {
         assert!(property.observe_props_presence(None).is_err());
         assert_eq!(property.owner, record.identity);
         assert_eq!(property.identity, member.identity);
+        let result =
+            crate::result_definition::property_column(&property, 1, "customer_name").unwrap();
+        assert_eq!(result.source_identities, [member.identity.clone()]);
+        assert!(matches!(
+            result.representation,
+            weft_core::backend::Representation::Scalar {
+                carrier: weft_core::backend::ScalarCarrier::Text,
+                decoder: weft_core::backend::ScalarDecoder::Text,
+                ..
+            }
+        ));
+
         let mut foreign = binding.clone();
         let other = foreign["entities"]
             .as_array()

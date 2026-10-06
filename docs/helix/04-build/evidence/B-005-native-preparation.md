@@ -1846,3 +1846,31 @@ control. Source/native domain and recursive decoder realization, native visibili
 full host enforcement and adopted Truss profile qualification remain open before
 B-005 acceptance. Python/browser packages were not rebuilt; no story criterion
 or final merge gate is closed.
+
+### Original property result contract bridge (2026-10-06)
+
+A result metadata bridge now constructs the existing Weft Column representation
+from the admitted original property descriptor. Required non-null scalars retain
+complete authored logical types/facets with text carriers and their text/boolean/
+exact-integer/exact-decimal decoders. Optional, nullable and compound values retain
+the original descriptor identity with nativeNull=false, preserving presence/value
+semantics for the required result bridge. Source identity, output position/name
+and public column nullability are explicit. Unestablished property availability,
+invalid output identity and a graph changed from original admitted bytes refuse.
+
+Original descriptors are now exposed as an immutable slice outside this crate;
+backend preparation retains the admitted closure rather than permitting a caller
+to rewrite result facets in place. The actual admitted string-property control
+checks its scalar/text result contract. Two additional controls cover all four
+families with exact u64 and decimal facets, optional/nullable transitions,
+sequence/map/structured identities, finite self-references, missing availability
+and invalid position/name. All 65 crate tests pass (44 library, four binding,
+17 compiler). [Receipt](B-005-result-contract.json) pins source and the test log.
+No database or embedding rerun is claimed for this metadata-only component.
+
+These instructions state the required public result shape, not successful codec
+execution. The backend still must establish the selected source/native codec and
+presence conversion, emit the correct carrier, enforce native/host obligations
+and withhold all results until complete admission. No new public decoder ABI,
+Truss carrier substitution, native conversion claim, story acceptance or B-005
+merge-gate completion follows from constructing Column metadata.
