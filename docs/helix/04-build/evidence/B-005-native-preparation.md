@@ -1598,3 +1598,28 @@ rebuilt this turn; their earlier pinned component evidence remains separate.
 The traversal grants no native grammar/domain/operator authority. Original
 registered procedure integration, complete result bridge and native Truss
 profile/host qualification remain open before B-005 acceptance.
+
+### Backend-owned relational source assembly (2026-10-06)
+
+The V01 candidate source emitter now uses iterative relational assembly with
+trusted scan and native-expression callbacks. It retains left/right occurrence
+order, filter placement and grouping, while staging all source parameters until
+successful completion. Integrity prerequisites remain separate from filters.
+An explicit aggregate marker also catches global aggregates with no grouping
+columns: joins or filters over an aggregate, repeated aggregation and nested
+projection refuse until a separate target stage is implemented. Group-list
+emptiness cannot stand in for aggregate-stage identity.
+
+Three controls use actual resolved plans: grouped join source/group ordering,
+late join refusal after both scan callbacks allocate parameters, and global
+aggregate refusal beneath a join or filter. All 61 crate tests pass (40 library,
+four binding, 17 compiler). A freshly rebuilt compile_probe passes the original
+26 relational/native cases across props and row homes against PostgreSQL 17.9.
+[Receipt](B-005-relational-native.json) pins source, harness, corpus, binary and
+full report. These V01 cases directly exercise the source/expression refactor;
+the preceding 76 application cases use the separate V02 application emitter.
+Python/browser packages were not rebuilt for this change.
+
+This is fixed synthetic candidate evidence. Original-profile integration,
+complete result bridge and adopted Truss native/host qualification remain open;
+no story criterion or B-005 merge gate is closed by these component checks.

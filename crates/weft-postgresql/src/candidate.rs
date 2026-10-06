@@ -593,8 +593,14 @@ impl Build<'_> {
         Ok(())
     }
     fn expression(&mut self, e: &Expression) -> Result<String> {
-        let fields = &self.fields;
-        crate::expression::render(e, &mut self.parameters, |e, operands, parameters| {
+        Self::expression_with(&self.fields, &mut self.parameters, e)
+    }
+    fn expression_with(
+        fields: &BTreeMap<(String, String), String>,
+        parameters: &mut Parameters,
+        e: &Expression,
+    ) -> Result<String> {
+        crate::expression::render(e, parameters, |e, operands, parameters| {
             Ok(match e {
                 Expression::Field { scan, identity, .. } => fields
                     .get(&(scan.clone(), json!(identity).to_string()))
@@ -629,48 +635,26 @@ impl Build<'_> {
         })
     }
     fn from(&mut self, n: &Node) -> Result<(String, Vec<String>, Vec<String>)> {
-        match n {
-            Node::Scan { occurrence, .. } => {
-                let s = self.scans.get(occurrence).unwrap();
-                Ok((
-                    if s.joins.is_empty() {
-                        s.source.clone()
-                    } else {
-                        format!("({} {})", s.source, s.joins.join(" "))
-                    },
-                    vec![],
-                    vec![],
-                ))
-            }
-            Node::InnerJoin { left, right, on } => {
-                let (l, mut f, g) = self.from(left)?;
-                let (r, rf, rg) = self.from(right)?;
-                if !g.is_empty() || !rg.is_empty() {
-                    return Err(capability(
-                        "Join over aggregate requires another target stage",
-                    ));
-                }
-                f.extend(rf);
-                Ok((
-                    format!("({l} INNER JOIN {r} ON {})", self.expression(on)?),
-                    f,
-                    vec![],
-                ))
-            }
-            Node::Filter { input, predicate } => {
-                let (s, mut f, g) = self.from(input)?;
-                f.push(self.expression(predicate)?);
-                Ok((s, f, g))
-            }
-            Node::Aggregate { input, groups, .. } => {
-                let (s, f, _) = self.from(input)?;
-                let g = groups
-                    .iter()
-                    .map(|e| self.expression(e))
-                    .collect::<Result<Vec<_>>>()?;
-                Ok((s, f, g))
-            }
-            Node::Project { .. } => Err(capability("Nested project requires another target stage")),
-        }
+        let scans = &self.scans;
+        let fields = &self.fields;
+        let source = crate::relational::assemble(
+            n,
+            &mut self.parameters,
+            |node, _| {
+                let Node::Scan { occurrence, .. } = node else {
+                    unreachable!("scan callback")
+                };
+                let source = scans
+                    .get(occurrence)
+                    .ok_or_else(|| fail("Original scan access is not prepared"))?;
+                Ok(if source.joins.is_empty() {
+                    source.source.clone()
+                } else {
+                    format!("({} {})", source.source, source.joins.join(" "))
+                })
+            },
+            |expression, parameters| Self::expression_with(fields, parameters, expression),
+        )?;
+        Ok((source.sql, source.filters, source.groups))
     }
 }
