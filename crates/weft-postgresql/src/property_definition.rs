@@ -943,6 +943,84 @@ mod tests {
             sha256: weft_core::json::sha256(changed_json.as_bytes()),
             json: changed_json,
         };
+        let requested_scan = match &plan.root {
+            weft_core::ir::Node::Project { input, .. } => match input.as_ref() {
+                weft_core::ir::Node::Scan { occurrence, .. } => occurrence.clone(),
+                _ => panic!("fixture scan"),
+            },
+            _ => panic!("fixture project"),
+        };
+        let request = crate::registered_access::Request {
+            scan: requested_scan.clone(),
+            field: member.identity.clone(),
+        };
+        let mut access_parameters = crate::Parameters::default();
+        let accesses = crate::registered_access::lower(
+            &context,
+            &properties,
+            &BTreeMap::new(),
+            &[request],
+            &mut access_parameters,
+        )
+        .unwrap();
+        assert_eq!(accesses.len(), 1);
+        assert!(matches!(
+            &accesses[0].location,
+            crate::registered_access::Location::Props(_)
+        ));
+        assert_eq!(accesses[0].owner_alias.sql(), "\"weft_scan_0\"");
+        let mut atomic_parameters = crate::Parameters::default();
+        let requests = [
+            crate::registered_access::Request {
+                scan: requested_scan.clone(),
+                field: member.identity.clone(),
+            },
+            crate::registered_access::Request {
+                scan: "foreign-scan".into(),
+                field: member.identity.clone(),
+            },
+        ];
+        assert!(crate::registered_access::lower(
+            &context,
+            &properties,
+            &BTreeMap::new(),
+            &requests,
+            &mut atomic_parameters
+        )
+        .is_err());
+        assert!(atomic_parameters.into_slots().is_empty());
+        let (_, self_plan) = weft_core::prepare_and_resolve("SELECT c.name AS left_name, d.name AS right_name FROM Customer c JOIN Customer d ON c.name = d.name",catalog.inputs.clone()).unwrap();
+        let self_requests = match &self_plan.root {
+            weft_core::ir::Node::Project { outputs, .. } => outputs
+                .iter()
+                .map(|output| match &output.expression {
+                    weft_core::ir::Expression::Field { scan, identity, .. } => {
+                        crate::registered_access::Request {
+                            scan: scan.clone(),
+                            field: identity.clone(),
+                        }
+                    }
+                    _ => panic!("fixture field"),
+                })
+                .collect::<Vec<_>>(),
+            _ => panic!("fixture projection"),
+        };
+        let self_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V01(&self_plan),
+            ..context
+        };
+        let mut self_parameters = crate::Parameters::default();
+        let self_accesses = crate::registered_access::lower(
+            &self_context,
+            &properties,
+            &comparisons,
+            &self_requests,
+            &mut self_parameters,
+        )
+        .unwrap();
+        assert_eq!(self_accesses.len(), 2);
+        assert_ne!(self_accesses[0].owner_alias, self_accesses[1].owner_alias);
+        assert_eq!(self_parameters.into_slots().len(), 2);
         let changed_context = weft_core::backend::Context {
             binding: &changed_input,
             binding_value: &changed,

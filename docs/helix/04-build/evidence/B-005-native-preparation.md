@@ -1460,3 +1460,28 @@ with distinct read admissions. The composed original-property Context accepts
 plain projection with an empty comparator registry; its targeted integration
 passes after the full 56-test crate suite. Registered full-backend invocation,
 recursive result decoding and native/profile/host qualification remain unfinished.
+
+### Context-admitted physical access planner (2026-10-06)
+
+registered_access::lower now connects the complete context/property/comparator
+gate to captured props and native-row location emission. Backend-owned access
+requests name original scan occurrences and Fields. The planner resolves owning
+Records from the original plan, checks selected owning tuples, derives distinct
+quoted scan aliases and the exact admitted namespace, and stages all parameters
+for the entire request set. Unknown scans, foreign read tuples and duplicate
+access requests refuse before any staged slots are committed. Repeated reads
+under distinct self-join occurrences retain separate aliases/locations.
+
+The authored-property integration lowers an actual resolved projection through
+this path without comparator grants. A late foreign scan request after a valid
+access leaves the original parameter collection empty. A real resolved Customer
+self-join accepts the coupled equality comparator and emits two distinct scan
+aliases/two member slots. The full 56-test suite passes; the added self-join
+integration then passes targeted verification. These tests still use synthetic
+registered domain evidence.
+
+This is a physical access stage: the backend still owns selecting requests from
+resolved expressions, full relational operations, original codec/result decoding
+and complete prerequisite/publication protocol. Independent relationship subquery
+accesses and full recursive storage semantics remain separate work. No public
+compiler/backend support or native Truss profile qualification is claimed.

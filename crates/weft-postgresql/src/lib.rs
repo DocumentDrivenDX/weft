@@ -221,3 +221,5 @@ pub mod row_join_definition;
 pub mod property_definition;
 
 pub mod numeric_correspondence;
+
+pub mod registered_access;
