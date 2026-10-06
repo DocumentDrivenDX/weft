@@ -334,6 +334,25 @@ mod tests {
         .unwrap();
         assert_eq!(prepared.scans.len(), 1);
         assert!(prepared.accesses.is_empty());
+        let result_columns = crate::result_definition::projection_columns(
+            &context,
+            &BTreeMap::new(),
+            &BTreeMap::new(),
+        )
+        .unwrap();
+        assert_eq!(result_columns.len(), 1);
+        assert_eq!(
+            result_columns[0].source_identities,
+            [plan.source.record.clone()]
+        );
+        assert!(matches!(
+            result_columns[0].representation,
+            weft_core::backend::Representation::Scalar {
+                decoder: weft_core::backend::ScalarDecoder::ExactInteger,
+                ..
+            }
+        ));
+
         assert!(prepared
             .scans
             .values()

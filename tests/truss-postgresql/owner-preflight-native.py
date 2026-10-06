@@ -32,10 +32,14 @@ for name, names, invalid in cases:
     assert rows[:4] == [['violations'],[count],['violations'],[count]], (name,rows)
     if invalid is None:
         assert rows[4] == ['left_name','right_name']
+        if 'columns' in emission:
+            assert [c['position'] for c in emission['columns']] == [1,2]
+            assert rows[4] == [c['outputName'] for c in emission['columns']]
+            assert all(c['representation']['kind'] == 'scalar' and c['representation']['carrier'] == 'text' and c['representation']['decoder'] == 'text' for c in emission['columns'])
         expected = Counter((left,right) for left in names for right in names if left == right)
         assert Counter(map(tuple,rows[5:])) == expected,(name,rows)
     else: assert len(rows) == 4
-    results.append({'id':name,'violationsPerOccurrence':int(count),'queryExecuted':invalid is None,'queryRows':rows[5:] if invalid is None else [],'executedSqlSha256':hashlib.sha256(sql.encode()).hexdigest()})
+    results.append({'id':name,'violationsPerOccurrence':int(count),'queryExecuted':invalid is None,'queryRows':rows[5:] if invalid is None else [],'columnMetadataChecked':invalid is None and 'columns' in emission,'executedSqlSha256':hashlib.sha256(sql.encode()).hexdigest()})
 version = subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 report_path.write_text(json.dumps({'scope':'Captured Rust owner-wide structural check SQL over synthetic props roots; fixture withholding on corruption only, not general host, codec, stored-domain or adopted Truss qualification','server':version,'captureSha256':hashlib.sha256(raw).hexdigest(),'harnessSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'results':results},ensure_ascii=False,indent=2)+'\n')
 print('6 owner-wide native cases passed; all four malformed owned roots detected before result query.')

@@ -1302,6 +1302,43 @@ mod tests {
         .unwrap();
         assert_eq!(combined_self.scans.len(), 2);
         assert_eq!(combined_self.accesses.len(), 2);
+        let output_columns =
+            crate::result_definition::projection_columns(&self_context, &properties, &comparisons)
+                .unwrap();
+        assert_eq!(output_columns.len(), 2);
+        assert_eq!(output_columns[0].position, 1);
+        assert_eq!(output_columns[0].output_name, "left_name");
+        assert_eq!(output_columns[1].position, 2);
+        assert_eq!(output_columns[1].output_name, "right_name");
+        assert_eq!(
+            output_columns[0].source_identities,
+            output_columns[1].source_identities
+        );
+        let mut altered_projection = self_plan.clone();
+        if let weft_core::ir::Node::Project { outputs, .. } = &mut altered_projection.root {
+            if let weft_core::ir::Expression::Field { logical_type, .. } =
+                &mut outputs[0].expression
+            {
+                logical_type.family = weft_core::ir::Family::Boolean;
+            }
+        }
+        let altered_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V01(&altered_projection),
+            ..self_context
+        };
+        assert!(crate::result_definition::projection_columns(
+            &altered_context,
+            &properties,
+            &comparisons
+        )
+        .is_err());
+        assert!(crate::result_definition::projection_columns(
+            &self_context,
+            &properties,
+            &BTreeMap::new()
+        )
+        .is_err());
+
         if let Ok(path) = std::env::var("WEFT_COMBINED_CAPTURE") {
             let input = match &self_plan.root {
                 weft_core::ir::Node::Project { input, .. } => input.as_ref(),
@@ -1361,7 +1398,7 @@ mod tests {
                 .values()
                 .flat_map(|scan| scan.structural_check_sql.iter())
                 .collect();
-            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":sql,"structuralChecks":checks,"parameters":combined_self_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"]})).unwrap()).unwrap();
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":sql,"structuralChecks":checks,"columns":output_columns,"parameters":combined_self_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"]})).unwrap()).unwrap();
         }
 
         assert_eq!(combined_self_parameters.into_slots().len(), 4);

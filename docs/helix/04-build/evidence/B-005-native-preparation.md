@@ -1874,3 +1874,37 @@ presence conversion, emit the correct carrier, enforce native/host obligations
 and withhold all results until complete admission. No new public decoder ABI,
 Truss carrier substitution, native conversion claim, story acceptance or B-005
 merge-gate completion follows from constructing Column metadata.
+
+### Projection-order result contract assembly (2026-10-06)
+
+The result bridge now assembles Column metadata in original V01/V02 projection
+order after the context/property/comparator gate. Direct Field outputs resolve
+their exact owning scan and original property; V01 Field types must match the
+admitted original scalar descriptor. Computed scalar/aggregate metadata preserves
+resolved logical types, nullable outcomes and contributing source identities.
+Application counts and related-key outputs retain the existing record/key and
+relationship metadata conventions. No backend-native operation is inferred from
+constructing these representations.
+
+Extended original-property controls verify separate self-join output positions
+and aliases despite equal Field source identities, reject missing comparator
+registration and altered projected Field type, and verify the fieldless count's
+exact-integer representation. An additional scalar aggregate metadata control
+preserves nullable decimal output and exact precision/scale. All 66 crate tests
+pass (45 library, four binding, 17 compiler).
+
+The combined Rust capture now includes actual emitted columns with the original
+query/checks/parameters. [Fixture](../../../../tests/truss-postgresql/fixtures/projection-contract-emission.json)
+passes six PostgreSQL 17.9 cases via the
+[native harness](../../../../tests/truss-postgresql/owner-preflight-native.py),
+which checks successful native headers against captured column positions/names
+and scalar/text decoder metadata. Exact duplicate/Unicode/empty-string bags pass;
+corrupt roots are detected before result execution. [Receipt](B-005-projection-contract-native.json)
+pins changed sources, capture, harness and native observations. This exercises
+string projection metadata correspondence only; aggregate/numeric/compound and
+related-key metadata are not newly qualified by these native cases.
+
+Full public artifact/decoder registration, executable original codec conversion,
+recursive value admission, qualified host observation/publication and adopted
+Truss profile remain open. No Python/browser rebuild, complete result ABI claim,
+story acceptance or B-005 merge-gate completion is made.
