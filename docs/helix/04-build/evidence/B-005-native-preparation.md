@@ -1170,3 +1170,24 @@ Registered metadata correspondence to inventory bytes, native types/procedures,
 operation admission and actual SQL wiring remain explicit requirements; static
 home admission cannot create these proofs. Candidate compilation remains on its
 separate synthetic profile and this change adds no logical edge-property support.
+
+### Owner-qualified comparator requirement correction (2026-10-06)
+
+Property integration inspection found that the comparator collector's earlier
+full-Field-identity merge was insufficient: the same authored Field may belong
+to multiple Records with independent property homes/native domains. Requirements
+now retain complete Record owner plus Field identity. Scan occurrences resolve
+to their original Record before requirements merge; missing/repeated scans
+refuse. Page keys use their source Record; relationship keys independently use
+the resolved from/to Records, preserving inverse query roles. Registration keys
+include both complete identities, and one owner's comparator cannot cover another
+owner's property. This supersedes the earlier identity-only merge description.
+
+A real frontend model test adds Customer.name as a member of Orders, resolves a
+join comparing both uses and verifies distinct owner requirements for the same
+Field identity. The registered comparator test additionally refuses a different
+owner with the same Field/type/operation. All 52 Rust tests pass, including the
+actual application corpus. Candidate SQL is unchanged: the helper is still a
+pre-lowering integration boundary rather than a newly qualified target profile.
+Exact property-to-comparator value/native-definition correspondence remains next
+in the integration path; no physical domain is inferred from shared Field meaning.

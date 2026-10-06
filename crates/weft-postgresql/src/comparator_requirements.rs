@@ -1,4 +1,4 @@
-//! Operation requirements derived from resolved query uses, independent of homes.
+//! Operation requirements retain authored property ownership, independent of location.
 use crate::native_comparator_definition::{Definition, Operation};
 use std::collections::{BTreeMap, BTreeSet};
 use weft_core::{
@@ -10,6 +10,7 @@ use weft_core::{
 };
 #[derive(Debug)]
 pub struct Requirement {
+    pub owner: Identity,
     pub identity: Identity,
     pub logical_type: LogicalType,
     pub operations: BTreeSet<Operation>,
@@ -17,29 +18,50 @@ pub struct Requirement {
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "lower", message)
 }
+pub fn registration_key(owner: &Identity, field: &Identity) -> String {
+    serde_json::json!({"owner":owner,"field":field}).to_string()
+}
 fn add(
     all: &mut BTreeMap<String, Requirement>,
+    owner: &Identity,
     identity: &Identity,
     logical: &LogicalType,
     operation: Operation,
 ) -> Result<()> {
-    let key = serde_json::to_string(identity)
-        .map_err(|_| fail("Comparator identity could not be encoded"))?;
-    let entry = all.entry(key).or_insert_with(|| Requirement {
-        identity: identity.clone(),
-        logical_type: logical.clone(),
-        operations: BTreeSet::new(),
-    });
+    let entry = all
+        .entry(registration_key(owner, identity))
+        .or_insert_with(|| Requirement {
+            owner: owner.clone(),
+            identity: identity.clone(),
+            logical_type: logical.clone(),
+            operations: BTreeSet::new(),
+        });
     if &entry.logical_type != logical {
         return Err(fail(
-            "Repeated comparator identity has inconsistent resolved types",
+            "Repeated owned comparator has inconsistent resolved types",
         ));
     }
     entry.operations.insert(operation);
     Ok(())
 }
+fn owner<'a>(owners: &'a BTreeMap<String, Identity>, scan: &str) -> Result<&'a Identity> {
+    owners
+        .get(scan)
+        .ok_or_else(|| fail("Comparator operand has no resolved owner scan"))
+}
+fn scan(
+    owners: &mut BTreeMap<String, Identity>,
+    occurrence: &str,
+    record: &Identity,
+) -> Result<()> {
+    if owners.insert(occurrence.into(), record.clone()).is_some() {
+        return Err(fail("Repeated comparator owner scan"));
+    }
+    Ok(())
+}
 fn key(
     all: &mut BTreeMap<String, Requirement>,
+    owner: &Identity,
     key: &AuthoredKey,
     operations: &[Operation],
 ) -> Result<()> {
@@ -48,7 +70,7 @@ fn key(
     }
     for (identity, logical) in key.fields.iter().zip(&key.types) {
         for operation in operations {
-            add(all, identity, logical, *operation)?;
+            add(all, owner, identity, logical, *operation)?;
         }
     }
     Ok(())
@@ -58,30 +80,53 @@ fn relationship(
     r: &RelationshipRead,
     ordered_target: bool,
 ) -> Result<()> {
-    key(all, &r.source_key, &[Operation::Key, Operation::Equality])?;
-    key(all, &r.target_key, &[Operation::Key, Operation::Equality])?;
+    key(
+        all,
+        &r.from,
+        &r.source_key,
+        &[Operation::Key, Operation::Equality],
+    )?;
+    key(
+        all,
+        &r.to,
+        &r.target_key,
+        &[Operation::Key, Operation::Equality],
+    )?;
     if ordered_target {
-        key(all, &r.target_key, &[Operation::Ordering])?;
+        key(all, &r.to, &r.target_key, &[Operation::Ordering])?;
     }
     Ok(())
 }
-fn predicate(all: &mut BTreeMap<String, Requirement>, predicate: &app::Predicate) -> Result<()> {
-    match predicate {
+fn field(
+    all: &mut BTreeMap<String, Requirement>,
+    owners: &BTreeMap<String, Identity>,
+    field: &app::Field,
+    operation: Operation,
+) -> Result<()> {
+    add(
+        all,
+        owner(owners, &field.scan)?,
+        &field.identity,
+        &field.logical_type,
+        operation,
+    )
+}
+fn predicate(
+    all: &mut BTreeMap<String, Requirement>,
+    owners: &BTreeMap<String, Identity>,
+    p: &app::Predicate,
+) -> Result<()> {
+    match p {
         app::Predicate::Equal { left, right } => {
-            add(all, &left.identity, &left.logical_type, Operation::Equality)?;
-            if let app::Value::Field { field } = right {
-                add(
-                    all,
-                    &field.identity,
-                    &field.logical_type,
-                    Operation::Equality,
-                )?;
+            field(all, owners, left, Operation::Equality)?;
+            if let app::Value::Field { field: f } = right {
+                field(all, owners, f, Operation::Equality)?;
             }
         }
         app::Predicate::LexicographicGreater { columns, .. } => {
-            for field in columns {
+            for f in columns {
                 for operation in [Operation::Equality, Operation::Ordering] {
-                    add(all, &field.identity, &field.logical_type, operation)?;
+                    field(all, owners, f, operation)?;
                 }
             }
         }
@@ -93,13 +138,16 @@ fn predicate(all: &mut BTreeMap<String, Requirement>, predicate: &app::Predicate
 }
 pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
     let mut all = BTreeMap::new();
+    let mut owners = BTreeMap::new();
     match plan {
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             let mut expressions = vec![];
             while let Some(node) = nodes.pop() {
                 match node {
-                    Node::Scan { .. } => {}
+                    Node::Scan {
+                        occurrence, record, ..
+                    } => scan(&mut owners, occurrence, record)?,
                     Node::InnerJoin { left, right, on } => {
                         nodes.extend([left.as_ref(), right.as_ref()]);
                         expressions.push((on, None));
@@ -132,12 +180,19 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
             while let Some((expression, operation)) = expressions.pop() {
                 match expression {
                     Expression::Field {
+                        scan,
                         identity,
                         logical_type,
                         ..
                     } => {
                         if let Some(operation) = operation {
-                            add(&mut all, identity, logical_type, operation)?;
+                            add(
+                                &mut all,
+                                owner(&owners, scan)?,
+                                identity,
+                                logical_type,
+                                operation,
+                            )?;
                         }
                     }
                     Expression::Literal { .. } => {}
@@ -154,41 +209,37 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
             }
         }
         Plan::V02(plan) => {
+            scan(&mut owners, &plan.source.occurrence, &plan.source.record)?;
+            for join in &plan.joins {
+                scan(&mut owners, &join.right.occurrence, &join.right.record)?;
+            }
             for join in &plan.joins {
                 for p in &join.on {
-                    predicate(&mut all, p)?;
+                    predicate(&mut all, &owners, p)?;
                 }
             }
             for p in &plan.filters {
-                predicate(&mut all, p)?;
+                predicate(&mut all, &owners, p)?;
             }
-            for field in &plan.groups {
-                add(
-                    &mut all,
-                    &field.identity,
-                    &field.logical_type,
-                    Operation::Equality,
-                )?;
+            for f in &plan.groups {
+                field(&mut all, &owners, f, Operation::Equality)?;
             }
-            for field in &plan.order {
-                add(
-                    &mut all,
-                    &field.identity,
-                    &field.logical_type,
-                    Operation::Ordering,
-                )?;
+            for f in &plan.order {
+                field(&mut all, &owners, f, Operation::Ordering)?;
             }
             if let Some(page_key) = &plan.page_key {
-                key(&mut all, page_key, &[Operation::Key, Operation::Ordering])?;
+                key(
+                    &mut all,
+                    &plan.source.record,
+                    page_key,
+                    &[Operation::Key, Operation::Ordering],
+                )?;
             }
             for output in &plan.outputs {
                 match &output.expression {
-                    app::Expression::Sum { argument, .. } => add(
-                        &mut all,
-                        &argument.identity,
-                        &argument.logical_type,
-                        Operation::Sum,
-                    )?,
+                    app::Expression::Sum { argument, .. } => {
+                        field(&mut all, &owners, argument, Operation::Sum)?
+                    }
                     app::Expression::RelatedKeys {
                         relationship: r, ..
                     } => relationship(&mut all, r, true)?,
@@ -199,21 +250,21 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
     }
     Ok(all.into_values().collect())
 }
-/// Called before SQL lowering with a trusted backend's selected definitions.
+/// Called before SQL lowering with owner-qualified registered definitions.
 pub fn admit(
     requirements: &[Requirement],
     definitions: &BTreeMap<String, Definition>,
 ) -> Result<()> {
     for requirement in requirements {
-        let key = serde_json::to_string(&requirement.identity)
-            .map_err(|_| fail("Comparator identity could not be encoded"))?;
-        let definition = definitions.get(&key).ok_or_else(|| {
-            Diagnostic::new(
-                "WFT-CAPABILITY",
-                "lower",
-                "Requested field operation has no selected comparator",
-            )
-        })?;
+        let definition = definitions
+            .get(&registration_key(&requirement.owner, &requirement.identity))
+            .ok_or_else(|| {
+                Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "lower",
+                    "Requested owned field operation has no selected comparator",
+                )
+            })?;
         definition.require_type(&requirement.logical_type)?;
         for operation in &requirement.operations {
             definition.require(*operation)?;
@@ -353,8 +404,12 @@ mod tests {
             module: "m".into(),
             element: "field".into(),
         };
-        let definitions = BTreeMap::from([(serde_json::to_string(&identity).unwrap(), definition)]);
+        let mut owned_record = identity.clone();
+        owned_record.element = "record".into();
+        let definitions =
+            BTreeMap::from([(registration_key(&owned_record, &identity), definition)]);
         let mut requirements = vec![Requirement {
+            owner: owned_record,
             identity,
             logical_type: logical,
             operations: BTreeSet::from([Operation::Equality]),
@@ -363,7 +418,46 @@ mod tests {
         requirements[0].operations.insert(Operation::Ordering);
         assert!(admit(&requirements, &definitions).is_err());
         requirements[0].operations.remove(&Operation::Ordering);
+        requirements[0].owner.element = "another-record".into();
+        assert!(admit(&requirements, &definitions).is_err());
+        requirements[0].owner.element = "record".into();
         requirements[0].logical_type.family = Family::Boolean;
         assert!(admit(&requirements, &definitions).is_err());
+    }
+    #[test]
+    fn shared_authored_field_keeps_independent_record_owner_requirements() {
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
+        ))
+        .unwrap();
+        let mut inputs: Vec<ModuleInput> =
+            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
+        let mut document: Value = serde_json::from_str(&inputs[0].document_json).unwrap();
+        let record = document["modules"][0]["elements"]
+            .as_array_mut()
+            .unwrap()
+            .iter_mut()
+            .find(|e| {
+                e["kind"] == "record"
+                    && e["name"]
+                        .as_str()
+                        .is_some_and(|name| name.eq_ignore_ascii_case("orders"))
+            })
+            .unwrap();
+        record["members"]
+            .as_array_mut()
+            .unwrap()
+            .push(serde_json::json!({"module":"sales","element":"customer-name"}));
+        inputs[0].document_json = document.to_string();
+        inputs[0].pin.sha256 = weft_core::json::sha256(inputs[0].document_json.as_bytes());
+        let (_,plan)=weft_core::prepare_and_resolve("SELECT c.name AS customer_name, o.name AS order_name FROM Customer c JOIN Orders o ON c.name = o.name",inputs).unwrap();
+        let requirements = collect(Plan::V01(&plan)).unwrap();
+        assert_eq!(requirements.len(), 2);
+        assert_eq!(requirements[0].identity, requirements[1].identity);
+        assert_ne!(requirements[0].owner, requirements[1].owner);
+        assert_ne!(
+            registration_key(&requirements[0].owner, &requirements[0].identity),
+            registration_key(&requirements[1].owner, &requirements[1].identity)
+        );
     }
 }
