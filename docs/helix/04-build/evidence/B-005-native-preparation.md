@@ -1285,3 +1285,23 @@ native extraction primitives, not compiler-generated full queries, token-domain
 admission, complete-result publication, deployed codec adoption or native profile
 qualification. Reproduce with psql -X -q --csv -v ON_ERROR_STOP=1 against the owned
 fixture container using tests/truss-postgresql/leaf-storage-primitives.sql.
+
+### Captured native row root location emission (2026-10-06)
+
+Composed properties now retain their admitted owner/property catalog IDs and
+expose row-root location emission through the captured original join bytes.
+Props homes refuse this path. State/root-node/scalar LEFT JOINs preserve the
+original registered object or edge owner discriminator and property owner pair;
+namespace, aliases and relation names are separately quoted. Catalog IDs are
+signed int4 prepared parameters. Location emission is physical access only and
+does not assert node/payload uniqueness, stored-domain validity, authorization
+or qualified whole-tree/result decoding.
+
+Both catalog domains validate before allocation, and the complete location uses
+staged parameter custody: a second-slot overflow leaves the original collection
+unchanged. Object/edge definition fixtures check distinct owner ID/discriminator
+columns, dotted namespace quoting, ordered signed catalog values and a 1023-slot
+overflow refusal. All 54 PostgreSQL crate tests pass (33 library, four binding,
+17 compiler). These are emitter/component controls, without new native execution
+or public wrapper qualification. Logical edge-property queries remain separately
+unfinished; a physical edge join foundation does not introduce their frontend syntax.

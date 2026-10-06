@@ -52,6 +52,8 @@ pub enum HomeAdmission {
 pub struct PropertyAdmission {
     pub owner: Identity,
     pub identity: Identity,
+    pub owner_catalog_id: String,
+    pub property_catalog_id: String,
     pub value: ValueAdmission,
     pub home: HomeAdmission,
 }
@@ -114,6 +116,33 @@ pub struct LeafStorage {
     pub storage_integrity: String,
 }
 impl PropertyAdmission {
+    pub fn row_root_location(
+        &self,
+        namespace: &crate::Identifier,
+        owner_alias: &crate::Identifier,
+        occurrence: usize,
+        parameters: &mut crate::Parameters,
+    ) -> Result<crate::row_join_definition::RootLocation> {
+        let HomeAdmission::Row {
+            original_join_json, ..
+        } = &self.home
+        else {
+            return Err(Diagnostic::new(
+                "WFT-CAPABILITY",
+                "lower",
+                "Props home cannot use native row access",
+            ));
+        };
+        crate::row_join_definition::root_location(
+            original_join_json,
+            namespace,
+            owner_alias,
+            &self.owner_catalog_id,
+            &self.property_catalog_id,
+            occurrence,
+            parameters,
+        )
+    }
     pub fn props_leaf_storage(
         &self,
         codec: &leaf_codec_definition::Definition,
@@ -341,6 +370,8 @@ pub fn admit_property(
     Ok(PropertyAdmission {
         owner,
         identity,
+        owner_catalog_id: property["ownerTypeId"].as_str().unwrap().into(),
+        property_catalog_id: property["propertyId"].as_str().unwrap().into(),
         value,
         home,
     })

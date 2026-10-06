@@ -33,6 +33,85 @@ pub struct Definition {
     pub original_artifacts: BTreeMap<String, Vec<u8>>,
     pub record_kind: RecordKind,
 }
+/// Physical root location; stored-domain integrity and codec decoding follow.
+#[derive(Debug)]
+pub struct RootLocation {
+    pub joins: Vec<String>,
+    pub state_alias: crate::Identifier,
+    pub node_alias: crate::Identifier,
+    pub scalar_alias: crate::Identifier,
+}
+/// Use the captured admitted join bytes, never a fresh registry lookup.
+pub(crate) fn root_location(
+    raw: &str,
+    namespace: &crate::Identifier,
+    owner: &crate::Identifier,
+    owner_type_id: &str,
+    property_id: &str,
+    occurrence: usize,
+    parameters: &mut crate::Parameters,
+) -> Result<RootLocation> {
+    let value = checked_json(raw).map_err(|_| fail("Captured row join JSON refused"))?;
+    if !Shape::is_valid(&value) {
+        return Err(fail("Captured row join grammar refused"));
+    }
+    // Validate both domains before mutating the caller's parameter collection.
+    let mut validation = crate::Parameters::default();
+    validation.catalog(
+        crate::CatalogDomain::Int,
+        owner_type_id,
+        serde_json::json!({}),
+    )?;
+    validation.catalog(
+        crate::CatalogDomain::Int,
+        property_id,
+        serde_json::json!({}),
+    )?;
+    let state_alias = crate::Identifier::new(&format!("weft_state_{occurrence}"))?;
+    let node_alias = crate::Identifier::new(&format!("weft_node_{occurrence}"))?;
+    let scalar_alias = crate::Identifier::new(&format!("weft_scalar_{occurrence}"))?;
+    let table = |role: &str| -> Result<String> {
+        Ok(crate::qualified(
+            namespace,
+            &crate::Identifier::new(value[role]["relationName"].as_str().unwrap())?,
+        ))
+    };
+    let state_table = table("state")?;
+    let node_table = table("node")?;
+    let scalar_table = table("scalar")?;
+    let mut staged = parameters.clone();
+    let type_slot = staged.catalog(
+        crate::CatalogDomain::Int,
+        owner_type_id,
+        serde_json::json!({"typeId":owner_type_id}),
+    )?;
+    let property_slot = staged.catalog(
+        crate::CatalogDomain::Int,
+        property_id,
+        serde_json::json!({"propertyId":property_id}),
+    )?;
+    let (kind, id_column, discriminator, owner_discriminator) = if value["recordKind"] == "object" {
+        ("object", "object_id", "object_type_id", "type_id")
+    } else {
+        ("edge", "edge_id", "relationship_type_id", "rel_type_id")
+    };
+    let state = state_alias.sql();
+    let node = node_alias.sql();
+    let scalar = scalar_alias.sql();
+    let owner = owner.sql();
+    let joins = vec![
+        format!("LEFT JOIN {state_table} AS {state} ON {state}.\"owner_kind\"='{kind}' AND {state}.\"{id_column}\"={owner}.\"id\" AND {state}.\"{discriminator}\"={owner}.\"{owner_discriminator}\" AND {state}.\"property_owner_type_id\"={type_slot}::pg_catalog.int4 AND {state}.\"property_id\"={property_slot}::pg_catalog.int4"),
+        format!("LEFT JOIN {node_table} AS {node} ON {node}.\"state_id\"={state}.\"state_id\" AND {node}.\"node_id\"={state}.\"root_node_id\""),
+        format!("LEFT JOIN {scalar_table} AS {scalar} ON {scalar}.\"state_id\"={node}.\"state_id\" AND {scalar}.\"node_id\"={node}.\"node_id\""),
+    ];
+    *parameters = staged;
+    Ok(RootLocation {
+        joins,
+        state_alias,
+        node_alias,
+        scalar_alias,
+    })
+}
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
@@ -364,6 +443,56 @@ mod tests {
                 columns: &f.columns,
             },
         )
+    }
+    #[test]
+    fn root_locations_keep_object_and_edge_ownership_and_atomic_slots() {
+        for edge in [false, true] {
+            let f = fixture(edge);
+            let mut parameters = crate::Parameters::default();
+            let location = root_location(
+                &f.value.to_string(),
+                &crate::Identifier::new("schema.with.dot").unwrap(),
+                &crate::Identifier::new("owner").unwrap(),
+                "-1",
+                "42",
+                3,
+                &mut parameters,
+            )
+            .unwrap();
+            assert_eq!(location.joins.len(), 3);
+            assert!(location.joins[0].contains("\"schema.with.dot\".\"row_home_state\""));
+            assert!(location.joins[0].contains(if edge { "\"edge_id\"" } else { "\"object_id\"" }));
+            assert!(location.joins[0].contains(if edge {
+                "\"rel_type_id\""
+            } else {
+                "\"type_id\""
+            }));
+            let slots = parameters.into_slots();
+            assert_eq!(
+                slots
+                    .iter()
+                    .map(|slot| slot.value.as_str())
+                    .collect::<Vec<_>>(),
+                vec!["-1", "42"]
+            );
+            let mut parameters = crate::Parameters::default();
+            for _ in 0..1023 {
+                parameters
+                    .catalog(crate::CatalogDomain::Int, "1", json!({}))
+                    .unwrap();
+            }
+            assert!(root_location(
+                &f.value.to_string(),
+                &crate::Identifier::new("s").unwrap(),
+                &crate::Identifier::new("o").unwrap(),
+                "1",
+                "42",
+                0,
+                &mut parameters
+            )
+            .is_err());
+            assert_eq!(parameters.into_slots().len(), 1023);
+        }
     }
     #[test]
     fn complete_native_selector_closure_retains_originals_for_both_owner_kinds() {

@@ -5,10 +5,10 @@ pub mod collection;
 mod json_codec;
 pub mod presence_definition;
 pub mod read_context_definition;
-pub mod value_definition;
 mod row_codec;
 pub mod structured;
 mod tree;
+pub mod value_definition;
 // PostgreSQL emission primitives. Storage mappings and engine support are separate.
 use weft_core::{
     backend::ParameterSlot,
@@ -41,7 +41,7 @@ pub fn qualified(namespace: &Identifier, object: &Identifier) -> String {
 }
 /// Per-query slots: values never enter emitted SQL. Common emission validation
 /// remains responsible for exact lexical/domain checking before any artifact.
-#[derive(Debug, Default)]
+#[derive(Debug, Default, Clone)]
 pub struct Parameters(Vec<ParameterSlot>);
 impl Parameters {
     pub fn push(
