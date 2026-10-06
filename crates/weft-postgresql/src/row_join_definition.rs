@@ -489,6 +489,11 @@ mod tests {
             home_admission,
             crate::property_definition::HomeAdmission::Row { .. }
         ));
+        let mut parameters = crate::Parameters::default();
+        assert!(home_admission
+            .props_location(&crate::Identifier::new("owner").unwrap(), &mut parameters)
+            .is_err());
+        assert!(parameters.into_slots().is_empty());
         assert!(admitted.property_home(0).is_err()); // Fixed candidate IDs remain a distinct profile.
         assert!(definition
             .verify_home(&admitted, 0, &BTreeSet::new(), None)

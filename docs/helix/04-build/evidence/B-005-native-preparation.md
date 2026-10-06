@@ -1231,3 +1231,20 @@ property member. All 52 PostgreSQL crate tests pass (31 library, four binding,
 17 compiler); no public candidate behavior or embedding ABI changed. Captured
 selectors are an integration foundation, not emitted real-profile SQL or native
 profile qualification.
+
+### Admitted JSONB physical locator emission (2026-10-06)
+
+Admitted props homes now emit a codec-neutral physical location from their captured
+column and a separately quoted owner alias. Literal property members use typed
+prepared parameters; root, JSONB leaf and text extraction remain distinct. The
+locator exposes root integrity as a prerequisite and presence as unknown for
+malformed roots, preserving absent versus JSON null. It performs no scalar cast,
+codec interpretation, operation grant or result decoding. Thus numeric-token
+profiles cannot accidentally inherit the fixed candidate's JSON-number conversion.
+
+The authored property integration verifies quoted dotted/quoted aliases, parameter
+position/value and the malformed-root presence guard. The original row-join
+integration refuses JSONB lowering without allocating a parameter, preventing
+row-to-props fallback. All 52 PostgreSQL crate tests pass. These are Rust emitter
+checks; no new native or embedding qualification is claimed. Full registered
+codec lowering, row emission and public backend integration remain open.

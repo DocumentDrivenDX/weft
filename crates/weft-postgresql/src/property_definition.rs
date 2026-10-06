@@ -55,6 +55,56 @@ pub struct PropertyAdmission {
     pub value: ValueAdmission,
     pub home: HomeAdmission,
 }
+/// Physical JSONB location only. Codec interpretation and operation admission
+/// must be completed before using a leaf as a logical operand or result.
+#[derive(Debug)]
+pub struct PropsLocation {
+    pub root: String,
+    pub leaf: String,
+    pub text: String,
+    pub present: String,
+    pub native_null: String,
+    pub root_integrity: String,
+}
+impl HomeAdmission {
+    pub fn props_location(
+        &self,
+        owner_alias: &crate::Identifier,
+        parameters: &mut crate::Parameters,
+    ) -> Result<PropsLocation> {
+        let Self::Props {
+            member,
+            props_column,
+            ..
+        } = self
+        else {
+            return Err(Diagnostic::new(
+                "WFT-CAPABILITY",
+                "lower",
+                "Native row home cannot be lowered through JSONB props",
+            ));
+        };
+        let slot = parameters.push(
+            weft_core::ir::LogicalType {
+                family: weft_core::ir::Family::String,
+                facets: serde_json::json!({}),
+                nullable: false,
+            },
+            member.clone(),
+            serde_json::json!({"propertyId": member, "use": "admitted-jsonb-member"}),
+        )?;
+        let root = format!("{}.{}", owner_alias.sql(), props_column.sql());
+        let leaf = format!("({root} -> {slot}::pg_catalog.text)");
+        Ok(PropsLocation {
+            text: format!("({root} ->> {slot}::pg_catalog.text)"),
+            present: format!("(CASE WHEN pg_catalog.jsonb_typeof({root})='object' THEN {root} ? {slot}::pg_catalog.text ELSE NULL END)"),
+            native_null: format!("(pg_catalog.jsonb_typeof({leaf})='null')"),
+            root_integrity: format!("({root} IS NOT NULL AND pg_catalog.jsonb_typeof({root})='object')"),
+            root,
+            leaf,
+        })
+    }
+}
 /// Registered metadata must already correspond to original inventory bytes.
 /// This function checks selectors against that metadata; it does not create it.
 pub fn admit_home(
@@ -582,6 +632,27 @@ mod tests {
             }
             _ => panic!("fixture props home"),
         }
+        let mut parameters = crate::Parameters::default();
+        let location = property
+            .home
+            .props_location(
+                &crate::Identifier::new("owner.\"alias").unwrap(),
+                &mut parameters,
+            )
+            .unwrap();
+        assert_eq!(location.root, "\"owner.\"\"alias\".\"props\"");
+        assert_eq!(
+            location.leaf,
+            format!("({} -> $1::pg_catalog.text)", location.root)
+        );
+        assert!(location.present.contains("ELSE NULL"));
+        assert!(!location.root_integrity.contains("$1"));
+        let slots = parameters.into_slots();
+        assert_eq!(slots.len(), 1);
+        assert_eq!(
+            slots[0].value,
+            binding["properties"][index]["propertyId"].as_str().unwrap()
+        );
         assert_eq!(property.owner, record.identity);
         assert_eq!(property.identity, member.identity);
         let mut foreign = binding.clone();
