@@ -1,0 +1,146 @@
+{
+  "interfaceVersion": "truss-postgresql-binding/0.1.0",
+  "bindingProfile": {
+    "identity": "candidate-test-profile",
+    "version": "0.1.0",
+    "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "bindingProfileId": "candidate-test-binding/0.1.0",
+  "basis": {
+    "modelBundle": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "catalogRevision": "0",
+    "acceptedCatalog": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutInventory": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutSql": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "exporterProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "namespace": "truss",
+    "identityProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "valueProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "keyProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "readContextProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "readContextDefinition": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    }
+  },
+  "entities": [
+    {
+      "logical": {
+        "documentId": "d",
+        "revision": "r",
+        "module": "m",
+        "element": "entity"
+      },
+      "typeId": "-1",
+      "acceptedDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "source": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    }
+  ],
+  "properties": [
+    {
+      "logical": {
+        "documentId": "d",
+        "revision": "r",
+        "module": "m",
+        "element": "field"
+      },
+      "ownerTypeId": "-1",
+      "propertyId": "0",
+      "home": "props",
+      "homeProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "homeDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "eyJpbnRlcmZhY2VWZXJzaW9uIjoidHJ1c3MtcHJvcGVydHktaG9tZS8wLjEuMCIsImxheW91dEludmVudG9yeSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LWFydGlmYWN0IiwiYnl0ZXNCYXNlNjQiOiJlMzA9Iiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJyZWNvcmRLaW5kIjoib2JqZWN0IiwicmVsYXRpb25QaHlzaWNhbElkZW50aXR5Ijoib2JqZWN0LXRhYmxlIiwicHJvcHNDb2x1bW5QaHlzaWNhbElkZW50aXR5Ijoib2JqZWN0LXByb3BzIiwiZGlzY3JpbWluYXRvckNvbHVtblBoeXNpY2FsSWRlbnRpdHkiOiJvYmplY3QtdHlwZSIsInJlbGF0aW9uTmFtZSI6Im9iamVjdCIsInByb3BzQ29sdW1uTmFtZSI6InByb3BzIiwiZGlzY3JpbWluYXRvckNvbHVtbk5hbWUiOiJ0eXBlX2lkIiwib3duZXJDYXRhbG9nSWQiOiItMSIsInByb3BlcnR5Q2F0YWxvZ0lkIjoiMCIsIm1lbWJlck5hbWUiOiIwIiwiYWNjZXNzb3IiOiJqc29uYi10b3AtbGV2ZWwtbWVtYmVyIiwicHJlc2VuY2VQcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInZlcnNpb24iOiIwLjEuMCIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwidmFsdWVQcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInZlcnNpb24iOiIwLjEuMCIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifX0=",
+        "sha256": "641895f5a12695cd313ea552f32ca17985fbb08b5e9a5fc674163a7787863215"
+      },
+      "valueProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "valueDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "presenceProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "presenceDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "acceptedDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "source": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    }
+  ],
+  "keys": [],
+  "relationships": [],
+  "executionObligations": [],
+  "qualification": []
+}

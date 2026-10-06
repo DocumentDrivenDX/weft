@@ -49,3 +49,15 @@ Add runnable Rust/host/native commands with pinned versions before implementatio
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## B-005 native probe preparation
+
+The independent read-only PostgreSQL probe and its authored exact-output checker
+now exist in `tests/truss-postgresql/`. They deliberately assert numeric cursor
+order differs from canonical-text order, preserve trailing spaces/UTF8 C ordering,
+and distinguish absent JSON, explicit null and empty arrays. They now pass nine engine observations on PostgreSQL 17.9; this does not close any AC. Their engine-only results must precede the
+full generated-SQL corpus and role/catalog/decoder execution checks.
+
+Owner integration gates are documented in TD-003. Draft flat layout 0.2 cannot be
+confused with the earlier partitioned profile. Record approved binding/layout
+hashes and native server/session versions before backend support claims.

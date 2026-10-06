@@ -42,7 +42,7 @@ Input is Weft SQL plus explicitly supplied pinned UMF modules; output is target 
 
 ## Issue Decomposition
 
-No tracker items are created by this bootstrap. The slices are ready for work-item creation with references to the corresponding US, TD, STP and this plan. Use dependency links above; keep each issue scoped to a failing acceptance test and its implementation. Backend-owner mapping decisions block production adapter slices while frontend and fixture-plugin work can continue.
+No tracker items are created by this bootstrap. The slices are ready for work-item creation with references to the corresponding US, TD, STP and this plan. Use dependency links above; keep each issue scoped to a failing acceptance test and its implementation. Backend-owner mapping decisions block production qualification; owner-authorized candidate adapter development and fixtures proceed against exact versioned drafts.
 
 ## Validation Plan
 
@@ -61,7 +61,7 @@ All 30 P0 story criteria pass; both initial adapters have qualified native profi
 
 ## Execution status
 
-B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003: complete for the registered library boundary; [evidence](evidence/B-003-backend-interface.md). B-004: complete for the public envelope and native Python/browser component scope; [evidence](evidence/B-004-compile-embeddings.md). B-005 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
+B-001: complete for its bounded scope; [evidence](evidence/B-001-native-python-browser.md). B-002: complete for the 0.1 frontend; [evidence](evidence/B-002-frontend.md). B-002A: complete for its versioned application frontend scope; [evidence](evidence/B-002A-application-reads.md). B-003: complete for the registered library boundary; [evidence](evidence/B-003-backend-interface.md). B-004: complete for the public envelope and native Python/browser component scope; [evidence](evidence/B-004-compile-embeddings.md). B-005: candidate implementation covers scalar relational and application reads across props and native row homes, including recursive descriptors and exact numeric/presence carriers. Native evidence covers 26 original relational, 76 application and 576 parameter-boundary executions. All 1,240 authored application compiler decisions pass. [Evidence](evidence/B-005-native-preparation.md) records versioned scope and host parity. Accepted physical binding/codec/profile authority, native driver/policy/revision enforcement and final story qualification remain pending; no production compatibility is claimed. B-006 through B-007: not implemented. Story acceptance allocations remain planned; B-001 does not close US-005 or any release conformance gate.
 
 ## PR #2 scope update
 

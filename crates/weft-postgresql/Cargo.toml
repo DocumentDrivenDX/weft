@@ -1,0 +1,17 @@
+[package]
+name = "weft-postgresql"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+[dependencies]
+weft-core = { path = "../weft-core" }
+serde_json.workspace = true
+serde.workspace = true
+base64 = "=0.22.1"
+jsonschema = { version = "=0.56.0", default-features = false, features = ["macros", "arbitrary-precision"] }
+[[test]]
+name = "candidate-binding"
+path = "../../tests/truss-postgresql/binding.rs"
+[[test]]
+name = "candidate-compiler"
+path = "../../tests/truss-postgresql/compiler.rs"

@@ -1,0 +1,1456 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "resource4": {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-row-join-definition/0.1.0"
+        },
+        "profile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "layoutInventory": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "recordKind": {
+          "enum": [
+            "object",
+            "edge"
+          ]
+        },
+        "owner": {
+          "type": "object",
+          "properties": {
+            "relationPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationName": {
+              "enum": [
+                "object",
+                "edge"
+              ]
+            },
+            "idColumnPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "discriminatorColumnPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "relationPhysicalIdentity",
+            "relationName",
+            "idColumnPhysicalIdentity",
+            "discriminatorColumnPhysicalIdentity"
+          ],
+          "additionalProperties": false
+        },
+        "state": {
+          "type": "object",
+          "properties": {
+            "relationPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationName": {
+              "const": "row_home_state"
+            },
+            "columns": {
+              "type": "object",
+              "properties": {
+                "state_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "owner_kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "object_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "object_type_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "edge_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "relationship_type_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "property_owner_type_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "property_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "root_node_id": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state_id",
+                "owner_kind",
+                "object_id",
+                "object_type_id",
+                "edge_id",
+                "relationship_type_id",
+                "property_owner_type_id",
+                "property_id",
+                "root_node_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "relationPhysicalIdentity",
+            "relationName",
+            "columns"
+          ],
+          "additionalProperties": false
+        },
+        "node": {
+          "type": "object",
+          "properties": {
+            "relationPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationName": {
+              "const": "row_home_node"
+            },
+            "columns": {
+              "type": "object",
+              "properties": {
+                "state_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "node_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parent_node_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "value_kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "slot_kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sequence_ordinal": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "map_key": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "record_field_identity_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "definition_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state_id",
+                "node_id",
+                "parent_node_id",
+                "value_kind",
+                "slot_kind",
+                "sequence_ordinal",
+                "map_key",
+                "record_field_identity_bytes",
+                "definition_bytes",
+                "source_bytes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "relationPhysicalIdentity",
+            "relationName",
+            "columns"
+          ],
+          "additionalProperties": false
+        },
+        "scalar": {
+          "type": "object",
+          "properties": {
+            "relationPhysicalIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationName": {
+              "const": "row_home_scalar"
+            },
+            "columns": {
+              "type": "object",
+              "properties": {
+                "state_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "node_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "scalar_kind": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text_value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "boolean_value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "numeric_value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "numeric_token": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "binary_value": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "temporal_text": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "temporal_instant": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "opaque_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "codec_definition_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "original_source_bytes": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "state_id",
+                "node_id",
+                "scalar_kind",
+                "text_value",
+                "boolean_value",
+                "numeric_value",
+                "numeric_token",
+                "binary_value",
+                "temporal_text",
+                "temporal_instant",
+                "opaque_bytes",
+                "codec_definition_bytes",
+                "original_source_bytes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "relationPhysicalIdentity",
+            "relationName",
+            "columns"
+          ],
+          "additionalProperties": false
+        },
+        "ownerJoin": {
+          "enum": [
+            "object-id-and-type",
+            "edge-id-and-relationship"
+          ]
+        },
+        "stateSelection": {
+          "const": "owner-kind-and-independent-property-owner-and-property"
+        },
+        "rootJoin": {
+          "const": "state-id-and-root-node-id-to-node-state-id-and-node-id"
+        },
+        "payloadJoin": {
+          "const": "root-state-id-and-node-id-to-scalar-state-id-and-node-id"
+        },
+        "ownerMultiplicity": {
+          "const": "preserve-each-admitted-owner-occurrence"
+        },
+        "optionalAbsence": {
+          "const": "complete-authorized-state-absence"
+        },
+        "requiredAbsence": {
+          "const": "integrity-refusal"
+        },
+        "nullRoot": {
+          "const": "present-null-with-zero-scalar-payloads"
+        },
+        "scalarRoot": {
+          "const": "present-scalar-with-exactly-one-qualified-payload"
+        },
+        "containerRoot": {
+          "const": "complete-value-tree-only"
+        },
+        "invalidObservation": {
+          "const": "whole-result-integrity-refusal"
+        },
+        "authorityView": {
+          "const": "same-original-admitted-catalog-authority-and-snapshot"
+        },
+        "integrityAdmission": {
+          "const": "qualified-stored-domain-before-publication-independent-of-predicate-order"
+        },
+        "constraintEvidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/exactArtifact"
+          }
+        },
+        "storedDomainDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "edgeAssociationDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "profile",
+        "layoutInventory",
+        "recordKind",
+        "owner",
+        "state",
+        "node",
+        "scalar",
+        "ownerJoin",
+        "stateSelection",
+        "rootJoin",
+        "payloadJoin",
+        "ownerMultiplicity",
+        "optionalAbsence",
+        "requiredAbsence",
+        "nullRoot",
+        "scalarRoot",
+        "containerRoot",
+        "invalidObservation",
+        "authorityView",
+        "integrityAdmission",
+        "constraintEvidence",
+        "storedDomainDefinition"
+      ],
+      "additionalProperties": false,
+      "title": "Proposed fixed row-home join definition",
+      "description": "Closed selectors and original physical IDs; not SQL, an authority handle, or evidence of native join/integrity support.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ownerJoin": {
+                "const": "object-id-and-type"
+              },
+              "owner": {
+                "properties": {
+                  "relationName": {
+                    "const": "object"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "not": {
+              "required": [
+                "edgeAssociationDefinition"
+              ],
+              "properties": {
+                "edgeAssociationDefinition": {}
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "edge"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "ownerJoin": {
+                "const": "edge-id-and-relationship"
+              },
+              "owner": {
+                "properties": {
+                  "relationName": {
+                    "const": "edge"
+                  }
+                },
+                "type": "object"
+              },
+              "edgeAssociationDefinition": {}
+            },
+            "required": [
+              "edgeAssociationDefinition"
+            ]
+          }
+        }
+      ]
+    },
+    "resource0": {
+      "title": "Proposed Truss complete acceptance input",
+      "description": "Shape validation only. Duplicate JSON members, Unicode scalar validity, canonical base64, digest verification, document ordering/uniqueness, upstream validity, resource limits and authority require separate semantic validation.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-acceptance-input/0.1.0"
+        },
+        "layoutProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "acceptanceProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "validatorProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "supportProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "documents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/document"
+          }
+        },
+        "binding": {
+          "$ref": "#/$defs/resource0/$defs/binding"
+        },
+        "policy": {
+          "$ref": "#/$defs/resource0/$defs/policy"
+        },
+        "transforms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/transform"
+          }
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "layoutProfile",
+        "acceptanceProfile",
+        "validatorProfile",
+        "supportProfile",
+        "documents",
+        "binding",
+        "policy",
+        "transforms"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "profilePin": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "identity",
+            "version",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "exactArtifact": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bytesBase64": {
+              "type": "string",
+              "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "identity",
+            "bytesBase64",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "canonicalTree": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/resource0/$defs/canonicalTree"
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/resource0/$defs/canonicalTree"
+              }
+            }
+          ]
+        },
+        "ingress": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "native"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "converted"
+                },
+                "adapterProfile": {
+                  "$ref": "#/$defs/resource0/$defs/profilePin"
+                },
+                "source": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                },
+                "lossReport": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                }
+              },
+              "required": [
+                "kind",
+                "adapterProfile",
+                "source",
+                "lossReport"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "document": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "documentRevision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "artifact": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "umfProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "ingress": {
+              "$ref": "#/$defs/resource0/$defs/ingress"
+            }
+          },
+          "required": [
+            "documentId",
+            "documentRevision",
+            "artifact",
+            "umfProfile",
+            "ingress"
+          ],
+          "additionalProperties": false
+        },
+        "binding": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "absent"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "present"
+                },
+                "vocabulary": {
+                  "$ref": "#/$defs/resource0/$defs/profilePin"
+                },
+                "artifact": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                }
+              },
+              "required": [
+                "state",
+                "vocabulary",
+                "artifact"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "unknownEndpoint": {
+              "enum": [
+                "reject",
+                "provisional",
+                "skip"
+              ]
+            },
+            "loss": {
+              "enum": [
+                "strict",
+                "report"
+              ]
+            },
+            "profile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            }
+          },
+          "required": [
+            "unknownEndpoint",
+            "loss",
+            "profile"
+          ],
+          "additionalProperties": false
+        },
+        "transform": {
+          "type": "object",
+          "properties": {
+            "registration": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "targetDefinitionIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "parameters": {
+              "$ref": "#/$defs/resource0/$defs/canonicalTree"
+            }
+          },
+          "required": [
+            "registration",
+            "targetDefinitionIdentity",
+            "parameters"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "resource3": {
+      "title": "Proposed fixed value-tree row home binding",
+      "description": "Exact logical join selectors only; original physical inventory, state closure, scalar/edge interpretation and native qualification required. Baseline 0.2 has no such tables.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-row-home/0.1.0"
+        },
+        "layoutInventory": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "recordKind": {
+          "enum": [
+            "object",
+            "edge"
+          ]
+        },
+        "ownerCatalogId": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "maxLength": 11
+        },
+        "propertyCatalogId": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "maxLength": 11
+        },
+        "stateRelationPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "nodeRelationPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scalarRelationPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "joinProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "joinDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "access": {
+          "enum": [
+            "scalar-root",
+            "complete-value-tree"
+          ]
+        },
+        "presenceDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "valueDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "storedDomainObligation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "edgeAssociationProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "edgeAssociationDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "layoutInventory",
+        "recordKind",
+        "ownerCatalogId",
+        "propertyCatalogId",
+        "stateRelationPhysicalIdentity",
+        "nodeRelationPhysicalIdentity",
+        "scalarRelationPhysicalIdentity",
+        "joinProfile",
+        "joinDefinition",
+        "access",
+        "presenceDefinition",
+        "valueDefinition",
+        "storedDomainObligation"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "edge"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "edgeAssociationProfile": {},
+              "edgeAssociationDefinition": {}
+            },
+            "required": [
+              "edgeAssociationProfile",
+              "edgeAssociationDefinition"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "object"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "properties": {
+                    "edgeAssociationProfile": {}
+                  },
+                  "required": [
+                    "edgeAssociationProfile"
+                  ]
+                },
+                {
+                  "properties": {
+                    "edgeAssociationDefinition": {}
+                  },
+                  "required": [
+                    "edgeAssociationDefinition"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "resource2": {
+      "title": "Proposed exact JSONB property home definition",
+      "description": "Decoded homeDefinition content for a registered props profile. Shape does not prove physical/source binding, native types, ownership or supported value semantics. No arbitrary SQL expressions.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-property-home/0.1.0"
+        },
+        "layoutInventory": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "recordKind": {
+          "enum": [
+            "object",
+            "edge"
+          ]
+        },
+        "relationPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "propsColumnPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "discriminatorColumnPhysicalIdentity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationName": {
+          "enum": [
+            "object",
+            "edge"
+          ]
+        },
+        "propsColumnName": {
+          "const": "props"
+        },
+        "discriminatorColumnName": {
+          "enum": [
+            "type_id",
+            "rel_type_id"
+          ]
+        },
+        "ownerCatalogId": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "maxLength": 11
+        },
+        "propertyCatalogId": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "maxLength": 11
+        },
+        "memberName": {
+          "type": "string",
+          "pattern": "^(0|-?[1-9][0-9]*)$",
+          "maxLength": 11
+        },
+        "accessor": {
+          "const": "jsonb-top-level-member"
+        },
+        "presenceProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "valueProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "edgeAssociationProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "edgeAssociationDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "layoutInventory",
+        "recordKind",
+        "relationPhysicalIdentity",
+        "propsColumnPhysicalIdentity",
+        "discriminatorColumnPhysicalIdentity",
+        "relationName",
+        "propsColumnName",
+        "discriminatorColumnName",
+        "ownerCatalogId",
+        "propertyCatalogId",
+        "memberName",
+        "accessor",
+        "presenceProfile",
+        "valueProfile"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "object"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "relationName": {
+                "const": "object"
+              },
+              "discriminatorColumnName": {
+                "const": "type_id"
+              }
+            },
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "edgeAssociationProfile"
+                  ],
+                  "properties": {
+                    "edgeAssociationProfile": {}
+                  }
+                },
+                {
+                  "required": [
+                    "edgeAssociationDefinition"
+                  ],
+                  "properties": {
+                    "edgeAssociationDefinition": {}
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "recordKind": {
+                "const": "edge"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "relationName": {
+                "const": "edge"
+              },
+              "discriminatorColumnName": {
+                "const": "rel_type_id"
+              },
+              "edgeAssociationProfile": {},
+              "edgeAssociationDefinition": {}
+            },
+            "required": [
+              "edgeAssociationProfile",
+              "edgeAssociationDefinition"
+            ]
+          }
+        }
+      ]
+    },
+    "resource1": {
+      "title": "Proposed Truss PostgreSQL storage binding envelope",
+      "description": "Unadopted structural envelope for Weft BindingInput.json. Nested profile-owned artifact grammars, complete model coverage, identity compatibility, signed native range admission and selected layout/value/key/context consistency remain required; shape does not approve row homes or qualification.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-postgresql-binding/0.1.0"
+        },
+        "bindingProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "basis": {
+          "type": "object",
+          "properties": {
+            "modelBundle": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "catalogRevision": {
+              "type": "string",
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "maxLength": 11
+            },
+            "acceptedCatalog": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "layoutProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "layoutInventory": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "layoutSql": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "exporterProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "namespace": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identityProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "valueProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "keyProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "readContextProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "readContextDefinition": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            }
+          },
+          "required": [
+            "modelBundle",
+            "catalogRevision",
+            "acceptedCatalog",
+            "layoutProfile",
+            "layoutInventory",
+            "layoutSql",
+            "exporterProfile",
+            "namespace",
+            "identityProfile",
+            "valueProfile",
+            "keyProfile",
+            "readContextProfile",
+            "readContextDefinition"
+          ],
+          "additionalProperties": false
+        },
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "logical": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "typeId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "acceptedDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "source": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              }
+            },
+            "required": [
+              "logical",
+              "typeId",
+              "acceptedDefinition",
+              "source"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "properties": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "logical": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "ownerTypeId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "propertyId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "home": {
+                "enum": [
+                  "props",
+                  "row"
+                ]
+              },
+              "homeProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "homeDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "valueProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "valueDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "presenceProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "acceptedDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "source": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "presenceDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              }
+            },
+            "required": [
+              "logical",
+              "ownerTypeId",
+              "propertyId",
+              "home",
+              "homeProfile",
+              "homeDefinition",
+              "valueProfile",
+              "valueDefinition",
+              "presenceProfile",
+              "acceptedDefinition",
+              "source",
+              "presenceDefinition"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "keys": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ownerTypeId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "keyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "keyNumber": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 6
+              },
+              "orderedPropertyIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "maxLength": 11
+                }
+              },
+              "comparisonProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "encodingProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "acceptedDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "comparisonDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "encodingDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              }
+            },
+            "required": [
+              "ownerTypeId",
+              "keyId",
+              "keyNumber",
+              "orderedPropertyIds",
+              "comparisonProfile",
+              "encodingProfile",
+              "acceptedDefinition",
+              "comparisonDefinition",
+              "encodingDefinition"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "logical": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "relationship": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "relationship"
+                ],
+                "additionalProperties": false
+              },
+              "relationshipId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "sourceTypeId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "targetTypeId": {
+                "type": "string",
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "maxLength": 11
+              },
+              "sourceKeyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "targetKeyId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "relationshipProfile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "acceptedDefinition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "source": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              },
+              "sourceOrderedPropertyIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "maxLength": 11
+                }
+              },
+              "targetOrderedPropertyIds": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "maxLength": 11
+                }
+              }
+            },
+            "required": [
+              "logical",
+              "relationshipId",
+              "sourceTypeId",
+              "targetTypeId",
+              "sourceKeyId",
+              "targetKeyId",
+              "relationshipProfile",
+              "acceptedDefinition",
+              "source",
+              "sourceOrderedPropertyIds",
+              "targetOrderedPropertyIds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "executionObligations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "profile": {
+                "$ref": "#/$defs/resource0/$defs/profilePin"
+              },
+              "definition": {
+                "$ref": "#/$defs/resource0/$defs/exactArtifact"
+              }
+            },
+            "required": [
+              "id",
+              "profile",
+              "definition"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "qualification": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/exactArtifact"
+          }
+        },
+        "bindingProfileId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "bindingProfile",
+        "basis",
+        "entities",
+        "properties",
+        "keys",
+        "relationships",
+        "executionObligations",
+        "qualification",
+        "bindingProfileId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/resource1"
+    },
+    {
+      "$ref": "#/$defs/resource2"
+    },
+    {
+      "$ref": "#/$defs/resource3"
+    },
+    {
+      "$ref": "#/$defs/resource4"
+    }
+  ]
+}

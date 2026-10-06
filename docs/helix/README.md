@@ -2,7 +2,7 @@
 
 The active flow is `helix` under `docs/helix/`. Catalog binding for this bootstrap: installed HELIX **0.15.0**, full plugin `workflows/graph.yml`; templates and methodology are resolved from that plugin and are not vendored here.
 
-Public contracts and requirements remain drafts. ADR-001 selects Rust after the bounded B-001 spike; ADR-002 remains proposed. A local native Python wheel and browser WASM experiment now exist. No target database execution or production storage binding is implemented.
+Public contracts and requirements remain drafts. ADR-001 selects Rust after the bounded B-001 spike; ADR-002 accepts the structural registered backend boundary. The public compiler has native Python and browser WASM component evidence. No production storage binding is implemented.
 
 | Activity | Read first |
 |---|---|
@@ -13,6 +13,13 @@ Public contracts and requirements remain drafts. ADR-001 selects Rust after the 
 | Test | [Project plan](03-test/TP-001-compiler-conformance.md), six story plans, [fixture corpus](03-test/fixtures/README.md) |
 | Build | [Implementation plan](04-build/implementation-plan.md), [embedding spike](02-design/spikes/SPIKE-001-native-python-browser.md) |
 
-The five JSON schemas and EBNF live beside their governing contracts. Stable `ddx.id` and `ddx.links` record local traceability. Sibling project evidence is cited as sources; this bootstrap does not invent a cross-flow catalog.
+The versioned JSON schemas and EBNF live beside their governing contracts. Stable `ddx.id` and `ddx.links` record local traceability. Sibling project evidence is cited as sources; this bootstrap does not invent a cross-flow catalog.
 
-B-001 passed on its recorded platform; see [execution evidence](04-build/evidence/B-001-native-python-browser.md). B-002 now establishes the 0.1 frontend; [evidence](04-build/evidence/B-002-frontend.md). Next is B-002A, the required versioned application-read extension from PR #2. Parallel independent progress can prepare the frontend oracle and obtain owner-approved Truss binding and Ashlar layout profiles. Open questions are recorded in the PRD and contracts. In particular, synthetic fixture bindings do not select Ashlar's production layout or declare a supported engine version.
+B-001 through B-004 complete their recorded component scopes; see the
+[implementation plan and evidence](04-build/implementation-plan.md). This includes
+PR #2's versioned application-read frontend, registered backend boundary and
+public Rust/Python/browser compiler parity. B-005 is in progress: Truss's approved
+mapping and native PostgreSQL qualification remain gates. Ashlar's approved layout
+and Databricks access gate B-006. Synthetic fixture bindings do not select either
+production profile or qualify an engine version. All 30 story criteria and release
+qualification remain planned until B-005 through B-007 establish their evidence.
