@@ -1248,3 +1248,20 @@ integration refuses JSONB lowering without allocating a parameter, preventing
 row-to-props fallback. All 52 PostgreSQL crate tests pass. These are Rust emitter
 checks; no new native or embedding qualification is claimed. Full registered
 codec lowering, row emission and public backend integration remain open.
+
+### Original leaf storage carrier emission (2026-10-06)
+
+The composed property now connects its admitted root graph codec to props
+extraction. Exact original codec bytes must match before allocating parameters;
+compound roots refuse this scalar path. Storage extraction derives family from
+those original bytes rather than a mutable parsed enum. String/integer-token/
+decimal-token carriers retain extracted text; boolean conversion is guarded by
+JSONB boolean type. Structural integrity combines the root prerequisite and
+selected JSON storage kind. It neither casts numeric tokens nor normalizes their
+spelling, and does not grant comparison or prove source/native domain validity.
+
+The authored string-property integration checks carrier/integrity SQL and refuses
+a byte-different codec before parameter allocation. All 52 PostgreSQL crate tests
+pass. Numeric/boolean branch implementation is not new native qualification;
+independent registered domain procedures, recursive and row lowering, result
+bridge and public backend integration remain required before B-005 acceptance.

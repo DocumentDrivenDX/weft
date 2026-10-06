@@ -105,6 +105,59 @@ impl HomeAdmission {
         })
     }
 }
+/// Storage carrier extraction retains numeric tokens as text. Structural
+/// integrity does not replace the selected source/native domain procedure.
+#[derive(Debug)]
+pub struct LeafStorage {
+    pub location: PropsLocation,
+    pub carrier: String,
+    pub storage_integrity: String,
+}
+impl PropertyAdmission {
+    pub fn props_leaf_storage(
+        &self,
+        codec: &leaf_codec_definition::Definition,
+        owner_alias: &crate::Identifier,
+        parameters: &mut crate::Parameters,
+    ) -> Result<LeafStorage> {
+        let node = &self.value.graph.value["nodes"][self.value.graph.root];
+        if node["shape"]["kind"] != "scalar" {
+            return Err(Diagnostic::new(
+                "WFT-CAPABILITY",
+                "lower",
+                "Compound property requires recursive codec lowering",
+            ));
+        }
+        let original = self
+            .value
+            .graph
+            .artifacts
+            .get(&format!("/nodes/{}/codecDefinition", self.value.graph.root))
+            .ok_or_else(|| fail("Original root leaf codec is missing"))?;
+        if original != codec.original_json.as_bytes() {
+            return Err(fail("Selected extraction codec differs from admitted root"));
+        }
+        let location = self.home.props_location(owner_alias, parameters)?;
+        let original_codec = checked_json(&codec.original_json)
+            .map_err(|_| fail("Original extraction codec JSON refused"))?;
+        let (kind, carrier) = match original_codec["rule"]["family"].as_str() {
+            Some("boolean") => ("boolean", format!(
+                "CASE WHEN pg_catalog.jsonb_typeof({})='boolean' THEN {}::pg_catalog.bool ELSE NULL END",
+                location.leaf, location.text)),
+            Some("string" | "integer" | "decimal") => ("string", location.text.clone()),
+            _ => return Err(fail("Original extraction family is unknown")),
+        };
+        let storage_integrity = format!(
+            "({} AND pg_catalog.jsonb_typeof({})='{kind}')",
+            location.root_integrity, location.leaf
+        );
+        Ok(LeafStorage {
+            location,
+            carrier,
+            storage_integrity,
+        })
+    }
+}
 /// Registered metadata must already correspond to original inventory bytes.
 /// This function checks selectors against that metadata; it does not create it.
 pub fn admit_home(
@@ -701,6 +754,37 @@ mod tests {
         )
         .is_err());
 
+        let mut storage_parameters = crate::Parameters::default();
+        let storage = property
+            .props_leaf_storage(
+                &leaves["root"],
+                &crate::Identifier::new("customer").unwrap(),
+                &mut storage_parameters,
+            )
+            .unwrap();
+        assert_eq!(storage.carrier, storage.location.text);
+        assert!(storage.storage_integrity.ends_with("='string')"));
+        assert!(!storage.carrier.contains("numeric"));
+        let mut substituted = Leaf::parse(
+            &leaves["root"].original_json,
+            LeafSelection {
+                profile: &pin,
+                source_profile: &pin,
+                native_profile: &pin,
+                original_artifacts: &originals,
+            },
+        )
+        .unwrap();
+        substituted.original_json.push(' ');
+        let mut refused_parameters = crate::Parameters::default();
+        assert!(property
+            .props_leaf_storage(
+                &substituted,
+                &crate::Identifier::new("customer").unwrap(),
+                &mut refused_parameters
+            )
+            .is_err());
+        assert!(refused_parameters.into_slots().is_empty());
         use crate::{
             comparator_requirements::{admit_properties, registration_key, Requirement},
             native_comparator_definition::{
