@@ -593,43 +593,39 @@ impl Build<'_> {
         Ok(())
     }
     fn expression(&mut self, e: &Expression) -> Result<String> {
-        Ok(match e {
-            Expression::Field { scan, identity, .. } => self
-                .fields
-                .get(&(scan.clone(), json!(identity).to_string()))
-                .ok_or_else(|| fail("Field access not prepared"))?
-                .clone(),
-            Expression::Literal {
-                value,
-                logical_type,
-                span,
-            } => {
-                let slot = self.parameters.push(
-                    logical_type.clone(),
-                    value.clone(),
-                    json!({"literalSpan":span}),
-                )?;
-                let cast = match logical_type.family {
-                    Family::String => "text",
-                    Family::Boolean => "bool",
-                    Family::Integer | Family::Decimal => "numeric",
-                };
-                let value = format!("{slot}::pg_catalog.{cast}");
-                if logical_type.family == Family::String {
-                    format!("{value} COLLATE pg_catalog.\"C\"")
-                } else {
-                    value
+        let fields = &self.fields;
+        crate::expression::render(e, &mut self.parameters, |e, operands, parameters| {
+            Ok(match e {
+                Expression::Field { scan, identity, .. } => fields
+                    .get(&(scan.clone(), json!(identity).to_string()))
+                    .ok_or_else(|| fail("Field access not prepared"))?
+                    .clone(),
+                Expression::Literal {
+                    value,
+                    logical_type,
+                    span,
+                } => {
+                    let slot = parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"literalSpan":span}),
+                    )?;
+                    let cast = match logical_type.family {
+                        Family::String => "text",
+                        Family::Boolean => "bool",
+                        Family::Integer | Family::Decimal => "numeric",
+                    };
+                    let value = format!("{slot}::pg_catalog.{cast}");
+                    if logical_type.family == Family::String {
+                        format!("{value} COLLATE pg_catalog.\"C\"")
+                    } else {
+                        value
+                    }
                 }
-            }
-            Expression::Equal { left, right, .. } => {
-                format!("({} = {})", self.expression(left)?, self.expression(right)?)
-            }
-            Expression::And { left, right, .. } => format!(
-                "({} AND {})",
-                self.expression(left)?,
-                self.expression(right)?
-            ),
-            Expression::Sum { argument, .. } => format!("sum({})", self.expression(argument)?),
+                Expression::Equal { .. } => format!("({} = {})", operands[0], operands[1]),
+                Expression::And { .. } => format!("({} AND {})", operands[0], operands[1]),
+                Expression::Sum { .. } => format!("sum({})", operands[0]),
+            })
         })
     }
     fn from(&mut self, n: &Node) -> Result<(String, Vec<String>, Vec<String>)> {

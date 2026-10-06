@@ -223,3 +223,5 @@ pub mod property_definition;
 pub mod numeric_correspondence;
 
 pub mod registered_access;
+
+pub mod expression;

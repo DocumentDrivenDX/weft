@@ -1573,3 +1573,28 @@ metadata; its self-join checks shared layout identity. All 57 crate tests pass.
 Recursive walk/source/domain/result realization, native whole-value probes and
 full backend/profile qualification remain unfinished; this metadata view is not
 a public support or publication claim.
+
+### Backend-owned native expression traversal (2026-10-06)
+
+A shared iterative expression renderer now passes original typed nodes and
+ordered rendered operands to a trusted backend callback. Field location, literal
+conversion and every native operator remain callback-owned; no model content
+loads executable code or selects an unregistered SQL template. The candidate
+uses this traversal with its existing fixed profile meanings. The original-profile
+backend can supply independently admitted mappings/operators without inheriting
+JSONB assumptions or the candidate's literal casts. Whole-expression parameters
+commit only after every callback succeeds.
+
+An actual resolved equality control verifies left-to-right callback order and
+ordered native operands. A callback allocates the first property slot then
+refuses a later missing native meaning; original parameters remain unchanged.
+All 58 crate tests pass (37 library, four binding, 17 compiler). The rebuilt actual
+compile_probe passes all 76 original application/native cases (37 props/39 row),
+including the existing corruption/empty/order controls. The JSON receipt pins
+new renderer/candidate source, native harness/corpus, probe binary, full output
+report and actual PostgreSQL 17.9 version. Python/browser packages were not
+rebuilt this turn; their earlier pinned component evidence remains separate.
+
+The traversal grants no native grammar/domain/operator authority. Original
+registered procedure integration, complete result bridge and native Truss
+profile/host qualification remain open before B-005 acceptance.
