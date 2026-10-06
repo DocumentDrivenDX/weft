@@ -1088,3 +1088,38 @@ This binds meaning custody only; field availability and native-null capability
 remain separately interpreted, and no native absence/visibility enforcement or
 SQL integration is inferred. The candidate retains synthetic definitions until
 its registered real-profile admission is connected.
+
+### Binding/home/relationship and extra-obligation refusal (2026-10-06)
+
+The active candidate profile audit found additional unchecked selections: top-level
+binding profile, selected home profile, relationship profile and declared extra
+execution obligations. A red regression showed an unknown binding profile still
+produced SQL. Candidate admission now requires the original explicit synthetic
+binding/home/relationship profiles and refuses extra execution obligations rather
+than replacing or ignoring their unknown procedures. Existing fixed context
+obligations are emitted by the trusted candidate implementation, separately from
+these refused input declarations.
+
+Tests alter binding/home/obligation inputs in both original storage homes and
+relationship profiles in forward props and inverse row traversals. All 48 Rust
+tests pass, including the valid compiler corpus. These guards do not change SQL
+templates or expand compatibility. Full original profile/procedure integration
+and native host qualification remain B-005 requirements.
+
+Fresh integration verification rebuilt the compile_probe and ran all 76 actual
+PostgreSQL application cases (37 props, 39 row), including existing corruption
+controls. The system Python invocation initially failed on unsupported strict zip;
+the selected Python 3.12 runtime completed the full run. The owned PG17 fixture
+container and synthetic storage scope remain as documented above.
+
+The same updated core was rebuilt into the actual native PyO3 wheel and browser
+WASM. Native Python passed all 76 artifact-byte parity cases with subprocesses
+disabled. Chromium's initial sandbox launch failed on macOS Mach port registration;
+only the browser check was rerun with escalation and passed all 76 cases, byte
+parity and absence of Node globals. No build was restarted solely for a wait.
+These runs exercise the updated candidate compilation path; they do not expose
+the standalone real-definition APIs through wrappers or qualify Truss host duties.
+
+The fresh browser artifact is 10,394,193 bytes with SHA-256
+`d8a418d3fdcd0e5ad9147b247b1598fa099fb9731697dcbdd15efb584eb4c5c0`,
+verified in Chromium 153.0.8010.12 through Playwright 1.62.1.

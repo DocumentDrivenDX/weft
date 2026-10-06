@@ -13,6 +13,12 @@ pub(super) fn validate(
         .enumerate()
         .find(|(_, r)| r["logical"] == json!(rel.identity))
         .ok_or_else(|| fail("Selected relationship mapping is missing"))?;
+    let expected = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+    if physical["relationshipProfile"] != expected {
+        return Err(fail(
+            "Selected relationship profile is not registered for this candidate",
+        ));
+    }
     let input = c
         .catalog
         .inputs

@@ -599,3 +599,64 @@ fn selected_page_and_relationship_keys_cannot_replace_registered_meaning() {
         }
     }
 }
+
+#[test]
+fn unknown_binding_home_and_execution_meanings_refuse_atomically() {
+    use base64::{engine::general_purpose::STANDARD, Engine};
+    let compiler = compiler();
+    for case in cases().iter().take(2) {
+        for kind in ["bindingProfile", "homeProfile", "executionObligations"] {
+            let mut request = case["request"].clone();
+            let mut binding: Value =
+                serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+            match kind {
+                "bindingProfile" => {
+                    binding["bindingProfile"]["identity"] = json!("unknown.binding.meaning")
+                }
+                "homeProfile" => {
+                    for property in binding["properties"].as_array_mut().unwrap() {
+                        property["homeProfile"]["identity"] = json!("unknown.home.meaning");
+                    }
+                }
+                _ => {
+                    binding["executionObligations"] = json!([{"id":"unknown.host.procedure","profile":binding["bindingProfile"],"definition":{"identity":"unknown-obligation","bytesBase64":STANDARD.encode(b"{}"),"sha256":weft_core::json::sha256(b"{}")}}])
+                }
+            }
+            let raw = binding.to_string();
+            request["target"]["bindingJson"] = json!(raw);
+            request["target"]["bindingSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+            let response = run(&compiler, &request);
+            assert_eq!(
+                response["status"], "blocked",
+                "{} {kind}: {response}",
+                case["id"]
+            );
+            assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
+            assert!(response.get("sql").is_none());
+        }
+    }
+}
+#[test]
+fn relationship_profile_cannot_change_fixed_traversal_meaning() {
+    let compiler = compiler();
+    let cases: Vec<Value> =
+        serde_json::from_str(include_str!("fixtures/application-cases.json")).unwrap();
+    for case in cases
+        .iter()
+        .filter(|case| case["id"] == "related-page-props" || case["id"] == "inverse-page-row")
+    {
+        let mut request = case["request"].clone();
+        let mut binding: Value =
+            serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        for relationship in binding["relationships"].as_array_mut().unwrap() {
+            relationship["relationshipProfile"]["identity"] = json!("unknown.relationship.meaning");
+        }
+        let raw = binding.to_string();
+        request["target"]["bindingJson"] = json!(raw);
+        request["target"]["bindingSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+        let response = run(&compiler, &request);
+        assert_eq!(response["status"], "blocked", "{}: {response}", case["id"]);
+        assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
+        assert!(response.get("sql").is_none());
+    }
+}

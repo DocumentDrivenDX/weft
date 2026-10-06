@@ -195,6 +195,14 @@ impl Backend for Candidate {
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         let admitted = Admission::parse(&c.binding.json, PROFILE)?;
         let synthetic_profile = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+        if admitted.value["bindingProfile"] != synthetic_profile
+            || !admitted.value["executionObligations"]
+                .as_array()
+                .unwrap()
+                .is_empty()
+        {
+            return Err(fail("Binding profile or additional execution obligations are not registered for this candidate"));
+        }
         for profile in [
             "readContextProfile",
             "layoutProfile",
@@ -264,6 +272,11 @@ impl Backend for Candidate {
                 // These are the registered synthetic codec pins for this candidate,
                 // never a claim that an arbitrary owner profile has been adopted.
                 let expected = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+                if admitted.value["properties"][i]["homeProfile"] != expected {
+                    return Err(fail(
+                        "Selected property home profile is not registered for this candidate",
+                    ));
+                }
                 for kind in ["value", "presence"] {
                     if admitted.value["properties"][i][format!("{kind}Profile")] != expected
                         || admitted.decoded_json(&format!("/properties/{i}/{kind}Definition"))?
