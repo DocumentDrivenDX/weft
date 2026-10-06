@@ -22,7 +22,7 @@ pub struct Selection<'a> {
     pub relations: &'a BTreeMap<String, String>,
     pub columns: &'a BTreeMap<String, Column>,
 }
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum RecordKind {
     Object,
     Edge,
@@ -780,6 +780,38 @@ mod tests {
             .props_location(&crate::Identifier::new("owner").unwrap(), &mut parameters)
             .is_err());
         assert!(parameters.into_slots().is_empty());
+        let mut owner_parameters = crate::Parameters::default();
+        let source = home_admission
+            .owner_mapping()
+            .source(
+                &crate::Identifier::new("schema.with.dot").unwrap(),
+                &crate::Identifier::new("owner\"literal").unwrap(),
+                "-7",
+                &mut owner_parameters,
+            )
+            .unwrap();
+        assert_eq!(
+            source.sql,
+            "\"schema.with.dot\".\"object\" AS \"owner\"\"literal\""
+        );
+        assert_eq!(
+            source.discriminator,
+            "(\"owner\"\"literal\".\"type_id\" = $1::pg_catalog.int4)"
+        );
+        assert_eq!(owner_parameters.into_slots()[0].value, "-7");
+        let mut rejected_parameters = crate::Parameters::default();
+        for id in ["01", "2147483648", "1 OR true"] {
+            assert!(home_admission
+                .owner_mapping()
+                .source(
+                    &crate::Identifier::new("schema").unwrap(),
+                    &crate::Identifier::new("owner").unwrap(),
+                    id,
+                    &mut rejected_parameters,
+                )
+                .is_err());
+        }
+        assert!(rejected_parameters.into_slots().is_empty());
         assert!(admitted.property_home(0).is_err()); // Fixed candidate IDs remain a distinct profile.
         assert!(definition
             .verify_home(&admitted, 0, &BTreeSet::new(), None)

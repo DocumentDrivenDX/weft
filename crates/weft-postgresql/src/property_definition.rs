@@ -94,6 +94,8 @@ pub enum HomeAdmission {
         access: String,
         record_kind: crate::row_join_definition::RecordKind,
         original_join_json: String,
+        relation: crate::Identifier,
+        discriminator_column: crate::Identifier,
     },
 }
 #[derive(Debug)]
@@ -116,6 +118,69 @@ pub struct PropsLocation {
     pub present: String,
     pub native_null: String,
     pub root_integrity: String,
+}
+/// Original admitted physical owner mapping, independent of property storage.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct OwnerMapping {
+    pub record_kind: crate::row_join_definition::RecordKind,
+    pub relation: crate::Identifier,
+    pub discriminator_column: crate::Identifier,
+}
+#[derive(Debug)]
+pub struct OwnerSource {
+    pub sql: String,
+    /// Selects the admitted owner type; never substitutes for integrity checks.
+    pub discriminator: String,
+}
+impl HomeAdmission {
+    pub fn owner_mapping(&self) -> OwnerMapping {
+        let (record_kind, relation, discriminator_column) = match self {
+            Self::Props {
+                record_kind,
+                relation,
+                discriminator_column,
+                ..
+            }
+            | Self::Row {
+                record_kind,
+                relation,
+                discriminator_column,
+                ..
+            } => (record_kind, relation, discriminator_column),
+        };
+        OwnerMapping {
+            record_kind: record_kind.clone(),
+            relation: relation.clone(),
+            discriminator_column: discriminator_column.clone(),
+        }
+    }
+}
+impl OwnerMapping {
+    pub fn source(
+        &self,
+        namespace: &crate::Identifier,
+        alias: &crate::Identifier,
+        catalog_id: &str,
+        parameters: &mut crate::Parameters,
+    ) -> Result<OwnerSource> {
+        let slot = parameters.catalog(
+            crate::CatalogDomain::Int,
+            catalog_id,
+            serde_json::json!({"typeId":catalog_id,"use":"admitted-owner-scan"}),
+        )?;
+        Ok(OwnerSource {
+            sql: format!(
+                "{} AS {}",
+                crate::qualified(namespace, &self.relation),
+                alias.sql()
+            ),
+            discriminator: format!(
+                "({}.{} = {slot}::pg_catalog.int4)",
+                alias.sql(),
+                self.discriminator_column.sql()
+            ),
+        })
+    }
 }
 impl HomeAdmission {
     pub fn props_location(
@@ -333,6 +398,12 @@ pub fn admit_home(
             access: home["access"].as_str().unwrap().into(),
             record_kind,
             original_join_json: join.original_json.clone(),
+            relation: crate::Identifier::new(if edge { "edge" } else { "object" })?,
+            discriminator_column: crate::Identifier::new(if edge {
+                "rel_type_id"
+            } else {
+                "type_id"
+            })?,
         });
     }
     if selected.row_join.is_some() {
@@ -1077,12 +1148,20 @@ mod tests {
         assert!(captured_storage.storage_integrity.ends_with("='string')"));
         assert!(captured_storage
             .carrier
-            .contains("\"weft_scan_0\".\"props\" ->> $1"));
+            .contains("\"weft_scan_0\".\"props\" ->> $2"));
         assert!(matches!(
             &accesses[0].location,
             crate::registered_access::Location::Props(_)
         ));
         assert_eq!(accesses[0].owner_alias.sql(), "\"weft_scan_0\"");
+        assert!(accesses[0]
+            .owner_source
+            .sql
+            .ends_with(".\"object\" AS \"weft_scan_0\""));
+        assert_eq!(
+            accesses[0].owner_source.discriminator,
+            "(\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+        );
         let mut atomic_parameters = crate::Parameters::default();
         let requests = [
             crate::registered_access::Request {
@@ -1189,14 +1268,14 @@ mod tests {
         )
         .is_err());
         assert!(rejected_parameters.into_slots().is_empty());
-        assert_eq!(automatic_parameters.into_slots().len(), 2);
+        assert_eq!(automatic_parameters.into_slots().len(), 4);
         assert_eq!(self_accesses.len(), 2);
         assert!(std::sync::Arc::ptr_eq(
             &self_accesses[0].value_layout,
             &self_accesses[1].value_layout
         ));
         assert_ne!(self_accesses[0].owner_alias, self_accesses[1].owner_alias);
-        assert_eq!(self_parameters.into_slots().len(), 2);
+        assert_eq!(self_parameters.into_slots().len(), 4);
         let changed_context = weft_core::backend::Context {
             binding: &changed_input,
             binding_value: &changed,

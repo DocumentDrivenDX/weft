@@ -1662,3 +1662,29 @@ or execution support claim. All 62 crate tests pass (41 library, four binding,
 [Receipt](B-005-comparator-operands.json) pins changed source and the test log.
 No native engine or embedding rerun is claimed; original-profile integration
 and native Truss qualification remain open.
+
+### Original owner-source access assembly (2026-10-06)
+
+Admitted props and row homes now retain their owner relation and discriminator
+mapping. Registered access planning emits a separately quoted namespace/relation
+and occurrence alias, with an int4-domain catalog parameter for owner selection.
+Each occurrence shares one immutable source across its selected properties;
+conflicting physical owner mappings or catalog IDs refuse the complete access
+plan. Separate self-join occurrences retain separate source parameters. Catalog
+discriminators remain storage selectors, never logical key values.
+
+Existing original-property controls now check the props owner source and its
+parameterized discriminator together with exact scalar carrier extraction; the
+self-join prepares two independent source/member pairs. The admitted original
+row-home control checks literal dotted namespace and quoted alias spelling,
+negative historical catalog IDs, and canonical/range/injection refusals with
+no parameter leakage. All 62 crate tests pass. [Receipt](B-005-owner-source.json)
+pins changed source and the test log. No native database or embedding rerun is
+claimed for this standalone preparation change.
+
+The discriminator selects owner types and cannot replace integrity prerequisites
+or hide malformed selected properties. This API prepares scans with selected
+property accesses; fieldless count scans still require independently admitted
+record mapping. Edge association, recursive result decoding, original source
+codec/native operation realization and complete host/profile qualification
+remain independent obligations before public backend integration/acceptance.

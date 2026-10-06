@@ -27,6 +27,7 @@ pub struct Access<'a> {
     pub scan: String,
     pub field: Identity,
     pub owner_alias: Identifier,
+    pub owner_source: std::sync::Arc<crate::property_definition::OwnerSource>,
     pub location: Location,
     pub scalar_storage: Option<crate::property_definition::ScalarStorage>,
     pub value_layout: std::sync::Arc<crate::value_definition::Layout<'a>>,
@@ -233,6 +234,14 @@ pub fn lower<'a>(
     let mut accessed = BTreeSet::new();
     let mut result = Vec::new();
     let mut layouts = BTreeMap::new();
+    let mut owner_sources: BTreeMap<
+        String,
+        (
+            crate::property_definition::OwnerMapping,
+            String,
+            std::sync::Arc<crate::property_definition::OwnerSource>,
+        ),
+    > = BTreeMap::new();
     for (index, request) in requests.iter().enumerate() {
         let owner = scans
             .get(&request.scan)
@@ -251,6 +260,33 @@ pub fn lower<'a>(
             .get(&key)
             .ok_or_else(|| fail("Access request lacks original owned property"))?;
         let alias = &aliases[&request.scan];
+        let mapping = property.home.owner_mapping();
+        let owner_source = if let Some((original_mapping, original_id, source)) =
+            owner_sources.get(&request.scan)
+        {
+            if original_mapping != &mapping || original_id != &property.owner_catalog_id {
+                return Err(fail(
+                    "Property homes disagree on the original scan owner mapping",
+                ));
+            }
+            std::sync::Arc::clone(source)
+        } else {
+            let source = std::sync::Arc::new(mapping.source(
+                &namespace,
+                alias,
+                &property.owner_catalog_id,
+                &mut staged,
+            )?);
+            owner_sources.insert(
+                request.scan.clone(),
+                (
+                    mapping,
+                    property.owner_catalog_id.clone(),
+                    std::sync::Arc::clone(&source),
+                ),
+            );
+            source
+        };
         let location = match &property.home {
             HomeAdmission::Props { .. } => {
                 Location::Props(property.home.props_location(alias, &mut staged)?)
@@ -274,6 +310,7 @@ pub fn lower<'a>(
             scan: request.scan.clone(),
             field: request.field.clone(),
             owner_alias: alias.clone(),
+            owner_source,
             location,
             scalar_storage,
             value_layout,
