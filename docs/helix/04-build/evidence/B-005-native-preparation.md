@@ -1623,3 +1623,23 @@ Python/browser packages were not rebuilt for this change.
 This is fixed synthetic candidate evidence. Original-profile integration,
 complete result bridge and adopted Truss native/host qualification remain open;
 no story criterion or B-005 merge gate is closed by these component checks.
+
+### Selected access-to-expression bridge (2026-10-06)
+
+The original-profile preparation API now connects typed expression traversal to
+its occurrence-qualified admitted physical access list. Field callbacks receive
+the exact selected access; operator/literal callbacks receive no field location.
+A missing occurrence/field pair or duplicate access refuses rather than borrowing
+another self-join location. Backend callbacks continue to own selected codec,
+literal and native operator meaning; this bridge does not grant their authority
+or publish a decoded result.
+
+The existing original-property admission control now renders the actual resolved
+self-join equality through both automatically prepared accesses. It checks the
+two independent quoted aliases and captured scalar carriers. A second invocation
+with only the first occurrence allocates a parameter through the first native
+callback, then refuses the missing second occurrence and retains zero parameters.
+All 61 crate tests pass. [Receipt](B-005-selected-expression.json) pins the bridge,
+extended control and test log. No database or embedding rerun is claimed for this
+standalone original-profile preparation API. Public registered backend/result
+integration and original native Truss profile qualification remain pending.

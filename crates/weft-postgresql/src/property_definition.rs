@@ -1141,6 +1141,54 @@ mod tests {
         )
         .unwrap();
         assert_eq!(automatic.len(), 2);
+        let join_expression = match &self_plan.root {
+            weft_core::ir::Node::Project { input, .. } => match input.as_ref() {
+                weft_core::ir::Node::InnerJoin { on, .. } => on,
+                _ => panic!("fixture join"),
+            },
+            _ => panic!("fixture project"),
+        };
+        let emitted = crate::registered_access::render_expression(
+            join_expression,
+            &automatic,
+            &mut automatic_parameters,
+            |node, operands, access, _| {
+                Ok(match node {
+                    weft_core::ir::Expression::Field { .. } => access
+                        .unwrap()
+                        .scalar_storage
+                        .as_ref()
+                        .unwrap()
+                        .carrier
+                        .clone(),
+                    weft_core::ir::Expression::Equal { .. } => {
+                        assert!(access.is_none());
+                        format!("({} = {})", operands[0], operands[1])
+                    }
+                    _ => panic!("fixture expression"),
+                })
+            },
+        )
+        .unwrap();
+        assert!(emitted.contains("\"weft_scan_0\".\"props\""));
+        assert!(emitted.contains("\"weft_scan_1\".\"props\""));
+        let mut rejected_parameters = crate::Parameters::default();
+        assert!(crate::registered_access::render_expression(
+            join_expression,
+            &automatic[..1],
+            &mut rejected_parameters,
+            |_, _, _, parameters| parameters.push(
+                weft_core::ir::LogicalType {
+                    family: weft_core::ir::Family::String,
+                    facets: json!({}),
+                    nullable: false
+                },
+                "first-location".into(),
+                json!({"use":"test-native-access"}),
+            ),
+        )
+        .is_err());
+        assert!(rejected_parameters.into_slots().is_empty());
         assert_eq!(automatic_parameters.into_slots().len(), 2);
         assert_eq!(self_accesses.len(), 2);
         assert!(std::sync::Arc::ptr_eq(

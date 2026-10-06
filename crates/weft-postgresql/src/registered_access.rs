@@ -282,6 +282,49 @@ pub fn lower<'a>(
     *parameters = staged;
     Ok(result)
 }
+/// Render a typed expression with exact occurrence-qualified physical accesses.
+/// The trusted native callback still owns codecs, literals and operations. A
+/// field cannot use another self-join occurrence's location or an unselected
+/// access. This does not certify stored domains or result publication.
+pub fn render_expression<'a>(
+    expression: &weft_core::ir::Expression,
+    accesses: &[Access<'a>],
+    parameters: &mut Parameters,
+    mut native: impl FnMut(
+        &weft_core::ir::Expression,
+        &[String],
+        Option<&Access<'a>>,
+        &mut Parameters,
+    ) -> Result<String>,
+) -> Result<String> {
+    let mut indexed = BTreeMap::new();
+    for access in accesses {
+        let key = (
+            access.scan.clone(),
+            serde_json::to_string(&access.field)
+                .map_err(|_| fail("Access identity encoding refused"))?,
+        );
+        if indexed.insert(key, access).is_some() {
+            return Err(fail("Duplicate expression physical access"));
+        }
+    }
+    crate::expression::render(expression, parameters, |node, operands, parameters| {
+        let access =
+            if let weft_core::ir::Expression::Field { scan, identity, .. } = node {
+                let key = (
+                    scan.clone(),
+                    serde_json::to_string(identity)
+                        .map_err(|_| fail("Expression identity encoding refused"))?,
+                );
+                Some(*indexed.get(&key).ok_or_else(|| {
+                    fail("Expression field has no exact selected occurrence access")
+                })?)
+            } else {
+                None
+            };
+        native(node, operands, access, parameters)
+    })
+}
 #[cfg(test)]
 mod tests {
     use super::*;
