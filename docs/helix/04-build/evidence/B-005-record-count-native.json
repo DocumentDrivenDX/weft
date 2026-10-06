@@ -1,0 +1,24 @@
+{
+  "scope": "Captured Rust independent Record source and native count over synthetic table without property columns; not complete public backend, host or adopted Truss qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "f636180ed10f9d5a76e65dda202c189fc26e798db91c139ef10aa410f371855c",
+  "harnessSha256": "33aca6b045078793c406a4602ffd195492ff7ccb17d1bef5898747cf049baf84",
+  "results": [
+    {
+      "id": "empty",
+      "count": 0,
+      "executedSqlSha256": "7423b30c05c0e83c2f0d1da7c69a9afae197cee56492a6e9e74d73d571d4ef5d"
+    },
+    {
+      "id": "two-owners",
+      "count": 2,
+      "executedSqlSha256": "b63d602b3d652434851837be07882282eee6e7bf5905c2fbba1ff9b5c7f96c8d"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/record_definition.rs": "9e76a9bf9f3ed05553db399eeadabad419b77eb7846c0cdd80e7caf0253f2258",
+    "crates/weft-postgresql/src/lib.rs": "4b163662456de802b559982a198b38a1ae2d1a743ffc1e52cef910e4cb02dd1f"
+  },
+  "rustCrateTests": 63,
+  "testLogSha256": "fc2b8cb9c3dae7bb4e245297d765983520e6d6ee30d2713acb23af29fa9e7fe0"
+}

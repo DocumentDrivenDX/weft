@@ -227,3 +227,5 @@ pub mod registered_access;
 pub mod expression;
 
 pub mod relational;
+
+pub mod record_definition;

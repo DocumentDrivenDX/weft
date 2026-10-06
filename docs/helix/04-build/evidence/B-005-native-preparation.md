@@ -1779,3 +1779,38 @@ codec checks, complete visibility, host publication gating and adopted native
 Truss qualification remain open. Edge physical fixtures do not grant logical
 edge property selection. Python/browser packages were not rebuilt, and B-005
 acceptance remains pending.
+
+### Property-independent original Record sources (2026-10-06)
+
+A separate Record admission now verifies the original selected UMF Record,
+complete source document and accepted entity definition against the binding.
+Trusted registry selectors must name an object relation and type_id column in
+the exact original layout inventory. Private admitted custody retains the model
+pin and binding cut. Scan lowering supports V01/V02 original scan occurrences,
+including fieldless counts, with derived aliases and typed catalog parameters;
+duplicate occurrences, missing records or changed owner/model/binding refuse
+atomically. Logical edge association does not follow from an entity type ID.
+
+The regression control resolves an actual Customer count with zero selected
+property reads and emits its independent owner source. A two-source count join
+with only its first Record admitted refuses after source preparation and leaves
+zero parameters. Changed namespace/binding, changed model pin, redirected native
+column and mismatched original entity source also refuse. All 63 crate tests
+pass (42 library, four binding, 17 compiler).
+
+[Native harness](../../../../tests/truss-postgresql/record-count-native.py) executes
+[captured Rust source/count SQL](../../../../tests/truss-postgresql/fixtures/record-count-emission.json)
+on PostgreSQL 17.9 using an independent minimal object table with only id/type_id
+and no property columns. Empty and two-owned-row cases return exact 0/2 counts,
+excluding an unrelated owner type. Catalog IDs are negative historical values;
+object IDs differ from their discriminator and have no business-key meaning.
+[Receipt](B-005-record-count-native.json) pins source, capture, harness and native
+observations. This closes the preparation API's fieldless Record mapping gap;
+it does not finish the public original-profile backend.
+
+Inventory interpretation and native storage guarantees still require registered
+owner qualification. Property/value/comparator admission, host authorization,
+recursive decoding/result publication and adopted Truss profile remain separate
+before B-005 acceptance. The captured count is a source component control, not
+full public compiler/result ABI execution. Python/browser packages were not
+rebuilt, and no story criterion or merge gate is closed.
