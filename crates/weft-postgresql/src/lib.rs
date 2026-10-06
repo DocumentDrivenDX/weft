@@ -219,3 +219,5 @@ pub mod comparator_requirements;
 pub mod row_join_definition;
 
 pub mod property_definition;
+
+pub mod numeric_correspondence;

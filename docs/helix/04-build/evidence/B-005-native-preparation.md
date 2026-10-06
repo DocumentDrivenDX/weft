@@ -1393,3 +1393,30 @@ that capture and explicit output receipt path against owned weft-b005-pg17.
 A test-only Family moved-value error was corrected before execution. All 54
 PostgreSQL crate tests pass. This is native component evidence, not acceptance
 of a deployed Truss profile or an application/story support claim.
+
+### Bounded exact mathematical correspondence witness (2026-10-06)
+
+The numeric_correspondence Rust module realizes Truss CONTRACT-010 NX's compact
+mathematical witness over separately admitted sign/mantissa/fraction/exponent
+parts. It removes leading/trailing coefficient zeros with checked signed exponent
+arithmetic, retaining original caller-owned tokens untouched. Zero cannot bypass
+complete digit/counter checks. No power-of-ten expansion or floating arithmetic
+is used. An invocation-shared budget reserves four steps per digit plus fixed
+bookkeeping for each occurrence, including repeated equal values; caller-selected
+maximum digits bounds witness allocation. This candidate reservation convention
+is not adoption of Truss's complete value/resource profile.
+
+The original Truss draft mathematical vectors are copied with a source SHA-256
+pin checked by the Rust test. All eleven witnesses and seven equality pairs pass,
+including >2^53 adjacent integers, negative zero, spelling variants and bounded
+million-exponent algorithm controls. Overflow on zero, malformed parts, inconsistent
+fraction counts and repeated budget exhaustion refuse. Full crate verification
+passes 56 tests (35 library, four binding, 17 compiler); the added source-pin check
+then passes targeted mathematical tests.
+
+The helper consumes already parsed parts and grants no source/native grammar,
+facets, native representability, ordering/key/SUM or publication capability.
+Source and native parsers, full original definition/domain admission and source
+custody must precede witness equality. Million-exponent mathematics is not a
+PostgreSQL storage claim. Decoder/public backend integration and deployed native
+profile qualification remain open.
