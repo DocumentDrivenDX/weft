@@ -1305,3 +1305,22 @@ overflow refusal. All 54 PostgreSQL crate tests pass (33 library, four binding,
 17 compiler). These are emitter/component controls, without new native execution
 or public wrapper qualification. Logical edge-property queries remain separately
 unfinished; a physical edge join foundation does not introduce their frontend syntax.
+
+### Row root structural prerequisites and alias containment (2026-10-06)
+
+Captured row location emission now returns structural_integrity separately from
+its LEFT JOINs. Correlated independent counts require either complete state
+absence or exactly one state with one parentless existing root, and at most one
+root scalar payload. Counts use the full original owner-kind/id/discriminator/
+property-owner/property tuple; missing roots and duplicated state/root/payload
+rows cannot be suppressed by inserting integrity as a query filter. Required
+versus optional state presence, scalar versus compound payload requirements,
+source/domain/codec correspondence and complete subtree checks remain separate.
+The host must evaluate prerequisites in the same complete authorized view before
+logical operations or publication; this predicate does not establish visibility.
+
+Internal join and probe aliases reject collision with the supplied owner alias
+before parameter mutation. Object/edge component controls check the prerequisite
+count/root structure and probe-alias refusal, preserving atomic slot custody.
+All 54 PostgreSQL crate tests pass. This turn adds no native corruption result or
+profile qualification; native execution of emitted prerequisites remains required.

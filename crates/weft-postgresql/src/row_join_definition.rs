@@ -37,6 +37,8 @@ pub struct Definition {
 #[derive(Debug)]
 pub struct RootLocation {
     pub joins: Vec<String>,
+    /// Prerequisite in the same complete authorized view, never a query filter.
+    pub structural_integrity: String,
     pub state_alias: crate::Identifier,
     pub node_alias: crate::Identifier,
     pub scalar_alias: crate::Identifier,
@@ -70,6 +72,22 @@ pub(crate) fn root_location(
     let state_alias = crate::Identifier::new(&format!("weft_state_{occurrence}"))?;
     let node_alias = crate::Identifier::new(&format!("weft_node_{occurrence}"))?;
     let scalar_alias = crate::Identifier::new(&format!("weft_scalar_{occurrence}"))?;
+    let observed_state = crate::Identifier::new(&format!("weft_check_state_{occurrence}"))?;
+    let observed_node = crate::Identifier::new(&format!("weft_check_node_{occurrence}"))?;
+    let observed_scalar = crate::Identifier::new(&format!("weft_check_scalar_{occurrence}"))?;
+    if [
+        &state_alias,
+        &node_alias,
+        &scalar_alias,
+        &observed_state,
+        &observed_node,
+        &observed_scalar,
+    ]
+    .iter()
+    .any(|alias| *alias == owner)
+    {
+        return Err(fail("Owner alias collides with native row access aliases"));
+    }
     let table = |role: &str| -> Result<String> {
         Ok(crate::qualified(
             namespace,
@@ -104,9 +122,17 @@ pub(crate) fn root_location(
         format!("LEFT JOIN {node_table} AS {node} ON {node}.\"state_id\"={state}.\"state_id\" AND {node}.\"node_id\"={state}.\"root_node_id\""),
         format!("LEFT JOIN {scalar_table} AS {scalar} ON {scalar}.\"state_id\"={node}.\"state_id\" AND {scalar}.\"node_id\"={node}.\"node_id\""),
     ];
+    let observed_state = observed_state.sql();
+    let observed_node = observed_node.sql();
+    let observed_scalar = observed_scalar.sql();
+    let state_count = format!("(SELECT count(*) FROM {state_table} AS {observed_state} WHERE {observed_state}.\"owner_kind\"='{kind}' AND {observed_state}.\"{id_column}\"={owner}.\"id\" AND {observed_state}.\"{discriminator}\"={owner}.\"{owner_discriminator}\" AND {observed_state}.\"property_owner_type_id\"={type_slot}::pg_catalog.int4 AND {observed_state}.\"property_id\"={property_slot}::pg_catalog.int4)");
+    let node_count = format!("(SELECT count(*) FROM {node_table} AS {observed_node} WHERE {observed_node}.\"state_id\"={state}.\"state_id\" AND {observed_node}.\"node_id\"={state}.\"root_node_id\")");
+    let scalar_count = format!("(SELECT count(*) FROM {scalar_table} AS {observed_scalar} WHERE {observed_scalar}.\"state_id\"={node}.\"state_id\" AND {observed_scalar}.\"node_id\"={node}.\"node_id\")");
+    let structural_integrity = format!("(({state_count}=0 AND {state}.\"state_id\" IS NULL) OR ({state_count}=1 AND {state}.\"state_id\" IS NOT NULL AND {node}.\"node_id\" IS NOT NULL AND {node}.\"parent_node_id\" IS NULL AND {node_count}=1 AND {scalar_count}<=1))");
     *parameters = staged;
     Ok(RootLocation {
         joins,
+        structural_integrity,
         state_alias,
         node_alias,
         scalar_alias,
@@ -460,6 +486,22 @@ mod tests {
             )
             .unwrap();
             assert_eq!(location.joins.len(), 3);
+            assert!(location.structural_integrity.contains("count(*)"));
+            assert!(location
+                .structural_integrity
+                .contains("\"parent_node_id\" IS NULL"));
+            let mut collision_slots = crate::Parameters::default();
+            assert!(root_location(
+                &f.value.to_string(),
+                &crate::Identifier::new("s").unwrap(),
+                &crate::Identifier::new("weft_check_state_3").unwrap(),
+                "1",
+                "42",
+                3,
+                &mut collision_slots
+            )
+            .is_err());
+            assert!(collision_slots.into_slots().is_empty());
             assert!(location.joins[0].contains("\"schema.with.dot\".\"row_home_state\""));
             assert!(location.joins[0].contains(if edge { "\"edge_id\"" } else { "\"object_id\"" }));
             assert!(location.joins[0].contains(if edge {
