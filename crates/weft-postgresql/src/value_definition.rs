@@ -22,6 +22,63 @@ fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
 impl Graph {
+    /// Verify every authored node against the original pinned model, retaining
+    /// lexical artifacts separately. This does not qualify shape or codec meaning.
+    pub fn verify_model_sources(
+        &self,
+        catalog: &weft_core::model::Catalog,
+        expected_root: &weft_core::ir::Identity,
+    ) -> Result<()> {
+        let nodes = self.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Missing graph nodes"))?;
+        let root = nodes
+            .get(self.root)
+            .ok_or_else(|| fail("Missing graph root"))?;
+        if root["authoredIdentity"] != serde_json::json!(expected_root) {
+            return Err(fail("Graph root differs from selected authored identity"));
+        }
+        for (index, node) in nodes.iter().enumerate() {
+            let identity: weft_core::ir::Identity =
+                serde_json::from_value(node["authoredIdentity"].clone())
+                    .map_err(|_| fail("Invalid authored node identity"))?;
+            let input = catalog
+                .inputs
+                .iter()
+                .find(|input| {
+                    input.pin.document_id == identity.document_id
+                        && input.pin.revision == identity.revision
+                        && input.selected_module_ids.contains(&identity.module)
+                })
+                .ok_or_else(|| fail("Graph node does not belong to an original selected model"))?;
+            let document = checked_json(&input.document_json)
+                .map_err(|_| fail("Original model JSON refused"))?;
+            let element = document["modules"]
+                .as_array()
+                .and_then(|modules| modules.iter().find(|m| m["id"] == identity.module))
+                .and_then(|module| module["elements"].as_array())
+                .and_then(|elements| elements.iter().find(|e| e["id"] == identity.element))
+                .ok_or_else(|| fail("Graph authored element is absent from original model"))?;
+            let decode = |path: &str| -> Result<Value> {
+                let bytes = self
+                    .artifacts
+                    .get(path)
+                    .ok_or_else(|| fail("Missing original graph artifact"))?;
+                let text = std::str::from_utf8(bytes)
+                    .map_err(|_| fail("Authored definition is not UTF-8"))?;
+                checked_json(text).map_err(|_| fail("Authored definition JSON refused"))
+            };
+            if decode(&format!("/nodes/{index}/authoredDefinition"))? != *element {
+                return Err(fail(
+                    "Graph authored definition differs from original model",
+                ));
+            }
+            if index == self.root && decode("/acceptedDefinition")? != *element {
+                return Err(fail("Graph accepted definition differs from original root"));
+            }
+        }
+        Ok(())
+    }
     pub fn parse(raw: &str, profile: &Value, accepted: &[u8]) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -173,6 +230,52 @@ impl Graph {
 mod tests {
     use super::*;
     use serde_json::json;
+    #[test]
+    fn authored_definitions_must_match_selected_original_models() {
+        use weft_core::{
+            ir::Identity,
+            model::{Catalog, ModuleInput},
+        };
+        let cases: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
+        ))
+        .unwrap();
+        let inputs: Vec<ModuleInput> =
+            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
+        let catalog = Catalog::prepare(inputs).unwrap();
+        let input = &catalog.inputs[0];
+        let document = checked_json(&input.document_json).unwrap();
+        let module = &document["modules"][0];
+        let element = &module["elements"][0];
+        let identity = Identity {
+            document_id: input.pin.document_id.clone(),
+            revision: input.pin.revision.clone(),
+            module: module["id"].as_str().unwrap().into(),
+            element: element["id"].as_str().unwrap().into(),
+        };
+        let bytes = element.to_string().into_bytes();
+        let artifact = json!({"identity":"original-node","bytesBase64":STANDARD.encode(&bytes),"sha256":sha256(&bytes)});
+        let mut value = fixture();
+        value["nodes"] = json!([{"nodeId":"root","authoredIdentity":identity,"authoredDefinition":artifact,"codecProfile":value["profile"],"codecDefinition":artifact,"shape":{"kind":"scalar","family":"fixture","storageRepresentation":"opaque-archive"}}]);
+        value["acceptedDefinition"] = artifact;
+        let graph = Graph::parse(&value.to_string(), &value["profile"], &bytes).unwrap();
+        graph.verify_model_sources(&catalog, &identity).unwrap();
+        let mut wrong = identity.clone();
+        wrong.revision.push('x');
+        assert!(graph.verify_model_sources(&catalog, &wrong).is_err());
+        let mut altered = value.clone();
+        altered["nodes"][0]["authoredDefinition"] = json!({"identity":"altered","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});
+        let graph = Graph::parse(&altered.to_string(), &value["profile"], &bytes).unwrap();
+        assert!(graph.verify_model_sources(&catalog, &identity).is_err());
+        let mut foreign = value.clone();
+        foreign["nodes"][0]["authoredIdentity"]["module"] = json!("unselected");
+        let graph = Graph::parse(&foreign.to_string(), &value["profile"], &bytes).unwrap();
+        let mut foreign_identity = identity;
+        foreign_identity.module = "unselected".into();
+        assert!(graph
+            .verify_model_sources(&catalog, &foreign_identity)
+            .is_err());
+    }
     fn fixture() -> Value {
         let artifact = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});
         let pin = json!({"identity":"graph-fixture","version":"0.1.0","sha256":sha256(b"{}")});

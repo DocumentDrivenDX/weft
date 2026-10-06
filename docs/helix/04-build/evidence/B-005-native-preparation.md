@@ -867,3 +867,20 @@ is structural graph admission, not qualification of codec meaning or complete
 original UMF facet/source correspondence. Integration into candidate compilation,
 operation-specific codec interpretation and native host enforcement remain work
 for B-005; no adopted Truss profile or production compatibility is claimed.
+
+### Value-graph original model correspondence (2026-10-06)
+
+Graph source admission now checks the selected root identity and each node against
+the original catalog's document/revision/module/element identity. Nodes outside
+selected modules refuse. Strictly decoded authored-definition JSON must equal
+the original element, including retained extension content; accepted-definition
+JSON must equal the original root. Original artifact bytes remain separately
+retained, so semantic JSON correspondence does not assert byte-identical source
+serialization or normalize the retained artifacts.
+
+A test uses the pinned model from the existing compiler corpus and admits its
+original definition. Changed root revision, a rehashed substitute definition and
+an unselected module refuse. All 29 Rust tests pass. This establishes source
+correspondence only; storage shapes/facets/codec interpretation and operation
+capabilities still require independent admission before using this graph for
+SQL lowering. No native or embedding checks were rerun for this standalone API.
