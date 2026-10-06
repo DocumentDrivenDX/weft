@@ -1688,3 +1688,36 @@ property accesses; fieldless count scans still require independently admitted
 record mapping. Edge association, recursive result decoding, original source
 codec/native operation realization and complete host/profile qualification
 remain independent obligations before public backend integration/acceptance.
+
+### Admitted physical scans in relational assembly (2026-10-06)
+
+The registered access layer now assembles each original V01 scan from its exact
+owner-qualified accesses. Native row-root LEFT JOINs remain attached to that
+owner source. Props root and row structural prerequisites are returned separately;
+they never enter query filters. The relational assembler accepts backend-owned
+scan filters, preserving owner discriminator selection across join/filter/group
+stages. Existing candidate string-scan emission uses a compatibility wrapper.
+Missing fieldless mapping, foreign original owner, disagreeing source/alias and
+duplicate field accesses refuse before returning a physical scan.
+
+The original-property self-join control now composes admitted sources and exact
+expression accesses through the relational assembler. It checks both owner
+filters and separate root prerequisites, and refuses missing and changed-owner
+scans. All 62 crate tests pass. An optional WEFT_OWNER_SCAN_CAPTURE writes the
+actual emitted source query and unchanged parameters from this control.
+[Captured fixture](../../../../tests/truss-postgresql/fixtures/owner-scan-emission.json)
+is executed by [native harness](../../../../tests/truss-postgresql/owner-scan-native.py)
+against independent minimal owner rows on PostgreSQL 17.9. Empty input yields
+zero rows; duplicate/Unicode/trailing-space/empty text yields exactly seven bag
+rows. Unrelated owner rows, including an unrelated malformed root, do not
+participate. Expected pairs are independently enumerated from fixture names.
+[Receipt](B-005-owner-scan-native.json) pins capture, harness, source and actual
+native results. The freshly rebuilt candidate probe also passes all 26 original
+relational/native cases after the shared assembler change.
+
+These two new executions establish physical source assembly only. They do not
+execute the retained integrity prerequisites, qualify original comparator/codec
+procedures, decode the public result ABI or adopt a Truss deployment profile.
+Fieldless record mapping, complete recursive result bridge, original-profile
+public backend and full native/host qualification remain open. Python/browser
+packages were not rebuilt; no story acceptance or B-005 merge gate is closed.

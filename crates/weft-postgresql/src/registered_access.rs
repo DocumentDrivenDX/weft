@@ -26,6 +26,7 @@ pub enum Location {
 pub struct Access<'a> {
     pub scan: String,
     pub field: Identity,
+    pub owner: Identity,
     pub owner_alias: Identifier,
     pub owner_source: std::sync::Arc<crate::property_definition::OwnerSource>,
     pub location: Location,
@@ -309,6 +310,7 @@ pub fn lower<'a>(
         result.push(Access {
             scan: request.scan.clone(),
             field: request.field.clone(),
+            owner: owner.clone(),
             owner_alias: alias.clone(),
             owner_source,
             location,
@@ -318,6 +320,74 @@ pub fn lower<'a>(
     }
     *parameters = staged;
     Ok(result)
+}
+/// Physical scan assembly, with integrity prerequisites deliberately separate.
+#[derive(Debug)]
+pub struct PhysicalScan {
+    pub source: crate::relational::Source,
+    pub structural_integrity: Vec<String>,
+}
+pub fn scan_source(node: &Node, accesses: &[Access<'_>]) -> Result<PhysicalScan> {
+    let Node::Scan {
+        occurrence, record, ..
+    } = node
+    else {
+        return Err(fail("Physical scan requires an original scan node"));
+    };
+    let selected: Vec<_> = accesses
+        .iter()
+        .filter(|access| &access.scan == occurrence)
+        .collect();
+    let first = *selected.first().ok_or_else(|| {
+        Diagnostic::new(
+            "WFT-CAPABILITY",
+            "lower",
+            "Fieldless scan needs independent original record mapping",
+        )
+    })?;
+    let mut fields = BTreeSet::new();
+    let mut joins = Vec::new();
+    let mut integrity = BTreeSet::new();
+    for access in selected {
+        if &access.owner != record
+            || access.owner_alias != first.owner_alias
+            || access.owner_source.sql != first.owner_source.sql
+            || access.owner_source.discriminator != first.owner_source.discriminator
+        {
+            return Err(fail(
+                "Selected accesses disagree on original scan ownership",
+            ));
+        }
+        if !fields.insert(
+            serde_json::to_string(&access.field)
+                .map_err(|_| fail("Access identity encoding refused"))?,
+        ) {
+            return Err(fail("Duplicate scan field access"));
+        }
+        match &access.location {
+            Location::Props(location) => {
+                integrity.insert(location.root_integrity.clone());
+            }
+            Location::Row(location) => {
+                joins.extend(location.joins.iter().cloned());
+                integrity.insert(location.structural_integrity.clone());
+            }
+        }
+    }
+    let sql = if joins.is_empty() {
+        first.owner_source.sql.clone()
+    } else {
+        format!("({} {})", first.owner_source.sql, joins.join(" "))
+    };
+    Ok(PhysicalScan {
+        source: crate::relational::Source {
+            sql,
+            filters: vec![first.owner_source.discriminator.clone()],
+            groups: vec![],
+            aggregated: false,
+        },
+        structural_integrity: integrity.into_iter().collect(),
+    })
 }
 /// Render a typed expression with exact occurrence-qualified physical accesses.
 /// The trusted native callback still owns codecs, literals and operations. A

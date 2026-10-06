@@ -20,6 +20,28 @@ pub fn assemble(
     root: &Node,
     parameters: &mut Parameters,
     mut scan: impl FnMut(&Node, &mut Parameters) -> Result<String>,
+    expression: impl FnMut(&Expression, &mut Parameters) -> Result<String>,
+) -> Result<Source> {
+    assemble_sources(
+        root,
+        parameters,
+        |node, parameters| {
+            Ok(Source {
+                sql: scan(node, parameters)?,
+                filters: vec![],
+                groups: vec![],
+                aggregated: false,
+            })
+        },
+        expression,
+    )
+}
+/// Scan callbacks retain physical owner-selection filters. Integrity
+/// prerequisites must be retained separately by the registered backend.
+pub fn assemble_sources(
+    root: &Node,
+    parameters: &mut Parameters,
+    mut scan: impl FnMut(&Node, &mut Parameters) -> Result<Source>,
     mut expression: impl FnMut(&Expression, &mut Parameters) -> Result<String>,
 ) -> Result<Source> {
     let mut staged = parameters.clone();
@@ -43,12 +65,7 @@ pub fn assemble(
             }
         } else {
             let source = match node {
-                Node::Scan { .. } => Source {
-                    sql: scan(node, &mut staged)?,
-                    filters: vec![],
-                    groups: vec![],
-                    aggregated: false,
-                },
+                Node::Scan { .. } => scan(node, &mut staged)?,
                 Node::InnerJoin { on, .. } => {
                     let right: Source = sources.pop().expect("right source");
                     let mut left: Source = sources.pop().expect("left source");

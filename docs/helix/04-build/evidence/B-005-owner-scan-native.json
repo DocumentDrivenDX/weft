@@ -1,0 +1,59 @@
+{
+  "scope": "Captured Rust original-profile source assembly over minimal synthetic owner rows; not native codec, integrity enforcement, result ABI, Truss adoption or deployment qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "d47a6688aaafdb9bc82bd54efaf65bff8b56a20c8e91176ce55dde0ca062229b",
+  "harnessSha256": "6717fe34e4affb97990055be94c0662d9328caf89d8f26b6387fdeca4b48a77b",
+  "results": [
+    {
+      "id": "empty",
+      "rows": [],
+      "rowCount": 0,
+      "executedSqlSha256": "5ad6f9e22ab9c8568d1b3ad08cb387774268d628bf3aebe6a9fa4a1d2a928bba"
+    },
+    {
+      "id": "duplicate-unicode-empty",
+      "rows": [
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          "é ",
+          "é "
+        ],
+        [
+          "é",
+          "é"
+        ]
+      ],
+      "rowCount": 7,
+      "executedSqlSha256": "faca31f6726957757b8c90266b4aea65e52678de0de91ac1d7db0ec125d37f98"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/relational.rs": "269006acfffdcf5605b154f027569ae77633ceb8d2b6969d29c4210422baaaf9",
+    "crates/weft-postgresql/src/registered_access.rs": "83a37c2a3d69d05299537cdc79df4c7ff082dfbc64f229105443e913e7245fa4",
+    "crates/weft-postgresql/src/property_definition.rs": "25c37c39b4764dd7079e9aba442c80c32775a77139b613a83d49d6590e429e79",
+    "target/debug/examples/compile_probe": "90708062c4ae499dd22cc6352c0d8ef1b982a424fd839234974255e3556f06b3",
+    "target/b005/compiler-reports.json": "644e79bd6fb2eadd433b0d2b99637e35da124f1132870d0b4a4a443bf04efe5d"
+  },
+  "rustCrateTests": 62,
+  "candidateRelationalNativeCases": 26,
+  "testLogSha256": "a513a3ce0e272d5e4f8b2c3a1f029e7da80b547b253ea99cc0799872d3351cd7"
+}

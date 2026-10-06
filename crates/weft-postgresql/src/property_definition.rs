@@ -1251,6 +1251,73 @@ mod tests {
         .unwrap();
         assert!(emitted.contains("\"weft_scan_0\".\"props\""));
         assert!(emitted.contains("\"weft_scan_1\".\"props\""));
+        let input = match &self_plan.root {
+            weft_core::ir::Node::Project { input, .. } => input.as_ref(),
+            _ => panic!("fixture project"),
+        };
+        let mut integrity = Vec::new();
+        let assembled = crate::relational::assemble_sources(
+            input,
+            &mut automatic_parameters,
+            |node, _| {
+                let scan = crate::registered_access::scan_source(node, &automatic)?;
+                assert_eq!(scan.source.filters.len(), 1);
+                assert_eq!(scan.structural_integrity.len(), 1);
+                integrity.extend(scan.structural_integrity);
+                Ok(scan.source)
+            },
+            |expression, parameters| {
+                crate::registered_access::render_expression(
+                    expression,
+                    &automatic,
+                    parameters,
+                    |node, operands, access, _| {
+                        Ok(match node {
+                            weft_core::ir::Expression::Field { .. } => access
+                                .unwrap()
+                                .scalar_storage
+                                .as_ref()
+                                .unwrap()
+                                .carrier
+                                .clone(),
+                            weft_core::ir::Expression::Equal { .. } => {
+                                format!("({} = {})", operands[0], operands[1])
+                            }
+                            _ => panic!("fixture expression"),
+                        })
+                    },
+                )
+            },
+        )
+        .unwrap();
+        assert_eq!(assembled.filters.len(), 2);
+        assert_eq!(integrity.len(), 2);
+        assert!(assembled
+            .filters
+            .iter()
+            .all(|filter| filter.contains("\"type_id\"") && !filter.contains("jsonb_typeof")));
+        assert!(assembled.sql.contains("INNER JOIN"));
+        let first_scan = match input {
+            weft_core::ir::Node::InnerJoin { left, .. } => left.as_ref(),
+            _ => panic!("fixture join"),
+        };
+        assert!(crate::registered_access::scan_source(first_scan, &automatic[1..]).is_err());
+        let mut changed_scan = first_scan.clone();
+        if let weft_core::ir::Node::Scan { record, .. } = &mut changed_scan {
+            record.element = "another-owner".into();
+        }
+        assert!(crate::registered_access::scan_source(&changed_scan, &automatic).is_err());
+        if let Ok(path) = std::env::var("WEFT_OWNER_SCAN_CAPTURE") {
+            let sql = format!(
+                "SELECT {} AS left_name, {} AS right_name FROM {} WHERE {}",
+                automatic[0].scalar_storage.as_ref().unwrap().carrier,
+                automatic[1].scalar_storage.as_ref().unwrap().carrier,
+                assembled.sql,
+                assembled.filters.join(" AND ")
+            );
+            std::fs::write(path, serde_json::to_vec(&json!({"sql":sql,"parameters":automatic_parameters.clone().into_slots(),"namespace":admitted.value["basis"]["namespace"],"integrity":integrity})).unwrap()).unwrap();
+        }
+
         let mut rejected_parameters = crate::Parameters::default();
         assert!(crate::registered_access::render_expression(
             join_expression,
