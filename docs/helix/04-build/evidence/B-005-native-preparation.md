@@ -970,3 +970,30 @@ pass. These are static candidate checks with synthetic registry artifacts, not
 native operator qualification, parsing/facet procedure implementation or aggregate
 result-domain evidence. Connecting this admission to requested SQL operations and
 qualified original profiles remains B-005 work.
+
+### Comparator requirements from resolved query uses (2026-10-06)
+
+The comparator requirement collector now traverses both resolved IR versions.
+Relational joins/filters/grouping request equality; SUM requests aggregation on
+its argument. Application requirements additionally retain ordering/cursor-prefix
+equality, page-key key/order support and independently typed source/target keys
+for relationship lookups and ordered RELATED_KEYS. Plain projection adds no
+comparison requirement. Uses merge by complete authored identity and reject
+inconsistent resolved types; key arity must match rather than silently zip away
+components. The relational traversal uses explicit work stacks.
+
+A pre-lowering admission helper requires a selected comparator for every requested
+field, the exact admitted logical type/facets and each requested operation. The
+comparator retains its admitted logical domain privately so a different type
+cannot reuse the same operation registration. Missing comparators, missing
+operation meaning and type substitution refuse.
+
+Tests resolve the existing complete application fixture corpus through the real
+frontend and collect its requirements, plus an actual relational join/group/SUM
+query and projection-only query. A selected equality comparator admits the exact
+field and refuses added ordering or a different type. All 41 Rust tests pass.
+An initial test used a private resolver and a later stale query variable; both
+were corrected before this successful run. This helper is not yet called by
+candidate lowering: the synthetic candidate binding remains separate until
+real profile admission is integrated. No native/embedding rerun or production
+qualification is claimed for this standalone pure compiler addition.

@@ -213,3 +213,5 @@ mod tests {
 pub mod leaf_codec_definition;
 
 pub mod native_comparator_definition;
+
+pub mod comparator_requirements;

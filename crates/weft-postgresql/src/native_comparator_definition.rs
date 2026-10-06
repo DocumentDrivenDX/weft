@@ -42,6 +42,7 @@ pub struct Definition {
     pub strategy: Strategy,
     pub native_type: String,
     operations: BTreeSet<Operation>,
+    logical_type: LogicalType,
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
@@ -197,7 +198,16 @@ impl Definition {
             strategy,
             native_type: native.into(),
             operations: selected.operations.clone(),
+            logical_type: logical.clone(),
         })
+    }
+    pub fn require_type(&self, logical: &LogicalType) -> Result<()> {
+        if &self.logical_type != logical {
+            return Err(fail(
+                "Requested comparator type differs from admitted original domain",
+            ));
+        }
+        Ok(())
     }
     pub fn require(&self, operation: Operation) -> Result<()> {
         if !self.operations.contains(&operation)
