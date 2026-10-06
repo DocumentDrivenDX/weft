@@ -18,10 +18,109 @@ pub struct Graph {
     pub root: usize,
     pub references: Vec<Vec<usize>>,
 }
+/// Finite borrowed decoder topology; original bytes stay owned by the graph.
+#[derive(Debug)]
+pub struct Layout<'a> {
+    pub root: usize,
+    pub nodes: Vec<LayoutNode<'a>>,
+}
+#[derive(Debug)]
+pub struct LayoutNode<'a> {
+    pub codec_bytes: &'a [u8],
+    pub shape: LayoutShape<'a>,
+}
+#[derive(Debug)]
+pub enum LayoutShape<'a> {
+    Scalar {
+        family: &'a str,
+        storage_representation: &'a str,
+    },
+    Sequence {
+        item: usize,
+    },
+    Map {
+        item: usize,
+    },
+    Structured {
+        record: usize,
+    },
+    Record {
+        members: Vec<MemberSlot<'a>>,
+    },
+}
+#[derive(Debug)]
+pub struct MemberSlot<'a> {
+    pub field_identity: &'a Value,
+    pub stored_name: &'a str,
+    pub value_node: usize,
+    pub presence_bytes: &'a [u8],
+}
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
 impl Graph {
+    /// Preserve storage slots independently of authored display names. This does
+    /// not grant the native/source procedure represented by a codec artifact.
+    pub fn layout(&self) -> Result<Layout<'_>> {
+        let nodes = self.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Original graph nodes are missing"))?;
+        let ids: BTreeMap<_, _> = nodes
+            .iter()
+            .enumerate()
+            .map(|(index, node)| (node["nodeId"].as_str().unwrap(), index))
+            .collect();
+        let reference = |id: &Value| -> Result<usize> {
+            ids.get(
+                id.as_str()
+                    .ok_or_else(|| fail("Original node reference is missing"))?,
+            )
+            .copied()
+            .ok_or_else(|| fail("Original node reference is unresolved"))
+        };
+        let mut layout = Vec::new();
+        for (index, node) in nodes.iter().enumerate() {
+            let shape = &node["shape"];
+            let shape = match shape["kind"].as_str() {
+                Some("scalar") => LayoutShape::Scalar {
+                    family: shape["family"].as_str().unwrap(),
+                    storage_representation: shape["storageRepresentation"].as_str().unwrap(),
+                },
+                Some("sequence") => LayoutShape::Sequence {
+                    item: reference(&shape["itemNodeId"])?,
+                },
+                Some("map") => LayoutShape::Map {
+                    item: reference(&shape["itemNodeId"])?,
+                },
+                Some("structured") => LayoutShape::Structured {
+                    record: reference(&shape["recordNodeId"])?,
+                },
+                Some("record") => {
+                    let mut members = Vec::new();
+                    for (member_index, member) in
+                        shape["members"].as_array().unwrap().iter().enumerate()
+                    {
+                        members.push(MemberSlot {field_identity:&member["fieldIdentity"],stored_name:member["storedMemberName"].as_str().unwrap(),
+                            value_node:reference(&member["valueNodeId"])?,presence_bytes:self.artifacts.get(&format!("/nodes/{index}/shape/members/{member_index}/presenceDefinition"))
+                                .ok_or_else(||fail("Original member presence bytes are missing"))?});
+                    }
+                    LayoutShape::Record { members }
+                }
+                _ => return Err(fail("Original graph shape is unknown")),
+            };
+            layout.push(LayoutNode {
+                codec_bytes: self
+                    .artifacts
+                    .get(&format!("/nodes/{index}/codecDefinition"))
+                    .ok_or_else(|| fail("Original node codec bytes are missing"))?,
+                shape,
+            });
+        }
+        Ok(Layout {
+            root: self.root,
+            nodes: layout,
+        })
+    }
     /// Verify every authored node against the original pinned model, retaining
     /// lexical artifacts separately. This does not qualify shape or codec meaning.
     pub fn verify_model_sources(
@@ -725,6 +824,26 @@ mod tests {
         assert_eq!(g.root, 0);
         assert_eq!(g.artifacts["/acceptedDefinition"], b"{}");
         assert_eq!(g.value, v);
+        let layout = g.layout().unwrap();
+        assert_eq!(layout.nodes.len(), 2);
+        assert!(matches!(
+            layout.nodes[0].shape,
+            LayoutShape::Structured { record: 1 }
+        ));
+        let LayoutShape::Record { members } = &layout.nodes[1].shape else {
+            panic!("fixture record")
+        };
+        assert_eq!(members[0].value_node, 0);
+        assert_eq!(members[0].stored_name, "next");
+        assert_eq!(members[0].presence_bytes, b"{}");
+        let mut literal = v.clone();
+        literal["nodes"][1]["shape"]["members"][0]["storedMemberName"] = json!("0.[]\"literal");
+        let literal = parse(&literal).unwrap();
+        let layout = literal.layout().unwrap();
+        let LayoutShape::Record { members } = &layout.nodes[1].shape else {
+            panic!("fixture record")
+        };
+        assert_eq!(members[0].stored_name, "0.[]\"literal");
     }
     #[test]
     fn dangling_unreachable_duplicate_and_corrupt_graphs_refuse() {

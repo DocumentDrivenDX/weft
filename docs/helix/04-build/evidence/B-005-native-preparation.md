@@ -1548,3 +1548,28 @@ refuses missing member, explicit JSON null, array root and SQL-null root. All
 codec/source/native/type admission before publication; this observer does not
 qualify authorized visibility, native-null support or complete result decoding.
 Full backend/result integration and Truss profile qualification remain open.
+
+### Original finite decoder slot layout attached to access plans (2026-10-06)
+
+Admitted graphs now expose a borrowed finite layout for recursive decoder
+composition: scalar family/storage representation, sequence/map item indices,
+structured Record index, and ordered Record slots with full Field identity,
+literal stored member name, referenced value index and original presence bytes.
+Every node retains original codec bytes. Stored names are never replaced by
+authored display names or interpreted as path syntax. Cycles remain finite
+node references rather than expanded recursive schemas. Codec artifact custody
+does not itself interpret or qualify a compound codec.
+
+Registered accesses now carry this layout alongside physical location and scalar
+props extraction. Within one admitted owning property, self-join occurrences
+share an immutable layout allocation while keeping independent aliases/slots.
+Layout sharing does not deduplicate runtime value validation or reset resource
+charges; bytes remain borrowed from the admitted original graph.
+
+The cyclic structured/Record fixture checks its back-reference and original
+presence bytes. A literal name containing a numeric-looking prefix, dot, brackets
+and quote remains exact. The actual property projection checks attached root/node
+metadata; its self-join checks shared layout identity. All 57 crate tests pass.
+Recursive walk/source/domain/result realization, native whole-value probes and
+full backend/profile qualification remain unfinished; this metadata view is not
+a public support or publication claim.

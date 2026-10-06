@@ -1071,6 +1071,8 @@ mod tests {
         )
         .unwrap();
         assert_eq!(accesses.len(), 1);
+        assert_eq!(accesses[0].value_layout.nodes.len(), 1);
+        assert_eq!(accesses[0].value_layout.root, 0);
         let captured_storage = accesses[0].scalar_storage.as_ref().unwrap();
         assert!(captured_storage.storage_integrity.ends_with("='string')"));
         assert!(captured_storage
@@ -1141,6 +1143,10 @@ mod tests {
         assert_eq!(automatic.len(), 2);
         assert_eq!(automatic_parameters.into_slots().len(), 2);
         assert_eq!(self_accesses.len(), 2);
+        assert!(std::sync::Arc::ptr_eq(
+            &self_accesses[0].value_layout,
+            &self_accesses[1].value_layout
+        ));
         assert_ne!(self_accesses[0].owner_alias, self_accesses[1].owner_alias);
         assert_eq!(self_parameters.into_slots().len(), 2);
         let changed_context = weft_core::backend::Context {

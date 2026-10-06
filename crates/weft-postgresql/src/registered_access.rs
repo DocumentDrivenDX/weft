@@ -23,12 +23,13 @@ pub enum Location {
     Row(RootLocation),
 }
 #[derive(Debug)]
-pub struct Access {
+pub struct Access<'a> {
     pub scan: String,
     pub field: Identity,
     pub owner_alias: Identifier,
     pub location: Location,
     pub scalar_storage: Option<crate::property_definition::ScalarStorage>,
+    pub value_layout: std::sync::Arc<crate::value_definition::Layout<'a>>,
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "lower", message)
@@ -166,24 +167,24 @@ pub fn requests(plan: Plan<'_>) -> Result<Vec<Request>> {
     }
     Ok(unique.into_values().collect())
 }
-pub fn lower_plan(
+pub fn lower_plan<'a>(
     context: &Context<'_>,
-    properties: &BTreeMap<String, PropertyAdmission>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
     comparators: &BTreeMap<String, Definition>,
     parameters: &mut Parameters,
-) -> Result<Vec<Access>> {
+) -> Result<Vec<Access<'a>>> {
     let selected = requests(context.plan)?;
     lower(context, properties, comparators, &selected, parameters)
 }
 /// Requests are backend-owned relational access choices, never SQL/model plugins.
 /// All property/context/comparator gates complete before parameters are committed.
-pub fn lower(
+pub fn lower<'a>(
     context: &Context<'_>,
-    properties: &BTreeMap<String, PropertyAdmission>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
     comparators: &BTreeMap<String, Definition>,
     requests: &[Request],
     parameters: &mut Parameters,
-) -> Result<Vec<Access>> {
+) -> Result<Vec<Access<'a>>> {
     admit_context(context, properties, comparators)?;
     let reads = self::requests(context.plan)?;
     let mut scans = BTreeMap::new();
@@ -231,6 +232,7 @@ pub fn lower(
     let mut staged = parameters.clone();
     let mut accessed = BTreeSet::new();
     let mut result = Vec::new();
+    let mut layouts = BTreeMap::new();
     for (index, request) in requests.iter().enumerate() {
         let owner = scans
             .get(&request.scan)
@@ -261,12 +263,20 @@ pub fn lower(
             Location::Props(location) => property.value.props_scalar_storage(location)?,
             Location::Row(_) => None, // Row source/native codec correspondence is separate.
         };
+        let value_layout = if let Some(layout) = layouts.get(&key) {
+            std::sync::Arc::clone(layout)
+        } else {
+            let layout = std::sync::Arc::new(property.value.graph.layout()?);
+            layouts.insert(key.clone(), std::sync::Arc::clone(&layout));
+            layout
+        };
         result.push(Access {
             scan: request.scan.clone(),
             field: request.field.clone(),
             owner_alias: alias.clone(),
             location,
             scalar_storage,
+            value_layout,
         });
     }
     *parameters = staged;
