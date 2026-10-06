@@ -79,6 +79,82 @@ impl Graph {
         }
         Ok(())
     }
+    /// Match storage graph topology to the frontend's resolved finite type graph.
+    /// Literal storage names and representations still require selected codec admission.
+    pub fn verify_descriptors(
+        &self,
+        descriptors: &[weft_core::application_model::Descriptor],
+        root_identity: &weft_core::ir::Identity,
+    ) -> Result<()> {
+        use weft_core::application_model::Shape;
+        let nodes = self.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Missing graph nodes"))?;
+        if nodes.len() != descriptors.len()
+            || nodes
+                .get(self.root)
+                .is_none_or(|n| n["authoredIdentity"] != serde_json::json!(root_identity))
+        {
+            return Err(fail(
+                "Storage graph closure or root differs from resolved type graph",
+            ));
+        }
+        let by_id: BTreeMap<_, _> = nodes
+            .iter()
+            .filter_map(|n| n["nodeId"].as_str().map(|id| (id, n)))
+            .collect();
+        let referred_identity = |id: &Value| -> Result<&Value> {
+            by_id
+                .get(id.as_str().ok_or_else(|| fail("Invalid graph reference"))?)
+                .map(|n| &n["authoredIdentity"])
+                .ok_or_else(|| fail("Unresolved graph reference"))
+        };
+        let mut seen = BTreeSet::new();
+        for descriptor in descriptors {
+            let identity = serde_json::json!(descriptor.identity);
+            if !seen.insert(identity.to_string()) {
+                return Err(fail("Repeated resolved descriptor identity"));
+            }
+            let node = nodes
+                .iter()
+                .find(|n| n["authoredIdentity"] == identity)
+                .ok_or_else(|| fail("Resolved identity is missing from storage graph"))?;
+            let shape = &node["shape"];
+            let matches = match &descriptor.shape {
+                Shape::Scalar { logical_type } => {
+                    shape["kind"] == "scalar"
+                        && shape["family"] == serde_json::json!(logical_type.family)
+                }
+                Shape::Sequence { item } => {
+                    shape["kind"] == "sequence"
+                        && *referred_identity(&shape["itemNodeId"])? == serde_json::json!(item)
+                }
+                Shape::Map { item } => {
+                    shape["kind"] == "map"
+                        && *referred_identity(&shape["itemNodeId"])? == serde_json::json!(item)
+                }
+                Shape::Structured { record } => {
+                    shape["kind"] == "structured"
+                        && *referred_identity(&shape["recordNodeId"])? == serde_json::json!(record)
+                }
+                Shape::Record { members } => {
+                    shape["kind"] == "record"
+                        && shape["members"].as_array().is_some_and(|bound| {
+                            bound.len() == members.len()
+                                && bound.iter().zip(members).all(|(binding, member)| {
+                                    binding["fieldIdentity"] == serde_json::json!(member.identity)
+                                })
+                        })
+                }
+            };
+            if !matches {
+                return Err(fail(
+                    "Storage shape differs from resolved authored type topology",
+                ));
+            }
+        }
+        Ok(())
+    }
     pub fn parse(raw: &str, profile: &Value, accepted: &[u8]) -> Result<Self> {
         if raw.len() > 4 * 1024 * 1024 {
             return Err(Diagnostic::new(
@@ -274,6 +350,142 @@ mod tests {
         foreign_identity.module = "unselected".into();
         assert!(graph
             .verify_model_sources(&catalog, &foreign_identity)
+            .is_err());
+    }
+    #[test]
+    fn resolved_topology_cannot_be_replaced_by_another_valid_graph() {
+        use weft_core::{
+            application_model::{Descriptor, Member, Shape},
+            ir::Identity,
+        };
+        let value = fixture();
+        let identity = |index: usize| -> Identity {
+            serde_json::from_value(value["nodes"][index]["authoredIdentity"].clone()).unwrap()
+        };
+        let root = identity(0);
+        let record = identity(1);
+        let descriptors = vec![
+            Descriptor {
+                identity: root.clone(),
+                availability: Some("required".into()),
+                shape: Shape::Structured {
+                    record: record.clone(),
+                },
+            },
+            Descriptor {
+                identity: record,
+                availability: None,
+                shape: Shape::Record {
+                    members: vec![Member {
+                        name: "next".into(),
+                        identity: root.clone(),
+                    }],
+                },
+            },
+        ];
+        parse(&value)
+            .unwrap()
+            .verify_descriptors(&descriptors, &root)
+            .unwrap();
+        let mut wrong = descriptors.clone();
+        wrong[0].shape = Shape::Map { item: root.clone() };
+        assert!(parse(&value)
+            .unwrap()
+            .verify_descriptors(&wrong, &root)
+            .is_err());
+        let mut wrong = descriptors.clone();
+        if let Shape::Record { members } = &mut wrong[1].shape {
+            members.clear();
+        }
+        assert!(parse(&value)
+            .unwrap()
+            .verify_descriptors(&wrong, &root)
+            .is_err());
+        assert!(parse(&value)
+            .unwrap()
+            .verify_descriptors(&descriptors[..1], &root)
+            .is_err());
+        let mut wrong = descriptors;
+        wrong[1].identity = root.clone();
+        assert!(parse(&value)
+            .unwrap()
+            .verify_descriptors(&wrong, &root)
+            .is_err());
+    }
+    #[test]
+    fn record_member_order_and_scalar_family_are_semantic() {
+        use weft_core::{
+            application_model::{Descriptor, Member, Shape},
+            ir::{Family, Identity, LogicalType},
+        };
+        let mut value = fixture();
+        let root: Identity =
+            serde_json::from_value(value["nodes"][0]["authoredIdentity"].clone()).unwrap();
+        let record: Identity =
+            serde_json::from_value(value["nodes"][1]["authoredIdentity"].clone()).unwrap();
+        let mut scalar = root.clone();
+        scalar.element = "leaf".into();
+        let mut node = value["nodes"][0].clone();
+        node["nodeId"] = json!("leaf");
+        node["authoredIdentity"] = json!(scalar);
+        node["shape"] =
+            json!({"kind":"scalar","family":"string","storageRepresentation":"json-string"});
+        value["nodes"].as_array_mut().unwrap().push(node);
+        let presence = value["acceptedDefinition"].clone();
+        value["nodes"][1]["shape"]["members"].as_array_mut().unwrap().push(json!({"fieldIdentity":scalar,"storedMemberName":"leaf","valueNodeId":"leaf","presenceDefinition":presence}));
+        let descriptors = vec![
+            Descriptor {
+                identity: root.clone(),
+                availability: Some("required".into()),
+                shape: Shape::Structured {
+                    record: record.clone(),
+                },
+            },
+            Descriptor {
+                identity: record,
+                availability: None,
+                shape: Shape::Record {
+                    members: vec![
+                        Member {
+                            name: "next".into(),
+                            identity: root.clone(),
+                        },
+                        Member {
+                            name: "leaf".into(),
+                            identity: scalar.clone(),
+                        },
+                    ],
+                },
+            },
+            Descriptor {
+                identity: scalar,
+                availability: Some("required".into()),
+                shape: Shape::Scalar {
+                    logical_type: LogicalType {
+                        family: Family::String,
+                        facets: json!({}),
+                        nullable: false,
+                    },
+                },
+            },
+        ];
+        parse(&value)
+            .unwrap()
+            .verify_descriptors(&descriptors, &root)
+            .unwrap();
+        let mut swapped = value.clone();
+        swapped["nodes"][1]["shape"]["members"]
+            .as_array_mut()
+            .unwrap()
+            .swap(0, 1);
+        assert!(parse(&swapped)
+            .unwrap()
+            .verify_descriptors(&descriptors, &root)
+            .is_err());
+        value["nodes"][2]["shape"]["family"] = json!("integer");
+        assert!(parse(&value)
+            .unwrap()
+            .verify_descriptors(&descriptors, &root)
             .is_err());
     }
     fn fixture() -> Value {

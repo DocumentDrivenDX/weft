@@ -884,3 +884,21 @@ an unselected module refuse. All 29 Rust tests pass. This establishes source
 correspondence only; storage shapes/facets/codec interpretation and operation
 capabilities still require independent admission before using this graph for
 SQL lowering. No native or embedding checks were rerun for this standalone API.
+
+### Value-graph resolved topology correspondence (2026-10-06)
+
+Storage graphs can now be compared with the frontend's finite resolved descriptor
+graph. Admission requires the same root and exact identity closure, rejects
+duplicate resolved descriptors, checks scalar family, and matches sequence/map
+item references and structured-record references by authored identity. Record
+member identities must match in their authored order; an otherwise valid graph
+cannot silently reorder the record or substitute another type shape. Cyclic
+graph comparison remains finite without schema expansion.
+
+Tests cover a cyclic structured record, collection-shape substitution, missing
+members, incomplete closure, duplicate descriptors, reordered record members and
+changed scalar family. All 31 Rust tests pass. An initial test-source borrow error
+was corrected before this successful run. This compares resolved logical topology
+only: storage names, presence/availability, facets, representation and codec
+capabilities still need their separate selected-profile admission. Candidate SQL
+is not yet wired to this standalone graph API.
