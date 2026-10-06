@@ -4,6 +4,7 @@ pub mod candidate;
 pub mod collection;
 mod json_codec;
 pub mod presence_definition;
+pub mod read_context_definition;
 mod row_codec;
 pub mod structured;
 mod tree;

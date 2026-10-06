@@ -818,3 +818,28 @@ not new compile support: current candidate registration still selects synthetic
 fixtures. Value graph, native join and read-context interpretation, complete
 source/profile/resource correspondence and compile/result-bridge integration
 remain required. No Truss host authority or profile adoption is inferred.
+
+### Original read-context interpreter foundation (2026-10-06)
+
+The original read-context grammar and acceptance dependency are frozen in a
+separate offline schema bundle, with exact hashes in read-context-source-pins.json.
+The root grammar SHA-256 is
+`01eef30067e6ce3ff3957475e163e8c9e870d1fa36b67c94aa6b2fe11d5e14cb`.
+Compile-time grammar validation uses that closed bundle without fetching resources.
+
+A pure Rust interpreter preserves original JSON/resource bytes, validates exact
+registered profile/resource correspondence and canonical base64/digest custody,
+and resolves required obligation IDs against an explicitly supplied registration
+set. Missing meanings refuse. Static requirements retain original binding/layout,
+current authority, live affine transaction and publication admission in both
+consistency modes; snapshot custody is required only for held_snapshot. A mode
+not allowed by the original definition refuses instead of creating a snapshot.
+
+Tests first failed against the pending interpreter, then pass conditional snapshot
+requirements, live-only refusal, unknown obligations, duplicate modes, implicit
+recompile policy, serialized transaction handles and changed original resources.
+Twenty-six Rust tests pass. These prove static interpretation/correspondence,
+not original host-procedure evidence, live enforcement or profile adoption.
+Current candidate compilation remains on synthetic definitions; wiring real
+read-context/value/presence/native-join meanings through a registered profile and
+result bridge remains required before B-005 completion. No compiler ABI changed.
