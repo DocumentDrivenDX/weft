@@ -943,3 +943,30 @@ and substituted codec bytes. All 34 Rust tests pass. This is correspondence, not
 source/native procedure qualification: it grants no comparison, key, predicate or
 aggregate capability. Candidate SQL integration and live/native enforcement remain
 required before B-005 completion.
+
+### Native comparator operation admission foundation (2026-10-06)
+
+The original native-comparator grammar and acceptance dependency are frozen
+separately; root SHA-256
+`26f3a754456e01984841d01dd972c2051d8611b9c0f9182f48721ec6000ebd4b`
+is recorded in native-comparator-source-pins.json. Static admission preserves
+original JSON/artifact bytes and requires exact registered comparator/native
+profiles and original identity/byte custody for value/source/native domains,
+operator inventory and qualification. The caller SQL cannot supply the backend's
+operation registration set.
+
+Strategy interpretation distinguishes Unicode text/C, boolean, signed integer,
+unsigned integer/numeric and finite decimal. It refuses nullable operands, scalar
+family/signedness substitution, integer domains narrower than authored width,
+incomplete/unknown facets and invalid precision/scale. Equality, ordering, key
+and SUM registration are independent; SUM is unavailable for string/boolean even
+if included erroneously in the operation set. Registered support is still a
+backend assertion requiring its governing qualification evidence.
+
+Tests cover unsigned64, signedness mismatch, int2 narrowing, rehashed inventory,
+unknown native profile, missing operation registration, boolean SUM, nullable
+operands, exact text/decimal strategies and unsupported facets. All 38 Rust tests
+pass. These are static candidate checks with synthetic registry artifacts, not
+native operator qualification, parsing/facet procedure implementation or aggregate
+result-domain evidence. Connecting this admission to requested SQL operations and
+qualified original profiles remains B-005 work.

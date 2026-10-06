@@ -1,0 +1,370 @@
+//! Selected native comparator meaning and explicit operation admission.
+use crate::leaf_codec_definition::OriginalArtifact;
+use base64::{engine::general_purpose::STANDARD, Engine};
+use serde_json::Value;
+use std::collections::{BTreeMap, BTreeSet};
+use weft_core::{
+    error::{Diagnostic, Result},
+    ir::{Family, LogicalType},
+    json::{checked_json, sha256},
+};
+#[jsonschema::validator(
+    path = "../../tests/truss-postgresql/upstream/native-comparator-schema-bundle.json"
+)]
+struct Shape;
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum Operation {
+    Equality,
+    Ordering,
+    Key,
+    Sum,
+}
+/// Operation meanings are selected by the trusted backend registry. Merely
+/// supplying qualification bytes cannot populate this set.
+pub struct Selection<'a> {
+    pub profile: &'a Value,
+    pub native_profile: &'a Value,
+    pub original_artifacts: &'a BTreeMap<String, OriginalArtifact>,
+    pub operations: &'a BTreeSet<Operation>,
+}
+#[derive(Debug, PartialEq, Eq)]
+pub enum Strategy {
+    UnicodeText,
+    Boolean,
+    SignedInteger,
+    UnsignedInteger,
+    FiniteDecimal,
+}
+#[derive(Debug)]
+pub struct Definition {
+    pub original_json: String,
+    pub original_artifacts: BTreeMap<String, Vec<u8>>,
+    pub strategy: Strategy,
+    pub native_type: String,
+    operations: BTreeSet<Operation>,
+}
+fn fail(message: &str) -> Diagnostic {
+    Diagnostic::new("WFT-BINDING", "binding", message)
+}
+impl Definition {
+    pub fn parse(raw: &str, selected: Selection<'_>, logical: &LogicalType) -> Result<Self> {
+        if raw.len() > 4 * 1024 * 1024 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "binding",
+                "Comparator exceeds candidate byte bound",
+            ));
+        }
+        let value =
+            checked_json(raw).map_err(|_| fail("Malformed or duplicate-member comparator"))?;
+        if !Shape::is_valid(&value)
+            || &value["profile"] != selected.profile
+            || &value["nativeDomainProfile"] != selected.native_profile
+        {
+            return Err(fail("Comparator grammar or registered profile differs"));
+        }
+        if logical.nullable {
+            return Err(fail("Comparator cannot admit nullable operands"));
+        }
+        let facets = logical
+            .facets
+            .as_object()
+            .ok_or_else(|| fail("Original facets are not an object"))?;
+        let complete = match logical.family {
+            Family::String | Family::Boolean => facets.is_empty(),
+            Family::Integer => {
+                facets.len() == 1
+                    && facets.contains_key("integerWidth")
+                    && logical.facets["integerWidth"]
+                        .as_object()
+                        .is_some_and(|width| {
+                            width.len() == 2
+                                && width.contains_key("bits")
+                                && width.contains_key("signed")
+                        })
+            }
+            Family::Decimal => {
+                facets.len() == 2
+                    && facets.contains_key("precision")
+                    && facets.contains_key("scale")
+            }
+        };
+        if !complete {
+            return Err(fail(
+                "Comparator cannot discard unknown or incomplete authored facets",
+            ));
+        }
+        let native = value["strategy"]["nativeType"].as_str().unwrap();
+        let kind = value["strategy"]["kind"].as_str().unwrap();
+        let strategy = match kind {
+            "unicode-text-C" if logical.family == Family::String => Strategy::UnicodeText,
+            "native-boolean" if logical.family == Family::Boolean => Strategy::Boolean,
+            "signed-integer" | "unsigned-integer" if logical.family == Family::Integer => {
+                let width = &logical.facets["integerWidth"];
+                let bits = width["bits"]
+                    .as_u64()
+                    .filter(|n| (1..=64).contains(n))
+                    .ok_or_else(|| fail("Original integer width is unavailable"))?;
+                let signed = width["signed"]
+                    .as_bool()
+                    .ok_or_else(|| fail("Original integer signedness is unavailable"))?;
+                if signed != (kind == "signed-integer") {
+                    return Err(fail("Comparator signedness differs from authored integer"));
+                }
+                let capacity = match native {
+                    "pg_catalog.int2" => 16,
+                    "pg_catalog.int4" => 32,
+                    "pg_catalog.int8" => 64,
+                    "pg_catalog.numeric" => 64,
+                    _ => return Err(fail("Unknown integer native domain")),
+                };
+                if bits > capacity {
+                    return Err(fail(
+                        "Comparator native integer domain narrows authored width",
+                    ));
+                }
+                if signed {
+                    Strategy::SignedInteger
+                } else {
+                    Strategy::UnsignedInteger
+                }
+            }
+            "finite-decimal" if logical.family == Family::Decimal => {
+                let precision = logical.facets["precision"]
+                    .as_u64()
+                    .filter(|p| (1..=28).contains(p))
+                    .ok_or_else(|| fail("Original decimal precision is unavailable"))?;
+                if logical.facets["scale"]
+                    .as_u64()
+                    .is_none_or(|s| s > precision)
+                {
+                    return Err(fail("Original decimal scale is unavailable"));
+                }
+                Strategy::FiniteDecimal
+            }
+            _ => {
+                return Err(fail(
+                    "Comparator strategy differs from authored scalar family",
+                ))
+            }
+        };
+        let paths = [
+            "valueDefinition",
+            "sourceDomainDefinition",
+            "nativeDomainDefinition",
+            "operatorInventory",
+            "qualification",
+        ];
+        if paths.len() != selected.original_artifacts.len() {
+            return Err(fail("Comparator original artifact closure differs"));
+        }
+        let mut artifacts = BTreeMap::new();
+        let mut total = 0usize;
+        for path in paths {
+            let artifact = &value[path];
+            let encoded = artifact["bytesBase64"].as_str().unwrap();
+            let bytes = STANDARD
+                .decode(encoded)
+                .map_err(|_| fail("Comparator artifact base64 refused"))?;
+            total = total
+                .checked_add(bytes.len())
+                .ok_or_else(|| fail("Comparator artifact accounting overflow"))?;
+            if total > 4 * 1024 * 1024 {
+                return Err(Diagnostic::new(
+                    "WFT-LIMIT",
+                    "binding",
+                    "Comparator artifact bound exceeded",
+                ));
+            }
+            if STANDARD.encode(&bytes) != encoded
+                || artifact["sha256"] != sha256(&bytes)
+                || selected
+                    .original_artifacts
+                    .get(path)
+                    .is_none_or(|original| {
+                        original.bytes != bytes || artifact["identity"] != original.identity
+                    })
+            {
+                return Err(fail(
+                    "Comparator artifact differs from original registered selection",
+                ));
+            }
+            artifacts.insert(path.into(), bytes);
+        }
+        Ok(Self {
+            original_json: raw.into(),
+            original_artifacts: artifacts,
+            strategy,
+            native_type: native.into(),
+            operations: selected.operations.clone(),
+        })
+    }
+    pub fn require(&self, operation: Operation) -> Result<()> {
+        if !self.operations.contains(&operation)
+            || (operation == Operation::Sum
+                && matches!(self.strategy, Strategy::UnicodeText | Strategy::Boolean))
+        {
+            return Err(Diagnostic::new(
+                "WFT-CAPABILITY",
+                "lower",
+                "Comparator operation has no selected registered meaning",
+            ));
+        }
+        Ok(())
+    }
+}
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+    fn fixture(strategy: Value) -> (Value, BTreeMap<String, OriginalArtifact>) {
+        let pin = json!({"identity":"fixture","version":"0.1.0","sha256":sha256(b"{}")});
+        let artifact = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"{}"),"sha256":sha256(b"{}")});
+        let originals = [
+            "valueDefinition",
+            "sourceDomainDefinition",
+            "nativeDomainDefinition",
+            "operatorInventory",
+            "qualification",
+        ]
+        .into_iter()
+        .map(|key| {
+            (
+                key.into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            )
+        })
+        .collect();
+        (
+            json!({"interfaceVersion":"truss-native-comparator/0.1.0","profile":pin,"valueDefinition":artifact,"sourceDomainDefinition":artifact,"nativeDomainProfile":pin,"nativeDomainDefinition":artifact,"operatorInventory":artifact,"strategy":strategy,"castOutcome":"exact-or-error","nullOperands":"refuse","absentOperands":"refuse","qualification":artifact}),
+            originals,
+        )
+    }
+    fn integer(signed: bool, bits: u64) -> LogicalType {
+        LogicalType {
+            family: Family::Integer,
+            facets: json!({"integerWidth":{"signed":signed,"bits":bits}}),
+            nullable: false,
+        }
+    }
+    fn parse(
+        value: &Value,
+        originals: &BTreeMap<String, OriginalArtifact>,
+        logical: &LogicalType,
+        operations: &BTreeSet<Operation>,
+    ) -> Result<Definition> {
+        let pin = fixture(json!({})).0["profile"].clone();
+        Definition::parse(
+            &value.to_string(),
+            Selection {
+                profile: &pin,
+                native_profile: &pin,
+                original_artifacts: originals,
+                operations,
+            },
+            logical,
+        )
+    }
+    #[test]
+    fn unsigned64_and_operation_registration_are_independent() {
+        let (value, originals) = fixture(
+            json!({"kind":"unsigned-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast","range":"original-authored-unsigned-facets"}),
+        );
+        let definition = parse(
+            &value,
+            &originals,
+            &integer(false, 64),
+            &BTreeSet::from([Operation::Equality]),
+        )
+        .unwrap();
+        assert_eq!(definition.strategy, Strategy::UnsignedInteger);
+        definition.require(Operation::Equality).unwrap();
+        for operation in [Operation::Ordering, Operation::Key, Operation::Sum] {
+            assert!(definition.require(operation).is_err());
+        }
+        assert!(parse(&value, &originals, &integer(true, 64), &BTreeSet::new()).is_err());
+        let definition = parse(&value, &originals, &integer(false, 64), &BTreeSet::new()).unwrap();
+        assert!(definition.require(Operation::Equality).is_err());
+    }
+    #[test]
+    fn narrowing_and_rehashed_native_meaning_refuse() {
+        let (value, originals) = fixture(
+            json!({"kind":"signed-integer","nativeType":"pg_catalog.int2","integrality":"validate-before-cast"}),
+        );
+        parse(&value, &originals, &integer(true, 16), &BTreeSet::new()).unwrap();
+        assert!(parse(&value, &originals, &integer(true, 17), &BTreeSet::new()).is_err());
+        let mut wrong = value.clone();
+        wrong["operatorInventory"] = json!({"identity":"fixture","bytesBase64":STANDARD.encode(b"replacement"),"sha256":sha256(b"replacement")});
+        assert!(parse(&wrong, &originals, &integer(true, 16), &BTreeSet::new()).is_err());
+        let mut wrong = value;
+        wrong["nativeDomainProfile"]["version"] = json!("unknown");
+        assert!(parse(&wrong, &originals, &integer(true, 16), &BTreeSet::new()).is_err());
+    }
+    #[test]
+    fn boolean_cannot_gain_numeric_sum_from_registration() {
+        let (value, originals) =
+            fixture(json!({"kind":"native-boolean","nativeType":"pg_catalog.bool"}));
+        let logical = LogicalType {
+            family: Family::Boolean,
+            facets: json!({}),
+            nullable: false,
+        };
+        let definition = parse(
+            &value,
+            &originals,
+            &logical,
+            &BTreeSet::from([Operation::Ordering, Operation::Sum]),
+        )
+        .unwrap();
+        definition.require(Operation::Ordering).unwrap();
+        assert!(definition.require(Operation::Sum).is_err());
+        let mut nullable = logical;
+        nullable.nullable = true;
+        assert!(parse(&value, &originals, &nullable, &BTreeSet::new()).is_err());
+    }
+    #[test]
+    fn text_and_decimal_strategies_keep_independent_operations_and_facets() {
+        let (text, originals) = fixture(
+            json!({"kind":"unicode-text-C","nativeType":"pg_catalog.text","encoding":"UTF8","collation":"pg_catalog.C","normalization":"none"}),
+        );
+        let logical = LogicalType {
+            family: Family::String,
+            facets: json!({}),
+            nullable: false,
+        };
+        let definition = parse(
+            &text,
+            &originals,
+            &logical,
+            &BTreeSet::from([Operation::Equality, Operation::Key]),
+        )
+        .unwrap();
+        definition.require(Operation::Key).unwrap();
+        assert!(definition.require(Operation::Ordering).is_err());
+        let mut unknown = logical;
+        unknown.facets = json!({"pattern":".*"});
+        assert!(parse(&text, &originals, &unknown, &BTreeSet::new()).is_err());
+        let (decimal, originals) = fixture(
+            json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
+        );
+        let mut logical = LogicalType {
+            family: Family::Decimal,
+            facets: json!({"precision":28,"scale":9}),
+            nullable: false,
+        };
+        let definition = parse(
+            &decimal,
+            &originals,
+            &logical,
+            &BTreeSet::from([Operation::Sum]),
+        )
+        .unwrap();
+        definition.require(Operation::Sum).unwrap();
+        assert!(definition.require(Operation::Equality).is_err());
+        logical.facets["scale"] = json!(29);
+        assert!(parse(&decimal, &originals, &logical, &BTreeSet::new()).is_err());
+    }
+}
