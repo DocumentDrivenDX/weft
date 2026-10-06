@@ -132,6 +132,34 @@ impl Backend for Candidate {
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         let admitted = Admission::parse(&c.binding.json, PROFILE)?;
+        let synthetic_profile = json!({"identity":"candidate-test-profile","version":"0.1.0","sha256":weft_core::json::sha256(b"{}")});
+        for profile in [
+            "readContextProfile",
+            "layoutProfile",
+            "identityProfile",
+            "valueProfile",
+            "keyProfile",
+            "exporterProfile",
+        ] {
+            if admitted.value["basis"][profile] != synthetic_profile {
+                return Err(fail(
+                    "Execution basis profile is not registered for this candidate",
+                ));
+            }
+        }
+        for definition in [
+            "readContextDefinition",
+            "layoutInventory",
+            "layoutSql",
+            "acceptedCatalog",
+        ] {
+            if admitted.decoded_json(&format!("/basis/{definition}"))? != json!({}) {
+                return Err(fail(
+                    "Execution basis definition differs from the registered synthetic candidate",
+                ));
+            }
+        }
+
         if admitted.decoded_json("/basis/modelBundle")?
             != serde_json::to_value(&c.catalog.inputs)
                 .map_err(|_| fail("Model serialization failure"))?

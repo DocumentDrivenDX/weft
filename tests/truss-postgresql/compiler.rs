@@ -507,3 +507,34 @@ fn unknown_native_join_profile_cannot_select_fixed_row_joins() {
     assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
     assert!(response.get("sql").is_none());
 }
+
+#[test]
+fn unknown_execution_basis_profiles_refuse_before_sql() {
+    let compiler = compiler();
+    let cases: Vec<Value> =
+        serde_json::from_str(include_str!("fixtures/application-cases.json")).unwrap();
+    for profile in [
+        "readContextProfile",
+        "layoutProfile",
+        "identityProfile",
+        "valueProfile",
+        "keyProfile",
+        "exporterProfile",
+    ] {
+        let mut request = cases
+            .iter()
+            .find(|c| c["id"] == "global-count-props")
+            .unwrap()["request"]
+            .clone();
+        let mut binding: Value =
+            serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        binding["basis"][profile]["identity"] = json!("unregistered.execution.basis");
+        let raw = binding.to_string();
+        request["target"]["bindingJson"] = json!(raw);
+        request["target"]["bindingSha256"] = json!(weft_core::json::sha256(raw.as_bytes()));
+        let response = run(&compiler, &request);
+        assert_eq!(response["status"], "blocked", "{profile}");
+        assert_eq!(response["diagnostics"][0]["code"], "WFT-BINDING");
+        assert!(response.get("sql").is_none());
+    }
+}

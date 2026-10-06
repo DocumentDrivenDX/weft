@@ -747,3 +747,20 @@ that invocation was corrected before obtaining the actual failing assertion.
 Registered fixture SQL/result/obligation bytes are unchanged. Adopted owner join
 and association resource interpretation and live host enforcement remain open.
 The candidate remains draft PR #7, with no B-005 merge or B-006 start.
+
+### Execution basis registration (2026-10-06)
+
+A failing public compile test demonstrated that an unknown read-context profile
+could compile. Candidate assessment now requires its registered synthetic layout,
+identity, value, key, exporter and read-context pins plus the known empty fixture
+read-context/inventory/layout/catalog definitions. Arbitrary execution requirements
+cannot be discarded while candidate host obligations are substituted. These checks
+make the synthetic profile boundary explicit, not production qualification.
+
+Twenty-two Rust tests pass. Six independent execution-basis profile mutations
+refuse with WFT-BINDING and no SQL after rehashing the binding. All 76 unchanged
+application fixtures compile. The registered fixture SQL/result/obligation bytes
+remain unchanged. Accepted owner definitions require a separately implemented
+semantic interpreter and joint evidence; assigning the synthetic pin to genuine
+owner data is not adoption. Live host policy/revision/publication enforcement and
+owner source/resource qualification still gate B-005 completion and merge.
