@@ -1018,6 +1018,16 @@ mod tests {
             &mut self_parameters,
         )
         .unwrap();
+        let mut automatic_parameters = crate::Parameters::default();
+        let automatic = crate::registered_access::lower_plan(
+            &self_context,
+            &properties,
+            &comparisons,
+            &mut automatic_parameters,
+        )
+        .unwrap();
+        assert_eq!(automatic.len(), 2);
+        assert_eq!(automatic_parameters.into_slots().len(), 2);
         assert_eq!(self_accesses.len(), 2);
         assert_ne!(self_accesses[0].owner_alias, self_accesses[1].owner_alias);
         assert_eq!(self_parameters.into_slots().len(), 2);

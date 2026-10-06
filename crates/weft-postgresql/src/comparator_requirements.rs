@@ -489,6 +489,7 @@ mod tests {
             .unwrap();
             let requirements = collect(Plan::V02(&plan)).unwrap();
             let reads = collect_reads(Plan::V02(&plan)).unwrap();
+            let accesses = crate::registered_access::requests(Plan::V02(&plan)).unwrap();
             for output in &plan.outputs {
                 if let app::Expression::Field { scan, identity } = &output.expression {
                     let owner = if scan == &plan.source.occurrence {
@@ -503,6 +504,9 @@ mod tests {
                             .record
                     };
                     assert!(reads.contains(&(owner.clone(), identity.clone())));
+                    assert!(accesses
+                        .iter()
+                        .any(|request| &request.scan == scan && &request.field == identity));
                 }
             }
             for requirement in &requirements {

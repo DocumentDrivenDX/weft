@@ -1485,3 +1485,25 @@ resolved expressions, full relational operations, original codec/result decoding
 and complete prerequisite/publication protocol. Independent relationship subquery
 accesses and full recursive storage semantics remain separate work. No public
 compiler/backend support or native Truss profile qualification is claimed.
+
+### Resolved expression-to-access request generation (2026-10-06)
+
+registered_access::requests derives exact outer scan/Field pairs from relational
+expressions and application projections, predicates, grouping/ordering, SUM,
+authored page keys and relationship source keys. Repeated references deduplicate
+only within the same occurrence/Field tuple. lower_plan feeds those requests
+through the admitted context and atomic physical planner. Explicit request
+lowering now checks exact occurrence/Field membership rather than only owning
+Record/Field membership, preventing a shared Record's field from moving to an
+unreferenced self-join side. Relationship target subqueries remain separately
+scoped access plans; this is not complete relationship query emission.
+
+The real Customer self-join lowers automatically to two locations/member slots.
+A different self-join projects name only from its first occurrence; the independent
+control checks three total accessed pairs and absence of name on the second
+occurrence. All 76 application cases verify projected scan/Field pairs appear
+in generated requests. A function-name shadowing compile error was corrected
+before successful verification. All 57 crate tests pass (36 library, four binding,
+17 compiler), with documentation checks also passing. Original codec/relational
+result integration, target-subquery lowering and native/profile/host qualification
+remain required for B-005 acceptance.
