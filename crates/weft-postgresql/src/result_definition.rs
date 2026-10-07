@@ -88,13 +88,19 @@ pub fn property_projection(
 ) -> Result<ScalarProjection> {
     access.verify_property(property)?;
     let column = property_column(property, position, output_name)?;
-    if !matches!(column.representation, Representation::Scalar { .. }) {
+    let descriptor = property
+        .value
+        .descriptors()
+        .iter()
+        .find(|descriptor| descriptor.identity == property.identity)
+        .ok_or_else(|| fail("Projection lacks original scalar descriptor"))?;
+    let Shape::Scalar { logical_type } = &descriptor.shape else {
         return Err(Diagnostic::new(
             "WFT-CAPABILITY",
             "emit",
-            "Selected value needs its recursive/presence result bridge",
+            "Compound value needs its recursive result bridge",
         ));
-    }
+    };
     let codec_bytes = property
         .value
         .graph
@@ -111,11 +117,19 @@ pub fn property_projection(
                 .value
                 .props_scalar_storage(location)?
                 .ok_or_else(|| fail("Scalar result lacks original scalar storage codec"))?;
-            (
-                storage.carrier,
-                storage.storage_integrity,
-                access.owner_source.sql.clone(),
-            )
+            let (carrier, integrity) =
+                if matches!(column.representation, Representation::Value { .. }) {
+                    props_presence_sql(
+                        location,
+                        &storage.carrier,
+                        &storage.storage_integrity,
+                        descriptor.availability.as_deref() == Some("required"),
+                        logical_type.nullable,
+                    )
+                } else {
+                    (storage.carrier, storage.storage_integrity)
+                };
+            (carrier, integrity, access.owner_source.sql.clone())
         }
         crate::registered_access::Location::Row(location) => {
             if !matches!(
@@ -124,9 +138,13 @@ pub fn property_projection(
             ) {
                 return Err(fail("Native projection differs from original row home"));
             }
-            let Representation::Scalar { logical_type, .. } = &column.representation else {
-                unreachable!()
-            };
+            if !matches!(column.representation, Representation::Scalar { .. }) {
+                return Err(Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "emit",
+                    "Native row presence requires its null/root projection",
+                ));
+            }
             let observation = location.scalar_observation();
             let carrier = observation.result_carrier(logical_type.family.clone());
             let hex: String = codec_bytes
@@ -157,6 +175,21 @@ pub fn property_projection(
         presence_bytes: property.value.presence.original_json.as_bytes().to_vec(),
         column,
     })
+}
+/// Scalar presence under a known props home. Integrity is an owner-wide
+/// prerequisite; invalid values must never become a successful result envelope.
+pub(crate) fn props_presence_sql(
+    location: &crate::property_definition::PropsLocation,
+    carrier: &str,
+    value_integrity: &str,
+    required: bool,
+    nullable: bool,
+) -> (String, String) {
+    let present = &location.present;
+    let null = &location.native_null;
+    let integrity=format!("({} AND (CASE WHEN {present} IS FALSE THEN {} WHEN {null} IS TRUE THEN {} ELSE {value_integrity} END))",location.root_integrity,!required,nullable);
+    let envelope=format!("CASE WHEN {present} IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN {null} IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb({carrier})) END");
+    (envelope, integrity)
 }
 fn column(descriptor: &Descriptor, position: usize, output_name: &str) -> Result<Column> {
     if position == 0 || output_name.is_empty() || output_name.contains('\0') {

@@ -1253,6 +1253,28 @@ mod tests {
         );
         assert_eq!(row_budget.remaining_bytes, 4096);
         let captured_storage = accesses[0].scalar_storage.as_ref().unwrap();
+        let crate::registered_access::Location::Props(presence_location) = &accesses[0].location
+        else {
+            panic!("fixture props")
+        };
+        let mut presence_cases = Vec::new();
+        for required in [false, true] {
+            for nullable in [false, true] {
+                let (carrier, integrity) = crate::result_definition::props_presence_sql(
+                    presence_location,
+                    &captured_storage.carrier,
+                    &captured_storage.storage_integrity,
+                    required,
+                    nullable,
+                );
+                assert!(carrier.contains("'state','null'"));
+                assert!(integrity.contains(&presence_location.root_integrity));
+                presence_cases.push(json!({"required":required,"nullable":nullable,"sql":format!("SELECT ({carrier})::text AS value FROM {} WHERE {}",accesses[0].owner_source.sql,accesses[0].owner_source.discriminator),"check":format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",accesses[0].owner_source.sql,accesses[0].owner_source.discriminator)}));
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_SCALAR_PRESENCE_CAPTURE") {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"cases":presence_cases,"parameters":access_parameters.clone().into_slots()})).unwrap()).unwrap();
+        }
         assert!(captured_storage.storage_integrity.ends_with("='string')"));
         assert!(captured_storage
             .carrier
