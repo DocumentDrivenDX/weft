@@ -44,7 +44,7 @@ pub fn compile_with_registry<'a>(
         comparators,
         &mut parameters,
     )?;
-    let select = assemble(
+    let mut select = assemble(
         context,
         &prepared,
         properties,
@@ -109,6 +109,57 @@ pub fn compile_with_registry<'a>(
             }
         },
     )?;
+    for requirement in crate::comparator_requirements::collect(context.plan)? {
+        if !requirement
+            .operations
+            .contains(&crate::native_comparator_definition::Operation::Sum)
+        {
+            continue;
+        }
+        let key = crate::comparator_requirements::registration_key(
+            &requirement.owner,
+            &requirement.identity,
+        );
+        let comparator = comparators.get(&key).ok_or_else(|| {
+            Diagnostic::new("WFT-BINDING", "lower", "SUM domain comparator missing")
+        })?;
+        for access in prepared.accesses.iter().filter(|access| {
+            access.owner == requirement.owner && access.field == requirement.identity
+        }) {
+            let carrier = match &access.location {
+                crate::registered_access::Location::Props(_) => access
+                    .scalar_storage
+                    .as_ref()
+                    .ok_or_else(|| {
+                        Diagnostic::new("WFT-BINDING", "lower", "SUM scalar carrier missing")
+                    })?
+                    .carrier
+                    .clone(),
+                crate::registered_access::Location::Row(location) => {
+                    location.scalar_observation().native_numeric_text
+                }
+            };
+            let integrity = comparator.numeric_domain_sql(&carrier)?;
+            let scan = prepared
+                .scans
+                .get(&access.scan)
+                .ok_or_else(|| Diagnostic::new("WFT-BINDING", "lower", "SUM owner scan missing"))?;
+            let mut check = select
+                .payload_checks
+                .iter()
+                .find(|check| check.scan == access.scan && check.field == access.field)
+                .ok_or_else(|| {
+                    Diagnostic::new(
+                        "WFT-BINDING",
+                        "lower",
+                        "SUM original payload prerequisite missing",
+                    )
+                })?
+                .clone();
+            check.sql = format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",scan.source.sql,scan.source.filters.join(" AND "));
+            select.payload_checks.push(check);
+        }
+    }
     Ok(Compilation {
         select,
         parameters: parameters.into_slots(),

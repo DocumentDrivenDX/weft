@@ -47,7 +47,7 @@ pub struct ScalarProjection {
 }
 /// Payload observations for every prepared read, including predicate-only reads.
 /// These are physical prerequisites, not source/domain or host qualification.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ReadPayloadObservation {
     pub scan: String,
     pub field: weft_core::ir::Identity,
