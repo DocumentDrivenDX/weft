@@ -1,0 +1,101 @@
+{
+  "scope": "Public original UMF uint64 named-cursor page, exact numeric comparison and complete-owner prerequisites over synthetic props storage; no production or embedding qualification",
+  "captureSha256": "565c7f1af55b41b7cbaa3133082ef9700714942e35e520fb66b8c3c4f187db27",
+  "harnessSha256": "0d9b9fe6cbf6cdbb74a62a8a0f4104c6d57fec9c28968eb4099373df66438f54",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "531585fe8a3d556476977da9585b9d03f426b13dc360a5cc89131588297091e1"
+    },
+    {
+      "case": "numeric-order",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "fe975d58b01bd7ffd783b0b4bda88ae3fe204fa00f0f47a4a028d6dde8237d47"
+    },
+    {
+      "case": "exact-adjacent",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "2c5cc79e460c590b3c33b96ebee1af40d610c383e38951b78dc77f311f6edd3a"
+    },
+    {
+      "case": "equal-and-below",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5c287f6f51d81b6d1e4a05d4f72cc2c77d5b0779d610be925ae64f3e39d124aa"
+    },
+    {
+      "case": "maximum",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "56975a35641ecd9ca8a6eedd541a10263790d02b575f051680548b2aa77e83ab"
+    },
+    {
+      "case": "hidden-by-limit",
+      "violations": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9e3ae2b8bb0d66c4b6879f8c78760e29e52b4f24704687e419716f74a0945e52"
+    },
+    {
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b5dd205a78a0a0019bb266a32946b9b6d9237779f601efb5e2f37ee8be8ba0b4"
+    },
+    {
+      "case": "invalid-key",
+      "violations": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "79080e7dc899cabc566122eb2792b4c6010819672c5b9f9d3ba3691789edac1b"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "3f3411c029a876ea3fedac7a07a416838f46fcbc1f778541269575cd9a4cb60d",
+    "crates/weft-postgresql/src/select_definition.rs": "f9526ce8b7b85ed5748e0fc20d8b58ecd4466643d10f83e22e333701d7623522",
+    "crates/weft-postgresql/src/original_backend.rs": "fedd0934be9d20a845e90ac8e88ba7f5a8a396d63c89d884ce261d5fcd894ee0"
+  },
+  "testLogSha256": "6b3f9056def18e913ba7f97947205e40fcbf3b242386b0a6638c3160d719aa31"
+}

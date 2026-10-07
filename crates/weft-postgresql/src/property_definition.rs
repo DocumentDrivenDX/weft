@@ -1111,12 +1111,24 @@ mod tests {
             node: &weft_core::ir::Expression,
             _: &[String],
             access: Option<&crate::registered_access::Access<'_>>,
-            _: &mut crate::Parameters,
+            parameters: &mut crate::Parameters,
         ) -> weft_core::error::Result<String> {
             match node {
                 weft_core::ir::Expression::Field { .. } => Ok(format!(
                     "({})::pg_catalog.numeric",
                     access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    span,
+                } => Ok(format!(
+                    "{}::pg_catalog.numeric",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"literalSpan":span})
+                    )?
                 )),
                 _ => panic!("Public SUM must be comparator-owned"),
             }
@@ -1238,6 +1250,55 @@ mod tests {
             assert_eq!(checks.len(), 4);
             if let Ok(path) = std::env::var("WEFT_PUBLIC_PAGE_CAPTURE") {
                 std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public_page.emission.sql,"columns":public_page.emission.columns,"checks":checks,"parameters":public_page.emission.parameters})).unwrap()).unwrap();
+            }
+        }
+        if family == "integer" {
+            let cursor = weft_core::application_resolve::resolve(
+                &catalog,
+                weft_core::application_syntax::parse(
+                    "SELECT c.id FROM Customer c WHERE c.id > :cursor ORDER BY c.id LIMIT 2",
+                )
+                .unwrap(),
+                BTreeMap::from([(
+                    "cursor".into(),
+                    weft_core::application_resolve::Parameter {
+                        family: weft_core::ir::Family::Integer,
+                        value: "2".into(),
+                    },
+                )]),
+                Some(weft_core::application_ir::ReadProfile {
+                    version: "weft-application-read/0.2.0".into(),
+                    subset: weft_core::application_ir::Subset::EntityPage,
+                }),
+            )
+            .unwrap();
+            let public_cursor = registry
+                .compile(
+                    &catalog,
+                    weft_core::backend::Plan::V02(&cursor),
+                    &target,
+                    &input,
+                )
+                .unwrap();
+            assert_eq!(public_cursor.emission.parameters.len(), 3);
+            assert_eq!(
+                public_cursor.emission.parameters[2].origin["parameter"],
+                "cursor"
+            );
+            let checks: Vec<_> = public_cursor
+                .emission
+                .obligations
+                .iter()
+                .filter_map(|obligation| {
+                    obligation
+                        .parameters
+                        .get("sql")
+                        .and_then(|sql| sql.as_str())
+                })
+                .collect();
+            assert_eq!(checks.len(), 4);
+            if let Ok(path) = std::env::var("WEFT_PUBLIC_CURSOR_CAPTURE") {
+                std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":public_cursor.emission.sql,"columns":public_cursor.emission.columns,"checks":checks,"parameters":public_cursor.emission.parameters})).unwrap()).unwrap();
             }
         }
         target.allow_candidate = false;
