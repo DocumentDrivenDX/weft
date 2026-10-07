@@ -201,14 +201,13 @@ fn assemble_application<'a>(
     let Plan::V02(plan) = context.plan else {
         unreachable!()
     };
-    if !plan.joins.is_empty()
-        || !plan.filters.is_empty()
-        || !plan.order.is_empty()
-        || plan.limit.is_some()
-    {
+    if !plan.joins.is_empty() || !plan.filters.is_empty() {
         return Err(fail(
             "Application relational stages need original-definition lowering",
         ));
+    }
+    if plan.limit.is_some_and(|limit| !(1..=1000).contains(&limit)) {
+        return Err(fail("Application LIMIT is outside its resolved bounds"));
     }
     let has_count = plan
         .outputs
@@ -335,6 +334,36 @@ fn assemble_application<'a>(
             " GROUP BY {}",
             groups.values().cloned().collect::<Vec<_>>().join(", ")
         ));
+    }
+    let mut order = Vec::new();
+    for field in &plan.order {
+        let key = serde_json::json!({"scan":field.scan,"field":field.identity}).to_string();
+        let expression = if plan.aggregate {
+            groups
+                .get(&key)
+                .cloned()
+                .ok_or_else(|| fail("Aggregate order field is not grouped"))?
+        } else {
+            let expression = Expression::Field {
+                scan: field.scan.clone(),
+                identity: field.identity.clone(),
+                logical_type: field.logical_type.clone(),
+                span: field.span.clone(),
+            };
+            crate::registered_access::render_expression(
+                &expression,
+                &prepared.accesses,
+                &mut staged,
+                &mut *native,
+            )?
+        };
+        order.push(format!("({expression}) ASC"));
+    }
+    if !order.is_empty() {
+        sql.push_str(&format!(" ORDER BY {}", order.join(", ")));
+    }
+    if let Some(limit) = plan.limit {
+        sql.push_str(&format!(" LIMIT {limit}"));
     }
     *parameters = staged;
     Ok(Select {

@@ -1106,7 +1106,7 @@ mod tests {
                     profile: &pin,
                     native_profile,
                     original_artifacts: &originals,
-                    operations: &BTreeSet::from([Operation::Equality]),
+                    operations: &BTreeSet::from([Operation::Equality, Operation::Ordering]),
                 },
                 &logical,
             )
@@ -1236,7 +1236,7 @@ mod tests {
         assert!(application_compiled.select.sql.contains("AS \"name\""));
         assert_eq!(application_compiled.parameters.len(), 2);
         assert_eq!(application_compiled.select.payload_checks.len(), 1);
-        application_plan.limit = Some(1);
+        application_plan.limit = Some(0);
         let application_context = weft_core::backend::Context {
             plan: weft_core::backend::Plan::V02(&application_plan),
             ..context
@@ -1249,6 +1249,39 @@ mod tests {
             |_, _, _, _| panic!("Unimplemented stage called native operator"),
         )
         .is_err());
+        application_plan.limit = Some(3);
+        application_plan.order = vec![weft_core::application_ir::Field {
+            scan: application_plan.source.occurrence.clone(),
+            identity: member.identity.clone(),
+            logical_type: match &descriptors[0].shape {
+                Shape::Scalar { logical_type } => logical_type.clone(),
+                _ => unreachable!(),
+            },
+            span: Span { start: 0, end: 0 },
+        }];
+        let ordered_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        let ordered = crate::select_definition::compile_with_registry(
+            &ordered_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |_, _, access, _| {
+                Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                ))
+            },
+        )
+        .unwrap();
+        assert!(ordered.select.sql.ends_with("LIMIT 3"));
+        assert!(ordered.select.sql.contains("ORDER BY"));
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_ORDER_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":ordered.select.sql,"columns":ordered.select.columns,"checks":ordered.select.structural_checks.iter().cloned().chain(ordered.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":ordered.parameters})).unwrap()).unwrap();
+        }
+        application_plan.order.clear();
         application_plan.limit = None;
         application_plan.aggregate = true;
         application_plan.outputs = vec![weft_core::application_ir::Output {
