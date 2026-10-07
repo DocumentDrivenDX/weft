@@ -171,6 +171,179 @@ pub fn admit_tree_rows(rows: &[Vec<Option<&str>>], budget: &mut Budget) -> Resul
     }
     Ok(admitted)
 }
+/// Physical complete-tree index. Original UMF shape/identity/codec admission
+/// remains required before interpreting a node as a logical value.
+pub struct TreeIndex<'a> {
+    pub root: &'a TreeRow,
+    pub children: std::collections::BTreeMap<&'a str, Vec<&'a TreeRow>>,
+}
+pub struct TreeBudget {
+    pub remaining_nodes: usize,
+    pub max_depth: usize,
+}
+pub fn index_tree<'a>(
+    rows: &'a [TreeRow],
+    state: &str,
+    root: &str,
+    budget: &mut TreeBudget,
+) -> Result<TreeIndex<'a>> {
+    use std::collections::{BTreeMap, BTreeSet};
+    if rows.len() > budget.remaining_nodes {
+        return Err(Diagnostic::new(
+            "WFT-LIMIT",
+            "decode",
+            "Native tree index budget exhausted",
+        ));
+    }
+    budget.remaining_nodes -= rows.len();
+    let mut nodes = BTreeMap::new();
+    for row in rows {
+        for i in [0, 1, 2, 5, 10, 11] {
+            if let Some(value) = &row.cells[i] {
+                let native = value
+                    .parse::<i64>()
+                    .map_err(|_| fail("Native tree index integer differs"))?;
+                if native.to_string() != *value {
+                    return Err(fail("Native tree index integer is noncanonical"));
+                }
+            }
+        }
+        if row.cells[0].as_deref() != Some(state) {
+            return Err(fail(
+                "Native tree contains an orphan payload or foreign state",
+            ));
+        }
+        let id = row.cells[1]
+            .as_deref()
+            .ok_or_else(|| fail("Native tree node ID missing"))?;
+        if nodes.insert(id, row).is_some() {
+            return Err(fail("Native tree repeats a node/payload occurrence"));
+        }
+        if row.cells[8].is_none() || row.cells[9].is_none() {
+            return Err(fail("Native tree lacks original definition/source custody"));
+        }
+        let kind = row.cells[3]
+            .as_deref()
+            .ok_or_else(|| fail("Native tree value kind missing"))?;
+        if !matches!(
+            kind,
+            "scalar" | "null" | "sequence" | "map" | "structured" | "record"
+        ) {
+            return Err(fail("Native tree value kind unsupported"));
+        }
+        if kind == "scalar" {
+            if row.cells[10].as_deref() != Some(state)
+                || row.cells[11].as_deref() != Some(id)
+                || row.cells[12].is_none()
+                || row.cells[21].is_none()
+                || row.cells[22].is_none()
+            {
+                return Err(fail("Native scalar payload ownership/custody differs"));
+            }
+        } else if row.cells[10..].iter().any(Option::is_some) {
+            return Err(fail("Native container/null node retains scalar payload"));
+        }
+    }
+    let root_row = *nodes
+        .get(root)
+        .ok_or_else(|| fail("Native tree root missing"))?;
+    let mut children: BTreeMap<&str, Vec<&TreeRow>> = BTreeMap::new();
+    for (id, row) in &nodes {
+        let slot = row.cells[4].as_deref();
+        if *id == root {
+            if row.cells[2].is_some()
+                || slot != Some("root")
+                || row.cells[5..8].iter().any(Option::is_some)
+            {
+                return Err(fail("Native root slot differs"));
+            }
+            continue;
+        }
+        let parent = row.cells[2]
+            .as_deref()
+            .ok_or_else(|| fail("Native nonroot has no parent"))?;
+        let parent_row = nodes
+            .get(parent)
+            .ok_or_else(|| fail("Native node parent missing"))?;
+        let valid = match parent_row.cells[3].as_deref() {
+            Some("sequence") => {
+                slot == Some("sequence")
+                    && row.cells[5]
+                        .as_deref()
+                        .is_some_and(|v| v.parse::<u64>().is_ok())
+                    && row.cells[6].is_none()
+                    && row.cells[7].is_none()
+            }
+            Some("map") => {
+                slot == Some("map")
+                    && row.cells[5].is_none()
+                    && row.cells[6].is_some()
+                    && row.cells[7].is_none()
+            }
+            Some("structured" | "record") => {
+                slot == Some("record")
+                    && row.cells[5].is_none()
+                    && row.cells[6].is_none()
+                    && row.cells[7].is_some()
+            }
+            _ => false,
+        };
+        if !valid {
+            return Err(fail("Native child slot conflicts with parent shape"));
+        }
+        children.entry(parent).or_default().push(row);
+    }
+    for (parent, children) in &mut children {
+        let kind = nodes[parent].cells[3].as_deref();
+        if kind == Some("sequence") {
+            children.sort_by_key(|row| row.cells[5].as_ref().unwrap().parse::<u64>().unwrap());
+            if children
+                .iter()
+                .enumerate()
+                .any(|(i, row)| row.cells[5].as_ref().unwrap().parse::<u64>().unwrap() != i as u64)
+            {
+                return Err(fail("Native sequence ordinals are not unique and dense"));
+            }
+        } else {
+            let index = if kind == Some("map") { 6 } else { 7 };
+            let mut keys = BTreeSet::new();
+            if children
+                .iter()
+                .any(|row| !keys.insert(row.cells[index].as_deref().unwrap()))
+            {
+                return Err(fail("Native container repeats a member slot"));
+            }
+        }
+    }
+    let mut pending = vec![(root, 0usize)];
+    let mut reached = BTreeSet::new();
+    while let Some((id, depth)) = pending.pop() {
+        if depth > budget.max_depth {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "decode",
+                "Native tree depth exhausted",
+            ));
+        }
+        if !reached.insert(id) {
+            return Err(fail("Native tree cycle detected"));
+        }
+        if let Some(kids) = children.get(id) {
+            for row in kids {
+                pending.push((row.cells[1].as_deref().unwrap(), depth + 1));
+            }
+        }
+    }
+    if reached.len() != nodes.len() {
+        return Err(fail(
+            "Native tree contains unreachable nodes or a disconnected cycle",
+        ));
+    }
+    Ok(TreeIndex {
+        root: root_row,
+        children,
+    })
+}
 /// Eight cells in custody_projection order; SQL NULL is None, never empty text.
 /// The host must separately admit framing, structural/payload preflight, complete
 /// visibility and source/native codec procedures. Numeric text is not parsed here.
@@ -260,6 +433,129 @@ mod tests {
         Budget {
             remaining_bytes: 4096,
             remaining_cells: 80,
+        }
+    }
+    #[test]
+    fn tree_index_refuses_corrupt_links_slots_cycles_and_work_bounds() {
+        let receipt: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+        ))
+        .unwrap();
+        let case = receipt["results"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["case"] == "descendant")
+            .unwrap();
+        let raw: Vec<Vec<Option<&str>>> = case["values"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|r| r.as_array().unwrap().iter().map(|v| v.as_str()).collect())
+            .collect();
+        for (cell, value) in [
+            (0, "2"),
+            (1, "10"),
+            (2, "999"),
+            (4, "map"),
+            (5, "1"),
+            (5, "01"),
+            (10, "2"),
+            (11, "999"),
+        ] {
+            let mut rows = admit_tree_rows(&raw, &mut budget()).unwrap();
+            let child = rows
+                .iter_mut()
+                .find(|r| r.cells[1].as_deref() == Some("11"))
+                .unwrap();
+            child.cells[cell] = Some(value.into());
+            assert!(index_tree(
+                &rows,
+                "1",
+                "10",
+                &mut TreeBudget {
+                    remaining_nodes: 100,
+                    max_depth: 32
+                }
+            )
+            .is_err());
+        }
+        let mut rows = admit_tree_rows(&raw, &mut budget()).unwrap();
+        let child = rows
+            .iter_mut()
+            .find(|r| r.cells[1].as_deref() == Some("11"))
+            .unwrap();
+        child.cells[2] = Some("11".into());
+        child.cells[3] = Some("sequence".into());
+        for cell in &mut child.cells[10..] {
+            *cell = None;
+        }
+        assert!(index_tree(
+            &rows,
+            "1",
+            "10",
+            &mut TreeBudget {
+                remaining_nodes: 100,
+                max_depth: 32
+            }
+        )
+        .is_err());
+        let rows = admit_tree_rows(&raw, &mut budget()).unwrap();
+        let mut limited = TreeBudget {
+            remaining_nodes: 1,
+            max_depth: 32,
+        };
+        assert_eq!(
+            index_tree(&rows, "1", "10", &mut limited)
+                .err()
+                .unwrap()
+                .code,
+            "WFT-LIMIT"
+        );
+        assert_eq!(limited.remaining_nodes, 1);
+        assert_eq!(
+            index_tree(
+                &rows,
+                "1",
+                "10",
+                &mut TreeBudget {
+                    remaining_nodes: 2,
+                    max_depth: 0
+                }
+            )
+            .err()
+            .unwrap()
+            .code,
+            "WFT-LIMIT"
+        );
+    }
+    #[test]
+    fn native_bags_require_complete_unique_reachable_tree_structure() {
+        let receipt: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+        ))
+        .unwrap();
+        for case in receipt["results"].as_array().unwrap() {
+            let rows: Vec<Vec<Option<&str>>> = case["values"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|r| r.as_array().unwrap().iter().map(|v| v.as_str()).collect())
+                .collect();
+            let admitted = admit_tree_rows(&rows, &mut budget()).unwrap();
+            let result = index_tree(
+                &admitted,
+                "1",
+                "10",
+                &mut TreeBudget {
+                    remaining_nodes: 100,
+                    max_depth: 32,
+                },
+            );
+            assert_eq!(
+                result.is_ok(),
+                matches!(case["case"].as_str().unwrap(), "container" | "descendant")
+            );
         }
     }
     #[test]
