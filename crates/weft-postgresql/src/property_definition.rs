@@ -1881,6 +1881,7 @@ mod tests {
         )
         .is_err());
 
+        let mut named_plan = application_plan.clone();
         application_plan.filters.clear();
 
         application_plan.limit = None;
@@ -3121,7 +3122,7 @@ mod tests {
             node: &weft_core::ir::Expression,
             operands: &[String],
             access: Option<&crate::registered_access::Access<'_>>,
-            _: &mut crate::Parameters,
+            parameters: &mut crate::Parameters,
         ) -> weft_core::error::Result<String> {
             match node {
                 weft_core::ir::Expression::Field { .. } => Ok(access
@@ -3134,6 +3135,18 @@ mod tests {
                 weft_core::ir::Expression::Equal { .. } => {
                     Ok(format!("({} = {})", operands[0], operands[1]))
                 }
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    span,
+                } => Ok(format!(
+                    "{}::pg_catalog.text",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"literalSpan":span})
+                    )?
+                )),
                 _ => panic!("registered fixture native operation"),
             }
         }
@@ -3241,14 +3254,14 @@ mod tests {
         assert!(declaration
             .capabilities
             .iter()
-            .find(|capability| capability.id == "parameter.named")
+            .find(|capability| capability.id == "relationship.exists")
             .unwrap()
             .language_profiles
             .iter()
             .all(|profile| profile.ir_version != "weft-ir/0.2.0"));
         join_plan
             .required_capabilities
-            .push("parameter.named".into());
+            .push("relationship.exists".into());
         assert!(registry
             .compile(
                 &catalog,
@@ -3257,6 +3270,42 @@ mod tests {
                 self_context.binding
             )
             .is_err());
+        named_plan.required_capabilities = vec![
+            "scan".into(),
+            "project".into(),
+            "filter".into(),
+            "equal".into(),
+            "type.string".into(),
+            "parameter.named".into(),
+            "limit".into(),
+        ];
+        let public_named = registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&named_plan),
+                &target,
+                self_context.binding,
+            )
+            .unwrap();
+        assert_eq!(
+            public_named.emission.parameters[2].origin["parameter"],
+            "selected_name"
+        );
+        assert_eq!(public_named.emission.parameters[2].value, "A");
+        if let Ok(path) = std::env::var("WEFT_PUBLIC_NAMED_CAPTURE") {
+            let checks: Vec<_> = public_named
+                .emission
+                .obligations
+                .iter()
+                .filter_map(|obligation| {
+                    obligation
+                        .parameters
+                        .get("sql")
+                        .and_then(|sql| sql.as_str())
+                })
+                .collect();
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public_named.emission.sql,"columns":public_named.emission.columns,"checks":checks,"parameters":public_named.emission.parameters})).unwrap()).unwrap();
+        }
         target.allow_candidate = false;
         assert!(registry
             .compile(

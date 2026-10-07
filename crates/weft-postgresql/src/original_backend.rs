@@ -58,6 +58,7 @@ impl OriginalBackend {
                     | "aggregate"
                     | "aggregate.count"
                     | "sum"
+                    | "parameter.named"
                     | "order.asc"
                     | "limit"
                     | "value.presence"
