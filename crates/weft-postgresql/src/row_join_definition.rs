@@ -36,6 +36,8 @@ pub struct Definition {
 /// Physical root location; stored-domain integrity and codec decoding follow.
 #[derive(Debug)]
 pub struct RootLocation {
+    node_relation: String,
+    scalar_relation: String,
     pub joins: Vec<String>,
     /// Prerequisite in the same complete authorized view, never a query filter.
     pub structural_integrity: String,
@@ -133,6 +135,54 @@ impl ScalarObservation {
     }
 }
 impl RootLocation {
+    /// Private complete-state custody bag. Every native node/payload occurrence
+    /// is retained, including duplicate or orphan payload rows. Original topology,
+    /// source/codec interpretation and host allocation admission follow separately.
+    pub fn tree_custody(&self) -> String {
+        let node = "weft_tree_node";
+        let scalar = "weft_tree_scalar";
+        let mut cells = Vec::new();
+        for column in [
+            "state_id",
+            "node_id",
+            "parent_node_id",
+            "value_kind",
+            "slot_kind",
+            "sequence_ordinal",
+            "map_key",
+        ] {
+            cells.push(format!("{node}.\"{column}\"::pg_catalog.text"));
+        }
+        for column in [
+            "record_field_identity_bytes",
+            "definition_bytes",
+            "source_bytes",
+        ] {
+            cells.push(format!("pg_catalog.encode({node}.\"{column}\",'hex')"));
+        }
+        for column in [
+            "state_id",
+            "node_id",
+            "scalar_kind",
+            "text_value",
+            "boolean_value",
+            "numeric_value",
+            "numeric_token",
+            "temporal_text",
+            "temporal_instant",
+        ] {
+            cells.push(format!("{scalar}.\"{column}\"::pg_catalog.text"));
+        }
+        for column in [
+            "binary_value",
+            "opaque_bytes",
+            "codec_definition_bytes",
+            "original_source_bytes",
+        ] {
+            cells.push(format!("pg_catalog.encode({scalar}.\"{column}\",'hex')"));
+        }
+        format!("(SELECT COALESCE(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array({})), '[]'::jsonb) FROM {} {node} FULL JOIN {} {scalar} ON {node}.\"state_id\"={scalar}.\"state_id\" AND {node}.\"node_id\"={scalar}.\"node_id\" WHERE COALESCE({node}.\"state_id\",{scalar}.\"state_id\")={}.\"state_id\")",cells.join(","),self.node_relation,self.scalar_relation,self.state_alias.sql())
+    }
     pub fn scalar_observation(&self) -> ScalarObservation {
         let scalar = self.scalar_alias.sql();
         let column = |name: &str| format!("{scalar}.\"{name}\"");
@@ -250,6 +300,8 @@ pub(crate) fn root_location(
     let structural_integrity = format!("(({state_count}=0 AND {state}.\"state_id\" IS NULL) OR ({state_count}=1 AND {state}.\"state_id\" IS NOT NULL AND {node}.\"node_id\" IS NOT NULL AND {node}.\"parent_node_id\" IS NULL AND {node_count}=1 AND {scalar_count}<=1))");
     *parameters = staged;
     Ok(RootLocation {
+        node_relation: node_table,
+        scalar_relation: scalar_table,
         joins,
         structural_integrity,
         state_alias,
@@ -594,6 +646,7 @@ pub(crate) mod tests {
         let mut captures = Vec::new();
         let mut payload_captures = Vec::new();
         let mut scan_captures = Vec::new();
+        let mut tree_captures = Vec::new();
         for edge in [false, true] {
             let f = fixture(edge);
             let mut parameters = crate::Parameters::default();
@@ -608,6 +661,10 @@ pub(crate) mod tests {
             )
             .unwrap();
             assert_eq!(location.joins.len(), 3);
+            let tree = location.tree_custody();
+            assert!(tree.contains("FULL JOIN"));
+            assert!(tree.contains("record_field_identity_bytes"));
+            tree_captures.push(json!({"kind":if edge {"edge"}else{"object"},"sql":tree,"joins":location.joins,"parameters":parameters.clone().into_slots()}));
             let observation = location.scalar_observation();
             assert_eq!(
                 observation.native_numeric_text,
@@ -712,6 +769,9 @@ pub(crate) mod tests {
             )
             .is_err());
             assert_eq!(parameters.into_slots().len(), 1023);
+        }
+        if let Ok(path) = std::env::var("WEFT_ROW_TREE_CUSTODY_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&tree_captures).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ROW_SCAN_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&scan_captures).unwrap()).unwrap();

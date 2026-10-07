@@ -1,0 +1,92 @@
+[
+  {
+    "joins": [
+      "LEFT JOIN \"schema.with.dot\".\"row_home_state\" AS \"weft_state_3\" ON \"weft_state_3\".\"owner_kind\"='object' AND \"weft_state_3\".\"object_id\"=\"owner\".\"id\" AND \"weft_state_3\".\"object_type_id\"=\"owner\".\"type_id\" AND \"weft_state_3\".\"property_owner_type_id\"=$1::pg_catalog.int4 AND \"weft_state_3\".\"property_id\"=$2::pg_catalog.int4",
+      "LEFT JOIN \"schema.with.dot\".\"row_home_node\" AS \"weft_node_3\" ON \"weft_node_3\".\"state_id\"=\"weft_state_3\".\"state_id\" AND \"weft_node_3\".\"node_id\"=\"weft_state_3\".\"root_node_id\"",
+      "LEFT JOIN \"schema.with.dot\".\"row_home_scalar\" AS \"weft_scalar_3\" ON \"weft_scalar_3\".\"state_id\"=\"weft_node_3\".\"state_id\" AND \"weft_scalar_3\".\"node_id\"=\"weft_node_3\".\"node_id\""
+    ],
+    "kind": "object",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1"
+        },
+        "position": 1,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "42"
+        },
+        "position": 2,
+        "value": "42"
+      }
+    ],
+    "sql": "(SELECT COALESCE(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(weft_tree_node.\"state_id\"::pg_catalog.text,weft_tree_node.\"node_id\"::pg_catalog.text,weft_tree_node.\"parent_node_id\"::pg_catalog.text,weft_tree_node.\"value_kind\"::pg_catalog.text,weft_tree_node.\"slot_kind\"::pg_catalog.text,weft_tree_node.\"sequence_ordinal\"::pg_catalog.text,weft_tree_node.\"map_key\"::pg_catalog.text,pg_catalog.encode(weft_tree_node.\"record_field_identity_bytes\",'hex'),pg_catalog.encode(weft_tree_node.\"definition_bytes\",'hex'),pg_catalog.encode(weft_tree_node.\"source_bytes\",'hex'),weft_tree_scalar.\"state_id\"::pg_catalog.text,weft_tree_scalar.\"node_id\"::pg_catalog.text,weft_tree_scalar.\"scalar_kind\"::pg_catalog.text,weft_tree_scalar.\"text_value\"::pg_catalog.text,weft_tree_scalar.\"boolean_value\"::pg_catalog.text,weft_tree_scalar.\"numeric_value\"::pg_catalog.text,weft_tree_scalar.\"numeric_token\"::pg_catalog.text,weft_tree_scalar.\"temporal_text\"::pg_catalog.text,weft_tree_scalar.\"temporal_instant\"::pg_catalog.text,pg_catalog.encode(weft_tree_scalar.\"binary_value\",'hex'),pg_catalog.encode(weft_tree_scalar.\"opaque_bytes\",'hex'),pg_catalog.encode(weft_tree_scalar.\"codec_definition_bytes\",'hex'),pg_catalog.encode(weft_tree_scalar.\"original_source_bytes\",'hex'))), '[]'::jsonb) FROM \"schema.with.dot\".\"row_home_node\" weft_tree_node FULL JOIN \"schema.with.dot\".\"row_home_scalar\" weft_tree_scalar ON weft_tree_node.\"state_id\"=weft_tree_scalar.\"state_id\" AND weft_tree_node.\"node_id\"=weft_tree_scalar.\"node_id\" WHERE COALESCE(weft_tree_node.\"state_id\",weft_tree_scalar.\"state_id\")=\"weft_state_3\".\"state_id\")"
+  },
+  {
+    "joins": [
+      "LEFT JOIN \"schema.with.dot\".\"row_home_state\" AS \"weft_state_3\" ON \"weft_state_3\".\"owner_kind\"='edge' AND \"weft_state_3\".\"edge_id\"=\"owner\".\"id\" AND \"weft_state_3\".\"relationship_type_id\"=\"owner\".\"rel_type_id\" AND \"weft_state_3\".\"property_owner_type_id\"=$1::pg_catalog.int4 AND \"weft_state_3\".\"property_id\"=$2::pg_catalog.int4",
+      "LEFT JOIN \"schema.with.dot\".\"row_home_node\" AS \"weft_node_3\" ON \"weft_node_3\".\"state_id\"=\"weft_state_3\".\"state_id\" AND \"weft_node_3\".\"node_id\"=\"weft_state_3\".\"root_node_id\"",
+      "LEFT JOIN \"schema.with.dot\".\"row_home_scalar\" AS \"weft_scalar_3\" ON \"weft_scalar_3\".\"state_id\"=\"weft_node_3\".\"state_id\" AND \"weft_scalar_3\".\"node_id\"=\"weft_node_3\".\"node_id\""
+    ],
+    "kind": "edge",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1"
+        },
+        "position": 1,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "42"
+        },
+        "position": 2,
+        "value": "42"
+      }
+    ],
+    "sql": "(SELECT COALESCE(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array(weft_tree_node.\"state_id\"::pg_catalog.text,weft_tree_node.\"node_id\"::pg_catalog.text,weft_tree_node.\"parent_node_id\"::pg_catalog.text,weft_tree_node.\"value_kind\"::pg_catalog.text,weft_tree_node.\"slot_kind\"::pg_catalog.text,weft_tree_node.\"sequence_ordinal\"::pg_catalog.text,weft_tree_node.\"map_key\"::pg_catalog.text,pg_catalog.encode(weft_tree_node.\"record_field_identity_bytes\",'hex'),pg_catalog.encode(weft_tree_node.\"definition_bytes\",'hex'),pg_catalog.encode(weft_tree_node.\"source_bytes\",'hex'),weft_tree_scalar.\"state_id\"::pg_catalog.text,weft_tree_scalar.\"node_id\"::pg_catalog.text,weft_tree_scalar.\"scalar_kind\"::pg_catalog.text,weft_tree_scalar.\"text_value\"::pg_catalog.text,weft_tree_scalar.\"boolean_value\"::pg_catalog.text,weft_tree_scalar.\"numeric_value\"::pg_catalog.text,weft_tree_scalar.\"numeric_token\"::pg_catalog.text,weft_tree_scalar.\"temporal_text\"::pg_catalog.text,weft_tree_scalar.\"temporal_instant\"::pg_catalog.text,pg_catalog.encode(weft_tree_scalar.\"binary_value\",'hex'),pg_catalog.encode(weft_tree_scalar.\"opaque_bytes\",'hex'),pg_catalog.encode(weft_tree_scalar.\"codec_definition_bytes\",'hex'),pg_catalog.encode(weft_tree_scalar.\"original_source_bytes\",'hex'))), '[]'::jsonb) FROM \"schema.with.dot\".\"row_home_node\" weft_tree_node FULL JOIN \"schema.with.dot\".\"row_home_scalar\" weft_tree_scalar ON weft_tree_node.\"state_id\"=weft_tree_scalar.\"state_id\" AND weft_tree_node.\"node_id\"=weft_tree_scalar.\"node_id\" WHERE COALESCE(weft_tree_node.\"state_id\",weft_tree_scalar.\"state_id\")=\"weft_state_3\".\"state_id\")"
+  }
+]

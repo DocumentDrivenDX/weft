@@ -1,0 +1,69 @@
+{
+  "scope": "Private complete-state native node/payload custody bag only; retains malformed duplicates/orphans without semantic admission or public result qualification",
+  "captureSha256": "4cbdc58bff8c5ce2a5e11dc8f0116653e0f99ec179a6b96ac868461e7fc16a1a",
+  "harnessSha256": "96edab10663d435ab4bde76a5e60900befd391e99cb186be5967a27d8d5c493e",
+  "results": [
+    {
+      "kind": "object",
+      "case": "absent",
+      "observedRows": 0,
+      "sqlSha256": "a85bd086c49c524d1d1b0f3e695437ea99352b5b221354688c7e94eff68089b7"
+    },
+    {
+      "kind": "object",
+      "case": "container",
+      "observedRows": 1,
+      "sqlSha256": "c60979d47a3410cbb28c7eeb0a637ca5645889c814469d1ff13167a616dac655"
+    },
+    {
+      "kind": "object",
+      "case": "descendant",
+      "observedRows": 2,
+      "sqlSha256": "ef719de06d20413a8fe50de5b574d01328484f0ee809714e747f86522c0d512b"
+    },
+    {
+      "kind": "object",
+      "case": "orphan-payload",
+      "observedRows": 3,
+      "sqlSha256": "db955cb17f61ed8d3b02e76e5a79343ddf0e0bd1d19f89ec6ce5ec1b52ba8b11"
+    },
+    {
+      "kind": "object",
+      "case": "duplicate-payload",
+      "observedRows": 3,
+      "sqlSha256": "ba2cabedab3cd4421025c6e79174e3bc4b4b760013dfc3d5e8c8e8a9525589d4"
+    },
+    {
+      "kind": "edge",
+      "case": "absent",
+      "observedRows": 0,
+      "sqlSha256": "32798a2b54ec422a74947593d0991cf75bc262fa08a3a7d7bfe5caee0f4db8c3"
+    },
+    {
+      "kind": "edge",
+      "case": "container",
+      "observedRows": 1,
+      "sqlSha256": "9099e666be70dec7687e94cc7883ad43793805050b9ddc414ffa9eeb21656b66"
+    },
+    {
+      "kind": "edge",
+      "case": "descendant",
+      "observedRows": 2,
+      "sqlSha256": "c83098910ff4723523c5dee075850b9b1565db02958894c3cc4e5652af06570c"
+    },
+    {
+      "kind": "edge",
+      "case": "orphan-payload",
+      "observedRows": 3,
+      "sqlSha256": "d8e255ffb1c8f828dadddcfd697917e9590a590a1c3995ec305f1253df27c20e"
+    },
+    {
+      "kind": "edge",
+      "case": "duplicate-payload",
+      "observedRows": 3,
+      "sqlSha256": "c2754a466c96a12993c7f22a593d41d06e9db4d064f9d3e06350ece3615695c4"
+    }
+  ],
+  "sourceSha256": "83c1d8747213e87badc4cef5209c636347eaa6acc14becab5fc4e509e83dd65e",
+  "testLogSha256": "f4317d0dc07e342612b13d958dfbd00457c2d6bc8447e03eaf1974f5ed71c4a5"
+}
