@@ -65,6 +65,7 @@ impl OriginalBackend {
                     | "limit"
                     | "value.presence"
                     | "value.sequence"
+                    | "value.map"
                     | "value.structured"
             );
             if !application {

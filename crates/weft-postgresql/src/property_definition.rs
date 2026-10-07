@@ -1327,22 +1327,26 @@ mod tests {
             "../../../tests/truss-postgresql/fixtures/application-cases.json"
         ))
         .unwrap();
-        let catalog = Catalog::prepare(
-            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap(),
-        )
-        .unwrap();
-        let name = |value: &str| Name {
-            value: value.into(),
-            quoted: false,
-            span: Span { start: 0, end: 0 },
-        };
-        let record = catalog.record(None, &name("customer")).unwrap();
-        for member_name in ["tags", "address"] {
+        for (fixture_name, member_name, case_index) in [
+            ("tags", "tags", 0),
+            ("address", "address", 0),
+            ("map", "tags", 58),
+        ] {
+            let catalog = Catalog::prepare(
+                serde_json::from_value(cases[case_index]["request"]["modules"].clone()).unwrap(),
+            )
+            .unwrap();
+            let name = |value: &str| Name {
+                value: value.into(),
+                quoted: false,
+                span: Span { start: 0, end: 0 },
+            };
+            let record = catalog.record(None, &name("customer")).unwrap();
             let (member, descriptors) = catalog
                 .member_descriptor(&record, &name(member_name))
                 .unwrap();
             let mut binding: Value = serde_json::from_str(
-                cases[0]["request"]["target"]["bindingJson"]
+                cases[case_index]["request"]["target"]["bindingJson"]
                     .as_str()
                     .unwrap(),
             )
@@ -1558,7 +1562,7 @@ mod tests {
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
                 std::fs::write(
                     std::path::Path::new(&directory)
-                        .join(format!("original-{member_name}-owner-observation.json")),
+                        .join(format!("original-{fixture_name}-owner-observation.json")),
                     serde_json::to_vec_pretty(
                         &json!({"sql":owner_check,"parameters":owner_parameters.into_slots()}),
                     )
@@ -1575,7 +1579,7 @@ mod tests {
             .unwrap();
             assert_eq!(observation_parameters.clone().into_slots().len(), 1);
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
-                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-observation.json")),serde_json::to_vec_pretty(&json!({"sql":observation.integrity,"body":observation.body,"parameters":observation_parameters.into_slots()})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-observation.json")),serde_json::to_vec_pretty(&json!({"sql":observation.integrity,"body":observation.body,"parameters":observation_parameters.into_slots()})).unwrap()).unwrap();
             }
             let decode = |input: &Value| {
                 let mut budget = crate::value_traversal::Budget {
@@ -1607,7 +1611,15 @@ mod tests {
                     },
                 )
             };
-            if member_name == "tags" {
+            if fixture_name == "map" {
+                assert_eq!(
+                    decode(&json!({"1.a[0]":"é  ","":"","雪":"x"})).unwrap(),
+                    json!({"1.a[0]":"é  ","":"","雪":"x"})
+                );
+                assert_eq!(decode(&json!({})).unwrap(), json!({}));
+                assert!(decode(&json!({"x":1})).is_err());
+                assert!(decode(&json!([])).is_err());
+            } else if member_name == "tags" {
                 assert_eq!(
                     decode(&json!(["é  ", "1.a[0]", ""])).unwrap(),
                     json!(["é  ", "1.a[0]", ""])
@@ -1714,7 +1726,7 @@ mod tests {
                 }
             ));
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
-                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-projection.json")),serde_json::to_vec_pretty(&json!({"sql":format!("SELECT {} FROM {} WHERE {}",projection.sql,accesses[0].owner_source.sql,accesses[0].owner_source.discriminator),"check":projection.payload_check_sql,"columns":[projection.column],"parameters":parameters.into_slots()})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-projection.json")),serde_json::to_vec_pretty(&json!({"sql":format!("SELECT {} FROM {} WHERE {}",projection.sql,accesses[0].owner_source.sql,accesses[0].owner_source.discriminator),"check":projection.payload_check_sql,"columns":[projection.column],"parameters":parameters.into_slots()})).unwrap()).unwrap();
             }
             let record_index = admitted.value["entities"]
                 .as_array()
@@ -1750,7 +1762,7 @@ mod tests {
             assert_eq!(compiled.select.payload_checks.len(), 1);
             assert_eq!(compiled.parameters.len(), 4);
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
-                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|p|p.sql.clone())).collect::<Vec<_>>(),"columns":compiled.select.columns,"parameters":compiled.parameters})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|p|p.sql.clone())).collect::<Vec<_>>(),"columns":compiled.select.columns,"parameters":compiled.parameters})).unwrap()).unwrap();
             }
             fn compound_native(
                 _: &weft_core::ir::Expression,
@@ -1796,7 +1808,7 @@ mod tests {
                     .iter()
                     .filter_map(|o| o.parameters.get("sql").and_then(|v| v.as_str()))
                     .collect();
-                std::fs::write(std::path::Path::new(&directory).join(format!("public-{member_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"checks":checks,"columns":public.emission.columns,"parameters":public.emission.parameters})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("public-{fixture_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"checks":checks,"columns":public.emission.columns,"parameters":public.emission.parameters})).unwrap()).unwrap();
             }
         }
     }
