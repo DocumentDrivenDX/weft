@@ -155,6 +155,7 @@ pub struct Body {
     pub logical_integrity: String,
     pub pairing: String,
     pub structural_integrity: String,
+    native_walk_prefix: String,
 }
 /// Intermediate assembly only: native structural/source prerequisites must still
 /// be established before publishing the logical body. Scalar SQL is trusted
@@ -197,6 +198,7 @@ pub fn body(
         logical_integrity: logical.integrity,
         pairing: mapping.walk_sql,
         structural_integrity: mapping.structural_integrity,
+        native_walk_prefix: prefix,
     };
     *parameters = staged;
     Ok(result)
@@ -228,4 +230,55 @@ fn structure(parameter: &str, custody: &str) -> String {
         WHEN 'scalar' THEN r->>3 IN ('scalar','null') ELSE r->>3=metadata.v->'nodes'->i->'shape'->>'kind' END) FROM walk,metadata),FALSE)
     ))"#
     )
+}
+
+/// Backend-selected scalar rendering and its independent native/source predicate.
+pub struct NativeLeaf {
+    pub value_sql: String,
+    pub integrity_sql: String,
+}
+pub struct GuardedBody {
+    pub body: Body,
+    pub native_integrity: String,
+}
+/// Trusted procedures own byte/source and typed scalar meaning; guards cannot
+/// be omitted merely because the reconstructed logical body satisfies UMF.
+/// All per-row predicates require TRUE (NULL is a refusal).
+pub fn guarded_body(
+    property: &PropertyAdmission,
+    access: &Access<'_>,
+    parameters: &mut Parameters,
+    field_identity: impl FnMut(&Value) -> Result<Vec<u8>>,
+    mut scalar: impl FnMut(usize, &crate::value_definition::LayoutNode<'_>) -> Result<NativeLeaf>,
+    mut node_source: impl FnMut(usize, &crate::value_definition::LayoutNode<'_>) -> Result<String>,
+) -> Result<GuardedBody> {
+    let mut staged = parameters.clone();
+    let mut scalar_guards = std::collections::BTreeMap::new();
+    let body = body(property, access, &mut staged, field_identity, |i, node| {
+        let selected = scalar(i, node)?;
+        scalar_guards.insert(i, selected.integrity_sql);
+        Ok(selected.value_sql)
+    })?;
+    let layout = property.value.graph.layout()?;
+    let mut guards = Vec::new();
+    for (i, node) in layout.nodes.iter().enumerate() {
+        let source = node_source(i, node)?;
+        let guard = if let Some(scalar) = scalar_guards.get(&i) {
+            format!("({source}) AND ({scalar})")
+        } else {
+            source
+        };
+        guards.push(format!("WHEN {i} THEN ({guard})"));
+    }
+    let native_integrity = format!(
+        "{} SELECT COALESCE(bool_and((CASE w.i {} ELSE FALSE END) IS TRUE),FALSE) FROM walk w)",
+        body.native_walk_prefix,
+        guards.join(" ")
+    );
+    let result = GuardedBody {
+        body,
+        native_integrity,
+    };
+    *parameters = staged;
+    Ok(result)
 }

@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "scope": "Explicit selected native source/typed leaf integrity predicates alongside body SQL",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "bc70f5185b9d296f3033f025df5820fd94f7e7343af5f07cc832ba10e7af9413"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "faf0e823e28a14ba99b85ecac3b069ba88958ae29c309c2ccfd644f32a550d7f",
+    "crates/weft-postgresql/src/property_definition.rs": "71a5b17f131a2935781cac15913a15dff695727c05dc6576a9783fc987f6c1cc"
+  },
+  "nativeCases": 65,
+  "nativeReceiptSha256": "2ef43da7132cb7a347cd3e5f405ca7f60954dc22df0b24c30b4cdc29d7f4f865",
+  "selectedFixtureMeaning": [
+    "Exact original codec/node definition bytes",
+    "Exact empty native node/scalar source bytes",
+    "Closed text and integer typed payload slots",
+    "Canonical unsigned decimal token spelling and native numeric/token correspondence"
+  ],
+  "limits": [
+    "Fixture-selected procedures are not adopted Truss production codecs",
+    "Native predicates do not replace logical domains, member presence or structural integrity",
+    "Owner-wide prerequisites and public projection/embedding remain unfinished",
+    "Database allocation bound remains unqualified"
+  ]
+}

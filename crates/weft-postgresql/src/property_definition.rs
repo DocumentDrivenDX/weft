@@ -2046,6 +2046,51 @@ mod tests {
             )
             .unwrap();
             assert_eq!(body_parameters.clone().into_slots().len(), 6);
+            let mut guarded_parameters = native_mapping_parameters.clone();
+            let guarded=crate::row_tree_mapping::guarded_body(row_property,&row_accesses[0],&mut guarded_parameters,
+                |identity|Ok(serde_json::to_vec(identity).unwrap()),
+                |_,node| {
+                    let (value,kind,allowed)=match node.shape {
+                        crate::value_definition::LayoutShape::Scalar {family:"integer",..}=>("to_jsonb(w.r->>16)","integer",vec![15,16]),
+                        crate::value_definition::LayoutShape::Scalar {family:"string",..}=>("to_jsonb(w.r->>13)","text",vec![13]),
+                        _=>panic!("fixture scalar procedure unsupported"),
+                    };
+                    let codec:String=node.codec_bytes.iter().map(|b|format!("{b:02x}")).collect();
+                    let extra=(13..=20).filter(|i|!allowed.contains(i)).map(|i|format!("w.r->>{i} IS NULL")).collect::<Vec<_>>().join(" AND ");
+                    let numeric=if kind=="integer" {" AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"} else {""};
+                    Ok(crate::row_tree_mapping::NativeLeaf {value_sql:value.into(),integrity_sql:format!("w.r->>3='scalar' AND w.r->>12='{kind}' AND w.r->>21='{codec}' AND w.r->>22='' AND {extra}{numeric}")})
+                },
+                |_,node| {let codec:String=node.codec_bytes.iter().map(|b|format!("{b:02x}")).collect();Ok(format!("w.r->>8='{codec}' AND w.r->>9=''"))}).unwrap();
+            assert_eq!(guarded_parameters.clone().into_slots().len(), 6);
+            if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_GUARDED_CAPTURE") {
+                let crate::registered_access::Location::Row(location) = &row_accesses[0].location
+                else {
+                    unreachable!()
+                };
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-guarded-body.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} AS stored,{} AS logical,{} AS integrity,{} AS structure,{} AS native FROM {} {} WHERE {}",guarded.body.storage_body,guarded.body.logical_body,guarded.body.logical_integrity,guarded.body.structural_integrity,guarded.native_integrity,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator),"parameters":guarded_parameters.clone().into_slots(),"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id,"procedure":"fixture original codec bytes, empty source bytes, closed text/canonical uint64 slots; not Truss adopted encoding"})).unwrap()).unwrap();
+            }
+            let guarded_before =
+                serde_json::to_value(guarded_parameters.clone().into_slots()).unwrap();
+            assert!(crate::row_tree_mapping::guarded_body(
+                row_property,
+                &row_accesses[0],
+                &mut guarded_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                |_, _| Ok(crate::row_tree_mapping::NativeLeaf {
+                    value_sql: "NULL::jsonb".into(),
+                    integrity_sql: "TRUE".into()
+                }),
+                |_, _| Err(weft_core::error::Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "emit",
+                    "fixture source procedure refused"
+                ))
+            )
+            .is_err());
+            assert_eq!(
+                serde_json::to_value(guarded_parameters.into_slots()).unwrap(),
+                guarded_before
+            );
             let before_body = serde_json::to_value(body_parameters.clone().into_slots()).unwrap();
             assert!(crate::row_tree_mapping::body(
                 row_property,
