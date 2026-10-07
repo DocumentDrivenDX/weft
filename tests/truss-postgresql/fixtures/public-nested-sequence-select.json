@@ -1,0 +1,99 @@
+{
+  "checks": [
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN false WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN false ELSE (WITH RECURSIVE g AS (SELECT d,(ord-1)::int AS id FROM pg_catalog.jsonb_array_elements($3::jsonb) WITH ORDINALITY AS graph(d,ord)), walk(v,id,depth,path) AS (SELECT ((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))::jsonb,0::int,0,ARRAY[]::text[] UNION ALL SELECT child.v,child.id,w.depth+1,w.path||child.path FROM walk w JOIN g ON g.id=w.id CROSS JOIN LATERAL (SELECT w.v->(m->>'name'),(m->>'id')::int,ARRAY[m->>'name'] FROM pg_catalog.jsonb_array_elements(COALESCE(g.d->'members','[]'::jsonb)) m WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object' UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[(item.ord-1)::text] FROM pg_catalog.jsonb_array_elements(CASE WHEN g.d->>'kind'='sequence' AND pg_catalog.jsonb_typeof(w.v)='array' THEN w.v ELSE '[]'::jsonb END) WITH ORDINALITY item(v,ord) UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[item.k] FROM pg_catalog.jsonb_each(CASE WHEN g.d->>'kind'='map' AND pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{}'::jsonb END) item(k,v) UNION ALL SELECT w.v,(g.d->>'record')::int,ARRAY[]::text[] WHERE g.d->>'kind'='structured' AND pg_catalog.jsonb_typeof(w.v)='object') child(v,id,path) WHERE w.depth<128) SELECT COALESCE(bool_and(w.depth<128 AND CASE WHEN w.v IS NULL THEN (g.d->>'optional')::bool WHEN w.v='null'::jsonb THEN (g.d->>'nullable')::bool ELSE CASE g.d->>'kind' WHEN 'scalar' THEN CASE w.id WHEN 2 THEN (TRUE AND pg_catalog.jsonb_typeof(w.v)='string') ELSE FALSE END WHEN 'sequence' THEN pg_catalog.jsonb_typeof(w.v)='array' WHEN 'map' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'structured' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'record' THEN pg_catalog.jsonb_typeof(w.v)='object' AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_object_keys(CASE WHEN pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{}'::jsonb END) keys(k) WHERE NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(g.d->'members') m WHERE m->>'name'=keys.k)) ELSE FALSE END END),FALSE) AND count(*)<=100000 FROM walk w JOIN g ON g.id=w.id) END))) IS DISTINCT FROM TRUE",
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE"
+  ],
+  "columns": [
+    {
+      "nullable": false,
+      "outputName": "tags",
+      "position": 1,
+      "representation": {
+        "descriptor": {
+          "documentId": "sales-fixture",
+          "element": "tags",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        },
+        "kind": "value",
+        "nativeNull": false
+      },
+      "sourceIdentities": [
+        {
+          "documentId": "sales-fixture",
+          "element": "tags",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        }
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "4",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 2,
+      "value": "4"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "originalRecursiveObservation": {
+          "documentId": "sales-fixture",
+          "element": "tags",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        }
+      },
+      "position": 3,
+      "value": "[{\"item\":1,\"kind\":\"sequence\",\"nullable\":false,\"optional\":false},{\"item\":2,\"kind\":\"sequence\",\"nullable\":false,\"optional\":false},{\"kind\":\"scalar\",\"nullable\":false,\"optional\":false}]"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "originalRecursiveObservation": {
+          "documentId": "sales-fixture",
+          "element": "tags",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        }
+      },
+      "position": 4,
+      "value": "[{\"item\":1,\"kind\":\"sequence\",\"nullable\":false,\"optional\":false},{\"item\":2,\"kind\":\"sequence\",\"nullable\":false,\"optional\":false},{\"kind\":\"scalar\",\"nullable\":false,\"optional\":false}]"
+    }
+  ],
+  "sql": "SELECT (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb((WITH RECURSIVE g AS (SELECT d,(ord-1)::int AS id FROM pg_catalog.jsonb_array_elements($4::jsonb) WITH ORDINALITY AS graph(d,ord)), walk(v,id,depth,path) AS (SELECT ((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))::jsonb,0::int,0,ARRAY[]::text[] UNION ALL SELECT child.v,child.id,w.depth+1,w.path||child.path FROM walk w JOIN g ON g.id=w.id CROSS JOIN LATERAL (SELECT w.v->(m->>'name'),(m->>'id')::int,ARRAY[m->>'name'] FROM pg_catalog.jsonb_array_elements(COALESCE(g.d->'members','[]'::jsonb)) m WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object' UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[(item.ord-1)::text] FROM pg_catalog.jsonb_array_elements(CASE WHEN g.d->>'kind'='sequence' AND pg_catalog.jsonb_typeof(w.v)='array' THEN w.v ELSE '[]'::jsonb END) WITH ORDINALITY item(v,ord) UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[item.k] FROM pg_catalog.jsonb_each(CASE WHEN g.d->>'kind'='map' AND pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{}'::jsonb END) item(k,v) UNION ALL SELECT w.v,(g.d->>'record')::int,ARRAY[]::text[] WHERE g.d->>'kind'='structured' AND pg_catalog.jsonb_typeof(w.v)='object') child(v,id,path) WHERE w.depth<128), patches AS (SELECT w.path,g.d,row_number() OVER (ORDER BY w.depth DESC,w.path,w.id) AS seq FROM walk w JOIN g ON g.id=w.id WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object'), folded(seq,value) AS (SELECT 0::bigint,((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))::jsonb UNION ALL SELECT p.seq,CASE WHEN cardinality(p.path)=0 THEN assembled.v ELSE pg_catalog.jsonb_set(f.value,p.path,assembled.v,true) END FROM folded f JOIN patches p ON p.seq=f.seq+1 CROSS JOIN LATERAL (SELECT COALESCE(pg_catalog.jsonb_object_agg(m->>'logicalName',CASE WHEN f.value#>(p.path||ARRAY[m->>'name']) IS NULL THEN pg_catalog.jsonb_build_object('state','absent') WHEN f.value#>(p.path||ARRAY[m->>'name'])='null'::jsonb AND (child.d->>'nullable')::bool THEN pg_catalog.jsonb_build_object('state','null') WHEN (child.d->>'optional')::bool OR (child.d->>'nullable')::bool THEN pg_catalog.jsonb_build_object('state','value','value',f.value#>(p.path||ARRAY[m->>'name'])) ELSE f.value#>(p.path||ARRAY[m->>'name']) END),'{}'::jsonb) AS v FROM pg_catalog.jsonb_array_elements(p.d->'members') m JOIN g child ON child.id=(m->>'id')::int) assembled) SELECT value FROM folded ORDER BY seq DESC LIMIT 1))) END)::pg_catalog.text AS \"tags\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+}

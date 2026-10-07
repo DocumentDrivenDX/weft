@@ -1,0 +1,155 @@
+{
+  "scope": "Frontend-resolved original compound props one-call SELECT/Registry emissions with complete-owner prerequisites; no embedding, row-tree or production qualification",
+  "captureSha256": {
+    "nested-sequence": "725d1a7a7182c260fc47a61fb0b8cb6df685071def6fe98dc52c098e24c25b41",
+    "cyclic": "05fe092735d75aa28ab241f016ad6c071fcc4e58ccb9f433b913d5fdb2ce3033"
+  },
+  "harnessSha256": "b26fb3f700b99fef2f1e9ad499c5ac82632132bcc1b7217bafd3b42295a1dcc2",
+  "results": [
+    {
+      "property": "nested-sequence",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "21ce3a9e1205ccba7c4b8667d5cc6c5f201bcd8708cc3e0b2fd2a21287896cb9"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "exact-nested",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "953c5cd6b26cd652f3242e3c6eebc8e9e21cb27d5711fd0769221cc20da6d8ad"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4cc631ba909e95242503428cb13b792fbac98c1231e45591036474e818ca5337"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1682eb4792a51b4d956e61e1876fdd1157f5ed01684619b764e4231520bcbaa8"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f521c1ef34083f29efad4e2355316c148c2025d8bef1261968c209540d25856c"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4a8c47151afb5dc5d4754e6cb63b40e4327b601f4b33d26c944e173fb4bae93d"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "902b461b0bd4df166a3ab8efda4270a323720b18766332795bb359e273d512a6"
+    },
+    {
+      "property": "cyclic",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1b5e78cf4eb3e5f86b4adc418ad5dd1e410bccf138c8cf117cff8481598258d8"
+    },
+    {
+      "property": "cyclic",
+      "case": "exact-nested",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "dd0d6bf56a30b6c238ef11b6724645fee7ad78e84d3ac916146fefbe24ef2d02"
+    },
+    {
+      "property": "cyclic",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "533edcfcf5d0319fe0f492d4b8dabf0ec75b5186fa4b679f391c698992122498"
+    },
+    {
+      "property": "cyclic",
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "b655eaa580fd8779bdd90d9176cd7e637058d22a47a423da231b622669eb20ff"
+    },
+    {
+      "property": "cyclic",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9af1aa9bdd609d4d98f466ad904bd9b0f2edc7ddbd76f63715a7b35da4e7fd16"
+    },
+    {
+      "property": "cyclic",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d7bcc6b1ba6b84581e2c6fc3a8aff328463167b38b6bb1c008e3bd7d3a1deebc"
+    },
+    {
+      "property": "cyclic",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "40a874b106b02064ae62425f0633cf49b75eb0c2f964d9e0e037606891fd50d3"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "c1e6c2fb42f19767ec85c1293efe7d13e8af82162acec576b7b33862ff4e0de9",
+    "crates/weft-postgresql/src/recursive_observation.rs": "9a9c8c69357fca264cd6b1857fe32235caf5a93202b7d21e3fb248315f38e522"
+  },
+  "testLogSha256": "ce51a3b8a547dfece72e02397f4908607b2c110577ab3ccba6438991602118f6"
+}

@@ -1331,6 +1331,8 @@ mod tests {
             ("tags", "tags", 0),
             ("address", "address", 0),
             ("map", "tags", 58),
+            ("cyclic", "address", 64),
+            ("nested-sequence", "tags", 66),
         ] {
             let catalog = Catalog::prepare(
                 serde_json::from_value(cases[case_index]["request"]["modules"].clone()).unwrap(),
@@ -1409,9 +1411,16 @@ mod tests {
                 let mut codec = empty.clone();
                 let shape = match &d.shape {
                     Shape::Scalar { logical_type } => {
-                        assert_eq!(logical_type.family, weft_core::ir::Family::String);
-                        let raw = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored[i],"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":"string","storageRepresentation":"json-string","encoding":"preserve-unicode-scalars","decodedCarrierKind":"string"},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
-                        let originals = BTreeMap::from([
+                        let numeric = logical_type.family == weft_core::ir::Family::Integer;
+                        assert!(numeric || logical_type.family == weft_core::ir::Family::String);
+                        let mut raw = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored[i],"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":"string","storageRepresentation":"json-string","encoding":"preserve-unicode-scalars","decodedCarrierKind":"string"},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
+                        if numeric {
+                            raw["rule"]["family"] = json!("integer");
+                            raw["rule"]["decodedCarrierKind"] = json!("integer");
+                            raw["rule"]["encoding"] = json!("preserve-admitted-source-token");
+                            raw["rule"]["numericAdoptionEvidence"] = empty.clone();
+                        }
+                        let mut originals = BTreeMap::from([
                             (
                                 "authoredDefinition".into(),
                                 OriginalArtifact {
@@ -1436,6 +1445,15 @@ mod tests {
                                 },
                             ),
                         ]);
+                        if numeric {
+                            originals.insert(
+                                "rule/numericAdoptionEvidence".into(),
+                                OriginalArtifact {
+                                    identity: "fixture".into(),
+                                    bytes: b"{}".to_vec(),
+                                },
+                            );
+                        }
                         let leaf = Leaf::parse(
                             &raw.to_string(),
                             LeafSelection {
@@ -1448,7 +1466,7 @@ mod tests {
                         .unwrap();
                         codec = artifact("selected-leaf", leaf.original_json.as_bytes());
                         leaves.insert(i.to_string(), leaf);
-                        json!({"kind":"scalar","family":"string","storageRepresentation":"json-string"})
+                        json!({"kind":"scalar","family":logical_type.family,"storageRepresentation":"json-string"})
                     }
                     Shape::Sequence { item } => {
                         json!({"kind":"sequence","itemNodeId":node_id(item)})
@@ -1593,7 +1611,7 @@ mod tests {
                     input,
                     &mut budget,
                     |codec, family, representation, v| {
-                        assert_eq!(family, "string");
+                        assert!(family == "string" || family == "integer");
                         assert_eq!(representation, "json-string");
                         assert!(property
                             .value
@@ -1607,11 +1625,38 @@ mod tests {
                                 "Original string codec refuses input",
                             ));
                         }
+                        if family == "integer" {
+                            v.as_str().unwrap().parse::<u64>().map_err(|_| {
+                                weft_core::error::Diagnostic::new(
+                                    "WFT-DECODE",
+                                    "decode",
+                                    "Fixture original uint64 token refuses input",
+                                )
+                            })?;
+                        }
                         Ok(v.clone())
                     },
                 )
             };
-            if fixture_name == "map" {
+            if fixture_name == "nested-sequence" {
+                assert_eq!(
+                    decode(&json!([
+                        ["9007199254740993", "18446744073709551615"],
+                        [],
+                        ["0"]
+                    ]))
+                    .unwrap(),
+                    json!([["9007199254740993", "18446744073709551615"], [], ["0"]])
+                );
+                assert!(decode(&json!(["x"])).is_err());
+                assert!(decode(&json!([[1]])).is_err());
+            } else if fixture_name == "cyclic" {
+                assert_eq!(
+                    decode(&json!({"slot.0":"outer","slot.2":{"slot.0":"inner"}})).unwrap(),
+                    json!({"street":"outer","zip":{"state":"absent"},"next":{"state":"value","value":{"street":"inner","zip":{"state":"absent"},"next":{"state":"absent"}}}})
+                );
+                assert!(decode(&json!({"slot.0":"outer","slot.2":{}})).is_err());
+            } else if fixture_name == "map" {
                 assert_eq!(
                     decode(&json!({"1.a[0]":"é  ","":"","雪":"x"})).unwrap(),
                     json!({"1.a[0]":"é  ","":"","雪":"x"})
