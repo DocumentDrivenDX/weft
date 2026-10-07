@@ -1333,6 +1333,8 @@ mod tests {
             ("map", "tags", 58),
             ("cyclic", "address", 64),
             ("nested-sequence", "tags", 66),
+            ("numeric-map", "tags", 62),
+            ("numeric-address", "address", 56),
         ] {
             let catalog = Catalog::prepare(
                 serde_json::from_value(cases[case_index]["request"]["modules"].clone()).unwrap(),
@@ -1638,7 +1640,19 @@ mod tests {
                     },
                 )
             };
-            if fixture_name == "nested-sequence" {
+            if fixture_name == "numeric-map" {
+                assert_eq!(
+                    decode(&json!({"9.a":"18446744073709551615","":"9007199254740993"})).unwrap(),
+                    json!({"9.a":"18446744073709551615","":"9007199254740993"})
+                );
+                assert!(decode(&json!({"x":"-1"})).is_err());
+            } else if fixture_name == "numeric-address" {
+                assert_eq!(
+                    decode(&json!({"slot.0":"é  ","slot.1":"18446744073709551615"})).unwrap(),
+                    json!({"street":"é  ","zip":{"state":"value","value":"18446744073709551615"}})
+                );
+                assert!(decode(&json!({"slot.0":"x","slot.1":"18446744073709551616"})).is_err());
+            } else if fixture_name == "nested-sequence" {
                 assert_eq!(
                     decode(&json!([
                         ["9007199254740993", "18446744073709551615"],
