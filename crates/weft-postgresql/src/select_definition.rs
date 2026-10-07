@@ -71,7 +71,14 @@ pub fn assemble<'a>(
     prepared.verify_context(context, parameters)?;
     let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
     let Plan::V01(plan) = context.plan else {
-        return assemble_application(context, prepared, properties, comparators, parameters);
+        return assemble_application(
+            context,
+            prepared,
+            properties,
+            comparators,
+            parameters,
+            &mut native,
+        );
     };
     let Node::Project { input, outputs, .. } = &plan.root else {
         return Err(fail("SELECT requires its outer projection"));
@@ -174,14 +181,20 @@ pub fn assemble<'a>(
     })
 }
 
-/// Original-definition V02 field projections. Other relational stages require
+/// Original-definition V02 field projections and string-grouped COUNT. Other stages require
 /// their selected lowering procedures and must never be silently discarded.
-fn assemble_application(
+fn assemble_application<'a>(
     context: &Context<'_>,
-    prepared: &Prepared<'_>,
+    prepared: &Prepared<'a>,
     properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
     comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
     parameters: &mut Parameters,
+    native: &mut impl FnMut(
+        &Expression,
+        &[String],
+        Option<&Access<'a>>,
+        &mut Parameters,
+    ) -> Result<String>,
 ) -> Result<Select> {
     use weft_core::application_ir as app;
     let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
@@ -190,7 +203,6 @@ fn assemble_application(
     };
     if !plan.joins.is_empty()
         || !plan.filters.is_empty()
-        || !plan.groups.is_empty()
         || !plan.order.is_empty()
         || plan.limit.is_some()
     {
@@ -198,11 +210,11 @@ fn assemble_application(
             "Application relational stages need original-definition lowering",
         ));
     }
-    let count_only = plan
+    let has_count = plan
         .outputs
         .iter()
-        .all(|output| matches!(output.expression, app::Expression::Count { .. }));
-    if plan.aggregate != count_only {
+        .any(|output| matches!(output.expression, app::Expression::Count { .. }));
+    if plan.aggregate != has_count || (!plan.aggregate && !plan.groups.is_empty()) {
         return Err(fail("Application aggregate and projection stages differ"));
     }
     if prepared.scans.len() != 1 {
@@ -217,6 +229,39 @@ fn assemble_application(
         return Err(fail("Application projection metadata arity differs"));
     }
     let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
+    let mut staged = parameters.clone();
+    let mut groups = BTreeMap::new();
+    for field in &plan.groups {
+        // This selected bridge preserves string carriers; numeric grouping
+        // needs its canonical result-correspondence procedure.
+        if field.logical_type.family != weft_core::ir::Family::String || field.logical_type.nullable
+        {
+            return Err(fail(
+                "Grouped output requires selected carrier correspondence",
+            ));
+        }
+        let expression = Expression::Field {
+            scan: field.scan.clone(),
+            identity: field.identity.clone(),
+            logical_type: field.logical_type.clone(),
+            span: field.span.clone(),
+        };
+        let sql = crate::registered_access::render_expression(
+            &expression,
+            &prepared.accesses,
+            &mut staged,
+            &mut *native,
+        )?;
+        if groups
+            .insert(
+                serde_json::json!({"scan":field.scan,"field":field.identity}).to_string(),
+                sql,
+            )
+            .is_some()
+        {
+            return Err(fail("Repeated original application group field"));
+        }
+    }
     let mut projections = Vec::new();
     for (output, column) in plan.outputs.iter().zip(&columns) {
         if let app::Expression::Count { logical_type } = &output.expression {
@@ -239,6 +284,16 @@ fn assemble_application(
                 "Application computed result needs original-definition lowering",
             ));
         };
+        if plan.aggregate {
+            let expression = groups
+                .get(&serde_json::json!({"scan":scan,"field":identity}).to_string())
+                .ok_or_else(|| fail("Aggregate output is not an admitted group field"))?;
+            projections.push(format!(
+                "({expression})::pg_catalog.text AS {}",
+                crate::Identifier::new(&column.output_name)?.sql()
+            ));
+            continue;
+        }
         let access = prepared
             .accesses
             .iter()
@@ -275,8 +330,13 @@ fn assemble_application(
     if !source.source.filters.is_empty() {
         sql.push_str(&format!(" WHERE {}", source.source.filters.join(" AND ")));
     }
-    // This branch allocates no parameters; prepared custody was verified above.
-    let _ = parameters;
+    if !groups.is_empty() {
+        sql.push_str(&format!(
+            " GROUP BY {}",
+            groups.values().cloned().collect::<Vec<_>>().join(", ")
+        ));
+    }
+    *parameters = staged;
     Ok(Select {
         sql,
         columns,

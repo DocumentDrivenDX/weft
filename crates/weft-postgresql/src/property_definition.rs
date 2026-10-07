@@ -1296,6 +1296,61 @@ mod tests {
             )
             .unwrap();
         }
+        let group_type = match &descriptors[0].shape {
+            Shape::Scalar { logical_type } => logical_type.clone(),
+            _ => unreachable!(),
+        };
+        application_plan.groups = vec![weft_core::application_ir::Field {
+            scan: application_plan.source.occurrence.clone(),
+            identity: member.identity.clone(),
+            logical_type: group_type,
+            span: Span { start: 0, end: 0 },
+        }];
+        application_plan.outputs.insert(
+            0,
+            weft_core::application_ir::Output {
+                name: "name".into(),
+                expression: weft_core::application_ir::Expression::Field {
+                    scan: application_plan.source.occurrence.clone(),
+                    identity: member.identity.clone(),
+                },
+            },
+        );
+        let group_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        let group_compiled = crate::select_definition::compile_with_registry(
+            &group_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, _, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                _ => panic!("Grouped fixture native operation"),
+            },
+        )
+        .unwrap();
+        assert!(group_compiled.select.sql.contains("GROUP BY"));
+        assert_eq!(group_compiled.select.payload_checks.len(), 1);
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_GROUP_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({
+                "sql": group_compiled.select.sql, "columns": group_compiled.select.columns,
+                "checks": group_compiled.select.structural_checks.iter().cloned().chain(group_compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),
+                "parameters": group_compiled.parameters,
+            })).unwrap()).unwrap();
+        }
+        assert!(crate::select_definition::compile_with_registry(
+            &group_context,
+            &record_registry,
+            &properties,
+            &BTreeMap::new(),
+            |_, _, _, _| panic!("Missing comparator reached grouped native lowering"),
+        )
+        .is_err());
         application_plan.aggregate = false;
         let wrong_count_context = weft_core::backend::Context {
             plan: weft_core::backend::Plan::V02(&application_plan),
