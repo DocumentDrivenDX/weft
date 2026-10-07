@@ -2034,61 +2034,102 @@ mod tests {
             }
             let cells: Vec<[Option<String>; 23]> =
                 serde_json::from_value(native_cases[0]["cells"].clone()).unwrap();
-            let borrowed = cells
-                .iter()
-                .map(|row| row.iter().map(Option::as_deref).collect())
-                .collect::<Vec<Vec<_>>>();
-            let native = crate::row_custody::admit_tree_rows(
-                &borrowed,
-                &mut crate::row_custody::Budget {
-                    remaining_cells: 10000,
-                    remaining_bytes: 1000000,
-                },
-            )
-            .unwrap();
-            let tree = crate::row_custody::index_tree(
-                &native,
-                "1",
-                "1",
-                &mut crate::row_custody::TreeBudget {
-                    remaining_nodes: 1000,
-                    max_depth: 32,
-                },
-            )
-            .unwrap();
-            let logical = crate::row_value_traversal::decode_logical_property(
-                row_property,
-                &row_accesses[0],
-                &tree,
-                &mut crate::value_traversal::Budget {
-                    remaining_nodes: 2000,
-                    remaining_key_bytes: 20000,
-                    remaining_members: 2000,
-                    max_depth: 32,
-                },
-                |node, row| {
-                    assert_eq!(row.bytes[&8], node.codec_bytes);
-                    Ok(())
-                },
-                |node, row| {
-                    if let crate::value_definition::LayoutShape::Scalar { family, .. } = node.shape
-                    {
-                        let token = if family == "integer" {
-                            let token = row.cells[16].as_deref().unwrap();
-                            token.parse::<u64>().unwrap();
-                            token
-                        } else {
-                            row.cells[13].as_deref().unwrap()
-                        };
-                        Ok(json!(token))
-                    } else {
-                        unreachable!()
-                    }
-                },
-                |bytes, identity| Ok(bytes == serde_json::to_vec(identity).unwrap()),
-            )
-            .unwrap();
+            let decode_native =
+                |cells: &[[Option<String>; 23]]| -> weft_core::error::Result<Value> {
+                    let refuse = |message: &str| {
+                        weft_core::error::Diagnostic::new("WFT-DECODE", "decode", message)
+                    };
+                    let borrowed = cells
+                        .iter()
+                        .map(|row| row.iter().map(Option::as_deref).collect())
+                        .collect::<Vec<Vec<_>>>();
+                    let native = crate::row_custody::admit_tree_rows(
+                        &borrowed,
+                        &mut crate::row_custody::Budget {
+                            remaining_cells: 10000,
+                            remaining_bytes: 1000000,
+                        },
+                    )?;
+                    let tree = crate::row_custody::index_tree(
+                        &native,
+                        "1",
+                        "1",
+                        &mut crate::row_custody::TreeBudget {
+                            remaining_nodes: 1000,
+                            max_depth: 32,
+                        },
+                    )?;
+                    crate::row_value_traversal::decode_logical_property(
+                        row_property,
+                        &row_accesses[0],
+                        &tree,
+                        &mut crate::value_traversal::Budget {
+                            remaining_nodes: 2000,
+                            remaining_key_bytes: 20000,
+                            remaining_members: 2000,
+                            max_depth: 32,
+                        },
+                        |node, row| {
+                            if row.bytes[&8] != node.codec_bytes || !row.bytes[&9].is_empty() {
+                                return Err(refuse(
+                                    "Fixture native definition/source custody differs",
+                                ));
+                            }
+                            Ok(())
+                        },
+                        |node, row| {
+                            if let crate::value_definition::LayoutShape::Scalar { family, .. } =
+                                node.shape
+                            {
+                                let token = if family == "integer" {
+                                    let token = row.cells[16]
+                                        .as_deref()
+                                        .ok_or_else(|| refuse("Fixture numeric token missing"))?;
+                                    token
+                                        .parse::<u64>()
+                                        .map_err(|_| refuse("Fixture uint64 domain refused"))?;
+                                    token
+                                } else {
+                                    row.cells[13]
+                                        .as_deref()
+                                        .ok_or_else(|| refuse("Fixture text missing"))?
+                                };
+                                Ok(json!(token))
+                            } else {
+                                Err(refuse("Fixture leaf shape differs"))
+                            }
+                        },
+                        |bytes, identity| Ok(bytes == serde_json::to_vec(identity).unwrap()),
+                    )
+                };
+            let logical = decode_native(&cells).unwrap();
             assert_eq!(logical, expected, "native fixture {fixture_name}");
+            let mut wrong_definition = cells.clone();
+            wrong_definition[0][8] = Some("ff".into());
+            assert!(decode_native(&wrong_definition).is_err());
+            let mut wrong_source = cells.clone();
+            wrong_source[0][9] = Some("ff".into());
+            assert!(decode_native(&wrong_source).is_err());
+            if let Some(index) = cells.iter().position(|row| row[16].is_some()) {
+                let mut overflow = cells.clone();
+                overflow[index][15] = Some("18446744073709551616".into());
+                overflow[index][16] = overflow[index][15].clone();
+                assert!(decode_native(&overflow).is_err());
+            }
+            if fixture_name == "address"
+                || fixture_name == "numeric-address"
+                || fixture_name == "cyclic"
+            {
+                let mut unknown = cells.clone();
+                unknown[1][7] = Some("ff".into());
+                assert!(decode_native(&unknown).is_err());
+            }
+            if fixture_name == "address" {
+                assert!(
+                    decode_native(&cells[..1]).is_err(),
+                    "missing required street must refuse"
+                );
+            }
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_NATIVE_TREE_CAPTURE") {
                 std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-tree.json")),
                     serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"binding":row_binding,"cells":cells,"stored":stored,"logical":logical,"identityProcedure":"synthetic exact JSON bytes; not a Truss adopted encoding"})).unwrap()).unwrap();
