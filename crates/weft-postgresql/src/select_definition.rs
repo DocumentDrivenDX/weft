@@ -800,3 +800,50 @@ fn render_application_equality<'a>(
         },
     )
 }
+
+#[cfg(test)]
+mod cursor_bounds_tests {
+    use super::*;
+    #[test]
+    fn tuple_bounds_refuse_before_callbacks_and_preserve_parameter_state() {
+        use weft_core::{
+            application_ir as app,
+            ir::{Family, Identity, LogicalType, Span},
+        };
+        let field = app::Field {
+            scan: "scan".into(),
+            identity: Identity {
+                document_id: "d".into(),
+                revision: "1".into(),
+                module: "m".into(),
+                element: "f".into(),
+            },
+            logical_type: LogicalType {
+                family: Family::String,
+                facets: serde_json::json!({}),
+                nullable: false,
+            },
+            span: Span { start: 0, end: 0 },
+        };
+        let value = app::Value::Literal {
+            value: "A".into(),
+            logical_type: field.logical_type.clone(),
+            span: field.span.clone(),
+        };
+        for (columns, values) in [
+            (vec![], vec![]),
+            (vec![field.clone()], vec![]),
+            (vec![field; 33], vec![value; 33]),
+        ] {
+            let mut parameters = Parameters::default();
+            let result = render_application_equality(
+                &app::Predicate::LexicographicGreater { columns, values },
+                &[],
+                &mut parameters,
+                &mut |_, _, _, _| panic!("Invalid tuple reached native lowering"),
+            );
+            assert_eq!(result.unwrap_err().code, "WFT-LIMIT");
+            assert!(parameters.into_slots().is_empty());
+        }
+    }
+}

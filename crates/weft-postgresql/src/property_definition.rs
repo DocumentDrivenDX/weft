@@ -2294,6 +2294,71 @@ mod tests {
             },
         )
         .unwrap();
+        let mut tuple_plan = join_plan.clone();
+        tuple_plan.joins[0].on = vec![weft_core::application_ir::Predicate::Equal {
+            left: field(&tuple_plan.source.occurrence),
+            right: weft_core::application_ir::Value::Field {
+                field: field(&tuple_plan.source.occurrence),
+            },
+        }];
+        let tuple_fields = vec![
+            field(&tuple_plan.source.occurrence),
+            field(&tuple_plan.joins[0].right.occurrence),
+        ];
+        tuple_plan.filters = vec![weft_core::application_ir::Predicate::LexicographicGreater {
+            columns: tuple_fields.clone(),
+            values: tuple_fields
+                .iter()
+                .enumerate()
+                .map(
+                    |(index, field)| weft_core::application_ir::Value::Parameter {
+                        name: format!("cursor_{index}"),
+                        value: "A".into(),
+                        logical_type: field.logical_type.clone(),
+                        span: field.span.clone(),
+                    },
+                )
+                .collect(),
+        }];
+        let tuple_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&tuple_plan),
+            ..context
+        };
+        let tuple = crate::select_definition::compile_with_registry(
+            &tuple_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, parameters| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    ..
+                } => Ok(format!(
+                    "{}::pg_catalog.text",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"fixture":true})
+                    )?
+                )),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => unreachable!(),
+            },
+        )
+        .unwrap();
+        assert_eq!(tuple.parameters.len(), 6);
+        assert_eq!(tuple.parameters[4].origin["parameter"], "cursor_0");
+        assert_eq!(tuple.parameters[5].origin["parameter"], "cursor_1");
+        if let Ok(path) = std::env::var("WEFT_COMPOSITE_CURSOR_CAPTURE") {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":tuple.select.sql,"columns":tuple.select.columns,"checks":tuple.select.structural_checks.iter().cloned().chain(tuple.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":tuple.parameters})).unwrap()).unwrap();
+        }
         assert_eq!(joined.select.structural_checks.len(), 2);
         assert_eq!(joined.select.payload_checks.len(), 2);
         assert_eq!(joined.parameters.len(), 4);
