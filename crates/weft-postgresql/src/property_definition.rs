@@ -1975,6 +1975,24 @@ mod tests {
             },
         )
         .unwrap();
+        let row_record = crate::record_definition::RecordAdmission::admit(
+            &row_admission,
+            record_index,
+            &catalog,
+            crate::record_definition::Selection {
+                inventory: &inventory,
+                relation_identity: "object-table",
+                discriminator_identity: "object-type",
+                relations: &relations,
+                columns: &columns,
+            },
+        )
+        .unwrap();
+        row_record.verify_property(&row_property).unwrap();
+        let row_records = BTreeMap::from([(
+            serde_json::to_string(row_record.identity()).unwrap(),
+            row_record,
+        )]);
         let row_properties = BTreeMap::from([(registration.clone(), row_property)]);
         let row_input = weft_core::backend::BindingInput {
             profile: input.profile.clone(),
@@ -1986,6 +2004,44 @@ mod tests {
             binding_value: &row_binding,
             ..context
         };
+        let row_join_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&join_plan),
+            ..row_context
+        };
+        let row_join_compiled = crate::select_definition::compile_with_registry(
+            &row_join_context,
+            &row_records,
+            &row_properties,
+            &comparisons,
+            |node, operands, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => {
+                    let crate::registered_access::Location::Row(location) =
+                        &access.unwrap().location
+                    else {
+                        unreachable!()
+                    };
+                    Ok(format!(
+                        "({}) COLLATE \"C\"",
+                        location.scalar_observation().text
+                    ))
+                }
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => unreachable!(),
+            },
+        )
+        .unwrap();
+        assert_eq!(row_join_compiled.select.payload_checks.len(), 2);
+        assert_eq!(row_join_compiled.parameters.len(), 6);
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_ROW_JOIN_CAPTURE") {
+            let codec_hex: String = row_properties[&registration].value.graph.artifacts
+                ["/nodes/0/codecDefinition"]
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect();
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"codecHex":codec_hex,"sql":row_join_compiled.select.sql,"columns":row_join_compiled.select.columns,"checks":row_join_compiled.select.structural_checks.iter().cloned().chain(row_join_compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":row_join_compiled.parameters,"ownerTypeId":row_properties[&registration].owner_catalog_id,"propertyId":row_properties[&registration].property_catalog_id})).unwrap()).unwrap();
+        }
         let mut row_parameters = crate::Parameters::default();
         let row_accesses = crate::registered_access::lower_plan(
             &row_context,
