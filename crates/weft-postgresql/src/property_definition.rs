@@ -2148,6 +2148,88 @@ mod tests {
             item: member.identity,
         };
         assert!(admit_value(&admitted, index, &catalog, &wrong, select()).is_err());
+
+        fn registered_native(
+            node: &weft_core::ir::Expression,
+            operands: &[String],
+            access: Option<&crate::registered_access::Access<'_>>,
+            _: &mut crate::Parameters,
+        ) -> weft_core::error::Result<String> {
+            match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => panic!("registered fixture native operation"),
+            }
+        }
+        let backend = crate::original_backend::OriginalBackend::new(
+            self_context.binding,
+            record_registry,
+            properties,
+            comparisons,
+            registered_native,
+        )
+        .unwrap();
+        let mut registry = weft_core::backend::Registry::default();
+        registry.register(backend).unwrap();
+        let mut target = weft_core::backend::Target {
+            backend_id: "truss.postgresql.original".into(),
+            backend_version: "0.1.0-candidate".into(),
+            profile_id: "pg17.9-candidate".into(),
+            allow_candidate: true,
+        };
+        let public = registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V01(&self_plan),
+                &target,
+                self_context.binding,
+            )
+            .unwrap();
+        assert_eq!(public.emission.sql, compiled.select.sql);
+        assert_eq!(
+            serde_json::to_value(&public.emission.parameters).unwrap(),
+            serde_json::to_value(&compiled.parameters).unwrap()
+        );
+        assert!(public
+            .emission
+            .obligations
+            .iter()
+            .any(|o| o.id == "truss.original.complete-read-context"));
+        let checks: Vec<_> = public
+            .emission
+            .obligations
+            .iter()
+            .filter(|o| o.id.starts_with("truss.original.owner-"))
+            .collect();
+        assert_eq!(
+            checks.len(),
+            compiled.select.structural_checks.len() + compiled.select.payload_checks.len()
+        );
+        for check in checks {
+            assert_eq!(check.parameters["beforeQuery"], true);
+            assert_eq!(check.parameters["expectedViolations"], "0");
+            assert_eq!(
+                check.parameters["parameters"],
+                serde_json::to_value(&compiled.parameters).unwrap()
+            );
+        }
+        target.allow_candidate = false;
+        assert!(registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V01(&self_plan),
+                &target,
+                self_context.binding
+            )
+            .is_err());
     }
     #[test]
     fn native_home_cannot_enter_props_path_without_original_join() {
