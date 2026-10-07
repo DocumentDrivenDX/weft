@@ -1,0 +1,43 @@
+{
+  "scope": "Original decimal(28,2) UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification",
+  "captureSha256": "77fe8cd1f1002aebf8500fc92a7646f010f829a21a2344e9688b3c25d6059b04",
+  "harnessSha256": "3aa7c3f965370aad5c699300f585c451b766a6cdda392756a187f5a49fa99493",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "result": "__null__",
+      "queryExecuted": true,
+      "sqlSha256": "79ba76e330323db4f5b3a762c12e2e07c01a10a4f738908eeda9326b5c25beb7"
+    },
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "result": "9999999999999999999.13",
+      "queryExecuted": true,
+      "sqlSha256": "be871d0e2ee6480f4da3e5038fd3dafe1bf37fced05c5d77b512b381a07bfa04"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "78f3a758ac7eceb3f32567b5c37181f5d0966d358adaf2ae8be4538a8e8e2e23"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "06214b4603eeef2727045d01b846f3de2190f4699893930e263415b6995575c2",
+    "crates/weft-postgresql/src/select_definition.rs": "18849c5576a9a98c90db2cea70d1950bb7fff51e55225dd74599f35914984f49",
+    "crates/weft-postgresql/src/native_comparator_definition.rs": "ae167d55378370e20dffe9333c1078d43383393a948e66c2d195d8d798912239"
+  },
+  "testLogSha256": "8dcffce643bed5fbc6d7f2c22951e8aed5c03de2693a636802966052c3ec6b95"
+}

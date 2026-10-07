@@ -707,6 +707,379 @@ mod tests {
         assert!(closure(&descriptors[..1], &root).is_err());
     }
     #[test]
+    fn original_decimal_property_compiles_comparator_owned_sum() {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        use leaf_codec_definition::{
+            Definition as Leaf, OriginalArtifact, Selection as LeafSelection,
+        };
+        use weft_core::json::sha256;
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
+        ))
+        .unwrap();
+        let inputs = serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
+        let catalog = Catalog::prepare(inputs).unwrap();
+        let name = |value: &str| Name {
+            value: value.to_ascii_lowercase(),
+            quoted: false,
+            span: Span { start: 0, end: 0 },
+        };
+        let record = catalog.record(None, &name("Orders")).unwrap();
+        let (member, descriptors) = catalog.member_descriptor(&record, &name("total")).unwrap();
+        let mut binding: Value = serde_json::from_str(
+            cases[0]["request"]["target"]["bindingJson"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        let index = binding["properties"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|p| p["logical"] == json!(member.identity))
+            .unwrap();
+        let property = &binding["properties"][index];
+        let pin = property["valueProfile"].clone();
+        let authored = property["acceptedDefinition"].clone();
+        let bytes = STANDARD
+            .decode(authored["bytesBase64"].as_str().unwrap())
+            .unwrap();
+        let artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+        let empty = artifact("fixture", b"{}");
+        let leaf = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored,"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":"decimal","storageRepresentation":"json-string","encoding":"preserve-admitted-source-token","decodedCarrierKind":"decimal","numericAdoptionEvidence":empty},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
+        let mut originals = BTreeMap::from([
+            (
+                "authoredDefinition".into(),
+                OriginalArtifact {
+                    identity: authored["identity"].as_str().unwrap().into(),
+                    bytes: bytes.clone(),
+                },
+            ),
+            (
+                "sourceInterpretationDefinition".into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            ),
+            (
+                "nativeDomainDefinition".into(),
+                OriginalArtifact {
+                    identity: "fixture".into(),
+                    bytes: b"{}".to_vec(),
+                },
+            ),
+        ]);
+        originals.insert(
+            "rule/numericAdoptionEvidence".into(),
+            OriginalArtifact {
+                identity: "fixture".into(),
+                bytes: b"{}".to_vec(),
+            },
+        );
+        let leaf = Leaf::parse(
+            &leaf.to_string(),
+            LeafSelection {
+                profile: &pin,
+                source_profile: &pin,
+                native_profile: &pin,
+                original_artifacts: &originals,
+            },
+        )
+        .unwrap();
+        let graph = json!({"interfaceVersion":"truss-value-definition/0.1.0","profile":pin,"rootNodeId":"root","acceptedDefinition":authored,"nodes":[{"nodeId":"root","authoredIdentity":member.identity,"authoredDefinition":authored,"codecProfile":pin,"codecDefinition":artifact("selected-leaf",leaf.original_json.as_bytes()),"shape":{"kind":"scalar","family":"decimal","storageRepresentation":"json-string"}}]});
+        let schema: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/upstream/presence-definition.schema.json"
+        ))
+        .unwrap();
+        let mut presence = json!({});
+        for (key, rule) in schema["properties"].as_object().unwrap() {
+            if let Some(constant) = rule.get("const") {
+                presence[key] = constant.clone();
+            }
+        }
+        presence["profile"] = pin.clone();
+        presence["acceptedDefinition"] = authored.clone();
+        binding["properties"][index]["valueDefinition"] =
+            artifact("original-value-graph", graph.to_string().as_bytes());
+        binding["properties"][index]["presenceDefinition"] =
+            artifact("original-presence", presence.to_string().as_bytes());
+        let admitted = Admission::parse(
+            &binding.to_string(),
+            binding["bindingProfileId"].as_str().unwrap(),
+        )
+        .unwrap();
+        let leaves = BTreeMap::from([("root".into(), leaf)]);
+        let records = BTreeMap::new();
+        let select = || Selection {
+            value_profile: &pin,
+            presence_profile: &pin,
+            leaf_codecs: &leaves,
+            record_presence: &records,
+        };
+        let value = admit_value(&admitted, index, &catalog, &descriptors, select()).unwrap();
+        assert_eq!(value.descriptors.len(), 1);
+        assert_eq!(value.presence.accepted_definition, bytes);
+        let inventory = leaf_codec_definition::OriginalArtifact {
+            identity: binding["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: b"{}".to_vec(),
+        };
+        let relations = BTreeMap::from([("object-table".into(), "object".into())]);
+        let columns = BTreeMap::from([
+            (
+                "object-props".into(),
+                crate::row_join_definition::Column {
+                    relation_identity: "object-table".into(),
+                    name: "props".into(),
+                },
+            ),
+            (
+                "object-type".into(),
+                crate::row_join_definition::Column {
+                    relation_identity: "object-table".into(),
+                    name: "type_id".into(),
+                },
+            ),
+        ]);
+        let obligations = BTreeSet::new();
+        let physical = || PhysicalSelection {
+            profile: &pin,
+            inventory: &inventory,
+            relations: &relations,
+            columns: &columns,
+            row_join: None,
+            obligations: &obligations,
+            edge_association: None,
+        };
+        let property = admit_property(
+            &admitted,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            physical(),
+        )
+        .unwrap();
+        use crate::{
+            comparator_requirements::{admit_properties, registration_key, Requirement},
+            native_comparator_definition::{
+                Definition as Comparator, Operation, Selection as ComparatorSelection,
+            },
+        };
+        let logical = if let Shape::Scalar { logical_type } = &descriptors[0].shape {
+            logical_type.clone()
+        } else {
+            panic!("fixture scalar")
+        };
+        let value_artifact = property.value.definition_artifact.clone();
+        let graph_bytes = property.value.graph.original_json.as_bytes().to_vec();
+        let make_comparator = |value_artifact: Value,
+                               graph_bytes: &[u8],
+                               native_profile: &Value| {
+            let comparator = json!({"interfaceVersion":"truss-native-comparator/0.1.0","profile":pin,"valueDefinition":value_artifact,"sourceDomainDefinition":authored,"nativeDomainProfile":native_profile,"nativeDomainDefinition":empty,"operatorInventory":empty,"strategy":{"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"},"castOutcome":"exact-or-error","nullOperands":"refuse","absentOperands":"refuse","qualification":empty});
+            let originals = BTreeMap::from([
+                (
+                    "valueDefinition".into(),
+                    OriginalArtifact {
+                        identity: value_artifact["identity"].as_str().unwrap().into(),
+                        bytes: graph_bytes.to_vec(),
+                    },
+                ),
+                (
+                    "sourceDomainDefinition".into(),
+                    OriginalArtifact {
+                        identity: authored["identity"].as_str().unwrap().into(),
+                        bytes: bytes.clone(),
+                    },
+                ),
+                (
+                    "nativeDomainDefinition".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+                (
+                    "operatorInventory".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+                (
+                    "qualification".into(),
+                    OriginalArtifact {
+                        identity: "fixture".into(),
+                        bytes: b"{}".to_vec(),
+                    },
+                ),
+            ]);
+            Comparator::parse(
+                &comparator.to_string(),
+                ComparatorSelection {
+                    profile: &pin,
+                    native_profile,
+                    original_artifacts: &originals,
+                    operations: &BTreeSet::from([Operation::Sum]),
+                },
+                &logical,
+            )
+            .unwrap()
+        };
+        let registration = registration_key(&record.identity, &member.identity);
+        let comparisons = BTreeMap::from([(
+            registration.clone(),
+            make_comparator(value_artifact, &graph_bytes, &pin),
+        )]);
+        let properties = BTreeMap::from([(registration.clone(), property)]);
+        let (_, plan) = weft_core::prepare_and_resolve(
+            "SELECT SUM(o.total) AS total FROM Orders o",
+            catalog.inputs.clone(),
+        )
+        .unwrap();
+        let manifest = <crate::candidate::Candidate as weft_core::backend::Backend>::describe(
+            &crate::candidate::Candidate,
+        )
+        .unwrap();
+        let input = weft_core::backend::BindingInput {
+            profile: binding["bindingProfileId"].as_str().unwrap().into(),
+            json: admitted.original_json.clone(),
+            sha256: sha256(admitted.original_json.as_bytes()),
+        };
+        let record_index = admitted.value["entities"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .position(|entity| entity["logical"] == json!(record.identity))
+            .unwrap();
+        let record_source = crate::record_definition::RecordAdmission::admit(
+            &admitted,
+            record_index,
+            &catalog,
+            crate::record_definition::Selection {
+                inventory: &inventory,
+                relation_identity: "object-table",
+                discriminator_identity: "object-type",
+                relations: &relations,
+                columns: &columns,
+            },
+        )
+        .unwrap();
+        record_source
+            .verify_property(&properties[&registration])
+            .unwrap();
+        let record_registry = BTreeMap::from([(
+            serde_json::to_string(record_source.identity()).unwrap(),
+            record_source,
+        )]);
+        let context = weft_core::backend::Context {
+            catalog: &catalog,
+            plan: weft_core::backend::Plan::V01(&plan),
+            target: &manifest.target_profiles[0],
+            binding: &input,
+            binding_value: &admitted.value,
+            selection: &weft_core::backend::Selection::default(),
+        };
+        let compiled = crate::select_definition::compile_with_registry(
+            &context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, _, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                _ => panic!("SUM must be comparator-owned"),
+            },
+        )
+        .unwrap();
+        assert!(compiled.select.sql.contains("pg_catalog.sum"));
+        let (scan, result_type) = match &plan.root {
+            weft_core::ir::Node::Project { input, outputs } => {
+                let scan = match input.as_ref() {
+                    weft_core::ir::Node::Aggregate { input, .. } => match input.as_ref() {
+                        weft_core::ir::Node::Scan {
+                            occurrence,
+                            record,
+                            pin,
+                        } => weft_core::application_ir::Scan {
+                            occurrence: occurrence.clone(),
+                            record: record.clone(),
+                            pin: pin.clone(),
+                        },
+                        _ => unreachable!(),
+                    },
+                    _ => unreachable!(),
+                };
+                (scan, outputs[0].expression.logical_type().clone())
+            }
+            _ => unreachable!(),
+        };
+        let application = weft_core::application_ir::Plan {
+            ir_version: "weft-ir/0.2.0".into(),
+            module_pins: plan.module_pins.clone(),
+            read_profile: None,
+            required_capabilities: vec!["scan".into(), "project".into(), "sum".into()],
+            type_graph: descriptors.clone(),
+            outputs: vec![weft_core::application_ir::Output {
+                name: "total".into(),
+                expression: weft_core::application_ir::Expression::Sum {
+                    argument: weft_core::application_ir::Field {
+                        scan: scan.occurrence.clone(),
+                        identity: member.identity.clone(),
+                        logical_type: logical.clone(),
+                        span: Span { start: 0, end: 0 },
+                    },
+                    logical_type: result_type,
+                },
+            }],
+            source: scan,
+            page_key: None,
+            joins: vec![],
+            filters: vec![],
+            groups: vec![],
+            aggregate: true,
+            order: vec![],
+            limit: None,
+        };
+        let context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application),
+            ..context
+        };
+        let application_compiled = crate::select_definition::compile_with_registry(
+            &context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, _, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                _ => panic!("V02 SUM must be comparator-owned"),
+            },
+        )
+        .unwrap();
+        assert_eq!(compiled.select.sql, application_compiled.select.sql);
+        assert_eq!(
+            serde_json::to_value(&compiled.select.columns).unwrap(),
+            serde_json::to_value(&application_compiled.select.columns).unwrap()
+        );
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_NUMERIC_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"columns":compiled.select.columns,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":compiled.parameters})).unwrap()).unwrap();
+        }
+    }
+    #[test]
     fn real_authored_field_composes_graph_presence_and_leaf_correspondence() {
         use base64::{engine::general_purpose::STANDARD, Engine};
         use leaf_codec_definition::{
