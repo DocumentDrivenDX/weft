@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "scope": "Public original backend registry and one-call compile for native compound projections with selected trusted procedures",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "a9ce4b365e35e8db4d1e6ce55a64349e6f96d4f6d64a8415d92d31f0be1ddb6a"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "5e33720066bdda4612d73143a5e143b5aa3d86a6cbbab12ded84f0b9a1bb9b8c",
+    "crates/weft-postgresql/src/property_definition.rs": "4b67006441ec6b0f1d4e203dca86e198e68fbd26245af6847357fcb76b9c43cb",
+    "crates/weft-postgresql/src/result_definition.rs": "2543cb211b346fb07ca48ed85eec1124ae35aada9da41094064938c60094ef54"
+  },
+  "nativeCases": 21,
+  "nativeReceiptSha256": "5b25eea2136db4574de81bccc8b9b651cba7915a719088332ed6097ba9490c73",
+  "evidence": [
+    "All seven original compound row fixtures compile through public registry with SQL/parameter parity against one-call assembly",
+    "Projection and payload observation use privately held trusted procedures selected after original complete-value-tree admission",
+    "Exact emitted SELECT and prerequisite SQL pass valid/corrupt-owned/foreign-owner PostgreSQL controls"
+  ],
+  "limits": [
+    "Selected procedures are fixture meanings, not adopted production codecs",
+    "No fresh original-registry Python/WASM embedding qualification",
+    "Full B-005 corpus, relationships and native numeric/page cases remain unfinished",
+    "Host read-context/prerequisite execution remains required before publication"
+  ]
+}

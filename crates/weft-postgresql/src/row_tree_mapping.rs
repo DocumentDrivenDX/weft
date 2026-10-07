@@ -1,4 +1,13 @@
-//! Original native topology packet for SQL lowering; identities are selected code.
+/// Trusted compiler procedures selected by the embedding host, never model code.
+#[derive(Debug, Clone, Copy)]
+pub struct Procedures {
+    pub field_identity: fn(&serde_json::Value) -> weft_core::error::Result<Vec<u8>>,
+    pub scalar:
+        fn(usize, &crate::value_definition::LayoutNode<'_>) -> weft_core::error::Result<NativeLeaf>,
+    pub node_source:
+        fn(usize, &crate::value_definition::LayoutNode<'_>) -> weft_core::error::Result<String>,
+}
+// Original native topology packet for SQL lowering; identities are selected code.
 use crate::{
     property_definition::PropertyAdmission,
     registered_access::{Access, Location},

@@ -131,11 +131,23 @@ pub fn property_projection_with_parameters(
         return property_projection(property, access, position, output_name);
     }
     let crate::registered_access::Location::Props(location) = &access.location else {
-        return Err(Diagnostic::new(
-            "WFT-CAPABILITY",
-            "emit",
-            "Recursive native row projection is not implemented",
-        ));
+        let procedures = property.native_tree.ok_or_else(|| {
+            Diagnostic::new(
+                "WFT-CAPABILITY",
+                "emit",
+                "Recursive native row projection lacks selected identity/source/scalar procedures",
+            )
+        })?;
+        return native_tree_projection(
+            property,
+            access,
+            position,
+            output_name,
+            parameters,
+            procedures.field_identity,
+            procedures.scalar,
+            procedures.node_source,
+        );
     };
     let required = match descriptor.availability.as_deref() {
         Some("required") => true,

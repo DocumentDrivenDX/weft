@@ -134,6 +134,7 @@ pub enum HomeAdmission {
 }
 #[derive(Debug)]
 pub struct PropertyAdmission {
+    pub(crate) native_tree: Option<crate::row_tree_mapping::Procedures>,
     original_binding_sha256: String,
     pub owner: Identity,
     pub identity: Identity,
@@ -264,6 +265,24 @@ pub struct LeafStorage {
     pub storage_integrity: String,
 }
 impl PropertyAdmission {
+    pub fn with_native_tree(
+        mut self,
+        procedures: crate::row_tree_mapping::Procedures,
+    ) -> Result<Self> {
+        if !matches!(&self.home,HomeAdmission::Row {access,..} if access=="complete-value-tree") {
+            return Err(fail(
+                "Native tree procedures require admitted complete-value-tree home",
+            ));
+        }
+        crate::result_definition::property_column(&self, 1, "native_tree_selection")?;
+        self.value
+            .graph
+            .verify_record_presence(&self.value.admitted_record_presence)?;
+        self.value.verify_leaf_codec_custody()?;
+        self.native_tree = Some(procedures);
+        Ok(self)
+    }
+
     /// Presence is observed under the original field availability, before codec
     /// decoding. An observed present value is not yet a publishable logical value.
     pub fn observe_props_presence<'a>(
@@ -567,6 +586,7 @@ pub fn admit_property(
         ));
     }
     Ok(PropertyAdmission {
+        native_tree: None,
         original_binding_sha256: weft_core::json::sha256(binding.original_json.as_bytes()),
         owner,
         identity,
@@ -2008,6 +2028,13 @@ mod tests {
                 },
             )
             .unwrap();
+            let row_property = row_property
+                .with_native_tree(crate::row_tree_mapping::Procedures {
+                    field_identity: |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                    scalar: fixture_native_leaf,
+                    node_source: fixture_native_source,
+                })
+                .unwrap();
             let row_input = weft_core::backend::BindingInput {
                 profile: input.profile.clone(),
                 sha256: sha256(row_admission.original_json.as_bytes()),
@@ -2332,6 +2359,76 @@ mod tests {
                     serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"binding":row_binding,"cells":cells,"stored":stored,"logical":logical,"identityProcedure":"synthetic exact JSON bytes; not a Truss adopted encoding"})).unwrap()).unwrap();
             }
 
+            let row_record_index = row_admission.value["entities"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .position(|e| e["logical"] == json!(record.identity))
+                .unwrap();
+            let row_record = crate::record_definition::RecordAdmission::admit(
+                &row_admission,
+                row_record_index,
+                &catalog,
+                crate::record_definition::Selection {
+                    inventory: &inventory,
+                    relation_identity: "object-table",
+                    discriminator_identity: "object-type",
+                    relations: &relations,
+                    columns: &columns,
+                },
+            )
+            .unwrap();
+            let row_records = BTreeMap::from([(
+                serde_json::to_string(row_record.identity()).unwrap(),
+                row_record,
+            )]);
+            let row_compiled = crate::select_definition::compile_with_registry(
+                &row_context,
+                &row_records,
+                &row_properties,
+                &BTreeMap::new(),
+                |_, _, _, _| panic!("Native compound projection must use selected tree procedures"),
+            )
+            .unwrap();
+            assert_eq!(row_compiled.select.payload_checks.len(), 1);
+            let row_backend = crate::original_backend::OriginalBackend::new(
+                &row_input,
+                row_records,
+                row_properties,
+                BTreeMap::new(),
+                compound_native,
+            )
+            .unwrap();
+            let mut row_registry = weft_core::backend::Registry::default();
+            row_registry.register(row_backend).unwrap();
+            let row_target = weft_core::backend::Target {
+                backend_id: "truss.postgresql.original".into(),
+                backend_version: "0.1.0-candidate".into(),
+                profile_id: "pg17.9-candidate".into(),
+                allow_candidate: true,
+            };
+            let row_public = row_registry
+                .compile(
+                    &catalog,
+                    weft_core::backend::Plan::V02(&plan),
+                    &row_target,
+                    &row_input,
+                )
+                .unwrap();
+            assert_eq!(row_public.emission.sql, row_compiled.select.sql);
+            assert_eq!(
+                serde_json::to_value(&row_public.emission.parameters).unwrap(),
+                serde_json::to_value(&row_compiled.parameters).unwrap()
+            );
+            if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_PUBLIC_CAPTURE") {
+                let checks: Vec<_> = row_public
+                    .emission
+                    .obligations
+                    .iter()
+                    .filter_map(|o| o.parameters.get("sql").and_then(Value::as_str))
+                    .collect();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-public.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":row_public.emission.sql,"checks":checks,"parameters":row_public.emission.parameters,"columns":row_public.emission.columns,"propertyId":row_binding["properties"][index]["propertyId"],"ownerTypeId":row_binding["properties"][index]["ownerTypeId"]})).unwrap()).unwrap();
+            }
             let properties = BTreeMap::from([(
                 crate::comparator_requirements::registration_key(
                     &record.identity,
