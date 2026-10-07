@@ -128,11 +128,7 @@ pub fn property_projection(
                 unreachable!()
             };
             let observation = location.scalar_observation();
-            let carrier = match logical_type.family {
-                Family::String => observation.text.clone(),
-                Family::Boolean => format!("{}::pg_catalog.text", observation.boolean),
-                Family::Integer | Family::Decimal => observation.original_numeric_token.clone(),
-            };
+            let carrier = observation.result_carrier(logical_type.family.clone());
             let hex: String = codec_bytes
                 .iter()
                 .map(|byte| format!("{byte:02x}"))

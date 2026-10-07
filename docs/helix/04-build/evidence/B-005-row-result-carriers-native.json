@@ -1,0 +1,109 @@
+{
+  "scope": "Actual row scalar carrier expression and physical payload predicate for four UMF families under object/edge captured aliases; independent valid synthetic values, not complete original property/decoder/host qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "42bf532df3e919471edae392543eecdd81024920ca0a37a066149237c0873bde",
+  "harnessSha256": "282753b91f86ce9103bc07c891d9344f08d6fe0125fefd08c673ea68470413e7",
+  "results": [
+    {
+      "ownerKind": "object",
+      "id": "string-empty",
+      "value": "",
+      "sqlSha256": "db04e1f2e5bcd01f7e41013541df531410187b89d6d256252eefd1920210e6db"
+    },
+    {
+      "ownerKind": "object",
+      "id": "string-unicode",
+      "value": "é😀  ",
+      "sqlSha256": "47d2bcc9ac50c18892356fd2a7d7c17eae81a9b91c18cb12b311714ceca4842e"
+    },
+    {
+      "ownerKind": "object",
+      "id": "boolean-false",
+      "value": "false",
+      "sqlSha256": "22fc900cc67da9302ec3f97891208e1e9e34282132b2e7049a44777ae86ae591"
+    },
+    {
+      "ownerKind": "object",
+      "id": "boolean-true",
+      "value": "true",
+      "sqlSha256": "0f81cf718c3ba1e20958e051b1165fc71e796e40d56afc0cb96bc877f5e62a94"
+    },
+    {
+      "ownerKind": "object",
+      "id": "integer-uint64",
+      "value": "18446744073709551615",
+      "sqlSha256": "bf1639f325697e02f85603d9ffde31053bb4766fc11a60ab1b29a84a204959cb"
+    },
+    {
+      "ownerKind": "object",
+      "id": "integer-int64-min",
+      "value": "-9223372036854775808",
+      "sqlSha256": "c60af16aee4cbc98d71ac1e0f62217babcf8e5f01527b3499d2833e6515595ed"
+    },
+    {
+      "ownerKind": "object",
+      "id": "decimal-negative-zero",
+      "value": "-0.00",
+      "sqlSha256": "5e8f74858b2090b7e8477abcb1f9147015424bbf8c03e87cd0700fc2c91a32fb"
+    },
+    {
+      "ownerKind": "object",
+      "id": "decimal-exact-scale",
+      "value": "12345678901234567890.00100",
+      "sqlSha256": "0336c1cdac4d0874699e4dcbca62a3465c8102cb076c20581851ade9f34299d2"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "string-empty",
+      "value": "",
+      "sqlSha256": "db04e1f2e5bcd01f7e41013541df531410187b89d6d256252eefd1920210e6db"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "string-unicode",
+      "value": "é😀  ",
+      "sqlSha256": "47d2bcc9ac50c18892356fd2a7d7c17eae81a9b91c18cb12b311714ceca4842e"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "boolean-false",
+      "value": "false",
+      "sqlSha256": "22fc900cc67da9302ec3f97891208e1e9e34282132b2e7049a44777ae86ae591"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "boolean-true",
+      "value": "true",
+      "sqlSha256": "0f81cf718c3ba1e20958e051b1165fc71e796e40d56afc0cb96bc877f5e62a94"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "integer-uint64",
+      "value": "18446744073709551615",
+      "sqlSha256": "bf1639f325697e02f85603d9ffde31053bb4766fc11a60ab1b29a84a204959cb"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "integer-int64-min",
+      "value": "-9223372036854775808",
+      "sqlSha256": "c60af16aee4cbc98d71ac1e0f62217babcf8e5f01527b3499d2833e6515595ed"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "decimal-negative-zero",
+      "value": "-0.00",
+      "sqlSha256": "5e8f74858b2090b7e8477abcb1f9147015424bbf8c03e87cd0700fc2c91a32fb"
+    },
+    {
+      "ownerKind": "edge",
+      "id": "decimal-exact-scale",
+      "value": "12345678901234567890.00100",
+      "sqlSha256": "0336c1cdac4d0874699e4dcbca62a3465c8102cb076c20581851ade9f34299d2"
+    }
+  ],
+  "sourcePins": {
+    "crates/weft-postgresql/src/row_join_definition.rs": "98fed26115b07fe499ed564b1f3d967bfeccd7dcedd2327f8e1bda88c6a164ad",
+    "crates/weft-postgresql/src/result_definition.rs": "f1218838ddf7f93b2f26d9aca3096a69f050a5aa4ffd68f4d347abfdecb6d15a"
+  },
+  "rustTestLogSha256": "3896bf5dd8ca742e315c10ddc032aac3777d35d76ec1ec1c94b56b5f8e50d69c"
+}

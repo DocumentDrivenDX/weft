@@ -58,6 +58,16 @@ pub struct ScalarObservation {
     pub other_payloads_absent: String,
 }
 impl ScalarObservation {
+    /// Scalar result carrier selected by the original UMF family. Numeric
+    /// spelling comes from the original token, never native numeric rendering.
+    pub(crate) fn result_carrier(&self, family: weft_core::ir::Family) -> String {
+        use weft_core::ir::Family;
+        match family {
+            Family::String => self.text.clone(),
+            Family::Boolean => format!("{}::pg_catalog.text", self.boolean),
+            Family::Integer | Family::Decimal => self.original_numeric_token.clone(),
+        }
+    }
     /// Private observation columns for the selected source/native decoder.
     /// Native NULL remains NULL; empty strings/byte sequences remain present.
     /// This is not Weft Column metadata or an adopted public decoder ABI.
@@ -619,7 +629,7 @@ pub(crate) mod tests {
             assert!(custody[5].contains("numeric_token"));
             let payloads: Vec<_> = [weft_core::ir::Family::String, weft_core::ir::Family::Boolean,
                 weft_core::ir::Family::Integer, weft_core::ir::Family::Decimal].iter()
-                .map(|family|json!({"family":family,"integrity":observation.payload_integrity(family.clone())})).collect();
+                .map(|family|json!({"family":family,"integrity":observation.payload_integrity(family.clone()),"carrier":observation.result_carrier(family.clone())})).collect();
             payload_captures.push(json!({"kind":if edge {"edge"} else {"object"},"payloads":payloads,
                 "numeric":observation.native_numeric_text,"token":observation.original_numeric_token,
                 "codec":observation.codec_bytes_hex,"source":observation.source_bytes_hex,"custody":custody}));
