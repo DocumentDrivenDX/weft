@@ -2028,6 +2028,50 @@ mod tests {
             assert_eq!(native_mapping.topology_parameter, "$4");
             assert!(!native_mapping.custody_sql.is_empty());
             assert_eq!(native_mapping_parameters.clone().into_slots().len(), 4);
+            let mut body_parameters = native_mapping_parameters.clone();
+            let native_body = crate::row_tree_mapping::body(
+                row_property,
+                &row_accesses[0],
+                &mut body_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                |_, node| match node.shape {
+                    crate::value_definition::LayoutShape::Scalar {
+                        family: "integer", ..
+                    } => Ok("to_jsonb(w.r->>16)".into()),
+                    crate::value_definition::LayoutShape::Scalar {
+                        family: "string", ..
+                    } => Ok("to_jsonb(w.r->>13)".into()),
+                    _ => panic!("fixture native leaf procedure unsupported"),
+                },
+            )
+            .unwrap();
+            assert_eq!(body_parameters.clone().into_slots().len(), 6);
+            let before_body = serde_json::to_value(body_parameters.clone().into_slots()).unwrap();
+            assert!(crate::row_tree_mapping::body(
+                row_property,
+                &row_accesses[0],
+                &mut body_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                |_, _| Err(weft_core::error::Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "emit",
+                    "fixture refuses native leaf lowering"
+                ))
+            )
+            .is_err());
+            assert_eq!(
+                serde_json::to_value(body_parameters.clone().into_slots()).unwrap(),
+                before_body
+            );
+
+            if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_BODY_CAPTURE") {
+                let crate::registered_access::Location::Row(location) = &row_accesses[0].location
+                else {
+                    unreachable!()
+                };
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-body.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} AS stored,{} AS logical,{} AS integrity FROM {} {} WHERE {}",native_body.storage_body,native_body.logical_body,native_body.logical_integrity,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator),"parameters":body_parameters.into_slots(),"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id})).unwrap()).unwrap();
+            }
+
             if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_WALK_CAPTURE") {
                 let crate::registered_access::Location::Row(location) = &row_accesses[0].location
                 else {

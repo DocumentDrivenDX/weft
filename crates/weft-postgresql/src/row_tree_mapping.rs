@@ -102,7 +102,7 @@ pub fn encode(
     Ok(mapping)
 }
 
-fn walk(parameter: &str, custody: &str) -> String {
+fn prefix(parameter: &str, custody: &str) -> String {
     format!(
         r#"(WITH RECURSIVE metadata AS (SELECT {parameter}::pg_catalog.jsonb AS v),
     raw AS (SELECT x AS r FROM pg_catalog.jsonb_array_elements({custody}) x),
@@ -128,12 +128,67 @@ fn walk(parameter: &str, custody: &str) -> String {
           AND child.r->>4='record' AND child.r->>7=member->>'identityHex'
       ) next WHERE w.depth<128
     )
-    SELECT pg_catalog.jsonb_build_object('rows',COALESCE((SELECT pg_catalog.jsonb_agg(
+"#
+    )
+}
+fn walk(parameter: &str, custody: &str) -> String {
+    let prefix = prefix(parameter, custody);
+    format!("{prefix}    SELECT pg_catalog.jsonb_build_object('rows',COALESCE((SELECT pg_catalog.jsonb_agg(
       pg_catalog.jsonb_build_object('cells',r,'logicalNode',i,'path',path,'depth',depth) ORDER BY depth,path) FROM walk),'[]'::jsonb),
       'unmatchedRows',(SELECT count(*) FROM raw)-(SELECT count(*) FROM walk),
       'uniqueNodes',(SELECT count(*) FROM raw)=(SELECT count(DISTINCT (r->>0,r->>1)) FROM raw),
       'matchingShapes',COALESCE((SELECT bool_and(CASE metadata.v->'nodes'->i->'shape'->>'kind'
         WHEN 'scalar' THEN r->>3 IN ('scalar','null') ELSE r->>3=metadata.v->'nodes'->i->'shape'->>'kind' END) FROM walk,metadata),FALSE))
-    )"#
-    )
+ )")
+}
+
+pub struct Body {
+    pub storage_body: String,
+    pub logical_body: String,
+    pub logical_integrity: String,
+    pub pairing: String,
+}
+/// Intermediate assembly only: native structural/source prerequisites must still
+/// be established before publishing the logical body. Scalar SQL is trusted
+/// backend code and returns exact JSONB under alias w.r's native custody cells.
+pub fn body(
+    property: &PropertyAdmission,
+    access: &Access<'_>,
+    parameters: &mut Parameters,
+    field_identity: impl FnMut(&Value) -> Result<Vec<u8>>,
+    mut scalar: impl FnMut(usize, &crate::value_definition::LayoutNode<'_>) -> Result<String>,
+) -> Result<Body> {
+    let mut staged = parameters.clone();
+    let mapping = encode(property, access, &mut staged, field_identity)?;
+    let layout = property.value.graph.layout()?;
+    let mut leaves = Vec::new();
+    for (i, node) in layout.nodes.iter().enumerate() {
+        if matches!(node.shape, LayoutShape::Scalar { .. }) {
+            leaves.push(format!("WHEN {i} THEN ({})", scalar(i, node)?));
+        }
+    }
+    let leaf = format!("CASE w.i {} ELSE NULL::jsonb END", leaves.join(" "));
+    let prefix = prefix(&mapping.topology_parameter, &mapping.custody_sql);
+    let storage_body = format!(
+        r#"{prefix},
+      ordered AS (SELECT w.*,row_number() OVER (ORDER BY depth,path) AS ordinal,
+        CASE WHEN w.r->>3 IN ('structured','record','map') THEN '{{}}'::jsonb
+          WHEN w.r->>3='sequence' THEN COALESCE((SELECT jsonb_agg('null'::jsonb) FROM walk child WHERE child.r->>2=w.r->>1),'[]'::jsonb)
+          WHEN w.r->>3='null' THEN 'null'::jsonb ELSE {leaf} END AS value
+        FROM walk w),
+      assembled(ordinal,value) AS (SELECT 0::bigint,'null'::jsonb UNION ALL
+        SELECT o.ordinal,CASE WHEN cardinality(o.path)=0 THEN o.value
+          ELSE jsonb_set(a.value,o.path,o.value,TRUE) END
+        FROM assembled a JOIN ordered o ON o.ordinal=a.ordinal+1)
+      SELECT value FROM assembled ORDER BY ordinal DESC LIMIT 1)"#
+    );
+    let logical = crate::recursive_observation::encode(property, &storage_body, &mut staged)?;
+    let result = Body {
+        storage_body,
+        logical_body: logical.body,
+        logical_integrity: logical.integrity,
+        pairing: mapping.walk_sql,
+    };
+    *parameters = staged;
+    Ok(result)
 }
