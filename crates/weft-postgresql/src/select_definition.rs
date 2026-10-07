@@ -364,8 +364,8 @@ fn assemble_application<'a>(
                     }
                 }
             }
-            conditions.push(crate::registered_access::render_expression(
-                &expression,
+            conditions.push(render_application_equality(
+                predicate,
                 &prepared.accesses,
                 &mut staged,
                 &mut *native,
@@ -386,9 +386,8 @@ fn assemble_application<'a>(
     }
 
     for predicate in &plan.filters {
-        let expression = application_equality(predicate)?;
-        filters.push(crate::registered_access::render_expression(
-            &expression,
+        filters.push(render_application_equality(
+            predicate,
             &prepared.accesses,
             &mut staged,
             &mut *native,
@@ -592,9 +591,16 @@ fn application_equality(predicate: &weft_core::application_ir::Predicate) -> Res
             logical_type: logical_type.clone(),
             span: span.clone(),
         },
-        app::Value::Parameter { .. } => {
-            return Err(fail("Named parameter needs its origin-preserving bridge"))
-        }
+        app::Value::Parameter {
+            value,
+            logical_type,
+            span,
+            ..
+        } => Expression::Literal {
+            value: value.clone(),
+            logical_type: logical_type.clone(),
+            span: span.clone(),
+        },
     };
     Ok(Expression::Equal {
         left: Box::new(field(left)),
@@ -681,4 +687,57 @@ mod aggregate_tests {
         };
         assert!(validate_sum_result(&text, &text, false).is_err());
     }
+}
+
+fn render_application_equality<'a>(
+    predicate: &weft_core::application_ir::Predicate,
+    accesses: &[Access<'a>],
+    parameters: &mut Parameters,
+    mut native: impl FnMut(
+        &Expression,
+        &[String],
+        Option<&Access<'a>>,
+        &mut Parameters,
+    ) -> Result<String>,
+) -> Result<String> {
+    use weft_core::application_ir as app;
+    let expression = application_equality(predicate)?;
+    crate::registered_access::render_expression(
+        &expression,
+        accesses,
+        parameters,
+        |node, operands, access, parameters| {
+            if let (
+                app::Predicate::Equal {
+                    right:
+                        app::Value::Parameter {
+                            name,
+                            value,
+                            logical_type,
+                            span,
+                        },
+                    ..
+                },
+                Expression::Literal { .. },
+            ) = (predicate, node)
+            {
+                let before = parameters.0.len();
+                let sql = native(node, operands, access, parameters)?;
+                if parameters.0.len() != before + 1
+                    || parameters.0[before].value != *value
+                    || parameters.0[before].logical_type != *logical_type
+                {
+                    return Err(Diagnostic::new(
+                        "WFT-BINDING",
+                        "emit",
+                        "Named parameter conversion must retain one exact typed value slot",
+                    ));
+                }
+                parameters.0[before].origin = serde_json::json!({"parameter":name,"span":span});
+                Ok(sql)
+            } else {
+                native(node, operands, access, parameters)
+            }
+        },
+    )
 }

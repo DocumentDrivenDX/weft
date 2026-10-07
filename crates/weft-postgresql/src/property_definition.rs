@@ -1807,6 +1807,80 @@ mod tests {
         if let Ok(path) = std::env::var("WEFT_APPLICATION_FILTER_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":filtered.select.sql,"columns":filtered.select.columns,"checks":filtered.select.structural_checks.iter().cloned().chain(filtered.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":filtered.parameters})).unwrap()).unwrap();
         }
+        if let weft_core::application_ir::Predicate::Equal { right, .. } =
+            &mut application_plan.filters[0]
+        {
+            let weft_core::application_ir::Value::Literal {
+                value,
+                logical_type,
+                span,
+            } = right.clone()
+            else {
+                unreachable!()
+            };
+            *right = weft_core::application_ir::Value::Parameter {
+                name: "selected_name".into(),
+                value,
+                logical_type,
+                span,
+            };
+        }
+        let named_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        let named = crate::select_definition::compile_with_registry(
+            &named_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, parameters| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    ..
+                } => Ok(format!(
+                    "{}::pg_catalog.text",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"fixture":true})
+                    )?
+                )),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => unreachable!(),
+            },
+        )
+        .unwrap();
+        assert_eq!(named.parameters[2].origin["parameter"], "selected_name");
+        assert_eq!(named.select.sql, filtered.select.sql);
+        assert!(crate::select_definition::compile_with_registry(
+            &named_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                weft_core::ir::Expression::Literal { .. } => Ok("'A'::pg_catalog.text".into()),
+                weft_core::ir::Expression::Equal { .. } =>
+                    Ok(format!("({} = {})", operands[0], operands[1])),
+                _ => unreachable!(),
+            }
+        )
+        .is_err());
+
         application_plan.filters.clear();
 
         application_plan.limit = None;
