@@ -2091,3 +2091,10 @@ All 74 PostgreSQL crate tests passed (`/private/tmp/weft-public-application-test
 V02 SELECT assembly now routes SUM through the existing typed Expression traversal and trusted native callback after original comparator SUM admission. Result validation preserves the resolver's exact numeric family, decimal scale and ungrouped empty-input nullability. Unsupported argument families and altered result types refuse. This extends the internal one-call path only: public V02 SUM capability remains undeclared until admitted numeric original-model/native execution evidence exists.
 
 All 75 PostgreSQL crate tests passed (`/private/tmp/weft-application-sum-tests.log`). The new result-contract test covers uint64 and decimal(28,9), grouped/ungrouped nullability, altered scale/facets and string refusal. No native database or embedding run occurred for this checkpoint. Positive admitted numeric compilation, exact native aggregate results/overflow behavior and public SUM dispatch remain required acceptance work; this evidence does not qualify completed aggregate support.
+
+
+### Selected exact numeric SUM procedure (2026-10-07)
+
+Original native comparator definitions now expose `sum_sql` for registered SUM operations and closed exact native numeric types. Altering native type away from original comparator bytes refuses; floating-point strategies cannot supply SUM. Carrier SQL is trusted physical-plan input. Source/domain integrity and transport checks remain prerequisites; casting does not itself prove them.
+
+All 76 PostgreSQL crate tests passed (`/private/tmp/weft-numeric-sum-tests.log`). Fresh comparator SQL capture passed [four native PostgreSQL cases](B-005-numeric-sum-native.json): uint64 and decimal empty-input NULL, two uint64 maxima summed beyond uint64 range, and exact decimal scale-nine cancellation. Expected text results are authored independently. This qualifies the selected SQL primitive over synthetic text inputs only. Complete numeric original-property admission/SELECT compilation, source-domain refusal, public V02 SUM capability and embedding coverage remain pending.

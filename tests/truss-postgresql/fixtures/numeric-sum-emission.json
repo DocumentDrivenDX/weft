@@ -1,0 +1,10 @@
+[
+  {
+    "name": "uint64",
+    "sql": "SELECT (pg_catalog.sum((value)::pg_catalog.numeric))::pg_catalog.text AS total FROM values_table"
+  },
+  {
+    "name": "decimal",
+    "sql": "SELECT (pg_catalog.sum((value)::pg_catalog.numeric))::pg_catalog.text AS total FROM values_table"
+  }
+]

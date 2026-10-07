@@ -201,6 +201,37 @@ impl Definition {
             logical_type: logical.clone(),
         })
     }
+    /// Trusted scalar SQL is supplied by the admitted physical access plan.
+    /// Domain/transport preflight must precede execution; this never validates
+    /// source values by an unchecked PostgreSQL cast.
+    pub fn sum_sql(&self, carrier: &str) -> Result<String> {
+        self.require(Operation::Sum)?;
+        let original = checked_json(&self.original_json)
+            .map_err(|_| fail("Original comparator JSON refused"))?;
+        if original["strategy"]["nativeType"] != self.native_type {
+            return Err(fail("SUM native type differs from original comparator"));
+        }
+        let native = match self.strategy {
+            Strategy::SignedInteger
+                if matches!(
+                    self.native_type.as_str(),
+                    "pg_catalog.int2"
+                        | "pg_catalog.int4"
+                        | "pg_catalog.int8"
+                        | "pg_catalog.numeric"
+                ) =>
+            {
+                self.native_type.as_str()
+            }
+            Strategy::UnsignedInteger | Strategy::FiniteDecimal
+                if self.native_type == "pg_catalog.numeric" =>
+            {
+                "pg_catalog.numeric"
+            }
+            _ => return Err(fail("SUM lacks its closed exact numeric native strategy")),
+        };
+        Ok(format!("pg_catalog.sum(({carrier})::{native})"))
+    }
     pub fn require_type(&self, logical: &LogicalType) -> Result<()> {
         if &self.logical_type != logical {
             return Err(fail(
@@ -277,6 +308,45 @@ mod tests {
             },
             logical,
         )
+    }
+    #[test]
+    fn selected_numeric_sum_sql_preserves_exact_native_types() {
+        let mut captures = Vec::new();
+        for (name, strategy, logical) in [
+            (
+                "uint64",
+                json!({"kind":"unsigned-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast","range":"original-authored-unsigned-facets"}),
+                integer(false, 64),
+            ),
+            (
+                "decimal",
+                json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
+                LogicalType {
+                    family: Family::Decimal,
+                    facets: json!({"precision":28,"scale":9}),
+                    nullable: false,
+                },
+            ),
+        ] {
+            let (value, originals) = fixture(strategy);
+            let mut definition = parse(
+                &value,
+                &originals,
+                &logical,
+                &BTreeSet::from([Operation::Sum]),
+            )
+            .unwrap();
+            let sql = format!(
+                "SELECT ({})::pg_catalog.text AS total FROM values_table",
+                definition.sum_sql("value").unwrap()
+            );
+            captures.push(json!({"name":name,"sql":sql}));
+            definition.native_type = "pg_catalog.float8".into();
+            assert!(definition.sum_sql("value").is_err());
+        }
+        if let Ok(path) = std::env::var("WEFT_NUMERIC_SUM_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
     }
     #[test]
     fn unsigned64_and_operation_registration_are_independent() {
@@ -373,6 +443,10 @@ mod tests {
         )
         .unwrap();
         definition.require(Operation::Sum).unwrap();
+        assert_eq!(
+            definition.sum_sql("value").unwrap(),
+            "pg_catalog.sum((value)::pg_catalog.numeric)"
+        );
         assert!(definition.require(Operation::Equality).is_err());
         logical.facets["scale"] = json!(29);
         assert!(parse(&decimal, &originals, &logical, &BTreeSet::new()).is_err());
