@@ -52,6 +52,44 @@ pub fn decode_property(
     let layout = property.value.graph.layout()?;
     decode(&layout, tree, budget, observe, scalar, field, absent)
 }
+/// Decode a present native tree into UMF logical member representation.
+/// Native leaf procedures must first qualify their returned exact scalar under
+/// original native/source meaning. The shared logical bridge then owns authored
+/// member names and presence envelopes. Both passes share one work budget.
+/// Root state absence/null publication remains a separate presence gate.
+pub fn decode_logical_property(
+    property: &crate::property_definition::PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    tree: &TreeIndex<'_>,
+    budget: &mut Budget,
+    observe: impl FnMut(&LayoutNode<'_>, &TreeRow) -> Result<()>,
+    scalar: impl FnMut(&LayoutNode<'_>, &TreeRow) -> Result<Value>,
+    field: impl FnMut(&[u8], &Value) -> Result<bool>,
+) -> Result<Value> {
+    let body = decode_property(
+        property,
+        access,
+        tree,
+        budget,
+        observe,
+        scalar,
+        field,
+        |_| Ok(()),
+    )?;
+    crate::value_traversal::decode_admitted_logical_property(
+        property,
+        &body,
+        budget,
+        |_, _, _, value| {
+            if !matches!(value, Value::String(_) | Value::Bool(_) | Value::Null) {
+                return Err(fail(
+                    "Qualified native leaf lost exact scalar representation",
+                ));
+            }
+            Ok(value.clone())
+        },
+    )
+}
 /// Low-level traversal; callers that own admitted properties use decode_property.
 pub fn decode(
     layout: &Layout<'_>,

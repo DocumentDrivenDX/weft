@@ -3519,6 +3519,26 @@ mod tests {
         )
         .unwrap();
         assert_eq!(native_body, json!("é  "));
+
+        let decode_native_logical = |budget: &mut crate::value_traversal::Budget| {
+            crate::row_value_traversal::decode_logical_property(
+                &row_properties[&registration],
+                &row_accesses[0],
+                &native_tree,
+                budget,
+                |_, _| Ok(()),
+                |_, row| Ok(json!(row.cells[13].as_deref().unwrap())),
+                |_, _| panic!("scalar identity correspondence"),
+            )
+        };
+        assert_eq!(
+            decode_native_logical(&mut make_budget()).unwrap(),
+            json!("é  ")
+        );
+        let mut shared_limit = make_budget();
+        shared_limit.remaining_nodes = 1;
+        assert!(decode_native_logical(&mut shared_limit).is_err());
+        assert_eq!(shared_limit.remaining_nodes, 0);
         assert!(crate::row_value_traversal::decode_property(
             &properties[&registration],
             &row_accesses[0],
