@@ -1567,7 +1567,7 @@ mod tests {
                 .unwrap();
             }
             let mut observation_parameters = crate::Parameters::default();
-            let observation = crate::recursive_observation::props(
+            let observation = crate::recursive_observation::encode(
                 &property,
                 "fixture.v",
                 &mut observation_parameters,
@@ -1575,7 +1575,7 @@ mod tests {
             .unwrap();
             assert_eq!(observation_parameters.clone().into_slots().len(), 1);
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
-                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-observation.json")),serde_json::to_vec_pretty(&json!({"sql":observation,"parameters":observation_parameters.into_slots()})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-observation.json")),serde_json::to_vec_pretty(&json!({"sql":observation.integrity,"body":observation.body,"parameters":observation_parameters.into_slots()})).unwrap()).unwrap();
             }
             let decode = |input: &Value| {
                 let mut budget = crate::value_traversal::Budget {

@@ -10,13 +10,25 @@ use weft_core::{
     error::{Diagnostic, Result},
     ir::{Family, LogicalType},
 };
-/// Per-value physical prerequisite. Parameters commit only after every original
-/// graph, member-presence and leaf-codec correspondence check succeeds.
+pub struct Encoded {
+    pub integrity: String,
+    /// Logical JSONB body. Publish only after integrity/owner prerequisites pass.
+    pub body: String,
+}
 pub fn props(
     property: &PropertyAdmission,
     leaf: &str,
     parameters: &mut Parameters,
 ) -> Result<String> {
+    Ok(encode(property, leaf, parameters)?.integrity)
+}
+/// Per-value physical prerequisite. Parameters commit only after every original
+/// graph, member-presence and leaf-codec correspondence check succeeds.
+pub fn encode(
+    property: &PropertyAdmission,
+    leaf: &str,
+    parameters: &mut Parameters,
+) -> Result<Encoded> {
     crate::result_definition::property_column(property, 1, "recursive_observation")?;
     property
         .value
@@ -77,10 +89,23 @@ pub fn props(
             }
             LayoutShape::Record { members } => {
                 entry["kind"] = json!("record");
-                entry["members"] = json!(members
-                    .iter()
-                    .map(|m| json!({"name":m.stored_name,"id":m.value_node}))
-                    .collect::<Vec<_>>());
+                let Shape::Record {
+                    members: logical_members,
+                } = &descriptor.shape
+                else {
+                    unreachable!()
+                };
+                let mut names = std::collections::BTreeSet::new();
+                for m in logical_members {
+                    if !names.insert(&m.name) {
+                        return Err(Diagnostic::new(
+                            "WFT-CAPABILITY",
+                            "emit",
+                            "Recursive logical object needs unique authored names",
+                        ));
+                    }
+                }
+                entry["members"]=json!(members.iter().zip(logical_members).map(|(stored,logical)|json!({"name":stored.stored_name,"logicalName":logical.name,"id":stored.value_node})).collect::<Vec<_>>());
             }
         }
         packed.push(entry);
@@ -101,11 +126,23 @@ pub fn props(
         format!("CASE w.id {} ELSE FALSE END", scalar_guards.join(" "))
     };
     let sql = format!(
-        r#"(WITH RECURSIVE g AS (SELECT d,(ord-1)::int AS id FROM pg_catalog.jsonb_array_elements({graph}::jsonb) WITH ORDINALITY AS graph(d,ord)), walk(v,id,depth) AS (SELECT ({leaf})::jsonb,{root}::int,0 UNION ALL SELECT child.v,child.id,w.depth+1 FROM walk w JOIN g ON g.id=w.id CROSS JOIN LATERAL (SELECT w.v->(m->>'name'),(m->>'id')::int FROM pg_catalog.jsonb_array_elements(COALESCE(g.d->'members','[]'::jsonb)) m WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object' UNION ALL SELECT item.v,(g.d->>'item')::int FROM pg_catalog.jsonb_array_elements(CASE WHEN g.d->>'kind'='sequence' AND pg_catalog.jsonb_typeof(w.v)='array' THEN w.v ELSE '[]'::jsonb END) item(v) UNION ALL SELECT item.v,(g.d->>'item')::int FROM pg_catalog.jsonb_each(CASE WHEN g.d->>'kind'='map' AND pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{{}}'::jsonb END) item(k,v) UNION ALL SELECT w.v,(g.d->>'record')::int WHERE g.d->>'kind'='structured' AND pg_catalog.jsonb_typeof(w.v)='object') child(v,id) WHERE w.depth<128) SELECT COALESCE(bool_and(w.depth<128 AND CASE WHEN w.v IS NULL THEN (g.d->>'optional')::bool WHEN w.v='null'::jsonb THEN (g.d->>'nullable')::bool ELSE CASE g.d->>'kind' WHEN 'scalar' THEN {scalar} WHEN 'sequence' THEN pg_catalog.jsonb_typeof(w.v)='array' WHEN 'map' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'structured' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'record' THEN pg_catalog.jsonb_typeof(w.v)='object' AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_object_keys(CASE WHEN pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{{}}'::jsonb END) keys(k) WHERE NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(g.d->'members') m WHERE m->>'name'=keys.k)) ELSE FALSE END END),FALSE) AND count(*)<=100000 FROM walk w JOIN g ON g.id=w.id)"#,
+        r#"(WITH RECURSIVE g AS (SELECT d,(ord-1)::int AS id FROM pg_catalog.jsonb_array_elements({graph}::jsonb) WITH ORDINALITY AS graph(d,ord)), walk(v,id,depth,path) AS (SELECT ({leaf})::jsonb,{root}::int,0,ARRAY[]::text[] UNION ALL SELECT child.v,child.id,w.depth+1,w.path||child.path FROM walk w JOIN g ON g.id=w.id CROSS JOIN LATERAL (SELECT w.v->(m->>'name'),(m->>'id')::int,ARRAY[m->>'name'] FROM pg_catalog.jsonb_array_elements(COALESCE(g.d->'members','[]'::jsonb)) m WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object' UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[(item.ord-1)::text] FROM pg_catalog.jsonb_array_elements(CASE WHEN g.d->>'kind'='sequence' AND pg_catalog.jsonb_typeof(w.v)='array' THEN w.v ELSE '[]'::jsonb END) WITH ORDINALITY item(v,ord) UNION ALL SELECT item.v,(g.d->>'item')::int,ARRAY[item.k] FROM pg_catalog.jsonb_each(CASE WHEN g.d->>'kind'='map' AND pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{{}}'::jsonb END) item(k,v) UNION ALL SELECT w.v,(g.d->>'record')::int,ARRAY[]::text[] WHERE g.d->>'kind'='structured' AND pg_catalog.jsonb_typeof(w.v)='object') child(v,id,path) WHERE w.depth<128) SELECT COALESCE(bool_and(w.depth<128 AND CASE WHEN w.v IS NULL THEN (g.d->>'optional')::bool WHEN w.v='null'::jsonb THEN (g.d->>'nullable')::bool ELSE CASE g.d->>'kind' WHEN 'scalar' THEN {scalar} WHEN 'sequence' THEN pg_catalog.jsonb_typeof(w.v)='array' WHEN 'map' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'structured' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'record' THEN pg_catalog.jsonb_typeof(w.v)='object' AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_object_keys(CASE WHEN pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{{}}'::jsonb END) keys(k) WHERE NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(g.d->'members') m WHERE m->>'name'=keys.k)) ELSE FALSE END END),FALSE) AND count(*)<=100000 FROM walk w JOIN g ON g.id=w.id)"#,
         root = layout.root
     );
+    let prefix = sql
+        .rsplit_once(" SELECT COALESCE")
+        .ok_or_else(|| {
+            Diagnostic::new("WFT-BINDING", "emit", "Recursive SQL prefix is unavailable")
+        })?
+        .0;
+    let body = format!(
+        r#"{prefix}, patches AS (SELECT w.path,g.d,row_number() OVER (ORDER BY w.depth DESC,w.path,w.id) AS seq FROM walk w JOIN g ON g.id=w.id WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object'), folded(seq,value) AS (SELECT 0::bigint,({leaf})::jsonb UNION ALL SELECT p.seq,CASE WHEN cardinality(p.path)=0 THEN assembled.v ELSE pg_catalog.jsonb_set(f.value,p.path,assembled.v,true) END FROM folded f JOIN patches p ON p.seq=f.seq+1 CROSS JOIN LATERAL (SELECT COALESCE(pg_catalog.jsonb_object_agg(m->>'logicalName',CASE WHEN f.value#>(p.path||ARRAY[m->>'name']) IS NULL THEN pg_catalog.jsonb_build_object('state','absent') WHEN f.value#>(p.path||ARRAY[m->>'name'])='null'::jsonb AND (child.d->>'nullable')::bool THEN pg_catalog.jsonb_build_object('state','null') WHEN (child.d->>'optional')::bool OR (child.d->>'nullable')::bool THEN pg_catalog.jsonb_build_object('state','value','value',f.value#>(p.path||ARRAY[m->>'name'])) ELSE f.value#>(p.path||ARRAY[m->>'name']) END),'{{}}'::jsonb) AS v FROM pg_catalog.jsonb_array_elements(p.d->'members') m JOIN g child ON child.id=(m->>'id')::int) assembled) SELECT value FROM folded ORDER BY seq DESC LIMIT 1)"#
+    );
     *parameters = staged;
-    Ok(sql)
+    Ok(Encoded {
+        integrity: sql,
+        body,
+    })
 }
 
 /// Complete-owner physical prerequisite from an admitted props home. No query
