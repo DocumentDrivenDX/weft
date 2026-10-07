@@ -300,8 +300,12 @@ pub fn assemble<'a>(
         return Err(fail("SELECT requires its outer projection"));
     };
     let columns = crate::result_definition::projection_columns(context, properties, comparators)?;
-    let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
     let mut staged = parameters.clone();
+    let payload_checks = crate::result_definition::read_payload_observations_with_parameters(
+        prepared,
+        properties,
+        &mut staged,
+    )?;
     let mut used = std::collections::BTreeSet::new();
     let source = crate::relational::assemble_sources(
         input,
@@ -341,11 +345,12 @@ pub fn assemble<'a>(
             let property = properties
                 .get(&key)
                 .ok_or_else(|| fail("Projected field lacks original property admission"))?;
-            let projection = crate::result_definition::property_projection(
+            let projection = crate::result_definition::property_projection_with_parameters(
                 property,
                 access,
                 column.position,
                 &column.output_name,
+                &mut staged,
             )?;
             if serde_json::to_value(&projection.column)
                 .map_err(|_| fail("Projection metadata encoding refused"))?
@@ -440,8 +445,12 @@ fn assemble_application<'a>(
     if columns.len() != plan.outputs.len() || columns.is_empty() {
         return Err(fail("Application projection metadata arity differs"));
     }
-    let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
     let mut staged = parameters.clone();
+    let payload_checks = crate::result_definition::read_payload_observations_with_parameters(
+        prepared,
+        properties,
+        &mut staged,
+    )?;
     let mut filters = source.source.filters.clone();
     let mut from = source.source.sql.clone();
     let mut visible = std::collections::BTreeSet::from([plan.source.occurrence.clone()]);
@@ -599,11 +608,12 @@ fn assemble_application<'a>(
                 identity,
             ))
             .ok_or_else(|| fail("Application output lacks original property"))?;
-        let projection = crate::result_definition::property_projection(
+        let projection = crate::result_definition::property_projection_with_parameters(
             property,
             access,
             column.position,
             &column.output_name,
+            &mut staged,
         )?;
         if serde_json::to_value(&projection.column)
             .map_err(|_| fail("Application metadata encoding refused"))?

@@ -80,6 +80,90 @@ pub fn read_payload_observations(
     }
     Ok(observations)
 }
+/// Parameter-aware observation path for original recursive props reads.
+pub fn read_payload_observations_with_parameters(
+    prepared: &crate::registered_access::Prepared<'_>,
+    properties: &std::collections::BTreeMap<String, PropertyAdmission>,
+    parameters: &mut crate::Parameters,
+) -> Result<Vec<ReadPayloadObservation>> {
+    let mut staged = parameters.clone();
+    let mut observations = Vec::new();
+    let mut seen = std::collections::BTreeSet::new();
+    for access in &prepared.accesses {
+        let key = crate::comparator_requirements::registration_key(&access.owner, &access.field);
+        if !seen.insert((access.scan.clone(), key.clone())) {
+            return Err(fail("Repeated prepared payload read"));
+        }
+        let property = properties
+            .get(&key)
+            .ok_or_else(|| fail("Payload read lacks original property admission"))?;
+        let projection =
+            property_projection_with_parameters(property, access, 1, "weft_payload", &mut staged)?;
+        observations.push(ReadPayloadObservation {
+            scan: access.scan.clone(),
+            field: access.field.clone(),
+            sql: projection.payload_check_sql,
+            codec_bytes: projection.codec_bytes,
+            presence_bytes: projection.presence_bytes,
+        });
+    }
+    *parameters = staged;
+    Ok(observations)
+}
+/// Original recursive props projection plus its independent complete-owner
+/// prerequisite. Scalar behavior stays on the existing original-codec path.
+pub fn property_projection_with_parameters(
+    property: &PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    position: usize,
+    output_name: &str,
+    parameters: &mut crate::Parameters,
+) -> Result<ScalarProjection> {
+    access.verify_property(property)?;
+    let column = property_column(property, position, output_name)?;
+    let descriptor = property
+        .value
+        .descriptors()
+        .iter()
+        .find(|d| d.identity == property.identity)
+        .ok_or_else(|| fail("Recursive projection lacks original descriptor"))?;
+    if matches!(descriptor.shape, Shape::Scalar { .. }) {
+        return property_projection(property, access, position, output_name);
+    }
+    let crate::registered_access::Location::Props(location) = &access.location else {
+        return Err(Diagnostic::new(
+            "WFT-CAPABILITY",
+            "emit",
+            "Recursive native row projection is not implemented",
+        ));
+    };
+    let required = match descriptor.availability.as_deref() {
+        Some("required") => true,
+        Some("absent-allowed") => false,
+        _ => return Err(fail("Recursive root availability lacks selected meaning")),
+    };
+    let mut staged = parameters.clone();
+    let encoded = crate::recursive_observation::encode(property, &location.leaf, &mut staged)?;
+    let (carrier, integrity) =
+        props_presence_sql(location, &encoded.body, &encoded.integrity, required, false);
+    let codec_bytes = property
+        .value
+        .graph
+        .artifacts
+        .get(&format!(
+            "/nodes/{}/codecDefinition",
+            property.value.graph.root
+        ))
+        .ok_or_else(|| fail("Recursive result lacks original root codec bytes"))?
+        .clone();
+    let projection=ScalarProjection {
+        sql:format!("({carrier})::pg_catalog.text AS {}",crate::Identifier::new(output_name)?.sql()),
+        payload_check_sql:format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",access.owner_source.sql,access.owner_source.discriminator),
+        codec_bytes,presence_bytes:property.value.presence.original_json.as_bytes().to_vec(),column,
+    };
+    *parameters = staged;
+    Ok(projection)
+}
 pub fn property_projection(
     property: &PropertyAdmission,
     access: &crate::registered_access::Access<'_>,

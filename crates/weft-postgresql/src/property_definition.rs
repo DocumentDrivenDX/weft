@@ -1648,6 +1648,74 @@ mod tests {
                 )
                 .is_err());
             }
+            property.value.admitted_record_presence = records.clone();
+            let plan = weft_core::application_resolve::resolve(
+                &catalog,
+                weft_core::application_syntax::parse(&format!(
+                    "SELECT c.{member_name} FROM Customer c"
+                ))
+                .unwrap(),
+                BTreeMap::new(),
+                None,
+            )
+            .unwrap();
+            let input = weft_core::backend::BindingInput {
+                profile: binding["bindingProfileId"].as_str().unwrap().into(),
+                json: admitted.original_json.clone(),
+                sha256: sha256(admitted.original_json.as_bytes()),
+            };
+            let manifest = <crate::candidate::Candidate as weft_core::backend::Backend>::describe(
+                &crate::candidate::Candidate,
+            )
+            .unwrap();
+            let selection = weft_core::backend::Selection {
+                fields: vec![member.identity.clone()],
+                records: vec![record.identity.clone()],
+                ..Default::default()
+            };
+            let context = weft_core::backend::Context {
+                catalog: &catalog,
+                plan: weft_core::backend::Plan::V02(&plan),
+                target: &manifest.target_profiles[0],
+                binding: &input,
+                binding_value: &admitted.value,
+                selection: &selection,
+            };
+            let properties = BTreeMap::from([(
+                crate::comparator_requirements::registration_key(
+                    &record.identity,
+                    &member.identity,
+                ),
+                property,
+            )]);
+            let mut parameters = crate::Parameters::default();
+            let accesses = crate::registered_access::lower_plan(
+                &context,
+                &properties,
+                &BTreeMap::new(),
+                &mut parameters,
+            )
+            .unwrap();
+            assert_eq!(accesses.len(), 1);
+            let property = properties.values().next().unwrap();
+            let projection = crate::result_definition::property_projection_with_parameters(
+                property,
+                &accesses[0],
+                1,
+                member_name,
+                &mut parameters,
+            )
+            .unwrap();
+            assert!(matches!(
+                projection.column.representation,
+                weft_core::backend::Representation::Value {
+                    native_null: false,
+                    ..
+                }
+            ));
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-projection.json")),serde_json::to_vec_pretty(&json!({"sql":format!("SELECT {} FROM {} WHERE {}",projection.sql,accesses[0].owner_source.sql,accesses[0].owner_source.discriminator),"check":projection.payload_check_sql,"columns":[projection.column],"parameters":parameters.into_slots()})).unwrap()).unwrap();
+            }
         }
     }
     #[test]
