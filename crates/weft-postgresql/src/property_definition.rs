@@ -1496,23 +1496,76 @@ mod tests {
                 },
             )
             .unwrap();
-            // This fixture exercises original value admission, independently of
-            // physical home SQL admission and execution qualification.
-            let mut property = PropertyAdmission {
-                original_binding_sha256: sha256(binding.to_string().as_bytes()),
-                owner: record.identity.clone(),
-                identity: member.identity.clone(),
-                owner_catalog_id: "1".into(),
-                property_catalog_id: "1".into(),
-                value,
-                home: HomeAdmission::Props {
-                    member: "1".into(),
-                    record_kind: crate::row_join_definition::RecordKind::Object,
-                    relation: crate::Identifier::new("object").unwrap(),
-                    props_column: crate::Identifier::new("props").unwrap(),
-                    discriminator_column: crate::Identifier::new("type_id").unwrap(),
-                },
+            let inventory = leaf_codec_definition::OriginalArtifact {
+                identity: binding["basis"]["layoutInventory"]["identity"]
+                    .as_str()
+                    .unwrap()
+                    .into(),
+                bytes: b"{}".to_vec(),
             };
+            let relations = BTreeMap::from([("object-table".into(), "object".into())]);
+            let columns = BTreeMap::from([
+                (
+                    "object-props".into(),
+                    crate::row_join_definition::Column {
+                        relation_identity: "object-table".into(),
+                        name: "props".into(),
+                    },
+                ),
+                (
+                    "object-type".into(),
+                    crate::row_join_definition::Column {
+                        relation_identity: "object-table".into(),
+                        name: "type_id".into(),
+                    },
+                ),
+            ]);
+            let obligations = BTreeSet::new();
+            let mut property = admit_property(
+                &admitted,
+                index,
+                &catalog,
+                &descriptors,
+                Selection {
+                    value_profile: &pin,
+                    presence_profile: &pin,
+                    leaf_codecs: &leaves,
+                    record_presence: &records,
+                },
+                PhysicalSelection {
+                    profile: &pin,
+                    inventory: &inventory,
+                    relations: &relations,
+                    columns: &columns,
+                    row_join: None,
+                    obligations: &obligations,
+                    edge_association: None,
+                },
+            )
+            .unwrap();
+            assert_eq!(
+                value.descriptors().len(),
+                property.value.descriptors().len()
+            );
+            let mut owner_parameters = crate::Parameters::default();
+            let owner_check = crate::recursive_observation::props_owner(
+                &property,
+                &crate::Identifier::new("pg_temp").unwrap(),
+                &crate::Identifier::new("owner").unwrap(),
+                &mut owner_parameters,
+            )
+            .unwrap();
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
+                std::fs::write(
+                    std::path::Path::new(&directory)
+                        .join(format!("original-{member_name}-owner-observation.json")),
+                    serde_json::to_vec_pretty(
+                        &json!({"sql":owner_check,"parameters":owner_parameters.into_slots()}),
+                    )
+                    .unwrap(),
+                )
+                .unwrap();
+            }
             let mut observation_parameters = crate::Parameters::default();
             let observation = crate::recursive_observation::props(
                 &property,

@@ -107,3 +107,38 @@ pub fn props(
     *parameters = staged;
     Ok(sql)
 }
+
+/// Complete-owner physical prerequisite from an admitted props home. No query
+/// filter/order/limit participates in this observation.
+pub fn props_owner(
+    property: &PropertyAdmission,
+    namespace: &crate::Identifier,
+    alias: &crate::Identifier,
+    parameters: &mut Parameters,
+) -> Result<String> {
+    if !matches!(
+        property.home,
+        crate::property_definition::HomeAdmission::Props { .. }
+    ) {
+        return Err(Diagnostic::new(
+            "WFT-CAPABILITY",
+            "emit",
+            "Recursive native row observation is not implemented",
+        ));
+    }
+    let mut staged = parameters.clone();
+    let source = property.home.owner_mapping().source(
+        namespace,
+        alias,
+        &property.owner_catalog_id,
+        &mut staged,
+    )?;
+    let location = property.home.props_location(alias, &mut staged)?;
+    let integrity = props(property, &location.leaf, &mut staged)?;
+    let sql = format!(
+        "SELECT count(*) AS violations FROM {} WHERE {} AND ({} AND {}) IS DISTINCT FROM TRUE",
+        source.sql, source.discriminator, location.root_integrity, integrity
+    );
+    *parameters = staged;
+    Ok(sql)
+}
