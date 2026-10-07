@@ -1317,6 +1317,276 @@ mod tests {
         }
     }
     #[test]
+    fn original_compound_properties_decode_storage_slots_into_logical_members() {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        use leaf_codec_definition::{
+            Definition as Leaf, OriginalArtifact, Selection as LeafSelection,
+        };
+        use weft_core::json::sha256;
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let catalog = Catalog::prepare(
+            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap(),
+        )
+        .unwrap();
+        let name = |value: &str| Name {
+            value: value.into(),
+            quoted: false,
+            span: Span { start: 0, end: 0 },
+        };
+        let record = catalog.record(None, &name("customer")).unwrap();
+        for member_name in ["tags", "address"] {
+            let (member, descriptors) = catalog
+                .member_descriptor(&record, &name(member_name))
+                .unwrap();
+            let mut binding: Value = serde_json::from_str(
+                cases[0]["request"]["target"]["bindingJson"]
+                    .as_str()
+                    .unwrap(),
+            )
+            .unwrap();
+            let index = binding["properties"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .position(|p| p["logical"] == json!(member.identity))
+                .unwrap();
+            let pin = binding["properties"][index]["valueProfile"].clone();
+            let artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+            let empty = artifact("fixture", b"{}");
+            let document: Value = serde_json::from_str(&catalog.inputs[0].document_json).unwrap();
+            let authored: Vec<_> = descriptors
+                .iter()
+                .map(|d| {
+                    let element = document["modules"][0]["elements"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .find(|e| e["id"] == d.identity.element)
+                        .unwrap();
+                    artifact(&d.identity.element, element.to_string().as_bytes())
+                })
+                .collect();
+            let node_id = |identity: &Identity| {
+                descriptors
+                    .iter()
+                    .position(|d| &d.identity == identity)
+                    .unwrap()
+                    .to_string()
+            };
+            let presence_for = |accepted: &Value| {
+                let schema: Value = serde_json::from_str(include_str!(
+                    "../../../tests/truss-postgresql/upstream/presence-definition.schema.json"
+                ))
+                .unwrap();
+                let mut value = json!({});
+                for (key, rule) in schema["properties"].as_object().unwrap() {
+                    if let Some(c) = rule.get("const") {
+                        value[key] = c.clone();
+                    }
+                }
+                value["profile"] = pin.clone();
+                value["acceptedDefinition"] = accepted.clone();
+                presence_definition::Definition::parse(
+                    &value.to_string(),
+                    &pin,
+                    &STANDARD
+                        .decode(accepted["bytesBase64"].as_str().unwrap())
+                        .unwrap(),
+                )
+                .unwrap()
+            };
+            let mut leaves = BTreeMap::new();
+            let mut records = BTreeMap::new();
+            let mut nodes = Vec::new();
+            for (i, d) in descriptors.iter().enumerate() {
+                let mut codec = empty.clone();
+                let shape = match &d.shape {
+                    Shape::Scalar { logical_type } => {
+                        assert_eq!(logical_type.family, weft_core::ir::Family::String);
+                        let raw = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored[i],"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":"string","storageRepresentation":"json-string","encoding":"preserve-unicode-scalars","decodedCarrierKind":"string"},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
+                        let originals = BTreeMap::from([
+                            (
+                                "authoredDefinition".into(),
+                                OriginalArtifact {
+                                    identity: authored[i]["identity"].as_str().unwrap().into(),
+                                    bytes: STANDARD
+                                        .decode(authored[i]["bytesBase64"].as_str().unwrap())
+                                        .unwrap(),
+                                },
+                            ),
+                            (
+                                "sourceInterpretationDefinition".into(),
+                                OriginalArtifact {
+                                    identity: "fixture".into(),
+                                    bytes: b"{}".to_vec(),
+                                },
+                            ),
+                            (
+                                "nativeDomainDefinition".into(),
+                                OriginalArtifact {
+                                    identity: "fixture".into(),
+                                    bytes: b"{}".to_vec(),
+                                },
+                            ),
+                        ]);
+                        let leaf = Leaf::parse(
+                            &raw.to_string(),
+                            LeafSelection {
+                                profile: &pin,
+                                source_profile: &pin,
+                                native_profile: &pin,
+                                original_artifacts: &originals,
+                            },
+                        )
+                        .unwrap();
+                        codec = artifact("selected-leaf", leaf.original_json.as_bytes());
+                        leaves.insert(i.to_string(), leaf);
+                        json!({"kind":"scalar","family":"string","storageRepresentation":"json-string"})
+                    }
+                    Shape::Sequence { item } => {
+                        json!({"kind":"sequence","itemNodeId":node_id(item)})
+                    }
+                    Shape::Map { item } => json!({"kind":"map","itemNodeId":node_id(item)}),
+                    Shape::Structured { record } => {
+                        json!({"kind":"structured","recordNodeId":node_id(record)})
+                    }
+                    Shape::Record { members } => {
+                        let members: Vec<_>=members.iter().enumerate().map(|(j,m)| {
+                            let child=descriptors.iter().position(|d|d.identity==m.identity).unwrap();
+                            let presence=presence_for(&authored[child]);
+                            let artifact=artifact("selected-presence",presence.original_json.as_bytes());
+                            records.insert(format!("/nodes/{i}/shape/members/{j}/presenceDefinition"),presence);
+                            json!({"fieldIdentity":m.identity,"storedMemberName":format!("slot.{j}"),"valueNodeId":child.to_string(),"presenceDefinition":artifact})
+                        }).collect();
+                        json!({"kind":"record","members":members})
+                    }
+                };
+                nodes.push(json!({"nodeId":i.to_string(),"authoredIdentity":d.identity,"authoredDefinition":authored[i],"codecProfile":pin,"codecDefinition":codec,"shape":shape}));
+            }
+            let root = descriptors
+                .iter()
+                .position(|d| d.identity == member.identity)
+                .unwrap();
+            let graph = json!({"interfaceVersion":"truss-value-definition/0.1.0","profile":pin,"rootNodeId":root.to_string(),"acceptedDefinition":authored[root],"nodes":nodes});
+            binding["properties"][index]["acceptedDefinition"] = authored[root].clone();
+            binding["properties"][index]["valueDefinition"] =
+                artifact("original-value-graph", graph.to_string().as_bytes());
+            binding["properties"][index]["presenceDefinition"] = artifact(
+                "original-presence",
+                presence_for(&authored[root]).original_json.as_bytes(),
+            );
+            let admitted = Admission::parse(
+                &binding.to_string(),
+                binding["bindingProfileId"].as_str().unwrap(),
+            )
+            .unwrap();
+            let value = admit_value(
+                &admitted,
+                index,
+                &catalog,
+                &descriptors,
+                Selection {
+                    value_profile: &pin,
+                    presence_profile: &pin,
+                    leaf_codecs: &leaves,
+                    record_presence: &records,
+                },
+            )
+            .unwrap();
+            // This fixture exercises original value admission, independently of
+            // physical home SQL admission and execution qualification.
+            let mut property = PropertyAdmission {
+                original_binding_sha256: sha256(binding.to_string().as_bytes()),
+                owner: record.identity.clone(),
+                identity: member.identity.clone(),
+                owner_catalog_id: "1".into(),
+                property_catalog_id: "1".into(),
+                value,
+                home: HomeAdmission::Props {
+                    member: "1".into(),
+                    record_kind: crate::row_join_definition::RecordKind::Object,
+                    relation: crate::Identifier::new("object").unwrap(),
+                    props_column: crate::Identifier::new("props").unwrap(),
+                    discriminator_column: crate::Identifier::new("type_id").unwrap(),
+                },
+            };
+            let decode = |input: &Value| {
+                let mut budget = crate::value_traversal::Budget {
+                    remaining_nodes: 100,
+                    remaining_key_bytes: 1000,
+                    remaining_members: 100,
+                    max_depth: 32,
+                };
+                crate::value_traversal::decode_admitted_logical_property(
+                    &property,
+                    input,
+                    &mut budget,
+                    |codec, family, representation, v| {
+                        assert_eq!(family, "string");
+                        assert_eq!(representation, "json-string");
+                        assert!(property
+                            .value
+                            .admitted_leaf_codecs
+                            .values()
+                            .any(|leaf| leaf.original_json.as_bytes() == codec));
+                        if !v.is_string() {
+                            return Err(weft_core::error::Diagnostic::new(
+                                "WFT-DECODE",
+                                "decode",
+                                "Original string codec refuses input",
+                            ));
+                        }
+                        Ok(v.clone())
+                    },
+                )
+            };
+            if member_name == "tags" {
+                assert_eq!(
+                    decode(&json!(["é  ", "1.a[0]", ""])).unwrap(),
+                    json!(["é  ", "1.a[0]", ""])
+                );
+                assert_eq!(decode(&json!([])).unwrap(), json!([]));
+                assert!(decode(&json!([1])).is_err());
+            } else {
+                assert_eq!(
+                    decode(&json!({"slot.0":"é  "})).unwrap(),
+                    json!({"street":"é  ","zip":{"state":"absent"}})
+                );
+                assert_eq!(
+                    decode(&json!({"slot.0":"","slot.1":"00123"})).unwrap(),
+                    json!({"street":"","zip":{"state":"value","value":"00123"}})
+                );
+                for bad in [
+                    json!({}),
+                    json!({"slot.0":null}),
+                    json!({"street":"x"}),
+                    json!({"slot.0":"x","unknown":"x"}),
+                ] {
+                    assert!(decode(&bad).is_err());
+                }
+                property.value.admitted_record_presence.clear();
+                let mut budget = crate::value_traversal::Budget {
+                    remaining_nodes: 100,
+                    remaining_key_bytes: 1000,
+                    remaining_members: 100,
+                    max_depth: 32,
+                };
+                assert!(crate::value_traversal::decode_admitted_logical_property(
+                    &property,
+                    &json!({"slot.0":"x"}),
+                    &mut budget,
+                    |_, _, _, _| panic!(
+                        "Missing original presence must refuse before leaf decoding"
+                    )
+                )
+                .is_err());
+            }
+        }
+    }
+    #[test]
     fn real_authored_field_composes_graph_presence_and_leaf_correspondence() {
         use base64::{engine::general_purpose::STANDARD, Engine};
         use leaf_codec_definition::{

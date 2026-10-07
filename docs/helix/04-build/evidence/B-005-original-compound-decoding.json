@@ -1,0 +1,19 @@
+{
+  "scope": "Original UMF sequence and structured value admission plus logical body decoding; physical home in test is a placeholder, no SQL/native/embedding qualification",
+  "sourceSha256": "c13cf4b081aea8aacc2dfe4770cdeb70d57f8f9fe8e87ad6f00dab7ca785ce30",
+  "decoderSha256": "7799fcadbabbcd8c9aaa9883ce2bcc678a987622dc844eb9bd652570bbfc6165",
+  "testLogSha256": "12b3a1c2087c96a6b57d4e190fbf7d2fd7b755ea378e5f19408afdd554bae87b",
+  "tests": 86,
+  "cases": [
+    "sequence exact strings",
+    "empty sequence",
+    "numeric JSON leaf refusal",
+    "structured storage-to-logical name and optional absence",
+    "optional present member",
+    "missing required member refusal",
+    "null nonnullable leaf refusal",
+    "logical-name-as-storage-name refusal",
+    "unknown storage member refusal",
+    "missing captured presence refuses before leaf callbacks"
+  ]
+}
