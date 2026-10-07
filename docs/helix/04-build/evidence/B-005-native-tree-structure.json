@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-07",
+  "scope": "SQL native tree structural topology/slot/payload custody integrity, separate from logical domain and source interpretation",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "a20b8785cfedaef56085dc3c9b922503282002eae2b85122ad811b3cd85c4877"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "99a97177fb6fcf3d8f53ee27309e01e3820a977ad8c1c234201a7ed75d0fb98d",
+    "crates/weft-postgresql/src/property_definition.rs": "32a0c2bf4d3978c0cb5acb8716109cea8701f426e054d1b5e6f37edf5f4e6f4e"
+  },
+  "nativeEvidence": {
+    "docs/helix/04-build/evidence/B-005-native-tree-structure-native.json": "7fe77f087f09c47f5eeef7fd50f6be5cd3c9b3feeb5cd24ddac84ed25c6bc357",
+    "docs/helix/04-build/evidence/B-005-native-tree-structure-body-native.json": "8d321e209bf8db4b309b583329ee07c123a5e204d5d86b6246bd4e48fba45bb3"
+  },
+  "nativeCases": {
+    "structure": 56,
+    "logicalSeparation": 11
+  },
+  "limits": [
+    "Typed scalar slot meaning, native/source byte interpretation and native/token correspondence remain selected procedures",
+    "No owner-wide prerequisite or public projection/embedding qualification",
+    "Post-traversal row limit does not bound database allocations"
+  ]
+}

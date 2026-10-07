@@ -2069,7 +2069,7 @@ mod tests {
                 else {
                     unreachable!()
                 };
-                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-body.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} AS stored,{} AS logical,{} AS integrity FROM {} {} WHERE {}",native_body.storage_body,native_body.logical_body,native_body.logical_integrity,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator),"parameters":body_parameters.into_slots(),"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id})).unwrap()).unwrap();
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-structure-body.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} AS stored,{} AS logical,{} AS integrity,{} AS structure FROM {} {} WHERE {}",native_body.storage_body,native_body.logical_body,native_body.logical_integrity,native_body.structural_integrity,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator),"parameters":body_parameters.into_slots(),"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id})).unwrap()).unwrap();
             }
 
             if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_WALK_CAPTURE") {

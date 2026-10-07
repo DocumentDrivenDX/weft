@@ -16,6 +16,7 @@ pub struct Mapping {
     pub custody_sql: String,
     /// Native rows paired with original topology and stored-member paths.
     pub walk_sql: String,
+    pub structural_integrity: String,
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "emit", message)
@@ -93,10 +94,16 @@ pub fn encode(
     )?;
     let custody_sql = location.tree_custody();
     let walk_sql = walk(&topology_parameter, &custody_sql);
+    let structural_integrity = format!(
+        "({} AND {})",
+        location.structural_integrity,
+        structure(&topology_parameter, &custody_sql)
+    );
     let mapping = Mapping {
         topology_parameter,
         custody_sql,
         walk_sql,
+        structural_integrity,
     };
     *parameters = staged;
     Ok(mapping)
@@ -147,6 +154,7 @@ pub struct Body {
     pub logical_body: String,
     pub logical_integrity: String,
     pub pairing: String,
+    pub structural_integrity: String,
 }
 /// Intermediate assembly only: native structural/source prerequisites must still
 /// be established before publishing the logical body. Scalar SQL is trusted
@@ -188,7 +196,36 @@ pub fn body(
         logical_body: logical.body,
         logical_integrity: logical.integrity,
         pairing: mapping.walk_sql,
+        structural_integrity: mapping.structural_integrity,
     };
     *parameters = staged;
     Ok(result)
+}
+
+fn structure(parameter: &str, custody: &str) -> String {
+    let prefix = prefix(parameter, custody);
+    format!(
+        r#"{prefix} SELECT (
+      (SELECT count(*) FROM raw)>0 AND (SELECT count(*) FROM raw)<=100000
+      AND (SELECT count(*) FROM raw)=(SELECT count(*) FROM walk)
+      AND (SELECT count(*) FROM raw)=(SELECT count(DISTINCT (r->>0,r->>1)) FROM raw)
+      AND (SELECT count(DISTINCT (r->>0)) FROM raw)=1
+      AND (SELECT count(*) FROM raw WHERE r->>2 IS NULL AND r->>4='root')=1
+      AND NOT EXISTS (SELECT 1 FROM walk GROUP BY path HAVING count(*)<>1)
+      AND NOT EXISTS (SELECT 1 FROM raw WHERE
+        r->>0 IS NULL OR r->>1 IS NULL OR r->>8 IS NULL OR r->>9 IS NULL
+        OR (CASE r->>4
+          WHEN 'root' THEN r->>2 IS NULL AND r->>5 IS NULL AND r->>6 IS NULL AND r->>7 IS NULL
+          WHEN 'sequence' THEN r->>2 IS NOT NULL AND r->>5 IS NOT NULL AND (r->>5)::numeric>=0 AND r->>6 IS NULL AND r->>7 IS NULL
+          WHEN 'map' THEN r->>2 IS NOT NULL AND r->>5 IS NULL AND r->>6 IS NOT NULL AND r->>7 IS NULL
+          WHEN 'record' THEN r->>2 IS NOT NULL AND r->>5 IS NULL AND r->>6 IS NULL AND r->>7 IS NOT NULL
+          ELSE FALSE END) IS DISTINCT FROM TRUE
+        OR (CASE WHEN r->>3='scalar' THEN r->>10=r->>0 AND r->>11=r->>1 AND r->>12 IS NOT NULL AND r->>21 IS NOT NULL AND r->>22 IS NOT NULL
+          ELSE NOT EXISTS (SELECT 1 FROM jsonb_array_elements(r) WITH ORDINALITY c(value,ordinal) WHERE ordinal>=11 AND value<>'null'::jsonb) END) IS DISTINCT FROM TRUE)
+      AND NOT EXISTS (SELECT 1 FROM raw WHERE r->>4='sequence' GROUP BY r->>0,r->>2
+        HAVING min((r->>5)::numeric)<>0 OR max((r->>5)::numeric)<>count(*)-1 OR count(DISTINCT r->>5)<>count(*))
+      AND COALESCE((SELECT bool_and(CASE metadata.v->'nodes'->i->'shape'->>'kind'
+        WHEN 'scalar' THEN r->>3 IN ('scalar','null') ELSE r->>3=metadata.v->'nodes'->i->'shape'->>'kind' END) FROM walk,metadata),FALSE)
+    ))"#
+    )
 }

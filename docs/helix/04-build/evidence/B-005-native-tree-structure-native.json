@@ -1,0 +1,398 @@
+{
+  "scope": "Native structural topology/slot/payload gate, separate from source/codec interpretation and logical presence",
+  "harnessSha256": "c2d63027dd1c75984d81693318d352373e502f4042e6d0b026caee14a7e825ba",
+  "results": [
+    {
+      "fixture": "address",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "985df42c18916bb0653c4f399dbd5b60db9680b0261b3d312b6e0e67b6865e99"
+    },
+    {
+      "fixture": "address",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "ceed876717960b5edeb9bdc71d516c3271b227d141c9c0f2a0b50a0999f0df9f"
+    },
+    {
+      "fixture": "address",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "5aa264972e25d7ed524987dadecead46491c5183ad007c38c10bb0d1cd1656d7"
+    },
+    {
+      "fixture": "address",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "a4477eed2fb0d3a8a8e53d2b0fe02ab6052a97c857c6be3c18602d07c74fe819"
+    },
+    {
+      "fixture": "address",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "296347ea96bd610c48848b7d79ee232ca2ffd94cbf5d434f05a02a688c8231cb"
+    },
+    {
+      "fixture": "address",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "cf090d443a61422f1524449ccd670f73beb93e6c71bb40d7f5f3991ba4d51789"
+    },
+    {
+      "fixture": "address",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "ae1840c3acb8ff33e9b995805c345ab7a6fac41b8cb8252bd52da99a093967be"
+    },
+    {
+      "fixture": "address",
+      "case": "unknown-field",
+      "structure": false,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "81f3cba2bb3cacdbf7b36fa6d8a50e218e293ce260f9a5628698a0507bc58d38"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "6931689f9fc28f27f28fc7dee456166399e61fb0618f157a3da9c2f1d8fe222d"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "5530488f5bbb33feb7610e0f470520f5ffa7bc63490b119825318c846d13226a"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "5e86d8aea4f1a5bed791881bd62633a75d0ebda5c02911ec759456183a256064"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "08dc74122c47c40c18edfddbcd169af6eca4e90683ac59afce593f3c12ca1439"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "69238233b5a404823f7a9158da1d4ba64e7f0809c8d315df8001bed319c5fe39"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "72101dfcd7f0d867d4ebeefd6186dba5c7bcff5245f55b90ea7659b6c62bfeb6"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "308f1b5f1a8e02d449a19b6c8cfaf34882de22f88a081ce9d9b012358b99c6e8"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "unknown-field",
+      "structure": false,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "78a77f56d62829eadd774a8a742ed967ba0165e0bb1dd6eba8bd37cd138d382e"
+    },
+    {
+      "fixture": "map",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "2bda530792c547903fbaa74d29b3ca5552a82cab4400cd7ab04c8e925ad99385"
+    },
+    {
+      "fixture": "map",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "b3c7efe3cea95e76a09df5e3089affba83a08dda9ad89f5ed92ab088b2cdf216"
+    },
+    {
+      "fixture": "map",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "b67d5251de5c72b7eceb037e4bf5af712fd8166315893e8ec92dbc30ec708478"
+    },
+    {
+      "fixture": "map",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "e02de1d7a4d546a24354f7c464d19c536933a0817eb88b96615290657b7c79a8"
+    },
+    {
+      "fixture": "map",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "4fa35747cce38f0374374e43ca176963e4cc54825e34bedd3945f742f4aebf13"
+    },
+    {
+      "fixture": "map",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "272053358997990f9318d15f964fbd57e52c977537996922c7a3554d06913501"
+    },
+    {
+      "fixture": "map",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "ec6f4329fb4d1a50fd5dce4c8827411d7ba6499026d644fa60384c8d51c0a06b"
+    },
+    {
+      "fixture": "map",
+      "case": "duplicate-map-key",
+      "structure": false,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "2e9a631e457050cfded0ac34e3e0c55ad2dd3b9193beaf7d93e9f54763d2f0ee"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "12fca9ef89013c0dc2d72162ac3901ee022f22e92bc9cbf3106e257a2ec2c5c2"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "3971c66314e3bc9bdf0c3ffe9bb0a682ed1b0d689a876c8da333d9162e3f383a"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "27c398ce918bb2ac34cc2f55b252682f644d5cbddf2af689d2fd96e43de5ef65"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "c5647d820d7febfb51ab1a6c8f9c2d46557d314af57bcb25142dc94bc8eaaf85"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "a175367f494b85de866d59b65e00b4c9496059535634003cceb2290947b65554"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "b2a111e4f91c5d5309d50bd45080ab3644212beb47b37d6f59db52a25077ec8b"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "089e8a0a2284b0a3a044e06615a111a8cca85ec63837a413131b1881d0c3d899"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "ordinal-gap",
+      "structure": false,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "ff2df521be769d4231dcef378516473de6ad81a80d70cdd943cfa4d2c2ba4340"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "1d0dee3122f80baad20d644853fd92de473a961fdb2de1fbe2d07520567ac6b9"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "1048aa8647d65a8e217019fcc08cd0ab252d33dbca5710ddaf3c2395cbdd620d"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "486f1aeab36665b7cfa10643b9f4ed7ed02d34c8ea6857b93aede0725f305c45"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "fdb8090b90e9e3ca6744a8f7aa580788600fa77f0092c303eaab25986a96dd4f"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "f00c67ee1de81f214555e9eaf7c4b9f8ffe5554b43f5d345d5454d22ecf8a90b"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "23d2e133a248aaf5925f10bd64a95d4ae48dc59608aeeb6f6ce3f3650e09f3c9"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "848cf32a18e4739c62ec618ca397b55b098e4b62cfb1d5228fdde0542013aae4"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "unknown-field",
+      "structure": false,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "5ad0ceb62d9106510d715f1328f41e516d39aea3a4b81959a0dd9ab923701fcd"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "eed989653f85882cbf3f7709fc0dd6ac8f34412dcfdfe0e463f5ce035ed6d20d"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "349ea8a0f73f0a5641591a35ae57481b3da4d5b1e6c046f32010d31f23c94e98"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "204cb560d0b8d93f042142dab32344a882248103ba96d5bff8e98f50a07898e5"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "c7019673e3ab7b676e1ffdd5d99aa018a1f2383274357ac8cbfec5e34aead4d1"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "2980d8dc38b0287b985c52bc7daf9cecd03f463ac10fb6c984ed87ae5ad3807f"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "ec9ffcc34baa3d6524cd51bd7a3e5dd0bc6a104e9e0c9136d6c40facb7db4590"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "13577f1bd3002840abc41d87a6f4ae7353854b33ace2cb8286fdc38f0718389b"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "duplicate-map-key",
+      "structure": false,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "e7e150cf87ad525ce0ce8a63f4c01fc503c9f1f77ed3216a17e6a5c8726fde8c"
+    },
+    {
+      "fixture": "tags",
+      "case": "valid",
+      "structure": true,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "fb0a3880b791584c742122ad8efbd4aef081d9442125c0ead289041bb95b6a93"
+    },
+    {
+      "fixture": "tags",
+      "case": "orphan",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "18c14a3a8206eedb95baed26536fb97f2d379364902675cea7d7325f7202a7fb"
+    },
+    {
+      "fixture": "tags",
+      "case": "duplicate",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "026c7a4576deba79fbe22564a9d3520be523af2bc113c8f830149c8432e5ce22"
+    },
+    {
+      "fixture": "tags",
+      "case": "wrong-slot",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "47937160766193bd8ebcbfeac4b317f8e2dd27f4954225d5ce2b1145c3fe7fd6"
+    },
+    {
+      "fixture": "tags",
+      "case": "root-slot",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "6c7318cc2bae91c569a816d6e2bfcbfef971999c843c7293206ed1d5b655456c"
+    },
+    {
+      "fixture": "tags",
+      "case": "container-payload",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "e5f69b3aaf0e8d78a1530127ac34eafd3ea7d7f95b2478ac7f9357abb222a241"
+    },
+    {
+      "fixture": "tags",
+      "case": "missing-source",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "00478a04ac4c8734ae5a4c5b61e76a15ce10e57ec97b6d11f24dafd10005bfad"
+    },
+    {
+      "fixture": "tags",
+      "case": "ordinal-gap",
+      "structure": false,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "059cbeff704c70d88fc62bbacbeb1c10993bf53bd17006653580ff518ae9c951"
+    }
+  ]
+}
