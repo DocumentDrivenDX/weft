@@ -73,7 +73,20 @@ pub fn encode(
                             "Missing original recursive scalar codec",
                         )
                     })?;
-                scalar_guards.push(format!("WHEN {i} THEN {}", storage.storage_integrity));
+                let guard = if let Shape::Scalar { logical_type } = &descriptor.shape {
+                    if matches!(logical_type.family, Family::Integer | Family::Decimal) {
+                        let domain = crate::native_comparator_definition::numeric_domain_for_type(
+                            logical_type,
+                            &storage.carrier,
+                        )?;
+                        format!("({} AND {domain})", storage.storage_integrity)
+                    } else {
+                        storage.storage_integrity
+                    }
+                } else {
+                    unreachable!()
+                };
+                scalar_guards.push(format!("WHEN {i} THEN {guard}"));
             }
             LayoutShape::Sequence { item } | LayoutShape::Map { item } => {
                 entry["kind"] = json!(if matches!(node.shape, LayoutShape::Sequence { .. }) {

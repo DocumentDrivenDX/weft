@@ -1,0 +1,215 @@
+{
+  "scope": "Original/public nested uint64 native integrality/range/finite/input validity prerequisites plus cyclic structured SELECT; source-token lexical profile and production qualification remain separate",
+  "captureSha256": {
+    "nested-sequence": "62e31a342b20deba3639808a8f5ec1fe2ca970b118dc1fc11efc41de8d2427b6",
+    "cyclic": "05fe092735d75aa28ab241f016ad6c071fcc4e58ccb9f433b913d5fdb2ce3033"
+  },
+  "harnessSha256": "ee9c3a70091fa6b41b8ab4062e7af2044ea0017712f538ddb6ebb66023f299e3",
+  "results": [
+    {
+      "property": "nested-sequence",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "0ff8b50a5a9a62532ef383d4d59174f93cd6cee8187bccd033ef25b1d039cff0"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "exact-nested",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "935f97dc33c6f9dacee6bf1282e991ba1d93c7d2f7978e7f0bb09e629632572c"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "a3cd2b3f9fd7383d012a264d045852c1b3171298ee0944cec9378e0f8dd3d959"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "174982192c8c2abdbfc02f9dbc0987413feffd8382599a3507709cbcf2ed6f18"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1548ce3339d854bbdc36a953a7f463bb19b95c1bed0cf9419b9539e0fd1028f7"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "fb1454950e35b8dfa6fef3dd9bc9b0c1fc904c95062edd324eb48f8864b1bb7a"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e11efb81199a9e13b434f5637b87a768d5d57de40a06523b162b148b70971fae"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain--1",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "2ae70d3a8ab0b26df66944c4b91ee9921cec08506b5113a9bafd8659e6d39ae4"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain-1.5",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ecfca491afefff4c3473ae6bf2b077c363a3b185d45a8681cbf8cf303accc3ac"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain-18446744073709551616",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d14ee3cbb7b3280e47014079050cff5ccc643f79dc7cf5f628495ff1ca6f058d"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain-NaN",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ade6d6974a66da0cb8bf472dedcbd1c44395e3d3318c471f6decdeb30ed8986c"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain-Infinity",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0e9c68a33dceebbabccf408d15825bcac9adbd1dc8944c72d05dd800251c6f92"
+    },
+    {
+      "property": "nested-sequence",
+      "case": "numeric-domain-not-a-number",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ff1e11434bf4a4674e385923045621fe59b229eb8ac1995bcb333ea0d8945875"
+    },
+    {
+      "property": "cyclic",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1b5e78cf4eb3e5f86b4adc418ad5dd1e410bccf138c8cf117cff8481598258d8"
+    },
+    {
+      "property": "cyclic",
+      "case": "exact-nested",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "dd0d6bf56a30b6c238ef11b6724645fee7ad78e84d3ac916146fefbe24ef2d02"
+    },
+    {
+      "property": "cyclic",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "533edcfcf5d0319fe0f492d4b8dabf0ec75b5186fa4b679f391c698992122498"
+    },
+    {
+      "property": "cyclic",
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "b655eaa580fd8779bdd90d9176cd7e637058d22a47a423da231b622669eb20ff"
+    },
+    {
+      "property": "cyclic",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9af1aa9bdd609d4d98f466ad904bd9b0f2edc7ddbd76f63715a7b35da4e7fd16"
+    },
+    {
+      "property": "cyclic",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d7bcc6b1ba6b84581e2c6fc3a8aff328463167b38b6bb1c008e3bd7d3a1deebc"
+    },
+    {
+      "property": "cyclic",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "40a874b106b02064ae62425f0633cf49b75eb0c2f964d9e0e037606891fd50d3"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/native_comparator_definition.rs": "bb6ee69b7de402163c6229b39c6ac9034adbc5c7db012615a5c100bc1a9c0f2b",
+    "crates/weft-postgresql/src/recursive_observation.rs": "335d00b42f2f3296704ea8c78494dc890f244f9c9e03d629813c7e5142adff50"
+  },
+  "testLogSha256": "4d68f5ce4f064f04d6ef795b18e4096a81ead6eb6ee3036910f1d3a39e9c1741"
+}

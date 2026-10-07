@@ -208,44 +208,7 @@ impl Definition {
     /// separate selected host/codec obligation.
     pub fn numeric_domain_sql(&self, carrier: &str) -> Result<String> {
         let _ = self.numeric_native_type()?;
-        let value = format!("({carrier})::pg_catalog.numeric");
-        let facets = &self.logical_type.facets;
-        let bounds = match self.logical_type.family {
-            Family::Decimal => {
-                let precision = facets["precision"]
-                    .as_u64()
-                    .ok_or_else(|| fail("Decimal precision missing"))?;
-                let scale = facets["scale"]
-                    .as_u64()
-                    .ok_or_else(|| fail("Decimal scale missing"))?;
-                let integral = precision
-                    .checked_sub(scale)
-                    .ok_or_else(|| fail("Decimal scale exceeds precision"))?;
-                format!("{value}=pg_catalog.trunc({value},{scale}) AND pg_catalog.abs({value})<pg_catalog.power(10::pg_catalog.numeric,{integral})")
-            }
-            Family::Integer => {
-                let bits = facets["integerWidth"]["bits"]
-                    .as_u64()
-                    .ok_or_else(|| fail("Integer width missing"))?;
-                let signed = facets["integerWidth"]["signed"]
-                    .as_bool()
-                    .ok_or_else(|| fail("Integer signedness missing"))?;
-                let exponent = if signed {
-                    bits.checked_sub(1)
-                        .ok_or_else(|| fail("Integer width invalid"))?
-                } else {
-                    bits
-                };
-                let lower = if signed {
-                    format!("-pg_catalog.power(2::pg_catalog.numeric,{exponent})")
-                } else {
-                    "0".into()
-                };
-                format!("{value}=pg_catalog.trunc({value}) AND {value}>={lower} AND {value}<pg_catalog.power(2::pg_catalog.numeric,{exponent})")
-            }
-            _ => return Err(fail("SUM has no exact numeric domain")),
-        };
-        Ok(format!("CASE WHEN pg_catalog.pg_input_is_valid(({carrier})::pg_catalog.text,'pg_catalog.numeric') THEN ({value}::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND {bounds}) ELSE FALSE END"))
+        numeric_domain_for_type(&self.logical_type, carrier)
     }
     pub fn sum_sql(&self, carrier: &str) -> Result<String> {
         self.require(Operation::Sum)?;
@@ -309,6 +272,48 @@ impl Definition {
         }
         Ok(())
     }
+}
+/// Exact PostgreSQL numeric-domain predicate for an already admitted UMF type.
+/// This does not choose a comparator, source-token grammar or storage encoding.
+pub(crate) fn numeric_domain_for_type(logical_type: &LogicalType, carrier: &str) -> Result<String> {
+    let value = format!("({carrier})::pg_catalog.numeric");
+    let facets = &logical_type.facets;
+    let bounds = match logical_type.family {
+        Family::Decimal => {
+            let precision = facets["precision"]
+                .as_u64()
+                .ok_or_else(|| fail("Decimal precision missing"))?;
+            let scale = facets["scale"]
+                .as_u64()
+                .ok_or_else(|| fail("Decimal scale missing"))?;
+            let integral = precision
+                .checked_sub(scale)
+                .ok_or_else(|| fail("Decimal scale exceeds precision"))?;
+            format!("{value}=pg_catalog.trunc({value},{scale}) AND pg_catalog.abs({value})<pg_catalog.power(10::pg_catalog.numeric,{integral})")
+        }
+        Family::Integer => {
+            let bits = facets["integerWidth"]["bits"]
+                .as_u64()
+                .ok_or_else(|| fail("Integer width missing"))?;
+            let signed = facets["integerWidth"]["signed"]
+                .as_bool()
+                .ok_or_else(|| fail("Integer signedness missing"))?;
+            let exponent = if signed {
+                bits.checked_sub(1)
+                    .ok_or_else(|| fail("Integer width invalid"))?
+            } else {
+                bits
+            };
+            let lower = if signed {
+                format!("-pg_catalog.power(2::pg_catalog.numeric,{exponent})")
+            } else {
+                "0".into()
+            };
+            format!("{value}=pg_catalog.trunc({value}) AND {value}>={lower} AND {value}<pg_catalog.power(2::pg_catalog.numeric,{exponent})")
+        }
+        _ => return Err(fail("SUM has no exact numeric domain")),
+    };
+    Ok(format!("CASE WHEN pg_catalog.pg_input_is_valid(({carrier})::pg_catalog.text,'pg_catalog.numeric') THEN ({value}::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND {bounds}) ELSE FALSE END"))
 }
 #[cfg(test)]
 mod tests {
