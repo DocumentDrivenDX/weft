@@ -2649,6 +2649,74 @@ mod tests {
                 serde_json::to_value(&compiled.parameters).unwrap()
             );
         }
+        join_plan.required_capabilities = vec![
+            "scan".into(),
+            "project".into(),
+            "innerJoin".into(),
+            "equal".into(),
+            "type.string".into(),
+        ];
+        let public_application = registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&join_plan),
+                &target,
+                self_context.binding,
+            )
+            .unwrap();
+        assert!(public_application.emission.sql.contains("INNER JOIN"));
+        assert_eq!(
+            serde_json::to_value(&public_application.emission.columns).unwrap(),
+            serde_json::to_value(&joined.select.columns).unwrap()
+        );
+        assert_eq!(
+            serde_json::to_value(&public_application.emission.parameters).unwrap(),
+            serde_json::to_value(&joined.parameters).unwrap()
+        );
+        if let Ok(path) = std::env::var("WEFT_PUBLIC_APPLICATION_CAPTURE") {
+            let checks: Vec<_> = public_application
+                .emission
+                .obligations
+                .iter()
+                .filter_map(|obligation| {
+                    obligation
+                        .parameters
+                        .get("sql")
+                        .and_then(|sql| sql.as_str())
+                })
+                .collect();
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":public_application.emission.sql,"columns":public_application.emission.columns,"checks":checks,"parameters":public_application.emission.parameters})).unwrap()).unwrap();
+        }
+        assert_eq!(public_application.emission.parameters.len(), 4);
+        assert!(public_application
+            .emission
+            .obligations
+            .iter()
+            .any(|o| o.id == "truss.original.complete-read-context"));
+        let declaration = registry.manifest("truss.postgresql.original").unwrap();
+        assert!(declaration
+            .language_profiles
+            .iter()
+            .any(|profile| profile.ir_version == "weft-ir/0.2.0"));
+        assert!(declaration
+            .capabilities
+            .iter()
+            .find(|capability| capability.id == "parameter.named")
+            .unwrap()
+            .language_profiles
+            .iter()
+            .all(|profile| profile.ir_version != "weft-ir/0.2.0"));
+        join_plan
+            .required_capabilities
+            .push("parameter.named".into());
+        assert!(registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&join_plan),
+                &target,
+                self_context.binding
+            )
+            .is_err());
         target.allow_candidate = false;
         assert!(registry
             .compile(

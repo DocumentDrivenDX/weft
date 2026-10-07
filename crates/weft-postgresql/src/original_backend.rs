@@ -42,17 +42,32 @@ impl OriginalBackend {
         let mut manifest = crate::candidate::Candidate.describe()?;
         manifest.backend_id = "truss.postgresql.original".into();
         manifest.binding_profile = binding.profile.clone();
-        manifest
-            .language_profiles
-            .retain(|profile| profile.ir_version == "weft-ir/0.1.0");
         for capability in &mut manifest.capabilities {
-            capability
-                .language_profiles
-                .retain(|profile| profile.ir_version == "weft-ir/0.1.0");
+            let application = matches!(
+                capability.id.as_str(),
+                "scan"
+                    | "project"
+                    | "filter"
+                    | "innerJoin"
+                    | "equal"
+                    | "group"
+                    | "type.string"
+                    | "type.boolean"
+                    | "type.integer"
+                    | "type.decimal"
+                    | "aggregate"
+                    | "aggregate.count"
+                    | "order.asc"
+                    | "limit"
+                    | "value.presence"
+            );
+            if !application {
+                capability
+                    .language_profiles
+                    .retain(|profile| profile.ir_version == "weft-ir/0.1.0");
+            }
+            capability.logical_domain = serde_json::json!({"subset":"original-definition scalar relational plans; V02 equality joins/filters, direct scalar-root projection, COUNT and string grouping, ordering and bounded LIMIT"});
         }
-        manifest
-            .capabilities
-            .retain(|capability| !capability.language_profiles.is_empty());
         Ok(Self {
             manifest,
             binding_sha256: binding.sha256.clone(),
@@ -65,13 +80,6 @@ impl OriginalBackend {
     fn verify(&self, context: &Context<'_>) -> Result<()> {
         if context.binding.sha256 != self.binding_sha256 {
             return Err(fail("Registered original backend binding cut differs"));
-        }
-        if !matches!(context.plan, Plan::V01(_)) {
-            return Err(Diagnostic::new(
-                "WFT-CAPABILITY",
-                "lower",
-                "Original registered backend needs its V02 plan bridge",
-            ));
         }
         crate::comparator_requirements::admit_context(context, &self.properties, &self.comparators)
     }
