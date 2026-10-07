@@ -1564,6 +1564,47 @@ mod tests {
             )
             .unwrap();
         }
+        let crate::registered_access::Location::Row(native_presence_location) =
+            &row_accesses[0].location
+        else {
+            panic!("fixture row home")
+        };
+        let scan = crate::registered_access::scan_source(
+            match &plan.root {
+                weft_core::ir::Node::Project { input, .. } => input,
+                _ => panic!("fixture projection"),
+            },
+            &row_accesses,
+        )
+        .unwrap();
+        let observation = native_presence_location.scalar_observation();
+        let scalar_integrity = format!(
+            "({} AND {}='{}')",
+            observation.payload_integrity(logical.family.clone()),
+            observation.codec_bytes_hex,
+            codec_hex
+        );
+        let mut native_presence_cases = Vec::new();
+        for required in [false, true] {
+            for nullable in [false, true] {
+                let (carrier, integrity) = crate::result_definition::row_presence_sql(
+                    native_presence_location,
+                    &observation.text,
+                    &scalar_integrity,
+                    required,
+                    nullable,
+                );
+                assert!(integrity.contains("value_kind"));
+                native_presence_cases.push(json!({"required":required,"nullable":nullable,
+                "sql":format!("SELECT ({carrier})::text AS value FROM {} WHERE {}",scan.source.sql,scan.source.filters.join(" AND ")),
+                "check":format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",scan.source.sql,scan.source.filters.join(" AND ")),
+                "structuralChecks":scan.structural_check_sql}));
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_ROW_PRESENCE_CAPTURE") {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"cases":native_presence_cases,"parameters":row_parameters.clone().into_slots(),"codecHex":codec_hex,
+                "ownerTypeId":row_properties[&registration].owner_catalog_id,"propertyId":row_properties[&registration].property_catalog_id})).unwrap()).unwrap();
+        }
         let row_projection = crate::result_definition::property_projection(
             &row_properties[&registration],
             &row_accesses[0],

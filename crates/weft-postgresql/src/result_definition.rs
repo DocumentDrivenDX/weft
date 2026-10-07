@@ -138,13 +138,6 @@ pub fn property_projection(
             ) {
                 return Err(fail("Native projection differs from original row home"));
             }
-            if !matches!(column.representation, Representation::Scalar { .. }) {
-                return Err(Diagnostic::new(
-                    "WFT-CAPABILITY",
-                    "emit",
-                    "Native row presence requires its null/root projection",
-                ));
-            }
             let observation = location.scalar_observation();
             let carrier = observation.result_carrier(logical_type.family.clone());
             let hex: String = codec_bytes
@@ -157,6 +150,23 @@ pub fn property_projection(
                 observation.codec_bytes_hex,
                 hex
             );
+            let (carrier, integrity) =
+                if matches!(column.representation, Representation::Value { .. }) {
+                    let value = if logical_type.family == Family::Boolean {
+                        observation.boolean.clone()
+                    } else {
+                        carrier
+                    };
+                    row_presence_sql(
+                        location,
+                        &value,
+                        &integrity,
+                        descriptor.availability.as_deref() == Some("required"),
+                        logical_type.nullable,
+                    )
+                } else {
+                    (carrier, integrity)
+                };
             let source = format!("{} {}", access.owner_source.sql, location.joins.join(" "));
             (carrier, integrity, source)
         }
@@ -189,6 +199,25 @@ pub(crate) fn props_presence_sql(
     let null = &location.native_null;
     let integrity=format!("({} AND (CASE WHEN {present} IS FALSE THEN {} WHEN {null} IS TRUE THEN {} ELSE {value_integrity} END))",location.root_integrity,!required,nullable);
     let envelope=format!("CASE WHEN {present} IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN {null} IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb({carrier})) END");
+    (envelope, integrity)
+}
+/// Truss state absence and explicit null-node semantics. Structural checks must
+/// establish unique state/root joins independently of this payload predicate.
+pub(crate) fn row_presence_sql(
+    location: &crate::row_join_definition::RootLocation,
+    value: &str,
+    scalar_integrity: &str,
+    required: bool,
+    nullable: bool,
+) -> (String, String) {
+    let state = location.state_alias.sql();
+    let node = location.node_alias.sql();
+    let present = format!("({state}.\"state_id\" IS NOT NULL)");
+    let null = format!("({node}.\"value_kind\"='null')");
+    let scalar = location.scalar_observation();
+    let null_integrity=format!("({} AND NOT {} AND {node}.\"definition_bytes\" IS NOT NULL AND {node}.\"source_bytes\" IS NOT NULL)",nullable,scalar.present);
+    let integrity=format!("(CASE WHEN NOT {present} THEN {} WHEN {null} IS TRUE THEN {null_integrity} ELSE ({node}.\"value_kind\"='scalar' AND {scalar_integrity}) END)",!required);
+    let envelope=format!("CASE WHEN NOT {present} THEN pg_catalog.jsonb_build_object('state','absent') WHEN {null} IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb({value})) END");
     (envelope, integrity)
 }
 fn column(descriptor: &Descriptor, position: usize, output_name: &str) -> Result<Column> {
