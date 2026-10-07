@@ -1458,6 +1458,47 @@ mod tests {
         visit(layout, layout.root, body, None, "root", None, &mut rows);
         rows
     }
+    fn fixture_native_leaf(
+        _: usize,
+        node: &crate::value_definition::LayoutNode<'_>,
+    ) -> weft_core::error::Result<crate::row_tree_mapping::NativeLeaf> {
+        let (value, kind, allowed) = match node.shape {
+            crate::value_definition::LayoutShape::Scalar {
+                family: "integer", ..
+            } => ("to_jsonb(w.r->>16)", "integer", vec![15, 16]),
+            crate::value_definition::LayoutShape::Scalar {
+                family: "string", ..
+            } => ("to_jsonb(w.r->>13)", "text", vec![13]),
+            _ => panic!("fixture scalar procedure unsupported"),
+        };
+        let codec: String = node
+            .codec_bytes
+            .iter()
+            .map(|b| format!("{b:02x}"))
+            .collect();
+        let extra = (13..=20)
+            .filter(|i| !allowed.contains(i))
+            .map(|i| format!("w.r->>{i} IS NULL"))
+            .collect::<Vec<_>>()
+            .join(" AND ");
+        let numeric = if kind == "integer" {
+            " AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+        } else {
+            ""
+        };
+        Ok(crate::row_tree_mapping::NativeLeaf {value_sql:value.into(),integrity_sql:format!("w.r->>3='scalar' AND w.r->>12='{kind}' AND w.r->>21='{codec}' AND w.r->>22='' AND {extra}{numeric}")})
+    }
+    fn fixture_native_source(
+        _: usize,
+        node: &crate::value_definition::LayoutNode<'_>,
+    ) -> weft_core::error::Result<String> {
+        let codec: String = node
+            .codec_bytes
+            .iter()
+            .map(|b| format!("{b:02x}"))
+            .collect();
+        Ok(format!("w.r->>8='{codec}' AND w.r->>9=''"))
+    }
     #[test]
     fn original_compound_properties_decode_storage_slots_into_logical_members() {
         use base64::{engine::general_purpose::STANDARD, Engine};
@@ -2047,21 +2088,37 @@ mod tests {
             .unwrap();
             assert_eq!(body_parameters.clone().into_slots().len(), 6);
             let mut guarded_parameters = native_mapping_parameters.clone();
-            let guarded=crate::row_tree_mapping::guarded_body(row_property,&row_accesses[0],&mut guarded_parameters,
-                |identity|Ok(serde_json::to_vec(identity).unwrap()),
-                |_,node| {
-                    let (value,kind,allowed)=match node.shape {
-                        crate::value_definition::LayoutShape::Scalar {family:"integer",..}=>("to_jsonb(w.r->>16)","integer",vec![15,16]),
-                        crate::value_definition::LayoutShape::Scalar {family:"string",..}=>("to_jsonb(w.r->>13)","text",vec![13]),
-                        _=>panic!("fixture scalar procedure unsupported"),
-                    };
-                    let codec:String=node.codec_bytes.iter().map(|b|format!("{b:02x}")).collect();
-                    let extra=(13..=20).filter(|i|!allowed.contains(i)).map(|i|format!("w.r->>{i} IS NULL")).collect::<Vec<_>>().join(" AND ");
-                    let numeric=if kind=="integer" {" AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"} else {""};
-                    Ok(crate::row_tree_mapping::NativeLeaf {value_sql:value.into(),integrity_sql:format!("w.r->>3='scalar' AND w.r->>12='{kind}' AND w.r->>21='{codec}' AND w.r->>22='' AND {extra}{numeric}")})
-                },
-                |_,node| {let codec:String=node.codec_bytes.iter().map(|b|format!("{b:02x}")).collect();Ok(format!("w.r->>8='{codec}' AND w.r->>9=''"))}).unwrap();
+            let guarded = crate::row_tree_mapping::guarded_body(
+                row_property,
+                &row_accesses[0],
+                &mut guarded_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                fixture_native_leaf,
+                fixture_native_source,
+            )
+            .unwrap();
             assert_eq!(guarded_parameters.clone().into_slots().len(), 6);
+            let mut projection_parameters = native_mapping_parameters.clone();
+            let projection = crate::result_definition::native_tree_projection(
+                row_property,
+                &row_accesses[0],
+                1,
+                member_name,
+                &mut projection_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                fixture_native_leaf,
+                fixture_native_source,
+            )
+            .unwrap();
+            assert_eq!(projection_parameters.clone().into_slots().len(), 6);
+            if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_PROJECTION_CAPTURE") {
+                let crate::registered_access::Location::Row(location) = &row_accesses[0].location
+                else {
+                    unreachable!()
+                };
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-projection.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} FROM {} {} WHERE {} AND {}.\"id\"=9007199254740993 LIMIT 1",projection.sql,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator,row_accesses[0].owner_alias.sql()),"check":projection.payload_check_sql,"parameters":projection_parameters.into_slots(),"columns":[projection.column],"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id,"required":row_property.value.descriptors().iter().find(|d|d.identity==row_property.identity).unwrap().availability.as_deref()==Some("required")})).unwrap()).unwrap();
+            }
+
             if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_GUARDED_CAPTURE") {
                 let crate::registered_access::Location::Row(location) = &row_accesses[0].location
                 else {

@@ -641,3 +641,70 @@ mod tests {
         assert!(column(&descriptor, 1, "").is_err());
     }
 }
+
+/// Recursive native projection with an independent complete-owner prerequisite.
+/// Trusted selected procedures qualify native identity/source/scalar meaning;
+/// read context/authorization and prerequisite execution remain host obligations.
+pub fn native_tree_projection(
+    property: &PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    position: usize,
+    output_name: &str,
+    parameters: &mut crate::Parameters,
+    field_identity: impl FnMut(&serde_json::Value) -> Result<Vec<u8>>,
+    scalar: impl FnMut(
+        usize,
+        &crate::value_definition::LayoutNode<'_>,
+    ) -> Result<crate::row_tree_mapping::NativeLeaf>,
+    node_source: impl FnMut(usize, &crate::value_definition::LayoutNode<'_>) -> Result<String>,
+) -> Result<ScalarProjection> {
+    access.verify_property(property)?;
+    let column = property_column(property, position, output_name)?;
+    let descriptor = property
+        .value
+        .descriptors()
+        .iter()
+        .find(|d| d.identity == property.identity)
+        .ok_or_else(|| fail("Native recursive result lacks original descriptor"))?;
+    if matches!(descriptor.shape, Shape::Scalar { .. }) {
+        return Err(fail(
+            "Native recursive projection requires compound descriptor",
+        ));
+    }
+    let required = match descriptor.availability.as_deref() {
+        Some("required") => true,
+        Some("absent-allowed") => false,
+        _ => return Err(fail("Native root presence lacks original meaning")),
+    };
+    let crate::registered_access::Location::Row(location) = &access.location else {
+        return Err(fail("Native recursive projection requires row access"));
+    };
+    let alias = crate::Identifier::new(output_name)?;
+    let mut staged = parameters.clone();
+    let guarded = crate::row_tree_mapping::guarded_body(
+        property,
+        access,
+        &mut staged,
+        field_identity,
+        scalar,
+        node_source,
+    )?;
+    let present = format!("{}.\"state_id\" IS NOT NULL", location.state_alias.sql());
+    let integrity = format!(
+        "({} AND CASE WHEN NOT ({present}) THEN {} ELSE ({} AND {} AND {}) END)",
+        location.structural_integrity,
+        !required,
+        guarded.body.structural_integrity,
+        guarded.body.logical_integrity,
+        guarded.native_integrity
+    );
+    let carrier=format!("CASE WHEN NOT ({present}) THEN jsonb_build_object('state','absent') ELSE jsonb_build_object('state','value','value',{}) END",guarded.body.logical_body);
+    let result=ScalarProjection {
+        sql:format!("({carrier})::pg_catalog.text AS {}",alias.sql()),
+        column,payload_check_sql:format!("SELECT count(*) AS violations FROM {} {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",access.owner_source.sql,location.joins.join(" "),access.owner_source.discriminator),
+        codec_bytes:property.value.graph.artifacts.get(&format!("/nodes/{}/codecDefinition",property.value.graph.root)).ok_or_else(||fail("Native result lacks original codec custody"))?.clone(),
+        presence_bytes:property.value.presence.original_json.as_bytes().to_vec(),
+    };
+    *parameters = staged;
+    Ok(result)
+}
