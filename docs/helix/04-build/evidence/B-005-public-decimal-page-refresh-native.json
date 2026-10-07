@@ -1,0 +1,84 @@
+{
+  "scope": "Original decimal(28,2) UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification",
+  "captureSha256": "60622661b65f64e0d35e6878a01021f100951b7d5f91823ca7c954496bdce015",
+  "harnessSha256": "2f84b692093a1000cf10d3e585ddd818a8e765ed7a76a0c3872c032a7d8571b8",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "__null__",
+      "queryExecuted": true,
+      "sqlSha256": "e7582f1a9d2011797e86495c8e057845f0d8ec825d67068a8f7f3566326e7f0e"
+    },
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "9999999999999999999.13",
+      "queryExecuted": true,
+      "sqlSha256": "008e51c64872cbe1be81980203614b9256f04d646b0693e64b32d3d1b675ea3a"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "f2962f0b0d8696bc56d9e171d53a153a714fabc6c5fddda4fd66ee9209eedd12"
+    },
+    {
+      "case": "scale",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "7d0ad7a26388d6599276ed79bc2b664e54796b13faf72fcb1813962df6f1dd7b"
+    },
+    {
+      "case": "precision",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "8da9c3196e148442a0d2e044b79ed251caadb560d5551964975b75cd7f85e2b1"
+    },
+    {
+      "case": "nonfinite",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "d189b60e706f6260de0762e310f3c342518ec99a568cba46690a491e6515b74a"
+    },
+    {
+      "case": "invalid-native",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "27ad472ce07d5770beda3fec66bbef9006ebb5a550fef3932cab9e219f6b3ec1"
+    }
+  ]
+}

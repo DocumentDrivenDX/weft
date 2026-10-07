@@ -59,6 +59,8 @@ impl OriginalBackend {
                     | "aggregate.count"
                     | "sum"
                     | "parameter.named"
+                    | "compare.lexicographicGreater"
+                    | "key.uniqueStable"
                     | "order.asc"
                     | "limit"
                     | "value.presence"

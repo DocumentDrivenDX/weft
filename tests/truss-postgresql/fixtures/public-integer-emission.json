@@ -24,7 +24,7 @@
           "documentId": "sales-fixture",
           "element": "customer-id",
           "module": "sales",
-          "revision": "fixture-r1"
+          "revision": "application-fixture-1"
         }
       ]
     }
@@ -62,5 +62,5 @@
       "value": "0"
     }
   ],
-  "sql": "SELECT (pg_catalog.sum(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric))::pg_catalog.text AS \"total\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+  "sql": "SELECT (pg_catalog.sum((((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric)::pg_catalog.numeric))::pg_catalog.text AS \"total\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
 }

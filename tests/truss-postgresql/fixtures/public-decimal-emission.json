@@ -26,7 +26,7 @@
           "documentId": "sales-fixture",
           "element": "order-total",
           "module": "sales",
-          "revision": "fixture-r1"
+          "revision": "application-fixture-1"
         }
       ]
     }
@@ -57,12 +57,12 @@
         "nullable": false
       },
       "origin": {
-        "propertyId": "4",
+        "propertyId": "8",
         "use": "admitted-jsonb-member"
       },
       "position": 2,
-      "value": "4"
+      "value": "8"
     }
   ],
-  "sql": "SELECT (pg_catalog.sum(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric))::pg_catalog.text AS \"total\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+  "sql": "SELECT (pg_catalog.sum((((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric)::pg_catalog.numeric))::pg_catalog.text AS \"total\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
 }

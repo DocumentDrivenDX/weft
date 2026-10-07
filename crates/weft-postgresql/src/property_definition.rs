@@ -1114,13 +1114,10 @@ mod tests {
             _: &mut crate::Parameters,
         ) -> weft_core::error::Result<String> {
             match node {
-                weft_core::ir::Expression::Field { .. } => Ok(access
-                    .unwrap()
-                    .scalar_storage
-                    .as_ref()
-                    .unwrap()
-                    .carrier
-                    .clone()),
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({})::pg_catalog.numeric",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
                 _ => panic!("Public SUM must be comparator-owned"),
             }
         }
@@ -1185,7 +1182,11 @@ mod tests {
                 &input,
             )
             .unwrap();
-        assert_eq!(public.emission.sql, compiled.select.sql);
+        assert!(public.emission.sql.contains("pg_catalog.sum"));
+        assert_eq!(
+            serde_json::to_value(&public.emission.parameters).unwrap(),
+            serde_json::to_value(&compiled.parameters).unwrap()
+        );
         assert_eq!(
             serde_json::to_value(&public.emission.columns).unwrap(),
             serde_json::to_value(&compiled.select.columns).unwrap()
@@ -1200,6 +1201,44 @@ mod tests {
         assert_eq!(public_checks.len(), 3);
         if let Ok(path) = std::env::var(format!("{capture}_PUBLIC")) {
             std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"columns":public.emission.columns,"checks":public_checks,"parameters":public.emission.parameters})).unwrap()).unwrap();
+        }
+        if family == "integer" {
+            let page = weft_core::application_resolve::resolve(
+                &catalog,
+                weft_core::application_syntax::parse(
+                    "SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2",
+                )
+                .unwrap(),
+                BTreeMap::new(),
+                Some(weft_core::application_ir::ReadProfile {
+                    version: "weft-application-read/0.2.0".into(),
+                    subset: weft_core::application_ir::Subset::EntityPage,
+                }),
+            )
+            .unwrap();
+            let public_page = registry
+                .compile(
+                    &catalog,
+                    weft_core::backend::Plan::V02(&page),
+                    &target,
+                    &input,
+                )
+                .unwrap();
+            let checks: Vec<_> = public_page
+                .emission
+                .obligations
+                .iter()
+                .filter_map(|obligation| {
+                    obligation
+                        .parameters
+                        .get("sql")
+                        .and_then(|sql| sql.as_str())
+                })
+                .collect();
+            assert_eq!(checks.len(), 4);
+            if let Ok(path) = std::env::var("WEFT_PUBLIC_PAGE_CAPTURE") {
+                std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public_page.emission.sql,"columns":public_page.emission.columns,"checks":checks,"parameters":public_page.emission.parameters})).unwrap()).unwrap();
+            }
         }
         target.allow_candidate = false;
         assert!(registry
