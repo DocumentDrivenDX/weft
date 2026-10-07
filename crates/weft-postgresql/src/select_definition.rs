@@ -204,11 +204,13 @@ fn assemble_application<'a>(
     if plan.limit.is_some_and(|limit| !(1..=1000).contains(&limit)) {
         return Err(fail("Application LIMIT is outside its resolved bounds"));
     }
-    let has_count = plan
-        .outputs
-        .iter()
-        .any(|output| matches!(output.expression, app::Expression::Count { .. }));
-    if plan.aggregate != has_count || (!plan.aggregate && !plan.groups.is_empty()) {
+    let has_aggregate = plan.outputs.iter().any(|output| {
+        matches!(
+            output.expression,
+            app::Expression::Count { .. } | app::Expression::Sum { .. }
+        )
+    });
+    if plan.aggregate != has_aggregate || (!plan.aggregate && !plan.groups.is_empty()) {
         return Err(fail("Application aggregate and projection stages differ"));
     }
     if prepared.scans.len() != 1 + plan.joins.len() {
@@ -313,6 +315,34 @@ fn assemble_application<'a>(
     }
     let mut projections = Vec::new();
     for (output, column) in plan.outputs.iter().zip(&columns) {
+        if let app::Expression::Sum {
+            argument,
+            logical_type,
+        } = &output.expression
+        {
+            validate_sum_result(&argument.logical_type, logical_type, plan.groups.is_empty())?;
+            let expression = Expression::Sum {
+                argument: Box::new(Expression::Field {
+                    scan: argument.scan.clone(),
+                    identity: argument.identity.clone(),
+                    logical_type: argument.logical_type.clone(),
+                    span: argument.span.clone(),
+                }),
+                logical_type: logical_type.clone(),
+                span: argument.span.clone(),
+            };
+            let sql = crate::registered_access::render_expression(
+                &expression,
+                &prepared.accesses,
+                &mut staged,
+                &mut *native,
+            )?;
+            projections.push(format!(
+                "({sql})::pg_catalog.text AS {}",
+                crate::Identifier::new(&column.output_name)?.sql()
+            ));
+            continue;
+        }
         if let app::Expression::Count { logical_type } = &output.expression {
             if logical_type.family != weft_core::ir::Family::Integer
                 || logical_type.nullable
@@ -463,4 +493,79 @@ fn application_equality(predicate: &weft_core::application_ir::Predicate) -> Res
         },
         span: left.span.clone(),
     })
+}
+
+fn validate_sum_result(
+    argument: &weft_core::ir::LogicalType,
+    result: &weft_core::ir::LogicalType,
+    ungrouped: bool,
+) -> Result<()> {
+    use weft_core::ir::Family;
+    let facets = match argument.family {
+        Family::Integer => serde_json::json!({}),
+        Family::Decimal if argument.facets.get("scale").is_some() => {
+            serde_json::json!({"scale":argument.facets["scale"]})
+        }
+        _ => {
+            return Err(Diagnostic::new(
+                "WFT-TYPE",
+                "emit",
+                "SUM requires its exact numeric argument contract",
+            ))
+        }
+    };
+    if argument.family != result.family || result.facets != facets || result.nullable != ungrouped {
+        return Err(Diagnostic::new(
+            "WFT-TYPE",
+            "emit",
+            "SUM result differs from its resolved numeric/nullability contract",
+        ));
+    }
+    Ok(())
+}
+#[cfg(test)]
+mod aggregate_tests {
+    use super::*;
+    use weft_core::ir::{Family, LogicalType};
+    #[test]
+    fn sum_preserves_exact_family_scale_and_empty_input_nullability() {
+        for (family, input, output) in [
+            (
+                Family::Integer,
+                serde_json::json!({"integerWidth":{"bits":64,"signed":false}}),
+                serde_json::json!({}),
+            ),
+            (
+                Family::Decimal,
+                serde_json::json!({"precision":28,"scale":9}),
+                serde_json::json!({"scale":9}),
+            ),
+        ] {
+            let argument = LogicalType {
+                family: family.clone(),
+                facets: input,
+                nullable: false,
+            };
+            for ungrouped in [false, true] {
+                let result = LogicalType {
+                    family: family.clone(),
+                    facets: output.clone(),
+                    nullable: ungrouped,
+                };
+                validate_sum_result(&argument, &result, ungrouped).unwrap();
+                let mut wrong = result.clone();
+                wrong.nullable = !ungrouped;
+                assert!(validate_sum_result(&argument, &wrong, ungrouped).is_err());
+                wrong = result.clone();
+                wrong.facets = serde_json::json!({"scale":8});
+                assert!(validate_sum_result(&argument, &wrong, ungrouped).is_err());
+            }
+        }
+        let text = LogicalType {
+            family: Family::String,
+            facets: serde_json::json!({}),
+            nullable: false,
+        };
+        assert!(validate_sum_result(&text, &text, false).is_err());
+    }
 }
