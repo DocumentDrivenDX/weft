@@ -693,7 +693,7 @@ fn render_application_equality<'a>(
     predicate: &weft_core::application_ir::Predicate,
     accesses: &[Access<'a>],
     parameters: &mut Parameters,
-    mut native: impl FnMut(
+    native: &mut dyn FnMut(
         &Expression,
         &[String],
         Option<&Access<'a>>,
@@ -701,6 +701,65 @@ fn render_application_equality<'a>(
     ) -> Result<String>,
 ) -> Result<String> {
     use weft_core::application_ir as app;
+    if let app::Predicate::LexicographicGreater { columns, values } = predicate {
+        if columns.is_empty() || columns.len() != values.len() || columns.len() > 32 {
+            return Err(Diagnostic::new(
+                "WFT-LIMIT",
+                "emit",
+                "Cursor tuple requires 1 through 32 matching components",
+            ));
+        }
+        let mut staged = parameters.clone();
+        let mut left = Vec::new();
+        let mut right = Vec::new();
+        for (field, value) in columns.iter().zip(values) {
+            let logical = match value {
+                app::Value::Field { field } => &field.logical_type,
+                app::Value::Literal { logical_type, .. }
+                | app::Value::Parameter { logical_type, .. } => logical_type,
+            };
+            if logical != &field.logical_type || logical.nullable {
+                return Err(Diagnostic::new(
+                    "WFT-TYPE",
+                    "emit",
+                    "Cursor component type differs or permits native null",
+                ));
+            }
+            let component = app::Predicate::Equal {
+                left: field.clone(),
+                right: value.clone(),
+            };
+            let mut operands = None;
+            render_application_equality(
+                &component,
+                accesses,
+                &mut staged,
+                &mut |node, rendered, access, parameters| {
+                    if matches!(node, Expression::Equal { .. }) {
+                        operands = Some(rendered.to_vec());
+                        Ok("TRUE".into())
+                    } else {
+                        native(node, rendered, access, parameters)
+                    }
+                },
+            )?;
+            let operands = operands.ok_or_else(|| {
+                Diagnostic::new(
+                    "WFT-BINDING",
+                    "emit",
+                    "Cursor component lowering incomplete",
+                )
+            })?;
+            left.push(operands[0].clone());
+            right.push(operands[1].clone());
+        }
+        *parameters = staged;
+        return Ok(format!(
+            "(ROW({}) > ROW({}))",
+            left.join(", "),
+            right.join(", ")
+        ));
+    }
     let expression = application_equality(predicate)?;
     crate::registered_access::render_expression(
         &expression,

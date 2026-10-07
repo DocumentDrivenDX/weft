@@ -1881,6 +1881,50 @@ mod tests {
         )
         .is_err());
 
+        let mut cursor_plan = application_plan.clone();
+        let weft_core::application_ir::Predicate::Equal { left, right } = &cursor_plan.filters[0]
+        else {
+            unreachable!()
+        };
+        cursor_plan.filters = vec![weft_core::application_ir::Predicate::LexicographicGreater {
+            columns: vec![left.clone()],
+            values: vec![right.clone()],
+        }];
+        let cursor_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&cursor_plan),
+            ..context
+        };
+        let cursor = crate::select_definition::compile_with_registry(
+            &cursor_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, _, access, parameters| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    ..
+                } => Ok(format!(
+                    "{}::pg_catalog.text",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"fixture":true})
+                    )?
+                )),
+                _ => panic!("Cursor uses selected tuple comparison"),
+            },
+        )
+        .unwrap();
+        assert_eq!(cursor.parameters[2].origin["parameter"], "selected_name");
+        assert!(cursor.select.sql.contains("ROW("));
+        if let Ok(path) = std::env::var("WEFT_CURSOR_BRIDGE_CAPTURE") {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":cursor.select.sql,"columns":cursor.select.columns,"checks":cursor.select.structural_checks.iter().cloned().chain(cursor.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":cursor.parameters})).unwrap()).unwrap();
+        }
         let mut named_plan = application_plan.clone();
         application_plan.filters.clear();
 
