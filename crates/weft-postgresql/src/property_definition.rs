@@ -874,6 +874,36 @@ mod tests {
             }
             _ => panic!("fixture props home"),
         }
+        let mut recursive_budget = crate::value_traversal::Budget {
+            remaining_nodes: 10,
+            remaining_key_bytes: 100,
+            remaining_members: 10,
+            max_depth: 8,
+        };
+        assert_eq!(
+            crate::value_traversal::decode_property(
+                &property,
+                &json!("é  "),
+                &mut recursive_budget,
+                |codec, family, representation, value| {
+                    assert_eq!(codec, leaves["root"].original_json.as_bytes());
+                    assert_eq!(family, "string");
+                    assert_eq!(representation, "json-string");
+                    value.as_str().ok_or_else(|| {
+                        weft_core::error::Diagnostic::new(
+                            "WFT-DECODE",
+                            "decode",
+                            "Original string codec refused input",
+                        )
+                    })?;
+                    Ok(value.clone())
+                },
+                |_, _| panic!("scalar has no member absence"),
+            )
+            .unwrap(),
+            json!("é  ")
+        );
+        assert_eq!(recursive_budget.remaining_nodes, 9);
         let mut parameters = crate::Parameters::default();
         let location = property
             .home

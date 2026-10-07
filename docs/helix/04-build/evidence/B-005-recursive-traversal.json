@@ -1,0 +1,10 @@
+{
+  "scope": "Iterative intermediate JSONB value-body traversal under original finite topology; selected callbacks own leaf/member semantics; not public recursive result decoding or native row-tree support",
+  "sourcePins": {
+    "crates/weft-postgresql/src/value_traversal.rs": "d2fa03bddd4a3bac850cbf6fd815b5fdcf3f4183338927b288a70a5a65e3f788",
+    "crates/weft-postgresql/src/property_definition.rs": "be105735ba99eb5398bc33adc7090404f3103cb6057140a46bdb8256ebed177a"
+  },
+  "rustTestLogSha256": "09947035136ffbf9d122fe98af31fd553a762ccabb4fd8a5d88b4885dc9218ad",
+  "rustTestsPassed": 74,
+  "nativeExecution": false
+}
