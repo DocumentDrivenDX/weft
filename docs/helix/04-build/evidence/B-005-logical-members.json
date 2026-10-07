@@ -1,0 +1,7 @@
+{
+  "scope": "Rust original-property logical-name bridge and descriptor-selected member procedure; no recursive SQL/native/embedding qualification",
+  "sourceSha256": "9b58ca3af194beb71417592a375b654be813cd8305a0cbfce1fdb6296ee11101",
+  "testLogSha256": "f628c113411df9722893aa441b03d010da8e8e242f9fd1a93ca8fd8827e13e5a",
+  "tests": 84,
+  "newCase": "logical authored name, original descriptor and presence bytes, missing/present envelope, ambiguous/duplicate names and output-name allocation bounds"
+}

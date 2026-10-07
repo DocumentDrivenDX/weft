@@ -34,11 +34,83 @@ pub fn decode_property_with_records(
     budget: &mut Budget,
     scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
     absent: impl FnMut(&Value, &[u8]) -> Result<()>,
-    record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>) -> Result<Value>,
+    record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>, &mut Budget) -> Result<Value>,
 ) -> Result<Value> {
     crate::result_definition::property_column(property, 1, "weft_recursive_body")?;
     let layout = property.value.graph.layout()?;
     decode_with_records(&layout, value, budget, scalar, absent, record)
+}
+/// Decode storage bodies with original UMF logical member names. Selected
+/// member procedures own availability/null envelopes; this bridge only supplies
+/// the exact descriptor, original presence bytes and explicit decoded presence.
+pub fn decode_logical_property(
+    property: &crate::property_definition::PropertyAdmission,
+    value: &Value,
+    budget: &mut Budget,
+    scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
+    absent: impl FnMut(&Value, &[u8]) -> Result<()>,
+    mut member: impl FnMut(
+        &weft_core::application_model::Descriptor,
+        &[u8],
+        Option<Value>,
+    ) -> Result<Value>,
+) -> Result<Value> {
+    decode_property_with_records(property, value, budget, scalar, absent, |slots, budget| {
+        assemble_logical_record(property.value.descriptors(), slots, budget, &mut member)
+    })
+}
+fn assemble_logical_record(
+    descriptors: &[weft_core::application_model::Descriptor],
+    slots: Vec<(&MemberSlot<'_>, Option<Value>)>,
+    budget: &mut Budget,
+    member: &mut impl FnMut(
+        &weft_core::application_model::Descriptor,
+        &[u8],
+        Option<Value>,
+    ) -> Result<Value>,
+) -> Result<Value> {
+    use weft_core::application_model::Shape;
+    let mut selected = Vec::new();
+    let mut names = std::collections::BTreeSet::new();
+    let mut bytes = 0usize;
+    for (slot, value) in slots {
+        let descriptor = descriptors
+            .iter()
+            .find(|d| serde_json::json!(d.identity) == *slot.field_identity)
+            .ok_or_else(|| fail("Logical member lacks original descriptor"))?;
+        let mut name = None;
+        for d in descriptors {
+            if let Shape::Record { members } = &d.shape {
+                for m in members.iter().filter(|m| m.identity == descriptor.identity) {
+                    if name.is_some_and(|prior| prior != m.name.as_str()) {
+                        return Err(fail("Logical member identity has ambiguous authored names"));
+                    }
+                    name = Some(m.name.as_str());
+                }
+            }
+        }
+        let name = name.ok_or_else(|| fail("Logical member lacks original Record membership"))?;
+        if !names.insert(name) {
+            return Err(fail("Logical Record has duplicate authored names"));
+        }
+        bytes = bytes
+            .checked_add(name.len())
+            .ok_or_else(|| fail("Logical member name size overflow"))?;
+        selected.push((name, descriptor, slot.presence_bytes, value));
+    }
+    if bytes > budget.remaining_key_bytes {
+        return Err(Diagnostic::new(
+            "WFT-LIMIT",
+            "decode",
+            "Logical member name budget exhausted",
+        ));
+    }
+    budget.remaining_key_bytes -= bytes;
+    let mut object = Map::new();
+    for (name, descriptor, presence, value) in selected {
+        object.insert(name.into(), member(descriptor, presence, value)?);
+    }
+    Ok(Value::Object(object))
 }
 /// Normalize a complete recursive value body, preserving literal stored names.
 /// Every runtime occurrence is visited even when metadata nodes are shared/cyclic.
@@ -52,7 +124,7 @@ pub fn decode(
     scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
     absent: impl FnMut(&Value, &[u8]) -> Result<()>,
 ) -> Result<Value> {
-    decode_with_records(layout, value, budget, scalar, absent, |members| {
+    decode_with_records(layout, value, budget, scalar, absent, |members, _| {
         let mut object = Map::new();
         for (member, value) in members {
             if let Some(value) = value {
@@ -74,7 +146,7 @@ pub fn decode_with_records(
     budget: &mut Budget,
     mut scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
     mut absent: impl FnMut(&Value, &[u8]) -> Result<()>,
-    mut record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>) -> Result<Value>,
+    mut record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>, &mut Budget) -> Result<Value>,
 ) -> Result<Value> {
     enum Frame<'a> {
         Enter(usize, &'a Value, usize),
@@ -200,7 +272,7 @@ pub fn decode_with_records(
                     .zip(present)
                     .map(|(member, present)| (member, if present { values.next() } else { None }))
                     .collect();
-                let assembled = record(slots)?;
+                let assembled = record(slots, budget)?;
                 if !assembled.is_object() {
                     return Err(fail(
                         "Record assembler returned a non-object logical representation",
@@ -401,6 +473,116 @@ mod tests {
         );
     }
     #[test]
+    fn logical_record_names_and_presence_are_selected_from_original_descriptors() {
+        use weft_core::{
+            application_model::{Descriptor, Member, Shape},
+            ir::{Family, Identity, LogicalType},
+        };
+        let identity = |element: &str| Identity {
+            document_id: "d".into(),
+            revision: "1".into(),
+            module: "m".into(),
+            element: element.into(),
+        };
+        let field = identity("field");
+        let field_json = json!(field);
+        let mut descriptors = vec![
+            Descriptor {
+                identity: identity("record"),
+                availability: None,
+                shape: Shape::Record {
+                    members: vec![Member {
+                        name: "authored.name".into(),
+                        identity: field.clone(),
+                    }],
+                },
+            },
+            Descriptor {
+                identity: field.clone(),
+                availability: Some("absent-allowed".into()),
+                shape: Shape::Scalar {
+                    logical_type: LogicalType {
+                        family: Family::String,
+                        facets: json!({}),
+                        nullable: false,
+                    },
+                },
+            },
+        ];
+        let slot = MemberSlot {
+            field_identity: &field_json,
+            stored_name: "17",
+            value_node: 0,
+            presence_bytes: b"original-optional",
+        };
+        let mut procedure = |descriptor: &Descriptor, presence: &[u8], value: Option<Value>| {
+            assert_eq!(descriptor.identity, field);
+            assert_eq!(descriptor.availability.as_deref(), Some("absent-allowed"));
+            assert_eq!(presence, b"original-optional");
+            Ok(match value {
+                Some(v) => json!({"state":"value","value":v}),
+                None => json!({"state":"absent"}),
+            })
+        };
+        assert_eq!(
+            assemble_logical_record(
+                &descriptors,
+                vec![(&slot, None)],
+                &mut budget(),
+                &mut procedure
+            )
+            .unwrap(),
+            json!({"authored.name":{"state":"absent"}})
+        );
+        assert_eq!(
+            assemble_logical_record(
+                &descriptors,
+                vec![(&slot, Some(json!("é  ")))],
+                &mut budget(),
+                &mut procedure
+            )
+            .unwrap(),
+            json!({"authored.name":{"state":"value","value":"é  "}})
+        );
+        let mut limited = budget();
+        limited.remaining_key_bytes = 1;
+        assert_eq!(
+            assemble_logical_record(
+                &descriptors,
+                vec![(&slot, None)],
+                &mut limited,
+                &mut |_, _, _| panic!("budget must refuse before procedure")
+            )
+            .unwrap_err()
+            .code,
+            "WFT-LIMIT"
+        );
+        assert!(assemble_logical_record(
+            &descriptors,
+            vec![(&slot, None), (&slot, None)],
+            &mut budget(),
+            &mut |_, _, _| panic!("duplicate must refuse before procedure")
+        )
+        .is_err());
+        descriptors.push(Descriptor {
+            identity: identity("other-record"),
+            availability: None,
+            shape: Shape::Record {
+                members: vec![Member {
+                    name: "conflicting-name".into(),
+                    identity: field,
+                }],
+            },
+        });
+        assert!(assemble_logical_record(
+            &descriptors,
+            vec![(&slot, None)],
+            &mut budget(),
+            &mut |_, _, _| panic!("ambiguous identity must refuse before procedure")
+        )
+        .is_err());
+    }
+    #[test]
     fn record_assembly_retains_original_order_identity_and_missing_slots() {
         let first = json!({"element":"authored-first"});
         let second = json!({"element":"authored-second"});
@@ -438,7 +620,7 @@ mod tests {
         let decoded = decode_with_records(&layout, &json!({"9.first":"é  "}), &mut budget(),
             |_,_,_,value| Ok(value.clone()),
             |identity,presence| { assert_eq!(identity,&second); assert_eq!(presence,b"optional-original"); Ok(()) },
-            |slots| {
+            |slots, _| {
                 assert_eq!(slots.len(),2);
                 assert_eq!(slots[0].0.field_identity,&first);
                 assert_eq!(slots[0].0.presence_bytes,b"required-original");
@@ -456,7 +638,7 @@ mod tests {
             &mut budget(),
             |_, _, _, v| Ok(v.clone()),
             |_, _| Ok(()),
-            |_| Ok(json!([]))
+            |_, _| Ok(json!([]))
         )
         .is_err());
     }
