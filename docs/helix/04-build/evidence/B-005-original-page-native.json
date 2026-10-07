@@ -1,0 +1,40 @@
+{
+  "scope": "Original UMF uint64 key/order correspondence and LIMIT over synthetic unique valid props values; no storage uniqueness/key-procedure or production qualification",
+  "captureSha256": "8fd2f91a9799e621e00c205b972bac2f8be2f55820cda3997cd74c7f7e97eade",
+  "harnessSha256": "eac68ad29a93bf77724e111bb8c0a2efec966b015a2659a323825f4d216d70ba",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "ad53b71058ccc5c2c4ea0acf71562bb072e90be27fbcac494117afbaa6e5f578"
+    },
+    {
+      "case": "numeric-order",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "751d5086495bbdc727d33bdacb4d2f46cb876509c2313e3143d3b6d6988475eb"
+    },
+    {
+      "case": "hidden-by-limit",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e23db2752990c6578a779e387ea683dadc4247aee584dd6aec9a78c505b05793"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "4900f162a28fec03fbd40129ea581c69832d55e30c7009854cd8400544a84a60",
+    "crates/weft-postgresql/src/record_definition.rs": "b116f0bf3bd9ce552116b64cca860a93a8ab3ae2eb376596406542aa1389bac2",
+    "crates/weft-postgresql/src/select_definition.rs": "5b3af1b3b12a1d8e407ed53e04c51807a8bbee632447ad909e2441a141407719"
+  },
+  "testLogSha256": "a9439d50e4a801f664cb481c4c52befc86545cd5c381c1dd95219f12f090e4d8"
+}

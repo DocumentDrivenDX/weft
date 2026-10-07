@@ -739,7 +739,7 @@ mod tests {
         };
         use weft_core::json::sha256;
         let cases: Vec<Value> = serde_json::from_str(include_str!(
-            "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
         ))
         .unwrap();
         let inputs = serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
@@ -950,7 +950,12 @@ mod tests {
                     profile: &pin,
                     native_profile,
                     original_artifacts: &originals,
-                    operations: &BTreeSet::from([Operation::Sum]),
+                    operations: &BTreeSet::from([
+                        Operation::Sum,
+                        Operation::Equality,
+                        Operation::Ordering,
+                        Operation::Key,
+                    ]),
                 },
                 &logical,
             )
@@ -1117,6 +1122,43 @@ mod tests {
                     .carrier
                     .clone()),
                 _ => panic!("Public SUM must be comparator-owned"),
+            }
+        }
+        if family == "integer" {
+            let page = weft_core::application_resolve::resolve(
+                &catalog,
+                weft_core::application_syntax::parse(
+                    "SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2",
+                )
+                .unwrap(),
+                BTreeMap::new(),
+                Some(weft_core::application_ir::ReadProfile {
+                    version: "weft-application-read/0.2.0".into(),
+                    subset: weft_core::application_ir::Subset::EntityPage,
+                }),
+            )
+            .unwrap();
+            let page_context = weft_core::backend::Context {
+                plan: weft_core::backend::Plan::V02(&page),
+                ..context
+            };
+            let page_compiled = crate::select_definition::compile_with_registry(
+                &page_context,
+                &record_registry,
+                &properties,
+                &comparisons,
+                |node, _, access, _| match node {
+                    weft_core::ir::Expression::Field { .. } => Ok(format!(
+                        "({})::pg_catalog.numeric",
+                        access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                    )),
+                    _ => panic!("Page fixture field operation"),
+                },
+            )
+            .unwrap();
+            assert!(page.page_key.is_some());
+            if let Ok(path) = std::env::var("WEFT_ORIGINAL_PAGE_CAPTURE") {
+                std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":page_compiled.select.sql,"columns":page_compiled.select.columns,"checks":page_compiled.select.structural_checks.iter().cloned().chain(page_compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":page_compiled.parameters})).unwrap()).unwrap();
             }
         }
         let backend = crate::original_backend::OriginalBackend::new(
