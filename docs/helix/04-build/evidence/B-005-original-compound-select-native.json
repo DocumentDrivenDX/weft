@@ -1,0 +1,136 @@
+{
+  "scope": "Frontend-resolved original compound props one-call SELECT/Registry emissions with complete-owner prerequisites; no embedding, row-tree or production qualification",
+  "captureSha256": {
+    "tags": "777716d994fca31bea123e943fea856b1e94bfeef9f3363939fd9b3b40e2c864",
+    "address": "db9252571e7a6436995b17727e44cc4154860fb8a3131111da8a2a323a065d01"
+  },
+  "harnessSha256": "a158efb48e43756bdc2bf0d7f130c31706c0324b606314685fe5b4f1e8e05e02",
+  "results": [
+    {
+      "property": "tags",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "357525188e0de689c5b2be951f16dce34c92347f5f18c75e62ea65cb3001b808"
+    },
+    {
+      "property": "tags",
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4208a4bc7a44e3610d8685d24f954c6871de53165bdc23393a7796ca2666b3ef"
+    },
+    {
+      "property": "tags",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "f4b03e2402eb7af1d9cc50c391405d98911d63e9a07400358f9e0ad978483d47"
+    },
+    {
+      "property": "tags",
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9fada7ed345ac7a23e97d03c9d8254f0f67a4757ee457a5d84de7c498909f2c0"
+    },
+    {
+      "property": "tags",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "927483f70ba229855577341ab1103088884d738bbc7ac1edf4adfd9a99715ea3"
+    },
+    {
+      "property": "tags",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8f5378cf26ec95c09322423b2e6535842ab5528fc22b08400af5ce15777fb4c5"
+    },
+    {
+      "property": "address",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "17df6a141bf87aaa8c71c47603d761cf3919c40b97739774e03f71fd5efd8861"
+    },
+    {
+      "property": "address",
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "fcf2b3a007c0053d2aa9dc54eb3c3299d120b52c2fb0e8df029cee145642fd7d"
+    },
+    {
+      "property": "address",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "ef15aa521a956863925217f492902c84f155cb920e443a21933d1d6445b734b6"
+    },
+    {
+      "property": "address",
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1e51a48aecfe6e8cbf460b52846d8eace9011071cdd9a4a96f91b2bbb3b2bcde"
+    },
+    {
+      "property": "address",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "5247b2cd621040e7e6a7cd925e58e0c5bd63a7dcc1add4ecacbb335d1f790da7"
+    },
+    {
+      "property": "address",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "48cb098eeaa3974d4c36aa3efac6dfc0cc08bbdb02e0a4b68375d54bfed693f5"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "9ce1742334cd1a1227dd402c98438e923fab695408b11316b7d8d4dbd290c360",
+    "crates/weft-postgresql/src/original_backend.rs": "da2246a1685e4e7d759e492701c3c0aaf00b217ede6bc89752344f4a561c4b90",
+    "crates/weft-postgresql/src/select_definition.rs": "cde9d6bf6f986c49074bd3551ce3cd2dae65cbe7acf3f25498a2fe72b0c47e6a"
+  },
+  "testLogSha256": "93b472f51994c674b475b07b60fa3e482ad124a51a014f0927203f2882f25323"
+}

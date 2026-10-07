@@ -1716,6 +1716,88 @@ mod tests {
             if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
                 std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-projection.json")),serde_json::to_vec_pretty(&json!({"sql":format!("SELECT {} FROM {} WHERE {}",projection.sql,accesses[0].owner_source.sql,accesses[0].owner_source.discriminator),"check":projection.payload_check_sql,"columns":[projection.column],"parameters":parameters.into_slots()})).unwrap()).unwrap();
             }
+            let record_index = admitted.value["entities"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .position(|e| e["logical"] == json!(record.identity))
+                .unwrap();
+            let record_source = crate::record_definition::RecordAdmission::admit(
+                &admitted,
+                record_index,
+                &catalog,
+                crate::record_definition::Selection {
+                    inventory: &inventory,
+                    relation_identity: "object-table",
+                    discriminator_identity: "object-type",
+                    relations: &relations,
+                    columns: &columns,
+                },
+            )
+            .unwrap();
+            let record_registry = BTreeMap::from([(
+                serde_json::to_string(record_source.identity()).unwrap(),
+                record_source,
+            )]);
+            let compiled = crate::select_definition::compile_with_registry(
+                &context,
+                &record_registry,
+                &properties,
+                &BTreeMap::new(),
+                |_, _, _, _| panic!("Compound projection must use original recursive codec"),
+            )
+            .unwrap();
+            assert_eq!(compiled.select.payload_checks.len(), 1);
+            assert_eq!(compiled.parameters.len(), 4);
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|p|p.sql.clone())).collect::<Vec<_>>(),"columns":compiled.select.columns,"parameters":compiled.parameters})).unwrap()).unwrap();
+            }
+            fn compound_native(
+                _: &weft_core::ir::Expression,
+                _: &[String],
+                _: Option<&crate::registered_access::Access<'_>>,
+                _: &mut crate::Parameters,
+            ) -> weft_core::error::Result<String> {
+                panic!("Compound projection must use original recursive codec");
+            }
+            let backend = crate::original_backend::OriginalBackend::new(
+                &input,
+                record_registry,
+                properties,
+                BTreeMap::new(),
+                compound_native,
+            )
+            .unwrap();
+            let mut registry = weft_core::backend::Registry::default();
+            registry.register(backend).unwrap();
+            let target = weft_core::backend::Target {
+                backend_id: "truss.postgresql.original".into(),
+                backend_version: "0.1.0-candidate".into(),
+                profile_id: "pg17.9-candidate".into(),
+                allow_candidate: true,
+            };
+            let public = registry
+                .compile(
+                    &catalog,
+                    weft_core::backend::Plan::V02(&plan),
+                    &target,
+                    &input,
+                )
+                .unwrap();
+            assert_eq!(public.emission.sql, compiled.select.sql);
+            assert_eq!(
+                serde_json::to_value(&public.emission.parameters).unwrap(),
+                serde_json::to_value(&compiled.parameters).unwrap()
+            );
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
+                let checks: Vec<_> = public
+                    .emission
+                    .obligations
+                    .iter()
+                    .filter_map(|o| o.parameters.get("sql").and_then(|v| v.as_str()))
+                    .collect();
+                std::fs::write(std::path::Path::new(&directory).join(format!("public-{member_name}-select.json")),serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"checks":checks,"columns":public.emission.columns,"parameters":public.emission.parameters})).unwrap()).unwrap();
+            }
         }
     }
     #[test]
