@@ -201,7 +201,7 @@ fn assemble_application<'a>(
     let Plan::V02(plan) = context.plan else {
         unreachable!()
     };
-    if !plan.joins.is_empty() || !plan.filters.is_empty() {
+    if !plan.joins.is_empty() {
         return Err(fail(
             "Application relational stages need original-definition lowering",
         ));
@@ -229,6 +229,51 @@ fn assemble_application<'a>(
     }
     let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
     let mut staged = parameters.clone();
+    let field_expression = |field: &app::Field| Expression::Field {
+        scan: field.scan.clone(),
+        identity: field.identity.clone(),
+        logical_type: field.logical_type.clone(),
+        span: field.span.clone(),
+    };
+    let mut filters = source.source.filters.clone();
+    for predicate in &plan.filters {
+        let app::Predicate::Equal { left, right } = predicate else {
+            return Err(fail(
+                "Application predicate requires its selected lowering bridge",
+            ));
+        };
+        let right = match right {
+            app::Value::Field { field } => field_expression(field),
+            app::Value::Literal {
+                value,
+                logical_type,
+                span,
+            } => Expression::Literal {
+                value: value.clone(),
+                logical_type: logical_type.clone(),
+                span: span.clone(),
+            },
+            app::Value::Parameter { .. } => {
+                return Err(fail("Named parameter needs its origin-preserving bridge"))
+            }
+        };
+        let expression = Expression::Equal {
+            left: Box::new(field_expression(left)),
+            right: Box::new(right),
+            logical_type: weft_core::ir::LogicalType {
+                family: weft_core::ir::Family::Boolean,
+                facets: serde_json::json!({}),
+                nullable: false,
+            },
+            span: left.span.clone(),
+        };
+        filters.push(crate::registered_access::render_expression(
+            &expression,
+            &prepared.accesses,
+            &mut staged,
+            &mut *native,
+        )?);
+    }
     let mut groups = BTreeMap::new();
     for field in &plan.groups {
         // This selected bridge preserves string carriers; numeric grouping
@@ -326,8 +371,8 @@ fn assemble_application<'a>(
         projections.join(", "),
         source.source.sql
     );
-    if !source.source.filters.is_empty() {
-        sql.push_str(&format!(" WHERE {}", source.source.filters.join(" AND ")));
+    if !filters.is_empty() {
+        sql.push_str(&format!(" WHERE {}", filters.join(" AND ")));
     }
     if !groups.is_empty() {
         sql.push_str(&format!(

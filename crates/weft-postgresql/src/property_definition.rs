@@ -1282,6 +1282,67 @@ mod tests {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":ordered.select.sql,"columns":ordered.select.columns,"checks":ordered.select.structural_checks.iter().cloned().chain(ordered.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":ordered.parameters})).unwrap()).unwrap();
         }
         application_plan.order.clear();
+        application_plan.filters = vec![weft_core::application_ir::Predicate::Equal {
+            left: application_plan.order.first().cloned().unwrap_or_else(|| {
+                weft_core::application_ir::Field {
+                    scan: application_plan.source.occurrence.clone(),
+                    identity: member.identity.clone(),
+                    logical_type: match &descriptors[0].shape {
+                        Shape::Scalar { logical_type } => logical_type.clone(),
+                        _ => unreachable!(),
+                    },
+                    span: Span { start: 0, end: 0 },
+                }
+            }),
+            right: weft_core::application_ir::Value::Literal {
+                value: "A".into(),
+                logical_type: match &descriptors[0].shape {
+                    Shape::Scalar { logical_type } => logical_type.clone(),
+                    _ => unreachable!(),
+                },
+                span: Span { start: 0, end: 0 },
+            },
+        }];
+        let filtered_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        let filtered = crate::select_definition::compile_with_registry(
+            &filtered_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, parameters| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Literal {
+                    value,
+                    logical_type,
+                    ..
+                } => Ok(format!(
+                    "{}::pg_catalog.text",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"use":"fixture-literal"})
+                    )?
+                )),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => panic!("Filtered fixture native operation"),
+            },
+        )
+        .unwrap();
+        assert_eq!(filtered.parameters.len(), 3);
+        assert_eq!(filtered.parameters[2].value, "A");
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_FILTER_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":filtered.select.sql,"columns":filtered.select.columns,"checks":filtered.select.structural_checks.iter().cloned().chain(filtered.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":filtered.parameters})).unwrap()).unwrap();
+        }
+        application_plan.filters.clear();
+
         application_plan.limit = None;
         application_plan.aggregate = true;
         application_plan.outputs = vec![weft_core::application_ir::Output {
