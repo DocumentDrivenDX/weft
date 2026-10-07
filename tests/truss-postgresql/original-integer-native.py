@@ -15,7 +15,9 @@ for case,tokens,corrupt,expected in [('empty',[],False,'__null__'),('exact',['18
  sql+='ROLLBACK;\n'
  out=subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-P','null=__null__','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode();rows=list(csv.reader(io.StringIO(out)))
  counts=[int(rows[i*2+1][0]) for i in range(len(e['checks']))];assert any(counts) if corrupt else not any(counts)
- if corrupt and case!='wrong-kind':assert counts[-1]>0 and not any(counts[:-1])
+ if corrupt and case!='wrong-kind':
+  domain=next(i for i,check in enumerate(e['checks']) if 'pg_input_is_valid' in check)
+  assert counts[domain]>0 and not any(count for i,count in enumerate(counts) if i!=domain)
  assert rows[2*len(counts):]==([] if corrupt else [['total'],[expected]])
  results.append({'case':case,'violations':counts,'result':expected,'queryExecuted':not corrupt,'sqlSha256':hashlib.sha256(sql.encode()).hexdigest()})
 receipt.write_text(json.dumps({'scope':'Original uint64 UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification','captureSha256':hashlib.sha256(raw).hexdigest(),'harnessSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'results':results},indent=2)+'\n');print('8 original uint64 SUM native cases passed.')

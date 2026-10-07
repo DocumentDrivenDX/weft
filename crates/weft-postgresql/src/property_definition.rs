@@ -1102,6 +1102,72 @@ mod tests {
             serde_json::to_value(&compiled.select.columns).unwrap(),
             serde_json::to_value(&application_compiled.select.columns).unwrap()
         );
+        fn scalar_native(
+            node: &weft_core::ir::Expression,
+            _: &[String],
+            access: Option<&crate::registered_access::Access<'_>>,
+            _: &mut crate::Parameters,
+        ) -> weft_core::error::Result<String> {
+            match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                _ => panic!("Public SUM must be comparator-owned"),
+            }
+        }
+        let backend = crate::original_backend::OriginalBackend::new(
+            &input,
+            record_registry,
+            properties,
+            comparisons,
+            scalar_native,
+        )
+        .unwrap();
+        let mut registry = weft_core::backend::Registry::default();
+        registry.register(backend).unwrap();
+        let mut target = weft_core::backend::Target {
+            backend_id: "truss.postgresql.original".into(),
+            backend_version: "0.1.0-candidate".into(),
+            profile_id: "pg17.9-candidate".into(),
+            allow_candidate: true,
+        };
+        let public = registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&application),
+                &target,
+                &input,
+            )
+            .unwrap();
+        assert_eq!(public.emission.sql, compiled.select.sql);
+        assert_eq!(
+            serde_json::to_value(&public.emission.columns).unwrap(),
+            serde_json::to_value(&compiled.select.columns).unwrap()
+        );
+        let public_checks: Vec<_> = public
+            .emission
+            .obligations
+            .iter()
+            .filter(|obligation| obligation.id.starts_with("truss.original.owner-"))
+            .map(|obligation| obligation.parameters["sql"].as_str().unwrap())
+            .collect();
+        assert_eq!(public_checks.len(), 3);
+        if let Ok(path) = std::env::var(format!("{capture}_PUBLIC")) {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"columns":public.emission.columns,"checks":public_checks,"parameters":public.emission.parameters})).unwrap()).unwrap();
+        }
+        target.allow_candidate = false;
+        assert!(registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&application),
+                &target,
+                &input
+            )
+            .is_err());
         if let Ok(path) = std::env::var(capture) {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"columns":compiled.select.columns,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":compiled.parameters})).unwrap()).unwrap();
         }

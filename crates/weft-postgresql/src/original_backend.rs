@@ -57,6 +57,7 @@ impl OriginalBackend {
                     | "type.decimal"
                     | "aggregate"
                     | "aggregate.count"
+                    | "sum"
                     | "order.asc"
                     | "limit"
                     | "value.presence"
@@ -66,7 +67,7 @@ impl OriginalBackend {
                     .language_profiles
                     .retain(|profile| profile.ir_version == "weft-ir/0.1.0");
             }
-            capability.logical_domain = serde_json::json!({"subset":"original-definition scalar relational plans; V02 equality joins/filters, direct scalar-root projection, COUNT and string grouping, ordering and bounded LIMIT"});
+            capability.logical_domain = serde_json::json!({"subset":"original-definition scalar relational plans; V02 equality joins/filters, direct scalar-root projection, COUNT/SUM and string grouping, ordering and bounded LIMIT"});
         }
         Ok(Self {
             manifest,
