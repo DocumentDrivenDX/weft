@@ -27,6 +27,36 @@ pub struct ValueAdmission {
     pub(crate) descriptors: Vec<Descriptor>,
 }
 impl ValueAdmission {
+    pub(crate) fn verify_leaf_codec_custody(&self) -> Result<()> {
+        let nodes = self.graph.value["nodes"]
+            .as_array()
+            .ok_or_else(|| fail("Original codec graph nodes missing"))?;
+        for (index, node) in nodes.iter().enumerate() {
+            if node["shape"]["kind"] != "scalar" {
+                continue;
+            }
+            let codec = self
+                .admitted_leaf_codecs
+                .get(
+                    node["nodeId"]
+                        .as_str()
+                        .ok_or_else(|| fail("Original scalar node identity missing"))?,
+                )
+                .ok_or_else(|| fail("Original scalar lacks captured codec"))?;
+            if self
+                .graph
+                .artifacts
+                .get(&format!("/nodes/{index}/codecDefinition"))
+                .map(Vec::as_slice)
+                != Some(codec.original_json.as_bytes())
+            {
+                return Err(fail(
+                    "Original scalar codec custody differs from captured meaning",
+                ));
+            }
+        }
+        Ok(())
+    }
     pub fn descriptors(&self) -> &[Descriptor] {
         &self.descriptors
     }
@@ -3416,6 +3446,90 @@ mod tests {
         )
         .unwrap();
         assert_eq!(row_accesses.len(), 1);
+
+        // Synthetic text custody exercises the admitted original-property gate;
+        // source/codec interpretation is explicitly supplied by this fixture.
+        let mut cells: [Option<String>; 23] = std::array::from_fn(|_| None);
+        for (index, text) in [
+            (0, "1"),
+            (1, "10"),
+            (3, "scalar"),
+            (4, "root"),
+            (8, "00"),
+            (9, "00"),
+            (10, "1"),
+            (11, "10"),
+            (12, "text"),
+            (13, "é  "),
+            (21, "00"),
+            (22, "00"),
+        ] {
+            cells[index] = Some(text.into());
+        }
+        let raw: Vec<Vec<Option<&str>>> = vec![cells.iter().map(Option::as_deref).collect()];
+        let native_rows = crate::row_custody::admit_tree_rows(
+            &raw,
+            &mut crate::row_custody::Budget {
+                remaining_cells: 100,
+                remaining_bytes: 10000,
+            },
+        )
+        .unwrap();
+        let native_tree = crate::row_custody::index_tree(
+            &native_rows,
+            "1",
+            "10",
+            &mut crate::row_custody::TreeBudget {
+                remaining_nodes: 10,
+                max_depth: 8,
+            },
+        )
+        .unwrap();
+        let make_budget = || crate::value_traversal::Budget {
+            remaining_nodes: 10,
+            remaining_key_bytes: 100,
+            remaining_members: 10,
+            max_depth: 8,
+        };
+        let native_body = crate::row_value_traversal::decode_property(
+            &row_properties[&registration],
+            &row_accesses[0],
+            &native_tree,
+            &mut make_budget(),
+            |node, row| {
+                assert_eq!(
+                    node.codec_bytes,
+                    row_properties[&registration].value.graph.artifacts["/nodes/0/codecDefinition"]
+                );
+                assert_eq!(row.bytes[&9], vec![0]);
+                Ok(())
+            },
+            |node, row| {
+                assert!(matches!(
+                    node.shape,
+                    crate::value_definition::LayoutShape::Scalar {
+                        family: "string",
+                        ..
+                    }
+                ));
+                Ok(json!(row.cells[13].as_deref().unwrap()))
+            },
+            |_, _| panic!("scalar has no fields"),
+            |_| panic!("scalar has no members"),
+        )
+        .unwrap();
+        assert_eq!(native_body, json!("é  "));
+        assert!(crate::row_value_traversal::decode_property(
+            &properties[&registration],
+            &row_accesses[0],
+            &native_tree,
+            &mut make_budget(),
+            |_, _| panic!("substituted original property reached observer"),
+            |_, _| panic!("substituted original property reached decoder"),
+            |_, _| panic!(),
+            |_| panic!(),
+        )
+        .is_err());
         let codec = row_properties[&registration]
             .value
             .graph

@@ -22,6 +22,37 @@ fn reserve(count: usize, budget: &mut Budget) -> Result<()> {
 /// Reconstruct an intermediate storage body, never a public logical envelope.
 /// Procedures receive original codec/presence/identity metadata and every native
 /// definition/source byte. Field-identity encoding is explicitly selected.
+pub fn decode_property(
+    property: &crate::property_definition::PropertyAdmission,
+    access: &crate::registered_access::Access<'_>,
+    tree: &TreeIndex<'_>,
+    budget: &mut Budget,
+    observe: impl FnMut(&LayoutNode<'_>, &TreeRow) -> Result<()>,
+    scalar: impl FnMut(&LayoutNode<'_>, &TreeRow) -> Result<Value>,
+    field: impl FnMut(&[u8], &Value) -> Result<bool>,
+    absent: impl FnMut(&MemberSlot<'_>) -> Result<()>,
+) -> Result<Value> {
+    access.verify_property(property)?;
+    if !matches!(access.location, crate::registered_access::Location::Row(_))
+        || !matches!(
+            property.home,
+            crate::property_definition::HomeAdmission::Row { .. }
+        )
+    {
+        return Err(fail(
+            "Native tree decoding requires original row-home access",
+        ));
+    }
+    crate::result_definition::property_column(property, 1, "weft_native_body")?;
+    property
+        .value
+        .graph
+        .verify_record_presence(&property.value.admitted_record_presence)?;
+    property.value.verify_leaf_codec_custody()?;
+    let layout = property.value.graph.layout()?;
+    decode(&layout, tree, budget, observe, scalar, field, absent)
+}
+/// Low-level traversal; callers that own admitted properties use decode_property.
 pub fn decode(
     layout: &Layout<'_>,
     tree: &TreeIndex<'_>,
