@@ -708,6 +708,31 @@ mod tests {
     }
     #[test]
     fn original_decimal_property_compiles_comparator_owned_sum() {
+        original_numeric_property_fixture(
+            "Orders",
+            "total",
+            "decimal",
+            json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
+            "WEFT_ORIGINAL_NUMERIC_CAPTURE",
+        );
+    }
+    #[test]
+    fn original_unsigned_property_compiles_comparator_owned_sum() {
+        original_numeric_property_fixture(
+            "Customer",
+            "id",
+            "integer",
+            json!({"kind":"unsigned-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast","range":"original-authored-unsigned-facets"}),
+            "WEFT_ORIGINAL_INTEGER_CAPTURE",
+        );
+    }
+    fn original_numeric_property_fixture(
+        record_name: &str,
+        member_name: &str,
+        family: &str,
+        strategy: Value,
+        capture: &str,
+    ) {
         use base64::{engine::general_purpose::STANDARD, Engine};
         use leaf_codec_definition::{
             Definition as Leaf, OriginalArtifact, Selection as LeafSelection,
@@ -724,8 +749,10 @@ mod tests {
             quoted: false,
             span: Span { start: 0, end: 0 },
         };
-        let record = catalog.record(None, &name("Orders")).unwrap();
-        let (member, descriptors) = catalog.member_descriptor(&record, &name("total")).unwrap();
+        let record = catalog.record(None, &name(record_name)).unwrap();
+        let (member, descriptors) = catalog
+            .member_descriptor(&record, &name(member_name))
+            .unwrap();
         let mut binding: Value = serde_json::from_str(
             cases[0]["request"]["target"]["bindingJson"]
                 .as_str()
@@ -746,7 +773,7 @@ mod tests {
             .unwrap();
         let artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
         let empty = artifact("fixture", b"{}");
-        let leaf = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored,"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":"decimal","storageRepresentation":"json-string","encoding":"preserve-admitted-source-token","decodedCarrierKind":"decimal","numericAdoptionEvidence":empty},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
+        let leaf = json!({"interfaceVersion":"truss-jsonb-leaf-codec/0.1.0","profile":pin,"authoredDefinition":authored,"sourceInterpretationProfile":pin,"sourceInterpretationDefinition":empty,"nativeDomainProfile":pin,"nativeDomainDefinition":empty,"rule":{"family":family,"storageRepresentation":"json-string","encoding":"preserve-admitted-source-token","decodedCarrierKind":family,"numericAdoptionEvidence":empty},"coercion":"none","readDefault":"none","invalidStoredValue":"complete-result-refusal"});
         let mut originals = BTreeMap::from([
             (
                 "authoredDefinition".into(),
@@ -787,7 +814,7 @@ mod tests {
             },
         )
         .unwrap();
-        let graph = json!({"interfaceVersion":"truss-value-definition/0.1.0","profile":pin,"rootNodeId":"root","acceptedDefinition":authored,"nodes":[{"nodeId":"root","authoredIdentity":member.identity,"authoredDefinition":authored,"codecProfile":pin,"codecDefinition":artifact("selected-leaf",leaf.original_json.as_bytes()),"shape":{"kind":"scalar","family":"decimal","storageRepresentation":"json-string"}}]});
+        let graph = json!({"interfaceVersion":"truss-value-definition/0.1.0","profile":pin,"rootNodeId":"root","acceptedDefinition":authored,"nodes":[{"nodeId":"root","authoredIdentity":member.identity,"authoredDefinition":authored,"codecProfile":pin,"codecDefinition":artifact("selected-leaf",leaf.original_json.as_bytes()),"shape":{"kind":"scalar","family":family,"storageRepresentation":"json-string"}}]});
         let schema: Value = serde_json::from_str(include_str!(
             "../../../tests/truss-postgresql/upstream/presence-definition.schema.json"
         ))
@@ -879,7 +906,7 @@ mod tests {
         let make_comparator = |value_artifact: Value,
                                graph_bytes: &[u8],
                                native_profile: &Value| {
-            let comparator = json!({"interfaceVersion":"truss-native-comparator/0.1.0","profile":pin,"valueDefinition":value_artifact,"sourceDomainDefinition":authored,"nativeDomainProfile":native_profile,"nativeDomainDefinition":empty,"operatorInventory":empty,"strategy":{"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"},"castOutcome":"exact-or-error","nullOperands":"refuse","absentOperands":"refuse","qualification":empty});
+            let comparator = json!({"interfaceVersion":"truss-native-comparator/0.1.0","profile":pin,"valueDefinition":value_artifact,"sourceDomainDefinition":authored,"nativeDomainProfile":native_profile,"nativeDomainDefinition":empty,"operatorInventory":empty,"strategy":strategy,"castOutcome":"exact-or-error","nullOperands":"refuse","absentOperands":"refuse","qualification":empty});
             let originals = BTreeMap::from([
                 (
                     "valueDefinition".into(),
@@ -936,7 +963,7 @@ mod tests {
         )]);
         let properties = BTreeMap::from([(registration.clone(), property)]);
         let (_, plan) = weft_core::prepare_and_resolve(
-            "SELECT SUM(o.total) AS total FROM Orders o",
+            &format!("SELECT SUM(o.{member_name}) AS total FROM {record_name} o"),
             catalog.inputs.clone(),
         )
         .unwrap();
@@ -1075,7 +1102,7 @@ mod tests {
             serde_json::to_value(&compiled.select.columns).unwrap(),
             serde_json::to_value(&application_compiled.select.columns).unwrap()
         );
-        if let Ok(path) = std::env::var("WEFT_ORIGINAL_NUMERIC_CAPTURE") {
+        if let Ok(path) = std::env::var(capture) {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"columns":compiled.select.columns,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":compiled.parameters})).unwrap()).unwrap();
         }
     }
