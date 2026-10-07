@@ -36,6 +36,9 @@ pub fn compile_with_registry<'a>(
         &mut Parameters,
     ) -> Result<String>,
 ) -> Result<Compilation> {
+    if let Plan::V02(plan) = context.plan {
+        verify_page_order(plan)?;
+    }
     let mut parameters = Parameters::default();
     let prepared = crate::registered_access::prepare(
         context,
@@ -863,5 +866,98 @@ mod cursor_bounds_tests {
             assert_eq!(result.unwrap_err().code, "WFT-LIMIT");
             assert!(parameters.into_slots().is_empty());
         }
+    }
+}
+
+fn verify_page_order(plan: &weft_core::application_ir::Plan) -> Result<()> {
+    use weft_core::application_ir as app;
+    let Some(key) = &plan.page_key else {
+        return Ok(());
+    };
+    let fail = || {
+        Diagnostic::new(
+            "WFT-BINDING",
+            "lower",
+            "Page order/cursor differs from complete original key",
+        )
+    };
+    let matches = |fields: &[app::Field]| {
+        fields.len() == key.fields.len()
+            && fields.iter().zip(key.fields.iter().zip(&key.types)).all(
+                |(field, (identity, logical))| {
+                    field.scan == plan.source.occurrence
+                        && &field.identity == identity
+                        && &field.logical_type == logical
+                },
+            )
+    };
+    if key.fields.is_empty()
+        || key.fields.len() != key.types.len()
+        || !matches(&plan.order)
+        || !plan.limit.is_some_and(|limit| (1..=1000).contains(&limit))
+    {
+        return Err(fail());
+    }
+    for predicate in &plan.filters {
+        if let app::Predicate::LexicographicGreater { columns, values } = predicate {
+            if !matches(columns) || values.len() != key.fields.len() {
+                return Err(fail());
+            }
+            for (value, logical) in values.iter().zip(&key.types) {
+                let actual = match value {
+                    app::Value::Literal { logical_type, .. }
+                    | app::Value::Parameter { logical_type, .. } => logical_type,
+                    _ => return Err(fail()),
+                };
+                if actual != logical {
+                    return Err(fail());
+                }
+            }
+        }
+    }
+    Ok(())
+}
+#[cfg(test)]
+mod page_order_tests {
+    use super::*;
+    use weft_core::{
+        application_ir as app, application_resolve, application_syntax, model::Catalog,
+    };
+    #[test]
+    fn authored_page_order_cannot_be_replaced_or_partially_compared() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let catalog = Catalog::prepare(
+            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap(),
+        )
+        .unwrap();
+        let plan = application_resolve::resolve(
+            &catalog,
+            application_syntax::parse("SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2").unwrap(),
+            BTreeMap::new(),
+            Some(app::ReadProfile {
+                version: "weft-application-read/0.2.0".into(),
+                subset: app::Subset::EntityPage,
+            }),
+        )
+        .unwrap();
+        verify_page_order(&plan).unwrap();
+        let mut wrong = plan.clone();
+        wrong.order.clear();
+        assert!(verify_page_order(&wrong).is_err());
+        let mut wrong = plan.clone();
+        wrong.order[0].scan = "foreign-scan".into();
+        assert!(verify_page_order(&wrong).is_err());
+        let mut wrong = plan.clone();
+        wrong.limit = None;
+        assert!(verify_page_order(&wrong).is_err());
+        let mut wrong = plan;
+        wrong.filters.push(app::Predicate::LexicographicGreater {
+            columns: vec![],
+            values: vec![],
+        });
+        assert!(verify_page_order(&wrong).is_err());
     }
 }

@@ -2168,3 +2168,10 @@ All 79 PostgreSQL crate tests passed (`/private/tmp/weft-composite-cursor-tests.
 Record admission now retains its original pinned Record. `verify_key_mapping` rechecks model/binding cuts, resolves the original authored key, compares complete resolved identity/field order/types, matches exactly one physical owner/key mapping, verifies accepted key bytes against the original Record and checks ordered property IDs. V02 one-call compilation invokes this check when a page key is selected. Encoding/comparison procedure admission and uniqueness enforcement remain separate; correspondence alone does not qualify paging.
 
 All 80 PostgreSQL crate tests passed (`/private/tmp/weft-key-correspondence-tests.log`). The application fixture's authored Record keys pass; substituted field identity and nullability/type fail. No native database or embedding run occurred. Full original-admitted page/cursor integration, selected physical key procedure meanings and public paging qualification remain required B-005 work.
+
+
+### Complete page-key order and cursor coupling (2026-10-07)
+
+Original one-call V02 compilation now checks page-key order before preparing physical accesses. Ordering must match the complete original source key's fields/types in order and remain on the source scan, with a bounded LIMIT. Cursor predicates must compare that same complete ordered key against matching typed literal/named values; field-valued or partial cursor tuples refuse. Original Record/physical mapping correspondence still follows independently. This prevents valid key metadata from accompanying a different paging operation.
+
+All 81 PostgreSQL crate tests passed (`/private/tmp/weft-page-order-tests.log`). A real application frontend-resolved entity page passes; removed order, substituted scan, missing LIMIT and incomplete cursor fail. No native database or embedding run occurred. Full original-admitted native page execution, physical key comparison/encoding procedure qualification and public paging capability remain required B-005 work.
