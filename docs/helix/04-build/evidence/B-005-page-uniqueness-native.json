@@ -1,0 +1,67 @@
+{
+  "scope": "Original uint64 entity-page full-owner uniqueness and numeric domain prerequisites over synthetic props rows; no production/key encoding qualification",
+  "captureSha256": "9647074f4b990a54e77c358e02e11e30866e423292866a42e2051dff9474720d",
+  "harnessSha256": "37b77bb73206e0f271b1a5837c56e23b874c8c782d43bb0ed4c55e67ff03b74a",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "9e6deb764fba14824779ec799d35a1ff3fffbe0eecb5b7b4af8c1e2a6a116376"
+    },
+    {
+      "case": "numeric-order",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "05b4b8ca259af95e5571024d1a014e985f39e27f75836b68f8f6875aeef75d7a"
+    },
+    {
+      "case": "hidden-by-limit",
+      "violations": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "56be4b33c54288a0640af7f3d3ce94ec9374cf1344c2ecd472b91d577f22d6f5"
+    },
+    {
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "5d91e3b41a252c811d28eb1dfa8c7012e73070bdc0dd8f9818a0dca86c2b6710"
+    },
+    {
+      "case": "invalid-key",
+      "violations": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ae9882df5e9ad067243c419e6427d2b97533f64e167f977c789d8d69d6571224"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/select_definition.rs": "f9526ce8b7b85ed5748e0fc20d8b58ecd4466643d10f83e22e333701d7623522",
+    "crates/weft-postgresql/src/native_comparator_definition.rs": "d26dfbee269e87d983180cedf44142a36ba9f298fe1600d4f7bc74da5e0da847"
+  },
+  "testLogSha256": "0d2392d5e2367c9464ada06e5d1903754820a23c290c2e209a84b83c44b45f0d"
+}

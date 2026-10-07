@@ -207,8 +207,7 @@ impl Definition {
     /// Native domain check only; original source-token grammar remains a
     /// separate selected host/codec obligation.
     pub fn numeric_domain_sql(&self, carrier: &str) -> Result<String> {
-        self.require(Operation::Sum)?;
-        let _ = self.sum_sql(carrier)?;
+        let _ = self.numeric_native_type()?;
         let value = format!("({carrier})::pg_catalog.numeric");
         let facets = &self.logical_type.facets;
         let bounds = match self.logical_type.family {
@@ -250,6 +249,10 @@ impl Definition {
     }
     pub fn sum_sql(&self, carrier: &str) -> Result<String> {
         self.require(Operation::Sum)?;
+        let native = self.numeric_native_type()?;
+        Ok(format!("pg_catalog.sum(({carrier})::{native})"))
+    }
+    fn numeric_native_type(&self) -> Result<&str> {
         let original = checked_json(&self.original_json)
             .map_err(|_| fail("Original comparator JSON refused"))?;
         if original["strategy"]["nativeType"] != self.native_type {
@@ -283,7 +286,7 @@ impl Definition {
             }
             _ => return Err(fail("SUM lacks its closed exact numeric native strategy")),
         };
-        Ok(format!("pg_catalog.sum(({carrier})::{native})"))
+        Ok(native)
     }
     pub fn require_type(&self, logical: &LogicalType) -> Result<()> {
         if &self.logical_type != logical {

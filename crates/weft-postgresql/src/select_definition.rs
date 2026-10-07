@@ -131,9 +131,15 @@ pub fn compile_with_registry<'a>(
         },
     )?;
     for requirement in crate::comparator_requirements::collect(context.plan)? {
-        if !requirement
+        if !matches!(
+            requirement.logical_type.family,
+            weft_core::ir::Family::Integer | weft_core::ir::Family::Decimal
+        ) || !(requirement
             .operations
             .contains(&crate::native_comparator_definition::Operation::Sum)
+            || requirement
+                .operations
+                .contains(&crate::native_comparator_definition::Operation::Key))
         {
             continue;
         }
@@ -179,6 +185,82 @@ pub fn compile_with_registry<'a>(
                 .clone();
             check.sql = format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",scan.source.sql,scan.source.filters.join(" AND "));
             select.payload_checks.push(check);
+        }
+    }
+    if let Plan::V02(plan) = context.plan {
+        if plan.page_key.is_some() {
+            let scan = prepared.scans.get(&plan.source.occurrence).ok_or_else(|| {
+                Diagnostic::new("WFT-BINDING", "lower", "Key owner source missing")
+            })?;
+            let before = serde_json::to_value(parameters.clone().into_slots()).map_err(|_| {
+                Diagnostic::new("WFT-BINDING", "lower", "Key parameter encoding refused")
+            })?;
+            let mut keys = Vec::new();
+            for field in &plan.order {
+                let expression = Expression::Field {
+                    scan: field.scan.clone(),
+                    identity: field.identity.clone(),
+                    logical_type: field.logical_type.clone(),
+                    span: field.span.clone(),
+                };
+                let sql = crate::registered_access::render_expression(
+                    &expression,
+                    &prepared.accesses,
+                    &mut parameters,
+                    &mut native,
+                )?;
+                if matches!(
+                    field.logical_type.family,
+                    weft_core::ir::Family::Integer | weft_core::ir::Family::Decimal
+                ) {
+                    let access = prepared
+                        .accesses
+                        .iter()
+                        .find(|access| access.scan == field.scan && access.field == field.identity)
+                        .ok_or_else(|| {
+                            Diagnostic::new("WFT-BINDING", "lower", "Key access missing")
+                        })?;
+                    let comparator = &comparators
+                        [&crate::comparator_requirements::registration_key(
+                            &access.owner,
+                            &field.identity,
+                        )];
+                    let raw = match &access.location {
+                        crate::registered_access::Location::Props(_) => access
+                            .scalar_storage
+                            .as_ref()
+                            .ok_or_else(|| {
+                                Diagnostic::new(
+                                    "WFT-BINDING",
+                                    "lower",
+                                    "Key scalar carrier missing",
+                                )
+                            })?
+                            .carrier
+                            .clone(),
+                        crate::registered_access::Location::Row(location) => {
+                            location.scalar_observation().native_numeric_text
+                        }
+                    };
+                    keys.push(format!(
+                        "CASE WHEN ({}) THEN ({sql}) ELSE NULL END",
+                        comparator.numeric_domain_sql(&raw)?
+                    ));
+                } else {
+                    keys.push(sql);
+                }
+            }
+            if serde_json::to_value(parameters.clone().into_slots()).map_err(|_| {
+                Diagnostic::new("WFT-BINDING", "lower", "Key parameter encoding refused")
+            })? != before
+            {
+                return Err(Diagnostic::new(
+                    "WFT-BINDING",
+                    "lower",
+                    "Key preflight changed prepared field parameters",
+                ));
+            }
+            select.structural_checks.push(format!("SELECT count(*) AS violations FROM (SELECT {} FROM {} WHERE {} GROUP BY {} HAVING pg_catalog.count(*)>1) AS weft_duplicate_keys",keys.join(", "),scan.source.sql,scan.source.filters.join(" AND "),keys.join(", ")));
         }
     }
     Ok(Compilation {
