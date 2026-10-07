@@ -2161,3 +2161,10 @@ All 78 PostgreSQL crate tests passed (`/private/tmp/weft-cursor-bridge-tests.log
 Added an admitted original two-scan string cursor fixture with independently named components. Its equality join produces a full owner bag so both greater-first-component and equal-prefix/greater-second-component branches are observable. Component parameter origins remain in tuple order after four owner/member slots. New bound tests prove empty, mismatched and 33-component tuples refuse before callbacks and return no parameter state.
 
 All 79 PostgreSQL crate tests passed (`/private/tmp/weft-composite-cursor-tests.log`). Fresh capture passed [three native PostgreSQL cases](B-005-composite-cursor-native.json): empty tuple-filtered bag, duplicate/Unicode bag compared independently with Python tuple greater-than, and malformed complete-owner preflight refusal. Receipt pins source/capture/harness/log. This supplies composite comparison primitive evidence, not authored unique page-key correspondence, numeric cursors or public paging qualification; those remain required B-005 work.
+
+
+### Original Record page-key correspondence (2026-10-07)
+
+Record admission now retains its original pinned Record. `verify_key_mapping` rechecks model/binding cuts, resolves the original authored key, compares complete resolved identity/field order/types, matches exactly one physical owner/key mapping, verifies accepted key bytes against the original Record and checks ordered property IDs. V02 one-call compilation invokes this check when a page key is selected. Encoding/comparison procedure admission and uniqueness enforcement remain separate; correspondence alone does not qualify paging.
+
+All 80 PostgreSQL crate tests passed (`/private/tmp/weft-key-correspondence-tests.log`). The application fixture's authored Record keys pass; substituted field identity and nullability/type fail. No native database or embedding run occurred. Full original-admitted page/cursor integration, selected physical key procedure meanings and public paging qualification remain required B-005 work.

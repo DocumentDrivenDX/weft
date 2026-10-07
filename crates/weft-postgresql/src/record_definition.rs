@@ -33,6 +33,7 @@ pub struct RecordAdmission {
     binding_sha256: String,
     catalog_id: String,
     mapping: OwnerMapping,
+    original_record: weft_core::model::Record,
 }
 impl RecordAdmission {
     pub fn admit(
@@ -102,6 +103,16 @@ impl RecordAdmission {
         // Entity Record mappings select object owners. Logical edge scans require
         // their separate association contract and cannot enter by discriminator.
         Ok(Self {
+            original_record: weft_core::model::Record {
+                identity: owner.clone(),
+                pin: input.pin.clone(),
+                value: record.clone(),
+                document: catalog
+                    .inputs
+                    .iter()
+                    .position(|candidate| candidate.pin == input.pin)
+                    .ok_or_else(|| fail("Record document index missing"))?,
+            },
             owner,
             model_pin: input.pin.clone(),
             binding_sha256: sha256(binding.original_json.as_bytes()),
@@ -115,6 +126,77 @@ impl RecordAdmission {
                 discriminator_column: Identifier::new("type_id")?,
             },
         })
+    }
+    /// Proves logical/original physical key correspondence only. Selected key
+    /// encoding/comparison procedures and uniqueness enforcement are separate.
+    pub fn verify_key_mapping(
+        &self,
+        binding: &Admission,
+        catalog: &Catalog,
+        key: &weft_core::application_model::AuthoredKey,
+    ) -> Result<()> {
+        if sha256(binding.original_json.as_bytes()) != self.binding_sha256 {
+            return Err(fail("Key binding cut differs from admitted Record"));
+        }
+        let input = catalog
+            .inputs
+            .get(self.original_record.document)
+            .ok_or_else(|| fail("Key original model input missing"))?;
+        if input.pin != self.model_pin
+            || sha256(input.document_json.as_bytes()) != self.model_pin.sha256
+        {
+            return Err(fail("Key model cut differs from admitted Record"));
+        }
+        let original = catalog.authored_key(&self.original_record, &key.id)?;
+        if serde_json::to_value(&original).map_err(|_| fail("Original key encoding refused"))?
+            != serde_json::to_value(key).map_err(|_| fail("Resolved key encoding refused"))?
+        {
+            return Err(fail(
+                "Resolved key order or types differ from original Record",
+            ));
+        }
+        let mappings: Vec<_> = binding.value["keys"]
+            .as_array()
+            .ok_or_else(|| fail("Key mappings missing"))?
+            .iter()
+            .enumerate()
+            .filter(|(_, mapping)| {
+                mapping["ownerTypeId"] == self.catalog_id && mapping["keyId"] == key.id
+            })
+            .collect();
+        if mappings.len() != 1 {
+            return Err(fail("Original key mapping missing or ambiguous"));
+        }
+        let (index, mapping) = mappings[0];
+        let authored = self.original_record.value["keys"]
+            .as_array()
+            .and_then(|keys| keys.iter().find(|value| value["id"] == key.id))
+            .ok_or_else(|| fail("Original key definition missing"))?;
+        if binding.decoded_json(&format!("/keys/{index}/acceptedDefinition"))? != *authored {
+            return Err(fail("Mapped key definition differs from original Record"));
+        }
+        let mut ids = Vec::new();
+        for field in &key.fields {
+            let properties: Vec<_> = binding.value["properties"]
+                .as_array()
+                .ok_or_else(|| fail("Key property mappings missing"))?
+                .iter()
+                .filter(|property| {
+                    property["ownerTypeId"] == self.catalog_id
+                        && property["logical"] == serde_json::json!(field)
+                })
+                .collect();
+            if properties.len() != 1 {
+                return Err(fail("Key property mapping missing or ambiguous"));
+            }
+            ids.push(properties[0]["propertyId"].clone());
+        }
+        if mapping["orderedPropertyIds"] != serde_json::json!(ids) {
+            return Err(fail(
+                "Physical key property order differs from original Record",
+            ));
+        }
+        Ok(())
     }
     pub fn identity(&self) -> &Identity {
         &self.owner
@@ -235,6 +317,80 @@ mod tests {
         application_ir as app, application_resolve, application_syntax,
         backend::{Backend, BindingInput, Selection as QuerySelection},
     };
+    #[test]
+    fn original_record_key_mapping_retains_authored_identity_order_and_types() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let catalog = Catalog::prepare(
+            serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap(),
+        )
+        .unwrap();
+        let raw = cases[0]["request"]["target"]["bindingJson"]
+            .as_str()
+            .unwrap();
+        let value = checked_json(raw).unwrap();
+        let admitted = Admission::parse(raw, value["bindingProfileId"].as_str().unwrap()).unwrap();
+        let home = admitted.original_home_definition(0).unwrap();
+        let relation = home["relationPhysicalIdentity"].as_str().unwrap();
+        let column = home["discriminatorColumnPhysicalIdentity"]
+            .as_str()
+            .unwrap();
+        let relations = BTreeMap::from([(relation.into(), "object".into())]);
+        let columns = BTreeMap::from([(
+            column.into(),
+            Column {
+                relation_identity: relation.into(),
+                name: "type_id".into(),
+            },
+        )]);
+        let inventory = OriginalArtifact {
+            identity: value["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: admitted.artifacts["/basis/layoutInventory"].clone(),
+        };
+        let mut checked = 0;
+        for index in 0..admitted.value["entities"].as_array().unwrap().len() {
+            let record = RecordAdmission::admit(
+                &admitted,
+                index,
+                &catalog,
+                Selection {
+                    inventory: &inventory,
+                    relation_identity: relation,
+                    discriminator_identity: column,
+                    relations: &relations,
+                    columns: &columns,
+                },
+            )
+            .unwrap();
+            if let Some(keys) = record.original_record.value["keys"].as_array() {
+                for original in keys {
+                    let key = catalog
+                        .authored_key(&record.original_record, original["id"].as_str().unwrap())
+                        .unwrap();
+                    record
+                        .verify_key_mapping(&admitted, &catalog, &key)
+                        .unwrap();
+                    let mut wrong = key.clone();
+                    wrong.fields[0].element = "foreign-field".into();
+                    assert!(record
+                        .verify_key_mapping(&admitted, &catalog, &wrong)
+                        .is_err());
+                    let mut wrong = key;
+                    wrong.types[0].nullable = true;
+                    assert!(record
+                        .verify_key_mapping(&admitted, &catalog, &wrong)
+                        .is_err());
+                    checked += 1;
+                }
+            }
+        }
+        assert!(checked > 0);
+    }
     #[test]
     fn fieldless_count_uses_original_record_and_refuses_late_missing_owner_atomically() {
         let cases: serde_json::Value = serde_json::from_str(include_str!(

@@ -44,6 +44,24 @@ pub fn compile_with_registry<'a>(
         comparators,
         &mut parameters,
     )?;
+    if let Plan::V02(plan) = context.plan {
+        if let Some(key) = &plan.page_key {
+            let record = records
+                .get(&serde_json::to_string(&plan.source.record).map_err(|_| {
+                    Diagnostic::new(
+                        "WFT-BINDING",
+                        "lower",
+                        "Page owner identity encoding refused",
+                    )
+                })?)
+                .ok_or_else(|| {
+                    Diagnostic::new("WFT-BINDING", "lower", "Page key lacks its admitted Record")
+                })?;
+            let binding =
+                crate::binding::Admission::parse(&context.binding.json, &context.binding.profile)?;
+            record.verify_key_mapping(&binding, context.catalog, key)?;
+        }
+    }
     let mut select = assemble(
         context,
         &prepared,
