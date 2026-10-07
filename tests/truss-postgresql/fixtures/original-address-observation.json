@@ -1,0 +1,22 @@
+{
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "originalRecursiveObservation": {
+          "documentId": "sales-fixture",
+          "element": "address",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        }
+      },
+      "position": 1,
+      "value": "[{\"kind\":\"structured\",\"nullable\":false,\"optional\":true,\"record\":1},{\"kind\":\"record\",\"members\":[{\"id\":2,\"name\":\"slot.0\"},{\"id\":3,\"name\":\"slot.1\"}],\"nullable\":false,\"optional\":false},{\"kind\":\"scalar\",\"nullable\":false,\"optional\":false},{\"kind\":\"scalar\",\"nullable\":false,\"optional\":true}]"
+    }
+  ],
+  "sql": "(WITH RECURSIVE g AS (SELECT d,(ord-1)::int AS id FROM pg_catalog.jsonb_array_elements($1::jsonb) WITH ORDINALITY AS graph(d,ord)), walk(v,id,depth) AS (SELECT (fixture.v)::jsonb,0::int,0 UNION ALL SELECT child.v,child.id,w.depth+1 FROM walk w JOIN g ON g.id=w.id CROSS JOIN LATERAL (SELECT w.v->(m->>'name'),(m->>'id')::int FROM pg_catalog.jsonb_array_elements(COALESCE(g.d->'members','[]'::jsonb)) m WHERE g.d->>'kind'='record' AND pg_catalog.jsonb_typeof(w.v)='object' UNION ALL SELECT item.v,(g.d->>'item')::int FROM pg_catalog.jsonb_array_elements(CASE WHEN g.d->>'kind'='sequence' AND pg_catalog.jsonb_typeof(w.v)='array' THEN w.v ELSE '[]'::jsonb END) item(v) UNION ALL SELECT item.v,(g.d->>'item')::int FROM pg_catalog.jsonb_each(CASE WHEN g.d->>'kind'='map' AND pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{}'::jsonb END) item(k,v) UNION ALL SELECT w.v,(g.d->>'record')::int WHERE g.d->>'kind'='structured' AND pg_catalog.jsonb_typeof(w.v)='object') child(v,id) WHERE w.depth<128) SELECT COALESCE(bool_and(w.depth<128 AND CASE WHEN w.v IS NULL THEN (g.d->>'optional')::bool WHEN w.v='null'::jsonb THEN (g.d->>'nullable')::bool ELSE CASE g.d->>'kind' WHEN 'scalar' THEN CASE w.id WHEN 2 THEN (TRUE AND pg_catalog.jsonb_typeof(w.v)='string') WHEN 3 THEN (TRUE AND pg_catalog.jsonb_typeof(w.v)='string') ELSE FALSE END WHEN 'sequence' THEN pg_catalog.jsonb_typeof(w.v)='array' WHEN 'map' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'structured' THEN pg_catalog.jsonb_typeof(w.v)='object' WHEN 'record' THEN pg_catalog.jsonb_typeof(w.v)='object' AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_object_keys(CASE WHEN pg_catalog.jsonb_typeof(w.v)='object' THEN w.v ELSE '{}'::jsonb END) keys(k) WHERE NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(g.d->'members') m WHERE m->>'name'=keys.k)) ELSE FALSE END END),FALSE) AND count(*)<=100000 FROM walk w JOIN g ON g.id=w.id)"
+}

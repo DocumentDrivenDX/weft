@@ -1,0 +1,111 @@
+{
+  "scope": "Original-topology recursive JSONB physical observation only; no public projection, complete-owner orchestration, logical decoding or production qualification",
+  "captureSha256": {
+    "tags": "62b30fb9225e5641b74e8e2afb6255480d368b735377e070767dc6427499afb2",
+    "address": "3ba90c48bf4c0c081deda86da9fd862451b964cc856675f96801ad4b52138fa3"
+  },
+  "harnessSha256": "9fef589fafe672ed8250bfb89e3b52802e4a6c66f07cb202de4984af41e4d5cf",
+  "results": [
+    {
+      "property": "tags",
+      "case": "exact",
+      "integrity": true,
+      "sqlSha256": "49c92bc783174442c43ddea25d754e6447d51687714e534fcceaa50a470e368a"
+    },
+    {
+      "property": "tags",
+      "case": "empty",
+      "integrity": true,
+      "sqlSha256": "bae39ca09cac6b262ac9d833fcf40ee936dcad06640dc405956cd4a51401e223"
+    },
+    {
+      "property": "tags",
+      "case": "number",
+      "integrity": false,
+      "sqlSha256": "96f2bfe3fb10228447a63b0f3ba05b250f69e17ebce9cea50f569071ea90b613"
+    },
+    {
+      "property": "tags",
+      "case": "null-leaf",
+      "integrity": false,
+      "sqlSha256": "0f530d86f07e57b616790814a825918e1e1ec071ed6ac5976211ec735163167d"
+    },
+    {
+      "property": "tags",
+      "case": "object",
+      "integrity": false,
+      "sqlSha256": "1c6c226a66380fda6595565a68df40fece6a271947460ed5c54466220168a0e7"
+    },
+    {
+      "property": "tags",
+      "case": "native-null",
+      "integrity": false,
+      "sqlSha256": "24d6022de64bf64c8d08306d97d054f68bd4a9866766fa4739dd779438e44879"
+    },
+    {
+      "property": "tags",
+      "case": "absent",
+      "integrity": false,
+      "sqlSha256": "9188ebb53edb7ecf5776238cef4e61e0dd929c7862b27809b5cb187b13d6f4e5"
+    },
+    {
+      "property": "address",
+      "case": "required",
+      "integrity": true,
+      "sqlSha256": "04cb0e922d098381d6ded5527f4ef670be03b2e026929baa24dc999feb4daecd"
+    },
+    {
+      "property": "address",
+      "case": "optional-present",
+      "integrity": true,
+      "sqlSha256": "f9431adb5adf049f49e930ea67607b52412b187d904998b160a5f41d4a7d5ab1"
+    },
+    {
+      "property": "address",
+      "case": "missing-required",
+      "integrity": false,
+      "sqlSha256": "eb42467cb7e32359159c10406ba70c92e3b9e9f62f25b898892b0d70aa22d646"
+    },
+    {
+      "property": "address",
+      "case": "null-leaf",
+      "integrity": false,
+      "sqlSha256": "73bdc6770b5c5e9f8190d09614c1e84ee21b427f17038750ffa57a0c98a0eb77"
+    },
+    {
+      "property": "address",
+      "case": "unknown",
+      "integrity": false,
+      "sqlSha256": "2f4e6cfc2b036e8e3d26e7d437e49342fc52a702fea08442504bce9bbd78a7ae"
+    },
+    {
+      "property": "address",
+      "case": "wrong-name",
+      "integrity": false,
+      "sqlSha256": "6c8d5f889814ce662e40968886c2b82aad9a8806ff36dd8be83ab58bb71149d1"
+    },
+    {
+      "property": "address",
+      "case": "array",
+      "integrity": false,
+      "sqlSha256": "c8bdf5d23eece525a7319fc63176220f1937daf77a105a9eaba9f81c54278758"
+    },
+    {
+      "property": "address",
+      "case": "native-null",
+      "integrity": false,
+      "sqlSha256": "b8a8d6e5f5da390cb1780026ae1af12bd28ddc6811357827fa46255554f7afb4"
+    },
+    {
+      "property": "address",
+      "case": "absent",
+      "integrity": true,
+      "sqlSha256": "2634569c3f19e408d87d1ec71ce94cd34004b4fb61e5f9f02dcd11e2912c404d"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/recursive_observation.rs": "0b96fa74dd2eb7245674a03cff578aeb7844c76010450632c30735a1f56f3e38",
+    "crates/weft-postgresql/src/property_definition.rs": "fcdb1bdc5ecfac5e7f839cdd2a3f4a99b34c06d8b155fd1b8c4a870f5c09871c"
+  },
+  "testLogSha256": "b43f46a95e98eaa8c5005d70ede1065faa6c92f9707a5955e1403e42e4b5c6b3"
+}

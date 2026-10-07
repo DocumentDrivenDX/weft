@@ -1513,6 +1513,17 @@ mod tests {
                     discriminator_column: crate::Identifier::new("type_id").unwrap(),
                 },
             };
+            let mut observation_parameters = crate::Parameters::default();
+            let observation = crate::recursive_observation::props(
+                &property,
+                "fixture.v",
+                &mut observation_parameters,
+            )
+            .unwrap();
+            assert_eq!(observation_parameters.clone().into_slots().len(), 1);
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_COMPOUND_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{member_name}-observation.json")),serde_json::to_vec_pretty(&json!({"sql":observation,"parameters":observation_parameters.into_slots()})).unwrap()).unwrap();
+            }
             let decode = |input: &Value| {
                 let mut budget = crate::value_traversal::Budget {
                     remaining_nodes: 100,
