@@ -1,0 +1,8 @@
+{
+  "scope": "Bounded private 23-cell complete-state custody parsing; no topology, original codec, logical reconstruction, embedding or production qualification",
+  "sourceSha256": "5ddad07ec41f1b5d92eafe80e97ce5b8ebfc077f692295dca8095dea8a3da3d8",
+  "nativeReceiptSha256": "154a0ea1c47b6a5f227de6ff048f034d4c879b9b613219fd9b26fe934765111f",
+  "testLogSha256": "35be446bd18e4c0bf1889a3f5091f853c7e841d28718bc8a446ac2a25ed2f42f",
+  "tests": 88,
+  "nativeBagsChecked": 10
+}

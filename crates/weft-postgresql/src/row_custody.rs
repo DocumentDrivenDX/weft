@@ -104,6 +104,73 @@ fn hex(raw: &str) -> Result<Vec<u8>> {
         .map(|pair| digit(pair[0]) * 16 + digit(pair[1]))
         .collect())
 }
+/// Private complete-state row. Native text and decoded byte custody coexist;
+/// topology, selected codecs and source meanings must be admitted separately.
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeRow {
+    pub cells: [Option<String>; 23],
+    pub bytes: std::collections::BTreeMap<usize, Vec<u8>>,
+}
+/// Admit a host-framed 23-cell bag with a whole-input allocation reservation.
+/// Duplicate/orphan rows remain intact for the subsequent structural gate.
+pub fn admit_tree_rows(rows: &[Vec<Option<&str>>], budget: &mut Budget) -> Result<Vec<TreeRow>> {
+    const BYTE_CELLS: [usize; 7] = [7, 8, 9, 19, 20, 21, 22];
+    if rows.iter().any(|row| row.len() != 23) {
+        return Err(fail("Native tree custody arity differs"));
+    }
+    let cell_count = rows
+        .len()
+        .checked_mul(23)
+        .ok_or_else(|| fail("Native tree cell count overflow"))?;
+    let mut byte_count = 0usize;
+    for row in rows {
+        for (i, cell) in row.iter().enumerate() {
+            let length = cell.map_or(0, str::len);
+            byte_count = byte_count
+                .checked_add(length)
+                .and_then(|n| n.checked_add(length))
+                .and_then(|n| {
+                    n.checked_add(if BYTE_CELLS.contains(&i) {
+                        length / 2
+                    } else {
+                        0
+                    })
+                })
+                .ok_or_else(|| fail("Native tree custody size overflow"))?;
+        }
+    }
+    if cell_count > budget.remaining_cells || byte_count > budget.remaining_bytes {
+        return Err(Diagnostic::new(
+            "WFT-LIMIT",
+            "decode",
+            "Native tree custody reservation exhausted",
+        ));
+    }
+    budget.remaining_cells -= cell_count;
+    budget.remaining_bytes -= byte_count;
+    let mut admitted = Vec::with_capacity(rows.len());
+    for row in rows {
+        for i in [0, 1, 2, 5, 10, 11] {
+            if let Some(value) = row[i] {
+                let parsed = value
+                    .parse::<i64>()
+                    .map_err(|_| fail("Native tree integer custody is invalid"))?;
+                if parsed.to_string() != value {
+                    return Err(fail("Native tree integer custody is noncanonical"));
+                }
+            }
+        }
+        let mut bytes = std::collections::BTreeMap::new();
+        for i in BYTE_CELLS {
+            if let Some(raw) = row[i] {
+                bytes.insert(i, hex(raw)?);
+            }
+        }
+        let cells = std::array::from_fn(|i| row[i].map(str::to_owned));
+        admitted.push(TreeRow { cells, bytes });
+    }
+    Ok(admitted)
+}
 /// Eight cells in custody_projection order; SQL NULL is None, never empty text.
 /// The host must separately admit framing, structural/payload preflight, complete
 /// visibility and source/native codec procedures. Numeric text is not parsed here.
@@ -193,6 +260,75 @@ mod tests {
         Budget {
             remaining_bytes: 4096,
             remaining_cells: 80,
+        }
+    }
+    #[test]
+    fn admits_all_ten_recorded_complete_state_native_bags() {
+        let receipt: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/B-005-row-tree-custody-native.json"
+        ))
+        .unwrap();
+        let cases = receipt["results"].as_array().unwrap();
+        assert_eq!(cases.len(), 10);
+        for case in cases {
+            let rows: Vec<Vec<Option<&str>>> = case["values"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|row| row.as_array().unwrap().iter().map(|v| v.as_str()).collect())
+                .collect();
+            let admitted = admit_tree_rows(&rows, &mut budget()).unwrap();
+            assert_eq!(
+                admitted.len(),
+                case["observedRows"].as_u64().unwrap() as usize
+            );
+            for (original, row) in rows.iter().zip(admitted) {
+                for (i, cell) in original.iter().enumerate() {
+                    assert_eq!(row.cells[i].as_deref(), *cell);
+                }
+            }
+        }
+    }
+    #[test]
+    fn tree_rows_reserve_whole_input_and_preserve_unknown_and_orphan_custody() {
+        let mut row = vec![None; 23];
+        row[10] = Some("1");
+        row[11] = Some("9007199254740993");
+        row[12] = Some("future-kind");
+        row[13] = Some("");
+        row[21] = Some("00ff");
+        let rows = vec![row.clone(), row.clone()];
+        let mut work = Budget {
+            remaining_bytes: 4096,
+            remaining_cells: 46,
+        };
+        let admitted = admit_tree_rows(&rows, &mut work).unwrap();
+        assert_eq!(admitted.len(), 2);
+        assert_eq!(work.remaining_cells, 0);
+        assert_eq!(admitted[0].cells[1], None);
+        assert_eq!(admitted[0].cells[13], Some("".into()));
+        assert_eq!(admitted[0].bytes[&21], vec![0, 255]);
+        assert_eq!(admitted[0], admitted[1]);
+        let mut limited = Budget {
+            remaining_bytes: 4096,
+            remaining_cells: 45,
+        };
+        assert_eq!(
+            admit_tree_rows(&rows, &mut limited).unwrap_err().code,
+            "WFT-LIMIT"
+        );
+        assert_eq!(limited.remaining_cells, 45);
+        row[21] = Some("0A");
+        let mut failed = Budget {
+            remaining_bytes: 4096,
+            remaining_cells: 23,
+        };
+        assert!(admit_tree_rows(&[row.clone()], &mut failed).is_err());
+        assert_eq!(failed.remaining_cells, 0);
+        row[21] = Some("00");
+        for token in ["01", "+1", "9223372036854775808"] {
+            row[11] = Some(token);
+            assert!(admit_tree_rows(&[row.clone()], &mut budget()).is_err());
         }
     }
     #[test]

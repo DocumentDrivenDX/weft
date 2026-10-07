@@ -26,5 +26,5 @@ for e in emissions:
    if row[1]=='11':assert row[15:17]==['18446744073709551615']*2 and row[21:23]==['0063','64']
   if case=='orphan-payload':assert any(row[1] is None and row[11]=='99' and row[13]=='' for row in bag)
   if case=='duplicate-payload':assert sum(row[1]=='11' for row in bag)==2
-  results.append({'kind':kind,'case':case,'observedRows':len(bag),'sqlSha256':hashlib.sha256(sql.encode()).hexdigest()})
+  results.append({'kind':kind,'case':case,'observedRows':len(bag),'values':bag,'sqlSha256':hashlib.sha256(sql.encode()).hexdigest()})
 Path('docs/helix/04-build/evidence/B-005-row-tree-custody-native.json').write_text(json.dumps({'scope':'Private complete-state native node/payload custody bag only; retains malformed duplicates/orphans without semantic admission or public result qualification','captureSha256':hashlib.sha256(raw).hexdigest(),'harnessSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'results':results},indent=2)+'\n');print('10 complete-state row custody native cases passed.')
