@@ -1176,6 +1176,79 @@ mod tests {
             serde_json::to_string(record_source.identity()).unwrap(),
             record_source,
         )]);
+        let scan = match &plan.root {
+            weft_core::ir::Node::Project { input, .. } => match input.as_ref() {
+                weft_core::ir::Node::Scan {
+                    occurrence,
+                    record,
+                    pin,
+                } => weft_core::application_ir::Scan {
+                    occurrence: occurrence.clone(),
+                    record: record.clone(),
+                    pin: pin.clone(),
+                },
+                _ => unreachable!(),
+            },
+            _ => unreachable!(),
+        };
+        let mut application_plan = weft_core::application_ir::Plan {
+            ir_version: "weft-ir/0.2.0".into(),
+            module_pins: plan.module_pins.clone(),
+            read_profile: None,
+            required_capabilities: vec![],
+            type_graph: descriptors.clone(),
+            source: scan.clone(),
+            page_key: None,
+            joins: vec![],
+            filters: vec![],
+            groups: vec![],
+            aggregate: false,
+            outputs: vec![weft_core::application_ir::Output {
+                name: "name".into(),
+                expression: weft_core::application_ir::Expression::Field {
+                    scan: scan.occurrence,
+                    identity: member.identity.clone(),
+                },
+            }],
+            order: vec![],
+            limit: None,
+        };
+        let application_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        let application_compiled = crate::select_definition::compile_with_registry(
+            &application_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |_, _, _, _| panic!("Direct application projection called native operator"),
+        )
+        .unwrap();
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_SELECT_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({
+                "sql": application_compiled.select.sql, "columns": application_compiled.select.columns,
+                "checks": application_compiled.select.structural_checks.iter().cloned().chain(application_compiled.select.payload_checks.iter().map(|check| check.sql.clone())).collect::<Vec<_>>(),
+                "parameters": application_compiled.parameters,
+            })).unwrap()).unwrap();
+        }
+        assert_eq!(application_compiled.select.columns.len(), 1);
+        assert!(application_compiled.select.sql.contains("AS \"name\""));
+        assert_eq!(application_compiled.parameters.len(), 2);
+        assert_eq!(application_compiled.select.payload_checks.len(), 1);
+        application_plan.limit = Some(1);
+        let application_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            ..context
+        };
+        assert!(crate::select_definition::compile_with_registry(
+            &application_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |_, _, _, _| panic!("Unimplemented stage called native operator"),
+        )
+        .is_err());
         let mut combined_parameters = crate::Parameters::default();
         let combined = crate::registered_access::prepare(
             &context,

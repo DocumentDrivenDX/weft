@@ -71,7 +71,7 @@ pub fn assemble<'a>(
     prepared.verify_context(context, parameters)?;
     let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
     let Plan::V01(plan) = context.plan else {
-        return Err(fail("Selected assembly requires the V01 plan bridge"));
+        return assemble_application(context, prepared, properties, comparators, parameters);
     };
     let Node::Project { input, outputs, .. } = &plan.root else {
         return Err(fail("SELECT requires its outer projection"));
@@ -108,11 +108,6 @@ pub fn assemble<'a>(
     }
     let mut projections = Vec::new();
     for (output, column) in outputs.iter().zip(&columns) {
-        if !matches!(column.representation, Representation::Scalar { .. }) {
-            return Err(fail(
-                "SELECT value requires its selected recursive result bridge",
-            ));
-        }
         if let Expression::Field { scan, identity, .. } = &output.expression {
             let access = prepared
                 .accesses
@@ -138,6 +133,11 @@ pub fn assemble<'a>(
             }
             projections.push(projection.sql);
             continue;
+        }
+        if !matches!(column.representation, Representation::Scalar { .. }) {
+            return Err(fail(
+                "SELECT value requires its selected recursive result bridge",
+            ));
         }
         let expression = crate::registered_access::render_expression(
             &output.expression,
@@ -171,5 +171,95 @@ pub fn assemble<'a>(
         columns,
         structural_checks,
         payload_checks,
+    })
+}
+
+/// Original-definition V02 field projections. Other relational stages require
+/// their selected lowering procedures and must never be silently discarded.
+fn assemble_application(
+    context: &Context<'_>,
+    prepared: &Prepared<'_>,
+    properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+    parameters: &mut Parameters,
+) -> Result<Select> {
+    use weft_core::application_ir as app;
+    let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
+    let Plan::V02(plan) = context.plan else {
+        unreachable!()
+    };
+    if !plan.joins.is_empty()
+        || !plan.filters.is_empty()
+        || !plan.groups.is_empty()
+        || plan.aggregate
+        || !plan.order.is_empty()
+        || plan.limit.is_some()
+    {
+        return Err(fail(
+            "Application relational stages need original-definition lowering",
+        ));
+    }
+    if prepared.scans.len() != 1 {
+        return Err(fail("Application projection scan inventory differs"));
+    }
+    let source = prepared
+        .scans
+        .get(&plan.source.occurrence)
+        .ok_or_else(|| fail("Application source lacks original scan admission"))?;
+    let columns = crate::result_definition::projection_columns(context, properties, comparators)?;
+    if columns.len() != plan.outputs.len() || columns.is_empty() {
+        return Err(fail("Application projection metadata arity differs"));
+    }
+    let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
+    let mut projections = Vec::new();
+    for (output, column) in plan.outputs.iter().zip(&columns) {
+        let app::Expression::Field { scan, identity } = &output.expression else {
+            return Err(fail(
+                "Application computed result needs original-definition lowering",
+            ));
+        };
+        let access = prepared
+            .accesses
+            .iter()
+            .find(|access| &access.scan == scan && &access.field == identity)
+            .ok_or_else(|| fail("Application output lacks exact prepared access"))?;
+        let property = properties
+            .get(&crate::comparator_requirements::registration_key(
+                &access.owner,
+                identity,
+            ))
+            .ok_or_else(|| fail("Application output lacks original property"))?;
+        let projection = crate::result_definition::property_projection(
+            property,
+            access,
+            column.position,
+            &column.output_name,
+        )?;
+        if serde_json::to_value(&projection.column)
+            .map_err(|_| fail("Application metadata encoding refused"))?
+            != serde_json::to_value(column)
+                .map_err(|_| fail("Application metadata encoding refused"))?
+        {
+            return Err(fail(
+                "Application original codec and result metadata differ",
+            ));
+        }
+        projections.push(projection.sql);
+    }
+    let mut sql = format!(
+        "SELECT {} FROM {}",
+        projections.join(", "),
+        source.source.sql
+    );
+    if !source.source.filters.is_empty() {
+        sql.push_str(&format!(" WHERE {}", source.source.filters.join(" AND ")));
+    }
+    // This branch allocates no parameters; prepared custody was verified above.
+    let _ = parameters;
+    Ok(Select {
+        sql,
+        columns,
+        payload_checks,
+        structural_checks: source.structural_check_sql.clone(),
     })
 }
