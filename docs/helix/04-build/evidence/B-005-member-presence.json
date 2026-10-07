@@ -1,0 +1,10 @@
+{
+  "scope": "Rust descriptor-driven member envelopes with captured original record presence and original scalar property entry-point evidence; no compound native or embedding qualification",
+  "sourceSha256": {
+    "crates/weft-postgresql/src/value_traversal.rs": "7799fcadbabbcd8c9aaa9883ce2bcc678a987622dc844eb9bd652570bbfc6165",
+    "crates/weft-postgresql/src/property_definition.rs": "f9ce39aa0f0bd25c83cbdf63ad9f7d12945927125704eec0044556a46b31b382",
+    "crates/weft-postgresql/src/presence_definition.rs": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75"
+  },
+  "testLogSha256": "bbf6fb0988ab98556adbc0c70b3d16f3d5787360fceb45b89b3cde4a49720b5f",
+  "tests": 85
+}

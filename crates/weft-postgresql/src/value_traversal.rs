@@ -40,6 +40,76 @@ pub fn decode_property_with_records(
     let layout = property.value.graph.layout()?;
     decode_with_records(&layout, value, budget, scalar, absent, record)
 }
+/// Default logical member bridge using captured original presence definitions.
+/// Leaf decoding remains selected by its original codec. Compound explicit null
+/// is refused until the model supplies an admitted nullable compound meaning.
+pub fn decode_admitted_logical_property(
+    property: &crate::property_definition::PropertyAdmission,
+    value: &Value,
+    budget: &mut Budget,
+    scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
+) -> Result<Value> {
+    property
+        .value
+        .graph
+        .verify_record_presence(&property.value.admitted_record_presence)?;
+    let verify_presence = |bytes: &[u8]| -> Result<()> {
+        if !property
+            .value
+            .admitted_record_presence
+            .values()
+            .any(|d| d.original_json.as_bytes() == bytes)
+        {
+            return Err(fail(
+                "Logical member lacks captured original presence meaning",
+            ));
+        }
+        Ok(())
+    };
+    decode_logical_property(
+        property,
+        value,
+        budget,
+        scalar,
+        |identity, bytes| {
+            verify_presence(bytes)?;
+            let descriptor = property
+                .value
+                .descriptors()
+                .iter()
+                .find(|d| serde_json::json!(d.identity) == *identity)
+                .ok_or_else(|| fail("Missing member lacks original descriptor"))?;
+            member_envelope(descriptor, None).map(|_| ())
+        },
+        |descriptor, bytes, value| {
+            verify_presence(bytes)?;
+            member_envelope(descriptor, value)
+        },
+    )
+}
+fn member_envelope(
+    descriptor: &weft_core::application_model::Descriptor,
+    value: Option<Value>,
+) -> Result<Value> {
+    use weft_core::application_model::Shape;
+    let required = match descriptor.availability.as_deref() {
+        Some("required") => true,
+        Some("absent-allowed") => false,
+        _ => return Err(fail("Logical member availability has no selected meaning")),
+    };
+    let nullable =
+        matches!(&descriptor.shape, Shape::Scalar { logical_type } if logical_type.nullable);
+    match value {
+        None if required => Err(fail("Required logical member is absent")),
+        None => Ok(serde_json::json!({"state":"absent"})),
+        Some(v) if v.is_null() && !nullable => {
+            Err(fail("Logical member null lacks authored permission"))
+        }
+        Some(v) if v.is_null() => Ok(serde_json::json!({"state":"null"})),
+        Some(v) if !required || nullable => Ok(serde_json::json!({"state":"value","value":v})),
+        Some(v) => Ok(v),
+    }
+}
 /// Decode storage bodies with original UMF logical member names. Selected
 /// member procedures own availability/null envelopes; this bridge only supplies
 /// the exact descriptor, original presence bytes and explicit decoded presence.
@@ -471,6 +541,62 @@ mod tests {
             .code,
             "WFT-LIMIT"
         );
+    }
+    #[test]
+    fn member_envelopes_distinguish_availability_and_authored_nullability() {
+        use weft_core::{
+            application_model::{Descriptor, Shape},
+            ir::{Family, Identity, LogicalType},
+        };
+        let mut d = Descriptor {
+            identity: Identity {
+                document_id: "d".into(),
+                revision: "1".into(),
+                module: "m".into(),
+                element: "f".into(),
+            },
+            availability: Some("required".into()),
+            shape: Shape::Scalar {
+                logical_type: LogicalType {
+                    family: Family::String,
+                    facets: json!({}),
+                    nullable: false,
+                },
+            },
+        };
+        assert_eq!(member_envelope(&d, Some(json!(""))).unwrap(), json!(""));
+        assert!(member_envelope(&d, None).is_err());
+        assert!(member_envelope(&d, Some(Value::Null)).is_err());
+        d.availability = Some("absent-allowed".into());
+        assert_eq!(
+            member_envelope(&d, None).unwrap(),
+            json!({"state":"absent"})
+        );
+        assert!(member_envelope(&d, Some(Value::Null)).is_err());
+        if let Shape::Scalar { logical_type } = &mut d.shape {
+            logical_type.nullable = true;
+        }
+        assert_eq!(
+            member_envelope(&d, Some(Value::Null)).unwrap(),
+            json!({"state":"null"})
+        );
+        assert_eq!(
+            member_envelope(&d, Some(json!("x"))).unwrap(),
+            json!({"state":"value","value":"x"})
+        );
+        d.availability = Some("required".into());
+        assert!(member_envelope(&d, None).is_err());
+        assert_eq!(
+            member_envelope(&d, Some(Value::Null)).unwrap(),
+            json!({"state":"null"})
+        );
+        d.shape = Shape::Sequence {
+            item: d.identity.clone(),
+        };
+        assert!(member_envelope(&d, Some(Value::Null)).is_err());
+        assert_eq!(member_envelope(&d, Some(json!([]))).unwrap(), json!([]));
+        d.availability = None;
+        assert!(member_envelope(&d, Some(json!([]))).is_err());
     }
     #[test]
     fn logical_record_names_and_presence_are_selected_from_original_descriptors() {

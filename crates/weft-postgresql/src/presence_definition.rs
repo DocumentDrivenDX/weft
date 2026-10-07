@@ -5,7 +5,7 @@ use weft_core::{
     error::{Diagnostic, Result},
     json::{checked_json, sha256},
 };
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Definition {
     pub original_json: String,
     pub accepted_definition: Vec<u8>,

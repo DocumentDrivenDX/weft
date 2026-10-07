@@ -19,6 +19,7 @@ pub struct Selection<'a> {
 }
 #[derive(Debug)]
 pub struct ValueAdmission {
+    pub(crate) admitted_record_presence: BTreeMap<String, presence_definition::Definition>,
     admitted_leaf_codecs: BTreeMap<String, leaf_codec_definition::Definition>,
     pub definition_artifact: Value,
     pub graph: Graph,
@@ -662,6 +663,7 @@ pub fn admit_value(
         ));
     }
     Ok(ValueAdmission {
+        admitted_record_presence: selected.record_presence.clone(),
         admitted_leaf_codecs: selected.leaf_codecs.clone(),
         definition_artifact: property["valueDefinition"].clone(),
         graph,
@@ -1512,6 +1514,22 @@ mod tests {
             json!("é  ")
         );
         assert_eq!(recursive_budget.remaining_nodes, 9);
+        assert_eq!(
+            crate::value_traversal::decode_admitted_logical_property(
+                &property,
+                &json!("é  "),
+                &mut recursive_budget,
+                |codec, family, representation, value| {
+                    assert_eq!(codec, leaves["root"].original_json.as_bytes());
+                    assert_eq!(family, "string");
+                    assert_eq!(representation, "json-string");
+                    Ok(value.clone())
+                }
+            )
+            .unwrap(),
+            json!("é  ")
+        );
+
         let mut parameters = crate::Parameters::default();
         let location = property
             .home
