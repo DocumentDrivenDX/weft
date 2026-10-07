@@ -1,6 +1,6 @@
 //! Bounded traversal of runtime JSONB values under original finite UMF topology.
 //! Leaf and member presence procedures remain explicitly selected callbacks.
-use crate::value_definition::{Layout, LayoutShape};
+use crate::value_definition::{Layout, LayoutShape, MemberSlot};
 use serde_json::{Map, Value};
 use weft_core::error::{Diagnostic, Result};
 pub struct Budget {
@@ -26,6 +26,20 @@ pub fn decode_property(
     let layout = property.value.graph.layout()?;
     decode(&layout, value, budget, scalar, absent)
 }
+/// Original-property entry point for logical record assembly. Recheck graph and
+/// descriptor custody before invoking any selected host procedure.
+pub fn decode_property_with_records(
+    property: &crate::property_definition::PropertyAdmission,
+    value: &Value,
+    budget: &mut Budget,
+    scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
+    absent: impl FnMut(&Value, &[u8]) -> Result<()>,
+    record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>) -> Result<Value>,
+) -> Result<Value> {
+    crate::result_definition::property_column(property, 1, "weft_recursive_body")?;
+    let layout = property.value.graph.layout()?;
+    decode_with_records(&layout, value, budget, scalar, absent, record)
+}
 /// Normalize a complete recursive value body, preserving literal stored names.
 /// Every runtime occurrence is visited even when metadata nodes are shared/cyclic.
 /// Scalar callbacks own original codec/type/facet/null semantics and allocation
@@ -35,13 +49,38 @@ pub fn decode(
     layout: &Layout<'_>,
     value: &Value,
     budget: &mut Budget,
+    scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
+    absent: impl FnMut(&Value, &[u8]) -> Result<()>,
+) -> Result<Value> {
+    decode_with_records(layout, value, budget, scalar, absent, |members| {
+        let mut object = Map::new();
+        for (member, value) in members {
+            if let Some(value) = value {
+                if object.insert(member.stored_name.into(), value).is_some() {
+                    return Err(fail("Repeated original record storage member"));
+                }
+            }
+        }
+        Ok(Value::Object(object))
+    })
+}
+/// Assemble every original record slot after its children have decoded. Missing
+/// slots have already passed the original presence callback and remain explicit
+/// here. Hosts can map storage names to authored identities/names and construct
+/// their selected member envelopes without revisiting or dropping slots.
+pub fn decode_with_records(
+    layout: &Layout<'_>,
+    value: &Value,
+    budget: &mut Budget,
     mut scalar: impl FnMut(&[u8], &str, &str, &Value) -> Result<Value>,
     mut absent: impl FnMut(&Value, &[u8]) -> Result<()>,
+    mut record: impl FnMut(Vec<(&MemberSlot<'_>, Option<Value>)>) -> Result<Value>,
 ) -> Result<Value> {
     enum Frame<'a> {
         Enter(usize, &'a Value, usize),
         Array(usize),
         Object(Vec<&'a str>),
+        Record(Vec<&'a MemberSlot<'a>>, Vec<bool>),
     }
     reserve_nodes(1, budget)?;
     let mut pending = vec![Frame::Enter(layout.root, value, 0)];
@@ -128,8 +167,12 @@ pub fn decode(
                                 absent(member.field_identity, member.presence_bytes)?;
                             }
                         }
-                        pending.push(Frame::Object(
-                            children.iter().map(|(name, _, _)| *name).collect(),
+                        pending.push(Frame::Record(
+                            members.iter().collect(),
+                            members
+                                .iter()
+                                .map(|member| values.contains_key(member.stored_name))
+                                .collect(),
                         ));
                         for (_, index, child) in children.into_iter().rev() {
                             pending.push(Frame::Enter(index, child, depth + 1));
@@ -144,6 +187,26 @@ pub fn decode(
                     .ok_or_else(|| fail("Incomplete sequence decode"))?;
                 let values = results.split_off(start);
                 results.push(Value::Array(values));
+            }
+            Frame::Record(members, present) => {
+                let count = present.iter().filter(|present| **present).count();
+                let start = results
+                    .len()
+                    .checked_sub(count)
+                    .ok_or_else(|| fail("Incomplete record decode"))?;
+                let mut values = results.split_off(start).into_iter();
+                let slots = members
+                    .into_iter()
+                    .zip(present)
+                    .map(|(member, present)| (member, if present { values.next() } else { None }))
+                    .collect();
+                let assembled = record(slots)?;
+                if !assembled.is_object() {
+                    return Err(fail(
+                        "Record assembler returned a non-object logical representation",
+                    ));
+                }
+                results.push(assembled);
             }
             Frame::Object(names) => {
                 let start = results
@@ -336,6 +399,66 @@ mod tests {
             .code,
             "WFT-LIMIT"
         );
+    }
+    #[test]
+    fn record_assembly_retains_original_order_identity_and_missing_slots() {
+        let first = json!({"element":"authored-first"});
+        let second = json!({"element":"authored-second"});
+        let layout = Layout {
+            root: 0,
+            nodes: vec![
+                LayoutNode {
+                    codec_bytes: b"record",
+                    shape: LayoutShape::Record {
+                        members: vec![
+                            MemberSlot {
+                                field_identity: &first,
+                                stored_name: "9.first",
+                                value_node: 1,
+                                presence_bytes: b"required-original",
+                            },
+                            MemberSlot {
+                                field_identity: &second,
+                                stored_name: "1.second",
+                                value_node: 1,
+                                presence_bytes: b"optional-original",
+                            },
+                        ],
+                    },
+                },
+                LayoutNode {
+                    codec_bytes: b"text",
+                    shape: LayoutShape::Scalar {
+                        family: "string",
+                        storage_representation: "json-string",
+                    },
+                },
+            ],
+        };
+        let decoded = decode_with_records(&layout, &json!({"9.first":"é  "}), &mut budget(),
+            |_,_,_,value| Ok(value.clone()),
+            |identity,presence| { assert_eq!(identity,&second); assert_eq!(presence,b"optional-original"); Ok(()) },
+            |slots| {
+                assert_eq!(slots.len(),2);
+                assert_eq!(slots[0].0.field_identity,&first);
+                assert_eq!(slots[0].0.presence_bytes,b"required-original");
+                assert_eq!(slots[1].0.field_identity,&second);
+                assert_eq!(slots[1].1,None);
+                Ok(json!({"logical-first":slots[0].1.as_ref().unwrap(),"logical-second":{"state":"absent"}}))
+            }).unwrap();
+        assert_eq!(
+            decoded,
+            json!({"logical-first":"é  ","logical-second":{"state":"absent"}})
+        );
+        assert!(decode_with_records(
+            &layout,
+            &json!({"9.first":"x"}),
+            &mut budget(),
+            |_, _, _, v| Ok(v.clone()),
+            |_, _| Ok(()),
+            |_| Ok(json!([]))
+        )
+        .is_err());
     }
     #[test]
     fn nested_wide_containers_charge_pending_work_before_leaf_callbacks() {

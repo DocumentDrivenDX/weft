@@ -1,0 +1,7 @@
+{
+  "scope": "Rust original-layout record assembly hook and original-property custody entry point; no recursive SQL/native/embedding qualification",
+  "sourceSha256": "0656ddca16ca9077a8bd515b8bd0010eea7ab37d3278daa155a17ab8238a0964",
+  "testLogSha256": "2e7374101f825fe875c74aa93f2333e8bca442bdaf7a191e772d8386a982c6c3",
+  "tests": 83,
+  "newCase": "original member order/identity/presence bytes, explicit missing slot, storage-to-logical name assembly, non-object assembler refusal"
+}
