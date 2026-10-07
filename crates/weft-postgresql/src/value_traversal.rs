@@ -43,19 +43,19 @@ pub fn decode(
         Array(usize),
         Object(Vec<&'a str>),
     }
+    reserve_nodes(1, budget)?;
     let mut pending = vec![Frame::Enter(layout.root, value, 0)];
     let mut results = Vec::new();
     while let Some(frame) = pending.pop() {
         match frame {
             Frame::Enter(index, value, depth) => {
-                if budget.remaining_nodes == 0 || depth > budget.max_depth {
+                if depth > budget.max_depth {
                     return Err(Diagnostic::new(
                         "WFT-LIMIT",
                         "decode",
                         "Recursive value traversal budget exhausted",
                     ));
                 }
-                budget.remaining_nodes -= 1;
                 let node = layout
                     .nodes
                     .get(index)
@@ -73,19 +73,14 @@ pub fn decode(
                         results.push(decoded);
                     }
                     LayoutShape::Structured { record } => {
+                        reserve_nodes(1, budget)?;
                         pending.push(Frame::Enter(*record, value, depth + 1))
                     }
                     LayoutShape::Sequence { item } => {
                         let values = value
                             .as_array()
                             .ok_or_else(|| fail("Sequence value is not an array"))?;
-                        if values.len() > budget.remaining_nodes {
-                            return Err(Diagnostic::new(
-                                "WFT-LIMIT",
-                                "decode",
-                                "Sequence child reservation exhausted",
-                            ));
-                        }
+                        reserve_nodes(values.len(), budget)?;
                         pending.push(Frame::Array(values.len()));
                         for child in values.iter().rev() {
                             pending.push(Frame::Enter(*item, child, depth + 1));
@@ -96,6 +91,7 @@ pub fn decode(
                             .as_object()
                             .ok_or_else(|| fail("Map value is not an object"))?;
                         reserve(values.len(), values.keys().map(String::as_str), budget)?;
+                        reserve_nodes(values.len(), budget)?;
                         pending.push(Frame::Object(values.keys().map(String::as_str).collect()));
                         for child in values.values().rev() {
                             pending.push(Frame::Enter(*item, child, depth + 1));
@@ -123,6 +119,7 @@ pub fn decode(
                             ));
                         }
                         reserve(values.len(), values.keys().map(String::as_str), budget)?;
+                        reserve_nodes(values.len(), budget)?;
                         let mut children = Vec::new();
                         for member in members {
                             if let Some(child) = values.get(member.stored_name) {
@@ -168,6 +165,18 @@ pub fn decode(
         return Err(fail("Recursive decode did not produce one complete value"));
     }
     Ok(results.pop().unwrap())
+}
+// Charge queued occurrences, rather than only visits. Shared/cyclic topology
+// cannot accumulate uncharged pending work through nested wide containers.
+fn reserve_nodes(count: usize, budget: &mut Budget) -> Result<()> {
+    budget.remaining_nodes = budget.remaining_nodes.checked_sub(count).ok_or_else(|| {
+        Diagnostic::new(
+            "WFT-LIMIT",
+            "decode",
+            "Recursive child reservation exhausted",
+        )
+    })?;
+    Ok(())
 }
 fn reserve<'a>(
     count: usize,
@@ -327,6 +336,45 @@ mod tests {
             .code,
             "WFT-LIMIT"
         );
+    }
+    #[test]
+    fn nested_wide_containers_charge_pending_work_before_leaf_callbacks() {
+        let layout = Layout {
+            root: 0,
+            nodes: vec![LayoutNode {
+                codec_bytes: b"sequence",
+                shape: LayoutShape::Sequence { item: 0 },
+            }],
+        };
+        let value = json!([[[], [], []], [], []]);
+        let mut limited = budget();
+        limited.remaining_nodes = 6;
+        let error = decode(
+            &layout,
+            &value,
+            &mut limited,
+            |_, _, _, _| panic!("no leaf"),
+            |_, _| panic!("no record"),
+        )
+        .unwrap_err();
+        assert_eq!(error.code, "WFT-LIMIT");
+        // Root and its three queued children consume four slots. The first
+        // nested three-child reservation refuses with only two slots left.
+        assert_eq!(limited.remaining_nodes, 2);
+        let mut exact = budget();
+        exact.remaining_nodes = 7;
+        assert_eq!(
+            decode(
+                &layout,
+                &value,
+                &mut exact,
+                |_, _, _, _| panic!("no leaf"),
+                |_, _| panic!("no record")
+            )
+            .unwrap(),
+            value
+        );
+        assert_eq!(exact.remaining_nodes, 0);
     }
     #[test]
     fn wide_repeated_values_and_literal_key_work_refuse_without_partial_success() {
