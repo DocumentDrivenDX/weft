@@ -61,7 +61,7 @@ The owner checkout `/Users/erik/Projects/truss` still contains the earlier
 partitioned-layout decision; its active design worktree
 `/private/tmp/claude-501/truss-spec-wt` proposes the flat `truss-layout 0.2`
 CONTRACT-001 and checked DDL. These are different physical profiles. B-005 must
-pin exact owner source hashes and approval; it cannot silently use a spike's names
+pin exact owner source hashes and version/status; it cannot silently use a spike's names
 or a comment/header version as evidence of inventory compatibility.
 
 The owner architecture assigns Rust lowering/emission to Weft and storage-profile,
@@ -120,3 +120,9 @@ candidate code or fixtures. Implement props and typed row-store access through
 explicit mapping/codec assessment; exercise the same resolved queries across
 both homes without changing logical UMF identities. Keep incomplete guarantees
 candidate or unsupported, never silently advertise the draft as production.
+
+## UMF storage-realization boundary (2026-10-07)
+
+UMF supplies schema meaning. The Truss backend consumes the documented UMF physical layout and logical-to-physical mapping, including catalog identifiers, property homes, value encodings, presence and join paths. Weft derives logical result descriptors and emits SQL/parameters/decoding instructions. Execution and authorization remain host responsibilities. Truss's runtime or decoder implementation is not a dependency for Weft's compiler; exact draft layout pins and native fixtures suffice for candidate implementation. Production claims require separate evidence.
+
+For required non-null native scalar roots, lower string to text_value, boolean to boolean_value text, and integer/decimal result carriers to original numeric_token. Do not substitute numeric_value's rendered spelling for exact token custody. Retain owner-wide structural/payload checks and exact original codec-byte correspondence separately from logical query filters. Full source/domain correctness is a stored-data/host obligation; compiler tests independently arrange conforming and corrupt storage. Optional/null/recursive roots require their documented representation paths and remain required work, not JSONB fallback. Current physical source pins are recorded in tests/truss-postgresql/upstream/storage-realization-pins.json.

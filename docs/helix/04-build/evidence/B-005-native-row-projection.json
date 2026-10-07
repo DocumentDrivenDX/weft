@@ -1,0 +1,31 @@
+{
+  "scope": "Original UMF property/binding/native-home direct scalar projection with owner-wide payload and original codec checks; synthetic object row storage, not source-domain, tree or host qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "63aebc91bc15e56864f524e6e8da6cd636a12f45c9c91053f7cf69360698078f",
+  "harnessSha256": "58ec8b94504ec0ac44a62ba07ed9e0945cc5c225ef8531d4314878fe493b0321",
+  "results": [
+    {
+      "id": "required-absent",
+      "violations": 1,
+      "queryExecuted": false,
+      "sqlSha256": "81fab23928b13e8a4815d171f6a1dbeb35a3e86fb352d4a0bdac60daa1f9a97a"
+    },
+    {
+      "id": "string-value",
+      "violations": 0,
+      "queryExecuted": true,
+      "sqlSha256": "b5d3f8eccd63f79473b806fc48099dc56d82f8410a9a46700a26cffe23760e93"
+    },
+    {
+      "id": "wrong-codec",
+      "violations": 1,
+      "queryExecuted": false,
+      "sqlSha256": "0d1397fc2139b03dd5ac664f74f80f4bdbb9d0b7a676691ccfd87bd3affcf16d"
+    }
+  ],
+  "sourcePins": {
+    "crates/weft-postgresql/src/result_definition.rs": "3e9d0d4f35e4aef9c98222c62904526dc312a8cbc7ec2fa9ca9c27e2cba2d1be",
+    "crates/weft-postgresql/src/property_definition.rs": "7fe10d9fce8df8fff1e37689d87d529fa95f8340e29a994e7e6b8f4a41eed6bf"
+  },
+  "rustTestLogSha256": "b7c4e72f7b63d259892bfb7e12f4a4ae49c3b6f89b763f0bc9db015e89ae9a4b"
+}

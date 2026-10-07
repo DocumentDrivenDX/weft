@@ -1542,6 +1542,33 @@ mod tests {
             )
             .unwrap();
         }
+        let row_projection = crate::result_definition::property_projection(
+            &row_properties[&registration],
+            &row_accesses[0],
+            1,
+            "name",
+        )
+        .unwrap();
+        assert!(row_projection.sql.contains("text_value"));
+        assert!(!row_projection.sql.contains("props"));
+        assert!(row_projection.payload_check_sql.contains("LEFT JOIN"));
+        assert!(row_projection.payload_check_sql.contains(&codec_hex));
+        if let Ok(path) = std::env::var("WEFT_NATIVE_ROW_PROJECTION_CAPTURE") {
+            let scan = crate::registered_access::scan_source(
+                match &plan.root {
+                    weft_core::ir::Node::Project { input, .. } => input,
+                    _ => panic!("fixture projection"),
+                },
+                &row_accesses,
+            )
+            .unwrap();
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({
+                "sql":format!("SELECT {} FROM {} WHERE {}",row_projection.sql,scan.source.sql,scan.source.filters.join(" AND ")),
+                "check":row_projection.payload_check_sql,"parameters":row_parameters.clone().into_slots(),
+                "codecHex":codec_hex,"ownerTypeId":row_properties[&registration].owner_catalog_id,
+                "propertyId":row_properties[&registration].property_catalog_id,
+            })).unwrap()).unwrap();
+        }
         let cells = [
             Some("true"),
             Some("string"),

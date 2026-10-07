@@ -95,19 +95,6 @@ pub fn property_projection(
             "Selected value needs its recursive/presence result bridge",
         ));
     }
-    let crate::registered_access::Location::Props(location) = &access.location else {
-        return Err(Diagnostic::new(
-            "WFT-CAPABILITY",
-            "emit",
-            "Native row projection needs its original source/codec result bridge",
-        ));
-    };
-    // Recompute from this property's captured codec; an access cannot substitute
-    // its own scalar carrier/template for another admitted source definition.
-    let storage = property
-        .value
-        .props_scalar_storage(location)?
-        .ok_or_else(|| fail("Scalar result lacks original scalar storage codec"))?;
     let codec_bytes = property
         .value
         .graph
@@ -118,15 +105,57 @@ pub fn property_projection(
         ))
         .ok_or_else(|| fail("Result lacks original codec bytes"))?
         .clone();
+    let (carrier, integrity, source) = match &access.location {
+        crate::registered_access::Location::Props(location) => {
+            let storage = property
+                .value
+                .props_scalar_storage(location)?
+                .ok_or_else(|| fail("Scalar result lacks original scalar storage codec"))?;
+            (
+                storage.carrier,
+                storage.storage_integrity,
+                access.owner_source.sql.clone(),
+            )
+        }
+        crate::registered_access::Location::Row(location) => {
+            if !matches!(
+                property.home,
+                crate::property_definition::HomeAdmission::Row { .. }
+            ) {
+                return Err(fail("Native projection differs from original row home"));
+            }
+            let Representation::Scalar { logical_type, .. } = &column.representation else {
+                unreachable!()
+            };
+            let observation = location.scalar_observation();
+            let carrier = match logical_type.family {
+                Family::String => observation.text.clone(),
+                Family::Boolean => format!("{}::pg_catalog.text", observation.boolean),
+                Family::Integer | Family::Decimal => observation.original_numeric_token.clone(),
+            };
+            let hex: String = codec_bytes
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect();
+            let integrity = format!(
+                "({} AND {} = '{}')",
+                observation.payload_integrity(logical_type.family.clone()),
+                observation.codec_bytes_hex,
+                hex
+            );
+            let source = format!("{} {}", access.owner_source.sql, location.joins.join(" "));
+            (carrier, integrity, source)
+        }
+    };
     Ok(ScalarProjection {
         sql: format!(
             "({})::pg_catalog.text AS {}",
-            storage.carrier,
+            carrier,
             crate::Identifier::new(output_name)?.sql()
         ),
         payload_check_sql: format!(
             "SELECT count(*) AS violations FROM {} WHERE {} AND ({}) IS DISTINCT FROM TRUE",
-            access.owner_source.sql, access.owner_source.discriminator, storage.storage_integrity
+            source, access.owner_source.discriminator, integrity
         ),
         codec_bytes,
         presence_bytes: property.value.presence.original_json.as_bytes().to_vec(),
