@@ -191,13 +191,19 @@ fn assemble_application(
     if !plan.joins.is_empty()
         || !plan.filters.is_empty()
         || !plan.groups.is_empty()
-        || plan.aggregate
         || !plan.order.is_empty()
         || plan.limit.is_some()
     {
         return Err(fail(
             "Application relational stages need original-definition lowering",
         ));
+    }
+    let count_only = plan
+        .outputs
+        .iter()
+        .all(|output| matches!(output.expression, app::Expression::Count { .. }));
+    if plan.aggregate != count_only {
+        return Err(fail("Application aggregate and projection stages differ"));
     }
     if prepared.scans.len() != 1 {
         return Err(fail("Application projection scan inventory differs"));
@@ -213,6 +219,21 @@ fn assemble_application(
     let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
     let mut projections = Vec::new();
     for (output, column) in plan.outputs.iter().zip(&columns) {
+        if let app::Expression::Count { logical_type } = &output.expression {
+            if logical_type.family != weft_core::ir::Family::Integer
+                || logical_type.nullable
+                || logical_type.facets != serde_json::json!({})
+            {
+                return Err(fail(
+                    "COUNT result differs from resolved exact integer contract",
+                ));
+            }
+            projections.push(format!(
+                "pg_catalog.count(*)::pg_catalog.text AS {}",
+                crate::Identifier::new(&column.output_name)?.sql()
+            ));
+            continue;
+        }
         let app::Expression::Field { scan, identity } = &output.expression else {
             return Err(fail(
                 "Application computed result needs original-definition lowering",

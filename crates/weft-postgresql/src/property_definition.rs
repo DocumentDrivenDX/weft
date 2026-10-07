@@ -1249,6 +1249,67 @@ mod tests {
             |_, _, _, _| panic!("Unimplemented stage called native operator"),
         )
         .is_err());
+        application_plan.limit = None;
+        application_plan.aggregate = true;
+        application_plan.outputs = vec![weft_core::application_ir::Output {
+            name: "count".into(),
+            expression: weft_core::application_ir::Expression::Count {
+                logical_type: weft_core::ir::LogicalType {
+                    family: weft_core::ir::Family::Integer,
+                    facets: json!({}),
+                    nullable: false,
+                },
+            },
+        }];
+        let count_selection = weft_core::backend::Selection {
+            records: vec![record.identity.clone()],
+            ..Default::default()
+        };
+        let count_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            selection: &count_selection,
+            ..context
+        };
+        let count_compiled = crate::select_definition::compile_with_registry(
+            &count_context,
+            &record_registry,
+            &BTreeMap::new(),
+            &BTreeMap::new(),
+            |_, _, _, _| panic!("Fieldless COUNT called a native field operator"),
+        )
+        .unwrap();
+        assert_eq!(count_compiled.parameters.len(), 1);
+        assert!(count_compiled.select.payload_checks.is_empty());
+        assert!(count_compiled.select.structural_checks.is_empty());
+        assert!(count_compiled
+            .select
+            .sql
+            .contains("pg_catalog.count(*)::pg_catalog.text"));
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_COUNT_CAPTURE") {
+            std::fs::write(
+                path,
+                serde_json::to_vec_pretty(&json!({
+                    "sql": count_compiled.select.sql, "columns": count_compiled.select.columns,
+                    "checks": [], "parameters": count_compiled.parameters,
+                }))
+                .unwrap(),
+            )
+            .unwrap();
+        }
+        application_plan.aggregate = false;
+        let wrong_count_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&application_plan),
+            selection: &count_selection,
+            ..context
+        };
+        assert!(crate::select_definition::compile_with_registry(
+            &wrong_count_context,
+            &record_registry,
+            &BTreeMap::new(),
+            &BTreeMap::new(),
+            |_, _, _, _| panic!("Invalid COUNT called native operator"),
+        )
+        .is_err());
         let mut combined_parameters = crate::Parameters::default();
         let combined = crate::registered_access::prepare(
             &context,

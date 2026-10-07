@@ -1,0 +1,28 @@
+{
+  "scope": "Captured Rust original-definition V02 COUNT assembly over synthetic table without property columns; not complete public backend, host or adopted Truss qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "278f1512a1e7250038c5dc07b87b234acf1601d3443bc71581ad21a265ef7095",
+  "harnessSha256": "5c47e2ecc3bb972b4ea368dab0358223045d00de29c71efa91c02936b4ff6b71",
+  "results": [
+    {
+      "id": "empty",
+      "count": 0,
+      "executedSqlSha256": "a5b36c63ad15d04204c08ded2fdfc2a5968830fe7d7479d5f2f84303bd1e63d1"
+    },
+    {
+      "id": "two-owners",
+      "count": 2,
+      "executedSqlSha256": "8683e79ea898c08fbf31d7f2c32ede1b28e9d854d7aa5858b577c60bcb0cdaa8"
+    },
+    {
+      "id": "duplicate-owner-bag",
+      "count": 5,
+      "executedSqlSha256": "6dba676bf0e2b82134dc0b4925208a5d6341524abbd4dfb0174357f062a2bbcc"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/select_definition.rs": "530da4a0997b332552aa9e49a071202ff371d86b360836c055b2173594162f10",
+    "crates/weft-postgresql/src/property_definition.rs": "fb0c27ad09e19a675ece9f6b716879cc5a4adba72602178a07a7be3f859db118"
+  },
+  "testLogSha256": "b200cf144ba144171987b93bac412c9e0c306095e12f07db3a3ecbe957ffbc8d"
+}
