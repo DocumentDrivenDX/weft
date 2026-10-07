@@ -116,14 +116,10 @@ impl Definition {
         })?;
         match object.get(member) {
             None => Ok(Presence::Absent),
-            Some(v) if v.is_null() => Err(Diagnostic::new(
-                if authored_nullable {
-                    "WFT-CAPABILITY"
-                } else {
-                    "WFT-OBLIGATION"
-                },
+            Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(
+                "WFT-OBLIGATION",
                 "decode",
-                "JSON null requires separately qualified authored/native-null semantics",
+                "Explicit JSON null violates original UMF nullability",
             )),
             Some(v) => Ok(Presence::Present(v)),
         }
@@ -172,8 +168,8 @@ mod tests {
             "WFT-OBLIGATION"
         );
         assert_eq!(
-            d.observe(Some(&root), "null", true).unwrap_err().code,
-            "WFT-CAPABILITY"
+            d.observe(Some(&root), "null", true).unwrap(),
+            Presence::Present(&root["null"])
         );
         for invalid in [None, Some(&Value::Null), Some(&json!([]))] {
             assert_eq!(
@@ -181,6 +177,35 @@ mod tests {
                 "WFT-OBLIGATION"
             );
         }
+    }
+    #[test]
+    fn authored_nullability_does_not_change_absence_empty_or_native_root_rules() {
+        let v = fixture();
+        let definition = Definition::parse(&v.to_string(), &v["profile"], b"{}").unwrap();
+        let root = json!({"null":null,"empty":"","false":false,"list":[],"map":{}});
+        for nullable in [false, true] {
+            assert_eq!(
+                definition
+                    .observe(Some(&root), "missing", nullable)
+                    .unwrap(),
+                Presence::Absent
+            );
+            for member in ["empty", "false", "list", "map"] {
+                assert_eq!(
+                    definition.observe(Some(&root), member, nullable).unwrap(),
+                    Presence::Present(&root[member])
+                );
+            }
+            assert!(definition.observe(None, "null", nullable).is_err());
+            assert!(definition
+                .observe(Some(&Value::Null), "null", nullable)
+                .is_err());
+        }
+        assert!(definition.observe(Some(&root), "null", false).is_err());
+        assert_eq!(
+            definition.observe(Some(&root), "null", true).unwrap(),
+            Presence::Present(&Value::Null)
+        );
     }
     #[test]
     fn altered_meaning_profile_or_original_source_refuses() {
