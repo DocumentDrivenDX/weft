@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-07",
+  "scope": "SQL native custody to original topology/path pairing, partial integrity observations",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "be934ac3e3643f4c4961e4d2620d41462b3e0c53b8c3f44af3e4d39cb0a93a01"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "875f0a42eda21b9582634766616346604c7da14682e6ec2c3c08804ff3be553e",
+    "crates/weft-postgresql/src/property_definition.rs": "b464098338ac6222806aa3a4f9188bc16bd72079a324efc34a7884acc76f97fb"
+  },
+  "nativeReceiptSha256": "a578e1a83dc23ab75a6aa2601af420d288e5b2850389faa2762d4002e8b39695",
+  "nativeCases": 28,
+  "limits": [
+    "Intermediate SQL mapping observations are not complete structural or semantic admission",
+    "No public logical carrier, owner-wide recursive payload gate or fresh embedding qualification",
+    "Depth/count observation does not establish bounded database allocation",
+    "Field identity encoding remains explicitly fixture selected"
+  ]
+}

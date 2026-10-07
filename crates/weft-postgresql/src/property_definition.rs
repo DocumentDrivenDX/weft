@@ -1984,11 +1984,12 @@ mod tests {
                 ),
                 row_property,
             )]);
+            let mut native_mapping_parameters = crate::Parameters::default();
             let row_accesses = crate::registered_access::lower_plan(
                 &row_context,
                 &row_properties,
                 &BTreeMap::new(),
-                &mut crate::Parameters::default(),
+                &mut native_mapping_parameters,
             )
             .unwrap();
             let row_property = row_properties.values().next().unwrap();
@@ -2017,7 +2018,6 @@ mod tests {
             )
             .unwrap();
             let layout = row_property.value.graph.layout().unwrap();
-            let mut native_mapping_parameters = crate::Parameters::default();
             let native_mapping = crate::row_tree_mapping::encode(
                 row_property,
                 &row_accesses[0],
@@ -2025,9 +2025,17 @@ mod tests {
                 |identity| Ok(serde_json::to_vec(identity).unwrap()),
             )
             .unwrap();
-            assert_eq!(native_mapping.topology_parameter, "$1");
+            assert_eq!(native_mapping.topology_parameter, "$4");
             assert!(!native_mapping.custody_sql.is_empty());
-            assert_eq!(native_mapping_parameters.clone().into_slots().len(), 1);
+            assert_eq!(native_mapping_parameters.clone().into_slots().len(), 4);
+            if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_WALK_CAPTURE") {
+                let crate::registered_access::Location::Row(location) = &row_accesses[0].location
+                else {
+                    unreachable!()
+                };
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-walk.json")),serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"sql":format!("SELECT {} AS mapping FROM {} {} WHERE {}",native_mapping.walk_sql,row_accesses[0].owner_source.sql,location.joins.join(" "),row_accesses[0].owner_source.discriminator),"parameters":native_mapping_parameters.clone().into_slots(),"propertyId":row_property.property_catalog_id,"ownerTypeId":row_property.owner_catalog_id})).unwrap()).unwrap();
+            }
+
             if fixture_name == "address"
                 || fixture_name == "cyclic"
                 || fixture_name == "numeric-address"

@@ -14,6 +14,8 @@ pub struct Mapping {
     pub topology_parameter: String,
     /// Private custody SQL, not the public value carrier.
     pub custody_sql: String,
+    /// Native rows paired with original topology and stored-member paths.
+    pub walk_sql: String,
 }
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "emit", message)
@@ -89,10 +91,49 @@ pub fn encode(
         json!({"root":layout.root,"nodes":packed}).to_string(),
         json!({"use":"original-native-tree-topology","property":property.identity}),
     )?;
+    let custody_sql = location.tree_custody();
+    let walk_sql = walk(&topology_parameter, &custody_sql);
     let mapping = Mapping {
         topology_parameter,
-        custody_sql: location.tree_custody(),
+        custody_sql,
+        walk_sql,
     };
     *parameters = staged;
     Ok(mapping)
+}
+
+fn walk(parameter: &str, custody: &str) -> String {
+    format!(
+        r#"(WITH RECURSIVE metadata AS (SELECT {parameter}::pg_catalog.jsonb AS v),
+    raw AS (SELECT x AS r FROM pg_catalog.jsonb_array_elements({custody}) x),
+    walk(r,i,path,depth) AS (
+      SELECT r,(metadata.v->>'root')::int,ARRAY[]::text[],0 FROM raw,metadata
+      WHERE r->>2 IS NULL AND r->>4='root' AND r->>1 IS NOT NULL
+      UNION ALL
+      SELECT child.r,next.i,w.path||next.key,w.depth+1
+      FROM walk w CROSS JOIN metadata
+      CROSS JOIN LATERAL (SELECT metadata.v->'nodes'->w.i->'shape' AS shape) original
+      CROSS JOIN LATERAL (SELECT CASE WHEN original.shape->>'kind'='structured'
+        THEN metadata.v->'nodes'->(original.shape->>'record')::int->'shape'
+        ELSE original.shape END AS shape) container
+      JOIN raw child ON child.r->>2=w.r->>1 AND child.r->>0=w.r->>0
+      CROSS JOIN LATERAL (
+        SELECT (container.shape->>'item')::int AS i,child.r->>5 AS key
+        WHERE container.shape->>'kind'='sequence' AND w.r->>3='sequence' AND child.r->>4='sequence'
+        UNION ALL SELECT (container.shape->>'item')::int,child.r->>6
+        WHERE container.shape->>'kind'='map' AND w.r->>3='map' AND child.r->>4='map'
+        UNION ALL SELECT (member->>'valueNode')::int,member->>'storedName'
+        FROM pg_catalog.jsonb_array_elements(COALESCE(container.shape->'members','[]'::jsonb)) member
+        WHERE container.shape->>'kind'='record' AND w.r->>3 IN ('structured','record')
+          AND child.r->>4='record' AND child.r->>7=member->>'identityHex'
+      ) next WHERE w.depth<128
+    )
+    SELECT pg_catalog.jsonb_build_object('rows',COALESCE((SELECT pg_catalog.jsonb_agg(
+      pg_catalog.jsonb_build_object('cells',r,'logicalNode',i,'path',path,'depth',depth) ORDER BY depth,path) FROM walk),'[]'::jsonb),
+      'unmatchedRows',(SELECT count(*) FROM raw)-(SELECT count(*) FROM walk),
+      'uniqueNodes',(SELECT count(*) FROM raw)=(SELECT count(DISTINCT (r->>0,r->>1)) FROM raw),
+      'matchingShapes',COALESCE((SELECT bool_and(CASE metadata.v->'nodes'->i->'shape'->>'kind'
+        WHEN 'scalar' THEN r->>3 IN ('scalar','null') ELSE r->>3=metadata.v->'nodes'->i->'shape'->>'kind' END) FROM walk,metadata),FALSE))
+    )"#
+    )
 }
