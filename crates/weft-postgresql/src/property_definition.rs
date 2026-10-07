@@ -1626,6 +1626,95 @@ mod tests {
         .is_err());
         assert!(atomic_parameters.into_slots().is_empty());
         let (_, self_plan) = weft_core::prepare_and_resolve("SELECT c.name AS left_name, d.name AS right_name FROM Customer c JOIN Customer d ON c.name = d.name",catalog.inputs.clone()).unwrap();
+        let (left_scan, right_scan) = match &self_plan.root {
+            weft_core::ir::Node::Project { input, .. } => match input.as_ref() {
+                weft_core::ir::Node::InnerJoin { left, right, .. } => {
+                    (left.as_ref(), right.as_ref())
+                }
+                _ => unreachable!(),
+            },
+            _ => unreachable!(),
+        };
+        let to_scan = |node: &weft_core::ir::Node| match node {
+            weft_core::ir::Node::Scan {
+                occurrence,
+                record,
+                pin,
+            } => weft_core::application_ir::Scan {
+                occurrence: occurrence.clone(),
+                record: record.clone(),
+                pin: pin.clone(),
+            },
+            _ => unreachable!(),
+        };
+        let mut join_plan = application_plan.clone();
+        join_plan.aggregate = false;
+        join_plan.groups.clear();
+        join_plan.order.clear();
+        join_plan.limit = None;
+        join_plan.source = to_scan(left_scan);
+        let right_scan = to_scan(right_scan);
+        let field = |scan: &String| weft_core::application_ir::Field {
+            scan: scan.clone(),
+            identity: member.identity.clone(),
+            logical_type: match &descriptors[0].shape {
+                Shape::Scalar { logical_type } => logical_type.clone(),
+                _ => unreachable!(),
+            },
+            span: Span { start: 0, end: 0 },
+        };
+        join_plan.outputs = vec![
+            weft_core::application_ir::Output {
+                name: "left_name".into(),
+                expression: weft_core::application_ir::Expression::Field {
+                    scan: join_plan.source.occurrence.clone(),
+                    identity: member.identity.clone(),
+                },
+            },
+            weft_core::application_ir::Output {
+                name: "right_name".into(),
+                expression: weft_core::application_ir::Expression::Field {
+                    scan: right_scan.occurrence.clone(),
+                    identity: member.identity.clone(),
+                },
+            },
+        ];
+        join_plan.joins = vec![weft_core::application_ir::Join {
+            on: vec![weft_core::application_ir::Predicate::Equal {
+                left: field(&join_plan.source.occurrence),
+                right: weft_core::application_ir::Value::Field {
+                    field: field(&right_scan.occurrence),
+                },
+            }],
+            right: right_scan,
+        }];
+        let join_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&join_plan),
+            ..context
+        };
+        let joined = crate::select_definition::compile_with_registry(
+            &join_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(format!(
+                    "({}) COLLATE \"C\"",
+                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
+                )),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => unreachable!(),
+            },
+        )
+        .unwrap();
+        assert_eq!(joined.select.structural_checks.len(), 2);
+        assert_eq!(joined.select.payload_checks.len(), 2);
+        assert_eq!(joined.parameters.len(), 4);
+        if let Ok(path) = std::env::var("WEFT_APPLICATION_JOIN_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":joined.select.sql,"columns":joined.select.columns,"checks":joined.select.structural_checks.iter().cloned().chain(joined.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":joined.parameters})).unwrap()).unwrap();
+        }
         let self_requests = match &self_plan.root {
             weft_core::ir::Node::Project { outputs, .. } => outputs
                 .iter()

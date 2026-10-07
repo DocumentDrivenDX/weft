@@ -201,11 +201,6 @@ fn assemble_application<'a>(
     let Plan::V02(plan) = context.plan else {
         unreachable!()
     };
-    if !plan.joins.is_empty() {
-        return Err(fail(
-            "Application relational stages need original-definition lowering",
-        ));
-    }
     if plan.limit.is_some_and(|limit| !(1..=1000).contains(&limit)) {
         return Err(fail("Application LIMIT is outside its resolved bounds"));
     }
@@ -216,7 +211,7 @@ fn assemble_application<'a>(
     if plan.aggregate != has_count || (!plan.aggregate && !plan.groups.is_empty()) {
         return Err(fail("Application aggregate and projection stages differ"));
     }
-    if prepared.scans.len() != 1 {
+    if prepared.scans.len() != 1 + plan.joins.len() {
         return Err(fail("Application projection scan inventory differs"));
     }
     let source = prepared
@@ -229,44 +224,54 @@ fn assemble_application<'a>(
     }
     let payload_checks = crate::result_definition::read_payload_observations(prepared, properties)?;
     let mut staged = parameters.clone();
-    let field_expression = |field: &app::Field| Expression::Field {
-        scan: field.scan.clone(),
-        identity: field.identity.clone(),
-        logical_type: field.logical_type.clone(),
-        span: field.span.clone(),
-    };
     let mut filters = source.source.filters.clone();
-    for predicate in &plan.filters {
-        let app::Predicate::Equal { left, right } = predicate else {
-            return Err(fail(
-                "Application predicate requires its selected lowering bridge",
-            ));
-        };
-        let right = match right {
-            app::Value::Field { field } => field_expression(field),
-            app::Value::Literal {
-                value,
-                logical_type,
-                span,
-            } => Expression::Literal {
-                value: value.clone(),
-                logical_type: logical_type.clone(),
-                span: span.clone(),
-            },
-            app::Value::Parameter { .. } => {
-                return Err(fail("Named parameter needs its origin-preserving bridge"))
+    let mut from = source.source.sql.clone();
+    let mut visible = std::collections::BTreeSet::from([plan.source.occurrence.clone()]);
+    for join in &plan.joins {
+        if !visible.insert(join.right.occurrence.clone()) || join.on.is_empty() {
+            return Err(fail("Join occurrence or condition inventory differs"));
+        }
+        let right = prepared
+            .scans
+            .get(&join.right.occurrence)
+            .ok_or_else(|| fail("Join lacks admitted original right source"))?;
+        filters.extend(right.source.filters.iter().cloned());
+        let mut conditions = Vec::new();
+        for predicate in &join.on {
+            let expression = application_equality(predicate)?;
+            let Expression::Equal { left, right, .. } = &expression else {
+                unreachable!()
+            };
+            for operand in [left.as_ref(), right.as_ref()] {
+                if let Expression::Field { scan, .. } = operand {
+                    if !visible.contains(scan) {
+                        return Err(fail("Join condition references a later scan"));
+                    }
+                }
             }
+            conditions.push(crate::registered_access::render_expression(
+                &expression,
+                &prepared.accesses,
+                &mut staged,
+                &mut *native,
+            )?);
+        }
+        let right_sql = if prepared.accesses.iter().any(|access| {
+            access.scan == join.right.occurrence
+                && matches!(access.location, crate::registered_access::Location::Row(_))
+        }) {
+            format!("({})", right.source.sql)
+        } else {
+            right.source.sql.clone()
         };
-        let expression = Expression::Equal {
-            left: Box::new(field_expression(left)),
-            right: Box::new(right),
-            logical_type: weft_core::ir::LogicalType {
-                family: weft_core::ir::Family::Boolean,
-                facets: serde_json::json!({}),
-                nullable: false,
-            },
-            span: left.span.clone(),
-        };
+        from = format!(
+            "({from} INNER JOIN {right_sql} ON {})",
+            conditions.join(" AND ")
+        );
+    }
+
+    for predicate in &plan.filters {
+        let expression = application_equality(predicate)?;
         filters.push(crate::registered_access::render_expression(
             &expression,
             &prepared.accesses,
@@ -366,11 +371,7 @@ fn assemble_application<'a>(
         }
         projections.push(projection.sql);
     }
-    let mut sql = format!(
-        "SELECT {} FROM {}",
-        projections.join(", "),
-        source.source.sql
-    );
+    let mut sql = format!("SELECT {} FROM {}", projections.join(", "), from);
     if !filters.is_empty() {
         sql.push_str(&format!(" WHERE {}", filters.join(" AND ")));
     }
@@ -415,6 +416,51 @@ fn assemble_application<'a>(
         sql,
         columns,
         payload_checks,
-        structural_checks: source.structural_check_sql.clone(),
+        structural_checks: prepared
+            .scans
+            .values()
+            .flat_map(|scan| scan.structural_check_sql.iter().cloned())
+            .collect(),
+    })
+}
+
+fn application_equality(predicate: &weft_core::application_ir::Predicate) -> Result<Expression> {
+    use weft_core::application_ir as app;
+    let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
+    let app::Predicate::Equal { left, right } = predicate else {
+        return Err(fail(
+            "Application predicate requires its selected lowering bridge",
+        ));
+    };
+    let field = |field: &app::Field| Expression::Field {
+        scan: field.scan.clone(),
+        identity: field.identity.clone(),
+        logical_type: field.logical_type.clone(),
+        span: field.span.clone(),
+    };
+    let right = match right {
+        app::Value::Field { field: value } => field(value),
+        app::Value::Literal {
+            value,
+            logical_type,
+            span,
+        } => Expression::Literal {
+            value: value.clone(),
+            logical_type: logical_type.clone(),
+            span: span.clone(),
+        },
+        app::Value::Parameter { .. } => {
+            return Err(fail("Named parameter needs its origin-preserving bridge"))
+        }
+    };
+    Ok(Expression::Equal {
+        left: Box::new(field(left)),
+        right: Box::new(right),
+        logical_type: weft_core::ir::LogicalType {
+            family: weft_core::ir::Family::Boolean,
+            facets: serde_json::json!({}),
+            nullable: false,
+        },
+        span: left.span.clone(),
     })
 }

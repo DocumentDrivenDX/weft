@@ -1,0 +1,46 @@
+{
+  "scope": "Captured original-definition V02 self-join and physical preflight over synthetic string JSONB rows; callback fixture only, no adopted codecs, native rows, recursive results or host qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "cf25001844ad8476cd4138af00153415e99cd2defb100390ecf39b0681eb4bbf",
+  "harnessSha256": "06e86dd74d48db8aaf97c80ded3392296438d9bb96ba29b60af7f2106967ac3b",
+  "results": [
+    {
+      "id": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4e9ca334c031a3435f249eaf9156eed7e0edb98d7cb68eab104eb56b231129eb"
+    },
+    {
+      "id": "duplicate-unicode-empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "5a80add9a12cfce829afc7384893bd0d9824bff5228e3ee0a52679d5489db4f0"
+    },
+    {
+      "id": "predicate-read-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5d214a0c4afc52d64abb144ea5209953fac251d4047f960b5b871df2c4f9b177"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/select_definition.rs": "d01d92a805f2a6a686a69e7e0f563272526ea1a6c0012d25b80e354caef23bcc",
+    "crates/weft-postgresql/src/property_definition.rs": "e2860a2a00a80635fd4bb5e47270d3785df0217dc92f479877259cd123f5d1a0"
+  },
+  "testLogSha256": "e07d3822f58f7ec8af7909ad95106ef67994d74ad63122b06e752d9c3e9ba541"
+}
