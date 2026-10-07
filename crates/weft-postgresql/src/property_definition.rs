@@ -1400,6 +1400,75 @@ mod tests {
             },
         )
         .unwrap();
+        let compiled = crate::select_definition::compile_with_registry(
+            &self_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |node, operands, access, _| match node {
+                weft_core::ir::Expression::Field { .. } => Ok(access
+                    .unwrap()
+                    .scalar_storage
+                    .as_ref()
+                    .unwrap()
+                    .carrier
+                    .clone()),
+                weft_core::ir::Expression::Equal { .. } => {
+                    Ok(format!("({} = {})", operands[0], operands[1]))
+                }
+                _ => panic!("fixture native operation"),
+            },
+        )
+        .unwrap();
+        if let Ok(path) = std::env::var("WEFT_REGISTRY_SELECT_CAPTURE") {
+            std::fs::write(path,serde_json::to_vec_pretty(&json!({
+                "sql":compiled.select.sql,"columns":compiled.select.columns,
+                "checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|observation|observation.sql.clone())).collect::<Vec<_>>(),
+                "parameters":compiled.parameters,
+            })).unwrap()).unwrap();
+        }
+        assert_eq!(compiled.select.sql, selected.sql);
+        assert_eq!(
+            serde_json::to_value(&compiled.parameters).unwrap(),
+            self_parameters_before
+        );
+        assert_eq!(
+            compiled.select.structural_checks,
+            selected.structural_checks
+        );
+        assert_eq!(
+            compiled
+                .select
+                .payload_checks
+                .iter()
+                .map(|check| &check.sql)
+                .collect::<Vec<_>>(),
+            selected
+                .payload_checks
+                .iter()
+                .map(|check| &check.sql)
+                .collect::<Vec<_>>()
+        );
+        assert!(crate::select_definition::compile_with_registry(
+            &self_context,
+            &BTreeMap::new(),
+            &properties,
+            &comparisons,
+            |_, _, _, _| panic!("Incomplete registry reached native callback"),
+        )
+        .is_err());
+        assert!(crate::select_definition::compile_with_registry(
+            &self_context,
+            &record_registry,
+            &properties,
+            &comparisons,
+            |_, _, _, _| Err(weft_core::error::Diagnostic::new(
+                "WFT-CAPABILITY",
+                "emit",
+                "Native operation refused"
+            )),
+        )
+        .is_err());
         if let Ok(path) = std::env::var("WEFT_SELECT_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({
                 "sql":selected.sql,"columns":selected.columns,

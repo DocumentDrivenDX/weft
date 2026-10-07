@@ -16,6 +16,42 @@ pub struct Select {
     pub structural_checks: Vec<String>,
     pub payload_checks: Vec<crate::result_definition::ReadPayloadObservation>,
 }
+/// Complete original-profile lowering output. Execution stays in the host.
+#[derive(Debug)]
+pub struct Compilation {
+    pub select: Select,
+    pub parameters: Vec<weft_core::backend::ParameterSlot>,
+}
+/// Assemble from exact registered original definitions in one operation. No
+/// caller-owned parameter state or detached preparation can escape on failure.
+pub fn compile_with_registry<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+    native: impl FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>,
+) -> Result<Compilation> {
+    let mut parameters = Parameters::default();
+    let prepared = crate::registered_access::prepare(
+        context,
+        records,
+        properties,
+        comparators,
+        &mut parameters,
+    )?;
+    let select = assemble(
+        context,
+        &prepared,
+        properties,
+        comparators,
+        &mut parameters,
+        native,
+    )?;
+    Ok(Compilation {
+        select,
+        parameters: parameters.into_slots(),
+    })
+}
 /// Parameters commit only after source, projection and prerequisite assembly.
 /// Returned checks must run under the selected host contract before publication.
 /// This does not qualify a native operator callback or a source/codec procedure.
