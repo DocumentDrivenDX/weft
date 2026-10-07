@@ -7,6 +7,7 @@ pub mod presence_definition;
 pub mod read_context_definition;
 pub mod recursive_observation;
 mod row_codec;
+pub mod row_tree_mapping;
 pub mod row_value_traversal;
 pub mod structured;
 mod tree;

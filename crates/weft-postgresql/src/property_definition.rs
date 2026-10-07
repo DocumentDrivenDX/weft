@@ -2017,6 +2017,49 @@ mod tests {
             )
             .unwrap();
             let layout = row_property.value.graph.layout().unwrap();
+            let mut native_mapping_parameters = crate::Parameters::default();
+            let native_mapping = crate::row_tree_mapping::encode(
+                row_property,
+                &row_accesses[0],
+                &mut native_mapping_parameters,
+                |identity| Ok(serde_json::to_vec(identity).unwrap()),
+            )
+            .unwrap();
+            assert_eq!(native_mapping.topology_parameter, "$1");
+            assert!(!native_mapping.custody_sql.is_empty());
+            assert_eq!(native_mapping_parameters.clone().into_slots().len(), 1);
+            if fixture_name == "address"
+                || fixture_name == "cyclic"
+                || fixture_name == "numeric-address"
+            {
+                let before =
+                    serde_json::to_value(native_mapping_parameters.clone().into_slots()).unwrap();
+                assert!(crate::row_tree_mapping::encode(
+                    row_property,
+                    &row_accesses[0],
+                    &mut native_mapping_parameters,
+                    |_| Ok(vec![])
+                )
+                .is_err());
+                assert_eq!(
+                    serde_json::to_value(native_mapping_parameters.clone().into_slots()).unwrap(),
+                    before
+                );
+            }
+            let before =
+                serde_json::to_value(native_mapping_parameters.clone().into_slots()).unwrap();
+            assert!(crate::row_tree_mapping::encode(
+                &property,
+                &row_accesses[0],
+                &mut native_mapping_parameters,
+                |_| panic!("substituted property must refuse before native identity encoding")
+            )
+            .is_err());
+            assert_eq!(
+                serde_json::to_value(native_mapping_parameters.into_slots()).unwrap(),
+                before
+            );
+
             let synthetic_cells = synthetic_native_tree(&layout, &stored);
             let native_receipt: Value = serde_json::from_str(include_str!(
                 "../../../docs/helix/04-build/evidence/B-005-original-recursive-row-native.json"
