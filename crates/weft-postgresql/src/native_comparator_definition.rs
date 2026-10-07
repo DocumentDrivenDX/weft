@@ -211,6 +211,15 @@ impl Definition {
         if original["strategy"]["nativeType"] != self.native_type {
             return Err(fail("SUM native type differs from original comparator"));
         }
+        let kind = match self.strategy {
+            Strategy::SignedInteger => "signed-integer",
+            Strategy::UnsignedInteger => "unsigned-integer",
+            Strategy::FiniteDecimal => "finite-decimal",
+            _ => return Err(fail("SUM has no numeric comparator strategy")),
+        };
+        if original["strategy"]["kind"] != kind {
+            return Err(fail("SUM strategy differs from original comparator"));
+        }
         let native = match self.strategy {
             Strategy::SignedInteger
                 if matches!(
@@ -341,6 +350,10 @@ mod tests {
                 definition.sum_sql("value").unwrap()
             );
             captures.push(json!({"name":name,"sql":sql}));
+            let original_strategy =
+                std::mem::replace(&mut definition.strategy, Strategy::SignedInteger);
+            assert!(definition.sum_sql("value").is_err());
+            definition.strategy = original_strategy;
             definition.native_type = "pg_catalog.float8".into();
             assert!(definition.sum_sql("value").is_err());
         }

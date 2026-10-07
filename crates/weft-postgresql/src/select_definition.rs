@@ -29,7 +29,12 @@ pub fn compile_with_registry<'a>(
     records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
     properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
     comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
-    native: impl FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>,
+    mut native: impl FnMut(
+        &Expression,
+        &[String],
+        Option<&Access<'a>>,
+        &mut Parameters,
+    ) -> Result<String>,
 ) -> Result<Compilation> {
     let mut parameters = Parameters::default();
     let prepared = crate::registered_access::prepare(
@@ -45,7 +50,64 @@ pub fn compile_with_registry<'a>(
         properties,
         comparators,
         &mut parameters,
-        native,
+        |node, operands, access, parameters| {
+            if let Expression::Sum { argument, .. } = node {
+                let Expression::Field {
+                    scan,
+                    identity,
+                    logical_type,
+                    ..
+                } = argument.as_ref()
+                else {
+                    return Err(Diagnostic::new(
+                        "WFT-CAPABILITY",
+                        "lower",
+                        "SUM requires its admitted original field argument",
+                    ));
+                };
+                let argument_access = prepared
+                    .accesses
+                    .iter()
+                    .find(|access| &access.scan == scan && &access.field == identity)
+                    .ok_or_else(|| {
+                        Diagnostic::new(
+                            "WFT-BINDING",
+                            "lower",
+                            "SUM argument lacks its exact prepared scan access",
+                        )
+                    })?;
+                let key = crate::comparator_requirements::registration_key(
+                    &argument_access.owner,
+                    identity,
+                );
+                let property = properties.get(&key).ok_or_else(|| {
+                    Diagnostic::new(
+                        "WFT-BINDING",
+                        "lower",
+                        "SUM lacks its original owned property",
+                    )
+                })?;
+                argument_access.verify_property(property)?;
+                let comparator = comparators.get(&key).ok_or_else(|| {
+                    Diagnostic::new(
+                        "WFT-BINDING",
+                        "lower",
+                        "SUM lacks its selected original comparator",
+                    )
+                })?;
+                comparator.require_type(logical_type)?;
+                if operands.len() != 1 {
+                    return Err(Diagnostic::new(
+                        "WFT-BINDING",
+                        "lower",
+                        "SUM operand arity differs",
+                    ));
+                }
+                comparator.sum_sql(&operands[0])
+            } else {
+                native(node, operands, access, parameters)
+            }
+        },
     )?;
     Ok(Compilation {
         select,
