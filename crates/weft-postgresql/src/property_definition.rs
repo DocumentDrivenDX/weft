@@ -1346,6 +1346,118 @@ mod tests {
             std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":compiled.select.sql,"columns":compiled.select.columns,"checks":compiled.select.structural_checks.iter().cloned().chain(compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":compiled.parameters})).unwrap()).unwrap();
         }
     }
+    fn synthetic_native_tree(
+        layout: &crate::value_definition::Layout<'_>,
+        body: &Value,
+    ) -> Vec<[Option<String>; 23]> {
+        use crate::value_definition::LayoutShape;
+        fn hex(bytes: &[u8]) -> String {
+            bytes.iter().map(|b| format!("{b:02x}")).collect()
+        }
+        fn visit(
+            layout: &crate::value_definition::Layout<'_>,
+            index: usize,
+            body: &Value,
+            parent: Option<usize>,
+            slot: &str,
+            key: Option<String>,
+            rows: &mut Vec<[Option<String>; 23]>,
+        ) {
+            let id = rows.len() + 1;
+            let node = &layout.nodes[index];
+            let mut row: [Option<String>; 23] = std::array::from_fn(|_| None);
+            row[0] = Some("1".into());
+            row[1] = Some(id.to_string());
+            row[2] = parent.map(|p| p.to_string());
+            row[4] = Some(slot.into());
+            if let Some(key) = key {
+                row[match slot {
+                    "sequence" => 5,
+                    "map" => 6,
+                    "record" => 7,
+                    _ => panic!(),
+                }] = Some(key);
+            }
+            row[8] = Some(hex(node.codec_bytes));
+            row[9] = Some(String::new());
+            let shape = if let LayoutShape::Structured { record } = node.shape {
+                &layout.nodes[record].shape
+            } else {
+                &node.shape
+            };
+            row[3] = Some(
+                match node.shape {
+                    LayoutShape::Structured { .. } => "structured",
+                    LayoutShape::Sequence { .. } => "sequence",
+                    LayoutShape::Map { .. } => "map",
+                    LayoutShape::Record { .. } => "record",
+                    LayoutShape::Scalar { .. } => "scalar",
+                }
+                .into(),
+            );
+            if let LayoutShape::Scalar { family, .. } = shape {
+                row[10] = Some("1".into());
+                row[11] = Some(id.to_string());
+                row[12] = Some(
+                    if *family == "integer" {
+                        "integer"
+                    } else {
+                        "text"
+                    }
+                    .into(),
+                );
+                if *family == "integer" {
+                    row[15] = Some(body.as_str().unwrap().into());
+                    row[16] = row[15].clone();
+                } else {
+                    row[13] = Some(body.as_str().unwrap().into());
+                }
+                row[21] = Some(hex(node.codec_bytes));
+                row[22] = Some(String::new());
+            }
+            rows.push(row);
+            match shape {
+                LayoutShape::Sequence { item } => {
+                    for (i, v) in body.as_array().unwrap().iter().enumerate() {
+                        visit(
+                            layout,
+                            *item,
+                            v,
+                            Some(id),
+                            "sequence",
+                            Some(i.to_string()),
+                            rows,
+                        )
+                    }
+                }
+                LayoutShape::Map { item } => {
+                    for (k, v) in body.as_object().unwrap() {
+                        visit(layout, *item, v, Some(id), "map", Some(k.clone()), rows)
+                    }
+                }
+                LayoutShape::Record { members } => {
+                    for member in members {
+                        if let Some(v) = body.get(member.stored_name) {
+                            visit(
+                                layout,
+                                member.value_node,
+                                v,
+                                Some(id),
+                                "record",
+                                Some(hex(&serde_json::to_vec(member.field_identity).unwrap())),
+                                rows,
+                            )
+                        }
+                    }
+                }
+                LayoutShape::Scalar { .. } => {}
+                _ => unreachable!(),
+            }
+        }
+        let mut rows = Vec::new();
+        visit(layout, layout.root, body, None, "root", None, &mut rows);
+        rows
+    }
     #[test]
     fn original_compound_properties_decode_storage_slots_into_logical_members() {
         use base64::{engine::general_purpose::STANDARD, Engine};
@@ -1782,6 +1894,206 @@ mod tests {
                 binding_value: &admitted.value,
                 selection: &selection,
             };
+            // Same original UMF graph, independently admitted complete native home.
+            let mut row_fixture = crate::row_join_definition::tests::fixture(false);
+            row_fixture.value["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+            row_fixture
+                .artifacts
+                .get_mut("layoutInventory")
+                .unwrap()
+                .identity = inventory.identity.clone();
+            let row_join =
+                crate::row_join_definition::tests::parse(&row_fixture.value, &row_fixture).unwrap();
+            let template: Value = serde_json::from_str(include_str!(
+                "../../../tests/truss-postgresql/fixtures/binding-row.json"
+            ))
+            .unwrap();
+            let mut home: Value = serde_json::from_slice(
+                &STANDARD
+                    .decode(
+                        template["properties"][0]["homeDefinition"]["bytesBase64"]
+                            .as_str()
+                            .unwrap(),
+                    )
+                    .unwrap(),
+            )
+            .unwrap();
+            home["access"] = json!("complete-value-tree");
+            home["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+            for (key, source) in [
+                ("ownerCatalogId", "ownerTypeId"),
+                ("propertyCatalogId", "propertyId"),
+                ("valueDefinition", "valueDefinition"),
+                ("presenceDefinition", "presenceDefinition"),
+            ] {
+                home[key] = binding["properties"][index][source].clone();
+            }
+            home["joinProfile"] = row_fixture.value["profile"].clone();
+            home["joinDefinition"] =
+                artifact("selected-row-join", row_join.original_json.as_bytes());
+            for (role, key) in [
+                ("state", "stateRelationPhysicalIdentity"),
+                ("node", "nodeRelationPhysicalIdentity"),
+                ("scalar", "scalarRelationPhysicalIdentity"),
+            ] {
+                home[key] = row_fixture.value[role]["relationPhysicalIdentity"].clone();
+            }
+            let mut row_binding = binding.clone();
+            row_binding["properties"][index]["home"] = json!("row");
+            row_binding["properties"][index]["homeDefinition"] =
+                artifact("selected-row-home", home.to_string().as_bytes());
+            let row_admission = Admission::parse(&row_binding.to_string(), &input.profile).unwrap();
+            let row_obligations =
+                BTreeSet::from([home["storedDomainObligation"].as_str().unwrap().to_string()]);
+            let row_property = admit_property(
+                &row_admission,
+                index,
+                &catalog,
+                &descriptors,
+                Selection {
+                    value_profile: &pin,
+                    presence_profile: &pin,
+                    leaf_codecs: &leaves,
+                    record_presence: &records,
+                },
+                PhysicalSelection {
+                    profile: &pin,
+                    inventory: &inventory,
+                    relations: &row_fixture.relations,
+                    columns: &row_fixture.columns,
+                    row_join: Some(&row_join),
+                    obligations: &row_obligations,
+                    edge_association: None,
+                },
+            )
+            .unwrap();
+            let row_input = weft_core::backend::BindingInput {
+                profile: input.profile.clone(),
+                sha256: sha256(row_admission.original_json.as_bytes()),
+                json: row_admission.original_json.clone(),
+            };
+            let row_context = weft_core::backend::Context {
+                binding: &row_input,
+                binding_value: &row_binding,
+                ..context
+            };
+            let row_properties = BTreeMap::from([(
+                crate::comparator_requirements::registration_key(
+                    &record.identity,
+                    &member.identity,
+                ),
+                row_property,
+            )]);
+            let row_accesses = crate::registered_access::lower_plan(
+                &row_context,
+                &row_properties,
+                &BTreeMap::new(),
+                &mut crate::Parameters::default(),
+            )
+            .unwrap();
+            let row_property = row_properties.values().next().unwrap();
+            let stored = match fixture_name {
+                "tags" => json!(["é  ", "1.a[0]", ""]),
+                "address" => json!({"slot.0":"é  "}),
+                "map" => json!({"1.a[0]":"é  ","":"","雪":"x"}),
+                "cyclic" => json!({"slot.0":"outer","slot.2":{"slot.0":"inner"}}),
+                "nested-sequence" => {
+                    json!([["9007199254740993", "18446744073709551615"], [], ["0"]])
+                }
+                "numeric-map" => json!({"9.a":"18446744073709551615","":"9007199254740993"}),
+                "numeric-address" => json!({"slot.0":"é  ","slot.1":"18446744073709551615"}),
+                _ => unreachable!(),
+            };
+            let expected = crate::value_traversal::decode_admitted_logical_property(
+                &property,
+                &stored,
+                &mut crate::value_traversal::Budget {
+                    remaining_nodes: 1000,
+                    remaining_key_bytes: 10000,
+                    remaining_members: 1000,
+                    max_depth: 32,
+                },
+                |_, _, _, v| Ok(v.clone()),
+            )
+            .unwrap();
+            let layout = row_property.value.graph.layout().unwrap();
+            let synthetic_cells = synthetic_native_tree(&layout, &stored);
+            let native_receipt: Value = serde_json::from_str(include_str!(
+                "../../../docs/helix/04-build/evidence/B-005-original-recursive-row-native.json"
+            ))
+            .unwrap();
+            let native_cases: Vec<_> = native_receipt["results"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter(|case| case["fixture"] == fixture_name)
+                .collect();
+            assert_eq!(native_cases.len(), 2);
+            for case in &native_cases {
+                assert_eq!(case["cells"], json!(synthetic_cells));
+            }
+            let cells: Vec<[Option<String>; 23]> =
+                serde_json::from_value(native_cases[0]["cells"].clone()).unwrap();
+            let borrowed = cells
+                .iter()
+                .map(|row| row.iter().map(Option::as_deref).collect())
+                .collect::<Vec<Vec<_>>>();
+            let native = crate::row_custody::admit_tree_rows(
+                &borrowed,
+                &mut crate::row_custody::Budget {
+                    remaining_cells: 10000,
+                    remaining_bytes: 1000000,
+                },
+            )
+            .unwrap();
+            let tree = crate::row_custody::index_tree(
+                &native,
+                "1",
+                "1",
+                &mut crate::row_custody::TreeBudget {
+                    remaining_nodes: 1000,
+                    max_depth: 32,
+                },
+            )
+            .unwrap();
+            let logical = crate::row_value_traversal::decode_logical_property(
+                row_property,
+                &row_accesses[0],
+                &tree,
+                &mut crate::value_traversal::Budget {
+                    remaining_nodes: 2000,
+                    remaining_key_bytes: 20000,
+                    remaining_members: 2000,
+                    max_depth: 32,
+                },
+                |node, row| {
+                    assert_eq!(row.bytes[&8], node.codec_bytes);
+                    Ok(())
+                },
+                |node, row| {
+                    if let crate::value_definition::LayoutShape::Scalar { family, .. } = node.shape
+                    {
+                        let token = if family == "integer" {
+                            let token = row.cells[16].as_deref().unwrap();
+                            token.parse::<u64>().unwrap();
+                            token
+                        } else {
+                            row.cells[13].as_deref().unwrap()
+                        };
+                        Ok(json!(token))
+                    } else {
+                        unreachable!()
+                    }
+                },
+                |bytes, identity| Ok(bytes == serde_json::to_vec(identity).unwrap()),
+            )
+            .unwrap();
+            assert_eq!(logical, expected, "native fixture {fixture_name}");
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_NATIVE_TREE_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{fixture_name}-native-tree.json")),
+                    serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"binding":row_binding,"cells":cells,"stored":stored,"logical":logical,"identityProcedure":"synthetic exact JSON bytes; not a Truss adopted encoding"})).unwrap()).unwrap();
+            }
+
             let properties = BTreeMap::from([(
                 crate::comparator_requirements::registration_key(
                     &record.identity,
