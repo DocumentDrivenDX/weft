@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-07",
+  "scope": "Bounded intermediate native tree reconstruction; selected host procedures interpret identity, absence and scalar custody. Public recursive row result support remains unfinished.",
+  "tests": {
+    "command": "cargo test -p weft-postgresql",
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "c2dd0ee8fe2e6c18af98d6d0aa14d9522339f73a3087d7310075ef2ea078107d"
+  },
+  "sourceSha256": "644fd399c8b938302b59587f2235a63da1f2280be78ad77dd1825abd5fb46535",
+  "nativeReceiptSha256": "154a0ea1c47b6a5f227de6ff048f034d4c879b9b613219fd9b26fe934765111f",
+  "evidence": [
+    "Recorded PostgreSQL sequence custody preserves exact uint64 token and original source observations",
+    "Selected record identity and original member absence callbacks",
+    "Ambiguous/unknown identity, inexact scalar result, queued-node and member-work budget refusal"
+  ],
+  "limits": [
+    "Record test changes recorded native cells into a synthetic structured tree; no new native structured SQL claim",
+    "No original property admission wrapper or public recursive row SQL/embedding qualification"
+  ]
+}
