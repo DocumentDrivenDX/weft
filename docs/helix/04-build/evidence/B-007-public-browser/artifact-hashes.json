@@ -1,0 +1,20 @@
+{
+  "buildFeatures": [
+    "test-third"
+  ],
+  "wasmBindgen": "0.2.105",
+  "files": [
+    {
+      "path": "/private/tmp/weft-b007-public-web/weft_wasm.js",
+      "sha256": "ba45ae58ec74d09f17a62529ffbcb621975fd515100f48f2100f2778db5b2745"
+    },
+    {
+      "path": "/private/tmp/weft-b007-public-web/weft_wasm_bg.wasm",
+      "sha256": "5299eee35f807699ecbd42230ea91df197c3fe73946caaa7f3f97766edf50cdf"
+    },
+    {
+      "path": "target/b004/wrapper/index.js",
+      "sha256": "a1ab5c00b11d7b615330b29c567f05ce5a2666ec2c542935cce0b08cba48a6db"
+    }
+  ]
+}

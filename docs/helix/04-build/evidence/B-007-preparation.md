@@ -191,3 +191,12 @@ lone surrogates refuse. B-007-public-python/ records wheel/extension hashes,
 actual runtime and build/run logs. The harness accepts explicit report/output
 paths and hashes the loaded extension. This macOS ARM64 execution does not
 qualify every Python version or architecture advertised by wheel metadata.
+
+The fresh test-third WASM build now passes all 1273 public compile cases in
+Chromium 148.0.7778.96 / Playwright 1.62.1 with exact CLI byte parity. The
+real-browser harness also checks no Node globals or runtime network calls and
+wrapper refusal/trap behavior. All 1273 fresh CLI responses validate against
+their own versioned response schemas. B-007-public-browser/ retains build/run/
+schema logs, actual runtime/import/memory reports and hashes for WASM, glue and
+the reused unchanged B-004 wrapper. This completes the fresh public fixture
+corpus CLI/Python/browser component; it is not target-engine qualification.
