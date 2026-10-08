@@ -19,6 +19,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
           "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
+          "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -40,6 +44,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
           "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
+          "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -65,6 +73,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-parser-boundaries/summary.json",
           "sha256": "05d0286922f2a3e1f2729aeb5e3f1052b79a86f7e30462b0107da3581d30c9cd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
+          "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -86,6 +98,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
           "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
+          "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."

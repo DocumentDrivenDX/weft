@@ -356,3 +356,13 @@ and the separate public envelope distribution: seven compiled fixture successes
 and 1266 authored refusals, including 608 BACKEND-MISSING cases. The 1273-case
 host parity count is consequently a public success/refusal boundary matrix, not
 1273 native target executions. Native backend evidence remains separately scoped.
+
+US-001's retained-plan audit explicitly checks customer/orders source identities,
+the order-total aggregate identity, ambiguous-source refusal and selection of the
+other-sales document by qualification. The independent Decimal/bag interpreter
+replays all 13 authored row expectations, including exact large totals, string
+filters and empty global/grouped aggregates. All 333 authored refusals match their
+diagnostic codes and contain no plan/SQL. B-007-resolution-audit/ records every
+case ID plus report/oracle hashes. This is saved-plan semantic reconciliation,
+not another compiler or native-engine run. The 1200 generated relational assertions
+remain separate evidence for broader deterministic bags.
