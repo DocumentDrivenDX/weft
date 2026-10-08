@@ -79,7 +79,11 @@ synthetic fixtures against pinned draft realization descriptions.
 This is partial evidence for US-003-AC1–AC3, not blanket acceptance. AC4 retains
 its own native host transport/policy/revision evidence requirements; the compiler
 reports obligations and cannot certify host enforcement or database state.
-Original optional/native-null scalar roots, whole-entity composition, broader
-query/domain coverage and fresh embedding of later original paths remain open
-compiler qualification work. Truss runtime implementation/adoption is not a
+Optional Unicode scalar roots and seven scalar/recursive whole-entity cuts now
+have synthetic native SQL and fresh Python/browser evidence. The test-only host
+orchestration suite adds 532 callback cases for preparation, pin/visibility and
+publication refusal. Native driver execution for these newer original paths,
+broader scalar/query domains, multiple recursive roots and full host/story
+qualification remain open. Native null is explicitly unsupported by the pinned
+profile and requires a separately admitted profile before any positive claim. Truss runtime implementation/adoption is not a
 compiler dependency. Production qualification remains separate.

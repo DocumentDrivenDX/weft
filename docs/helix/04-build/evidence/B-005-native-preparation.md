@@ -3229,3 +3229,23 @@ null remains unsupported by the pinned profile; broader scalar/query domains,
 entities with multiple recursive roots and complete host/story qualification
 remain B-005 work. This allowlist is a conformance facility, not a released generic
 backend registration or production compatibility claim.
+
+### Host obligation orchestration subset (2026-10-07)
+
+The test-only host executor in `host_obligation_fixture.py` consumes the emitted
+original entity obligations. Its independent tests were run before the executor
+existed (missing-module failure), then pass 532 cases across the twenty-eight
+whole-entity transports. Unknown obligations or context meanings, missing required
+context, mismatched guard parameters, changed binding/model/layout and incomplete
+visibility refuse before any SQL callback. Violations, null guard results and
+check errors prevent the data query. Data-query errors or authority/pin/visibility
+changes at publication prevent buffered results from escaping. Successful paths
+execute every preparation check before the query and recheck context afterward;
+exact numeric text is returned unchanged.
+
+Receipt: [B-005-host-obligation-orchestration.json](B-005-host-obligation-orchestration.json).
+This is injected host callback evidence, not a native driver, real authorization,
+transaction isolation, descriptor decoding or production host claim. The host
+must supply transaction-affine trusted callbacks; database execution remains
+outside the compiler. Native transport with these newer original paths and full
+host/story qualification remain open.

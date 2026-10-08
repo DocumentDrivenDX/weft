@@ -1,0 +1,6534 @@
+{
+  "scope": "Test-only host orchestration using independent injected driver/context callbacks; no native driver, storage or production host qualification",
+  "cases": 532,
+  "sourceHashes": {
+    "tests/truss-postgresql/host-obligation-check.py": "d1170e6750f0d1bb1552e51c047589a37cfa838d82c583f2a16ddf769dcbe6dd",
+    "tests/truss-postgresql/host_obligation_fixture.py": "039392ade9f35355c981d6a1c1420729a349d3f9b5050dcd62030121796c9af1"
+  },
+  "results": [
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "valid",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "unknown-obligation",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "missing-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "missing-complete-context",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-parameter-mismatch",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-binding",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-model",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "changed-layout",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "hidden-state",
+      "events": [
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-violation",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-null",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "guard-error",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "query-error",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "model-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "layout-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false
+    }
+  ]
+}
