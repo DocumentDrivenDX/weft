@@ -1,0 +1,612 @@
+{
+  "auditVersion": "weft-acceptance-audit/0.1.0",
+  "status": "in-progress",
+  "criteria": [
+    {
+      "id": "US-001-AC1",
+      "requiredAssertion": "Identity-qualified plan; duplicate join rows contribute to SUM.",
+      "plannedTest": "join_group_sum",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002-frontend.md",
+          "sha256": "2101c8f1bf37d0d7656b1bee547464281985d3fe17d573211b7ed68588ff28f4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-initial-oracle/summary.json",
+          "sha256": "70db5a16e08e2727e269d6b272465a978783a0e5ae5ab81950b68a94dbff200e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
+          "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+    },
+    {
+      "id": "US-001-AC2",
+      "requiredAssertion": "Distinct identities; no fallback to first match.",
+      "plannedTest": "module_name_resolution",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002-frontend.md",
+          "sha256": "2101c8f1bf37d0d7656b1bee547464281985d3fe17d573211b7ed68588ff28f4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-initial-oracle/summary.json",
+          "sha256": "70db5a16e08e2727e269d6b272465a978783a0e5ae5ab81950b68a94dbff200e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
+          "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+    },
+    {
+      "id": "US-001-AC3",
+      "requiredAssertion": "Unsupported nodes never pass from parser to lowering.",
+      "plannedTest": "dialect_refusals",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002-frontend.md",
+          "sha256": "2101c8f1bf37d0d7656b1bee547464281985d3fe17d573211b7ed68588ff28f4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-initial-oracle/summary.json",
+          "sha256": "70db5a16e08e2727e269d6b272465a978783a0e5ae5ab81950b68a94dbff200e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
+          "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+    },
+    {
+      "id": "US-001-AC4",
+      "requiredAssertion": "Exact independent result bags and nullable empty SUM.",
+      "plannedTest": "relational_exactness",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002-frontend.md",
+          "sha256": "2101c8f1bf37d0d7656b1bee547464281985d3fe17d573211b7ed68588ff28f4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-initial-oracle/summary.json",
+          "sha256": "70db5a16e08e2727e269d6b272465a978783a0e5ae5ab81950b68a94dbff200e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-relational/summary.json",
+          "sha256": "8f157f0df04c72602c76e508739ed93e13451977bb2c676fad7bdff17c94ee8d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+    },
+    {
+      "id": "US-002-AC1",
+      "requiredAssertion": "No frontend backend-ID switch; explicit registry selection.",
+      "plannedTest": "third_backend_registration",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
+          "sha256": "f64fd1974335474c6d83cc2d3c025c961ea0cc1d2185502313a84c45990ae7fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace/summary.json",
+          "sha256": "59c1ca6a0ab3f0f62265f7978be52306383b334927e042962d0aa88d798ab495"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+    },
+    {
+      "id": "US-002-AC2",
+      "requiredAssertion": "No fallback; missing manifest/interface versions identify refusal.",
+      "plannedTest": "capability_negotiation",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
+          "sha256": "f64fd1974335474c6d83cc2d3c025c961ea0cc1d2185502313a84c45990ae7fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace/summary.json",
+          "sha256": "59c1ca6a0ab3f0f62265f7978be52306383b334927e042962d0aa88d798ab495"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+    },
+    {
+      "id": "US-002-AC3",
+      "requiredAssertion": "Candidate cannot masquerade as verified conformance.",
+      "plannedTest": "candidate_qualification",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
+          "sha256": "f64fd1974335474c6d83cc2d3c025c961ea0cc1d2185502313a84c45990ae7fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace/summary.json",
+          "sha256": "59c1ca6a0ab3f0f62265f7978be52306383b334927e042962d0aa88d798ab495"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+    },
+    {
+      "id": "US-002-AC4",
+      "requiredAssertion": "Injection/version/failure guards; trusted registration only.",
+      "plannedTest": "plugin_trust_boundary",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
+          "sha256": "f64fd1974335474c6d83cc2d3c025c961ea0cc1d2185502313a84c45990ae7fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace/summary.json",
+          "sha256": "59c1ca6a0ab3f0f62265f7978be52306383b334927e042962d0aa88d798ab495"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+    },
+    {
+      "id": "US-003-AC1",
+      "requiredAssertion": "Native prepared SQL and independent exact result agreement.",
+      "plannedTest": "truss_native_corpus",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+    },
+    {
+      "id": "US-003-AC2",
+      "requiredAssertion": "Stable property identities; storage ID is not logical key.",
+      "plannedTest": "truss_mapping_boundaries",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+    },
+    {
+      "id": "US-003-AC3",
+      "requiredAssertion": "Selected unknown/native unsupported meanings remain explicit.",
+      "plannedTest": "truss_semantic_refusals",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+    },
+    {
+      "id": "US-003-AC4",
+      "requiredAssertion": "No default JSON/float decoding; context obligations observable.",
+      "plannedTest": "truss_host_obligations",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+    },
+    {
+      "id": "US-004-AC1",
+      "requiredAssertion": "Exact native corpus comparison; no smaller-engine substitute.",
+      "plannedTest": "ashlar_native_corpus",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+    },
+    {
+      "id": "US-004-AC2",
+      "requiredAssertion": "Explicit accepted layout; no inferred JSONB or edge deduplication.",
+      "plannedTest": "ashlar_layout_boundaries",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+    },
+    {
+      "id": "US-004-AC3",
+      "requiredAssertion": "Native settings, domain boundaries and error outcomes agree.",
+      "plannedTest": "ashlar_numeric_collation",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+    },
+    {
+      "id": "US-004-AC4",
+      "requiredAssertion": "No mixed-publication/service-principal fallback.",
+      "plannedTest": "ashlar_publication_obligations",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+    },
+    {
+      "id": "US-005-AC1",
+      "requiredAssertion": "Direct extension import/call; no Node/Bun/server required.",
+      "plannedTest": "python_inprocess",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+          "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+          "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
+          "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        }
+      ],
+      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+    },
+    {
+      "id": "US-005-AC2",
+      "requiredAssertion": "Actual browser instance; identical canonical reports.",
+      "plannedTest": "wasm_browser_parity",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+          "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+          "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
+          "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        }
+      ],
+      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+    },
+    {
+      "id": "US-005-AC3",
+      "requiredAssertion": "No binary64 conversion; parameter/result metadata complete.",
+      "plannedTest": "artifact_exact_transport",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+          "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+          "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
+          "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        }
+      ],
+      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+    },
+    {
+      "id": "US-005-AC4",
+      "requiredAssertion": "Thin wrappers never recreate resolver/lowering semantics.",
+      "plannedTest": "wrapper_failure_parity",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+          "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+          "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
+          "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        }
+      ],
+      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+    },
+    {
+      "id": "US-006-AC1",
+      "requiredAssertion": "Missing/failed/skipped evidence cannot count as supported.",
+      "plannedTest": "support_evidence_audit",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
+          "sha256": "7ab7f1d0412e18e5fa31677cdbfd9a8688b08a43903b037202aa16a2cd6df71e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-properties/summary.json",
+          "sha256": "fe49f9555c798524d4bbb4ba209be128ff915ca62b3c60cf9e7d47313fe2cc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resources/summary.json",
+          "sha256": "907cc8b41e5e9dc23e37dc1d064b1a94155f3f6d5615ba2c4db9a633a56c01e9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parser/summary.json",
+          "sha256": "b3996e6be27902d62d6d6c9b17d124e2c2f9e6154a84229e8bccc05c43db2a47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+    },
+    {
+      "id": "US-006-AC2",
+      "requiredAssertion": "SHA-256 bytes and identity guards; no implicit migrations.",
+      "plannedTest": "pin_and_version_guards",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
+          "sha256": "7ab7f1d0412e18e5fa31677cdbfd9a8688b08a43903b037202aa16a2cd6df71e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-properties/summary.json",
+          "sha256": "fe49f9555c798524d4bbb4ba209be128ff915ca62b3c60cf9e7d47313fe2cc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resources/summary.json",
+          "sha256": "907cc8b41e5e9dc23e37dc1d064b1a94155f3f6d5615ba2c4db9a633a56c01e9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parser/summary.json",
+          "sha256": "b3996e6be27902d62d6d6c9b17d124e2c2f9e6154a84229e8bccc05c43db2a47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+    },
+    {
+      "id": "US-006-AC3",
+      "requiredAssertion": "Original bytes/content recoverable; no opaque-to-known inference.",
+      "plannedTest": "unknown_content_retention",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
+          "sha256": "7ab7f1d0412e18e5fa31677cdbfd9a8688b08a43903b037202aa16a2cd6df71e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-properties/summary.json",
+          "sha256": "fe49f9555c798524d4bbb4ba209be128ff915ca62b3c60cf9e7d47313fe2cc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resources/summary.json",
+          "sha256": "907cc8b41e5e9dc23e37dc1d064b1a94155f3f6d5615ba2c4db9a633a56c01e9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parser/summary.json",
+          "sha256": "b3996e6be27902d62d6d6c9b17d124e2c2f9e6154a84229e8bccc05c43db2a47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+    },
+    {
+      "id": "US-006-AC4",
+      "requiredAssertion": "Duplicate keys, bounds, nesting, malformed text and plugin failures.",
+      "plannedTest": "resource_and_fuzz_guards",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
+          "sha256": "7ab7f1d0412e18e5fa31677cdbfd9a8688b08a43903b037202aa16a2cd6df71e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-properties/summary.json",
+          "sha256": "fe49f9555c798524d4bbb4ba209be128ff915ca62b3c60cf9e7d47313fe2cc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resources/summary.json",
+          "sha256": "907cc8b41e5e9dc23e37dc1d064b1a94155f3f6d5615ba2c4db9a633a56c01e9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parser/summary.json",
+          "sha256": "b3996e6be27902d62d6d6c9b17d124e2c2f9e6154a84229e8bccc05c43db2a47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
+          "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        }
+      ],
+      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+    },
+    {
+      "id": "US-007-AC1",
+      "requiredAssertion": "Complete declared-member order and exact absent/null/value/list/structured descriptors.",
+      "plannedTest": "entity_members",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    },
+    {
+      "id": "US-007-AC2",
+      "requiredAssertion": "Stable ascending complete-key order, exact resume comparison and enforced bound; no silent cut.",
+      "plannedTest": "keyset_pages",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    },
+    {
+      "id": "US-007-AC3",
+      "requiredAssertion": "COUNT(*) preserves duplicates; empty global count 0, grouped empty output empty.",
+      "plannedTest": "exact_count",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    },
+    {
+      "id": "US-007-AC4",
+      "requiredAssertion": "Existential key filtering, bounded related keys with exact truncation and inverse resolution.",
+      "plannedTest": "related_reads",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    },
+    {
+      "id": "US-007-AC5",
+      "requiredAssertion": "Marker values match resolved UMF types and remain bound data; literal quoting/exactness is normative.",
+      "plannedTest": "typed_parameters",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    },
+    {
+      "id": "US-007-AC6",
+      "requiredAssertion": "Named subsets have independent positive/refusal fixtures and identify excluded constructs without changing valid syntax.",
+      "plannedTest": "recognizable_profiles",
+      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
+          "sha256": "941e39e05b87f0f00efba1946f8d4ff51e9d0ec32a36d49a17beb1323fd5f0fe"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+    }
+  ],
+  "unresolvedReleaseGates": [
+    "case-level native/application reconciliation",
+    "complete critical supported/refused branch review",
+    "real support-report consistency audit for any supported profile",
+    "qualified exact native profile for advertised supported claims",
+    "license and publication ownership decisions"
+  ],
+  "meaning": "Evidence-backed component index and explicit gaps. No criterion is declared release-complete merely because a test or summary exists."
+}
