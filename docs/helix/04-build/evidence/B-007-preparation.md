@@ -478,3 +478,9 @@ records/fields and revision mismatches in both plan versions. Panicking later
 phases detect accidental assessment, lowering, or emission. The fixture does
 not select named types or relationships; those coverage arms remain separate
 audit work. The initial overbroad type-fixture assertion was corrected.
+
+B-007-type-relationship-coverage/ retains four passing refusal assertions
+using resolved whole-entity and related-page corpus fixtures. Missing type or
+relationship coverage and revision mismatches refuse before assessment. With
+B-007-coverage-branches, all four coverage identity classes have explicit
+missing-identity and revision-mismatch assertions; release closure remains open.

@@ -308,3 +308,39 @@ fn selected_identity_coverage_is_revision_exact() {
         }
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC4 @covers US-007-AC4
+#[test]
+fn selected_type_and_relationship_coverage_refuse_before_assessment() {
+    struct Partial { mode:u8 }
+    impl Backend for Partial {
+        type Mapping=();type TargetPlan=();
+        fn describe(&self)->weft_core::error::Result<Manifest>{Ok(manifest(Status::Supported))}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<()>> {
+            let mut coverage=c.selection.clone();
+            if self.mode<2 {
+                assert!(!coverage.types.is_empty(),"fixture must select types");
+                if self.mode==0 {coverage.types.clear();} else {coverage.types[0].revision="wrong".into();}
+            } else {
+                assert!(!coverage.relationships.is_empty(),"fixture must select relationships");
+                if self.mode==2 {coverage.relationships.clear();} else {coverage.relationships[0].revision="wrong".into();}
+            }
+            Ok(Validated{mapping:(),coverage,additional_capabilities:vec![],obligations:vec![]})
+        }
+        fn assess(&self,_:&Context<'_>,_:&())->weft_core::error::Result<Vec<Assessment>>{panic!("incomplete coverage must precede assessment")}
+        fn lower(&self,_:&Context<'_>,_:&())->weft_core::error::Result<()>{panic!("incomplete coverage must not lower")}
+        fn emit(&self,_:&Context<'_>,_:&())->weft_core::error::Result<Emission>{panic!("incomplete coverage must not emit")}
+    }
+    let cases:Value=serde_json::from_str(include_str!("../application/fixtures/cases.json")).unwrap();
+    for (id,modes) in [("whole-entity",0..2),("related-page",2..4)] {
+        let request=&cases.as_array().unwrap().iter().find(|c|c["id"]==id).unwrap()["request"];
+        let inputs=serde_json::from_value(request["modules"].clone()).unwrap();
+        let (catalog,plan)=weft_core::prepare_and_resolve_application(request["sql"].as_str().unwrap(),inputs,Default::default(),None).unwrap();
+        for mode in modes {
+            let mut r=Registry::default();r.register(Partial{mode}).unwrap();
+            let e=r.compile(&catalog,Plan::V02(&plan),&target(false),&binding(&catalog)).unwrap_err();
+            assert_eq!(e.code,"WFT-BINDING","case {id}, mode {mode}");
+            assert_eq!(e.message,"Backend mapping omits a selected record, field, type or relationship identity");
+        }
+    }
+}
