@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "layer": "frontend",
+  "generator": "weft-relational/0.1.0",
+  "seed": 95955044271901,
+  "rng": "Python random.Random",
+  "python": "3.12.14",
+  "distinctAssertions": 1200,
+  "datasets": 300,
+  "mutationControls": {
+    "duplicate-collapse": 600,
+    "decimal-through-double": 600
+  },
+  "mutationScope": "output corruption controls, not compiler-source mutation coverage",
+  "frontendBinarySha256": "4c7a3f0ff39680f853a441719c70d0e1600812d52012572f167bc328f801b176",
+  "harnessSha256": "026a473c9d9695390f55be49d6e148aa8cb174eb1c4a46f3729a263e5725b3be",
+  "oracleSha256": "01c4ab6a7ec991a484aa99839b0810a36be46764c9ac7d772db6deb1b3c4f3b5",
+  "targetExecution": false
+}

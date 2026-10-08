@@ -63,3 +63,20 @@ corpus, interpreter and freshly built frontend binary hashes, with a binary
 custody check across the run. The oracle accepts explicit binary/output paths
 for repeatable qualification runs while preserving its default B-002 command.
 This is frontend evidence; the full backend/runtime matrix remains open.
+
+The expanded frontend relational component passes 1200 distinct assertions
+across 300 generated datasets (projection, boolean filter, equijoin, grouped
+exact sum). Expected rows are calculated directly from supplied data without
+using compiler IR; a separate IR interpreter must produce the same bags.
+Unique entity keys coexist with repeated projected names and repeated order
+rows, forcing duplicate/fanout preservation. Decimal inputs extend above the
+binary-float exact integer range; Unicode names retain authored distinctions.
+The fixed seed, Python version, harness/interpreter/binary hashes and every
+input digest are retained in B-007-relational/. The initial 636-case oracle
+was rerun after making its interpreter importable and still passes.
+
+Output-corruption controls detect duplicate collapse in 600 cases and decimal
+conversion through binary double in 600 cases. These are expressly not
+compiler-source mutation evidence. This contributes expanded frontend
+assertions; backend/embedding matrices, source mutation, fuzz/resource branch
+audits and the final support/release inventory remain open.
