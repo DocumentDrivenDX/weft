@@ -1,0 +1,135 @@
+[
+  {
+    "id": "duplicate",
+    "expectedCode": "WFT-JSON-DUPLICATE",
+    "inputBytes": 23,
+    "inputSha256": "6a6326e1e2a5378cb1ded9489bb633c97f840a185b7f24a2bc3b638ebc439231",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-JSON-DUPLICATE",
+          "message": "Invalid request JSON",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "truncated",
+    "expectedCode": "WFT-INPUT",
+    "inputBytes": 8,
+    "inputSha256": "758e1ac47ca1e29f82602335f3bf6e9a0fddcedaee32fa658c561f5e1512c1eb",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Invalid request JSON",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "nodes-over",
+    "expectedCode": "WFT-LIMIT",
+    "inputBytes": 200001,
+    "inputSha256": "af223ca49bd199ac08a094020440480511d32a352b2fcf8497475603211ca454",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-LIMIT",
+          "message": "Invalid request JSON",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "request-at",
+    "expectedCode": "WFT-INPUT",
+    "inputBytes": 16777216,
+    "inputSha256": "bcefc0035f5124a0955c36c91d3b49b3f22630df305ed3b0d1e25276b3a59683",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-INPUT",
+          "message": "Invalid request JSON",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "request-over",
+    "expectedCode": "WFT-LIMIT",
+    "inputBytes": 16777217,
+    "inputSha256": "2b818dc07b8a40bde72f742d0d7b43dd14a118ba98d47dae563f0b9ff5b89227",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-LIMIT",
+          "message": "Request exceeds sixteen MiB",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "sql-over",
+    "expectedCode": "WFT-LIMIT",
+    "inputBytes": 67980,
+    "inputSha256": "d68425794ea7950b434b85525b335d077dcc145b0817f3610f6457258e1638b4",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-LIMIT",
+          "message": "SQL exceeds 64 KiB",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  },
+  {
+    "id": "binding-over",
+    "expectedCode": "WFT-LIMIT",
+    "inputBytes": 4196676,
+    "inputSha256": "c0ba6cb9b7fabeb39425611a6bcf6ea4a3b149c2ea4c3ec8e1da6aa6252a4818",
+    "response": {
+      "diagnostics": [
+        {
+          "code": "WFT-LIMIT",
+          "message": "Binding exceeds four MiB",
+          "phase": "input",
+          "recoverability": "correct-input",
+          "severity": "error"
+        }
+      ],
+      "interfaceVersion": "weft-compile/0.1.0",
+      "status": "blocked"
+    }
+  }
+]

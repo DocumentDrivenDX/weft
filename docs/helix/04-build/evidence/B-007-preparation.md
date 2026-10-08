@@ -335,3 +335,14 @@ ESM resolution by package name, scalar/trap controls and strict declaration use.
 The four archive members and exact bytes are hashed in
 B-007-browser-package-consumer/. This supplements actual-browser compiler parity;
 it does not replace it or qualify a bundled backend/registry release.
+
+Seven independently specified raw malicious/resource inputs now pass atomic
+refusal assertions through the candidate CLI, native Python and real Chromium
+WASM: nested duplicate keys, truncated JSON, 100001 JSON nodes, exactly 16 MiB
+malformed whitespace, 16 MiB plus one byte, SQL over 64 KiB and binding over 4 MiB.
+All host responses match byte-for-byte; the at-limit malformed request is INPUT,
+not LIMIT. Python disables subprocess/PATH after CLI receipt generation; browser
+compilation I/O is disabled. B-007-host-resources/ retains exact input hashes,
+byte counts, diagnostics and executed binary/extension/WASM/wrapper hashes.
+These are early common-boundary checks across deliberately named feature builds;
+they do not qualify every host resource path or native database behavior.
