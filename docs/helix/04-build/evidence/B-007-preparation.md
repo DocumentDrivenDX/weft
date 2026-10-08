@@ -552,3 +552,10 @@ the portable native profile/independent-row audit and its eight corruption
 controls. It verifies 65 referenced evidence hashes. US-003/US-006 matrix
 entries link these receipts. This replay does not promote candidate profiles
 or replace engine/session provenance and host qualification.
+
+B-007-real-native-report-audit/ passes the support-report consistency verifier
+on all 76 actual retained Truss cases across 21 pinned scopes, using independent
+expected rows and exact normalized base-ten tuples. Layout revision is the
+retained owner pin-manifest digest. Internal supported claims exercise the
+verifier; they do not promote candidate inventory, producer trust, host-layer
+qualification, or engine/session provenance.
