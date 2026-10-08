@@ -594,3 +594,9 @@ independent retained embedding summaries. Four additional altered-runtime
 controls refuse, bringing host receipt corruption controls to fourteen.
 The full twelve-component retained-evidence replay passes. Identity
 consistency does not assert producer trust or final support qualification.
+
+The acceptance matrix now links case-level Python/browser receipts, their
+real native report joins, runtime-identity corruption controls, and current
+core unit evidence. Twelve replay components pass with 71 verified references.
+The closure audit records verified compiler artifact parity while retaining
+final profile provenance and host execution qualification as open.

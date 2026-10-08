@@ -450,6 +450,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
           "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-core-unit-current/summary.json",
+          "sha256": "4eaf68e0b84c0bd2a534ca1aa9fbe1556fa54792680ba48bb98ed1c80f57677c"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -586,6 +590,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
           "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -723,6 +743,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
           "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -776,6 +812,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
           "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -821,6 +873,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
           "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -870,6 +938,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
           "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -911,6 +995,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
           "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -980,6 +1080,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
           "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-python-case-receipts/receipts.json",
+          "sha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-browser-case-receipts/receipts.json",
+          "sha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-joined-summary.json",
+          "sha256": "b699e2419949b75dff73d71d71d68f5b304da406c409a0ab8e87fbba6941ae8e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
+          "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
