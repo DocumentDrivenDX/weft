@@ -510,3 +510,8 @@ B-007-related-representation/ retains an accepted relationship metadata
 baseline and seven passing corruption refusals: revision, bound, key identity,
 fields, types, nullability, and representation kind. The test derives authored
 key metadata from the resolved application fixture; no native execution claim.
+
+B-007-field-representation/ records the expanded passing presence/native-null
+test with three new descriptor/nullability/scalar-type refusals. The fixture
+correction removes an invalid paging-key assumption. Metadata validation
+evidence is scoped to this resolved fixture, not target execution.

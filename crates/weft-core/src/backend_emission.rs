@@ -421,6 +421,20 @@ mod tests {
                 .collect(),
         };
         assert!(validate(Plan::V02(&p), &e, &selection, &[]).is_ok());
+        // The complete baseline permits isolating descriptor/presence guard failures.
+        let mut missing=p.clone();missing.type_graph.clear();
+        let error=validate(Plan::V02(&missing),&e,&selection,&[]).unwrap_err();
+        assert_eq!(error.code,"WFT-EMIT");
+        assert_eq!(error.message,"Projected Field lacks its type descriptor");
+        let mut nullable=e.clone();nullable.columns[0].nullable=true;
+        let error=validate(Plan::V02(&p),&nullable,&selection,&[]).unwrap_err();
+        assert_eq!(error.message,"Result representation changes logical type, presence, relationship key or exact numeric decoding");
+        let mut wrong_kind=e.clone();
+        wrong_kind.columns[0].representation=Representation::Scalar{
+            logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},carrier:ScalarCarrier::Text,decoder:ScalarDecoder::Text,
+        };
+        let error=validate(Plan::V02(&p),&wrong_kind,&selection,&[]).unwrap_err();
+        assert_eq!(error.message,"Result representation changes logical type, presence, relationship key or exact numeric decoding");
         if let Representation::Value { native_null, .. } = &mut e.columns[3].representation {
             *native_null = true;
         }

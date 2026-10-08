@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "newRefusalAssertions": 3,
+  "sourceSha256": "b9198b6677c5d68a599f9d965401ddeb22ad6bbd97d4e4234ad4746588f3aca2",
+  "scope": "Expanded presence/native-null test: missing projected descriptor, nullable Value representation, incompatible scalar type. Existing baseline and qualified/unqualified native-null behavior also pass. Unit metadata validation only.",
+  "fixtureCorrection": "Initial wrong-kind construction assumed a paging key absent from this fixture; replaced with an incompatible scalar type."
+}
