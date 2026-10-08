@@ -582,6 +582,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
           "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
+          "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -903,6 +907,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
           "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
+          "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -968,6 +976,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
           "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/summary.json",
+          "sha256": "57d3d013bb2d7f975483b3abf78b4c24a85aa8ca578284d1952f4fdcc52aeec6"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

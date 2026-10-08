@@ -559,3 +559,9 @@ expected rows and exact normalized base-ten tuples. Layout revision is the
 retained owner pin-manifest digest. Internal supported claims exercise the
 verifier; they do not promote candidate inventory, producer trust, host-layer
 qualification, or engine/session provenance.
+
+The standard retained-evidence replay now runs eleven components and
+verifies 66 evidence references, including real Truss report consistency
+for 21 scopes/76 cases. The closure audit distinguishes this executed
+consistency proof from still-unproved final provenance, required host layers,
+and candidate-to-supported qualification.

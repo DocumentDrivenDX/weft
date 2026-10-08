@@ -10,6 +10,7 @@ components=[
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-native-profile-scopes.py','status','independentRowComparisons',76),
  ('native-scope-controls.py','status','corruptionsRejected',8),
+ ('audit-truss-support-reports.py','status','casesAudited',76),
  ('evidence-check.py','state','cases',41),
  ('reconcile-ashlar-application.py','status','cases',112),
  ('reconcile-controls.py','status','controls',11),
@@ -22,6 +23,8 @@ for name,status,count,expected in components:
  assert run.returncode==0,(name,run.stdout,run.stderr)
  report=json.loads(run.stdout)
  assert report[status]=='passed' and report[count]==expected,(name,report)
+ if name=='audit-truss-support-reports.py':
+  assert report['scopesAudited']==21
  if name=='audit-native-profile-scopes.py':
   assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
  results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
