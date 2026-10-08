@@ -454,6 +454,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-core-unit-current/summary.json",
           "sha256": "4eaf68e0b84c0bd2a534ca1aa9fbe1556fa54792680ba48bb98ed1c80f57677c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-core-unit-expanded/summary.json",
+          "sha256": "c9b16e8c33acbbb9878efec3b53f685af9f33bf3ced3392006903484223f4069"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
+          "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -954,6 +962,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-core-unit-expanded/summary.json",
+          "sha256": "c9b16e8c33acbbb9878efec3b53f685af9f33bf3ced3392006903484223f4069"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
+          "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1051,7 +1067,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "03b9c7281c856816b86b31dc326078f3a76e9cb0f38c31ba46be18bef6f33f08"
+          "sha256": "189db208b36b4b25c4c895e2bb5cd44d536036df7d87be12df0088d00969a037"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1197,7 +1213,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "03b9c7281c856816b86b31dc326078f3a76e9cb0f38c31ba46be18bef6f33f08"
+          "sha256": "189db208b36b4b25c4c895e2bb5cd44d536036df7d87be12df0088d00969a037"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1234,6 +1250,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
           "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-core-unit-expanded/summary.json",
+          "sha256": "c9b16e8c33acbbb9878efec3b53f685af9f33bf3ced3392006903484223f4069"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
+          "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
