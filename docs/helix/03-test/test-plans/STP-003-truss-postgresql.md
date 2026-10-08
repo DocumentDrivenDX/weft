@@ -25,24 +25,25 @@ ddx:
 
 Prove this P0 journey under its selected dialect/model/backend/host versions.
 Every covering test must cite its AC as `@covers US-003-ACm`. At bootstrap these tests were planned. Candidate implementation and versioned
-execution evidence now exist; the matrix below distinguishes partial evidence
-from complete story acceptance.
+execution evidence now exist; the matrix below records acceptance for the owner-authorized candidate compiler
+slice; production and release qualification remain separate.
 
 ## Acceptance Criteria Test Mapping
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | partial candidate evidence |
-| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | partial candidate evidence |
-| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | partial candidate evidence |
-| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | partial candidate evidence |
+| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | passed candidate compiler scope |
+| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | passed candidate compiler scope |
+| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | passed candidate compiler scope |
+| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | passed candidate compiler scope |
 
 ## Executable Proof and Data
 
-Planned implementation tests: `tests/truss-postgresql/`; shared language-neutral fixtures
+Executable compiler/native/host tests: `tests/truss-postgresql/`; shared language-neutral fixtures
 in `docs/helix/03-test/fixtures/`. The existing `bun run specs:check` validates
 spec/fixture integrity only; it does not execute this story or certify coverage.
-Add runnable Rust/host/native commands with pinned versions before implementation.
+Pinned versions, real commands, receipts and independent results are recorded in
+the [B-005 acceptance audit](../../04-build/evidence/B-005-acceptance.md).
 
 ## Edge Cases and Build Handoff
 
@@ -63,7 +64,7 @@ Owner integration gates are documented in TD-003. Draft flat layout 0.2 cannot b
 confused with the earlier partitioned profile. Record approved binding/layout
 hashes and native server/session versions before backend support claims.
 
-## Candidate evidence status (2026-10-07)
+## Historical candidate evidence status (2026-10-07)
 
 The [B-005 execution record](../../04-build/evidence/B-005-native-preparation.md)
 records original UMF Record/property/value/presence/comparator/relationship
@@ -89,3 +90,25 @@ also has native SQL and fresh public Rust/Python/browser evidence. Broader
 scalar/query domains and full host/story qualification remain open. Native null is explicitly unsupported by the pinned
 profile and requires a separately admitted profile before any positive claim. Truss runtime implementation/adoption is not a
 compiler dependency. Production qualification remains separate.
+
+## Candidate compiler acceptance (2026-10-08)
+
+[B-005 acceptance](../../04-build/evidence/B-005-acceptance.md) supersedes the
+open compiler/story status above and maps all four criteria to actual native
+results and host/embedding evidence. `original-sales-join-native.py` covers
+`@covers US-003-AC1`, `@covers US-003-AC2` and `@covers US-003-AC3` across every
+row/props cut of the original grouped sales query.
+`sales-join-driver-native.py` covers `@covers US-003-AC1` and
+`@covers US-003-AC4` through real prepared transport and publication refusal.
+Unknown-home/codec/profile refusals additionally run in `compiler.rs`;
+optional/recursive native fixtures retain absent/empty/value distinctions.
+
+The native sales driver passes 224 cases: 32 exact publications, 96 corrupt-data
+refusals before the result query and 96 injected authority/pin/visibility
+revocations before publication. Result descriptors and native column OIDs are
+asserted independently. Compiler capabilities remain candidate, with explicit
+opt-in; native null remains unsupported by the selected profile. No production
+authority/storage or released generic embedding-registration claim is made.
+B-007 owns release qualification; Truss runtime adoption is not a compiler gate.
+The initial `story-test-allocation.json` remains a bootstrap planning allocation,
+not this execution record.

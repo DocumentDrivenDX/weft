@@ -4,10 +4,10 @@
 @covers US-003-AC3: hidden selected-field corruption prevents execution.
 Synthetic pinned candidate layout, not installed Truss or production policy.
 """
-import base64,copy,csv,decimal,hashlib,io,json,subprocess
+import base64,copy,csv,decimal,hashlib,io,json,os,subprocess
 from pathlib import Path
 import weft
-ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures';source=F/'original-sales-join-inputs.json';cuts=json.loads(source.read_text());results=[];transports=[]
+ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures';source=F/'original-sales-join-inputs.json';cuts=json.loads(source.read_text());results=[];transports=[];driver_setups=[]
 decimal.getcontext().prec=100
 quote=lambda v:"'"+str(v).replace("'","''")+"'"
 maximum='99999999999999999999999999.99';uintmax='18446744073709551615'
@@ -43,6 +43,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
    sql+=f"INSERT INTO object VALUES ({owner},{type_id},{quote(json.dumps(props,ensure_ascii=False))}::jsonb);\n"+row_sql
   # Unrelated type with matching property identifiers and invalid carrier values.
   sql+="INSERT INTO object VALUES (999,-999,'{\"0\":false,\"1\":\"A\",\"7\":false,\"8\":false}'::jsonb);\n"
+  setup_sql=sql.removeprefix('BEGIN; ')
   types=','.join('text' for _ in r['parameters']);args=','.join(quote(p['value']) for p in r['parameters'])
   for i,check in enumerate(checks):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
   if not corrupt:sql+=f"PREPARE q({types}) AS {r['sql']}; EXECUTE q({args});\n"
@@ -58,8 +59,12 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
     for foreign,total in orders:
      if int(key)==int(foreign):expected[name]=expected.get(name,decimal.Decimal(0))+decimal.Decimal(total)
    actual={name:decimal.Decimal(total) for name,total in remaining[1:]};assert len(actual)==len(remaining)-1;assert actual==expected,(cut['homes'],case,actual,expected)
+  if os.environ.get('WEFT_SALES_DRIVER_SETUPS'):
+   driver_setups.append(dict(homes=cut['homes'],case=case,corrupt=corrupt,setupSql=setup_sql,artifact=r,expectedRows=[] if corrupt else [[name,format(total.quantize(decimal.Decimal('0.01')),'f')] for name,total in expected.items()]))
   results.append(dict(homes=cut['homes'],case=case,violations=counts,queryExecuted=not corrupt,sqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 (F/'original-sales-join-public.json').write_text(json.dumps(transports,indent=2)+'\n')
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Original Customer name / Orders total join, UInt64 equality, Unicode C groups, decimal(28,2), all 16 row/props home cuts; synthetic candidate only',cases=len(results),configurations=len(cuts),server=server,binaryProvenance='Fresh B-005-sales-join Python extension; exact binary hash pinned',extensionSha256=hashlib.sha256(next(Path(weft.__file__).parent.glob('*.so')).read_bytes()).hexdigest(),sourceSha256=hashlib.sha256(source.read_bytes()).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),transportSha256=hashlib.sha256((F/'original-sales-join-public.json').read_bytes()).hexdigest(),results=results)
 (ROOT/'docs/helix/04-build/evidence/B-005-original-sales-join-native.json').write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original sales join native cases passed')
+
+if os.environ.get('WEFT_SALES_DRIVER_SETUPS'):Path(os.environ['WEFT_SALES_DRIVER_SETUPS']).write_text(json.dumps(driver_setups)+'\n')

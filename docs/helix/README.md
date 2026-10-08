@@ -18,8 +18,9 @@ The versioned JSON schemas and EBNF live beside their governing contracts. Stabl
 B-001 through B-004 complete their recorded component scopes; see the
 [implementation plan and evidence](04-build/implementation-plan.md). This includes
 PR #2's versioned application-read frontend, registered backend boundary and
-public Rust/Python/browser compiler parity. B-005 is in progress: Truss's
-documented UMF storage mapping and native PostgreSQL compiler fixtures guide implementation. Ashlar's approved layout
+public Rust/Python/browser compiler parity. B-005 completes its owner-authorized
+candidate compiler scope; the [acceptance audit](04-build/evidence/B-005-acceptance.md)
+records original mappings, native PostgreSQL results and exact host boundaries. Ashlar's approved layout
 and Databricks access gate B-006. Synthetic fixture bindings do not select either
-production profile or qualify an engine version. All 30 story criteria and release
-qualification remain planned until B-005 through B-007 establish their evidence.
+production profile or qualify an engine version. The complete 30-criterion release matrix remains unfinished; component/story
+evidence is scoped and does not constitute release qualification.

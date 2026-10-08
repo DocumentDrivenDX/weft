@@ -6,7 +6,7 @@
   "binaryProvenance": "Fresh B-005-sales-join Python extension; exact binary hash pinned",
   "extensionSha256": "8871e297d7d691e6f9b6a0499931c09399907f5ef4ab8c5a8e40ba259576154c",
   "sourceSha256": "58486ad549a652cefe438cf726bd5a39b0750d7ba7fb8fad9fb1615ce137c143",
-  "harnessSha256": "5de40872703d2d2ea000345660b354352b64c689943352f9793ac19721af2446",
+  "harnessSha256": "b15b581395ad8aaed5a80bf09a4a3402936409fcee89278b05855eb84538607e",
   "transportSha256": "a7b66f4d03f41d356a3292f5ed7d44ae2c87d9f1da808e98343f929b7c184e13",
   "results": [
     {
