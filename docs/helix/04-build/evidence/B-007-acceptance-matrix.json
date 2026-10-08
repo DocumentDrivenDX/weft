@@ -227,6 +227,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -256,6 +260,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-backend-branches/summary.json",
           "sha256": "853b66a11cb519a0d55082478b0632e0523cb45009fa44d90d7c1bb6cde78a56"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -285,6 +293,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-backend-branches/summary.json",
           "sha256": "853b66a11cb519a0d55082478b0632e0523cb45009fa44d90d7c1bb6cde78a56"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -310,6 +322,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -331,6 +347,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
           "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -348,6 +368,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-backend-branches/summary.json",
           "sha256": "853b66a11cb519a0d55082478b0632e0523cb45009fa44d90d7c1bb6cde78a56"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -365,6 +389,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
           "sha256": "c0cb759746838affcaedbbbff6de1e436176fa153a47d8812c4b65bf7ec175e2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -378,6 +406,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."

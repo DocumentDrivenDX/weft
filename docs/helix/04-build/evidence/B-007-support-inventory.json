@@ -27,6 +27,14 @@
         {
           "path": "tests/truss-postgresql/upstream/storage-realization-pins.json",
           "sha256": "c50973fd2e4d06987c5c4776fc806eed32c6327ab46fd26175359fa8e6196c6a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
         }
       ],
       "excludedClaims": [
@@ -47,6 +55,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
+          "sha256": "c0cb759746838affcaedbbbff6de1e436176fa153a47d8812c4b65bf7ec175e2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
+          "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
         }
       ],
       "excludedClaims": [
@@ -66,14 +86,39 @@
     {
       "path": "docs/helix/04-build/evidence/B-007-browser/summary.json",
       "sha256": "d037b868af541f4a17c1d756cf966a25cd3e0c8fd11f804b234664b77acbb41e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+      "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+      "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+      "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+      "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-host-resources/python-summary.json",
+      "sha256": "d6f24c5c68beb8e49e937ec98697a9568dea6361a22ca53ff18335c0e5e9e401"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-host-resources/browser-summary.json",
+      "sha256": "d87ba07fc17822dd7ba14e97adcda6c17a99e8297145bce17b1c0bcb2497e931"
     }
   ],
   "pending": [
-    "full 30-criterion acceptance audit",
-    "critical supported/refused branch review and parser fuzz",
-    "exact native support profiles for any supported claim",
+    "full 30-criterion acceptance determination",
+    "complete critical supported/refused branch review",
+    "qualified native support profiles required by the implementation plan",
     "registry ownership and release maintainer verification",
-    "license decision"
+    "license decision",
+    "final release artifact build and content inspection"
   ],
   "meaning": "Evidence index, not compiler manifest or qualification certificate. Candidate statuses remain candidate; references do not prove every explicit release gate."
 }
