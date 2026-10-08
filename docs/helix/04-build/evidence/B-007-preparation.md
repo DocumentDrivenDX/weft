@@ -175,3 +175,11 @@ source hash and log. The first command used a shared mutation target and execute
 zero tests; that run is explicitly rejected and retained. A fresh target build
 executes the named test and all 5000 cases. This is bounded generated parser
 text testing, not coverage-guided fuzzing or proof of every syntax branch.
+
+A freshly built test-third-only public runtime passes all 1273 authored compile
+envelope cases. Seven compiled fixture queries independently execute in SQLite;
+this is fixture backend SQL, never a substitute engine for either native target.
+B-007-public-corpus/ retains compiler/corpus/harness hashes and build/run logs.
+The reports harness now accepts explicit binary/output paths and checks binary
+custody across execution. Native Python/browser rebuild parity for this corpus
+is the next component.
