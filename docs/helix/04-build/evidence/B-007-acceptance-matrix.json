@@ -127,6 +127,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
           "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
+          "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -202,6 +206,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
           "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
+          "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -671,7 +679,19 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "396962eb263d700beb6c874dbc3cb6c1d625138fc5d240cb017ade7f110fce58"
+          "sha256": "e7d6f4ce3f449a19c9665db1704449a2136c2154084fa8c235beb395f159a503"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
+          "sha256": "c7ab0802aedf587b9c3c8bb87663442a0588ac22c2103185905f499a1b98233a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-request-branches/summary.json",
+          "sha256": "c6fe6d5a8536a2a04f3d60ee0199f1227899e25c994e5e0cc5c8b27299148a3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
+          "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -701,6 +721,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
+          "sha256": "c7ab0802aedf587b9c3c8bb87663442a0588ac22c2103185905f499a1b98233a"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -761,7 +785,15 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "396962eb263d700beb6c874dbc3cb6c1d625138fc5d240cb017ade7f110fce58"
+          "sha256": "e7d6f4ce3f449a19c9665db1704449a2136c2154084fa8c235beb395f159a503"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
+          "sha256": "c7ab0802aedf587b9c3c8bb87663442a0588ac22c2103185905f499a1b98233a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-request-branches/summary.json",
+          "sha256": "c6fe6d5a8536a2a04f3d60ee0199f1227899e25c994e5e0cc5c8b27299148a3e"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
