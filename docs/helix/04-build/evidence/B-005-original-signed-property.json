@@ -1,0 +1,21 @@
+{
+  "scope": "Original signed property admission and compiler SQL on selected widths 1/8/16/32/64, props/native row homes; synthetic fixture original codec/domain artifacts; no fresh embedding or production claim",
+  "rustTests": 146,
+  "files": {
+    "crates/weft-postgresql/src/property_definition.rs": "e2ad1882e0c0d471a64bc4f97d26cefaad1f58703f0d7495186b7d80111ba651",
+    "tests/truss-postgresql/original-signed-property-native.py": "afa056a274314daf4304b5d1a6ff1bdf10b4c6e20f658bfd7d80a6e37991c6ac",
+    "tests/truss-postgresql/fixtures/original-signed-1-props-sum.json": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab",
+    "tests/truss-postgresql/fixtures/original-signed-1-row-sum.json": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114",
+    "tests/truss-postgresql/fixtures/original-signed-16-props-sum.json": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93",
+    "tests/truss-postgresql/fixtures/original-signed-16-row-sum.json": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50",
+    "tests/truss-postgresql/fixtures/original-signed-32-props-sum.json": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962",
+    "tests/truss-postgresql/fixtures/original-signed-32-row-sum.json": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265",
+    "tests/truss-postgresql/fixtures/original-signed-64-props-sum.json": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce",
+    "tests/truss-postgresql/fixtures/original-signed-64-row-sum.json": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be",
+    "tests/truss-postgresql/fixtures/original-signed-8-props-sum.json": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a",
+    "tests/truss-postgresql/fixtures/original-signed-8-row-sum.json": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+  },
+  "logs": {
+    "/private/tmp/weft-signed-property-full.log": "62a2dd8f44c1f58c56178f186855dbf788e120aa3992f99c715f131e211f6478"
+  }
+}

@@ -3308,3 +3308,28 @@ int64 minimum and uint64 maximum. Receipts:
 This qualifies operand rendering/transport, not full original signed property
 storage, a new public runtime preset, fresh embedding or production compatibility.
 Those broader paths remain required B-005 work.
+
+### Original signed integer property admission and SQL (2026-10-07)
+
+The original numeric property fixture now authors explicit signed integer model
+cuts at widths 1, 8, 16, 32 and 64. It re-pins the owning source document and
+accepted Field bytes before graph/presence/leaf/comparator admission. SUM and
+ordered application reads compile through original admitted properties in props
+and native row homes. Existing unsigned relationship fixtures retain their own
+scope; they are not relabeled as signed relationship evidence. Signed one-bit
+cursor inputs use -1, avoiding the unrelated unsigned fixture's out-of-domain 2.
+
+`original-signed-property-native.py` passes seventy PostgreSQL 17.9 executions:
+seven cases for each width/home. Independently calculated signed minimum plus
+maximum produces exact -1; empty SUM preserves SQL null. Below-minimum,
+above-maximum, fractional values, required absence and wrong codec/native or
+JSON carrier refuse through prerequisites before executing result SQL. The native
+owner scan excludes an unrelated discriminator. All 146 Rust tests, custody and
+specification checks pass. Receipts:
+[B-005-original-signed-property.json](B-005-original-signed-property.json) and
+[B-005-original-signed-property-native.json](B-005-original-signed-property-native.json).
+
+This extends original property and emitted-SQL evidence beyond uint64. Codec and
+source semantics are independently selected synthetic fixture procedures; this
+is not production profile qualification, a new runtime registry preset, native
+signed relationship qualification or fresh Python/browser execution evidence.

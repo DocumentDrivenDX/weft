@@ -766,6 +766,7 @@ mod tests {
             "decimal",
             json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
             "WEFT_ORIGINAL_NUMERIC_CAPTURE",
+            None,
         );
     }
     #[test]
@@ -776,7 +777,21 @@ mod tests {
             "integer",
             json!({"kind":"unsigned-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast","range":"original-authored-unsigned-facets"}),
             "WEFT_ORIGINAL_INTEGER_CAPTURE",
+            None,
         );
+    }
+    #[test]
+    fn original_signed_integer_properties_admit_and_compile_both_storage_homes() {
+        for bits in [1, 8, 16, 32, 64] {
+            original_numeric_property_fixture(
+                "Customer",
+                "id",
+                "integer",
+                json!({"kind":"signed-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast"}),
+                &format!("WEFT_ORIGINAL_SIGNED_{bits}_CAPTURE"),
+                Some(bits),
+            );
+        }
     }
     fn original_numeric_property_fixture(
         record_name: &str,
@@ -784,16 +799,49 @@ mod tests {
         family: &str,
         strategy: Value,
         capture: &str,
+        signed_width: Option<u8>,
     ) {
         use base64::{engine::general_purpose::STANDARD, Engine};
         use leaf_codec_definition::{
             Definition as Leaf, OriginalArtifact, Selection as LeafSelection,
         };
         use weft_core::json::sha256;
-        let cases: Vec<Value> = serde_json::from_str(include_str!(
+        let mut cases: Vec<Value> = serde_json::from_str(include_str!(
             "../../../tests/truss-postgresql/fixtures/application-cases.json"
         ))
         .unwrap();
+        if let Some(bits) = signed_width {
+            let request = &mut cases[0]["request"];
+            let mut document: Value =
+                serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap())
+                    .unwrap();
+            let field = document["modules"][0]["elements"]
+                .as_array_mut()
+                .unwrap()
+                .iter_mut()
+                .find(|field| field["id"] == "customer-id")
+                .unwrap();
+            field["facets"] = json!({"integerWidth":{"bits":bits,"signed":true}});
+            let authored_bytes = serde_json::to_vec(field).unwrap();
+            let document_json = document.to_string();
+            let make_artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
+            let mut binding: Value =
+                serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+            for group in ["entities", "properties", "relationships"] {
+                for selected in binding[group].as_array_mut().unwrap() {
+                    selected["source"] = make_artifact("signed-source", document_json.as_bytes());
+                    if selected["logical"]["element"] == "customer-id" {
+                        selected["acceptedDefinition"] =
+                            make_artifact("signed-field", &authored_bytes);
+                    }
+                }
+            }
+            request["modules"][0]["documentJson"] = json!(document_json);
+            request["modules"][0]["pin"]["sha256"] = json!(sha256(document_json.as_bytes()));
+            let binding_json = binding.to_string();
+            request["target"]["bindingJson"] = json!(binding_json);
+            request["target"]["bindingSha256"] = json!(sha256(binding_json.as_bytes()));
+        }
         let inputs = serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
         let catalog = Catalog::prepare(inputs).unwrap();
         let name = |value: &str| Name {
@@ -1410,7 +1458,7 @@ mod tests {
                 std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":sql,"checks":physical.structural_check_sql,"parameters":scoped_parameters.into_slots(),"codecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()})).unwrap()).unwrap();
             }
         }
-        if family == "integer" {
+        if family == "integer" && signed_width.is_none() {
             let name = Name {
                 value: "Orders".into(),
                 quoted: true,
@@ -2235,7 +2283,11 @@ mod tests {
                     "cursor".into(),
                     weft_core::application_resolve::Parameter {
                         family: weft_core::ir::Family::Integer,
-                        value: "2".into(),
+                        value: if signed_width.is_some() {
+                            "-1".into()
+                        } else {
+                            "2".into()
+                        },
                     },
                 )]),
                 Some(weft_core::application_ir::ReadProfile {

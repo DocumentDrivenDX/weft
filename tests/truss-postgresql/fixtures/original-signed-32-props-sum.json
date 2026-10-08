@@ -1,0 +1,66 @@
+{
+  "checks": [
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=-pg_catalog.power(2::pg_catalog.numeric,31) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,31)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE"
+  ],
+  "columns": [
+    {
+      "nullable": true,
+      "outputName": "total",
+      "position": 1,
+      "representation": {
+        "carrier": "text",
+        "decoder": "exact-integer",
+        "kind": "scalar",
+        "logicalType": {
+          "facets": {},
+          "family": "integer",
+          "nullable": true
+        }
+      },
+      "sourceIdentities": [
+        {
+          "documentId": "sales-fixture",
+          "element": "customer-id",
+          "module": "sales",
+          "revision": "application-fixture-1"
+        }
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "0",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 2,
+      "value": "0"
+    }
+  ],
+  "sql": "SELECT (pg_catalog.sum((((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric)::pg_catalog.numeric))::pg_catalog.text AS \"total\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+}
