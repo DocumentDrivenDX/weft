@@ -2,6 +2,36 @@
   "status": "passed",
   "components": [
     {
+      "component": "audit-qualified-hosts.py",
+      "result": {
+        "status": "passed",
+        "cases": 2181,
+        "hostArtifactJoins": 4362,
+        "resourceCasesPerHost": 7,
+        "scope": "Complete actual Python and Chromium artifact/pin/runtime joins to native-qualified requests, with exact loaded binaries and package custody. No separate host SQL executions or broader platform/distribution claims."
+      },
+      "sourceSha256": "b74b518eef66d38e51937a2dfda13311e36037f345304a373a583b7744cbe0b1"
+    },
+    {
+      "component": "qualified-host-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 8,
+        "controls": [
+          "Python actual hash changed",
+          "browser request identity changed",
+          "duplicate Python case identity",
+          "qualified request reverted to candidate",
+          "emitted SQL changed",
+          "package native payload changed",
+          "resource refusal input identity changed",
+          "browser runtime drift"
+        ],
+        "scope": "Eight semantic host receipt corruptions rejected after custody rehashing; no rebuilding or database execution."
+      },
+      "sourceSha256": "773454e7ac418351a3a3292456f2b4aa27cb3b6e332ff96494359a979bbbdf21"
+    },
+    {
       "component": "audit-qualified-registration-receipts.py",
       "result": {
         "status": "passed",
@@ -2286,6 +2316,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 132,
+  "verifiedEvidenceReferences": 133,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

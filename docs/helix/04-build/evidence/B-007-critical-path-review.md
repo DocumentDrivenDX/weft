@@ -237,3 +237,13 @@ Qualified runtime composition and both incompatible-feature refusals now pass.
 Two scoped historical NativeReview library regressions pass with incremental
 compilation disabled after a retained cache build failure. Final actual Python/
 Chromium builds, current workspace and all-criterion acceptance remain open.
+
+## Final qualified hosts
+
+Fresh public runtime, ABI3 Python and actual Chromium preserve all 2,181 complete
+native-qualified artifacts without candidate opt-in, with 4,362 audited joins.
+Package content, seven raw resource cases per host and eight rehashed corruption
+controls pass. B-007-qualified-hosts preserves exact source/binary/runtime custody.
+The remaining merge gates are terminal current workspace evidence and the full
+30-criterion acceptance determination, then PR #9 review/merge. Distribution
+ownership/license and production execution remain separately qualified.

@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 7,
+  "browser": "148.0.7778.96",
+  "byteParity": true,
+  "wasmSha256": "4adbd90328ad0f2978893f5ba9bf0ebaee4fb1052ab90dc12d9c5c31aa7dbcf6",
+  "wrapperSha256": "a1ab5c00b11d7b615330b29c567f05ce5a2666ec2c542935cce0b08cba48a6db",
+  "casesAndResponsesSha256": "b774277e87b8c54d732b14dd973dec911b71721105eade16374fd50983f55db1",
+  "scope": "Actual qualified WASM raw resource refusals and retired-trap transport; no database execution."
+}

@@ -1,13 +1,13 @@
 {
   "inventoryVersion": "weft-support-inventory/0.1.0",
-  "status": "native-compiler-qualified; final-host-acceptance-pending",
+  "status": "native-compiler-and-host-qualified; final-acceptance-pending",
   "releasedPackages": false,
   "supportedNativeProfiles": [
     {
       "backend": "truss.postgresql",
       "backendVersion": "0.1.0-qualified",
       "targetProfile": "pg17.9-qualified-fixtures",
-      "surface": "Trusted Rust registration and qualified runtime features; final Python/browser build qualification pending",
+      "surface": "Trusted Rust registration, native CPython 3.12.14 macOS ARM64 ABI3 and actual Chromium 148.0.7778.96 WASM; exact qualified features",
       "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
       "qualification": {
         "path": "docs/helix/04-build/evidence/B-007-qualified-truss.json",
@@ -20,13 +20,17 @@
       "implementation": {
         "path": "crates/weft-postgresql/src/qualified_profile.rs",
         "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+      },
+      "hostEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+        "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
       }
     },
     {
       "backend": "ashlar.databricks",
       "backendVersion": "0.1.0-qualified",
       "targetProfile": "dbsql2026.39-qualified",
-      "surface": "Trusted Rust registration and qualified runtime features; final Python/browser build qualification pending",
+      "surface": "Trusted Rust registration, native CPython 3.12.14 macOS ARM64 ABI3 and actual Chromium 148.0.7778.96 WASM; exact qualified features",
       "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
       "qualification": {
         "path": "docs/helix/04-build/evidence/B-007-qualified-ashlar.json",
@@ -39,6 +43,10 @@
       "implementation": {
         "path": "crates/weft-databricks/src/qualified_profile.rs",
         "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+      },
+      "hostEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+        "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
       }
     }
   ],

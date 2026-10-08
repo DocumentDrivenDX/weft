@@ -1,0 +1,1 @@
+{"status": "passed", "cases": 2181, "hostArtifactJoins": 4362, "resourceCasesPerHost": 7, "scope": "Complete actual Python and Chromium artifact/pin/runtime joins to native-qualified requests, with exact loaded binaries and package custody. No separate host SQL executions or broader platform/distribution claims."}

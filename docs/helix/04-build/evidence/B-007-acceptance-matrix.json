@@ -1223,6 +1223,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1312,6 +1316,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1393,6 +1401,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1478,6 +1490,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1683,7 +1699,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "6f688442d8a5811e41a382c2764949ad2d0a182e41f843b64c67e2e15512db02"
+          "sha256": "6a4bd48e5bf412d188fa756001bfee9b2f666e3fb4baa4424c39f266ab6d12fa"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1889,7 +1905,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "6f688442d8a5811e41a382c2764949ad2d0a182e41f843b64c67e2e15512db02"
+          "sha256": "6a4bd48e5bf412d188fa756001bfee9b2f666e3fb4baa4424c39f266ab6d12fa"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1946,6 +1962,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -2031,6 +2051,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -2116,6 +2140,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -2193,6 +2221,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -2270,6 +2302,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -2323,6 +2359,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -2384,6 +2424,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-resolver-audit/summary.json",
           "sha256": "3a4435b0ee62da3a3f65f461ef9d2cf0db2cbc504b42dde69aff9ec9a8b7cdb4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."

@@ -182,3 +182,13 @@ composition passes two unfiltered tests. This closes the supported declaration/
 assessment seam while leaving final Python/browser composition, deliberate feature
 conflict checks, current workspace evidence and all-criterion acceptance open.
 No actual publication/database authorization is inferred from a supported artifact.
+
+## Final qualified hosts
+
+Fresh public runtime, ABI3 Python and actual Chromium preserve all 2,181 complete
+native-qualified artifacts without candidate opt-in, with 4,362 audited joins.
+Package content, seven raw resource cases per host and eight rehashed corruption
+controls pass. B-007-qualified-hosts preserves exact source/binary/runtime custody.
+The remaining merge gates are terminal current workspace evidence and the full
+30-criterion acceptance determination, then PR #9 review/merge. Distribution
+ownership/license and production execution remain separately qualified.

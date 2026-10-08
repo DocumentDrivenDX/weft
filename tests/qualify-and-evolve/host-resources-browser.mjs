@@ -3,7 +3,7 @@ import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright';
 const cases=JSON.parse(await readFile(process.env.WEFT_RESOURCE_CASES,'utf8'));
-const files={'/compiler.js':process.env.WEFT_RESOURCE_JS,'/compiler.wasm':process.env.WEFT_RESOURCE_WASM,'/wrapper.js':'packages/weft-browser/dist/index.js'};
+const files={'/compiler.js':process.env.WEFT_RESOURCE_JS,'/compiler.wasm':process.env.WEFT_RESOURCE_WASM,'/wrapper.js':process.env.WEFT_RESOURCE_WRAPPER || 'packages/weft-browser/dist/index.js'};
 const browser=await chromium.launch({headless:true,executablePath:process.env.WEFT_CHROMIUM_EXECUTABLE});
 try{
  const page=await browser.newPage();
@@ -24,6 +24,6 @@ try{
   if(response!==c.response)throw new Error('Resource parity mismatch '+c.id);
  }
  const sha=async p=>createHash('sha256').update(await readFile(p)).digest('hex');
- const summary={status:'passed',cases:cases.length,browser:await browser.version(),byteParity:true,wasmSha256:await sha(files['/compiler.wasm']),wrapperSha256:await sha(files['/wrapper.js']),casesAndResponsesSha256:await sha(process.env.WEFT_RESOURCE_CASES),scope:'Raw resource/malicious-input host checks; retained test-third WASM, built transport, no database execution.'};
+ const summary={status:'passed',cases:cases.length,browser:await browser.version(),byteParity:true,wasmSha256:await sha(files['/compiler.wasm']),wrapperSha256:await sha(files['/wrapper.js']),casesAndResponsesSha256:await sha(process.env.WEFT_RESOURCE_CASES),scope:process.env.WEFT_RESOURCE_SCOPE || 'Raw resource/malicious-input host checks; retained test-third WASM, built transport, no database execution.'};
  await writeFile(process.env.WEFT_RESOURCE_SUMMARY,JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));
 }finally{await browser.close()}
