@@ -742,3 +742,138 @@ mod optional_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod recursive_entity_tests {
+    use super::*;
+    #[test]
+    fn complete_entities_combine_scalar_and_original_recursive_roots() {
+        let inputs: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-recursive-entity-inputs.json"
+        ))
+        .unwrap();
+        let baseline: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let props_template: Value = serde_json::from_str(
+            baseline[0]["request"]["target"]["bindingJson"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        let mut captures = Vec::new();
+        for input in inputs.as_array().unwrap() {
+            for note_home in ["row", "props"] {
+                for case in input["requests"].as_array().unwrap() {
+                    let mut request = case["request"].clone();
+                    let mut binding: Value =
+                        serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap())
+                            .unwrap();
+                    let note_index = binding["properties"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .position(|p| p["propertyId"] == "23")
+                        .unwrap();
+                    if note_home == "props" {
+                        let mut definition: Value = serde_json::from_slice(
+                            &bytes(
+                                &props_template["properties"][0]["homeDefinition"]["bytesBase64"],
+                            )
+                            .unwrap(),
+                        )
+                        .unwrap();
+                        definition["propertyCatalogId"] = serde_json::json!("23");
+                        definition["memberName"] = serde_json::json!("23");
+                        let raw = definition.to_string();
+                        binding["properties"][note_index]["home"] = serde_json::json!("props");
+                        binding["properties"][note_index]["homeDefinition"] = serde_json::json!({"identity":"recursive-entity-note-props","bytesBase64":STANDARD.encode(raw.as_bytes()),"sha256":weft_core::json::sha256(raw.as_bytes())});
+                    }
+                    let raw = binding.to_string();
+                    request["target"]["bindingJson"] = serde_json::json!(raw);
+                    request["target"]["bindingSha256"] =
+                        serde_json::json!(weft_core::json::sha256(raw.as_bytes()));
+                    let catalog = Catalog::prepare(
+                        serde_json::from_value(request["modules"].clone()).unwrap(),
+                    )
+                    .unwrap();
+                    let mut config =
+                        configuration(&input["composition"].to_string(), &catalog).unwrap();
+                    if note_home == "props" {
+                        let selected = config
+                            .properties
+                            .iter_mut()
+                            .find(|p| p.index == note_index)
+                            .unwrap();
+                        selected.relations =
+                            BTreeMap::from([("object-table".into(), "object".into())]);
+                        selected.columns = BTreeMap::from([
+                            (
+                                "object-type".into(),
+                                row_join_definition::Column {
+                                    relation_identity: "object-table".into(),
+                                    name: "type_id".into(),
+                                },
+                            ),
+                            (
+                                "object-props".into(),
+                                row_join_definition::Column {
+                                    relation_identity: "object-table".into(),
+                                    name: "props".into(),
+                                },
+                            ),
+                        ]);
+                        selected.row_join = None;
+                        selected.obligations.clear();
+                    }
+                    let response: Value =
+                        serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                    assert_eq!(
+                        response["status"], "compiled",
+                        "{} {note_home}: {response}",
+                        input["fixture"]
+                    );
+                    let root = binding["properties"][input["index"].as_u64().unwrap() as usize]
+                        ["logical"]["element"]
+                        .as_str()
+                        .unwrap();
+                    let label = if root == "address" { "address" } else { "tags" };
+                    let names: Vec<_> = response["columns"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .map(|c| c["outputName"].as_str().unwrap())
+                        .collect();
+                    assert_eq!(names, vec![label, "note", "id", "part"]);
+                    let index = config
+                        .properties
+                        .iter()
+                        .position(|p| p.index == input["index"].as_u64().unwrap() as usize)
+                        .unwrap();
+                    let removed = config.properties.remove(index);
+                    let refused: Value =
+                        serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                    assert_eq!(refused["status"], "blocked");
+                    assert!(refused.get("sql").is_none());
+                    config.properties.insert(index, removed);
+                    assert_eq!(
+                        response,
+                        serde_json::from_str::<Value>(&config.compile_json(&request.to_string()))
+                            .unwrap()
+                    );
+                    let checks: Vec<_> = response["obligations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .filter_map(|o| o["parameters"].get("sql").and_then(|s| s.as_str()))
+                        .collect();
+                    captures.push(serde_json::json!({"fixture":input["fixture"],"noteHome":note_home,"bound":case["bound"],"propertyId":binding["properties"][input["index"].as_u64().unwrap() as usize]["propertyId"],"sql":response["sql"],"parameters":response["parameters"],"columns":response["columns"],"checks":checks}));
+                }
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_RECURSIVE_ENTITY_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
+    }
+}

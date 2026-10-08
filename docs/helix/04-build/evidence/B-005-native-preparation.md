@@ -3167,3 +3167,40 @@ and complete three-scalar entity subset; it does not add native database or
 production compatibility claims. Native null remains unsupported by the pinned
 presence profile. Entities mixing recursive roots, broader scalar/query domains
 and complete host/story qualification remain B-005 work.
+
+### Complete entities with scalar and recursive roots (2026-10-07)
+
+`tests/truss-postgresql/build-recursive-entity-fixtures.py` authors seven model
+cuts combining an original recursive member, optional Unicode note and required
+string/uint64 key. The recursive closures are structured address, cyclic address,
+map, nested sequence, numeric address, numeric map and string sequence. Original
+Field/Record definitions for each selected closure are retained; owning Record
+members and source document pins are re-authored explicitly. Declared member order
+is `(recursive-member,note,id,part)` and key order remains `(part,id)`.
+
+The new original Configuration regression compiles all 28 whole-entity requests:
+seven graph shapes, optional note in native rows or JSONB props, and limits ten
+or one. Recursive members use their independently admitted complete-value-tree
+homes and trusted fixture procedures; scalar members use their independent homes.
+Exact column/member order is checked. Removing the recursive property's admission
+refuses without SQL, and restoring it restores the complete deterministic response.
+No member is silently dropped or flattened during whole-entity expansion.
+
+`tests/truss-postgresql/recursive-entity-native.py` passes 168 PostgreSQL 17.9
+cases with independent scalar/presence values and the previously authored exact
+logical recursive fixture expectations. The harness executes every emitted
+prerequisite before permitting result SQL. Hidden corruption in the recursive
+source bytes, key codec or optional note is detected even beyond the one-row page.
+A corrupt tree belonging to an unrelated object discriminator is excluded by the
+selected owner scope. Missing compound state yields absence for the three authored
+optional address roots and refusal for the four required sequence/map roots.
+Exact numeric recursive leaves remain strings, optional absence differs from an
+empty string, and all outputs retain declared order. Receipt:
+[B-005-recursive-entity-native.json](B-005-recursive-entity-native.json).
+
+All 141 core/PostgreSQL/runtime tests pass. HELIX and ten-composition/seventeen-
+response custody checks pass. This adds original Rust and synthetic native SQL
+composition evidence; it does not add these new whole-entity cuts to the runtime
+conformance allowlist or qualify fresh Python/browser execution for them. Native
+null remains unsupported by the pinned profile. Broader scalar/query domains,
+whole-entity embedding and full host/story qualification remain B-005 work.
