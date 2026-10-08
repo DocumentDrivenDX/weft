@@ -138,3 +138,32 @@ fn emitter_cannot_change_outputs_or_parameter_domains() {
         );
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC4
+#[test]
+fn registration_description_errors_are_atomic() {
+    struct Description(u8);
+    impl Backend for Description {
+        type Mapping=();type TargetPlan=();
+        fn describe(&self)->weft_core::error::Result<Manifest> {
+            match self.0 {
+                0=>panic!("description panic control"),
+                1=>Err(weft_core::error::Diagnostic::new("WFT-BINDING","binding","description refused")),
+                2=>{let mut m=manifest(Status::Supported);m.interface_version="unknown".into();Ok(m)},
+                _=>Ok(manifest(Status::Supported)),
+            }
+        }
+        fn validate_binding(&self,_:&Context<'_>)->weft_core::error::Result<Validated<()>> {panic!("registration must not validate binding")}
+        fn assess(&self,_:&Context<'_>,_:&())->weft_core::error::Result<Vec<Assessment>> {panic!("registration must not assess")}
+        fn lower(&self,_:&Context<'_>,_:&())->weft_core::error::Result<()> {panic!("registration must not lower")}
+        fn emit(&self,_:&Context<'_>,_:&())->weft_core::error::Result<Emission> {panic!("registration must not emit")}
+    }
+    for (mode,code) in [(0,"WFT-BACKEND-FAILURE"),(1,"WFT-BINDING"),(2,"WFT-BACKEND-VERSION")] {
+        let mut r=Registry::default();let error=r.register(Description(mode)).unwrap_err();assert_eq!(error.code,code);
+        assert!(r.manifest("test.third").is_none());
+        r.register(Description(3)).unwrap();assert!(r.manifest("test.third").is_some());
+        let error=r.register(Description(3)).unwrap_err();assert_eq!(error.code,"WFT-BACKEND-VERSION");
+        assert_eq!(error.message,"Backend identity is already registered");
+        assert_eq!(r.manifest("test.third").unwrap().backend_version,"0.1.0");
+    }
+}

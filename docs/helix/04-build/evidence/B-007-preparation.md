@@ -429,3 +429,10 @@ raw keys, Unicode-escaped equivalent keys and nested array/object propagation.
 The fresh named test passes and its implementation/test hashes are retained in
 B-007-json-branches/. Exact node/byte limits remain separately evidenced; no new
 claim about every recursion-depth boundary is made.
+
+Registry description guards now have a fresh explicit test for describe panic,
+returned refusal and invalid manifest interface. Each failure leaves no registered
+identity; recovery by valid registration succeeds; duplicate registration refuses
+without replacing the original manifest. The fixture forbids binding/assessment/
+lowering/emission during registration. B-007-registration-description/ retains
+source hashes and the executed single-test log. Compiler production code is unchanged.
