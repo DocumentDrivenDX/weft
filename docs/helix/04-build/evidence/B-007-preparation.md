@@ -623,3 +623,9 @@ builds on pull requests and main pushes. The workflow has read-only repository
 permissions and a 30-minute bound. YAML structure, spec checks and browser
 build pass locally; remote Ubuntu execution remains to be observed. It
 does not claim live database or actual-browser qualification.
+
+B-007-linux-ci/ retains terminal GitHub run 37771049078 at f9101d9:
+214 Rust tests across 35 suites pass with none ignored/filtered, alongside
+spec checks, browser package build, and twelve-component evidence replay
+verifying 73 references. Compressed full logs and remote job metadata pin
+the observation to its source revision. No live engine or browser CI claim.
