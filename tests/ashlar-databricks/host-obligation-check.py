@@ -1,7 +1,7 @@
 """Independent host phase/refusal assertions; @covers US-004-AC4."""
 import copy,json
 from pathlib import Path
-from host_obligation_fixture import execute,Refused
+from host_obligation_fixture import execute,Refused,PROFILE
 ROOT=Path(__file__).resolve().parents[2]
 artifact=json.loads((ROOT/'docs/helix/04-build/evidence/B-006-compound-native-initial/compile-artifacts.jsonl').read_text().splitlines()[0])['response']
 pub=next(o['parameters'] for o in artifact['obligations'] if o['id']=='ashlar.candidate.publication')
@@ -31,6 +31,11 @@ def probe(name,change=None,phase='before',artifact_change=None,transport=None,ex
   if phase=='before' and change:assert calls==[],name
  cases.append(name)
 probe('success',expect=True)
+def native_profile(a):return next(o for o in a['obligations'] if o['id']=='ashlar.candidate.publication')['parameters']
+probe('current-profile-without-spark-release',artifact_change=lambda a:native_profile(a).update(nativeProfile=copy.deepcopy(PROFILE)),expect=True)
+probe('unknown-legacy-version',artifact_change=lambda a:native_profile(a)['nativeProfile'].update(versionReported='unknown'))
+probe('unqualified-profile-cannot-claim-warehouse-release',artifact_change=lambda a:native_profile(a)['nativeProfile'].update(warehouseRelease='2026.39'))
+probe('unknown-arithmetic-profile',artifact_change=lambda a:native_profile(a)['nativeProfile'].update(arithmetic='lossy'))
 for key in ['completeVisibility','manifestVerified','schemasVerified','retainedDataFiles','sourceIdentityVerified','endpointIntegrityVerified','projectionCoverageVerified','payloadValidated','mappingVerified','lifecycleVerified']:
  for phase in ['before','after']:probe(key+'-'+phase,lambda v,k=key:v.update({k:False}),phase)
 for key in ['effectiveCaller','authenticatedCaller','policyRevision','bindingSha256','layoutRevision','layoutSha256']:

@@ -113,3 +113,20 @@ metadata reconciliation passes. These add exact current-build domains; they
 do not themselves promote the registered candidate or qualify every numeric
 parameter/home combination. The effective ANSI setting observation is separate
 and does not retroactively identify arbitrary query sessions.
+
+## Correct current host-obligation version meaning
+
+The current compiler no longer emits the historical Spark 4.2.0 zero-build
+observation under the ambiguous `nativeProfile.versionReported` field. Candidate
+warehouse release, comparison and arithmetic declarations remain explicit. The
+fixture host accepts the exact old shape only for frozen historical compiler
+receipts; it does not interpret it as a warehouse version. New-shape acceptance
+and unknown version/release/arithmetic refusals supplement the host controls.
+
+B-007-warehouse-metadata-correction records 18 passing Rust adapter tests,
+53 host fixture controls and 355 fresh CLI artifact comparisons against all
+current-build native scalar/application/compound/relationship/value requests.
+The obsolete field is the sole output difference: target SQL, parameters,
+model/binding pins, logical plans, result representations and candidate status
+are unchanged. The native receipts remain at their original compiler hashes;
+this comparison does not relabel them or claim a new database execution.

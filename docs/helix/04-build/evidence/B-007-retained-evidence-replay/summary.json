@@ -523,6 +523,70 @@
       "sourceSha256": "61ed369a129f6cbf7cf5a528de8eec604761b5d8a585db8e8bec6adcbe57d2a9"
     },
     {
+      "component": "../ashlar-databricks/host-obligation-check.py",
+      "result": {
+        "state": "passed",
+        "cases": 53,
+        "names": [
+          "success",
+          "current-profile-without-spark-release",
+          "unknown-legacy-version",
+          "unqualified-profile-cannot-claim-warehouse-release",
+          "unknown-arithmetic-profile",
+          "completeVisibility-before",
+          "completeVisibility-after",
+          "manifestVerified-before",
+          "manifestVerified-after",
+          "schemasVerified-before",
+          "schemasVerified-after",
+          "retainedDataFiles-before",
+          "retainedDataFiles-after",
+          "sourceIdentityVerified-before",
+          "sourceIdentityVerified-after",
+          "endpointIntegrityVerified-before",
+          "endpointIntegrityVerified-after",
+          "projectionCoverageVerified-before",
+          "projectionCoverageVerified-after",
+          "payloadValidated-before",
+          "payloadValidated-after",
+          "mappingVerified-before",
+          "mappingVerified-after",
+          "lifecycleVerified-before",
+          "lifecycleVerified-after",
+          "effectiveCaller-before",
+          "effectiveCaller-after",
+          "authenticatedCaller-before",
+          "authenticatedCaller-after",
+          "policyRevision-before",
+          "policyRevision-after",
+          "bindingSha256-before",
+          "bindingSha256-after",
+          "layoutRevision-before",
+          "layoutRevision-after",
+          "layoutSha256-before",
+          "layoutSha256-after",
+          "publication-before",
+          "publication-after",
+          "modelPins-before",
+          "modelPins-after",
+          "targetContext-before",
+          "targetContext-after",
+          "unknown-obligation",
+          "unknown-publication-meaning",
+          "unknown-guard-meaning",
+          "guard-violation",
+          "numeric-zero-is-not-exact-text",
+          "partial-transport",
+          "truncated-transport",
+          "native-type-change",
+          "native-null-value",
+          "duplicate-json-member"
+        ],
+        "qualification": "Host fixture phase/control evidence; synthetic callback trust, native execution tested separately."
+      },
+      "sourceSha256": "5bbceb2d6ede57ae3c41db12b24f8790443d398e77f0826f4f72dcad9f459958"
+    },
+    {
       "component": "reconcile-truss-archive.py",
       "result": {
         "status": "passed",
@@ -2004,6 +2068,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 106,
+  "verifiedEvidenceReferences": 107,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

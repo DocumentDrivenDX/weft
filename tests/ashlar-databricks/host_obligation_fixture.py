@@ -14,7 +14,10 @@ REQUIREMENTS=[
  'refuse unknown obligations or unavailable evidence; no latest version or broader principal fallback',
  'validate original mapping correspondence independently; identifiers and physical IDs are not logical identity']
 PAYLOAD=['exact validated JSON text with duplicate-key refusal','well-formed Unicode scalar strings with no NUL','registered fixed-base-ten numeric carrier; exponent/DOUBLE representations refuse','no rounding, coercion, missing/null substitution or hidden corrupt inputs']
-PROFILE=dict(versionReported='4.2.0 zero build hash',warehouseRelease='unqualified',comparison='UTF8_BINARY',arithmetic='ANSI exact-or-error')
+PROFILE=dict(warehouseRelease='unqualified',comparison='UTF8_BINARY',arithmetic='ANSI exact-or-error')
+# Frozen B-006/B-007 compiler artifacts carried Spark's version() observation.
+# Accept that exact historical fixture shape, without treating it as a warehouse release.
+LEGACY_PROFILE=dict(PROFILE,versionReported='4.2.0 zero build hash')
 FLAGS=['completeVisibility','manifestVerified','schemasVerified','retainedDataFiles','sourceIdentityVerified','endpointIntegrityVerified','projectionCoverageVerified','payloadValidated','mappingVerified','lifecycleVerified']
 def strict_json(raw):
  def pairs(items):
@@ -41,7 +44,7 @@ def execute(artifact,snapshot,query,session):
    if id=='ashlar.candidate.publication':
     require(o['failureCode']=='WFT-OBLIGATION')
     require(set(p)=={'publication','modelPins','layoutRevision','layoutSha256','requirements','nativeProfile','payloadValidation','visibility','publicationPhase'})
-    require(p['requirements']==REQUIREMENTS and p['payloadValidation']==PAYLOAD and p['nativeProfile']==PROFILE)
+    require(p['requirements']==REQUIREMENTS and p['payloadValidation']==PAYLOAD and p['nativeProfile'] in [PROFILE,LEGACY_PROFILE])
     require(p['visibility']=='hidden input is not evidence of absence or integrity' and p['publicationPhase']=='after-complete-buffer-and-context-recheck')
     require(p['modelPins']==artifact['modelPins']);publication=p;continue
    fixed=dict(phase='before-user-query',success='one exact STRING count equal to 0 per check',samePublicationRequired=True)

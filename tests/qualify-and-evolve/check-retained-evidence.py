@@ -22,6 +22,7 @@ components=[
  ('reconcile-warehouse-settings.py','status','nativeStatements',3),
  ('reconcile-ashlar-warehouse-scalars.py','status','cases',10),
  ('reconcile-ashlar-warehouse-values.py','status','cases',133),
+ ('../ashlar-databricks/host-obligation-check.py','state','cases',53),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),

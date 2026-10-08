@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "rustTests": 18,
+  "hostControls": 53,
+  "freshArtifactComparisons": 355,
+  "scope": "Remove the obsolete Spark versionReported field from current host obligations. New and exact historical fixture forms remain candidate; unknown profiles refuse. All 355 fresh CLI responses otherwise match retained native artifacts, including SQL, parameters and result meaning. No profile promotion or native retest claim.",
+  "sourceHashes": {
+    "crates/weft-databricks/src/candidate.rs": "3b57052f77a856e064965d09ac11c38a81cd58e90691709880d170e2c7fba66e",
+    "tests/ashlar-databricks/compiler.rs": "094d9807b565d0db08ecf231691fdc76ab5de93e13ec0fedbfd9ca86711889a7",
+    "tests/ashlar-databricks/host_obligation_fixture.py": "b39900de74c59001f62b842bcd66f849acae9560af451fbcd8c65eebdb4f495d",
+    "tests/ashlar-databricks/host-obligation-check.py": "5bbceb2d6ede57ae3c41db12b24f8790443d398e77f0826f4f72dcad9f459958",
+    "tests/qualify-and-evolve/compare-warehouse-metadata.py": "42b3e69dc3872363cf50de8ef91667cbc5a53275da99f1ac2413c401e7954910"
+  },
+  "evidenceHashes": {
+    "rust.log": "135f03f4b62acb79220fa883126999891809270cc3d66ee35df0b2b376f0e123",
+    "host.log": "584fd5b7f8094b5272821b68a01c561763e07e7105b1bc82b21c5f7f32c5b151",
+    "compile.log": "f62ca20327738ec9b382acf0b9cf094d9aef6d92e8f609e5e6a9d044b402b7bb",
+    "artifact-comparison.json": "d3a1d426ace775b0057ed24ac1f3c70ac38d864566acbd73fd497481222634fb"
+  }
+}

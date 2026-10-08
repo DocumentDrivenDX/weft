@@ -46,6 +46,11 @@ fn sales_compiles_with_pins_exact_carriers_and_prequery_integrity() {
         .unwrap()
         .iter()
         .any(|o| o["id"] == "ashlar.candidate.publication"));
+    let publication=response["obligations"].as_array().unwrap().iter()
+        .find(|o| o["id"]=="ashlar.candidate.publication").unwrap();
+    assert_eq!(publication["parameters"]["nativeProfile"],json!({
+        "warehouseRelease":"unqualified","comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error"
+    }));
     assert_eq!(run(&request), response);
 }
 #[test]

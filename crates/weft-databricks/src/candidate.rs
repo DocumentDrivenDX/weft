@@ -29,7 +29,7 @@ fn publication(binding: &Binding) -> Obligation {
         parameters: json!({
         "publication":binding.publication,"modelPins":binding.model_pins,"layoutRevision":binding.layout_revision,"layoutSha256":binding.layout_sha256,
         "requirements":["authenticate effective caller and establish complete authorized input view","verify one complete immutable manifest with trusted UUID and all schema revisions/projection dependencies","verify every consumed native schema, table UUID, version and retained data-file custody","verify source/type/id uniqueness, typed endpoint integrity and complete serving projection coverage at this publication","check policy and pin custody before execution and again before buffered result publication","refuse unknown obligations or unavailable evidence; no latest version or broader principal fallback","validate original mapping correspondence independently; identifiers and physical IDs are not logical identity"],
-        "nativeProfile":{"versionReported":"4.2.0 zero build hash","warehouseRelease":"unqualified","comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error"},
+        "nativeProfile":{"warehouseRelease":"unqualified","comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error"},
         "payloadValidation":["exact validated JSON text with duplicate-key refusal","well-formed Unicode scalar strings with no NUL","registered fixed-base-ten numeric carrier; exponent/DOUBLE representations refuse","no rounding, coercion, missing/null substitution or hidden corrupt inputs"],
         "visibility":"hidden input is not evidence of absence or integrity","publicationPhase":"after-complete-buffer-and-context-recheck"}),
         owner: ObligationOwner::Host,
