@@ -1050,11 +1050,12 @@
     }
   ],
   "unresolvedReleaseGates": [
-    "case-level native/application reconciliation",
-    "complete critical supported/refused branch review",
-    "real support-report consistency audit for any supported profile",
-    "qualified exact native profile for advertised supported claims",
-    "license and publication ownership decisions"
+    "full release acceptance determination for all 30 criteria",
+    "complete individual critical supported/refused branch-to-assertion accounting",
+    "real qualified support reports with native/profile/provenance evidence",
+    "qualified native profiles required by implementation-plan exit",
+    "owner license and release maintainer/registry ownership decisions",
+    "final release-artifact qualification before distribution"
   ],
   "meaning": "Evidence-backed component index and explicit gaps. No criterion is declared release-complete merely because a test or summary exists."
 }
