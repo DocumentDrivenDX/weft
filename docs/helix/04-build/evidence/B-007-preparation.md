@@ -635,3 +635,9 @@ matrix as shared workspace regression evidence. Twelve replay components
 pass with 74 verified references. Git comparison confirms crates, tests and
 workflow files are unchanged from tested f9101d9 through this evidence update.
 Criterion-specific native/host/profile proof remains separately scoped.
+
+Governing-plan review corrects the closure gate interpretation: license,
+registry/maintainer ownership and final distribution artifact decisions are
+required before distribution, not before merging this implementation PR.
+Publication was not requested. Qualified native profiles, all 30 criteria,
+exact support scope and critical branch accounting remain implementation gates.

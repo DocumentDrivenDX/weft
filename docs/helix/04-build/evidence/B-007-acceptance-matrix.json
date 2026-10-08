@@ -1681,5 +1681,16 @@
     "owner license and release maintainer/registry ownership decisions",
     "final release-artifact qualification before distribution"
   ],
-  "meaning": "Evidence-backed component index and explicit gaps. No criterion is declared release-complete merely because a test or summary exists."
+  "meaning": "Evidence-backed component index and explicit gaps. No criterion is declared release-complete merely because a test or summary exists.",
+  "unresolvedMergeGates": [
+    "full release acceptance determination for all 30 criteria",
+    "complete individual critical supported/refused branch-to-assertion accounting",
+    "real qualified support reports with native/profile/provenance evidence",
+    "qualified native profiles required by implementation-plan exit"
+  ],
+  "distributionOnlyGates": [
+    "owner license and release maintainer/registry ownership decisions",
+    "final release-artifact qualification before distribution"
+  ],
+  "gateInterpretation": "Implementation-plan exit requires qualified native profiles and acceptance evidence. License, registry ownership and final distributable-artifact qualification apply before distribution, which is outside the requested implementation/merge goal."
 }

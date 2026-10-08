@@ -16,12 +16,12 @@ executed compiler components from release/native support qualification.
 | Real support-report audit | 41 synthetic verifier controls; real retained Truss report consistency across 21 scopes/76 cases, independent expectations and 65 ordered comparisons; standard retained receipt/corruption replay | Synthetic controls and real native-data consistency pass. Exact artifact/model/binding scopes and independent expected rows are reconciled for Truss. Python/browser compiler-artifact joins now cover all 76 cases per host, with fourteen corruption controls and retained runtime identity checks. Final engine/session/producer provenance and host execution qualification remain unproved; these passes do not promote candidate capabilities. |
 | Native Python and actual browser | Fresh public/Truss builds and Ashlar host replays, exact metadata, traps/resources, loaded artifact hashes | Observed host component matrix passes. Platform metadata does not qualify every interpreter/OS. |
 | Versioned support inventory | Candidate inventory with exact evidence hashes and explicit exclusions | Exists, but remains candidate preparation rather than qualified support inventory. |
-| Packaging/release procedures and ownership/license | Native wheel RECORD/content audit, built/packed browser transport and isolated consumer, release procedure | Local packaging checks pass. Owner license and actual release maintainer/registry ownership remain unresolved; final release binaries are not built/qualified. No distribution requested or performed. |
+| Packaging/release procedures and ownership/license | Native wheel RECORD/content audit, built/packed browser transport and isolated consumer, release procedure | Local packaging checks pass. Owner license and actual release maintainer/registry ownership remain unresolved. The implementation plan requires these decisions before distribution; distribution was not requested, so they are not B-007 merge blockers. Final distributable binaries likewise remain a publication gate. |
 | Sequential reviewed PR and merge | B-002–B-006 merged; B-007 PR #9 open/draft | Must merge B-007 only after its gates are satisfied. |
 
 Next compiler work is complete critical branch accounting and a real qualified
 support report for each exact claimed profile. Owner release decisions are needed
-before distribution. Native tests remain possible against owned synthetic fixtures;
+before distribution, not before this implementation PR can merge. Native tests remain possible against owned synthetic fixtures;
 there is no missing Truss table-layout artifact blocking that work. Retesting
 already passing components without a new change or a concrete uncovered branch
 would not close the outstanding qualification gates.
