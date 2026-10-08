@@ -177,10 +177,17 @@ for c in cases:
     values=','.join(quote(p['value']) for p in params)
     integrity=[check for o in r['obligations'] if o['id'] in ['truss.candidate.scalarIntegrity','truss.candidate.relationshipIntegrity'] for check in o['parameters']['checks']]
     sql='BEGIN ISOLATION LEVEL REPEATABLE READ;\nSET standard_conforming_strings=on;\n'+setup(c['mapping'],case_seed,case_edges,c['request']['modules'])
+    sql += "SELECT json_build_object('engine',version(),'serverVersion',current_setting('server_version'),'serverEncoding',current_setting('server_encoding'),'clientEncoding',current_setting('client_encoding'),'standardConformingStrings',current_setting('standard_conforming_strings'),'transactionIsolation',current_setting('transaction_isolation'),'lcCollate',(SELECT datcollate FROM pg_database WHERE datname=current_database()),'lcCtype',(SELECT datctype FROM pg_database WHERE datname=current_database()))::text AS weft_session;\n"
     for i,g in enumerate(integrity):sql+=f"PREPARE check_{i}({types}) AS {g['sql']};\nEXECUTE check_{i}({values});\n"
     sql+=f"PREPARE query({types}) AS {r['sql']};\nEXECUTE query({values});\nROLLBACK;\n"
     result=subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-P','null=__WEFT_FIXTURE_NULL__','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode()
     rows=list(csv.reader(io.StringIO(result)))
+    assert rows[0] == ['weft_session'] and len(rows[1]) == 1, (c['id'], rows[:2])
+    session = json.loads(rows[1][0])
+    assert session['serverEncoding'] == session['clientEncoding'] == 'UTF8', session
+    assert session['standardConformingStrings'] == 'on', session
+    assert session['transactionIsolation'] == 'repeatable read', session
+    rows = rows[2:]
     for i in range(len(integrity)):assert rows[2*i:2*i+2]==[['count'],['0']],(c['id'],rows)
     rows=rows[2*len(integrity):]
     if len(r['columns'])==1:rows=[row if row else [''] for row in rows]
@@ -324,7 +331,7 @@ for c in cases:
             violations='2' if variant=='duplicate-state' else '1'
             assert list(csv.reader(io.StringIO(observed)))==[['count'],[violations]],(c['id'],variant,observed)
             topology.append(dict(variant=variant,violations=violations))
-    reports.append(dict(id=c['id'],raw=raw,response=r,rows=rows[1:],topology=topology))
+    reports.append(dict(id=c['id'],raw=raw,response=r,rows=rows[1:],topology=topology,session=session,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==BINARY_SHA
 OUT=Path(os.environ.get('WEFT_TRUSS_OUTPUT',str(ROOT/'target/b005')));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'application-native-reports.json').write_text(json.dumps(reports,ensure_ascii=False))

@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "cases": 76,
+  "binarySha256": "07b9c7c2d7c1a924d8df73df7e3fb9b583e57bd8fd47aa0564f3ecbcdc87ae24",
+  "harnessSha256": "63c484a6203e78fcce9820cfa7243024ea16dafbbdbd169895d404b8c9f0c41d",
+  "corpusSha256": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1",
+  "scope": "Fresh 76-case candidate fixture execution with same-transaction settings and SQL digest. Results, artifacts and topology agree with earlier receipts. No profile promotion or production qualification.",
+  "sameTransactionSessionCases": 76,
+  "unchangedArtifactRowsAndTopologyCases": 76,
+  "session": {
+    "clientEncoding": "UTF8",
+    "engine": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "lcCollate": "C",
+    "lcCtype": "C",
+    "serverEncoding": "UTF8",
+    "serverVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "standardConformingStrings": "on",
+    "transactionIsolation": "repeatable read"
+  },
+  "gzipSha256": "9a9233e4e628241bda27468504e963c84fb4f49f9e3ab77074e9e361620c2153",
+  "uncompressedSha256": "eb260585891de6d1cee8b0a2b2c1a86b069d2d75af99691a6468ccffcf61999a",
+  "bytes": 6235767
+}
