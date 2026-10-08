@@ -300,3 +300,11 @@ CPython 3.12.14 passes six components and verifies 28 evidence references. An
 initial invocation with the system Python failed because its `zip` lacks the
 `strict` argument; that invocation is not passing evidence. The configured
 Python environment completed the replay; no new database execution is implied.
+
+A retained unsigned-boundary reconciler independently checks all eight authored
+width controls against pinned module/binding bytes, emitted SQL substitutions,
+exact parameter arrays and integer-computed expectations. All 22 distinct native
+statement IDs are consumed exactly once: 21 successful single-row STRING results
+and one expected terminal CAST_OVERFLOW failure. UInt64 remains a compile refusal.
+This checks saved synthetic receipts; it adds no database execution or production
+publication claim. The combined retained-evidence command now runs seven components.

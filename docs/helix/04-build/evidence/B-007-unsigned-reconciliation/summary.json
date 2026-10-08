@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "nativeReceipts": 22,
+  "successfulReceipts": 21,
+  "expectedFailedReceipts": 1,
+  "sourceSha256": "5504aa01d7bad0a71db459541fc35b0f7404c6459cb2fd79c783ac182dcd43cc",
+  "inputHashes": {
+    "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+    "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
+  },
+  "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+}
