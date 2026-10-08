@@ -24,8 +24,9 @@ ddx:
 ## Scope and Objective
 
 Prove this P0 journey under its selected dialect/model/backend/host versions.
-Every covering test must cite its AC as `@covers US-004-ACm`. All tests below are
-planned; no compiler implementation or executed coverage exists at bootstrap.
+Every covering test must cite its AC as `@covers US-004-ACm`. The table preserves
+the bootstrap planning allocations; executed candidate evidence is audited in
+the checkpoint below.
 
 ## Acceptance Criteria Test Mapping
 
@@ -52,15 +53,14 @@ Require tests-before-code, retained logs/input hashes, and zero phantom claims.
 
 ## Execution checkpoint, 2026-10-08
 
-B-006 is in progress. [Native preparation and execution evidence](../../04-build/evidence/B-006-native-preparation.md)
-records explicit binding admission and registered 0.1/0.2 required-scalar lowering,
-fifteen Rust tests, native scalar/typed-home results, 112 entity/count/keyset cases,
-key/domain refusals and aggregate controls. AC1–AC3 have partial native component
-evidence; key integrity covers part of AC4. Full story acceptance remains open:
-compound values and actual host authorization/publication/pin refusals
-remain unfinished. Optional scalar values have 36 native cases and the fresh
-Python/Chromium embeddings match all 276 saved full artifacts. Authored
-relationship access has 52 native cases (28 results, 24 refusals), covering
-canonical/serving edges, props/typed keys, inverse direction, parallel edges and
-whole-input endpoint/key/multiplicity guards. Synthetic admin
-fixtures and candidate capabilities do not establish production compatibility.
+B-006 passes its owner-authorized candidate compiler gate. The
+[acceptance audit](../../04-build/evidence/B-006-acceptance.md) maps all four criteria
+to actual native/compiler/host observations with exact profile boundaries. Native
+evidence includes 36 optional, 52 relationship, 133 compound and 48 compound
+entity/keyset cases, six name/resource controls, 30 actual buffered host cases
+and 49 independent phase/transport controls. Final Ashlar Rust tests pass 18;
+fresh Python/Chromium/CLI builds match 463 artifacts with the documented
+presence-declaration correction. Bootstrap allocations above remain planned
+records; the audit is the executed component evidence. B-007 release qualification
+remains open. Synthetic authority attestations and the observed warehouse do not
+certify production policy or broader engine/platform compatibility.

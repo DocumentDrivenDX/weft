@@ -14,7 +14,7 @@ out = Path(os.environ.get('WEFT_ASHLAR_EMBEDDING_OUTPUT', root / 'target/b006/em
 out.mkdir(parents=True, exist_ok=True)
 evidence = root / 'docs/helix/04-build/evidence'
 cases = []
-for scope in ['columns-native', 'application-native', 'key-refusal', 'unsigned-columns', 'optional-native', 'relationship-native', 'compound-native', 'compound-boundaries-native']:
+for scope in ['columns-native', 'application-native', 'key-refusal', 'unsigned-columns', 'optional-native', 'relationship-native', 'compound-native', 'compound-boundaries-native', 'compound-application-native']:
     for line in (evidence / f'B-006-{scope}/compile-artifacts.jsonl').read_text().splitlines():
         case = json.loads(line)
         case['id'] = scope + ':' + str(case['id'])
@@ -27,7 +27,29 @@ for scope in ['scalar-native', 'global-native']:
 case = json.loads((evidence / 'B-006-cross-module-native/compile.json').read_text())
 case['id'] = 'cross-module'
 cases.append(case)
-assert len(cases) == 415, len(cases)
+assert len(cases) == 463, len(cases)
+# Historical native receipts keep their original declarations. The sole metadata
+# correction is specified independently here; native SQL and meaning stay exact.
+metadata_corrections = []
+for case in cases:
+    if case['response']['status'] != 'compiled':
+        assert case['response']['status'] == 'blocked', case['id']
+        continue
+    before = json.dumps(case['response'], ensure_ascii=False, sort_keys=True)
+    corrections = 0
+    for operation in case['response']['qualification']['operations']:
+        declaration = operation['declaration']
+        if declaration['id'] == 'value.presence':
+            domain = declaration['logicalDomain']
+            old = {'subset': 'optional scalar envelopes; absent or exact value; explicit native null refuses'}
+            new = {'subset': 'optional scalar or compound envelopes; absent or exact value; explicit native null refuses'}
+            assert domain in [old, new], (case['id'], domain)
+            if domain == old:
+                declaration['logicalDomain'] = new
+                corrections += 1
+    if corrections:
+        metadata_corrections.append({'id': case['id'], 'nativeResponseSha256': hashlib.sha256(before.encode()).hexdigest(), 'fields': corrections, 'correction': 'value.presence logicalDomain only'})
+(out / 'metadata-corrections.json').write_text(json.dumps(metadata_corrections, indent=2) + '\n')
 from weft import weft
 assert Path(weft.__file__).suffix in ['.so', '.pyd'], weft.__file__
 module_path = Path(weft.__file__)

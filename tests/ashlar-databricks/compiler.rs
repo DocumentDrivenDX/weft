@@ -335,3 +335,11 @@ fn compound_encoding_is_explicit_and_selected_dependency_meaning_refuses() {
         let response=run(&request);assert_eq!(response["status"],"blocked","{response}");assert!(response.get("sql").is_none());
     }
 }
+
+#[test]
+fn candidate_presence_declaration_includes_compound_availability() {
+    use weft_core::backend::Backend;
+    let manifest = Candidate.describe().unwrap();
+    let capability = manifest.capabilities.iter().find(|c| c.id == "value.presence").unwrap();
+    assert_eq!(capability.logical_domain, json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}));
+}

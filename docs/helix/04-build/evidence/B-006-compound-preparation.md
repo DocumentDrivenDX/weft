@@ -46,3 +46,40 @@ Native recursive syntax and limits were checked against the official
 last updated 2026-09-11. That reference does not identify this warehouse's
 release/channel; native capabilities remain candidate. Probe statement receipts
 are in B-006-recursion-probes/. No production compatibility is implied.
+
+## Final component checkpoint
+
+The frozen CLI (SHA-256 02f6db7df59ce6c075995083a2ff4750545d89765df4a7af0d101864f74d562c)
+passes 48 whole-entity/keyset combinations of required/optional nested, structured,
+cyclic and mapped structured values, with props or native BIGINT ID homes.
+B-006-compound-application-native/ contains the complete final receipts.
+
+The actual native host driver passes 30 cases across scalar, optional, relationship,
+entity, page and compound reads: six buffered results and 24 discarded buffers
+after caller, policy, publication or retained-file custody changes. It verifies
+actual caller identity, manifest/table UUIDs, version vectors, owner DDL schemas
+and retained-version reads before guards and before publication. The independent
+49-case host fixture covers additional pre-query, unknown-meaning and exact
+transport refusals. Its authority/lifecycle/projection certificates are synthetic
+fixture attestations, not a production policy service.
+
+Earlier harness schema/0.1 descriptor mistakes and a concurrent Cargo rebuild
+were rejected. No rejected run closes a gate. Native runs now use an immutable
+CLI outside Cargo's target directory. Final accepted statement ranges and the
+fixture hash are in custody.json; full earlier attempts remain distinguishable.
+Public host receipts hash caller text while retaining exact equality and the
+canonical original response digest; raw receipts remain local.
+
+The presence declaration now explicitly includes scalar or compound envelopes.
+This corrects metadata only. Historical native artifacts retain their original
+declarations; python-check.py applies the independently specified single-field
+correction and compares every other field exactly. The final native Python build
+matches 463 full artifacts. Final Chromium matches all 463 artifacts with byte parity; its exact WASM
+SHA-256 is 73cf013ac6b14e07222f81201820cc049975c04fa93e3db8f37813e0712bc046.
+The fresh native Python extension SHA-256 is
+8e04e6812141e895c8002624d0d81e9288dcc645d918855a2fecc5fd3546d831.
+The final CLI matches that entire corpus as well. The declaration-only bridge
+amends 172 historical capability declarations and leaves native SQL, parameters,
+result descriptors, obligations and every other field exact. The acceptance
+audit is recorded separately in B-006-acceptance.md. Eighteen final Ashlar Rust tests pass; the full workspace checkpoint
+passes 182 tests, before the additional declaration assertion.
