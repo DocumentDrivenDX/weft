@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "reports": 463,
+  "wideIntegerArtifacts": 24,
+  "nullableExactDecimalSumArtifacts": 2,
+  "textParameterSlots": 2526,
+  "inputSha256": "29c6a37604fd150199d094b523561e3d39940a3bf6615c275aea2ea2f342dd9f",
+  "sourceSha256": "dc60b6913ecc7ce924a9539cc1fa8e06584c400e2bba4b882b786b2b02113c90",
+  "scope": "Inspect actual native Python response metadata with independent exact-carrier assertions. Matching browser/CLI response bytes are established in separate host receipts; no new engine or host execution."
+}

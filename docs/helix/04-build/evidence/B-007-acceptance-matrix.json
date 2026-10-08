@@ -419,6 +419,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
           "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/summary.json",
+          "sha256": "3949f66e92a1e7fa231f210eec2adc533fe17a844f3936daed58609281f4edd9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
+          "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -464,6 +472,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
           "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/summary.json",
+          "sha256": "3949f66e92a1e7fa231f210eec2adc533fe17a844f3936daed58609281f4edd9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
+          "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -501,6 +517,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
           "sha256": "c0cb759746838affcaedbbbff6de1e436176fa153a47d8812c4b65bf7ec175e2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/summary.json",
+          "sha256": "3949f66e92a1e7fa231f210eec2adc533fe17a844f3936daed58609281f4edd9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
+          "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -534,6 +558,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/summary.json",
+          "sha256": "3949f66e92a1e7fa231f210eec2adc533fe17a844f3936daed58609281f4edd9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
+          "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
