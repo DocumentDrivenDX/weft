@@ -232,3 +232,38 @@ impl Configuration {
         weft_core::compile::Compiler::default().compile_json_with_factory(request, &mut factory)
     }
 }
+/// Test data only: preserve original inputs for independently checked embedding
+/// conformance. Procedure pointers remain in trusted Rust; this is not a plugin
+/// registration or executable serialization protocol.
+#[cfg(test)]
+impl Configuration {
+    pub(crate) fn conformance_capture(&self) -> serde_json::Value {
+        use base64::{engine::general_purpose::STANDARD, Engine};
+        use serde_json::json;
+        let artifact = |a: &crate::leaf_codec_definition::OriginalArtifact| json!({"identity":a.identity,"bytesBase64":STANDARD.encode(&a.bytes),"sha256":weft_core::json::sha256(&a.bytes)});
+        let columns = |cs: &BTreeMap<String, crate::row_join_definition::Column>| {
+            cs.iter()
+                .map(|(id, c)| {
+                    (
+                        id.clone(),
+                        json!({"relationIdentity":c.relation_identity,"name":c.name}),
+                    )
+                })
+                .collect::<BTreeMap<_, _>>()
+        };
+        let originals = |items: &BTreeMap<String, Vec<u8>>| {
+            items
+                .iter()
+                .map(|(path, bytes)| (path.clone(), STANDARD.encode(bytes)))
+                .collect::<BTreeMap<_, _>>()
+        };
+        json!({
+            "interfaceVersion":"weft-original-conformance-composition/0.1.0","bindingProfile":self.binding_profile,
+            "records":self.records.iter().map(|r|json!({"index":r.index,"inventory":artifact(&r.inventory),"relationIdentity":r.relation_identity,"discriminatorIdentity":r.discriminator_identity,"relations":r.relations,"columns":columns(&r.columns)})).collect::<Vec<_>>(),
+            "properties":self.properties.iter().map(|p|json!({"index":p.index,"valueProfile":p.value_profile,"presenceProfile":p.presence_profile,"leafCodecs":p.leaf_codecs.iter().map(|(id,d)|(id.clone(),json!({"originalJson":d.original_json,"originalArtifacts":originals(&d.original_artifacts)}))).collect::<BTreeMap<_,_>>(),"recordPresence":p.record_presence.iter().map(|(path,d)|(path.clone(),json!({"originalJson":d.original_json,"acceptedDefinitionBase64":STANDARD.encode(&d.accepted_definition)}))).collect::<BTreeMap<_,_>>(),"physicalProfile":p.physical_profile,"inventory":artifact(&p.inventory),"relations":p.relations,"columns":columns(&p.columns),"rowJoin":p.row_join.as_ref().map(|j|json!({"originalJson":j.original_json,"originalArtifacts":originals(&j.original_artifacts)})),"obligations":p.obligations,"nativeTree":p.native_tree.is_some()})).collect::<Vec<_>>(),
+            "comparators":self.comparators.iter().map(|(key,c)|(key.clone(),json!({"originalJson":c.original_json,"originalArtifacts":originals(&c.original_artifacts)}))).collect::<BTreeMap<_,_>>(),
+            "relationships":self.relationships.iter().map(|r|json!({"index":r.index,"inverse":r.inverse,"profile":r.profile,"inventory":artifact(&r.inventory),"relationIdentity":r.relation_identity,"relations":r.relations,"columns":columns(&r.columns),"relationshipType":r.relationship_type,"sourceId":r.source_id,"sourceType":r.source_type,"targetId":r.target_id,"targetType":r.target_type})).collect::<Vec<_>>(),
+            "procedureScope":"Conformance data only; trusted Rust selects all native/operator/source interpretation, never executable metadata"
+        })
+    }
+}

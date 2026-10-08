@@ -1874,6 +1874,13 @@ mod tests {
                     )
                     .collect(),
             };
+            if let Ok(path) = std::env::var("WEFT_ORIGINAL_RELATIONSHIP_COMPOSITION_CAPTURE") {
+                std::fs::write(
+                    path,
+                    serde_json::to_vec_pretty(&owned.conformance_capture()).unwrap(),
+                )
+                .unwrap();
+            }
             let backend = crate::original_backend::OriginalBackend::new(
                 &final_input,
                 final_records,

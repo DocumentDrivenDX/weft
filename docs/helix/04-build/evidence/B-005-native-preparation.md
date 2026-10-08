@@ -2764,3 +2764,32 @@ All 133 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
 Actual native Python/browser relationship adapter composition and execution
 remain required B-005 work; neither is claimed by these Rust checks. This adds
 no fresh PostgreSQL execution or production storage qualification.
+
+## Relationship embedding composition capture (2026-10-07)
+
+A test-only `Configuration::conformance_capture` preserves owned Record/property,
+comparator and directed relationship selection inputs. It records original
+artifact bytes/digests and trusted physical selectors, plus the presence of a
+native-tree procedure, without serializing executable pointers or callable
+names. `original-relationship-composition.json` captures the independently
+admitted two native uint64 endpoint keys, their original comparators and both
+relationship directions. This remains conformance data, not a released plugin
+registration protocol. Capture regeneration uses absolute
+`WEFT_ORIGINAL_RELATIONSHIP_COMPOSITION_CAPTURE` with the original unsigned
+property test.
+
+The persisted independent checker `check-composition-custody.py` now verifies
+eight configurations and eleven complete compiler responses: seven compound
+pairs plus four relationship requests at one binding cut. It checks canonical
+base64, every comparator/codec/join original-artifact digest, both relationship
+physical role inventories, request/response binding pins, and comparator value
+and source-domain definitions against the selected original property artifacts.
+[Receipt](B-005-relationship-composition-capture.json) pins capture/checker/source
+and test log bytes.
+
+All 133 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-relationship-composition-capture-tests.log`); formatting and
+HELIX checks pass. Runtime conformance loading of the new relationship capture
+and actual Python/browser execution remain the next embedding work. No new
+native database execution, embedding support or production compatibility is
+claimed by this data-custody checkpoint.
