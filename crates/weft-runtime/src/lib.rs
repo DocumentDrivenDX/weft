@@ -302,7 +302,16 @@ mod ashlar_tests {
         let raw = super::compile_json(&request);
         let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
         #[cfg(feature = "ashlar-databricks-candidate")]
-        assert_eq!(response, case["response"]);
+        {
+            // Retain the original native receipt. Only the explicitly obsolete
+            // Spark observation may differ from the current compiler artifact.
+            let mut expected = case["response"].clone();
+            let publication = expected["obligations"].as_array_mut().unwrap()
+                .iter_mut().find(|o| o["id"] == "ashlar.candidate.publication").unwrap();
+            assert_eq!(publication["parameters"]["nativeProfile"].as_object_mut().unwrap()
+                .remove("versionReported"), Some(serde_json::json!("4.2.0 zero build hash")));
+            assert_eq!(response, expected);
+        }
         #[cfg(not(feature = "ashlar-databricks-candidate"))]
         {
             assert_eq!(response["status"], "blocked");

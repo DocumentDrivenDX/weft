@@ -74,3 +74,22 @@ comparison after the metadata correction; it does not claim each host executed
 SQL. Registered supported-profile qualification and remaining critical semantic
 branch accounting still need completion. The standard replay now passes 34
 components and verifies 116 hashed references.
+
+The subsequent full workspace run terminates with 218 passing tests and one
+failed test across 22 terminal suites, then stops before the remaining suites.
+The failure is a stale runtime expectation for the obsolete Spark
+`versionReported` field; this is retained as failed evidence in
+B-007-workspace-metadata-failure. The focused regression passes after allowing
+only removal of that exact historical field and preserving the complete original
+native receipt. A new full workspace run is required; this failure is not
+reported as a passing workspace checkpoint.
+
+Explicit `NativeReview` library registrations now pin PostgreSQL 17.9 and
+Databricks SQL 2026.39 separately from the historical candidates. Two scoped
+registration tests preserve scalar typed/props SQL, parameters, columns and
+logical pins, retain existing obligations and add an exact native-profile host
+obligation. Wrong versions/profiles and disabled candidate opt-in refuse without
+SQL. Both declarations stay candidate, with no qualification evidence claims.
+This establishes the versioned engine-profile registration seam needed for the
+remaining native-support audit; it does not close that audit or qualify a new
+Python/browser composition. Scope and rollback are documented in TD-006.

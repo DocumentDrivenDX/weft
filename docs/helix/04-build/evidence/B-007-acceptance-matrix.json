@@ -364,6 +364,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-derived-capabilities/summary.json",
           "sha256": "47b01aef388f430edc78cfbed1a64214ebf4282bac7e32f3ec8da62b45c8ad85"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -1555,6 +1559,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1725,6 +1733,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
           "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

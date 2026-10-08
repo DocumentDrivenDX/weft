@@ -275,5 +275,41 @@
     "license decision",
     "final release artifact build and content inspection"
   ],
-  "meaning": "Evidence index, not compiler manifest or qualification certificate. Candidate statuses remain candidate; references do not prove every explicit release gate."
+  "meaning": "Evidence index, not compiler manifest or qualification certificate. Candidate statuses remain candidate; references do not prove every explicit release gate.",
+  "nativeReviewRegistrations": [
+    {
+      "backend": "truss.postgresql",
+      "registrationVersion": "0.1.0-native-review",
+      "status": "candidate",
+      "surface": "Explicit trusted Rust Backend registration only; default Python/browser builds keep the historical candidates.",
+      "implementation": {
+        "path": "crates/weft-postgresql/src/native_profile.rs",
+        "sha256": "c2b8dfbdd7390961df8ae52b3e970737aa34cbbe4ab6a0de566c1cc5e16f5d4c"
+      },
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
+        }
+      ],
+      "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."
+    },
+    {
+      "backend": "ashlar.databricks",
+      "registrationVersion": "0.1.0-native-review",
+      "status": "candidate",
+      "surface": "Explicit trusted Rust Backend registration only; default Python/browser builds keep the historical candidates.",
+      "implementation": {
+        "path": "crates/weft-databricks/src/native_profile.rs",
+        "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+      },
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
+        }
+      ],
+      "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."
+    }
+  ]
 }
