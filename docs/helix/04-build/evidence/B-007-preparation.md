@@ -346,3 +346,13 @@ compilation I/O is disabled. B-007-host-resources/ retains exact input hashes,
 byte counts, diagnostics and executed binary/extension/WASM/wrapper hashes.
 These are early common-boundary checks across deliberately named feature builds;
 they do not qualify every host resource path or native database behavior.
+
+The retained-source audit inspects the actual preparation responses, rather than
+inferring retention from host parity. All 303 resolved cases preserve supplied
+module arrays exactly, including documentJson strings and ordered pins; 304
+retained document instances include opaque root extension content. All 333
+refusals have no logical plan. B-007-source-retention-audit/ records input hashes
+and the separate public envelope distribution: seven compiled fixture successes
+and 1266 authored refusals, including 608 BACKEND-MISSING cases. The 1273-case
+host parity count is consequently a public success/refusal boundary matrix, not
+1273 native target executions. Native backend evidence remains separately scoped.
