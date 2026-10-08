@@ -489,3 +489,8 @@ B-007-declaration-branches/ retains eight exact refusals across both plans:
 missing operation declaration, excluded selected target, excluded selected
 language, and declaration-side Unsupported status despite supported assessment.
 The named test passes and downstream panic fixtures detect guard bypass.
+
+B-007-cross-phase-obligations/ records six passing cases across both plans.
+Conflicting declaration/assessment requirements refuse before lowering;
+conflicting emitted requirements refuse before artifact return. Identical
+requirements from all three phases survive once in each compiled artifact.

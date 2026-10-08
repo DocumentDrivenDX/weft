@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "cases": 6,
+  "refusals": 4,
+  "compiledArtifacts": 2,
+  "sourceSha256": "1c1191830edc2c95563886d735722d5dd2066af283bbf8031e71bfbce6a392f3",
+  "scope": "Both plan versions: declaration/assessment conflicts refuse before lowering, emission conflicts refuse, and identical requirements across all three phases deduplicate in the final artifact. No native execution or release qualification."
+}

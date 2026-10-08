@@ -375,3 +375,36 @@ fn capability_declarations_bind_selected_target_language_and_status() {
         }
     }
 }
+
+// @covers US-002-AC4 @covers US-006-AC4
+#[test]
+fn obligations_merge_across_declaration_assessment_and_emission() {
+    fn requirement(value:u8)->Obligation {Obligation{id:"shared".into(),parameters:json!({"version":value}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()}}
+    struct CrossPhase {mode:u8,inner:Third}
+    impl Backend for CrossPhase {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{
+            let mut m=self.inner.describe()?;m.capabilities[0].obligations=vec![requirement(1)];Ok(m)
+        }
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{self.inner.validate_binding(c)}
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{
+            let mut a=self.inner.assess(c,m)?;a[0].obligations=vec![requirement(if self.mode==0 {2} else {1})];Ok(a)
+        }
+        fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{
+            assert_ne!(self.mode,0,"assessment conflict must refuse before lowering");self.inner.lower(c,m)
+        }
+        fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{
+            let mut e=self.inner.emit(c,p)?;e.obligations=vec![requirement(if self.mode==1 {2} else {1})];Ok(e)
+        }
+    }
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for plan in [Plan::V01(&p01),Plan::V02(&p02)] {
+        for mode in 0..3 {
+            let mut r=Registry::default();r.register(CrossPhase{mode,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+            let out=r.compile(&catalog,plan,&target(false),&binding(&catalog));
+            if mode==2 {assert_eq!(out.unwrap().emission.obligations,vec![requirement(1)]);}
+            else {let e=out.unwrap_err();assert_eq!(e.code,"WFT-OBLIGATION");assert_eq!(e.message,"Obligation ID has conflicting requirements");}
+        }
+    }
+}
