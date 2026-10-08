@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "testsExecuted": 6,
+  "ignored": 0,
+  "filtered": 0,
+  "sourceHashes": {
+    "crates/weft-core/src/syntax.rs": "d3dc34a52d04550b59fe96f9f95decaf5bd80cdf5ecd5e4b730de816b4707233",
+    "crates/weft-core/src/application_syntax.rs": "6a0159d49c6d5000dcf639837dbe8f1a64511875a9b0f2f4c004367dc420f082",
+    "tests/application/syntax.rs": "f1d987935da8eb57d1de3ccb56a85861a2d981b15a2e7f8893f5cdf3fdbb71db"
+  },
+  "logSha256": "8ab18b9ccd392f781b69df4a32373ff27615d176f1836326b03a0d5049b1b33c",
+  "scope": "All application syntax integration tests",
+  "nativeExecution": false,
+  "supportPromotion": false
+}

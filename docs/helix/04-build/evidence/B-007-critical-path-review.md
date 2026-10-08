@@ -130,3 +130,12 @@ Tests assert that exact admission stage without claiming execution of downstream
 defensive guards. Existing recursion, unknown meaning and exact depth/identity
 boundaries remain in this unfiltered suite. Exact-value, parser and adapter
 family review and native supported-profile qualification remain open.
+
+## Exact-value and parser family review
+
+[B-007 exact/parser accounting](B-007-exact-parser-branch-accounting.md) maps
+eight exact-value and twelve lexer/parser semantic families to explicit tests
+and scoped historical property/resource receipts. Two new exact tests pass
+with five property tests intentionally filtered; all six application syntax
+tests pass unfiltered. No production source changed. Backend lowering review
+and supported native-profile qualification remain open.

@@ -135,3 +135,75 @@ fn generated_sql_parser_text_and_spans() {
     assert!(successes.load(Ordering::SeqCst)>0&&refusals.load(Ordering::SeqCst)>0);
     println!("PARSER_REPORT {}",json!({"generator":"weft-parser-text/0.1.0","proptest":"1.11.0","seed":seed,"cases":5000,"accepted":successes.load(Ordering::SeqCst),"refused":refusals.load(Ordering::SeqCst),"scope":"syntax parse determinism, no panic and UTF-8 diagnostic spans; no resolution or backend qualification"}));
 }
+
+// @covers US-006-AC2 @covers US-006-AC4
+#[test]
+fn exact_guard_integer_text_overflow_and_integral_refusal() {
+    // Through the public frontend: the UMF profile validates widths before exact.rs.
+    for (text, accepted) in [
+        ("18446744073709551615", true),
+        ("-0", true),
+        ("0001", true),
+        ("18446744073709551616", false),
+        ("-1", false),
+        ("1.0", false),
+        ("170141183460469231731687303715884105728", false),
+        ("-170141183460469231731687303715884105729", false),
+    ] {
+        let mut request = base();
+        request["sql"] = json!(format!("SELECT c.id FROM Customer c WHERE c.id = {text}"));
+        let response = run(&request);
+        if accepted {
+            assert_eq!(response["status"], "resolved", "{text}: {response}");
+            assert_eq!(response["logicalPlan"]["root"]["input"]["predicate"]["right"]["value"], text);
+        } else {
+            assert_eq!(response["diagnostics"][0]["code"], "WFT-NUMERIC-DOMAIN", "{text}: {response}");
+            assert!(response.get("logicalPlan").is_none());
+        }
+    }
+}
+
+// @covers US-006-AC2 @covers US-006-AC4
+#[test]
+fn exact_guard_decimal_zero_padding_and_family_matrix() {
+    for (text, accepted, code) in [
+        ("-0.000000", true, ""),
+        ("00000000.990000", true, ""),
+        ("0.01", true, ""),
+        ("0.001", false, "WFT-NUMERIC-DOMAIN"),
+        ("1.00", false, "WFT-NUMERIC-DOMAIN"),
+    ] {
+        let mut request = base();
+        edit(&mut request, |d| field(d, "order-total")["facets"] = json!({"precision":2,"scale":2}));
+        request["sql"] = json!(format!("SELECT o.total FROM Orders o WHERE o.total = {text}"));
+        let response = run(&request);
+        if accepted {
+            assert_eq!(response["status"], "resolved", "{text}: {response}");
+            assert_eq!(response["logicalPlan"]["root"]["input"]["predicate"]["right"]["value"], text);
+        } else {
+            assert_eq!(response["diagnostics"][0]["code"], code, "{text}: {response}");
+            assert!(response.get("logicalPlan").is_none());
+        }
+    }
+    // Full literal-kind/selected-family dispatch, independent of target SQL.
+    for (record, field, accepted_kind) in [
+        ("Customer", "name", 0),
+        ("Customer", "active", 1),
+        ("Customer", "id", 2),
+        ("Orders", "total", 2),
+    ] {
+        for (kind, literal) in ["'é'", "TRUE", "1"].iter().enumerate() {
+            let mut request = base();
+            request["sql"] = json!(format!("SELECT r.{field} FROM {record} r WHERE r.{field} = {literal}"));
+            let response = run(&request);
+            if kind == accepted_kind {
+                assert_eq!(response["status"], "resolved", "{record}.{field} {literal}: {response}");
+                let expected = if kind == 0 { "é" } else if kind == 1 { "true" } else { "1" };
+                assert_eq!(response["logicalPlan"]["root"]["input"]["predicate"]["right"]["value"], expected);
+            } else {
+                assert_eq!(response["diagnostics"][0]["code"], "WFT-TYPE", "{record}.{field} {literal}: {response}");
+                assert!(response.get("logicalPlan").is_none());
+            }
+        }
+    }
+}
