@@ -7,7 +7,7 @@ failures:
 failures:
     json_node_and_request_byte_limits
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.14s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.12s
 
 warning: unexpected `cfg` condition value: `128`
    --> vendor/ahash/src/fallback_hash.rs:164:11
@@ -81,7 +81,7 @@ warning: method `finish` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: `weft-core` (lib) generated 1 warning
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.87s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.84s
      Running ../../tests/qualify-and-evolve/resources.rs (/private/tmp/weft-b007-mutation-target/debug/deps/qualification_resources-29c49ea09aeb6b38)
 
 thread 'json_node_and_request_byte_limits' panicked at crates/weft-core/../../tests/qualify-and-evolve/resources.rs:16:33:

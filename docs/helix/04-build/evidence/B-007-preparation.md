@@ -117,3 +117,12 @@ passes on the original compiler across fixture homes and fails on each mutant.
 Baseline and mutant logs plus exact substitutions/hashes are retained. These
 are structural emission-contract checks, not native mutated-result evidence;
 numeric rounding mutation and native semantic mutation gates remain open.
+
+Seven source mutants are detected after adding binary-double conversion of
+original decimal operand tokens. The exact operand baseline passes; the mutant
+changes 9999999999999999 to 10000000000000000 and fails the independently
+authored exact-token assertion. Baseline/failure logs and original/mutant hashes
+are retained. The four named semantic mutation classes (type filters, duplicate
+elimination, rounding, absent/null) now have actual source mutations detected
+at emission/token/decoder layers. This does not claim native mutant execution
+or replace the release's native evidence and complete branch/runtime audits.

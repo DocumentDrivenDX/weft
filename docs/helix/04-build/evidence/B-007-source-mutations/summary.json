@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "detected": 6,
+  "detected": 7,
   "mutations": [
     {
       "mutation": "duplicate-key-guard",
@@ -51,6 +51,18 @@
       "status": "detected"
     },
     {
+      "mutation": "decimal-through-double",
+      "source": "crates/weft-postgresql/src/conformance_original.rs",
+      "before": "value.clone(),\n                serde_json::json!({\"literalSpan\":span}),",
+      "after": "value.parse::<f64>().unwrap().to_string(),\n                serde_json::json!({\"literalSpan\":span}),",
+      "originalSha256": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63",
+      "mutantSha256": "ba56d87e513e136ccbdf1d79e837ee2bcde532a9df1cc4c0c70662eae9b4682f",
+      "test": "postgresql-original",
+      "filter": "admitted_decimal_precision_scale_pairs_preserve_exact_operands",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
       "mutation": "presence-null-to-absence",
       "source": "crates/weft-postgresql/src/presence_definition.rs",
       "before": "Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(",
@@ -75,5 +87,5 @@
       "status": "detected"
     }
   ],
-  "scope": "Source guard and PostgreSQL presence mutations only; not all backend semantic mutations."
+  "scope": "Source guards, SQL emission, numeric token and presence mutations; no native mutated-result qualification."
 }

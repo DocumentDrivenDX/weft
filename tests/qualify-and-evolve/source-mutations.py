@@ -10,6 +10,7 @@ cases=[
  ('node-limit-guard','crates/weft-core/src/json.rs','if depth > 128 || *count >= 100_000 {','if depth > 128 || false {','qualification-resources','json_node_and_request_byte_limits'),
  ('scan-type-filter','crates/weft-postgresql/src/candidate.rs','WHERE type_id={slot}::int','WHERE {slot}::int IS NOT NULL','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
  ('projection-distinct','crates/weft-postgresql/src/candidate.rs','let mut sql = format!("SELECT {} FROM {from}", projection.join(", "));','let mut sql = format!("SELECT DISTINCT {} FROM {from}", projection.join(", "));','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
+ ('decimal-through-double','crates/weft-postgresql/src/conformance_original.rs','value.clone(),\n                serde_json::json!({"literalSpan":span}),','value.parse::<f64>().unwrap().to_string(),\n                serde_json::json!({"literalSpan":span}),','postgresql-original','admitted_decimal_precision_scale_pairs_preserve_exact_operands'),
  ('presence-null-to-absence','crates/weft-postgresql/src/presence_definition.rs','Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','Some(v) if v.is_null() => Ok(Presence::Absent),\n            Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','postgresql-lib','original_definition_drives_presence_without_coercion'),
  ('module-pin-guard','crates/weft-core/src/model.rs','if input.pin.sha256 != sha256(input.document_json.as_bytes()) {','if false && input.pin.sha256 != sha256(input.document_json.as_bytes()) {','qualification-properties','generated_unicode_retention_pins_and_selected_meaning'),
 ]
@@ -21,7 +22,8 @@ for name,file,before,after,test,filter in cases:
  mutant=original.replace(before,after);p.write_text(mutant)
  env=os.environ.copy();env['CARGO_TARGET_DIR']='/private/tmp/weft-b007-mutation-target'
  cmd=['/private/tmp/weft-toolchain/cargo/bin/cargo','test','-p']
- if test=='postgresql-lib':cmd+=['weft-postgresql','--lib']
+ if test=='postgresql-original':cmd+=['weft-postgresql','--lib','--features','conformance-original']
+ elif test=='postgresql-lib':cmd+=['weft-postgresql','--lib']
  elif test=='postgresql-candidate':cmd+=['weft-postgresql','--test','candidate-compiler']
  else:cmd+=['weft-core','--test',test]
  cmd+=['--locked','--offline',filter,'--','--nocapture']
@@ -32,4 +34,4 @@ for name,file,before,after,test,filter in cases:
  if regression.exists():shutil.copyfile(regression,OUT/(name+'-mutant-regression.txt'))
  reports.append({'mutation':name,'source':file,'before':before,'after':after,'originalSha256':hashlib.sha256(original.encode()).hexdigest(),'mutantSha256':hashlib.sha256(mutant.encode()).hexdigest(),'test':test,'filter':filter,'exitCode':run.returncode,'status':'detected'})
  print(json.dumps(reports[-1]),flush=True)
-(OUT/'summary.json').write_text(json.dumps({'status':'passed','detected':len(reports),'mutations':reports,'scope':'Source guard and PostgreSQL presence mutations only; not all backend semantic mutations.'},indent=2)+'\n')
+(OUT/'summary.json').write_text(json.dumps({'status':'passed','detected':len(reports),'mutations':reports,'scope':'Source guards, SQL emission, numeric token and presence mutations; no native mutated-result qualification.'},indent=2)+'\n')
