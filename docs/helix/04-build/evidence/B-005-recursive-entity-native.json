@@ -2,7 +2,7 @@
   "scope": "Complete original scalar/recursive entities over seven selected graph shapes with mixed optional scalar homes; synthetic PostgreSQL fixtures, not new embedding or production qualification",
   "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
   "captureSha256": "17cf224cd48f0580e6608d5ac258c5ce891ebb7b1efc628db2798c644de71010",
-  "harnessSha256": "2a6a57113ae585f60f6edd9dc5b2a7dfa75fa6a9427c2136cc1954d82a9e55f2",
+  "harnessSha256": "3d11f67f18f5596ed4cac755a7a3b5466b4dc16c21cd0b517a728b310381d211",
   "results": [
     {
       "fixture": "address",

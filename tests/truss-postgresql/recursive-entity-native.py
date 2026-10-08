@@ -3,9 +3,9 @@
 @covers US-003-AC2: original property homes and discriminated owner scans.
 @covers US-003-AC3: owner-wide prerequisite refusal independent of page bound.
 """
-import csv,hashlib,io,json,subprocess
+import csv,hashlib,io,json,os,subprocess
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures';path=F/'original-recursive-entity-public.json';raw=path.read_bytes();captures=json.loads(raw);inputs=json.loads((F/'original-recursive-entity-inputs.json').read_text());results=[]
+ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures';path=F/'original-recursive-entity-public.json';raw=path.read_bytes();captures=json.loads(raw);inputs=json.loads((F/'original-recursive-entity-inputs.json').read_text());results=[];driver_setups=[]
 def cell(value,index):
  if value is None:return 'NULL'
  if index in [7,8,9,19,20,21,22]:return "decode('"+value+"','hex')"
@@ -53,6 +53,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
    for row in foreign:
     sql+='INSERT INTO row_home_node VALUES ('+','.join(cell(v,i) for i,v in enumerate(row[:10]))+');\n'
     if row[10] is not None:sql+='INSERT INTO row_home_scalar VALUES ('+','.join(cell(v,i) for i,v in enumerate(row[10:],10))+');\n'
+  driver_setups.append(dict(fixture=e['fixture'],noteHome=e['noteHome'],bound=e['bound'],case=case,corrupt=corrupt,setupSql=sql.removeprefix('BEGIN;\n'),capture=e))
   args=','.join("'"+p['value'].replace("'","''")+"'" for p in e['parameters']);types=','.join('text' for p in e['parameters'])
   for i,check in enumerate(e['checks']):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
   if not corrupt:sql+=f"PREPARE q({types}) AS {e['sql']}; EXECUTE q({args});\n"
@@ -75,3 +76,6 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Complete original scalar/recursive entities over seven selected graph shapes with mixed optional scalar homes; synthetic PostgreSQL fixtures, not new embedding or production qualification',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
 (ROOT/'docs/helix/04-build/evidence/B-005-recursive-entity-native.json').write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original recursive entity native cases passed')
+
+if os.environ.get("WEFT_ENTITY_DRIVER_SETUPS"):
+ Path(os.environ["WEFT_ENTITY_DRIVER_SETUPS"]).write_text(json.dumps(driver_setups)+"\n")

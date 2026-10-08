@@ -1,9 +1,9 @@
 {
   "scope": "Test-only host orchestration using independent injected driver/context callbacks; no native driver, storage or production host qualification",
-  "cases": 532,
+  "cases": 588,
   "sourceHashes": {
-    "tests/truss-postgresql/host-obligation-check.py": "d1170e6750f0d1bb1552e51c047589a37cfa838d82c583f2a16ddf769dcbe6dd",
-    "tests/truss-postgresql/host_obligation_fixture.py": "039392ade9f35355c981d6a1c1420729a349d3f9b5050dcd62030121796c9af1"
+    "tests/truss-postgresql/host-obligation-check.py": "1d7eb34885469fb4b8dc45dccadaee10a7ff2702fac6df8d65c338a084bfbe1a",
+    "tests/truss-postgresql/host_obligation_fixture.py": "3668e04fca3939d51cfd9d0cfada4a9858aeeadfe9a633350041b414517130d4"
   },
   "results": [
     {
@@ -42,6 +42,20 @@
     {
       "fixture": "address",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -275,6 +289,20 @@
     {
       "fixture": "address",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -508,6 +536,20 @@
     {
       "fixture": "address",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -741,6 +783,20 @@
     {
       "fixture": "address",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -974,6 +1030,20 @@
     {
       "fixture": "cyclic",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -1207,6 +1277,20 @@
     {
       "fixture": "cyclic",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -1440,6 +1524,20 @@
     {
       "fixture": "cyclic",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -1673,6 +1771,20 @@
     {
       "fixture": "cyclic",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -1906,6 +2018,20 @@
     {
       "fixture": "map",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -2139,6 +2265,20 @@
     {
       "fixture": "map",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -2372,6 +2512,20 @@
     {
       "fixture": "map",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -2605,6 +2759,20 @@
     {
       "fixture": "map",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -2838,6 +3006,20 @@
     {
       "fixture": "nested-sequence",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -3071,6 +3253,20 @@
     {
       "fixture": "nested-sequence",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -3304,6 +3500,20 @@
     {
       "fixture": "nested-sequence",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -3537,6 +3747,20 @@
     {
       "fixture": "nested-sequence",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -3770,6 +3994,20 @@
     {
       "fixture": "numeric-address",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -4003,6 +4241,20 @@
     {
       "fixture": "numeric-address",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -4236,6 +4488,20 @@
     {
       "fixture": "numeric-address",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -4469,6 +4735,20 @@
     {
       "fixture": "numeric-address",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -4702,6 +4982,20 @@
     {
       "fixture": "numeric-map",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -4935,6 +5229,20 @@
     {
       "fixture": "numeric-map",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -5168,6 +5476,20 @@
     {
       "fixture": "numeric-map",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -5401,6 +5723,20 @@
     {
       "fixture": "numeric-map",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -5634,6 +5970,20 @@
     {
       "fixture": "tags",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -5867,6 +6217,20 @@
     {
       "fixture": "tags",
       "noteHome": "row",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -6100,6 +6464,20 @@
     {
       "fixture": "tags",
       "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
       "case": "missing-context",
       "events": [],
       "published": false
@@ -6327,6 +6705,20 @@
       "fixture": "tags",
       "noteHome": "props",
       "case": "unknown-context-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "unknown-guard-semantics",
+      "events": [],
+      "published": false
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "case": "wrong-failure-code",
       "events": [],
       "published": false
     },

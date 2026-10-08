@@ -17,6 +17,7 @@ def execute(artifact, snapshot, query):
         context=None;complete=None;guards=[]
         for obligation in artifact['obligations']:
             require(obligation['owner']=='host')
+            require(set(obligation)=={'id','owner','parameters','failureCode'} and obligation['failureCode']=='WFT-OBLIGATION')
             identity=obligation['id'];parameters=obligation['parameters']
             if identity=='truss.candidate.context':
                 require(context is None)
@@ -36,6 +37,10 @@ def execute(artifact, snapshot, query):
                 require(parameters==dict(beforePublication=True,bindingSha256=artifact['bindingSha256'],completeOwnerVisibility=True,sameTransactionAndAuthorization=True))
                 complete=parameters
             elif re.fullmatch(r'truss\.original\.owner-(payload|structural)-[0-9]+',identity):
+                allowed={'beforeQuery','expectedViolations','parameters','sql'}
+                if '.owner-payload-' in identity:
+                    allowed|={'codecBytesBase64','field','presenceBytesBase64','scan'}
+                require(set(parameters)==allowed)
                 require(parameters['beforeQuery'] is True and parameters['expectedViolations']=='0')
                 require(parameters['parameters']==artifact['parameters'])
                 require(isinstance(parameters['sql'],str) and parameters['sql'])

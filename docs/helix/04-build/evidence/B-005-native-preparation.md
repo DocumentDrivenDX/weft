@@ -3249,3 +3249,29 @@ transaction isolation, descriptor decoding or production host claim. The host
 must supply transaction-affine trusted callbacks; database execution remains
 outside the compiler. Native transport with these newer original paths and full
 host/story qualification remain open.
+
+### Original entity native driver and publication gates (2026-10-07)
+
+`entity-driver-native.py` passes 252 executions through psycopg 3.2.10 and
+PostgreSQL 17.9 using an owned ephemeral localhost-only fixture database.
+The 168 independently authored native entity setups are reused without deriving
+expected values from compiler output. Each generated prerequisite and result
+statement uses its unchanged native `$n` placeholders and server preparation in
+one host-owned transaction. The host sends explicit text parameter OIDs: implicit
+unknown typing failed on unused slots in the shared preparation parameter vector.
+Native guard int8/text carriers are checked and explicitly converted to the
+obligation's exact count spelling. Result integer carriers are verified as OID 25
+text; recursive JSON decoding rejects unqualified float tokens. Independent exact
+outputs preserve absent/empty values, member order and recursive numeric strings.
+
+The additional 84 executions deliberately change authority, binding or complete
+visibility after data execution and before publication. Buffered results are
+refused. Corrupt stored-data cases refuse before the result query. Context
+callbacks are injected fixtures, not real authorization-system qualification.
+The helper now rejects unknown obligation fields/guard meanings and unexpected
+failure codes; its independent callback corpus passes 588 cases.
+
+Receipt: [B-005-entity-driver-native.json](B-005-entity-driver-native.json).
+This supplies actual native transport and orchestration evidence for the selected
+original entity cuts. Production policy, general descriptor decoder adoption,
+broader original scalar/query domains and full story qualification remain open.

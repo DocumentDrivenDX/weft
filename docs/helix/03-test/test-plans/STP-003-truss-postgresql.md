@@ -81,9 +81,10 @@ its own native host transport/policy/revision evidence requirements; the compile
 reports obligations and cannot certify host enforcement or database state.
 Optional Unicode scalar roots and seven scalar/recursive whole-entity cuts now
 have synthetic native SQL and fresh Python/browser evidence. The test-only host
-orchestration suite adds 532 callback cases for preparation, pin/visibility and
-publication refusal. Native driver execution for these newer original paths,
-broader scalar/query domains, multiple recursive roots and full host/story
+orchestration suite adds 588 callback cases for preparation, pin/visibility and
+publication refusal. Actual psycopg execution adds 252 native cases for these original entity paths,
+including publication refusal after injected authority/pin/visibility changes.
+Broader scalar/query domains, multiple recursive roots and full host/story
 qualification remain open. Native null is explicitly unsupported by the pinned
 profile and requires a separately admitted profile before any positive claim. Truss runtime implementation/adoption is not a
 compiler dependency. Production qualification remains separate.

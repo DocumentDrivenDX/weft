@@ -1,0 +1,5566 @@
+{
+  "scope": "Synthetic PostgreSQL 17.9 original whole-entity fixture execution through psycopg native prepared placeholders; injected authority/pin/visibility callbacks, not production policy enforcement",
+  "server": "17.9 (Debian 17.9-1.pgdg13+1)",
+  "driver": "3.2.10",
+  "libpq": 170005,
+  "cases": 252,
+  "sourceHashes": {
+    "tests/truss-postgresql/entity-driver-native.py": "12ae2bd14f5d242372f863786796fabc0978ca7ea4d6c2dc4ea2f8b5a29f29f6",
+    "tests/truss-postgresql/host_obligation_fixture.py": "3668e04fca3939d51cfd9d0cfada4a9858aeeadfe9a633350041b414517130d4",
+    "tests/truss-postgresql/recursive-entity-native.py": "3d11f67f18f5596ed4cac755a7a3b5466b4dc16c21cd0b517a728b310381d211"
+  },
+  "results": [
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25,
+        25,
+        25
+      ]
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    }
+  ]
+}
