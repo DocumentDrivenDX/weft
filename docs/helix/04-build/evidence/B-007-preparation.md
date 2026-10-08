@@ -292,3 +292,11 @@ retains requests/artifacts and all native success/expected-error receipts.
 These read-only controls explicitly replace the physical owner relation with
 synthetic rows; they exercise emitted native operations, not table publication
 custody, every integer width, or production warehouse qualification.
+
+The acceptance evidence index now references the unsigned native boundary,
+backend branch, application-model graph and parser boundary receipts only under
+relevant criteria. Assessments remain unclosed. Replaying retained evidence with
+CPython 3.12.14 passes six components and verifies 28 evidence references. An
+initial invocation with the system Python failed because its `zip` lacks the
+`strict` argument; that invocation is not passing evidence. The configured
+Python environment completed the replay; no new database execution is implied.
