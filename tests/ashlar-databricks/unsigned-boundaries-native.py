@@ -34,11 +34,13 @@ for bits in [1,2,3,8,16,32,63,64]:
  checks=next(o for o in response['obligations'] if o['id']=='ashlar.candidate.scalarIntegrity')['parameters']['checks'];assert len(checks)==1
  maximum=(1<<bits)-1;valid=[0,1,maximum]
  assert client.sql(f'{bits}-valid-guard',substitute(checks[0]['sql'],valid),params)==[['0']]
- actual=client.sql(f'{bits}-valid-sum',substitute(response['sql'],valid),params)
+ observed=client.sql(f'{bits}-valid-sum',"SELECT version() AS __weft_engine, observed.* FROM ("+substitute(response['sql'],valid)+") observed",params)
+ assert len(observed)==1 and len(observed[0])==2 and observed[0][0],observed
+ engine=observed[0][0];actual=[row[1:] for row in observed]
  assert actual==[[str(sum(valid))]]
  invalid=[-1,maximum+1] if bits<63 else [-1]
  assert client.sql(f'{bits}-invalid-guard',substitute(checks[0]['sql'],invalid),params)==[[str(len(invalid))]]
- result=dict(bits=bits,validValues=[str(v) for v in valid],expectedSum=str(sum(valid)),invalidValues=[str(v) for v in invalid],outcome='exact-boundaries-and-domain-refusal')
+ result=dict(bits=bits,validValues=[str(v) for v in valid],expectedSum=str(sum(valid)),invalidValues=[str(v) for v in invalid],outcome='exact-boundaries-and-domain-refusal',sameStatementEngine=engine)
  if bits==63:
   try:client.sql('63-carrier-overflow',substitute(checks[0]['sql'],[maximum+1]),params)
   except NativeFailure as error:
@@ -48,5 +50,5 @@ for bits in [1,2,3,8,16,32,63,64]:
  results.append(result)
 assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha
 (OUT/'compile-artifacts.jsonl').write_text('\n'.join(json.dumps(a) for a in artifacts)+'\n')
-summary=dict(status='passed',cases=len(results),nativeStatements=len(client.records),outcomes=results,compilerSha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Read-only synthetic owner SQL substitutions exercise emitted unsigned domain guards and exact aggregate at widths 1/2/3/8/16/32/63 boundaries. No actual table/publication custody qualification; UInt64 BIGINT compile-refuses.')
+summary=dict(status='passed',cases=len(results),nativeStatements=len(client.records),outcomes=results,compilerSha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Read-only synthetic owner SQL substitutions retain version() in the same statement as each admitted SUM and exercise emitted unsigned domain guards and exact aggregate at widths 1/2/3/8/16/32/63 boundaries. No actual table/publication custody qualification; UInt64 BIGINT compile-refuses.')
 (OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary))

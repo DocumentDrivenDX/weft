@@ -1,0 +1,11 @@
+{
+  "scope": "Fresh read-only unsigned boundary controls; engine captured in each admitted SUM statement, no retroactive native-profile qualification.",
+  "sameStatementEngineResults": 7,
+  "nativeStatements": 22,
+  "inputHashes": {
+    "summary.json": "9f9a726980725b812887ae041a71753d0297ffe89f6d5650ffd0728539ba93c0",
+    "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+    "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
+  },
+  "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
+}
