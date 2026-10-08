@@ -965,6 +965,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "weft-databricks"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "weft-core",
+]
+
+[[package]]
 name = "weft-frontend-probe"
 version = "0.0.0"
 dependencies = [

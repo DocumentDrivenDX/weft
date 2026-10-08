@@ -55,3 +55,34 @@ compiler SQL, establish arbitrary JSON numeric lexical preservation, qualify
 delegation/publication, or close US-004-AC1–AC4. Next add failing mapped corpus and
 binding/refusal tests, implement the registered backend, then execute emitted SQL
 with independent expected values and actual Python/browser parity.
+
+## Binding admission checkpoint
+
+`crates/weft-databricks` now admits an explicit candidate binding against the
+pinned owner layout. Four Rust tests pass (`cargo test -p weft-databricks`), with
+[source custody and scope](B-006-binding.json). Tests were added before the
+implementation; the initial build failed because the binding module was absent.
+This is a component gate, not a complete registered backend or native acceptance.
+
+Bindings carry original model pins, exact record/property identities, source/type
+selectors, schema revision, explicit property homes and one publication vector
+of fully qualified table names, UUIDs and signed64 nonnegative versions. Unknown
+members, including nested identity members, malformed IDs, stale pins, duplicate
+mappings and unknown native column meanings refuse. Names are quoted component
+by component; discriminator/property values will become parameter slots during
+lowering. Existing unknown unmapped UMF content remains unchanged.
+
+The initial native-column profiles follow the owner-described canonical and
+example serving layouts. `node_type_a.group_value/group_present` and
+`rank_value/rank_present` are explicit typed homes alongside `props_json`.
+`edge_ab.score` is DOUBLE and cannot establish an exact decimal carrier. A native
+BIGINT cannot represent UInt64. Other typed projections need an explicitly
+registered owner layout; this checkpoint does not invent their columns.
+
+Admission establishes structural/model agreement only. Hosts still must verify
+physical schema, mapping correspondence, complete publication, effective policy,
+retained snapshots and custody before execution/publication. The next step is
+registered capability assessment and lowering with executable scalar integrity
+checks before user predicates, then independent native corpus comparison. The
+application-read extension and actual Python/browser/backend integration remain
+required B-006 work.
