@@ -366,3 +366,13 @@ diagnostic codes and contain no plan/SQL. B-007-resolution-audit/ records every
 case ID plus report/oracle hashes. This is saved-plan semantic reconciliation,
 not another compiler or native-engine run. The 1200 generated relational assertions
 remain separate evidence for broader deterministic bags.
+
+US-002 registration audit runs all 12 backend-registry, backend-pipeline and public
+compile-envelope tests with the locked offline toolchain; none are ignored or
+filtered. Named tests and source hashes are retained in B-007-registration-audit/.
+Both plan versions use the synthetic third backend. Source review confirms keyed
+Registry lookup and typed registered lowering, with no storage-backend selection
+branch in the frontend. Candidate opt-in/upgrade, version/capability failures,
+hostile mappings and atomic plugin/emission failures have positive/refusal cases.
+These prove the trusted registration boundary, not native backend semantics or
+independent provenance for a plugin's declared evidence strings.

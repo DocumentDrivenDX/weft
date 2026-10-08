@@ -123,6 +123,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
+          "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -144,6 +148,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
+          "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -165,6 +173,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
+          "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -186,6 +198,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
+          "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
