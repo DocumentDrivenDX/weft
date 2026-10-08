@@ -375,6 +375,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/python-summary.json",
+          "sha256": "d6f24c5c68beb8e49e937ec98697a9568dea6361a22ca53ff18335c0e5e9e401"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/browser-summary.json",
+          "sha256": "d87ba07fc17822dd7ba14e97adcda6c17a99e8297145bce17b1c0bcb2497e931"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
+          "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -408,6 +420,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/python-summary.json",
+          "sha256": "d6f24c5c68beb8e49e937ec98697a9568dea6361a22ca53ff18335c0e5e9e401"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/browser-summary.json",
+          "sha256": "d87ba07fc17822dd7ba14e97adcda6c17a99e8297145bce17b1c0bcb2497e931"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
+          "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -602,6 +626,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-parser-boundaries/summary.json",
           "sha256": "05d0286922f2a3e1f2729aeb5e3f1052b79a86f7e30462b0107da3581d30c9cd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/python-summary.json",
+          "sha256": "d6f24c5c68beb8e49e937ec98697a9568dea6361a22ca53ff18335c0e5e9e401"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/browser-summary.json",
+          "sha256": "d87ba07fc17822dd7ba14e97adcda6c17a99e8297145bce17b1c0bcb2497e931"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
+          "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
