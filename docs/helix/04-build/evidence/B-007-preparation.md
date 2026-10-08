@@ -212,3 +212,13 @@ harness source and lists case/query/statement identities. This establishes saved
 receipt consistency/custody, not fresh native execution or a new independent
 result oracle. Application story reconciliation remains incomplete across
 relationships, compounds, Truss and host/publication boundaries.
+
+The 48 compound entity/keyset cases reconcile against the accepted frozen-run
+receipt set (240 statements, 192 integrity guards). The accepted-file checksum
+and custody count must match; every receipt is consumed exactly once. Actual
+native SQL/parameters and terminal untruncated rows match the artifacts. Strict
+decoding rejects duplicate JSON members/nonfinite constants and compares exact
+authored values, distinguishing Boolean from numeric JSON values. Empty second
+pages match their explicit expectations. B-007-ashlar-compound-page-reconciliation/
+records all case/statement identities and source hashes. Earlier rejected mutable-
+binary attempts are not used. This audits saved evidence, not a new execution.

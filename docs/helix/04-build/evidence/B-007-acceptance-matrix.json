@@ -491,6 +491,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation/summary.json",
+          "sha256": "d22ce4f02377a6050c6428d25943f44ae94ab3670d376ee0cd71a90e8f98db9c"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -512,6 +516,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation/summary.json",
+          "sha256": "d22ce4f02377a6050c6428d25943f44ae94ab3670d376ee0cd71a90e8f98db9c"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."

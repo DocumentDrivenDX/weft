@@ -1,0 +1,620 @@
+{
+  "status": "passed",
+  "cases": 48,
+  "integrityReceipts": 192,
+  "acceptedReceipts": 240,
+  "reconcilerSha256": "8ad4f9dd8235fc8ced91848ff30655f2b53a66438d070a0fd1b17f49a472d69a",
+  "sources": [
+    {
+      "path": "docs/helix/04-build/evidence/B-006-compound-application-native/summary.json",
+      "sha256": "151ffbc8df2e62b63fbddbacd43630d09771c6b1466bdffd5a346e0bebbfecf7"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-006-compound-application-native/compile-artifacts.jsonl",
+      "sha256": "77a7f484c60916573cb9667695c056340ec4eed13d32963f4e700f3fce4d73f3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-006-compound-application-native/accepted-statements.jsonl",
+      "sha256": "6dac5d39648b6b135de6b8865f45665b76b37c23705fb62eadd652f707419d01"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-006-compound-application-native/custody.json",
+      "sha256": "c0b825d47cd94189aa24fcc179eb85a21f0a08b0312ddb4b913d4cabd46eb4d2"
+    },
+    {
+      "path": "tests/ashlar-databricks/compound-application-native.py",
+      "sha256": "e8e796190c2b15eb858cdae42e5682314ef5e5b98617ef2e36c94d2a2857918b"
+    }
+  ],
+  "scope": "Saved accepted native receipts; strict decoded expected-value comparison. Not a fresh native execution or production profile.",
+  "casesReconciled": [
+    {
+      "id": "nested-list-False-exact-props-page-0",
+      "statementId": "01f1c2f0-bd26-102b-98e2-2433e8c22101",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-props-page-1",
+      "statementId": "01f1c2f0-c1a0-1ca2-a378-dc9aaee06d96",
+      "expected": []
+    },
+    {
+      "id": "nested-list-False-exact-column-page-0",
+      "statementId": "01f1c2f0-c511-1f81-8436-c951899edc77",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-column-page-1",
+      "statementId": "01f1c2f0-c989-1fb0-a8ef-0a70f974e7f4",
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-props-page-0",
+      "statementId": "01f1c2f0-ccbc-10c3-91d8-9988d5a5620a",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-props-page-1",
+      "statementId": "01f1c2f0-d110-1069-9ab1-dcc62b8f8992",
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-column-page-0",
+      "statementId": "01f1c2f0-d41c-1afd-9f41-1b419f38a615",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-column-page-1",
+      "statementId": "01f1c2f0-d84c-1adc-ad25-ac3ec7b574d4",
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-props-page-0",
+      "statementId": "01f1c2f0-daae-1930-b182-9a2ded2d5892",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-props-page-1",
+      "statementId": "01f1c2f0-dd76-191c-a6d2-b6bcdabcabe4",
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-column-page-0",
+      "statementId": "01f1c2f0-dfc5-101a-a406-ed5f98f955d7",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-column-page-1",
+      "statementId": "01f1c2f0-e254-1b41-aad0-3a7a16d67ca5",
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-props-page-0",
+      "statementId": "01f1c2f0-e54f-16e4-a307-20fcd3e86e32",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-props-page-1",
+      "statementId": "01f1c2f0-e8f1-1d3b-9002-683ee5e95883",
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-column-page-0",
+      "statementId": "01f1c2f0-ebdb-1908-b6dd-cb6261ecb7d7",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-column-page-1",
+      "statementId": "01f1c2f0-ef8a-1433-9db3-cf45db7230fa",
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-props-page-0",
+      "statementId": "01f1c2f0-f284-1a58-9ef5-3c99772bd0cc",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-props-page-1",
+      "statementId": "01f1c2f0-f64f-15fd-828d-09bac6ee948e",
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-column-page-0",
+      "statementId": "01f1c2f0-f92a-1780-8329-8eec6662ea48",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-column-page-1",
+      "statementId": "01f1c2f0-fce5-1a71-ae86-ed83e029c8a7",
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-props-page-0",
+      "statementId": "01f1c2f0-ff40-1985-97fe-2522e78910ad",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-props-page-1",
+      "statementId": "01f1c2f1-01c7-10af-9441-7747423cc8b3",
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-column-page-0",
+      "statementId": "01f1c2f1-041d-1317-a5b5-38202f6b61bb",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-column-page-1",
+      "statementId": "01f1c2f1-06ac-1829-9c5e-f64f2b50b1b4",
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-props-page-0",
+      "statementId": "01f1c2f1-09e8-11c1-ada7-27f38ae764fc",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-props-page-1",
+      "statementId": "01f1c2f1-0e89-1dcd-b246-9a2bde171815",
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-column-page-0",
+      "statementId": "01f1c2f1-11ef-1b14-900d-fb1270aff37c",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-column-page-1",
+      "statementId": "01f1c2f1-164a-105e-ae73-f7431cdadf98",
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-props-page-0",
+      "statementId": "01f1c2f1-1977-1ea2-87fd-b5a34ed88f7a",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-props-page-1",
+      "statementId": "01f1c2f1-1ded-15bf-af81-ec8a7547b68c",
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-column-page-0",
+      "statementId": "01f1c2f1-2143-163e-82c4-28312ba71256",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-column-page-1",
+      "statementId": "01f1c2f1-25d9-136e-80fa-337495476424",
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-props-page-0",
+      "statementId": "01f1c2f1-282a-1604-97ff-1b830b53c9ce",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-props-page-1",
+      "statementId": "01f1c2f1-2ade-1227-86d5-cc8b269b2c0f",
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-column-page-0",
+      "statementId": "01f1c2f1-2d2b-1166-9cc7-48fb8bcb624b",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-column-page-1",
+      "statementId": "01f1c2f1-2fbb-180a-bab9-3bc7b4b9e5f3",
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-props-page-0",
+      "statementId": "01f1c2f1-32d9-105f-9dfc-f08174b48ae1",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-props-page-1",
+      "statementId": "01f1c2f1-37a4-132b-93dc-cb41ea3e5a35",
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-column-page-0",
+      "statementId": "01f1c2f1-3aef-186d-87c5-063994862f68",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-column-page-1",
+      "statementId": "01f1c2f1-3f78-1e79-a5cc-59460e5293bf",
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-props-page-0",
+      "statementId": "01f1c2f1-42ad-156b-bff1-4e2053d232d1",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-props-page-1",
+      "statementId": "01f1c2f1-4712-124f-a8ae-71bdc637d02d",
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-column-page-0",
+      "statementId": "01f1c2f1-4a72-1ff6-8e91-f7cc532badb0",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-column-page-1",
+      "statementId": "01f1c2f1-4ec0-1e2f-8eb2-9f2972424c5b",
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-props-page-0",
+      "statementId": "01f1c2f1-5151-1ad8-b452-871e95f9cd95",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-props-page-1",
+      "statementId": "01f1c2f1-53f0-1a91-ab03-5dfc2bf8edde",
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-column-page-0",
+      "statementId": "01f1c2f1-5655-1693-a51c-39f322fa4efb",
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-column-page-1",
+      "statementId": "01f1c2f1-58fa-109b-969c-573265ee265c",
+      "expected": []
+    }
+  ]
+}
