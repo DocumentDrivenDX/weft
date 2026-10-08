@@ -1,0 +1,97 @@
+🔗 Found pyo3 bindings with abi3 support
+🐍 Not using a specific python interpreter
+📡 Using build options bindings from pyproject.toml
+💻 Using `MACOSX_DEPLOYMENT_TARGET=11.0` for aarch64-apple-darwin by default
+   Compiling syn v2.0.119
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+   Compiling referencing v0.56.0
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling pyo3-macros-backend v0.27.1
+   Compiling serde_derive v1.0.228
+   Compiling strum_macros v0.28.0
+   Compiling strum v0.28.0
+   Compiling jsonschema-macros v0.56.0
+   Compiling serde v1.0.228
+   Compiling pyo3-macros v0.27.1
+   Compiling pyo3 v0.27.1
+   Compiling ahash v0.8.12 (/private/tmp/weft-build/vendor/ahash)
+   Compiling fluent-uri v0.4.1
+   Compiling email_address v0.2.9
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/weft-build/crates/weft-core)
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:243:19
+    |
+206 | impl Parser {
+    | ----------- method in this implementation
+...
+243 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-build/crates/weft-postgresql)
+warning: `weft-core` (lib) generated 1 warning
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-build/crates/weft-runtime)
+   Compiling weft-python v0.1.0 (/private/tmp/weft-build/crates/weft-python)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 8.93s
+📦 Built wheel for abi3 Python ≥ 3.9 to /private/tmp/weft-b007-truss-wheels/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl

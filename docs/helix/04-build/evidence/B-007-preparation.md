@@ -243,3 +243,13 @@ and corruption controls in the native harness. B-007-truss-application-native/
 retains build/run/summary records and losslessly compressed full compile/native
 reports with both compressed/uncompressed custody hashes. These are owned
 temporary-table fixtures, not installed Truss or production authority evidence.
+
+Fresh Truss-enabled native Python and browser WASM builds match all 76 newly
+PostgreSQL-tested application compiler artifacts byte-for-byte. CPython 3.12.14
+uses the actual ABI extension with subprocess/PATH disabled; Chromium
+148.0.7778.96 / Playwright 1.62.1 exercises the real WASM/wrapper.
+B-007-truss-embeddings/ records build features, wheel/extension/WASM hashes and
+full logs. The earlier Ashlar-only wheel correctly refused this unregistered
+Truss backend; its failed parity attempt is retained, not counted as passing.
+This closes this candidate fixture corpus's fresh CLI/Python/browser parity
+component, not all possible original-definition configurations or platforms.

@@ -179,6 +179,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
           "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -192,6 +204,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
           "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -205,6 +229,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
           "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -218,6 +254,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
           "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -291,6 +339,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
           "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -312,6 +372,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
           "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -333,6 +405,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
           "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -354,6 +438,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-public-corpus/summary.json",
           "sha256": "615d3f4e735a89e96af51b742cb6d80caf495730c8db1b97d18f779026290681"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -495,6 +591,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation/summary.json",
           "sha256": "d22ce4f02377a6050c6428d25943f44ae94ab3670d376ee0cd71a90e8f98db9c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -520,6 +628,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-compound-page-reconciliation/summary.json",
           "sha256": "d22ce4f02377a6050c6428d25943f44ae94ab3670d376ee0cd71a90e8f98db9c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -541,6 +661,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -566,6 +698,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-relationship-reconciliation/summary.json",
           "sha256": "c4f3403f4a25e224d4dcc4e4e304ad656f8686d4bcfb18bdb19160363a5e7c90"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -587,6 +731,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -608,6 +764,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+          "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+          "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
