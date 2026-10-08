@@ -11,6 +11,8 @@ assert len(artifacts)==8 and len(receipts)==22
 by_label={r['label']:r for r in receipts};assert len(by_label)==22
 assert len({r['response']['statement_id'] for r in receipts})==22
 engine_receipts=os.environ.get('WEFT_UNSIGNED_ENGINE_RECEIPTS')=='1'
+warehouse_receipts=os.environ.get('WEFT_UNSIGNED_WAREHOUSE_RECEIPTS')=='1'
+assert not warehouse_receipts or engine_receipts
 engines={}
 if engine_receipts:
  custody=json.loads((BASE/'custody.json').read_text())
@@ -18,6 +20,11 @@ if engine_receipts:
  summary=json.loads((BASE/'summary.json').read_text())
  engines={row['bits']:row['sameStatementEngine'] for row in summary['outcomes'] if 'sameStatementEngine' in row}
  assert set(engines)=={1,2,3,8,16,32,63} and len(set(engines.values()))==1 and all(isinstance(v,str) and v for v in engines.values())
+ if warehouse_receipts:
+  assert summary['engineProbe']=='current_version'
+  warehouse=json.loads(next(iter(engines.values())))
+  assert set(warehouse)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and warehouse['dbr_version'] is None
+  assert all(isinstance(warehouse[k],str) and warehouse[k] for k in ['dbsql_version','u_build_hash','r_build_hash'])
 used=set()
 for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
  assert artifact['id']=='unsigned-'+str(bits)
@@ -43,7 +50,9 @@ for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
   assert physical in sql
   wanted_sql=sql.replace(physical,owner)
   capture_engine=engine_receipts and label.endswith('-valid-sum')
-  if capture_engine:wanted_sql='SELECT version() AS __weft_engine, observed.* FROM ('+wanted_sql+') observed'
+  if capture_engine:
+   probe="to_json(current_version(), map('ignoreNullFields','false'))" if warehouse_receipts else 'version()'
+   wanted_sql='SELECT '+probe+' AS __weft_engine, observed.* FROM ('+wanted_sql+') observed'
   assert receipt['sql']==wanted_sql
   assert receipt['parameters']==params
   native=receipt['response']
@@ -64,7 +73,7 @@ for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
  check(f'{bits}-invalid-guard',checks[0]['sql'],invalid,len(invalid))
  if bits==63:check('63-carrier-overflow',checks[0]['sql'],[2**63])
 assert used==set(by_label)
-report={'status':'passed','cases':8,'nativeReceipts':22,'sameStatementEngineResults':len(engines),'successfulReceipts':21,'expectedFailedReceipts':1,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inputHashes':{n:hashlib.sha256((BASE/n).read_bytes()).hexdigest() for n in ['compile-artifacts.jsonl','statements.jsonl']},'scope':'Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification.'}
+report={'status':'passed','cases':8,'nativeReceipts':22,'sameStatementEngineResults':len(engines),'warehouseIdentity':warehouse if warehouse_receipts else None,'successfulReceipts':21,'expectedFailedReceipts':1,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inputHashes':{n:hashlib.sha256((BASE/n).read_bytes()).hexdigest() for n in ['compile-artifacts.jsonl','statements.jsonl']},'scope':'Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification.'}
 OUT=pathlib.Path(os.environ.get('WEFT_UNSIGNED_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation')));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report))

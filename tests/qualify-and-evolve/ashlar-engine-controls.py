@@ -2,7 +2,7 @@
 import hashlib,json,os,subprocess,sys,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-engine-native'
+BASE=Path(os.environ.get('WEFT_ASHLAR_ENGINE_CONTROL_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-engine-native')))
 rejected=[]
 for label in ['engine','sum','sql','parameter','statement-id','custody']:
  with tempfile.TemporaryDirectory() as folder:

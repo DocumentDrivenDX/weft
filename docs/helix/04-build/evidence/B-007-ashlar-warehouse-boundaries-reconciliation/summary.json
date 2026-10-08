@@ -3,13 +3,18 @@
   "cases": 8,
   "nativeReceipts": 22,
   "sameStatementEngineResults": 7,
-  "warehouseIdentity": null,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+  },
   "successfulReceipts": 21,
   "expectedFailedReceipts": 1,
   "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
   "inputHashes": {
     "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
-    "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
+    "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37"
   },
   "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
 }

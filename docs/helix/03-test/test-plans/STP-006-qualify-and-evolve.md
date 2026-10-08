@@ -47,7 +47,7 @@ coverage.
 
 | Criterion | Inspected component evidence | Remaining proof |
 | --- | --- | --- |
-| AC1 | B-007-support-audit: 41 synthetic controls; retained replay: sixteen components, including 76 independent Truss row comparisons across 21 artifact scopes, 65 ordered comparisons, eleven native receipt/custody controls and sixteen host receipt controls | Every applicable case on each advertised native profile must have exact version/domain evidence. Candidate inventory remains unqualified. |
+| AC1 | B-007-support-audit: 41 synthetic controls; retained replay: eighteen components, including 76 independent Truss row comparisons across 21 artifact scopes, 65 ordered comparisons, eleven native receipt/custody controls and sixteen host receipt controls | Every applicable case on each advertised native profile must have exact version/domain evidence. Candidate inventory remains unqualified. |
 | AC2 | B-007-properties: stale module SHA refusals; B-007-backend-branches: original-byte/binding/profile guards; public corpus native Python/Chromium byte parity | Final release matrix must identify applicable pin/interface cases and exact feature builds. |
 | AC3 | B-007-properties: Unicode/opaque retention and selected unknown refusal; model/backend branch receipts preserve unselected content and refuse selected meaning | Reconcile original-source retention assertions to the final shared host corpus; no opaque-to-known promotion. |
 | AC4 | B-007-resources and parser receipts: generated malformed/duplicate text and exact limits; B-007-plugin-boundary: 26 atomic failure combinations; B-007-host-resources: seven raw cases through CLI/Python/Chromium | Review the complete critical-path boundary matrix. Seven host cases do not prove every resource or plugin path. |
@@ -62,7 +62,8 @@ profile. The terminal Linux CI checkpoint executes 214 Rust tests across 35
 suites with no ignored or filtered tests. Its retained replay checks twelve
 components at that revision; the current local replay adds session reconciliation
 and six session-custody corruption controls, plus Ashlar same-statement engine
-reconciliation and six corruption controls, for sixteen components; it does not execute native engines or Chromium.
+reconciliation and six corruption controls, plus warehouse/build-linked unsigned
+SUM reconciliation and six further controls, for eighteen components; it does not execute native engines or Chromium.
 
 Actual backend engine checks are separate from Python/browser compiler transport
 checks. The latest raw host resource run uses CPython 3.12.14, Chromium

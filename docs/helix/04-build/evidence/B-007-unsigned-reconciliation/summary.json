@@ -3,9 +3,10 @@
   "cases": 8,
   "nativeReceipts": 22,
   "sameStatementEngineResults": 0,
+  "warehouseIdentity": null,
   "successfulReceipts": 21,
   "expectedFailedReceipts": 1,
-  "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4",
+  "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
   "inputHashes": {
     "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
     "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"

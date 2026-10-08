@@ -9,6 +9,8 @@ components=[
  ('reconcile-unsigned-boundaries.py','status','cases',8),
  ('reconcile-ashlar-engines.py','status','sameStatementEngineResults',7),
  ('ashlar-engine-controls.py','status','corruptionsRejected',6),
+ ('reconcile-ashlar-warehouse-boundaries.py','status','sameStatementEngineResults',7),
+ ('ashlar-warehouse-controls.py','status','corruptionsRejected',6),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),

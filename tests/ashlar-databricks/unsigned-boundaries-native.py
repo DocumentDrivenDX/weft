@@ -34,9 +34,12 @@ for bits in [1,2,3,8,16,32,63,64]:
  checks=next(o for o in response['obligations'] if o['id']=='ashlar.candidate.scalarIntegrity')['parameters']['checks'];assert len(checks)==1
  maximum=(1<<bits)-1;valid=[0,1,maximum]
  assert client.sql(f'{bits}-valid-guard',substitute(checks[0]['sql'],valid),params)==[['0']]
- observed=client.sql(f'{bits}-valid-sum',"SELECT version() AS __weft_engine, observed.* FROM ("+substitute(response['sql'],valid)+") observed",params)
+ observed=client.sql(f'{bits}-valid-sum',"SELECT to_json(current_version(), map('ignoreNullFields','false')) AS __weft_engine, observed.* FROM ("+substitute(response['sql'],valid)+") observed",params)
  assert len(observed)==1 and len(observed[0])==2 and observed[0][0],observed
- engine=observed[0][0];actual=[row[1:] for row in observed]
+ engine=observed[0][0];warehouse=json.loads(engine)
+ assert set(warehouse)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and warehouse['dbr_version'] is None,warehouse
+ assert all(isinstance(warehouse[k],str) and warehouse[k] for k in ['dbsql_version','u_build_hash','r_build_hash']),warehouse
+ actual=[row[1:] for row in observed]
  assert actual==[[str(sum(valid))]]
  invalid=[-1,maximum+1] if bits<63 else [-1]
  assert client.sql(f'{bits}-invalid-guard',substitute(checks[0]['sql'],invalid),params)==[[str(len(invalid))]]
@@ -50,5 +53,6 @@ for bits in [1,2,3,8,16,32,63,64]:
  results.append(result)
 assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha
 (OUT/'compile-artifacts.jsonl').write_text('\n'.join(json.dumps(a) for a in artifacts)+'\n')
-summary=dict(status='passed',cases=len(results),nativeStatements=len(client.records),outcomes=results,compilerSha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Read-only synthetic owner SQL substitutions retain version() in the same statement as each admitted SUM and exercise emitted unsigned domain guards and exact aggregate at widths 1/2/3/8/16/32/63 boundaries. No actual table/publication custody qualification; UInt64 BIGINT compile-refuses.')
+assert len({r['sameStatementEngine'] for r in results if 'sameStatementEngine' in r})==1
+summary=dict(engineProbe='current_version',status='passed',cases=len(results),nativeStatements=len(client.records),outcomes=results,compilerSha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),scope='Read-only synthetic owner SQL substitutions retain current_version() and warehouse build hashes in the same statement as each admitted SUM and exercise emitted unsigned domain guards and exact aggregate at widths 1/2/3/8/16/32/63 boundaries. No actual table/publication custody qualification; UInt64 BIGINT compile-refuses.')
 (OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary))

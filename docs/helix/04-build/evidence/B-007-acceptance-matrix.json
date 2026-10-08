@@ -1230,11 +1230,19 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
-          "sha256": "c6b70e585d872a5c78f9542b3fd02130d1977e6fb566be69f3868feb50bdb122"
+          "sha256": "37bd12c5b9ff09e2e80662e28cf6973ddb49b23673c3b3647b7ffb088c6fe409"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-native/custody.json",
+          "sha256": "8f50489b939e53bfbe588da3fc743eba5bd42024aaec8126d30323d2b68f8df2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-reconciliation/summary.json",
+          "sha256": "47d25960bc0a552f8291e68fb77a178e3debc8a207878d142baf58f93e6307e5"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

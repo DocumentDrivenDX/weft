@@ -16,16 +16,17 @@
         "cases": 8,
         "nativeReceipts": 22,
         "sameStatementEngineResults": 0,
+        "warehouseIdentity": null,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4",
+        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
         },
         "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
       },
-      "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4"
+      "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d"
     },
     {
       "component": "reconcile-ashlar-engines.py",
@@ -34,9 +35,10 @@
         "cases": 8,
         "nativeReceipts": 22,
         "sameStatementEngineResults": 7,
+        "warehouseIdentity": null,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4",
+        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
@@ -59,7 +61,47 @@
           "custody"
         ]
       },
-      "sourceSha256": "d8297cef52ac991ddb7b0a99b56aafd410b6639568e400a27cc63c585bb6c4c3"
+      "sourceSha256": "9b12b76c32eeb9aa9b024a7231eb374bfaf935ee9cf6392128c7e223447adf12"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-boundaries.py",
+      "result": {
+        "status": "passed",
+        "cases": 8,
+        "nativeReceipts": 22,
+        "sameStatementEngineResults": 7,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "successfulReceipts": 21,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "cc3db47d835bd53c4a57a2b30294d0760b83c1fc7aaf8c33334e0e0edef44aad"
+    },
+    {
+      "component": "ashlar-warehouse-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "engine",
+          "sum",
+          "sql",
+          "parameter",
+          "statement-id",
+          "custody"
+        ]
+      },
+      "sourceSha256": "03dcc6405fc33574628e8af26372e4154e7e7da81dff879dc32917b64d717972"
     },
     {
       "component": "reconcile-truss-archive.py",
@@ -1543,6 +1585,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 86,
+  "verifiedEvidenceReferences": 88,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }
