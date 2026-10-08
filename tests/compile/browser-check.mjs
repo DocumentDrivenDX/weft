@@ -48,9 +48,10 @@ try {
   return batch;
  }
  let checked=0;
+ const receipts=[];
  function verifyBatch(cases,responses) {
   if(responses.length!==cases.length)throw new Error('Browser response count differs');
-  responses.forEach((r,i)=>{if(r!==expected[checked+i])throw new Error('WASM/native byte mismatch: '+cases[i].id)});
+  responses.forEach((r,i)=>{if(r!==expected[checked+i])throw new Error('WASM/native byte mismatch: '+cases[i].id);receipts.push({id:cases[i].id,requestSha256:createHash('sha256').update(cases[i].request).digest('hex'),actualSha256:createHash('sha256').update(r).digest('hex'),expectedSha256:createHash('sha256').update(expected[checked+i]).digest('hex')})});
   checked+=cases.length;
  }
  const firstBatch=await nextBatch();if(!firstBatch.length)throw new Error('Empty browser corpus');
@@ -91,6 +92,7 @@ try {
  if(requests.some(r=>!r.startsWith(base))) throw new Error('External network request');
  const wasm=await readFile(resolve(root,process.env.WEFT_PROBE_WASM || 'target/b002/web/weft_frontend_probe_bg.wasm'));
  const summary={cases:checked,batchSize,streamingCorpus:corpusPath.endsWith('.jsonl'),browser:await browser.version(),playwrightVersion,wasmBytes:wasm.length,wasmSha256:createHash('sha256').update(wasm).digest('hex'),jsGlueBytes:(await stat(resolve(root,process.env.WEFT_PROBE_JS || 'target/b002/web/weft_frontend_probe.js'))).size,imports:results.imports,initialMemoryBytes:results.initialMemoryBytes,finalMemoryBytes:results.finalMemoryBytes,networkRequests:requests,nodeGlobals:false,byteParity:true};
+ if(process.env.WEFT_BROWSER_RECEIPTS)await writeFile(resolve(root,process.env.WEFT_BROWSER_RECEIPTS),JSON.stringify({summary,cases:receipts},null,2)+'\n');
  await writeFile(resolve(root,process.env.WEFT_FRONTEND_BROWSER_SUMMARY || 'target/b002/browser-summary.json'),JSON.stringify(summary,null,2)+'\n');
  console.log(JSON.stringify(summary,null,2));
 } finally {await browser.close();}

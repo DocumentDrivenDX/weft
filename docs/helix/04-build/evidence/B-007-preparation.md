@@ -571,3 +571,9 @@ embedding replay with subprocess entry points disabled. Every case records
 request, actual-response and expected-response hashes tied to the loaded
 abi3 extension hash. The existing wheel executes; PostgreSQL is not rerun.
 This closes the per-case Python receipt-index gap, not browser provenance.
+
+B-007-truss-browser-case-receipts/ records fresh actual Chromium 148
+execution for all 76 Truss requests with exact artifact byte parity. Each
+request/actual/expected hash is retained with the loaded WASM hash and
+network/import/trap checks. PostgreSQL was not rerun. This supplies a
+case-level browser receipt index for joining native report scopes.
