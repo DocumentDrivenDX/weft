@@ -383,6 +383,28 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
     registry.register(selected.backend(catalog, &binding)?)?;
     Ok(registry)
 }
+/// Test-only host-selected metadata; request/model content never supplies this argument.
+pub fn registry_with_configuration(
+    catalog: &Catalog,
+    target: CompositionInput<'_>,
+    raw: &str,
+) -> Result<Registry> {
+    if target.backend_id != "truss.postgresql.original" {
+        return Err(fail("Conformance backend differs"));
+    }
+    if raw.len() > 4 * 1024 * 1024 {
+        return Err(fail("Conformance configuration exceeds 4 MiB"));
+    }
+    let selected = configuration(raw, catalog)?;
+    let binding = BindingInput {
+        profile: selected.binding_profile.clone(),
+        json: target.binding_json.into(),
+        sha256: target.binding_sha256.into(),
+    };
+    let mut registry = Registry::default();
+    registry.register(selected.backend(catalog, &binding)?)?;
+    Ok(registry)
+}
 fn fixture_native_leaf(
     _: usize,
     node: &crate::value_definition::LayoutNode<'_>,

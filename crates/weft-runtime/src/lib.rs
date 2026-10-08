@@ -210,3 +210,75 @@ mod multi_recursive_entity_tests {
         }
     }
 }
+
+/// Explicit conformance instrumentation, available only in test-original builds.
+#[cfg(feature = "test-original")]
+pub fn compile_json_with_conformance_configuration(request: &str, configuration: &str) -> String {
+    let mut factory = |catalog: &weft_core::model::Catalog,
+                       _: weft_core::backend::Plan<'_>,
+                       target: weft_core::compile::CompositionInput<'_>| {
+        weft_postgresql::conformance_original::registry_with_configuration(
+            catalog,
+            target,
+            configuration,
+        )
+    };
+    weft_core::compile::Compiler::default().compile_json_with_factory(request, &mut factory)
+}
+
+#[cfg(all(test, feature = "test-original"))]
+mod supplied_configuration_tests {
+    #[test]
+    fn explicit_host_configuration_admits_unlisted_binding_and_preserves_refusals() {
+        use serde_json::{json, Value};
+        let fixture: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-address-compile-transport.json"
+        ))
+        .unwrap();
+        let configuration = include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-address-composition.json"
+        );
+        let mut request = fixture["request"].clone();
+        let binding = request["target"]["bindingJson"]
+            .as_str()
+            .unwrap()
+            .to_owned()
+            + " ";
+        request["target"]["bindingJson"] = json!(binding);
+        request["target"]["bindingSha256"] = json!(weft_core::json::sha256(binding.as_bytes()));
+        let fixed: Value =
+            serde_json::from_str(&super::compile_json(&request.to_string())).unwrap();
+        assert_eq!(fixed["status"], "blocked");
+        let result =
+            super::compile_json_with_conformance_configuration(&request.to_string(), configuration);
+        let compiled: Value = serde_json::from_str(&result).unwrap();
+        assert_eq!(compiled["status"], "compiled", "{compiled}");
+        assert_eq!(compiled["sql"], fixture["response"]["sql"]);
+        assert_eq!(compiled["parameters"], fixture["response"]["parameters"]);
+        assert_eq!(
+            result,
+            super::compile_json_with_conformance_configuration(&request.to_string(), configuration)
+        );
+        for invalid in [
+            "{}".to_owned(),
+            configuration.to_owned() + "{}",
+            " ".repeat(4 * 1024 * 1024 + 1),
+        ] {
+            let refused: Value = serde_json::from_str(
+                &super::compile_json_with_conformance_configuration(&request.to_string(), &invalid),
+            )
+            .unwrap();
+            assert_eq!(refused["status"], "blocked");
+            assert!(refused.get("sql").is_none());
+        }
+        request["options"]["allowCandidate"] = json!(false);
+        let refused: Value =
+            serde_json::from_str(&super::compile_json_with_conformance_configuration(
+                &request.to_string(),
+                configuration,
+            ))
+            .unwrap();
+        assert_eq!(refused["status"], "blocked");
+        assert!(refused.get("sql").is_none());
+    }
+}

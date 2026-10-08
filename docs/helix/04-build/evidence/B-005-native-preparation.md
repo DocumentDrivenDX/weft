@@ -3597,3 +3597,36 @@ This completes original property SUM/native integrity coverage for the admitted
 decimal precision/scale pairs. Fresh public embedding evidence, broader query
 composition and the final US-003 acceptance audit remain open. No installed
 Truss, production storage or native-null compatibility claim is added.
+
+### Explicit conformance configuration through Python and WASM (2026-10-07)
+
+Inspection established that the embedding runtime selected original compositions
+only through baked-in binding hashes. A separately supplied host configuration
+can now exercise the existing original-admission path without adding fixture
+hash presets. The new `compile_json_with_conformance_configuration(request,
+configuration)` export exists only in explicitly enabled `test-original` builds.
+It is conformance instrumentation, not a released registration protocol. Query
+and model content never selects this argument or loads executable plugins.
+The configuration remains pure metadata with original-byte/digest admission,
+checked JSON, a 4 MiB limit and request-local backend composition.
+
+A Rust regression proves that the default preset route refuses an unlisted
+binding, while the explicitly supplied configuration compiles it deterministically
+and preserves SQL/parameters. Malformed, oversized and candidate-disabled inputs
+refuse without SQL. All 156 other Rust tests pass; the unchanged exhaustive
+decimal test is separately retained from the preceding checkpoint.
+
+Fresh CPython abi3 and Chromium WASM pass 420 cases each: 84 complete artifacts
+with newly hashed, unlisted bindings plus 336 malformed configuration, unknown
+version, candidate-disabled and wrong-digest refusals. Python repeats all 84
+positive responses with subprocess calls disabled. Expected complete artifacts
+come from the prior original corpus with only the exact binding digest updated.
+Chromium preserves Python byte parity without Node globals or network IO during
+compilation. The initial all-at-once browser transfer closed the target; it is
+not counted as a pass. The identical corpus subsequently passes in batches of
+eight through the same initialized WASM instance.
+
+Receipt: [B-005-host-configuration-embedding.json](B-005-host-configuration-embedding.json).
+The selected helper establishes a path for additional conformance configurations.
+New decimal-domain embedding evidence and a released generic host-registration
+boundary remain unproven; final US-003 acceptance review remains open.
