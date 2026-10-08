@@ -407,14 +407,25 @@ fn numeric_expression(
 ) -> Result<String> {
     use weft_core::ir::{Expression, Family};
     let logical = node.logical_type();
-    let selected_domain = (logical.family == Family::Integer
-        && logical.facets == serde_json::json!({"integerWidth":{"bits":64,"signed":false}}))
+    let integer_domain = logical.family == Family::Integer
+        && logical.facets["integerWidth"]["bits"]
+            .as_u64()
+            .is_some_and(|bits| {
+                (1..=64).contains(&bits)
+                    && logical.facets["integerWidth"]["signed"]
+                        .as_bool()
+                        .is_some_and(|signed| {
+                            logical.facets
+                                == serde_json::json!({"integerWidth":{"bits":bits,"signed":signed}})
+                        })
+            });
+    let selected_domain = integer_domain
         || (logical.family == Family::Decimal
             && logical.facets == serde_json::json!({"precision":28,"scale":2}));
     let string_domain = logical.family == Family::String && logical.facets == serde_json::json!({});
     if logical.nullable || !(selected_domain || string_domain) {
         return Err(fail(
-            "Conformance numeric procedure only selects required uint64, decimal(28,2) or Unicode string operands",
+            "Conformance numeric procedure only selects required signed/unsigned integer widths 1..64, decimal(28,2) or Unicode string operands",
         ));
     }
     match node {
@@ -939,5 +950,101 @@ mod native_leaf_refusal_tests {
             shape: LayoutShape::Sequence { item: 0 },
         };
         assert!(fixture_native_leaf(0, &node).is_err());
+    }
+}
+
+#[cfg(test)]
+mod integer_operand_tests {
+    use super::*;
+    use weft_core::ir::Span;
+    use weft_core::ir::{Expression, Family, LogicalType};
+
+    #[test]
+    fn admitted_integer_widths_keep_signedness_and_exact_boundary_tokens() {
+        let mut captures = Vec::new();
+        for bits in 1..=64 {
+            for signed in [false, true] {
+                let (minimum, maximum) = if signed {
+                    (-(1i128 << (bits - 1)), (1i128 << (bits - 1)) - 1)
+                } else {
+                    (0, (1i128 << bits) - 1)
+                };
+                for value in [minimum.to_string(), maximum.to_string()] {
+                    let logical_type = LogicalType {
+                        family: Family::Integer,
+                        facets: serde_json::json!({"integerWidth":{"bits":bits,"signed":signed}}),
+                        nullable: false,
+                    };
+                    let node = Expression::Literal {
+                        value: value.clone(),
+                        logical_type: logical_type.clone(),
+                        span: Span {
+                            start: 0,
+                            end: value.len(),
+                        },
+                    };
+                    let mut parameters = crate::Parameters::default();
+                    let sql = numeric_expression(&node, &[], None, &mut parameters).unwrap();
+                    let slots = parameters.into_slots();
+                    assert_eq!(sql, "$1::pg_catalog.numeric");
+                    assert_eq!(slots[0].value, value);
+                    assert_eq!(slots[0].logical_type, logical_type);
+                    captures.push(
+                        serde_json::json!({"bits":bits,"signed":signed,"value":value,"sql":sql}),
+                    );
+                }
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_INTEGER_OPERAND_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
+    }
+}
+
+#[cfg(test)]
+mod integer_domain_refusal_tests {
+    use super::*;
+    use weft_core::ir::{Expression, Family, LogicalType, Span};
+    #[test]
+    fn integer_operands_refuse_unknown_facets_and_nullable_domains_without_slots() {
+        for (facets, nullable) in [
+            (
+                serde_json::json!({"integerWidth":{"bits":0,"signed":true}}),
+                false,
+            ),
+            (
+                serde_json::json!({"integerWidth":{"bits":65,"signed":true}}),
+                false,
+            ),
+            (
+                serde_json::json!({"integerWidth":{"bits":64,"signed":"true"}}),
+                false,
+            ),
+            (
+                serde_json::json!({"integerWidth":{"bits":64,"signed":true,"future":true}}),
+                false,
+            ),
+            (
+                serde_json::json!({"integerWidth":{"bits":64,"signed":true},"future":true}),
+                false,
+            ),
+            (
+                serde_json::json!({"integerWidth":{"bits":64,"signed":true}}),
+                true,
+            ),
+        ] {
+            let node = Expression::Literal {
+                value: "0".into(),
+                logical_type: LogicalType {
+                    family: Family::Integer,
+                    facets,
+                    nullable,
+                },
+                span: Span { start: 0, end: 1 },
+            };
+            let mut slots = crate::Parameters::default();
+            assert!(numeric_expression(&node, &[], None, &mut slots).is_err());
+            assert!(slots.into_slots().is_empty());
+        }
     }
 }

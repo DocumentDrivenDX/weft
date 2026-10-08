@@ -3286,3 +3286,25 @@ of unwinding. This does not qualify those domains: it preserves explicit refusal
 while broader domain procedures remain unfinished. All 143 core/PostgreSQL/runtime
 tests pass; custody and specification checks pass. Receipt:
 [B-005-native-leaf-refusal.json](B-005-native-leaf-refusal.json).
+
+### Signed and unsigned integer operand lowering (2026-10-07)
+
+The comparator layer already admits exact signed/unsigned integer widths 1–64.
+The original conformance expression procedure previously restricted all integer
+operands to uint64, causing the new tests-before-code width regression to refuse.
+It now accepts exactly the admitted width/signedness facet shape and preserves
+those logical facets and exact literal tokens in emitted parameter slots.
+Unknown top-level/nested facets, missing signedness, widths zero/65 and nullable
+operands refuse without allocating slots. Decimal(28,2) and Unicode-C paths keep
+their previous selected scope. No storage codec or comparator is inferred from a
+literal or from this procedure: original binding/domain admission remains separate.
+
+All 145 Rust tests pass. `integer-operand-native.py` passes 256 PostgreSQL 17.9
+prepared executions for independently calculated minima/maxima at every signed
+and unsigned width. Native numeric evaluation returns exact text, including
+int64 minimum and uint64 maximum. Receipts:
+[B-005-integer-operand-lowering.json](B-005-integer-operand-lowering.json) and
+[B-005-integer-operand-native.json](B-005-integer-operand-native.json).
+This qualifies operand rendering/transport, not full original signed property
+storage, a new public runtime preset, fresh embedding or production compatibility.
+Those broader paths remain required B-005 work.
