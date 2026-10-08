@@ -1,10 +1,10 @@
 """Independent COUNT oracles plus native query/model/warehouse custody, no execution."""
-import hashlib,importlib.util,json
+import hashlib,importlib.util,json,os
 from pathlib import Path
 from collections import Counter
 from evidence_audit import strict
 ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native'
+BASE=Path(os.environ.get('WEFT_ASHLAR_COUNT_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native')))
 custody=strict((BASE/'custody.json').read_text())
 for name,digest in custody['inputHashes'].items():assert hashlib.sha256((BASE/name).read_bytes()).hexdigest()==digest
 spec=importlib.util.spec_from_file_location('captured_projection',BASE/'warehouse_capture.py');capture=importlib.util.module_from_spec(spec);spec.loader.exec_module(capture)

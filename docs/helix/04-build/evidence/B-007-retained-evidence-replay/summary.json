@@ -353,7 +353,7 @@
         },
         "scope": "Saved native exact COUNT, duplicate join/group, Unicode comparison and empty-count results over four homes and signed8/64 with same-query warehouse builds. No fresh execution, entity/keyset, host or production qualification."
       },
-      "sourceSha256": "54c1f5f46a135d36c6574e0ecf54534e1a6f682b04b30377f02150c77fd03af2"
+      "sourceSha256": "351c078d3584ae71d6a6b2f93d9d45d892ac444ecf5b49ce5faf7fd5eccc34c5"
     },
     {
       "component": "warehouse-capture-controls.py",
@@ -365,6 +365,26 @@
         "scope": "Harness annotation controls only; no native or backend support claim."
       },
       "sourceSha256": "f8b0a6798818dacdc1107918e6b52f3e46214105e63524238967a1467c3fd855"
+    },
+    {
+      "component": "ashlar-count-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 10,
+        "controls": [
+          "count",
+          "group-multiplicity",
+          "group-order",
+          "warehouse",
+          "parameters",
+          "sql",
+          "statement-id",
+          "extra-receipt",
+          "model-pin",
+          "custody"
+        ]
+      },
+      "sourceSha256": "3a4e16a7fb29ff7b210cce92f72451e8273d4965f15d931f777d1d0be2663249"
     },
     {
       "component": "reconcile-truss-archive.py",
@@ -1848,6 +1868,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 92,
+  "verifiedEvidenceReferences": 93,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }
