@@ -98,3 +98,10 @@ and supported assessment; a requirement overlapping the logical plan appears
 exactly once. Emitted SQL remains the independently fixed fixture query.
 B-007-derived-capabilities retains the current 17-test pipeline checkpoint.
 This fixture evidence does not qualify either native backend.
+
+The 0.1 scalar resolver now has its own semantic family accounting in
+[B-007-scalar-resolver-branch-accounting.md](B-007-scalar-resolver-branch-accounting.md).
+Two internal guards bypassed by the parsed-SQL corpus have direct assertions: the
+1,024/1,025 literal boundary and empty JOIN predicates. Nine library tests pass,
+none filtered or ignored. Application resolution, catalog/exact/parser and native
+lowering remain separate scopes in the broader critical branch gate.

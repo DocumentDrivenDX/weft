@@ -101,6 +101,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolver-direct-guards/summary.json",
+          "sha256": "e7517cb8bbea859cdd744a445acd4c3c027f2a1edabda97c60bf9392d5624f68"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
+          "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -134,6 +142,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolver-direct-guards/summary.json",
+          "sha256": "e7517cb8bbea859cdd744a445acd4c3c027f2a1edabda97c60bf9392d5624f68"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
+          "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -1503,7 +1519,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "39e6c6bdf4243e3db1f94d5595ceac73da3117d912ddc060afd3dd3bbcb4e672"
+          "sha256": "f293016b3caee4f6351d316d42ed47d299d97c99d3908c34063b81f819f2d97c"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1613,6 +1629,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-resolver-direct-guards/summary.json",
+          "sha256": "e7517cb8bbea859cdd744a445acd4c3c027f2a1edabda97c60bf9392d5624f68"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
+          "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1673,7 +1697,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "39e6c6bdf4243e3db1f94d5595ceac73da3117d912ddc060afd3dd3bbcb4e672"
+          "sha256": "f293016b3caee4f6351d316d42ed47d299d97c99d3908c34063b81f819f2d97c"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",

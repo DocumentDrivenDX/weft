@@ -2092,6 +2092,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 109,
+  "verifiedEvidenceReferences": 111,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }
