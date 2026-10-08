@@ -588,3 +588,9 @@ Ten host-receipt corruption controls pass: each Python/browser join rejects
 missing cases, duplicate IDs, changed actual/request hashes, and false parity
 flags. The standard retained-evidence runner includes these controls. This
 checks receipt consistency rather than reexecuting hosts or native engines.
+
+Host joins now compare extension/WASM digest and runtime versions to the
+independent retained embedding summaries. Four additional altered-runtime
+controls refuse, bringing host receipt corruption controls to fourteen.
+The full twelve-component retained-evidence replay passes. Identity
+consistency does not assert producer trust or final support qualification.

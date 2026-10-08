@@ -21,6 +21,9 @@ for host in ['python','browser']:
     path=Path(os.environ.get(f'WEFT_{host.upper()}_RECEIPTS',str(root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json')))
     receipt=json.loads(path.read_text());summary=receipt['summary']
     assert summary['cases']==76 and summary['byteParity'] is True
+    retained=json.loads((root/f'docs/helix/04-build/evidence/B-007-truss-embeddings/{host}-summary.json').read_text())
+    keys=['extensionSha256','python','version'] if host=='python' else ['wasmSha256','browser','playwrightVersion','wasmBytes']
+    assert all(summary[key]==retained[key] for key in keys),f'{host} runtime identity changed'
     if host=='python':assert summary['subprocessDisabled'] is True and len(summary['extensionSha256'])==64
     else:assert summary['nodeGlobals'] is False and len(summary['wasmSha256'])==64
     index={c['id']:c for c in receipt['cases']}

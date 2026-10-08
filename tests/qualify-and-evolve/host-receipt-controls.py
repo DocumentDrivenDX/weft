@@ -15,7 +15,10 @@ with tempfile.TemporaryDirectory() as tmp:
  path=Path(tmp)/'receipt.json'
  for host in ['python','browser']:
   baseline=json.loads((root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json').read_text())
-  for name,edit in mutations.items():
+  host_mutations=dict(mutations)
+  host_mutations['changed-runtime-hash']=lambda r,h=host:r['summary'].update(**{('extensionSha256' if h=='python' else 'wasmSha256'):'0'*64})
+  host_mutations['changed-runtime-version']=lambda r,h=host:r['summary'].update(**{('python' if h=='python' else 'browser'):'wrong'})
+  for name,edit in host_mutations.items():
    changed=copy.deepcopy(baseline);edit(changed);path.write_text(json.dumps(changed))
    result=subprocess.run([sys.executable,str(audit)],env=dict(os.environ,**{f'WEFT_{host.upper()}_RECEIPTS':str(path)}),capture_output=True,text=True)
    assert result.returncode!=0 and 'AssertionError' in result.stderr,(host,name,result.stderr)

@@ -11,7 +11,7 @@ components=[
  ('audit-native-profile-scopes.py','status','independentRowComparisons',76),
  ('native-scope-controls.py','status','corruptionsRejected',8),
  ('audit-truss-support-reports.py','status','casesAudited',76),
- ('host-receipt-controls.py','status','corruptionsRejected',10),
+ ('host-receipt-controls.py','status','corruptionsRejected',14),
  ('evidence-check.py','state','cases',41),
  ('reconcile-ashlar-application.py','status','cases',112),
  ('reconcile-controls.py','status','controls',11),
