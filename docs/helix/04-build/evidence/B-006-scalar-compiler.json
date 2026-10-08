@@ -1,0 +1,27 @@
+{
+  "state": "passed",
+  "rustTests": 8,
+  "nativeCorpus": {
+    "salesCases": 10,
+    "positiveSales": 2,
+    "preQueryRefusals": 8,
+    "globalSumCases": 2,
+    "aggregatePatternBoundaries": 3
+  },
+  "qualification": "Registered candidate 0.1 scalar component. Core/target versions unchanged. No native-column execution, application-read, live delegation, embedding or production admission claim.",
+  "compilerBinarySha256": "63402d317bab45a5e55bb20489f0b8dcdf622b6c9939e64def7d6b8a551fe04d",
+  "sources": {
+    "crates/weft-databricks/Cargo.toml": "03e6fb9fb2b7132c8cc9dd2c110a4544978a856dc41eca1fd91648fefa4ceed8",
+    "crates/weft-databricks/src/lib.rs": "e37a4b1b9ff0e987db370bda0eae371e6646fb014e99b22093370470228df2d3",
+    "crates/weft-databricks/src/binding.rs": "213f23d84a8f06758faf922151e660a56491cb9d1ca7e9ed3aa65ab24a55bbd6",
+    "crates/weft-databricks/src/candidate.rs": "257a9b1be1af096b2832ba19310ccffce8a891a673c6eb3c5dd5abd6ae71a8be",
+    "crates/weft-databricks/examples/compile.rs": "40c0d585cb90792fd6f0d96bf3e7cdd389279515ea4e3ed0e8aef16ae8f74cdf",
+    "tests/ashlar-databricks/common.rs": "f8f3fcf798411397502426c59c65f56676e0131aea034fc7f61b97ab5b182eaf",
+    "tests/ashlar-databricks/compiler.rs": "e637635d2f16dd7219201714bb3345b262a0675c7e9e142feebda0d03506ad3c",
+    "tests/ashlar-databricks/scalar-native.py": "35d228a25ade34c13f62bbe8c856e16e561d77a37f5ea80debc9f3a0c3187153",
+    "tests/ashlar-databricks/global-sum-native.py": "2fdcd3ab4a991d6671d817f1d51130e6a7bbbc093073d934b3fe18cb24e7310d",
+    "tests/ashlar-databricks/sum-overflow-native.py": "67768dad9ce34d4ada78cd11e1b68c60b53c431809907dc37ea225bb5173e6d3",
+    "tests/ashlar-databricks/native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "spec/upstream/ashlar-delta-v03.sql": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e"
+  }
+}

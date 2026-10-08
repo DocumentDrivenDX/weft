@@ -1,0 +1,997 @@
+{
+  "request": {
+    "interfaceVersion": "weft-compile/0.1.0",
+    "dialect": "weft-sql/0.1.0",
+    "sql": "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name",
+    "modules": [
+      {
+        "documentJson": "{\n  \"umf\": \"0.7.0\",\n  \"id\": \"sales-fixture\",\n  \"vocabularies\": {\n    \"future.vendor\": {\n      \"version\": \"99.0.0\"\n    }\n  },\n  \"modules\": [\n    {\n      \"id\": \"sales\",\n      \"namespace\": \"sales\",\n      \"elements\": [\n        {\n          \"id\": \"customer\",\n          \"name\": \"Customer\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"sales\",\n              \"element\": \"customer-id\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"customer-name\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"customer-active\"\n            }\n          ],\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"orders\",\n          \"name\": \"Orders\",\n          \"kind\": \"record\",\n          \"members\": [\n            {\n              \"module\": \"sales\",\n              \"element\": \"order-customer\"\n            },\n            {\n              \"module\": \"sales\",\n              \"element\": \"order-total\"\n            }\n          ],\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"customer-id\",\n          \"name\": \"id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"integer\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {},\n          \"facets\": {\n            \"integerWidth\": {\n              \"bits\": 64,\n              \"signed\": false\n            }\n          }\n        },\n        {\n          \"id\": \"customer-name\",\n          \"name\": \"name\",\n          \"kind\": \"field\",\n          \"scalarType\": \"string\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"customer-active\",\n          \"name\": \"active\",\n          \"kind\": \"field\",\n          \"scalarType\": \"boolean\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {}\n        },\n        {\n          \"id\": \"order-customer\",\n          \"name\": \"customer_id\",\n          \"kind\": \"field\",\n          \"scalarType\": \"integer\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {},\n          \"facets\": {\n            \"integerWidth\": {\n              \"bits\": 64,\n              \"signed\": false\n            }\n          }\n        },\n        {\n          \"id\": \"order-total\",\n          \"name\": \"total\",\n          \"kind\": \"field\",\n          \"scalarType\": \"decimal\",\n          \"nullability\": \"required\",\n          \"cardinality\": \"one\",\n          \"extensions\": {},\n          \"facets\": {\n            \"precision\": 28,\n            \"scale\": 2\n          }\n        }\n      ]\n    }\n  ],\n  \"extensions\": {\n    \"future.vendor\": {\n      \"unknown\": [\n        \"keep\",\n        {\n          \"payload\": \"opaque\"\n        }\n      ]\n    }\n  }\n}\n",
+        "pin": {
+          "documentId": "sales-fixture",
+          "revision": "1",
+          "umfVersion": "0.7.0",
+          "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63"
+        },
+        "selectedModuleIds": [
+          "sales"
+        ]
+      }
+    ],
+    "target": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-candidate",
+      "targetProfile": "dbsql-candidate",
+      "bindingJson": "{\"profile\": \"ashlar-databricks-candidate/0.1.0\", \"layoutRevision\": \"ashlar-delta/0.3\", \"layoutSha256\": \"ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e\", \"modelPins\": [{\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"umfVersion\": \"0.7.0\", \"sha256\": \"4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63\"}], \"publication\": {\"id\": \"weft-b006-scalar-fixtures\", \"manifestUuid\": \"ac33a712-f484-4f99-8248-c6614dbc4bb4\", \"tables\": [{\"name\": [\"client_dev\", \"weft_b006_20261008_scalar\", \"object_current\"], \"uuid\": \"944ddafe-d88e-408a-9944-c6b490fc4bad\", \"version\": 1}]}, \"records\": [{\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"customer\"}, \"table\": 0, \"kind\": \"object\", \"sourceSystem\": \"weft-b006-hidden-number-string\", \"typeId\": \"1\", \"schemaRevision\": \"fixture-schema-1\", \"properties\": [{\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"customer-id\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"23\"}}, {\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"customer-name\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"24\"}}, {\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"customer-active\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"25\"}}]}, {\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"orders\"}, \"table\": 0, \"kind\": \"object\", \"sourceSystem\": \"weft-b006-hidden-number-string\", \"typeId\": \"2\", \"schemaRevision\": \"fixture-schema-1\", \"properties\": [{\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"order-customer\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"26\"}}, {\"logical\": {\"documentId\": \"sales-fixture\", \"revision\": \"1\", \"module\": \"sales\", \"element\": \"order-total\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"27\"}}]}]}",
+      "bindingSha256": "1b6a16951e71993db890c73836a437f5d64327b89bf1a9e0afd85ff79c1f37ab"
+    },
+    "options": {
+      "allowCandidate": true
+    }
+  },
+  "response": {
+    "backend": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-candidate",
+      "interfaceVersion": "weft-backend/0.2.0",
+      "targetProfile": "dbsql-candidate"
+    },
+    "bindingSha256": "1b6a16951e71993db890c73836a437f5d64327b89bf1a9e0afd85ff79c1f37ab",
+    "columns": [
+      {
+        "aggregate": null,
+        "carrier": "text",
+        "decoder": "text",
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "nullable": false,
+        "outputName": "name",
+        "position": 1,
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "customer-name",
+            "module": "sales",
+            "revision": "1"
+          }
+        ]
+      },
+      {
+        "aggregate": "sum",
+        "carrier": "text",
+        "decoder": "exact-decimal",
+        "logicalType": {
+          "facets": {
+            "scale": 2
+          },
+          "family": "decimal",
+          "nullable": false
+        },
+        "nullable": false,
+        "outputName": "total",
+        "position": 2,
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "order-total",
+            "module": "sales",
+            "revision": "1"
+          }
+        ]
+      }
+    ],
+    "compilerVersion": "weft/0.1.0",
+    "diagnostics": [],
+    "dialect": "weft-sql/0.1.0",
+    "interfaceVersion": "weft-compile/0.1.0",
+    "logicalPlan": {
+      "irVersion": "weft-ir/0.1.0",
+      "modulePins": [
+        {
+          "documentId": "sales-fixture",
+          "revision": "1",
+          "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63",
+          "umfVersion": "0.7.0"
+        }
+      ],
+      "requiredCapabilities": [
+        "equal",
+        "group",
+        "innerJoin",
+        "project",
+        "scan",
+        "sum",
+        "type.decimal",
+        "type.integer",
+        "type.string"
+      ],
+      "root": {
+        "input": {
+          "aggregates": [
+            {
+              "argument": {
+                "identity": {
+                  "documentId": "sales-fixture",
+                  "element": "order-total",
+                  "module": "sales",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s1",
+                "span": {
+                  "end": 26,
+                  "start": 19
+                },
+                "type": {
+                  "facets": {
+                    "precision": 28,
+                    "scale": 2
+                  },
+                  "family": "decimal",
+                  "nullable": false
+                }
+              },
+              "op": "sum",
+              "span": {
+                "end": 27,
+                "start": 15
+              },
+              "type": {
+                "facets": {
+                  "scale": 2
+                },
+                "family": "decimal",
+                "nullable": false
+              }
+            }
+          ],
+          "groups": [
+            {
+              "identity": {
+                "documentId": "sales-fixture",
+                "element": "customer-name",
+                "module": "sales",
+                "revision": "1"
+              },
+              "op": "field",
+              "scan": "s0",
+              "span": {
+                "end": 106,
+                "start": 100
+              },
+              "type": {
+                "facets": {},
+                "family": "string",
+                "nullable": false
+              }
+            }
+          ],
+          "input": {
+            "left": {
+              "occurrence": "s0",
+              "op": "scan",
+              "pin": {
+                "documentId": "sales-fixture",
+                "revision": "1",
+                "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63",
+                "umfVersion": "0.7.0"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "customer",
+                "module": "sales",
+                "revision": "1"
+              }
+            },
+            "on": {
+              "left": {
+                "identity": {
+                  "documentId": "sales-fixture",
+                  "element": "order-customer",
+                  "module": "sales",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s1",
+                "span": {
+                  "end": 83,
+                  "start": 70
+                },
+                "type": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": false
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                }
+              },
+              "op": "equal",
+              "right": {
+                "identity": {
+                  "documentId": "sales-fixture",
+                  "element": "customer-id",
+                  "module": "sales",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s0",
+                "span": {
+                  "end": 90,
+                  "start": 86
+                },
+                "type": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": false
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                }
+              },
+              "span": {
+                "end": 90,
+                "start": 70
+              },
+              "type": {
+                "facets": {},
+                "family": "boolean",
+                "nullable": false
+              }
+            },
+            "op": "innerJoin",
+            "right": {
+              "occurrence": "s1",
+              "op": "scan",
+              "pin": {
+                "documentId": "sales-fixture",
+                "revision": "1",
+                "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63",
+                "umfVersion": "0.7.0"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "orders",
+                "module": "sales",
+                "revision": "1"
+              }
+            }
+          },
+          "op": "aggregate"
+        },
+        "op": "project",
+        "outputs": [
+          {
+            "expression": {
+              "identity": {
+                "documentId": "sales-fixture",
+                "element": "customer-name",
+                "module": "sales",
+                "revision": "1"
+              },
+              "op": "field",
+              "scan": "s0",
+              "span": {
+                "end": 13,
+                "start": 7
+              },
+              "type": {
+                "facets": {},
+                "family": "string",
+                "nullable": false
+              }
+            },
+            "name": "name"
+          },
+          {
+            "expression": {
+              "argument": {
+                "identity": {
+                  "documentId": "sales-fixture",
+                  "element": "order-total",
+                  "module": "sales",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s1",
+                "span": {
+                  "end": 26,
+                  "start": 19
+                },
+                "type": {
+                  "facets": {
+                    "precision": 28,
+                    "scale": 2
+                  },
+                  "family": "decimal",
+                  "nullable": false
+                }
+              },
+              "op": "sum",
+              "span": {
+                "end": 27,
+                "start": 15
+              },
+              "type": {
+                "facets": {
+                  "scale": 2
+                },
+                "family": "decimal",
+                "nullable": false
+              }
+            },
+            "name": "total"
+          }
+        ]
+      }
+    },
+    "modelPins": [
+      {
+        "documentId": "sales-fixture",
+        "revision": "1",
+        "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63",
+        "umfVersion": "0.7.0"
+      }
+    ],
+    "obligations": [
+      {
+        "failureCode": "WFT-OBLIGATION",
+        "id": "ashlar.candidate.publication",
+        "owner": "host",
+        "parameters": {
+          "layoutRevision": "ashlar-delta/0.3",
+          "layoutSha256": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e",
+          "modelPins": [
+            {
+              "documentId": "sales-fixture",
+              "revision": "1",
+              "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63",
+              "umfVersion": "0.7.0"
+            }
+          ],
+          "nativeProfile": {
+            "arithmetic": "ANSI exact-or-error",
+            "comparison": "UTF8_BINARY",
+            "versionReported": "4.2.0 zero build hash",
+            "warehouseRelease": "unqualified"
+          },
+          "payloadValidation": [
+            "exact validated JSON text with duplicate-key refusal",
+            "well-formed Unicode scalar strings with no NUL",
+            "registered fixed-base-ten numeric carrier; exponent/DOUBLE representations refuse",
+            "no rounding, coercion, missing/null substitution or hidden corrupt inputs"
+          ],
+          "publication": {
+            "id": "weft-b006-scalar-fixtures",
+            "manifestUuid": "ac33a712-f484-4f99-8248-c6614dbc4bb4",
+            "tables": [
+              {
+                "name": [
+                  "client_dev",
+                  "weft_b006_20261008_scalar",
+                  "object_current"
+                ],
+                "uuid": "944ddafe-d88e-408a-9944-c6b490fc4bad",
+                "version": 1
+              }
+            ]
+          },
+          "publicationPhase": "after-complete-buffer-and-context-recheck",
+          "requirements": [
+            "authenticate effective caller and establish complete authorized input view",
+            "verify one complete immutable manifest with trusted UUID and all schema revisions/projection dependencies",
+            "verify every consumed native schema, table UUID, version and retained data-file custody",
+            "verify source/type/id uniqueness, typed endpoint integrity and complete serving projection coverage at this publication",
+            "check policy and pin custody before execution and again before buffered result publication",
+            "refuse unknown obligations or unavailable evidence; no latest version or broader principal fallback",
+            "validate original mapping correspondence independently; identifiers and physical IDs are not logical identity"
+          ],
+          "visibility": "hidden input is not evidence of absence or integrity"
+        }
+      },
+      {
+        "failureCode": "WFT-NUMERIC-DOMAIN",
+        "id": "ashlar.candidate.scalarIntegrity",
+        "owner": "host",
+        "parameters": {
+          "checks": [
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "sales-fixture",
+                "element": "customer-id",
+                "module": "sales",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "customer",
+                "module": "sales",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p4)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p4)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
+            },
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "sales-fixture",
+                "element": "customer-name",
+                "module": "sales",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "customer",
+                "module": "sales",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND (schema_of_variant(variant_get(parse_json(r.props_json), :p5)) = 'STRING' AND instr(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING), char(0)) = 0) THEN FALSE ELSE TRUE END"
+            },
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "sales-fixture",
+                "element": "order-customer",
+                "module": "sales",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "orders",
+                "module": "sales",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p9)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p9)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
+            },
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "sales-fixture",
+                "element": "order-total",
+                "module": "sales",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "sales-fixture",
+                "element": "orders",
+                "module": "sales",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p10)) = 'BIGINT' OR (schema_of_variant(variant_get(parse_json(r.props_json), :p10)) RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract(schema_of_variant(variant_get(parse_json(r.props_json), :p10)), ',([0-9]+)\\\\)$', 1) AS INT), 0) <= 2)) AND try_cast(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(28,2)) IS NOT NULL) THEN FALSE ELSE TRUE END"
+            }
+          ],
+          "noPartialPublication": true,
+          "parameters": "same emitted ordered slots; values never interpolated",
+          "phase": "before-user-query",
+          "samePublicationRequired": true,
+          "success": "one exact STRING count equal to 0 per check"
+        }
+      }
+    ],
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "sourceDiscriminator",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "customer",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 1,
+        "value": "weft-b006-hidden-number-string"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "typeDiscriminator",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "customer",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 2,
+        "value": "1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "schemaRevision",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "customer",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 3,
+        "value": "fixture-schema-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "field": {
+            "documentId": "sales-fixture",
+            "element": "customer-id",
+            "module": "sales",
+            "revision": "1"
+          },
+          "kind": "propertyPath"
+        },
+        "position": 4,
+        "value": "$.23"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "field": {
+            "documentId": "sales-fixture",
+            "element": "customer-name",
+            "module": "sales",
+            "revision": "1"
+          },
+          "kind": "propertyPath"
+        },
+        "position": 5,
+        "value": "$.24"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "sourceDiscriminator",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "orders",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 6,
+        "value": "weft-b006-hidden-number-string"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "typeDiscriminator",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "orders",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 7,
+        "value": "2"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "schemaRevision",
+          "record": {
+            "documentId": "sales-fixture",
+            "element": "orders",
+            "module": "sales",
+            "revision": "1"
+          }
+        },
+        "position": 8,
+        "value": "fixture-schema-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "field": {
+            "documentId": "sales-fixture",
+            "element": "order-customer",
+            "module": "sales",
+            "revision": "1"
+          },
+          "kind": "propertyPath"
+        },
+        "position": 9,
+        "value": "$.26"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "field": {
+            "documentId": "sales-fixture",
+            "element": "order-total",
+            "module": "sales",
+            "revision": "1"
+          },
+          "kind": "propertyPath"
+        },
+        "position": 10,
+        "value": "$.27"
+      }
+    ],
+    "qualification": {
+      "assumptions": [],
+      "evidence": [],
+      "operations": [
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "equal",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "equal",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "group",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "group",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "innerJoin",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "innerJoin",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "project",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "project",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "scan",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "scan",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "sum",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "sum",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.decimal",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.decimal",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.integer",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.integer",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.string",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.string",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "0.1 required scalar relational operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sum": "finite DECIMAL38 or error; never null on overflow"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        }
+      ],
+      "status": "candidate"
+    },
+    "sql": "WITH `s0` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) AS `f0`, (CAST(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING) AS STRING) COLLATE UTF8_BINARY) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT)), `s1` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) AS `f0`, CAST(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(38,2)) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT)) SELECT CAST((`s0`.`f1` COLLATE UTF8_BINARY) AS STRING) AS `name`, CAST(CASE WHEN COUNT(`s1`.`f1`) > 0 AND TRY_SUM(`s1`.`f1`) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(`s1`.`f1`) END AS STRING) AS `total` FROM (`s0` INNER JOIN `s1` ON (`s1`.`f0` = `s0`.`f0`)) GROUP BY (`s0`.`f1` COLLATE UTF8_BINARY)",
+    "status": "compiled",
+    "targetContext": {
+      "engine": "databricks-sql",
+      "engineVersion": "unqualified-warehouse-release",
+      "id": "dbsql-candidate",
+      "publicationRevision": "ashlar-resolver/0.1-candidate",
+      "sessionSettings": {
+        "arithmetic": "ANSI exact-or-error",
+        "comparison": "UTF8_BINARY",
+        "variantCarrier": "fixed-base-ten-exact-only"
+      },
+      "storageLayoutRevision": "ashlar-delta/0.3"
+    }
+  }
+}

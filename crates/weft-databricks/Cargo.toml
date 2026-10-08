@@ -12,3 +12,7 @@ serde_json.workspace = true
 [[test]]
 name = "ashlar-binding"
 path = "../../tests/ashlar-databricks/binding.rs"
+
+[[test]]
+name = "ashlar-compiler"
+path = "../../tests/ashlar-databricks/compiler.rs"

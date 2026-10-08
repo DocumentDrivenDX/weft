@@ -86,3 +86,62 @@ registered capability assessment and lowering with executable scalar integrity
 checks before user predicates, then independent native corpus comparison. The
 application-read extension and actual Python/browser/backend integration remain
 required B-006 work.
+
+## Registered scalar SQL checkpoint
+
+The candidate now implements the shared registered Backend trait for the 0.1
+relational plan. Scans, INNER JOIN bags, filters, exact equality, grouping,
+required scalar projection and SUM lower to Databricks SQL. The core/frontend has
+no Ashlar switch and the backend performs no database IO. Actual Rust registration
+and the public compile envelope execute in the fixture CLI. Default compilation
+still refuses candidate capabilities without explicit allowCandidate.
+
+Discriminators, revisions, paths and source literals are ordered typed parameter
+slots. Identifiers are separately backtick-quoted and Delta versions are validated
+signed64 literals. String comparisons/grouping explicitly use UTF8_BINARY.
+Numeric/boolean outputs travel as exact text with the logical decoder metadata.
+Each selected scalar has a separate owner-wide integrity query at the same pinned
+version, before user filters or joins. Missing/null, wrong native carrier, source
+numeric domain, decimal scale and schema revision failures refuse publication.
+JSON VARIANT DOUBLE/exponent carriers are unsupported rather than coerced. Payload
+Unicode/duplicate-key validation and independent projection correspondence remain
+explicit host obligations; native type labels alone cannot establish those facts.
+
+SUM uses a guarded TRY_SUM: a nonempty aggregate with a null finite result raises
+WFT-NUMERIC-DOMAIN, and an empty aggregate retains SQL NULL. This protects against
+overflow-to-null independently of ANSI mode; ordinary casts still require the
+admitted exact native domains and completed integrity checks. The source result
+is mathematically exact or an error, not implicitly restricted to source precision.
+
+[Source/binary custody](B-006-scalar-compiler.json) records eight passing Rust tests.
+The owner DDL is retained exactly at `spec/upstream/ashlar-delta-v03.sql`. Native
+fixtures use its canonical object and manifest CREATEs in the owned schema
+`client_dev.weft_b006_20261008_scalar`; no shared tables or warehouse settings
+changed. Intentional corrupt rows are synthetic refusal controls, not admitted
+producer data. The fixture manifest is not proof of production authority.
+
+- [Sales corpus](B-006-scalar-native/summary.json): ten cases; two exact/empty
+  results and eight refusals before user-query submission. Independent Python
+  integer equality and high-precision Decimal loops establish expected bags and
+  totals. Parallel matching logical values contribute repeatedly, isolated
+  customers remain legitimate, and composed/decomposed names form separate groups.
+  The widened result `200000000000000000000000000.02` remains exact native STRING.
+- [Global SUM](B-006-global-native/summary.json): two emitted-query cases; all
+  orders contribute, including unmatched foreign keys, and empty input returns
+  NULL. Logical nullable/scale/decoder metadata and native STRING metadata agree.
+- [Aggregate pattern boundaries](B-006-sum-pattern/summary.json): native DECIMAL38
+  overflow raises, empty input remains NULL and a large finite UInt64-derived sum
+  remains exact. This is pattern evidence, not enumeration of unbounded groups.
+
+Full native statement responses and requests/compiler artifacts sit next to the
+summaries. The sales log preserves the initial plain-SUM baseline and the final
+read-only rerun after guarded TRY_SUM; final captured artifacts use the guard.
+Native fixtures were not replayed: the rerun verifies existing UUIDs and the same
+immutable publication/version vector. A timeout retains its live handle; writes
+are never blindly retried. All source expected values remain independent of SQL.
+
+Remaining B-006 work includes native-column homes, the 0.2 application-read
+extension, actual host obligation/policy/publication refusal execution and real
+Python/browser composition parity. All capabilities remain candidate; the engine
+version report does not qualify a Databricks warehouse release/channel. This
+checkpoint does not close the four US-004 criteria or start B-007.
