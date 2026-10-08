@@ -1,0 +1,9 @@
+{
+  "scope": "Conformance-only original native leaf refusal; no new supported domain or fresh embedding/native SQL claim",
+  "rustTests": 143,
+  "sourceSha256": "1a6f64fef04e62217bf4fa2b92d4a55144626817bd26c4d79dbe6194a9fbd9a0",
+  "logs": {
+    "/private/tmp/weft-native-leaf-before.log": "e2c38f2276473888da7a042213815d6422480f3ca4db9fe8d49ccdee85a8e285",
+    "/private/tmp/weft-native-leaf-after.log": "a4b756af317db8d65c3c762651487bb18e0b1d538d9b94ce797a6b471d64e1fc"
+  }
+}

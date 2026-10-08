@@ -3275,3 +3275,14 @@ Receipt: [B-005-entity-driver-native.json](B-005-entity-driver-native.json).
 This supplies actual native transport and orchestration evidence for the selected
 original entity cuts. Production policy, general descriptor decoder adoption,
 broader original scalar/query domains and full story qualification remain open.
+
+### Unqualified native leaf refusal (2026-10-07)
+
+The original conformance native leaf procedure previously panicked on an
+unqualified scalar family or non-scalar shape. A tests-before-code regression
+reproduced the panic. The procedure now returns a WFT-BINDING diagnostic for
+boolean, decimal, timestamp, binary, unknown families and a sequence node instead
+of unwinding. This does not qualify those domains: it preserves explicit refusal
+while broader domain procedures remain unfinished. All 143 core/PostgreSQL/runtime
+tests pass; custody and specification checks pass. Receipt:
+[B-005-native-leaf-refusal.json](B-005-native-leaf-refusal.json).

@@ -364,7 +364,11 @@ fn fixture_native_leaf(
         crate::value_definition::LayoutShape::Scalar {
             family: "string", ..
         } => ("to_jsonb(w.r->>13)", "text", vec![13]),
-        _ => panic!("fixture scalar procedure unsupported"),
+        _ => {
+            return Err(fail(
+                "Native leaf family or shape has no qualified conformance procedure",
+            ))
+        }
     };
     let codec: String = node
         .codec_bytes
@@ -909,5 +913,31 @@ mod recursive_entity_tests {
         if let Ok(path) = std::env::var("WEFT_ORIGINAL_RECURSIVE_ENTITY_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
         }
+    }
+}
+
+#[cfg(test)]
+mod native_leaf_refusal_tests {
+    use super::*;
+    use crate::value_definition::{LayoutNode, LayoutShape};
+
+    #[test]
+    fn unqualified_native_leaf_shapes_return_diagnostics_without_panicking() {
+        for family in ["boolean", "decimal", "timestamp", "binary", "unknown"] {
+            let node = LayoutNode {
+                codec_bytes: b"{}",
+                shape: LayoutShape::Scalar {
+                    family,
+                    storage_representation: "native",
+                },
+            };
+            let result = fixture_native_leaf(0, &node);
+            assert!(result.is_err(), "unqualified family {family} must refuse");
+        }
+        let node = LayoutNode {
+            codec_bytes: b"{}",
+            shape: LayoutShape::Sequence { item: 0 },
+        };
+        assert!(fixture_native_leaf(0, &node).is_err());
     }
 }
