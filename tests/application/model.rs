@@ -218,3 +218,32 @@ fn ambiguous_relationship_and_unkeyed_inverse_refuse() {
     let r = c.record(None, &name("orders")).unwrap();
     assert!(c.relationship_read(&r, &name("customer")).is_err());
 }
+
+// @covers US-006-AC4
+#[test]
+fn selected_graph_depth_and_identity_boundaries_are_explicit() {
+    for (length,accepted) in [(127,true),(128,false)] {
+        let mut d=document();
+        d["modules"][0]["elements"][0]["members"]=json!([{"module":"sales","element":"boundary-0"}]);
+        for i in 0..length {
+            let next=if i+1==length {"customer-id".to_string()} else {format!("boundary-{}",i+1)};
+            d["modules"][0]["elements"].as_array_mut().unwrap().push(json!({"id":format!("boundary-{i}"),"name":format!("boundary-{i}"),"kind":"field","nullability":"required","cardinality":"array","itemType":{"module":"sales","element":next},"extensions":{}}));
+        }
+        let c=catalog(d);let result=c.entity_descriptor(&customer(&c));
+        if accepted {assert_eq!(result.unwrap().graph.len(),129);} else {assert_eq!(result.unwrap_err().code,"WFT-LIMIT");}
+    }
+    for (fields,accepted) in [(4095,true),(4096,false)] {
+        let mut d=document();
+        let template=d["modules"][0]["elements"].as_array().unwrap().iter().find(|f|f["id"]=="customer-name").unwrap().clone();
+        let mut members=Vec::new();
+        for i in 0..fields {
+            let id=format!("wide-{i}");let mut f=template.clone();f["id"]=json!(id);f["name"]=json!(id);
+            members.push(json!({"module":"sales","element":id}));
+            d["modules"][0]["elements"].as_array_mut().unwrap().push(f);
+        }
+        d["modules"][0]["elements"][0]["members"]=json!(members);
+        let c=catalog(d);let result=c.entity_descriptor(&customer(&c));
+        if accepted {assert_eq!(result.unwrap().graph.len(),4096);} else {assert_eq!(result.unwrap_err().code,"WFT-LIMIT");}
+    }
+    println!("MODEL_BOUNDARY_REPORT depth=128/129 identities=4096/4097");
+}

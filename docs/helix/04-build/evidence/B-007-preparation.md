@@ -269,3 +269,14 @@ syntax refusal; token-over-limit reaches WFT-LIMIT. B-007-parser-boundaries/
 records the named test execution, source hash and branch values. These parser
 checks do not imply successful model resolution or backend qualification for
 every maximum-sized query. Broader critical model/backend branches remain open.
+
+The complete application-model file passes 11 tests. The added resource test
+proves selected descriptor graph depth 128/129 and identities 4096/4097 acceptance/
+refusal boundaries. Existing tests cover authored member order, absent-allowed
+availability without SQL-nullability coercion, recursive identity graphs, exact
+list item types, required scalar keys, authored relationship/inverse identity,
+ambiguity/unkeyed inverse and unsupported selected meanings. Unrelated unknown
+members do not block a known projection; selecting their descriptor refuses.
+B-007-model-boundaries/ records all executed names, source/implementation hashes
+and log. Descriptor admission at a boundary does not imply that an expanded
+entity query exceeds neither its separate output limit nor native decoder limits.
