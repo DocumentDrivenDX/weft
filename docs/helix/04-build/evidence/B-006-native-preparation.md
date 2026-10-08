@@ -215,3 +215,28 @@ pass, and [actual native typed-column execution](B-006-cross-module-native/summa
 retains the field's `types` module identity and exact grouped values. The
 [custody record](B-006-cross-module.json) pins the changed source and harness.
 This does not fetch modules or infer cross-document dependencies.
+
+### Python and browser embedding checkpoint — 2026-10-08
+
+The optional `ashlar-databricks-candidate` feature now composes the same Rust
+backend through `weft-runtime`, the Python ABI and browser WASM. Registration
+is absent in the default build; a combined Ashlar/Truss candidate build passes
+the request-level registration and candidate opt-out test.
+
+`tests/ashlar-databricks/python-check.py` checks 188 saved native-tested full
+compiler artifacts (including refusal responses) against the native Python
+extension, with `subprocess.Popen` forbidden and PATH empty. All responses and
+repeat calls match. Actual Chromium 148.0.7778.96 with Playwright 1.62.1 checks
+the same 188 requests through the TypeScript wrapper and WASM, byte-for-byte
+against Python. Runtime network APIs are disabled after bootstrap, no Node
+globals are available, and the harness exercises transport errors and instance
+retirement after a WASM trap. See B-006-python-summary.json and
+B-006-browser-summary.json for binary hashes and runtime receipts.
+
+This is embedding parity against previously recorded database-tested artifacts,
+not new database execution or an independent result oracle. The initial
+sandboxed Chromium launch failed before executing requests because macOS Mach
+service registration was denied; the authorized unsandboxed launch passed.
+`scripts/run-b006-embeddings.sh` rebuilds both embeddings and repeats the checks.
+Optional/compound/relationship coverage and host enforcement remain unfinished;
+this checkpoint does not complete B-006 or qualify a production backend.

@@ -1007,6 +1007,7 @@ dependencies = [
  "serde_json",
  "weft-backend-probe",
  "weft-core",
+ "weft-databricks",
  "weft-postgresql",
 ]
 

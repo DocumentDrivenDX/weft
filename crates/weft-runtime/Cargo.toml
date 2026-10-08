@@ -4,10 +4,12 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+ashlar-databricks-candidate=["dep:weft-databricks"]
 test-original=["dep:weft-postgresql","weft-postgresql/conformance-original"]
 truss-postgresql-candidate=["dep:weft-postgresql"]
 test-third=["dep:weft-backend-probe"]
 [dependencies]
+weft-databricks={path="../weft-databricks",optional=true}
 weft-core={path="../weft-core"}
 weft-backend-probe={path="../../tests/register-backend/probe",optional=true}
 weft-postgresql={path="../weft-postgresql",optional=true}

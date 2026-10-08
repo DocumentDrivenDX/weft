@@ -7,6 +7,7 @@ publish.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+ashlar-databricks-candidate=["weft-runtime/ashlar-databricks-candidate"]
 test-original=["weft-runtime/test-original"]
 truss-postgresql-candidate=["weft-runtime/truss-postgresql-candidate"]
 test-third=["weft-runtime/test-third"]
