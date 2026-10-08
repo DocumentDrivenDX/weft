@@ -1,0 +1,21 @@
+{
+  "scope": "test-original only, thirty-four exact configurations including ten signed scalar cuts; no production or released generic plugin qualification",
+  "rustTests": 147,
+  "embeddingCorpusCases": 300,
+  "fullResponseCases": 75,
+  "pythonDeterministicRepeats": 75,
+  "pythonCompileCalls": 375,
+  "files": {
+    "tests/truss-postgresql/original-embedding-check.py": "2d3fa9c1010e242ecebf731c4a2a4a605f8b00066a819c394484891146442c80",
+    "tests/truss-postgresql/fixtures/original-signed-public-transport.json": "5357fed50d2cd0936b57b3b623217dd63f83feb32687c27a0ff23e31d972ad83",
+    "tests/truss-postgresql/evidence/signed-embedding/python-summary.json": "e4497ea3235cc2a9d669970df91b6e513aaed51d8bf8a26bb867968ed0b76585",
+    "tests/truss-postgresql/evidence/signed-embedding/browser-summary.json": "67322fac95c6c5676f33d2767c458cbf141f84655b1984328b3839b44eaf26f6"
+  },
+  "logs": {
+    "/private/tmp/weft-signed-python-build.log": "43c3bce2624c05d26127417b81e56164557fc1965bac8e9270d6bacaa817fe02",
+    "/private/tmp/weft-signed-python-install.log": "8c4c169318e046dac90fbae7ab713b52ec4844b0cc0e7de4c0f987444dd160dd",
+    "/private/tmp/weft-signed-wasm-build.log": "31dd39c2754d23cb63a9de6dfd552f08dc9a2ca1ca75c06c18d43b633ddad175"
+  },
+  "wheelSha256": "a8fda524bae43cc3b5c95627c7d638f06937e0bd5142752593091e9d4caaf531",
+  "wasmSha256": "0ebdd25ad39dc87ac3adc1d44fd291518c9860edee4a965ce63e935cab29d796"
+}

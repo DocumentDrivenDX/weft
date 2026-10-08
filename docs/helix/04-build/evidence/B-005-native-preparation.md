@@ -3362,3 +3362,22 @@ and cursor filters. Receipts:
 [B-005-original-signed-public-native.json](B-005-original-signed-public-native.json).
 Fresh Python/browser builds for these new registry cuts remain pending; this is
 not an embedding or production compatibility claim.
+
+### Signed original Python and browser embedding (2026-10-07)
+
+Fresh CPython abi3 and browser WASM builds pass the expanded 300-case embedding
+corpus: seventy-five complete response comparisons and 225 candidate/digest/
+unsupported-binding refusals. Python also repeats every successful compile for
+375 native calls with subprocess execution disabled. This includes thirty signed
+SUM/page/cursor responses across ten exact configurations, together with all
+previous original entity, relationship and recursive cuts. Real Chromium
+153.0.8010.12 matches native response bytes without Node globals or external
+network dependencies. The registry and custody scope is thirty-four configurations.
+
+Receipt: [B-005-signed-embedding.json](B-005-signed-embedding.json), with committed
+Python/browser summaries, fresh binary hashes and build-log hashes. Builds use
+maturin's test-original feature and weft-wasm's test-original feature; the browser
+runner consumes the generated corpus/reports in target/b005/original-embedding.
+This closes the fresh embedding gap for the selected signed paths. Broader
+original scalar/query domains, multiple recursive roots and full host/story
+qualification remain B-005 work. No production compatibility is claimed.

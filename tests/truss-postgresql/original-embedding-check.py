@@ -16,7 +16,9 @@ optional_path=ROOT/'tests/truss-postgresql/fixtures/original-optional-public-tra
 entries += [(optional_path.with_name(f'optional-{index}.json'),fixture) for index,fixture in enumerate(json.loads(optional_path.read_text()))]
 entity_path=ROOT/'tests/truss-postgresql/fixtures/original-entity-public-transport.json'
 entries += [(entity_path.with_name(f'entity-{index}.json'),fixture) for index,fixture in enumerate(json.loads(entity_path.read_text()))]
-assert len(entries)==45
+signed_path=ROOT/'tests/truss-postgresql/fixtures/original-signed-public-transport.json'
+entries += [(signed_path.with_name(f'signed-{index}.json'),fixture) for index,fixture in enumerate(json.loads(signed_path.read_text()))]
+assert len(entries)==75
 for path,fixture in entries:
     request = fixture['request']
     raw = weft.compile_json(json.dumps(request))
@@ -38,6 +40,6 @@ assert len(files) == 7
 out = ROOT/'target/b005/original-embedding'; out.mkdir(parents=True, exist_ok=True)
 (out/'cases.json').write_text(json.dumps(cases)+'\n')
 (out/'reports.json').write_text(json.dumps(reports)+'\n')
-summary = dict(cases=len(cases), originalConfigurations=24, fullResponseParity=True, deterministicRepeats=45, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts')
+summary = dict(cases=len(cases), originalConfigurations=34, fullResponseParity=True, deterministicRepeats=75, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations')
 (out/'python-summary.json').write_text(json.dumps(summary, indent=2)+'\n')
 print(json.dumps(summary))
