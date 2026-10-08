@@ -80,3 +80,13 @@ conversion through binary double in 600 cases. These are expressly not
 compiler-source mutation evidence. This contributes expanded frontend
 assertions; backend/embedding matrices, source mutation, fuzz/resource branch
 audits and the final support/release inventory remain open.
+
+The resource component passes three Rust tests, including 2000 deterministic
+truncated/nested-duplicate input pairs and 4000 public-envelope atomic refusals.
+It proves exact JSON node-count acceptance at 100000 total nodes and refusal
+at 100001, plus oversized request (16 MiB + 1), SQL (64 KiB + 1) and binding
+(4 MiB + 1) refusals. Nesting 200 refuses; no untested exact depth boundary
+is claimed. Every named refusal exposes no SQL, parameters, logical plan,
+result or host obligations. B-007-resources/ retains the log, seed, source hash
+and explicit branch list. This bounded generator is not coverage-guided parser
+fuzzing, and does not close plugin-failure or all critical-branch coverage.

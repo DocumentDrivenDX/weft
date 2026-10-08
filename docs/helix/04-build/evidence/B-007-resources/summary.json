@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "tests": 3,
+  "generator": "weft-json-xorshift/0.1.0",
+  "seed": 95955044271877,
+  "generatedCases": 2000,
+  "atomicRefusals": 4000,
+  "sourceSha256": "eec6c3fd8f82430e669339942c2c5c4d11dd3d89433db3383122da765ad3a036",
+  "branches": [
+    "JSON truncated syntax -> WFT-INPUT",
+    "nested duplicate key -> WFT-JSON-DUPLICATE",
+    "100000 total JSON nodes accepted",
+    "100001 total JSON nodes -> WFT-LIMIT",
+    "request bytes 16777217 -> WFT-LIMIT",
+    "SQL bytes 65537 -> WFT-LIMIT",
+    "binding bytes 4194305 -> WFT-LIMIT",
+    "nesting 200 refused"
+  ],
+  "scope": "Rust public envelope and checked JSON only; no full parser fuzz or plugin branch coverage"
+}
