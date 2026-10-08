@@ -1,0 +1,16 @@
+{
+  "scope": "Emission-validation assessment guards only; candidate opt-in remains enforced by the pipeline. No native engine or support-profile qualification.",
+  "command": "cargo test -p weft-core --lib --locked",
+  "passed": 8,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "assessmentAssertions": [
+    "supported accepted",
+    "candidate accepted after pipeline opt-in",
+    "unsupported refused with WFT-EMIT",
+    "unrelated supported assessment refused with WFT-EMIT"
+  ],
+  "sourceSha256": "ac850e4b0bf0ac481b3fbc3e6cfc2e1d21a268955651555a5e60f10c97544645",
+  "logSha256": "8b234e70c0170301a6c0bd73e858e5f7062164a157724b0d780639cfb608efa2"
+}

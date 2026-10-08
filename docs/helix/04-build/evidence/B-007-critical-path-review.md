@@ -73,7 +73,7 @@ All eight current core library unit tests pass with none ignored or filtered
 | 0.1 projection root | B-007-core-unit-current/projection-root.log |
 | Output count/name/order/source identity | Existing pipeline emitter corruption test and B-007-emission-branches |
 | Scalar family/carrier/decoder/facets/nullability | B-007-scalar-representation and original numeric result test |
-| Projected field descriptor, Value presence/nullability and native-null qualification | B-007-field-representation; expanded presence/native-null unit test |
+| Projected field descriptor, Value presence/nullability and native-null qualification | B-007-field-representation; expanded presence/native-null unit test; B-007-native-null-assessments explicitly covers supported/candidate/unsupported and unrelated assessment IDs |
 | Relationship identity/bound/key ID/fields/types/nullability/representation | B-007-related-representation |
 
 This map identifies executed validation guards. It does not establish every

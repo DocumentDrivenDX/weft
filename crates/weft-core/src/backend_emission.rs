@@ -484,7 +484,26 @@ mod tests {
             evidence: vec!["fixture".into()],
             obligations: vec![],
         };
-        assert!(validate(Plan::V02(&p), &e, &selection, &[capability]).is_ok());
+        // Candidate is admitted here only after the pipeline's explicit opt-in;
+        // unsupported or unrelated assessments cannot authorize native null.
+        for (id, status, accepted) in [
+            ("value.nativeNull", crate::backend::Status::Supported, true),
+            ("value.nativeNull", crate::backend::Status::Candidate, true),
+            ("value.nativeNull", crate::backend::Status::Unsupported, false),
+            ("value.other", crate::backend::Status::Supported, false),
+        ] {
+            let mut assessment = capability.clone();
+            assessment.id = id.into();
+            assessment.status = status.clone();
+            let result = validate(Plan::V02(&p), &e, &selection, &[assessment]);
+            if accepted {
+                assert!(result.is_ok(), "{id}: {status:?}");
+            } else {
+                let error = result.unwrap_err();
+                assert_eq!(error.code, "WFT-EMIT");
+                assert_eq!(error.message, "Result representation changes logical type, presence, relationship key or exact numeric decoding");
+            }
+        }
         if let Representation::Value { descriptor, .. } = &mut e.columns[0].representation {
             descriptor.element = "wrong".into();
         }
