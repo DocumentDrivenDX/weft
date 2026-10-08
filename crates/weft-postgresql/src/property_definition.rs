@@ -767,6 +767,7 @@ mod tests {
             json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
             "WEFT_ORIGINAL_NUMERIC_CAPTURE",
             None,
+            None,
         );
     }
     #[test]
@@ -777,6 +778,7 @@ mod tests {
             "integer",
             json!({"kind":"unsigned-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast","range":"original-authored-unsigned-facets"}),
             "WEFT_ORIGINAL_INTEGER_CAPTURE",
+            None,
             None,
         );
     }
@@ -790,6 +792,21 @@ mod tests {
                 json!({"kind":"signed-integer","nativeType":"pg_catalog.numeric","integrality":"validate-before-cast"}),
                 &format!("WEFT_ORIGINAL_SIGNED_{bits}_CAPTURE"),
                 Some(bits),
+                None,
+            );
+        }
+    }
+    #[test]
+    fn original_decimal_boundary_domains_compile_both_storage_homes() {
+        for (precision, scale) in [(1, 0), (1, 1), (18, 9), (28, 0), (28, 28)] {
+            original_numeric_property_fixture(
+                "Orders",
+                "total",
+                "decimal",
+                json!({"kind":"finite-decimal","nativeType":"pg_catalog.numeric","scaleCoercion":"forbidden","nonfinite":"refuse"}),
+                &format!("WEFT_ORIGINAL_DECIMAL_{precision}_{scale}_CAPTURE"),
+                None,
+                Some((precision, scale)),
             );
         }
     }
@@ -800,6 +817,7 @@ mod tests {
         strategy: Value,
         capture: &str,
         signed_width: Option<u8>,
+        decimal_facets: Option<(u8, u8)>,
     ) {
         use base64::{engine::general_purpose::STANDARD, Engine};
         use leaf_codec_definition::{
@@ -810,7 +828,7 @@ mod tests {
             "../../../tests/truss-postgresql/fixtures/application-cases.json"
         ))
         .unwrap();
-        if let Some(bits) = signed_width {
+        if signed_width.is_some() || decimal_facets.is_some() {
             let request = &mut cases[0]["request"];
             let mut document: Value =
                 serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap())
@@ -819,9 +837,22 @@ mod tests {
                 .as_array_mut()
                 .unwrap()
                 .iter_mut()
-                .find(|field| field["id"] == "customer-id")
+                .find(|field| {
+                    field["id"]
+                        == if signed_width.is_some() {
+                            "customer-id"
+                        } else {
+                            "order-total"
+                        }
+                })
                 .unwrap();
-            field["facets"] = json!({"integerWidth":{"bits":bits,"signed":true}});
+            field["facets"] = if let Some(bits) = signed_width {
+                json!({"integerWidth":{"bits":bits,"signed":true}})
+            } else {
+                let (precision, scale) = decimal_facets.unwrap();
+                json!({"precision":precision,"scale":scale})
+            };
+            let field_id = field["id"].as_str().unwrap().to_owned();
             let authored_bytes = serde_json::to_vec(field).unwrap();
             let document_json = document.to_string();
             let make_artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
@@ -830,7 +861,7 @@ mod tests {
             for group in ["entities", "properties", "relationships"] {
                 for selected in binding[group].as_array_mut().unwrap() {
                     selected["source"] = make_artifact("signed-source", document_json.as_bytes());
-                    if selected["logical"]["element"] == "customer-id" {
+                    if selected["logical"]["element"] == field_id {
                         selected["acceptedDefinition"] =
                             make_artifact("signed-field", &authored_bytes);
                     }

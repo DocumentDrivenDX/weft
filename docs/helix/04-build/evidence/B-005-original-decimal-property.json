@@ -1,0 +1,53 @@
+{
+  "scope": "Original-definition decimal SUM compilation for five independently authored precision/scale domains and both props/native row storage homes",
+  "domains": [
+    {
+      "precision": 1,
+      "scale": 0
+    },
+    {
+      "precision": 1,
+      "scale": 1
+    },
+    {
+      "precision": 18,
+      "scale": 9
+    },
+    {
+      "precision": 28,
+      "scale": 0
+    },
+    {
+      "precision": 28,
+      "scale": 28
+    }
+  ],
+  "storageHomes": [
+    "row",
+    "props"
+  ],
+  "nativeCases": 70,
+  "sources": {
+    "crates/weft-postgresql/src/property_definition.rs": "afd12a9a8ac54aab54446d660005fbfe5ae476f1cc7bba22cb0baaa07488e93d",
+    "tests/truss-postgresql/original-decimal-property-native.py": "5e71813b83f5f5b44b2c8cb5a43effb1454e98b04f20b8cf4a423e273d2ee6c9",
+    "tests/truss-postgresql/fixtures/original-decimal-1-0-props-sum.json": "5310eeb3d8182474de985fec760d008c0dbb343b15b1305bfdd14c2eeb281e28",
+    "tests/truss-postgresql/fixtures/original-decimal-1-0-row-sum.json": "f3b2be5c28acd6caeca75baebb2866101ad0c1f972f0d7d05429573e78f97614",
+    "tests/truss-postgresql/fixtures/original-decimal-1-1-props-sum.json": "99be8e2b1ed88dd95cb94020094d11a83c54593b7d5d82cf60c98df52c590ec0",
+    "tests/truss-postgresql/fixtures/original-decimal-1-1-row-sum.json": "6444ba9c5ac8da944d96d2a6e52db608fab463921334f02478cb5bee273faa4e",
+    "tests/truss-postgresql/fixtures/original-decimal-18-9-props-sum.json": "6a42d10a0eec8796cb467edff9e34149577e7adfb3ee549ced3e2abca3689c10",
+    "tests/truss-postgresql/fixtures/original-decimal-18-9-row-sum.json": "4555ec0a464ca4c7e38ab198709da0730c5e19a876ee4ea1b260db5f4bb3eb2a",
+    "tests/truss-postgresql/fixtures/original-decimal-28-0-props-sum.json": "600ca40cabe9ad93a987724b49c20f3d015c94ffa4bdf15db9d711d772027769",
+    "tests/truss-postgresql/fixtures/original-decimal-28-0-row-sum.json": "b6ed16ebb31d73f175613efe010bf20208164e3444d71e35c90a13e570e3299d",
+    "tests/truss-postgresql/fixtures/original-decimal-28-28-props-sum.json": "fd196d9bbc7c9aac257ec0fd3781f352b1ea270ac5693ceac3c45e7619fdb8be",
+    "tests/truss-postgresql/fixtures/original-decimal-28-28-row-sum.json": "122c6c92f92a4895678072b175c979f15ac82a2a7f60c433920a65d2f2035381",
+    "tests/truss-postgresql/fixtures/original-decimal-row-sum.json": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+  },
+  "nativeReceipt": "B-005-original-decimal-property-native.json",
+  "limitations": [
+    "No all-domain property storage claim",
+    "No new public runtime configuration or fresh Python/browser qualification",
+    "No installed Truss or production storage compatibility claim"
+  ],
+  "rustTestsPassed": 156,
+  "rustLogSha256": "288d4a22b63f184ed3a9e9962da8b93a12ea6d1248c44c144624e8e8f60ea702"
+}

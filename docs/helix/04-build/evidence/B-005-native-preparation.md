@@ -3545,3 +3545,26 @@ precision/scale pairs: 868 exact text results, without typemod rounding. Receipt
 This qualifies operand lowering only. Original property storage and fresh public
 embedding evidence for broader decimal domains remain open B-005 work. No broader
 codec, storage or production compatibility claim follows from this matrix.
+
+### Original decimal property boundary domains (2026-10-07)
+
+The original numeric property fixture can now reauthor decimal facets in the UMF
+Field, source document and accepted-definition pins before admission. Five domains
+(precision, scale) = (1,0), (1,1), (18,9), (28,0), (28,28) compile comparator-owned
+SUM through both props and native row homes. This includes all-fractional values
+and 28-digit integral values without narrowing the authored domain.
+
+Seventy independent native PostgreSQL 17.9 executions pass: exact and empty sums,
+both out-of-range boundaries, excess scale, required absence and wrong codec or
+carrier. Decimal expectations use independent arbitrary-precision arithmetic;
+invalid stored values block query execution through emitted guard results.
+All 156 Rust tests pass. Existing custody verifies 38 configurations and 84 full
+responses; specification integrity remains 43 artifacts/10 schemas/30 planned
+criteria/636 scenarios. Those latter checks do not extend native coverage.
+Receipts: [B-005-original-decimal-property.json](B-005-original-decimal-property.json)
+and [B-005-original-decimal-property-native.json](B-005-original-decimal-property-native.json).
+
+These five domains establish original property compilation/native execution.
+All admitted decimal property pairs, broader queries and fresh public embedding
+configuration coverage remain pending. This does not qualify installed Truss or
+production compatibility, nor close B-005 acceptance.
