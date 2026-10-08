@@ -2441,3 +2441,43 @@ All 130 core/PostgreSQL tests passed (`/private/tmp/weft-owned-composition-tests
 Captured the seven owned original configurations as explicit conformance-only metadata paired with their serialized compile requests/full expected responses. The packets preserve original inventory, leaf/source/domain artifacts, member-presence definitions, native join artifact custody, selected physical relations/columns and graph profiles. Procedure pointers are absent; the forthcoming harness must supply its explicit fixture procedures in compiled Rust. This packet is test data, not a released host registration protocol or model-driven plugin format.
 
 All 130 core/PostgreSQL tests passed with captures enabled (`/private/tmp/weft-original-composition-capture-tests.log`). The persisted independent Python custody checker validates canonical base64/digests for inventory, codec/join artifact paths, member definitions and binding/response pins across all seven pairs. [Receipt](B-005-composition-captures.json) pins captures/source/log/checker. Runtime composition and real native Python/browser execution remain B-005 work; capture production and Python custody checking do not qualify either embedding.
+
+## Original composition through native embedding ports (2026-10-07)
+
+A new explicitly optional `test-original` feature reconstructs the seven captured
+native compound configurations in Rust. It rechecks original artifact digests,
+reconstructs selected leaf/member/row procedures, and re-admits catalog and
+binding custody for every compile request. Its exact binding allowlist and closed
+fixture procedures are conformance machinery, not a released generic backend
+registration protocol or production codec support.
+
+`cargo test -p weft-core -p weft-postgresql -p weft-runtime --features
+weft-runtime/test-original` passes 131 tests. The runtime check covers all seven
+full expected responses, repeated fresh composition, candidate opt-out and
+rehashed unsupported binding cuts.
+
+The actual Python extension, built with maturin 1.9.6 / Rust 1.90 / Python
+3.12.14 using `--features test-original`, passes
+`tests/truss-postgresql/original-embedding-check.py` with subprocess entry points
+disabled. Seven original responses match the captures; seven deterministic
+repeats and 21 negative requests (candidate opt-out, unsupported cut, wrong
+digest) pass. Wheel SHA256:
+`55e6cc8352313ed0330e6c23aef1e83163677c25fbf42ec21913ae4424ea506d`.
+This local wheel is abi3 cp39, macOS 11 ARM64; other platforms remain untested.
+
+A fresh `weft-wasm` build for `wasm32-unknown-unknown --features test-original`,
+with wasm-bindgen 0.2.105 web glue, passes the same 28 requests byte-for-byte
+against the Python responses in real Chromium 153.0.8010.12 / Playwright 1.62.1.
+The existing `tests/compile/browser-check.mjs` runs with generated
+`target/b005/original-embedding/{cases,reports}.json` as corpus/reports and
+`WEFT_PROBE_JS` / `WEFT_PROBE_WASM` pointing to the fresh web output. Compile
+network APIs are disabled after loading; no Node globals or WASI imports are
+present. The wrapper's transport and trap retirement checks also pass.
+Browser launch required sandbox escalation for macOS Mach services; the
+compiler receives no additional host capabilities.
+
+Receipts are in `tests/truss-postgresql/evidence/original-embedding/`.
+WASM SHA256: `6d10c9c1cc99bc8fd347393d58ab0d3e88278cec7d533a5bb6dc3fb232b6f12a`.
+These checks establish embedding parity for the pinned seven configurations.
+They do not close B-005: broader original scalar/relationship/query evidence,
+generalized registration and qualification remain unfinished.

@@ -15,3 +15,6 @@ path = "../../tests/truss-postgresql/binding.rs"
 [[test]]
 name = "candidate-compiler"
 path = "../../tests/truss-postgresql/compiler.rs"
+
+[features]
+conformance-original=[]

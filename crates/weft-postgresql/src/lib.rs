@@ -2,6 +2,8 @@ pub mod access;
 pub mod binding;
 pub mod candidate;
 pub mod collection;
+#[cfg(feature = "conformance-original")]
+pub mod conformance_original;
 mod json_codec;
 pub mod original_admission;
 pub mod presence_definition;
