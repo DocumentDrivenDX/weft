@@ -3508,3 +3508,23 @@ This establishes original compiler/native evidence for the selected multi-root
 entity cut. Public runtime allowlisting and fresh Python/browser verification for
 it remain pending. Broader domains and complete host/story qualification remain
 B-005 work; no production storage compatibility is claimed.
+
+### Multiple recursive entity public runtime and fresh embedding (2026-10-07)
+
+The exact multi-root entity configuration now compiles through the public
+conformance registry. Runtime tests compare both complete page-bound responses
+and repeat them deterministically. All 153 Rust tests pass. The independent
+custody checker verifies thirty-eight configurations against eighty-four complete
+responses, retaining both independently selected root definitions and homes.
+
+Fresh CPython abi3 and Chromium WASM builds pass 342 embedding cases: eighty-four
+complete responses, 252 candidate/digest/unsupported-binding refusals and six
+Boolean SUM type refusals. Python repeats every successful response for 426 native
+calls with subprocess execution disabled. Chromium 153.0.8010.12 matches bytes
+without Node globals or external network dependencies. Receipt and summaries:
+[B-005-multi-recursive-embedding.json](B-005-multi-recursive-embedding.json).
+
+The selected multi-root entity now has original compiler, native PostgreSQL and
+fresh public Rust/Python/browser evidence. Broader scalar/query domains and full
+host/story qualification remain open. This is exact conformance evidence, not a
+generic released backend or production storage claim.

@@ -192,3 +192,21 @@ mod boolean_sequence_tests {
         assert_eq!(super::compile_json(&request), raw);
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod multi_recursive_entity_tests {
+    #[test]
+    fn original_multi_recursive_entities_match_complete_public_responses() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-multi-recursive-entity-public.json"
+        ))
+        .unwrap();
+        for case in cases.as_array().unwrap() {
+            let request = case["request"].to_string();
+            let raw = super::compile_json(&request);
+            let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
+            assert_eq!(response, case["response"]);
+            assert_eq!(super::compile_json(&request), raw);
+        }
+    }
+}

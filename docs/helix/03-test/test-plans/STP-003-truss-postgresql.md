@@ -84,7 +84,8 @@ have synthetic native SQL and fresh Python/browser evidence. The test-only host
 orchestration suite adds 588 callback cases for preparation, pin/visibility and
 publication refusal. Actual psycopg execution adds 252 native cases for these original entity paths,
 including publication refusal after injected authority/pin/visibility changes.
-Broader scalar/query domains, multiple recursive roots and full host/story
-qualification remain open. Native null is explicitly unsupported by the pinned
+A complete entity combining Boolean sequence and numeric structured roots now
+also has native SQL and fresh public Rust/Python/browser evidence. Broader
+scalar/query domains and full host/story qualification remain open. Native null is explicitly unsupported by the pinned
 profile and requires a separately admitted profile before any positive claim. Truss runtime implementation/adoption is not a
 compiler dependency. Production qualification remains separate.
