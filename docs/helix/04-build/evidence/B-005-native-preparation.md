@@ -2516,3 +2516,44 @@ All 131 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
 (`/private/tmp/weft-original-numeric-row-full-tests.log`); formatting and HELIX
 artifact checks pass. No new Python/browser numeric-row support is claimed by
 this native database run. B-005 remains open for the remaining full query corpus.
+
+## Original directed relationship admission/access (2026-10-07)
+
+`relationship_definition::RelationshipAdmission` now verifies a selected
+relationship against original pinned UMF source/definition bytes and a fresh
+Catalog traversal resolution. The complete resolved read is compared, including
+forward/inverse direction, both independently authored keys, multiplicity and
+lifecycle. Both endpoints require independent original Record admissions and
+exact key mapping validation. Physical edge roles come from trusted Rust
+selection over the exact binding layout inventory; foreign-relation columns or
+aliased physical roles refuse.
+
+Its parameterized access primitive correlates native object ID **and type**,
+selects the relationship discriminator and both endpoint types, and returns the
+correct opposite physical endpoint for either direction. It preserves a private
+binding/traversal cut and stages all parameters before committing them. Logical
+key tokens do not substitute for native IDs.
+
+The new Rust test covers both directions plus substituted lifecycle,
+multiplicity, endpoint revision and keys, missing independent endpoint Records,
+foreign/aliased columns and changed mapping cuts. Wrong-direction access refuses
+without changing existing parameters. Captures can be regenerated with
+`WEFT_ORIGINAL_RELATIONSHIP_CAPTURE` set to an absolute output path when running
+`cargo test -p weft-postgresql original_directed`.
+
+[Four PostgreSQL 17.9 cases](B-005-original-relationship-access-native.json)
+execute exact captured forward/inverse access SQL with empty and populated
+synthetic layouts. Controls include reused native IDs across object types,
+wrong relationship discriminators, wrong source/target types and reversed
+endpoints. Only the two expected directed edges are returned.
+
+This is reusable original custody/access implementation, not complete public
+relationship query lowering. `HAS_RELATED` and `RELATED_KEYS` still require
+integration, separate target property access, key projection, uniqueness,
+bounded expansion and complete-owner prerequisites before B-005 can close.
+No relationship cardinality enforcement, association Record or production
+storage compatibility is claimed by these access tests.
+
+All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-original-relationship-full-tests.log`); formatting and HELIX
+artifact checks pass. This run makes no new relationship embedding claim.

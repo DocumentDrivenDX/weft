@@ -1,0 +1,50 @@
+{
+  "scope": "Original admitted directed physical edge access only; full HAS_RELATED/RELATED_KEYS, target key projection, multiplicity and host prerequisites remain unqualified",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "bff1d600f31dd0dcf8d1786d96fef6cdeafb6a0576e06f35bf46375d4be08490",
+  "harnessSha256": "45aa6c2d1c4f95d876e5ca7fb106632535360ab7e3d3bd0ab9d4fb1cd2416812",
+  "results": [
+    {
+      "case": "empty",
+      "inverse": false,
+      "rows": [],
+      "executedSqlSha256": "de4c7de52b5203533fb55f1d5a92fc4a51e5cf8d83dfa418a3debb92b1388145"
+    },
+    {
+      "case": "scoped-directed",
+      "inverse": false,
+      "rows": [
+        [
+          "1",
+          "2"
+        ],
+        [
+          "3",
+          "2"
+        ]
+      ],
+      "executedSqlSha256": "a45509b580bc87ab4a15bbc646bbaceeca26d5cb5a1a1752aaf81559b58343a8"
+    },
+    {
+      "case": "empty",
+      "inverse": true,
+      "rows": [],
+      "executedSqlSha256": "9e7625971df825355853fe2d966456f333297c535b61efb685f1e7a07778da62"
+    },
+    {
+      "case": "scoped-directed",
+      "inverse": true,
+      "rows": [
+        [
+          "2",
+          "1"
+        ],
+        [
+          "2",
+          "3"
+        ]
+      ],
+      "executedSqlSha256": "209856273828f815e2296c1aa65b973244619e468dcbad5327baeb0d94f63c0b"
+    }
+  ]
+}

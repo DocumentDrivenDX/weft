@@ -9,6 +9,7 @@ pub mod original_admission;
 pub mod presence_definition;
 pub mod read_context_definition;
 pub mod recursive_observation;
+pub mod relationship_definition;
 mod row_codec;
 pub mod row_tree_mapping;
 pub mod row_value_traversal;

@@ -1,0 +1,152 @@
+[
+  {
+    "inverse": false,
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 1,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 2,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 3,
+        "value": "-2"
+      }
+    ],
+    "sql": "SELECT o.id::pg_catalog.text AS owner, \"e\".\"target_id\"::pg_catalog.text AS target FROM pg_temp.object o JOIN \"pg_temp\".\"edge\" AS \"e\" ON \"e\".\"rel_type_id\"=$1::pg_catalog.int4 AND \"e\".\"source_type\"=$2::pg_catalog.int4 AND \"e\".\"target_type\"=$3::pg_catalog.int4 AND \"e\".\"source_id\"=\"o\".\"id\" AND \"o\".\"type_id\"=\"e\".\"source_type\" ORDER BY o.id, \"e\".\"target_id\""
+  },
+  {
+    "inverse": true,
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 1,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 2,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 3,
+        "value": "-1"
+      }
+    ],
+    "sql": "SELECT o.id::pg_catalog.text AS owner, \"e\".\"source_id\"::pg_catalog.text AS target FROM pg_temp.object o JOIN \"pg_temp\".\"edge\" AS \"e\" ON \"e\".\"rel_type_id\"=$1::pg_catalog.int4 AND \"e\".\"target_type\"=$2::pg_catalog.int4 AND \"e\".\"source_type\"=$3::pg_catalog.int4 AND \"e\".\"target_id\"=\"o\".\"id\" AND \"o\".\"type_id\"=\"e\".\"target_type\" ORDER BY o.id, \"e\".\"source_id\""
+  }
+]
