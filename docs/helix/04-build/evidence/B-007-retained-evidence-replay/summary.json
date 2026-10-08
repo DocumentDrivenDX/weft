@@ -2,6 +2,36 @@
   "status": "passed",
   "components": [
     {
+      "component": "reconcile-truss-review-numerics.py",
+      "result": {
+        "status": "passed",
+        "cases": 1124,
+        "nativeAssertions": 4496,
+        "postgresqlTransactions": 1,
+        "scope": "Exact Truss registration, all 434 decimal and 128 integer domains per props/typed home, independent integer coefficient expectations, complete executed SQL/parameter/fixture/guard/pin correspondence. No support promotion."
+      },
+      "sourceSha256": "842f327ceb587ddd642712b60246fc7d6332555842b884a56d83722ed009e3dd"
+    },
+    {
+      "component": "truss-review-numeric-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 8,
+        "controls": [
+          "exact sum changed",
+          "valid guard rejects value",
+          "invalid domain silently lost",
+          "empty sum coerced to zero",
+          "PostgreSQL release drift",
+          "independent expectation weakened",
+          "decimal result scale changed",
+          "integrity AND became OR"
+        ],
+        "scope": "Eight semantic corruptions rejected after recomputing archive custody hashes; no new native SQL."
+      },
+      "sourceSha256": "8dd3cfcafaf6d21855bcbaae760930b661340ce3b604df92b4ec58ee1e63424d"
+    },
+    {
       "component": "reconcile-conjunction-native.py",
       "result": {
         "status": "passed",
@@ -2244,6 +2274,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 126,
+  "verifiedEvidenceReferences": 127,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

@@ -156,3 +156,18 @@ review registration when joined with the prior corpus. Domain qualification
 remains separate: broad Truss numeric evidence used its original-definition
 backend, so verify those scalar domains through this exact registration before
 promoting it. No owner-layout dependency or distribution license gate is added.
+
+## Exact Truss scalar-domain gap closed
+
+B-007-truss-review-numerics directly exercises the engine-pinned registration
+for all 434 decimal and 128 integer domains in each of two homes: 1,124 cases
+and 4,496 native assertions in one PostgreSQL 17.9 rollback transaction.
+Independent coefficient/SQL/pin/decoder reconciliation and eight rehashed semantic
+corruption controls pass. Older original-definition backend evidence is no longer
+the sole broad numeric-domain basis for this registration.
+
+The remaining implementation sequence is supported profile declarations and
+per-query assessments grounded in the retained operation/type/home/domain maps;
+final Python/browser composition; final current-source workspace and all 30
+criteria; PR #9 review/merge. Host authorization/publication obligations remain
+explicit conditions on execution, not compiler adoption or distribution gates.

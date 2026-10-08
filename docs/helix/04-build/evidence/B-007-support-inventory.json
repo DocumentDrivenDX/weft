@@ -310,6 +310,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
           "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
+          "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
         }
       ],
       "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."

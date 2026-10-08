@@ -5,6 +5,8 @@ import hashlib,json,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
+ ('reconcile-truss-review-numerics.py','status','cases',1124),
+ ('truss-review-numeric-controls.py','status','corruptionsRejected',8),
  ('reconcile-conjunction-native.py','status','cases',32),
  ('conjunction-reconcile-controls.py','status','corruptionsRejected',8),
  ('audit-native-registration-join.py','status','cases',1025),

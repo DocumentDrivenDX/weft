@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "cases": 1124,
+  "decimalDomainsPerHome": 434,
+  "integerDomainsPerHome": 128,
+  "homes": [
+    "props",
+    "row"
+  ],
+  "nativeAssertions": 4496,
+  "postgresqlTransactions": 1,
+  "engine": {
+    "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+    "server_encoding": "UTF8",
+    "client_encoding": "UTF8",
+    "standard_conforming_strings": "on",
+    "transaction_isolation": "repeatable read",
+    "lc_collate": "C",
+    "lc_ctype": "C"
+  },
+  "compilerSha256": "cbe78ca4c77ac86bfe431bb8b3ff7686959bfed9f565601231f914fbdddd3968",
+  "harnessSha256": "908e39fd5f51b611d3c78ba38c7d2650d1fc18d8279a89e2f66a32fb1c8fbf13",
+  "scope": "Exact Truss NativeReview scalar SUM, valid/invalid numeric-domain guards and empty SUM for all admitted precision/scale and signed/unsigned width domains in JSONB and typed numeric rows. One same-view PostgreSQL rollback transaction; no promotion or stored-table custody."
+}
