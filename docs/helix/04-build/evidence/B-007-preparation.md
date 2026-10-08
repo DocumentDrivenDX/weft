@@ -583,3 +583,8 @@ receipts to original request hashes and exact native compiler artifact hashes.
 host-joined-summary.json retains loaded runtime identities and receipt hashes
 for these 152 joins. They prove host compiler artifact parity, not separate
 host database executions or final native/support provenance qualification.
+
+Ten host-receipt corruption controls pass: each Python/browser join rejects
+missing cases, duplicate IDs, changed actual/request hashes, and false parity
+flags. The standard retained-evidence runner includes these controls. This
+checks receipt consistency rather than reexecuting hosts or native engines.

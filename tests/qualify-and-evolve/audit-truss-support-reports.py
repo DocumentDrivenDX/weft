@@ -1,5 +1,5 @@
 """Audit real retained native data with independent expectations per exact scope."""
-import contextlib,hashlib,io,json,runpy,tempfile
+import contextlib,hashlib,io,json,os,runpy,tempfile
 from decimal import Decimal
 from pathlib import Path
 from evidence_audit import audit
@@ -18,7 +18,7 @@ def exact(value):
 by_id={r['id']:r for r in ns['reports']};results=[]
 hosts={}
 for host in ['python','browser']:
-    path=root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json'
+    path=Path(os.environ.get(f'WEFT_{host.upper()}_RECEIPTS',str(root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json')))
     receipt=json.loads(path.read_text());summary=receipt['summary']
     assert summary['cases']==76 and summary['byteParity'] is True
     if host=='python':assert summary['subprocessDisabled'] is True and len(summary['extensionSha256'])==64

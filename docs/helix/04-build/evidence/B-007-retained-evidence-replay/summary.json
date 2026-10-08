@@ -1345,7 +1345,28 @@
         ],
         "qualification": "Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution."
       },
-      "sourceSha256": "35e3c0e895fbfd7e27fcaf026e75032c95c8a79596be8aef43e8abd6846f7ed5"
+      "sourceSha256": "9edd8b92803b6c42ba2a38b20f233087880dc1dabe023c90728041a97712c206"
+    },
+    {
+      "component": "host-receipt-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 10,
+        "names": [
+          "python-missing-case",
+          "python-duplicate-id",
+          "python-changed-actual",
+          "python-changed-request",
+          "python-false-parity",
+          "browser-missing-case",
+          "browser-duplicate-id",
+          "browser-changed-actual",
+          "browser-changed-request",
+          "browser-false-parity"
+        ],
+        "scope": "Host/native artifact receipt joins only; no native engine or host execution rerun."
+      },
+      "sourceSha256": "379218c75822246ec763878fc239b15a57e390917cf407f9d4eef3704900e254"
     },
     {
       "component": "evidence-check.py",
