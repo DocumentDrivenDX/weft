@@ -2,6 +2,16 @@
   "status": "passed",
   "components": [
     {
+      "component": "reconcile-truss-archive.py",
+      "result": {
+        "status": "passed",
+        "cases": 76,
+        "archiveBytes": 6201567,
+        "scope": "Retained archive/pin/artifact consistency and recorded embedding parity; no new native execution or independent row oracle."
+      },
+      "sourceSha256": "b7e434e90f88118fec696ad3f1affff63a90865ad8998f9220d780237f3276b0"
+    },
+    {
       "component": "evidence-check.py",
       "result": {
         "state": "passed",
@@ -92,6 +102,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 21,
+  "verifiedEvidenceReferences": 24,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

@@ -6,7 +6,7 @@ Run from the repository root. Python receipt checks use the standard library:
 python3 tests/qualify-and-evolve/check-retained-evidence.py
 ```
 
-This replays five saved-evidence/control components and verifies hashes referenced
+This replays six saved-evidence/control components and verifies hashes referenced
 by the 30-criterion matrix and candidate support inventory. It writes its own
 summary under `docs/helix/04-build/evidence/B-007-retained-evidence-replay/`.
 It does not run engines or prove release qualification.

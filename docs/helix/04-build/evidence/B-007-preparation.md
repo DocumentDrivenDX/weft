@@ -253,3 +253,10 @@ full logs. The earlier Ashlar-only wheel correctly refused this unregistered
 Truss backend; its failed parity attempt is retained, not counted as passing.
 This closes this candidate fixture corpus's fresh CLI/Python/browser parity
 component, not all possible original-definition configurations or platforms.
+
+The combined saved-evidence replay now includes the fresh Truss archive: six
+components pass and 24 referenced evidence hashes verify. The archive check
+validates compressed/uncompressed hashes and byte count, all 76 unique corpus
+IDs, raw/parsed artifact equality, original module/binding pins, lexical parameter
+carriers, native result row arity and matching Python/browser parity counts.
+This is archive consistency, not an additional native run or independent oracle.
