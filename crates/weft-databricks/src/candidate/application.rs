@@ -154,10 +154,10 @@ pub(super) fn lower(
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
                 let Shape::Scalar { logical_type } = &d.shape else {
-                    return Err(fail(
-                        "WFT-CAPABILITY",
-                        "Compound application values need an admitted recursive carrier",
-                    ));
+                    let record = context.catalog.record_by_identity(&lower.scans[scan])?;
+                    let (_,graph) = context.catalog.member_descriptor_by_identity(&record, identity)?;
+                    lower.compounds.insert((scan.clone(),serde_json::to_string(identity).unwrap()),graph);
+                    continue;
                 };
                 if d.availability.as_deref() == Some("absent-allowed") {
                     lower
@@ -214,6 +214,15 @@ pub(super) fn lower(
     let mut columns = Vec::new();
     let mut related_joins = Vec::new();
     for (index, output) in plan.outputs.iter().enumerate() {
+        if let app::Expression::Field {scan,identity} = &output.expression {
+            let key=(scan.clone(),serde_json::to_string(identity).unwrap());
+            if lower.compounds.contains_key(&key) {
+                let sql=lower.expressions.get(&key).unwrap();
+                outputs.push(format!("{sql} AS {}",binding::quote(&output.name)));
+                columns.push(Column{position:index+1,output_name:output.name.clone(),representation:Representation::Value{descriptor:identity.clone(),native_null:false},source_identities:vec![identity.clone()],nullable:false});
+                continue;
+            }
+        }
         if let app::Expression::RelatedKeys {
             scan,
             relationship,
@@ -314,7 +323,8 @@ pub(super) fn lower(
         from.push_str(&format!(" {join}"));
     }
     let mut sql = format!(
-        "WITH {} SELECT {} FROM {from}",
+        "WITH{} {} SELECT {} FROM {from}",
+        if lower.compounds.is_empty() { "" } else { " RECURSIVE" },
         lower.ctes.join(", "),
         outputs.join(", ")
     );
@@ -339,6 +349,9 @@ pub(super) fn lower(
             failure_code: "WFT-NUMERIC-DOMAIN".into(),
         },
     ];
+    if !lower.compound_checks.is_empty() {
+        obligations.push(Obligation{id:"ashlar.candidate.compoundIntegrity".into(),parameters:json!({"phase":"before-user-query","checks":lower.compound_checks,"success":"one exact STRING count equal to 0 per check","samePublicationRequired":true,"encoding":"ashlar-weft-json-value/0.1-candidate","nativeNull":false,"numericLeaves":"exact strings","limits":{"depthExclusive":128,"nodesPerValue":100000},"execution":"native recursion/resource errors refuse atomically; no partial values"}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});
+    }
     if !relationship_checks.is_empty() {
         obligations.push(Obligation{id:"ashlar.candidate.relationshipIntegrity".into(),parameters:json!({"phase":"before-user-query","checks":relationship_checks,"success":"one exact STRING count equal to 0 per check","samePublicationRequired":true,"policy":"complete authorized source and target inputs; inverse traversal cannot broaden authority","multiplicity":"parallel edges retained; min/max checked in authored orientation","lifecycle":"host verifies the authored lifecycle and projection coverage against original publication"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()});
     }
@@ -379,7 +392,7 @@ pub(super) fn lower(
             .collect::<Result<Vec<_>>>()?;
         let keys = fields.join(", ");
         let count = count_sql();
-        let check=format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {keys} FROM {} GROUP BY {keys} HAVING {count} > 1) duplicate_keys",lower.ctes.join(", "),binding::quote(&plan.source.occurrence));
+        let check=format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {keys} FROM {} GROUP BY {keys} HAVING {count} > 1) duplicate_keys",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),binding::quote(&plan.source.occurrence));
         obligations.push(Obligation{id:"ashlar.candidate.keyIntegrity".into(),parameters:json!({"phase":"before-user-query","key":key,"checks":[{"sql":check,"failureCode":"WFT-BINDING"}],"success":"one exact STRING count equal to 0","continuation":"same immutable publication, original binding and effective policy across pages; ORDER BY alone proves no continuity"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()});
     }
     Ok(TargetPlan(Emission {

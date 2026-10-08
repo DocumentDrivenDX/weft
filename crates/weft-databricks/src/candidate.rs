@@ -1,5 +1,6 @@
 //! Candidate registered SQL lowering. Native execution/custody stays in hosts.
 mod application;
+pub(crate) mod compound;
 mod relationships;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
@@ -48,7 +49,7 @@ impl Backend for Candidate {
             .collect::<Vec<_>>();
         Ok(Manifest{backend_id:"ashlar.databricks".into(),backend_version:"0.1.0-candidate".into(),interface_version:"weft-backend/0.2.0".into(),language_profiles:languages.clone(),binding_profile:binding::PROFILE.into(),
             target_profiles:vec![TargetProfile{id:"dbsql-candidate".into(),engine:"databricks-sql".into(),engine_version:"unqualified-warehouse-release".into(),session_settings:json!({"comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error","variantCarrier":"fixed-base-ten-exact-only"}),storage_layout_revision:"ashlar-delta/0.3".into(),publication_revision:"ashlar-resolver/0.1-candidate".into()}],
-            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar envelopes; absent or exact value; explicit native null refuses"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","value.sequence","value.map","value.structured","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar envelopes; absent or exact value; explicit native null refuses"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
         let binding = binding::admit(c.catalog, c.binding_value)?;
@@ -256,6 +257,8 @@ struct Lower<'a> {
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
     expressions: BTreeMap<(String, String), String>,
+    compounds: BTreeMap<(String, String), Vec<weft_core::application_model::Descriptor>>,
+    compound_checks: Vec<Value>,
     physical_ids: BTreeSet<String>,
     optional: BTreeSet<(String, String)>,
     presence: BTreeMap<(String, String), String>,
@@ -270,6 +273,8 @@ impl<'a> Lower<'a> {
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
+            compounds: BTreeMap::new(),
+            compound_checks: vec![],
             physical_ids: BTreeSet::new(),
             optional: BTreeSet::new(),
             presence: BTreeMap::new(),
@@ -333,6 +338,7 @@ impl<'a> Lower<'a> {
                 "TRUE".into()
             };
             let mut projections = Vec::new();
+            let mut joins = Vec::new();
             if self.physical_ids.contains(&scan) {
                 projections.push("r.id AS __id".into());
                 if record.kind == RecordKind::NodeProjection {
@@ -352,7 +358,7 @@ impl<'a> Lower<'a> {
                     })?;
                 let optional = self.optional.contains(&(scan.clone(), key.clone()));
                 let (value, valid, present) = match &property.home {
-                    Home::Props { property_id } => {
+                    Home::Props { property_id, .. } => {
                         let path = self.slot(
                             string_type(),
                             format!("$.{property_id}"),
@@ -425,15 +431,29 @@ impl<'a> Lower<'a> {
                 let count = count_sql();
                 self.checks.push(json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"}));
             }
+            for ((occurrence, key), graph) in self.compounds.clone() {
+                if occurrence != scan { continue; }
+                let identity = graph.first().unwrap().identity.clone();
+                let property = record.properties.iter().find(|p| p.logical == identity).ok_or_else(|| fail("WFT-BINDING","Compound property scan mapping is missing"))?;
+                let Home::Props { property_id, .. } = &property.home else { return Err(fail("WFT-BINDING","Compound exact JSON home is missing")); };
+                let path = self.slot(string_type(),format!("$.{property_id}"),json!({"kind":"compoundPropertyPath","field":identity}))?;
+                let encoded = compound::encode(self,&graph,&identity,&table,&owner,&revision,&path)?;
+                let alias = format!("f{}", projections.len());
+                projections.push(format!("{} AS {}",encoded.value,binding::quote(&alias)));
+                joins.push(encoded.join);
+                self.compound_checks.push(encoded.check);
+                self.expressions.insert((scan.clone(),key),format!("{}.{}",binding::quote(&scan),binding::quote(&alias)));
+            }
             if projections.is_empty() {
                 projections.push("1 AS __row".into());
                 let count = count_sql();
                 self.checks.push(json!({"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-BINDING"}));
             }
             self.ctes.push(format!(
-                "{} AS (SELECT {} FROM {table} r WHERE {owner})",
+                "{} AS (SELECT {} FROM {table} r{} WHERE {owner})",
                 binding::quote(&scan),
-                projections.join(", ")
+                projections.join(", "),
+                if joins.is_empty() { String::new() } else { format!(" {}",joins.join(" ")) }
             ));
         }
         Ok(())

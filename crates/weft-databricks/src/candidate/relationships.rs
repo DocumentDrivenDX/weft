@@ -164,8 +164,8 @@ impl Traversals {
                 "(e.src COLLATE UTF8_BINARY) = (s.__node_key COLLATE UTF8_BINARY) AND (e.dst COLLATE UTF8_BINARY) = (t.__node_key COLLATE UTF8_BINARY)".into()
             };
             let count = count_sql();
-            checks.push(json!({"relationship":p.logical,"sql":format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM {edge} e LEFT JOIN {source} s ON e.source_id=s.__id LEFT JOIN {target} t ON e.target_id=t.__id WHERE CASE WHEN s.__id IS NOT NULL AND t.__id IS NOT NULL AND ({native}) THEN FALSE ELSE TRUE END",lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
-            checks.push(json!({"relationship":p.logical,"sql":format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT id FROM {edge} GROUP BY id HAVING {count}>1) duplicates",lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
+            checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM {edge} e LEFT JOIN {source} s ON e.source_id=s.__id LEFT JOIN {target} t ON e.target_id=t.__id WHERE CASE WHEN s.__id IS NOT NULL AND t.__id IS NOT NULL AND ({native}) THEN FALSE ELSE TRUE END",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
+            checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT id FROM {edge} GROUP BY id HAVING {count}>1) duplicates",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
             let r = &access.descriptor;
             let endpoint_keys = if r.inverse {
                 [
@@ -188,7 +188,7 @@ impl Traversals {
                     .join(", ");
                 let quoted = binding::quote(alias);
                 for columns in [keys, "__id".into()] {
-                    checks.push(json!({"relationship":p.logical,"sql":format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {columns} FROM {quoted} GROUP BY {columns} HAVING {count}>1) duplicates",lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
+                    checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {columns} FROM {quoted} GROUP BY {columns} HAVING {count}>1) duplicates",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
                 }
             }
             // Authored multiplicities remain in their forward orientation, even for inverse reads.
@@ -201,7 +201,7 @@ impl Traversals {
                 if let Some(max) = m["max"].as_u64() {
                     violations.push_str(&format!(" OR n > {max}"));
                 }
-                checks.push(json!({"relationship":p.logical,"sql":format!("WITH {} SELECT CAST({count} AS STRING) AS violations FROM {alias} v LEFT JOIN (SELECT {column}, {count} AS n FROM {edge} GROUP BY {column}) degree ON v.__id=degree.{column} WHERE {}",lower.ctes.join(", "),violations.replace("n ","coalesce(n, CAST(0 AS DECIMAL(38,0))) ")),"failureCode":"WFT-BINDING"}));
+                checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM {alias} v LEFT JOIN (SELECT {column}, {count} AS n FROM {edge} GROUP BY {column}) degree ON v.__id=degree.{column} WHERE {}",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),violations.replace("n ","coalesce(n, CAST(0 AS DECIMAL(38,0))) ")),"failureCode":"WFT-BINDING"}));
             }
         }
         Ok(checks)

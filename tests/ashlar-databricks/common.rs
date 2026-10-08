@@ -47,3 +47,40 @@ pub fn relationship_request(sql: &str, projection: bool) -> Value {
     request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
     request
 }
+
+pub fn compound_request(shape: &str, optional: bool) -> Value {
+    let mut request = request("SELECT c.payload FROM Customer c");
+    request["interfaceVersion"] = json!("weft-compile/0.2.0");
+    request["dialect"] = json!("weft-sql/0.2.0");
+    let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    let elements=doc["modules"][0]["elements"].as_array_mut().unwrap();
+    elements[0]["members"].as_array_mut().unwrap().push(json!({"module":"sales","element":"payload"}));
+    let mut root=json!({"id":"payload","name":"payload","kind":"field","cardinality":"array","nullability":if optional {"absent-allowed"} else {"required"},"itemType":{"module":"sales","element":"leaf"},"extensions":{}});
+    let leaf=json!({"id":"leaf","name":"leaf","kind":"field","cardinality":"one","nullability":"required","scalarType":"integer","facets":{"integerWidth":{"bits":64,"signed":true}},"extensions":{}});
+    match shape {
+        "map" => root["cardinality"]=json!("map"),
+        "nested" => {
+            root["itemType"]=json!({"module":"sales","element":"row"});
+            elements.push(json!({"id":"row","name":"row","kind":"field","cardinality":"array","nullability":"required","itemType":{"module":"sales","element":"leaf"},"extensions":{}}));
+        },
+        "structured" | "cyclic" => {
+            root["cardinality"]=json!("one");root.as_object_mut().unwrap().remove("itemType");
+            root["references"]=json!([{"module":"sales","element":"record","role":"record-type"}]);
+            let mut members=vec![json!({"module":"sales","element":"leaf"}),json!({"module":"sales","element":"note"})];
+            elements.push(json!({"id":"note","name":"note","kind":"field","cardinality":"one","nullability":"absent-allowed","scalarType":"string","extensions":{}}));
+            if shape=="cyclic" {
+                members.push(json!({"module":"sales","element":"next"}));
+                elements.push(json!({"id":"next","name":"next","kind":"field","cardinality":"one","nullability":"absent-allowed","references":[{"module":"sales","element":"record","role":"record-type"}],"extensions":{}}));
+            }
+            elements.push(json!({"id":"record","name":"PayloadRecord","kind":"record","members":members,"extensions":{}}));
+        },
+        _ => {}
+    }
+    elements.push(root);elements.push(leaf);
+    let raw=doc.to_string();let digest=sha256(raw.as_bytes());
+    request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(digest);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["modelPins"][0]["sha256"]=json!(digest);
+    binding["records"][0]["properties"].as_array_mut().unwrap().push(json!({"logical":identity("payload"),"home":{"kind":"props","propertyId":"28","encoding":"ashlar-weft-json-value/0.1-candidate"}}));
+    let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));request
+}

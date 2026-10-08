@@ -83,6 +83,8 @@ pub enum Home {
     Props {
         #[serde(rename = "propertyId")]
         property_id: String,
+        #[serde(default)]
+        encoding: Option<String>,
     },
     Column {
         value: String,
@@ -265,9 +267,23 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                 .iter()
                 .find(|d| d.identity == property.logical)
                 .unwrap();
-            let Shape::Scalar { logical_type: ty } = &descriptor.shape else {
-                return Err(fail("Property needs an admitted recursive carrier"));
+            let ty = match &descriptor.shape {
+                Shape::Scalar { logical_type } => Some(logical_type),
+                _ => None,
             };
+            if ty.is_none() {
+                if !matches!(&property.home, Home::Props { encoding: Some(e), .. } if e == "ashlar-weft-json-value/0.1-candidate") {
+                    return Err(fail("Compound property needs the registered exact JSON value encoding"));
+                }
+                for d in &graph {
+                    let native = document["modules"].as_array().unwrap().iter().find(|m| m["id"] == d.identity.module)
+                        .and_then(|m|m["elements"].as_array()).and_then(|es|es.iter().find(|e|e["id"] == d.identity.element)).unwrap();
+                    if native["extensions"].as_object().is_none_or(|e|!e.is_empty()) {
+                        return Err(fail("Selected recursive extension semantics are unregistered"));
+                    }
+                }
+                crate::candidate::compound::pack(&graph)?;
+            }
             if field["extensions"]
                 .as_object()
                 .is_none_or(|e| !e.is_empty())
@@ -275,7 +291,10 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                 return Err(fail("Selected field extension semantics require separately registered interpretation"));
             }
             match &property.home {
-                Home::Props { property_id } => {
+                Home::Props { property_id, encoding } => {
+                    if encoding.as_deref().is_some_and(|e| e != "ashlar-weft-json-value/0.1-candidate") {
+                        return Err(fail("Unknown exact JSON value encoding"));
+                    }
                     if !signed(property_id) {
                         return Err(fail("Property catalog ID is not canonical signed64 text"));
                     }
@@ -290,6 +309,7 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                     {
                         return Err(fail("Column home differs from the pinned owner layout"));
                     }
+                    let ty = ty.ok_or_else(|| fail("Typed scalar column cannot represent a compound value"))?;
                     let agrees = match (&ty.family, native_type.as_str()) {
                         (Family::String, "STRING") => true,
                         (Family::Integer, "BIGINT") => ty.facets["integerWidth"]["bits"]

@@ -297,3 +297,41 @@ fn relationship_binding_refuses_missing_changed_or_unknown_authored_meaning() {
         assert!(response.get("sql").is_none());
     }
 }
+
+#[test]
+fn recursive_compounds_have_explicit_encoding_and_value_metadata() {
+    for shape in ["sequence","map","nested","structured","cyclic"] {
+        for optional in [false,true] {
+            let response=run(&common::compound_request(shape,optional));
+            assert_eq!(response["status"],"compiled","{response}");
+            assert_eq!(response["columns"][0]["representation"]["kind"],"value");
+            assert_eq!(response["columns"][0]["representation"]["nativeNull"],false);
+            assert_eq!(response["columns"][0]["nullable"],false);
+            let sql=response["sql"].as_str().unwrap();assert!(sql.contains("WITH RECURSIVE"));assert!(sql.contains("MAX RECURSION LEVEL 130"));
+            assert!(response["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="ashlar.candidate.compoundIntegrity"));
+        }
+    }
+}
+
+#[test]
+fn compound_encoding_is_explicit_and_selected_dependency_meaning_refuses() {
+    for mutation in 0..4 {
+        let mut request=common::compound_request("structured",false);
+        let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        let home=&mut binding["records"][0]["properties"].as_array_mut().unwrap().last_mut().unwrap()["home"];
+        match mutation {
+            0=>{home.as_object_mut().unwrap().remove("encoding");},
+            1=>home["encoding"]=json!("unknown/1"),
+            2=>*home=json!({"kind":"column","value":"group_value","present":"group_present","nativeType":"STRING"}),
+            _=>{
+                let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+                let note=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="note").unwrap();
+                note["extensions"]["future.vendor"]=json!({"meaning":"unregistered"});
+                let raw=doc.to_string();let digest=sha256(raw.as_bytes());
+                request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(digest);binding["modelPins"][0]["sha256"]=json!(digest);
+            },
+        }
+        let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+        let response=run(&request);assert_eq!(response["status"],"blocked","{response}");assert!(response.get("sql").is_none());
+    }
+}
