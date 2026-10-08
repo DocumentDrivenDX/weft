@@ -280,3 +280,15 @@ members do not block a known projection; selecting their descriptor refuses.
 B-007-model-boundaries/ records all executed names, source/implementation hashes
 and log. Descriptor admission at a boundary does not imply that an expanded
 entity query exceeds neither its separate output limit nor native decoder limits.
+
+Eight unsigned-BIGINT boundary controls now pass against the actual existing
+Databricks warehouse, with 22 terminal statement receipts. Widths 1/2/3/8/16/32/63
+accept [0, 1, maximum] and exactly sum to 2^bits (including UInt63's result
+9223372036854775808); negative and representable above-domain values trigger
+emitted integrity guards. UInt63's physically unrepresentable upper neighbor
+raises native CAST_OVERFLOW; UInt64/BIGINT mapping refuses compilation before
+SQL. The frozen CLI checksum is unchanged. B-007-unsigned-boundaries-native/
+retains requests/artifacts and all native success/expected-error receipts.
+These read-only controls explicitly replace the physical owner relation with
+synthetic rows; they exercise emitted native operations, not table publication
+custody, every integer width, or production warehouse qualification.
