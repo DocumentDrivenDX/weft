@@ -616,3 +616,10 @@ Host receipt reading now uses the strict support-audit JSON reader. Two
 conflicting duplicate byteParity member controls refuse rather than losing
 meaning through last-member selection. Sixteen host corruption controls and
 all twelve retained-evidence components pass at current source.
+
+Compiler conformance CI now runs locked Rust workspace tests, retained
+evidence/corruption audits, spec validation, and browser ESM/declaration
+builds on pull requests and main pushes. The workflow has read-only repository
+permissions and a 30-minute bound. YAML structure, spec checks and browser
+build pass locally; remote Ubuntu execution remains to be observed. It
+does not claim live database or actual-browser qualification.

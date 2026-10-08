@@ -1,0 +1,37 @@
+name: Compiler conformance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: conformance-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compiler-and-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Install locked JavaScript dependencies
+        run: bun install --frozen-lockfile
+      - name: Validate governed specifications
+        run: bun run specs:check
+      - name: Build browser ESM and declarations
+        run: bun run browser:build
+      - name: Rust workspace conformance
+        run: cargo test --workspace --all-features --locked
+      - name: Replay retained evidence and corruption controls
+        run: python tests/qualify-and-evolve/check-retained-evidence.py
