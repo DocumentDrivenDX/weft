@@ -3630,3 +3630,24 @@ Receipt: [B-005-host-configuration-embedding.json](B-005-host-configuration-embe
 The selected helper establishes a path for additional conformance configurations.
 New decimal-domain embedding evidence and a released generic host-registration
 boundary remain unproven; final US-003 acceptance review remains open.
+
+### Exhaustive decimal owned compositions (2026-10-07)
+
+The original numeric fixture now builds host-owned configurations and complete
+public compile artifacts for every admitted decimal domain in both homes:
+434 precision/scale pairs, 868 configurations and 868 SUM responses. Repeated
+Rust compilation is deterministic. The exhaustive test plus 109 PostgreSQL
+package regressions pass (110 tests in two invocations).
+
+An independent checker verifies all reauthored facets, original artifact bytes,
+hashes and selection paths. Every full response's SQL, parameter vector and
+emitted guard SQL exactly matches the earlier native decimal capture for its
+domain/home. This links the new public artifacts to the 6,076 native executions
+without treating generated SQL as new execution evidence.
+
+Receipt: [B-005-decimal-composition.json](B-005-decimal-composition.json).
+The actual Python ABI matrix is running at this checkpoint; no completed
+Python/browser decimal-domain pass is claimed. The new harness will compare all
+868 complete responses and four refusal variants per request through the
+explicitly enabled conformance configuration export. Browser verification and
+final US-003 acceptance remain pending. No released/production support is added.

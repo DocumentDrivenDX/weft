@@ -2142,7 +2142,18 @@ mod tests {
         )
         .is_err());
         assert!(scope_parameters.into_slots().is_empty());
-        if let Some(bits) = signed_width {
+        if signed_width.is_some() || decimal_facets.is_some() {
+            let label = if let Some(bits) = signed_width {
+                format!("signed-{bits}")
+            } else {
+                let (p, s) = decimal_facets.unwrap();
+                format!("decimal-{p}-{s}")
+            };
+            let capture_env = if signed_width.is_some() {
+                "WEFT_ORIGINAL_SIGNED_COMPOSITION_CAPTURE"
+            } else {
+                "WEFT_ORIGINAL_DECIMAL_COMPOSITION_CAPTURE"
+            };
             let mut transports = Vec::new();
             for (home, selected_binding) in [("row", &row_input), ("props", &input)] {
                 let owned = crate::original_admission::Configuration {
@@ -2196,14 +2207,19 @@ mod tests {
                         native_tree: None,
                     }],
                 };
-                for (kind, sql) in [
+                let queries = if decimal_facets.is_some() {
+                    vec![("sum", "SELECT SUM(o.total) AS total FROM Orders o")]
+                } else {
+                    vec![
                     ("sum", "SELECT SUM(c.id) AS total FROM Customer c"),
                     ("page", "SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2"),
                     (
                         "cursor",
                         "SELECT c.id FROM Customer c WHERE c.id > :cursor ORDER BY c.id LIMIT 2",
                     ),
-                ] {
+                ]
+                };
+                for (kind, sql) in queries {
                     let mut request = cases[0]["request"].clone();
                     request["sql"] = json!(sql);
                     request["target"]["backendId"] = json!("truss.postgresql.original");
@@ -2230,21 +2246,21 @@ mod tests {
                         owned.compile_json(&request.to_string()),
                         response.to_string()
                     );
-                    transports.push(json!({"bits":bits,"home":home,"kind":kind,"request":request,"response":response}));
+                    transports.push(json!({"bits":signed_width,"home":home,"kind":kind,"request":request,"response":response}));
                 }
-                if let Ok(directory) = std::env::var("WEFT_ORIGINAL_SIGNED_COMPOSITION_CAPTURE") {
+                if let Ok(directory) = std::env::var(capture_env) {
                     std::fs::write(
                         std::path::Path::new(&directory)
-                            .join(format!("original-signed-{bits}-{home}-composition.json")),
+                            .join(format!("original-{label}-{home}-composition.json")),
                         serde_json::to_vec_pretty(&owned.conformance_capture()).unwrap(),
                     )
                     .unwrap();
                 }
             }
-            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_SIGNED_COMPOSITION_CAPTURE") {
+            if let Ok(directory) = std::env::var(capture_env) {
                 std::fs::write(
                     std::path::Path::new(&directory)
-                        .join(format!("original-signed-{bits}-transports.json")),
+                        .join(format!("original-{label}-transports.json")),
                     serde_json::to_vec_pretty(&transports).unwrap(),
                 )
                 .unwrap();
