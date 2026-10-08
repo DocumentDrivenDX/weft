@@ -7,6 +7,8 @@ HERE=pathlib.Path(__file__).resolve().parent
 components=[
  ('unsigned-reconcile-controls.py','status','controls',15),
  ('reconcile-unsigned-boundaries.py','status','cases',8),
+ ('reconcile-ashlar-engines.py','status','sameStatementEngineResults',7),
+ ('ashlar-engine-controls.py','status','corruptionsRejected',6),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),

@@ -15,16 +15,51 @@
         "status": "passed",
         "cases": 8,
         "nativeReceipts": 22,
+        "sameStatementEngineResults": 0,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "824533dc539e47b05b4ad6cddb1d0e58775a30356d0d3c36a554d263e8718430",
+        "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
         },
         "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
       },
-      "sourceSha256": "824533dc539e47b05b4ad6cddb1d0e58775a30356d0d3c36a554d263e8718430"
+      "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4"
+    },
+    {
+      "component": "reconcile-ashlar-engines.py",
+      "result": {
+        "status": "passed",
+        "cases": 8,
+        "nativeReceipts": 22,
+        "sameStatementEngineResults": 7,
+        "successfulReceipts": 21,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "f873beccbc836ad8222c58896fbe994ce5f28a0578341702f3db3d2b253532a4",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "c0b2b0e5393a2a3badebb2a97af150a346447b00aadac911b2188db922d41df3"
+    },
+    {
+      "component": "ashlar-engine-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "engine",
+          "sum",
+          "sql",
+          "parameter",
+          "statement-id",
+          "custody"
+        ]
+      },
+      "sourceSha256": "d8297cef52ac991ddb7b0a99b56aafd410b6639568e400a27cc63c585bb6c4c3"
     },
     {
       "component": "reconcile-truss-archive.py",
