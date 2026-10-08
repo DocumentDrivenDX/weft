@@ -1,0 +1,242 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "scope": "Original-registry native numeric row SUM/page over synthetic PostgreSQL tables; fixture source semantics, no production codec or host qualification",
+  "harnessSha256": "3f4843eed158cc0137a1a229f9056e7173d79e1ff956764fafb277e9f4218078",
+  "results": [
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "b881f50eef2cb90863304414f1232573ca5eb762f1c42412252d6195d103f5a0",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4c0ffdedc448844ed6a9a7828a24913e6035bb14cc2616e6515384140a208ac4",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "overflow",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "76f78b12c6250168672a6de5008b8698eb9f588a663717017e84eeb9a9e3aca7",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "27ec759df84365270fdab50670ccc9e8a3a3a3142df7b3a8b7d9d184567bd217",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "3823dfde6b207708897a26c761645754ed3a0a1a32b243194f3fb517fe6a0fc8",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-decimal-row-sum",
+      "case": "excess-scale",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "14f8e72dfb76468f89c6783703ebfd623371f761b9219d5edcbacf95cd8fe238",
+      "captureSha256": "93fabd493043b29ceb2be01551b99967cbbf1ff2eeef87aa4699067ab8397072"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "9183afe243a3b58abea0d7dc275b5144f44ffbcc47e9caf4d43e4e7107a949e5",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "8b662f10431f24aa70b204b488f0e301b969f088bb970673e110df73f378bfbe",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "overflow",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1399f59d34906fd1ee048630f612ad532f8639d1b80be9a97e22e0b54262caf4",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0cd10b7d15b9752f4d66dd41e8ae24e0e4af94db0b2168574620f1820e75ddd7",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e48f0f1e532afe8549cf21c85df049f1056830546c4817a8bf0d52495408157f",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "485266988107d118d4e30d428d549d1537f56415a8be5ea5685802ed28fa80b0",
+      "captureSha256": "ce0710acb594ce23e2e78948db182c41f7a53889e4792850b74b4e7411e9dc33"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "ac78c661f3c5b68005eff1d6ab487706d19ecb4f5b23c5b29db06d4471f85388",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "43d0e26d56012d4e3939b5e9690eac774a5a37619fe993c6e04b8a0d107a8eca",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "overflow",
+      "violations": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1f93d7699f72ad41882a7bc8e5fe3938ddb9f35417f46a73c8fa7c188037bd7a",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "3eea9c347adbc79d7d54c465138cc20bf6f49e3e5afb32c2879385e41cc56dc4",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b1bbba7a4fe0a832c363f5f4cefce08318746d6789c9c10b796c77a67c45b2d7",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7a538053a1f525508a04c33cbbdbe15bede41feee2cd56d762a3fceba975b944",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    },
+    {
+      "fixture": "original-integer-row-page",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9943fbd1baddc0d997233236e734b321d0b21c4f36953d6e8c7131110cb3afb9",
+      "captureSha256": "2817f2967780c678f1f3b304b199e8aec00fe63b3b58399d314a6ae77b65dc85"
+    }
+  ]
+}

@@ -1222,6 +1222,216 @@ mod tests {
                 std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":page_compiled.select.sql,"columns":page_compiled.select.columns,"checks":page_compiled.select.structural_checks.iter().cloned().chain(page_compiled.select.payload_checks.iter().map(|check|check.sql.clone())).collect::<Vec<_>>(),"parameters":page_compiled.parameters})).unwrap()).unwrap();
             }
         }
+        // Positive native-home coupling using the same original UMF field.
+        let mut row_fixture = crate::row_join_definition::tests::fixture(false);
+        row_fixture.value["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+        row_fixture
+            .artifacts
+            .get_mut("layoutInventory")
+            .unwrap()
+            .identity = inventory.identity.clone();
+        let row_join =
+            crate::row_join_definition::tests::parse(&row_fixture.value, &row_fixture).unwrap();
+        let row_template: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/binding-row.json"
+        ))
+        .unwrap();
+        let mut row_home: Value = serde_json::from_slice(
+            &STANDARD
+                .decode(
+                    row_template["properties"][0]["homeDefinition"]["bytesBase64"]
+                        .as_str()
+                        .unwrap(),
+                )
+                .unwrap(),
+        )
+        .unwrap();
+        row_home["layoutInventory"] = binding["basis"]["layoutInventory"].clone();
+        row_home["ownerCatalogId"] = binding["properties"][index]["ownerTypeId"].clone();
+        row_home["propertyCatalogId"] = binding["properties"][index]["propertyId"].clone();
+        row_home["valueDefinition"] = binding["properties"][index]["valueDefinition"].clone();
+        row_home["presenceDefinition"] = binding["properties"][index]["presenceDefinition"].clone();
+        row_home["joinProfile"] = row_fixture.value["profile"].clone();
+        row_home["joinDefinition"] =
+            artifact("selected-row-join", row_join.original_json.as_bytes());
+        for (role, key) in [
+            ("state", "stateRelationPhysicalIdentity"),
+            ("node", "nodeRelationPhysicalIdentity"),
+            ("scalar", "scalarRelationPhysicalIdentity"),
+        ] {
+            row_home[key] = row_fixture.value[role]["relationPhysicalIdentity"].clone();
+        }
+        let row_obligations = BTreeSet::from([row_home["storedDomainObligation"]
+            .as_str()
+            .unwrap()
+            .to_string()]);
+        let mut row_binding = binding.clone();
+        row_binding["properties"][index]["home"] = json!("row");
+        row_binding["properties"][index]["homeDefinition"] =
+            artifact("selected-row-home", row_home.to_string().as_bytes());
+        let row_json = row_binding.to_string();
+        let row_admission = Admission::parse(&row_json, &input.profile).unwrap();
+        let row_property = admit_property(
+            &row_admission,
+            index,
+            &catalog,
+            &descriptors,
+            select(),
+            PhysicalSelection {
+                profile: &pin,
+                inventory: &inventory,
+                relations: &row_fixture.relations,
+                columns: &row_fixture.columns,
+                row_join: Some(&row_join),
+                obligations: &row_obligations,
+                edge_association: None,
+            },
+        )
+        .unwrap();
+        let row_record = crate::record_definition::RecordAdmission::admit(
+            &row_admission,
+            record_index,
+            &catalog,
+            crate::record_definition::Selection {
+                inventory: &inventory,
+                relation_identity: "object-table",
+                discriminator_identity: "object-type",
+                relations: &relations,
+                columns: &columns,
+            },
+        )
+        .unwrap();
+        row_record.verify_property(&row_property).unwrap();
+        let row_records = BTreeMap::from([(
+            serde_json::to_string(row_record.identity()).unwrap(),
+            row_record,
+        )]);
+        let row_properties = BTreeMap::from([(registration.clone(), row_property)]);
+        let row_input = weft_core::backend::BindingInput {
+            profile: input.profile.clone(),
+            sha256: sha256(row_json.as_bytes()),
+            json: row_json,
+        };
+        let row_context = weft_core::backend::Context {
+            binding: &row_input,
+            binding_value: &row_binding,
+            ..context
+        };
+
+        fn row_numeric_native(
+            node: &weft_core::ir::Expression,
+            _: &[String],
+            access: Option<&crate::registered_access::Access<'_>>,
+            _: &mut crate::Parameters,
+        ) -> weft_core::error::Result<String> {
+            let weft_core::ir::Expression::Field { .. } = node else {
+                return Err(weft_core::error::Diagnostic::new(
+                    "WFT-CAPABILITY",
+                    "lower",
+                    "Numeric row fixture only selects field operands",
+                ));
+            };
+            let crate::registered_access::Location::Row(location) = &access.unwrap().location
+            else {
+                unreachable!()
+            };
+            Ok(format!(
+                "({})::pg_catalog.numeric",
+                location.scalar_observation().native_numeric_text
+            ))
+        }
+        let row_sum = crate::select_definition::compile_with_registry(
+            &row_context,
+            &row_records,
+            &row_properties,
+            &comparisons,
+            row_numeric_native,
+        )
+        .unwrap();
+        assert!(row_sum.select.sql.contains("pg_catalog.sum"));
+        assert_eq!(
+            serde_json::to_value(&row_sum.select.columns).unwrap(),
+            serde_json::to_value(&application_compiled.select.columns).unwrap()
+        );
+        let row_backend = crate::original_backend::OriginalBackend::new(
+            &row_input,
+            row_records,
+            row_properties,
+            comparisons.clone(),
+            row_numeric_native,
+        )
+        .unwrap();
+        let mut row_registry = weft_core::backend::Registry::default();
+        row_registry.register(row_backend).unwrap();
+        let row_target = weft_core::backend::Target {
+            backend_id: "truss.postgresql.original".into(),
+            backend_version: "0.1.0-candidate".into(),
+            profile_id: "pg17.9-candidate".into(),
+            allow_candidate: true,
+        };
+        let row_public = row_registry
+            .compile(
+                &catalog,
+                weft_core::backend::Plan::V02(&application),
+                &row_target,
+                &row_input,
+            )
+            .unwrap();
+        assert_eq!(row_public.emission.sql, row_sum.select.sql);
+        assert_eq!(
+            serde_json::to_value(&row_public.emission.parameters).unwrap(),
+            serde_json::to_value(&row_sum.parameters).unwrap()
+        );
+        let capture_row = |suffix: &str, emission: &weft_core::backend::Emission| {
+            if let Ok(path) = std::env::var(format!("{capture}_{suffix}")) {
+                let checks: Vec<_> = emission
+                    .obligations
+                    .iter()
+                    .filter_map(|o| o.parameters.get("sql").and_then(|v| v.as_str()))
+                    .collect();
+                std::fs::write(path, serde_json::to_vec_pretty(&json!({"sql":emission.sql,"columns":emission.columns,"checks":checks,"parameters":emission.parameters,"codecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()})).unwrap()).unwrap();
+            }
+        };
+        capture_row("ROW_SUM", &row_public.emission);
+        if family == "integer" {
+            let page = weft_core::application_resolve::resolve(
+                &catalog,
+                weft_core::application_syntax::parse(
+                    "SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2",
+                )
+                .unwrap(),
+                BTreeMap::new(),
+                Some(weft_core::application_ir::ReadProfile {
+                    version: "weft-application-read/0.2.0".into(),
+                    subset: weft_core::application_ir::Subset::EntityPage,
+                }),
+            )
+            .unwrap();
+            let row_page = row_registry
+                .compile(
+                    &catalog,
+                    weft_core::backend::Plan::V02(&page),
+                    &row_target,
+                    &row_input,
+                )
+                .unwrap();
+            assert!(row_page.emission.sql.contains("ORDER BY"));
+            assert!(
+                row_page
+                    .emission
+                    .obligations
+                    .iter()
+                    .filter(|o| o.parameters.get("sql").is_some())
+                    .count()
+                    > row_public
+                        .emission
+                        .obligations
+                        .iter()
+                        .filter(|o| o.parameters.get("sql").is_some())
+                        .count()
+            );
+            capture_row("ROW_PAGE", &row_page.emission);
+        }
         let backend = crate::original_backend::OriginalBackend::new(
             &input,
             record_registry,
