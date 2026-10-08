@@ -527,3 +527,9 @@ none ignored or filtered. The new 0.1 projection-root corruption refuses with
 the exact intended diagnostic before output validation. This incorporates
 current field and relationship representation tests, not full workspace or
 engine qualification.
+
+B-007-native-profile-scopes/ groups the 76 actual retained Truss artifacts
+by exact compiler/dialect/IR/backend/model/binding pins: 21 distinct compiled
+scopes. The executable audit checks raw/decoded response agreement and unique
+case IDs. Engine/session provenance, expectations and host layers remain
+separate joins before a real support report; no inventory promotion occurs.
