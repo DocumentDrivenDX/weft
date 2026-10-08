@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-07",
+  "scope": "Reusable pure original-byte Record/property admission batch and request-local factory re-admission",
+  "tests": {
+    "command": "cargo test -p weft-core -p weft-postgresql",
+    "passed": 130,
+    "failed": 0,
+    "logSha256": "5c57348526ceb521992987ac35ff6d9fc351b8c15c52f51f0b99fae28f26a2af"
+  },
+  "sources": {
+    "crates/weft-core/src/model.rs": "82ca7345b1a5826e7e3960a8ce4f70deb59dfb99c191efaacb297da44393ebee",
+    "crates/weft-core/src/application_model.rs": "240a65d6d8f4aacfea6c6e8aadb6d35c8af32602eb3ad3d1c72fef14b769ab5f",
+    "crates/weft-postgresql/src/original_admission.rs": "bd2f468958df97fcca4e5f313a264bc34ac648bb02ae6737aec9e9b2d1d1cee3",
+    "crates/weft-postgresql/src/property_definition.rs": "d8eb7ebffcd20142641ed94d01cdf5cf2729615c257d7886862f422805d2c29a"
+  },
+  "evidence": [
+    "Seven native compound public backends are rebuilt from original binding bytes and canonical UMF Record/member identity lookup",
+    "Two serialized factory invocations per fixture independently reconstruct admissions and produce identical complete responses",
+    "Wrong Record revision/member document, digest mismatch, duplicate Record/property and missing independent owner admissions refuse"
+  ],
+  "limits": [
+    "Physical/codec/presence/comparator meanings and native procedures remain trusted Rust selections",
+    "Built-in Python/WASM runtime composition still needs integration",
+    "No fresh database or embedding execution claim"
+  ]
+}

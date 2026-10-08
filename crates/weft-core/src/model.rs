@@ -103,6 +103,41 @@ impl Catalog {
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
     }
+    /// Resolve a selected Record by complete original identity, never its name.
+    pub fn record_by_identity(&self, identity: &Identity) -> Result<Record> {
+        let mut found = Vec::new();
+        for (document, input) in self.inputs.iter().enumerate() {
+            if input.pin.document_id != identity.document_id
+                || input.pin.revision != identity.revision
+            {
+                continue;
+            }
+            for module in self.documents[document]["modules"].as_array().unwrap() {
+                if module["id"] != identity.module
+                    || !input.selected_module_ids.contains(&identity.module)
+                {
+                    continue;
+                }
+                for element in module["elements"].as_array().unwrap() {
+                    if element["id"] == identity.element && element["kind"] == "record" {
+                        found.push(Record {
+                            identity: identity.clone(),
+                            pin: input.pin.clone(),
+                            value: element.clone(),
+                            document,
+                        });
+                    }
+                }
+            }
+        }
+        if found.len() != 1 {
+            return Err(fail(
+                "WFT-NAME-MISSING",
+                "Original Record identity is missing or ambiguous",
+            ));
+        }
+        Ok(found.pop().unwrap())
+    }
     pub fn record(&self, namespace: Option<&Name>, name: &Name) -> Result<Record> {
         let mut found = Vec::new();
         for (d, input) in self.inputs.iter().enumerate() {

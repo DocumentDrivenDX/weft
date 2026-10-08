@@ -2454,10 +2454,91 @@ mod tests {
             )
             .unwrap();
             assert_eq!(row_compiled.select.payload_checks.len(), 1);
-            let row_backend = crate::original_backend::OriginalBackend::new(
+
+            let mut wrong_record = record.identity.clone();
+            wrong_record.revision = "unselected-revision".into();
+            assert!(catalog.record_by_identity(&wrong_record).is_err());
+            let mut wrong_member = member.identity.clone();
+            wrong_member.document_id = "other-document".into();
+            assert!(catalog
+                .member_descriptor_by_identity(&record, &wrong_member)
+                .is_err());
+            let mut bad_pin = row_input.clone();
+            bad_pin.sha256 = "0".repeat(64);
+            assert!(crate::original_admission::backend(
+                &catalog,
+                &bad_pin,
+                vec![],
+                vec![],
+                BTreeMap::new(),
+                compound_native
+            )
+            .is_err());
+            let record_selection = || crate::original_admission::RecordSelection {
+                index: row_record_index,
+                physical: crate::record_definition::Selection {
+                    inventory: &inventory,
+                    relation_identity: "object-table",
+                    discriminator_identity: "object-type",
+                    relations: &relations,
+                    columns: &columns,
+                },
+            };
+            let property_selection = || crate::original_admission::PropertySelection {
+                index,
+                value: Selection {
+                    value_profile: &pin,
+                    presence_profile: &pin,
+                    leaf_codecs: &leaves,
+                    record_presence: &records,
+                },
+                physical: PhysicalSelection {
+                    profile: &pin,
+                    inventory: &inventory,
+                    relations: &row_fixture.relations,
+                    columns: &row_fixture.columns,
+                    row_join: Some(&row_join),
+                    obligations: &row_obligations,
+                    edge_association: None,
+                },
+                native_tree: Some(crate::row_tree_mapping::Procedures {
+                    field_identity: |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                    scalar: fixture_native_leaf,
+                    node_source: fixture_native_source,
+                }),
+            };
+            assert!(crate::original_admission::backend(
+                &catalog,
                 &row_input,
-                row_records,
-                row_properties,
+                vec![record_selection(), record_selection()],
+                vec![],
+                BTreeMap::new(),
+                compound_native
+            )
+            .is_err());
+            assert!(crate::original_admission::backend(
+                &catalog,
+                &row_input,
+                vec![record_selection()],
+                vec![property_selection(), property_selection()],
+                BTreeMap::new(),
+                compound_native
+            )
+            .is_err());
+            assert!(crate::original_admission::backend(
+                &catalog,
+                &row_input,
+                vec![],
+                vec![property_selection()],
+                BTreeMap::new(),
+                compound_native
+            )
+            .is_err());
+            let row_backend = crate::original_admission::backend(
+                &catalog,
+                &row_input,
+                vec![record_selection()],
+                vec![property_selection()],
                 BTreeMap::new(),
                 compound_native,
             )
@@ -2485,7 +2566,6 @@ mod tests {
             );
 
             let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs,"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
-            let mut registry_once = Some(row_registry);
             let mut calls = 0;
             let mut factory =
                 |resolved_catalog: &Catalog,
@@ -2498,7 +2578,22 @@ mod tests {
                     assert!(selected.allow_candidate);
                     assert_eq!(resolved_catalog.inputs.len(), catalog.inputs.len());
                     assert!(matches!(resolved_plan, weft_core::backend::Plan::V02(_)));
-                    Ok(registry_once.take().unwrap())
+                    let request_binding = weft_core::backend::BindingInput {
+                        profile: row_input.profile.clone(),
+                        json: selected.binding_json.into(),
+                        sha256: selected.binding_sha256.into(),
+                    };
+                    let admitted_backend = crate::original_admission::backend(
+                        resolved_catalog,
+                        &request_binding,
+                        vec![record_selection()],
+                        vec![property_selection()],
+                        BTreeMap::new(),
+                        compound_native,
+                    )?;
+                    let mut composed = weft_core::backend::Registry::default();
+                    composed.register(admitted_backend)?;
+                    Ok(composed)
                 };
             for invalid in [
                 {
@@ -2534,8 +2629,14 @@ mod tests {
                     .compile_json_with_factory(&serialized_request.to_string(), &mut factory),
             )
             .unwrap();
+            let repeated: Value = serde_json::from_str(
+                &weft_core::compile::Compiler::default()
+                    .compile_json_with_factory(&serialized_request.to_string(), &mut factory),
+            )
+            .unwrap();
+            assert_eq!(repeated, transported);
             drop(factory);
-            assert_eq!(calls, 1);
+            assert_eq!(calls, 2);
             assert_eq!(transported["status"], "compiled");
             let mut refused_calls = 0;
             let mut refused_factory =

@@ -143,6 +143,29 @@ impl Catalog {
         let graph = self.type_graph(record, member.identity.clone(), v)?;
         Ok((member, graph))
     }
+    /// Exact authored membership lookup for backend admission after resolution.
+    pub fn member_descriptor_by_identity(
+        &self,
+        record: &Record,
+        identity: &Identity,
+    ) -> Result<(Member, Vec<Descriptor>)> {
+        let mut matches = self
+            .members(record, &record.value)?
+            .into_iter()
+            .filter(|m| &m.identity == identity);
+        let member = matches
+            .next()
+            .ok_or_else(|| fail("Original Record does not own selected member identity"))?;
+        if matches.next().is_some() {
+            return Err(fail("Original member identity is ambiguous"));
+        }
+        let (_, value) = self.local_element(
+            record,
+            &serde_json::json!({"module":identity.module,"element":identity.element}),
+        )?;
+        let graph = self.type_graph(record, identity.clone(), value)?;
+        Ok((member, graph))
+    }
     fn type_graph(
         &self,
         record: &Record,

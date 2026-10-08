@@ -3,6 +3,7 @@ pub mod binding;
 pub mod candidate;
 pub mod collection;
 mod json_codec;
+pub mod original_admission;
 pub mod presence_definition;
 pub mod read_context_definition;
 pub mod recursive_observation;
