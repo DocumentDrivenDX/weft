@@ -81,7 +81,7 @@ warning: method `finish` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: `weft-core` (lib) generated 1 warning
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.03s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.02s
      Running ../../tests/qualify-and-evolve/resources.rs (/private/tmp/weft-b007-mutation-target/debug/deps/qualification_resources-29c49ea09aeb6b38)
 
 thread 'generated_truncated_json_and_nested_duplicates' panicked at crates/weft-core/../../tests/qualify-and-evolve/resources.rs:33:39:

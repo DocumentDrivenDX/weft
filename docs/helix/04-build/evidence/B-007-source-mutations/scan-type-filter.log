@@ -1,13 +1,13 @@
 
 running 1 test
-test generated_unicode_retention_pins_and_selected_meaning ... FAILED
+test relational_emission_keeps_owner_selection_and_bag_projection ... FAILED
 
 failures:
 
 failures:
-    generated_unicode_retention_pins_and_selected_meaning
+    relational_emission_keeps_owner_selection_and_bag_projection
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 3.94s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 17 filtered out; finished in 0.03s
 
 warning: unexpected `cfg` condition value: `128`
    --> vendor/ahash/src/fallback_hash.rs:164:11
@@ -68,7 +68,6 @@ warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x
 
 warning: `ahash` (lib) generated 4 warnings
 warning: `ahash` (lib) generated 4 warnings (4 duplicates)
-   Compiling weft-core v0.1.0 (/private/tmp/weft-b007-mutants/module-pin-guard/crates/weft-core)
 warning: method `finish` is never used
    --> crates/weft-core/src/syntax.rs:243:19
     |
@@ -81,10 +80,11 @@ warning: method `finish` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: `weft-core` (lib) generated 1 warning
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.97s
-     Running ../../tests/qualify-and-evolve/properties.rs (/private/tmp/weft-b007-mutation-target/debug/deps/qualification_properties-7a3cd0c09ca515e1)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-b007-mutants/scan-type-filter/crates/weft-postgresql)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.95s
+     Running ../../tests/truss-postgresql/compiler.rs (/private/tmp/weft-b007-mutation-target/debug/deps/candidate_compiler-9a4c8820a3933b2f)
 
-thread 'generated_unicode_retention_pins_and_selected_meaning' panicked at crates/weft-core/../../tests/qualify-and-evolve/properties.rs:92:8:
-called `Result::unwrap()` on an `Err` value: Fail(Reason("assertion failed: `(left == right)` \n  left: `Null`,\n right: `\"WFT-PIN\"` at crates/weft-core/../../tests/qualify-and-evolve/properties.rs:88"), ("", 0))
+thread 'relational_emission_keeps_owner_selection_and_bag_projection' panicked at crates/weft-postgresql/../../tests/truss-postgresql/compiler.rs:676:9:
+owner type selection must survive lowering
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-error: test failed, to rerun pass `-p weft-core --test qualification-properties`
+error: test failed, to rerun pass `-p weft-postgresql --test candidate-compiler`

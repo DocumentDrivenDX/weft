@@ -9,9 +9,6 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 75 filtered out; finished in 0.00s
 
-    Blocking waiting for file lock on package cache
-    Blocking waiting for file lock on package cache
-    Blocking waiting for file lock on package cache
 warning: unexpected `cfg` condition value: `128`
    --> vendor/ahash/src/fallback_hash.rs:164:11
     |
@@ -70,7 +67,6 @@ warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x
    = note: `#[warn(dead_code)]` on by default
 
 warning: `ahash` (lib) generated 4 warnings
-   Compiling base64 v0.22.1
 warning: `ahash` (lib) generated 4 warnings (4 duplicates)
 warning: method `finish` is never used
    --> crates/weft-core/src/syntax.rs:243:19
@@ -104,7 +100,7 @@ warning: variable does not need to be mutable
     = note: `#[warn(unused_mut)]` on by default
 
 warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.82s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.52s
      Running unittests src/lib.rs (/private/tmp/weft-b007-mutation-target/debug/deps/weft_postgresql-5bf20d342390444d)
 
 thread 'presence_definition::tests::original_definition_drives_presence_without_coercion' panicked at crates/weft-postgresql/src/presence_definition.rs:168:51:

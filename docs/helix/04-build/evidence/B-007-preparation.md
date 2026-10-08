@@ -109,3 +109,11 @@ mutant fails its expected null refusal. Exact source hashes, replacement and
 baseline/failure logs are retained with the four-mutant summary. This covers
 the presence decoder mutation, not target SQL null behavior or the remaining
 type-filter, duplicate-elimination and numeric-rounding source mutations.
+
+Six source mutants now fail conformance tests. The two added SQL-emission
+mutants remove the owner type predicate from a candidate scan and insert
+DISTINCT into projection. An independently stated bag/owner-selection test
+passes on the original compiler across fixture homes and fails on each mutant.
+Baseline and mutant logs plus exact substitutions/hashes are retained. These
+are structural emission-contract checks, not native mutated-result evidence;
+numeric rounding mutation and native semantic mutation gates remain open.

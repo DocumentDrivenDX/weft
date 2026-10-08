@@ -8,6 +8,8 @@ OUT=ROOT/'docs/helix/04-build/evidence/B-007-source-mutations';OUT.mkdir(exist_o
 cases=[
  ('duplicate-key-guard','crates/weft-core/src/json.rs','if !keys.insert(key) {','if false && !keys.insert(key) {','qualification-resources','generated_truncated_json_and_nested_duplicates'),
  ('node-limit-guard','crates/weft-core/src/json.rs','if depth > 128 || *count >= 100_000 {','if depth > 128 || false {','qualification-resources','json_node_and_request_byte_limits'),
+ ('scan-type-filter','crates/weft-postgresql/src/candidate.rs','WHERE type_id={slot}::int','WHERE {slot}::int IS NOT NULL','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
+ ('projection-distinct','crates/weft-postgresql/src/candidate.rs','let mut sql = format!("SELECT {} FROM {from}", projection.join(", "));','let mut sql = format!("SELECT DISTINCT {} FROM {from}", projection.join(", "));','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
  ('presence-null-to-absence','crates/weft-postgresql/src/presence_definition.rs','Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','Some(v) if v.is_null() => Ok(Presence::Absent),\n            Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','postgresql-lib','original_definition_drives_presence_without_coercion'),
  ('module-pin-guard','crates/weft-core/src/model.rs','if input.pin.sha256 != sha256(input.document_json.as_bytes()) {','if false && input.pin.sha256 != sha256(input.document_json.as_bytes()) {','qualification-properties','generated_unicode_retention_pins_and_selected_meaning'),
 ]
@@ -19,7 +21,9 @@ for name,file,before,after,test,filter in cases:
  mutant=original.replace(before,after);p.write_text(mutant)
  env=os.environ.copy();env['CARGO_TARGET_DIR']='/private/tmp/weft-b007-mutation-target'
  cmd=['/private/tmp/weft-toolchain/cargo/bin/cargo','test','-p']
- cmd+=['weft-postgresql','--lib'] if test=='postgresql-lib' else ['weft-core','--test',test]
+ if test=='postgresql-lib':cmd+=['weft-postgresql','--lib']
+ elif test=='postgresql-candidate':cmd+=['weft-postgresql','--test','candidate-compiler']
+ else:cmd+=['weft-core','--test',test]
  cmd+=['--locked','--offline',filter,'--','--nocapture']
  run=subprocess.run(cmd,cwd=dest,env=env,capture_output=True,text=True)
  log=run.stdout+run.stderr;(OUT/(name+'.log')).write_text(log)

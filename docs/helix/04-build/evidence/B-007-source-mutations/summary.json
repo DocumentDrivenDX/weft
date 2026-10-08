@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "detected": 4,
+  "detected": 6,
   "mutations": [
     {
       "mutation": "duplicate-key-guard",
@@ -23,6 +23,30 @@
       "mutantSha256": "25517f123ba1d1a0160678f66d8151251fc8810185550e19bb888e0d41fc9e0a",
       "test": "qualification-resources",
       "filter": "json_node_and_request_byte_limits",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
+      "mutation": "scan-type-filter",
+      "source": "crates/weft-postgresql/src/candidate.rs",
+      "before": "WHERE type_id={slot}::int",
+      "after": "WHERE {slot}::int IS NOT NULL",
+      "originalSha256": "636794ae472ecad13d9957a9a30b32c624951c83ebeda6806afee8739dc35c17",
+      "mutantSha256": "ba1804a73d481226ee048bdd01f7aee237293378c3b7535760cae0c88bae5d62",
+      "test": "postgresql-candidate",
+      "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
+      "mutation": "projection-distinct",
+      "source": "crates/weft-postgresql/src/candidate.rs",
+      "before": "let mut sql = format!(\"SELECT {} FROM {from}\", projection.join(\", \"));",
+      "after": "let mut sql = format!(\"SELECT DISTINCT {} FROM {from}\", projection.join(\", \"));",
+      "originalSha256": "636794ae472ecad13d9957a9a30b32c624951c83ebeda6806afee8739dc35c17",
+      "mutantSha256": "0330fff815fd04929e062809b1c48c53f4b187b8ca59d242ca37f4ec063256a9",
+      "test": "postgresql-candidate",
+      "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
       "exitCode": 101,
       "status": "detected"
     },
