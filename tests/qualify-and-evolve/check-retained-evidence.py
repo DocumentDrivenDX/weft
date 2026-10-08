@@ -27,7 +27,7 @@ for name,status,count,expected in components:
  report=json.loads(run.stdout)
  assert report[status]=='passed' and report[count]==expected,(name,report)
  if name=='audit-truss-support-reports.py':
-  assert report['scopesAudited']==21
+  assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
  if name=='audit-native-profile-scopes.py':
   assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
  results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})

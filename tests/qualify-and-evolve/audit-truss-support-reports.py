@@ -6,7 +6,13 @@ from evidence_audit import audit,strict
 root=Path(__file__).resolve().parents[2]
 with contextlib.redirect_stdout(io.StringIO()):
     ns=runpy.run_path(str(root/'tests/qualify-and-evolve/audit-native-profile-scopes.py'))
-custody=json.loads((root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports-custody.json').read_text())
+session_audit=runpy.run_path(str(root/'tests/qualify-and-evolve/audit-truss-sessions.py'))
+compressed,session_receipt,original=session_audit['inputs']()
+assert session_audit['audit'](compressed,session_receipt,original)['cases']==76
+observed_session=session_receipt['session']
+settings={k:v for k,v in observed_session.items() if k!='engine'}
+provenance={'sameTransactionCases':76,'archiveSha256':hashlib.sha256(compressed).hexdigest(),'summarySha256':hashlib.sha256((root/'docs/helix/04-build/evidence/B-007-truss-session-native/summary.json').read_bytes()).hexdigest(),'session':observed_session}
+
 def exact(value):
     if isinstance(value,Decimal):
         sign,digits,exponent=value.as_tuple();digits=list(digits)
@@ -37,7 +43,7 @@ for host in ['python','browser']:
 with tempfile.TemporaryDirectory() as tmp:
     for index,(key,ids) in enumerate(sorted(ns['scopes'].items())):
         scope=json.loads(key);assert len(scope['modelPins'])==1
-        profile={'compilerVersion':scope['compilerVersion'],'dialect':scope['dialect'],'irVersion':scope['irVersion'],'backendVersion':scope['backend']['backendVersion'],'targetProfile':scope['backend']['targetProfile'],'engineVersion':custody['engine'],'layoutRevision':'sha256:'+hashlib.sha256((root/'tests/truss-postgresql/upstream/storage-realization-pins.json').read_bytes()).hexdigest(),'modelSha256':scope['modelPins'][0]['sha256'],'bindingSha256':scope['bindingSha256'],'settings':{'encoding':custody['encoding'],'comparison':'explicit C in emitted SQL'}}
+        profile={'compilerVersion':scope['compilerVersion'],'dialect':scope['dialect'],'irVersion':scope['irVersion'],'backendVersion':scope['backend']['backendVersion'],'targetProfile':scope['backend']['targetProfile'],'engineVersion':'PostgreSQL '+observed_session['serverVersion'],'layoutRevision':'sha256:'+hashlib.sha256((root/'tests/truss-postgresql/upstream/storage-realization-pins.json').read_bytes()).hexdigest(),'modelSha256':scope['modelPins'][0]['sha256'],'bindingSha256':scope['bindingSha256'],'settings':settings}
         cases=[];observed=[]
         for id in ids:
             report=by_id[id];columns=report['response']['columns'];request=ns['requests'][id];family=ns['namespace']['family'];canonical=ns['namespace']['canonical']
@@ -49,4 +55,4 @@ with tempfile.TemporaryDirectory() as tmp:
         claim={'status':'supported','profile':profile,'requiredLayers':['native'],'cases':cases,'evidence':[{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}]}
         result=audit(claim);results.append({'scope':scope,'audit':result,'reportSha256':hashlib.sha256(data).hexdigest()})
 assert sum(r['audit']['cases'] for r in results)==76
-print(json.dumps({'status':'passed','scopesAudited':len(results),'casesAudited':76,'hostArtifactJoins':hosts,'results':results,'qualification':'Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution.'},indent=2))
+print(json.dumps({'status':'passed','scopesAudited':len(results),'casesAudited':76,'hostArtifactJoins':hosts,'nativeSessionProvenance':provenance,'results':results,'qualification':'Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution.'},indent=2))
