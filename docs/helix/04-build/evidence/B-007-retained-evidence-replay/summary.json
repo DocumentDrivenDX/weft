@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "components": [
+    {
+      "component": "evidence-check.py",
+      "result": {
+        "state": "passed",
+        "cases": 41,
+        "names": [
+          "complete-exact-bag",
+          "report-failed",
+          "report-skipped",
+          "report-pending",
+          "case-failed",
+          "case-skipped",
+          "case-pending",
+          "profile-compilerVersion",
+          "profile-dialect",
+          "profile-irVersion",
+          "profile-backendVersion",
+          "profile-targetProfile",
+          "profile-engineVersion",
+          "profile-layoutRevision",
+          "profile-modelSha256",
+          "profile-bindingSha256",
+          "profile-settings",
+          "sha256-mismatch",
+          "library-is-not-native",
+          "missing-case",
+          "duplicate-case",
+          "lost-bag-copy",
+          "rounded-integer",
+          "rounded-decimal",
+          "normalized-unicode",
+          "absent-is-not-null",
+          "unknown-report-meaning",
+          "unknown-case-meaning",
+          "unqualified-engine",
+          "candidate-is-not-supported",
+          "missing-layer-declaration",
+          "boolean-is-not-integer",
+          "ordered-row-loss",
+          "ordered-exact",
+          "unknown-comparison",
+          "missing-evidence-file",
+          "missing-python-layer",
+          "duplicate-json-members",
+          "matched-unqualified-profile",
+          "matched-invalid-modelSha256",
+          "matched-invalid-bindingSha256"
+        ],
+        "qualification": "Synthetic audit-algorithm controls only; no native support claim is made."
+      },
+      "sourceSha256": "7954a2fb1f354b0b8a11eb1aa31667d4267771720581eee10f0dc56635baa994"
+    },
+    {
+      "component": "reconcile-ashlar-application.py",
+      "result": {
+        "status": "passed",
+        "cases": 112,
+        "integrityReceipts": 360
+      },
+      "sourceSha256": "f2abc40e9b2b0400f627477da8c9bb75f40cd7785fa042965d08a28c8be1cfcf"
+    },
+    {
+      "component": "reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "controls": 11
+      },
+      "sourceSha256": "e9019e9b8d67ec2a9a069d89e80ae60914e35c8487d167e43bb3bbca40c859e9"
+    },
+    {
+      "component": "reconcile-ashlar-compound-pages.py",
+      "result": {
+        "status": "passed",
+        "cases": 48,
+        "integrityReceipts": 192,
+        "acceptedReceipts": 240
+      },
+      "sourceSha256": "8ad4f9dd8235fc8ced91848ff30655f2b53a66438d070a0fd1b17f49a472d69a"
+    },
+    {
+      "component": "reconcile-ashlar-relationships.py",
+      "result": {
+        "status": "passed",
+        "cases": 52,
+        "positive": 28,
+        "refusals": 24,
+        "uniqueNativeGuards": 272
+      },
+      "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
+    }
+  ],
+  "verifiedEvidenceReferences": 21,
+  "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
+}

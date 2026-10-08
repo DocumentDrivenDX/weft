@@ -1,0 +1,43 @@
+"""Replay B-007 saved-evidence controls; never advertises full release qualification.
+@covers US-006-AC1 @covers US-006-AC2
+"""
+import hashlib,json,pathlib,subprocess,sys
+ROOT=pathlib.Path(__file__).resolve().parents[2]
+HERE=pathlib.Path(__file__).resolve().parent
+components=[
+ ('evidence-check.py','state','cases',41),
+ ('reconcile-ashlar-application.py','status','cases',112),
+ ('reconcile-controls.py','status','controls',11),
+ ('reconcile-ashlar-compound-pages.py','status','cases',48),
+ ('reconcile-ashlar-relationships.py','status','cases',52),
+]
+results=[]
+for name,status,count,expected in components:
+ run=subprocess.run([sys.executable,str(HERE/name)],cwd=ROOT,capture_output=True,text=True)
+ assert run.returncode==0,(name,run.stdout,run.stderr)
+ report=json.loads(run.stdout.strip().splitlines()[-1])
+ assert report[status]=='passed' and report[count]==expected,(name,report)
+ results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
+references={}
+for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
+ value=json.loads((ROOT/'docs/helix/04-build/evidence'/name).read_text())
+ def visit(v):
+  if isinstance(v,dict):
+   if set(v)=={'path','sha256'}:
+    p=ROOT/v['path'];assert p.is_relative_to(ROOT) and p.exists()
+    assert hashlib.sha256(p.read_bytes()).hexdigest()==v['sha256'],v['path']
+    references[v['path']]=v['sha256']
+   for child in v.values():visit(child)
+  elif isinstance(v,list):
+   for child in v:visit(child)
+ visit(value)
+ if name=='B-007-acceptance-matrix.json':
+  assert len(value['criteria'])==30 and len({r['id'] for r in value['criteria']})==30
+  assert value['status']=='in-progress'
+ else:
+  assert value['status']=='candidate-preparation' and value['supportedNativeProfiles']==[]
+  assert value['releasedPackages'] is False
+report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'scope':'Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
+OUT=ROOT/'docs/helix/04-build/evidence/B-007-retained-evidence-replay';OUT.mkdir(exist_ok=True)
+(OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'status':'passed','components':len(results),'verifiedEvidenceReferences':len(references),'releaseQualified':False}))
