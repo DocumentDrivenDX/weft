@@ -36,6 +36,7 @@ individual refusal guards; they supplement the earlier broad US-002 review.
 | Guard | Exact assertion evidence |
 | --- | --- |
 | Backend version, actual IR, duplicate operation IDs, target profile, binding profile, model pins, binding size/digest/JSON | B-007-dispatch-branches |
+| Each target identity field rejects empty/NUL values; session settings reject non-object shapes | B-007-target-profile-guards: fifteen explicit refusals with exact diagnostics and positive retained-version/settings assertions |
 | Manifest dialect/IR acceptance and non-object JSON roots, both plans | B-007-language-root-branches |
 | Missing or wrong-revision record and field coverage, both plans | B-007-coverage-branches |
 | Missing or wrong-revision type and relationship coverage, resolved application plans | B-007-type-relationship-coverage |

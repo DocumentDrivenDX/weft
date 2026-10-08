@@ -68,3 +68,27 @@ fn duplicate_declarations_and_unknown_shapes_refuse() {
     );
     assert!(validate_manifest_json(&raw).is_err());
 }
+
+#[test]
+fn target_profiles_require_each_identity_and_object_settings() {
+    // A manifest is a declaration, not a native qualification receipt.
+    let admitted = validate(&manifest()).unwrap();
+    assert_eq!(admitted.target_profiles[0].engine_version, "test-1");
+    assert_eq!(admitted.target_profiles[0].session_settings, json!({"comparison":"unicode-scalar"}));
+    for field in ["id", "engine", "engineVersion", "storageLayoutRevision", "publicationRevision"] {
+        for invalid in ["", "invalid\0identity"] {
+            let mut m = manifest();
+            m["targetProfiles"][0][field] = json!(invalid);
+            let error = validate(&m).unwrap_err();
+            assert_eq!(error.code, "WFT-BACKEND-VERSION", "{field}");
+            assert_eq!(error.message, "Target profiles must be distinct, pinned and structurally explicit", "{field}");
+        }
+    }
+    for settings in [json!(null), json!(false), json!(1), json!("ANSI"), json!([])] {
+        let mut m = manifest();
+        m["targetProfiles"][0]["sessionSettings"] = settings;
+        let error = validate(&m).unwrap_err();
+        assert_eq!(error.code, "WFT-BACKEND-VERSION");
+        assert_eq!(error.message, "Target profiles must be distinct, pinned and structurally explicit");
+    }
+}
