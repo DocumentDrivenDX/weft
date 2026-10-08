@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "command": "cargo test -p weft-core --test backend-pipeline --locked",
+  "passed": 17,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "scope": "Both IR versions: a binding-derived capability receives complete declaration/evidence qualification; overlapping logical-plan requirements deduplicate exactly once; emitted SQL is preserved. Synthetic backend only, no native support promotion.",
+  "sourceSha256": "5c99f52a3d6f4738f0b4938904fb66a15482ae5a64112c3d441a0d085f43a49d",
+  "logSha256": "b357bec5462d8ae818c97a1316dbd94736a4f6e55ee956539f5932b46c9b3ba4"
+}

@@ -485,3 +485,47 @@ fn registration_snapshots_manifest_once_for_both_ir_versions() {
     assert_eq!(r.manifest("test.third").unwrap().backend_version,original.backend_version);
     assert_eq!(calls.load(Ordering::SeqCst),1);
 }
+
+// @covers US-002-AC2 @covers US-002-AC3 @covers US-006-AC2
+#[test]
+fn mapping_derived_capabilities_are_qualified_and_deduplicate_plan_requirements() {
+    struct Derived { inner:Third }
+    impl Backend for Derived {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{self.inner.describe()}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{
+            let mut v=self.inner.validate_binding(c)?;
+            v.additional_capabilities=vec![c.plan.capabilities()[0].clone(),"binding.fixture".into()];
+            Ok(v)
+        }
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{
+            let mut a=self.inner.assess(c,m)?;
+            a.push(Assessment{id:"binding.fixture".into(),status:Status::Supported,evidence:vec!["fixture-proof".into()],obligations:vec![]});
+            Ok(a)
+        }
+        fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{self.inner.lower(c,m)}
+        fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{self.inner.emit(c,p)}
+    }
+    let mut m=manifest(Status::Supported);
+    let mut derived=m.capabilities[0].clone();
+    derived.id="binding.fixture".into();
+    derived.logical_domain=json!({"home":"fixture typed column"});
+    derived.constraints=vec!["fixture mapping only".into()];
+    m.capabilities.push(derived.clone());
+    let mut r=Registry::default();
+    r.register(Derived{inner:Third{manifest:m,behavior:Behavior::Normal}}).unwrap();
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name AS label FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name AS label FROM Customer c",modules(),Default::default(),None).unwrap();
+    for plan in [Plan::V01(&p01),Plan::V02(&p02)] {
+        let result=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap();
+        assert_eq!(result.qualifications.len(),plan.capabilities().len()+1);
+        for id in plan.capabilities().iter().chain(std::iter::once(&derived.id)) {
+            assert_eq!(result.qualifications.iter().filter(|q| &q.assessment.id==id).count(),1,"{id}");
+        }
+        let q=result.qualifications.iter().find(|q| q.assessment.id==derived.id).unwrap();
+        assert_eq!(q.assessment.status,Status::Supported);
+        assert_eq!(q.assessment.evidence,derived.evidence);
+        assert_eq!(serde_json::to_value(&q.declaration).unwrap(),serde_json::to_value(&derived).unwrap());
+        assert_eq!(result.emission.sql,"SELECT \"display_name\" AS \"label\" FROM \"fixture_customers\"");
+    }
+}

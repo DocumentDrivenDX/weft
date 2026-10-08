@@ -90,3 +90,11 @@ The [manifest admission accounting](B-007-manifest-branch-accounting.md) reviews
 each declaration guard family against the seven executed registry tests and
 records their three isolated admission gaps closed by exact assertions in the
 eight-test registry receipt. This does not close the broader semantic branch gate.
+
+The positive mapping-derived requirement path now has explicit assertions in
+`mapping_derived_capabilities_are_qualified_and_deduplicate_plan_requirements`.
+Both IR versions preserve the added declaration, its domain/constraints/evidence
+and supported assessment; a requirement overlapping the logical plan appears
+exactly once. Emitted SQL remains the independently fixed fixture query.
+B-007-derived-capabilities retains the current 17-test pipeline checkpoint.
+This fixture evidence does not qualify either native backend.
