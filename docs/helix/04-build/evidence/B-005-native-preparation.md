@@ -2738,3 +2738,29 @@ pass with `weft-runtime/test-original`
 pass. Composite endpoint keys, alternate homes and owned Python/browser
 relationship composition remain B-005 work. No production qualification is
 inferred from the synthetic PostgreSQL layouts.
+
+## Owned original relationship composition (2026-10-07)
+
+`original_admission::Configuration` now includes owned relationship selections:
+binding index, explicit direction, selected profile, exact inventory and trusted
+physical edge roles. Like other owned selections these are Rust host inputs,
+not a serde plugin-loading protocol. Each `backend` invocation reconstructs
+Record/property admissions, resolves the authored relationship name from the
+current original definition, independently admits each direction and registers
+only after the whole batch succeeds. Duplicate directions and substituted
+original registration cuts refuse.
+
+The four forward/inverse public native-key queries now pass through this owned
+configuration's `compile_json` factory, comparing their complete responses with
+direct public registry output and repeating deterministically. A duplicate
+relationship selection is inserted for each query and refuses without SQL;
+removing it restores the valid configuration. Existing seven compound owned
+configurations explicitly select no relationships and keep their prior scope.
+
+All 133 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-owned-relationship-tests.log`).
+`cargo check -p weft-postgresql --target wasm32-unknown-unknown` passes
+(`/private/tmp/weft-owned-relationship-wasm.log`), proving compilation only.
+Actual native Python/browser relationship adapter composition and execution
+remain required B-005 work; neither is claimed by these Rust checks. This adds
+no fresh PostgreSQL execution or production storage qualification.

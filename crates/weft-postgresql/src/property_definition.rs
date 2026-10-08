@@ -1810,6 +1810,70 @@ mod tests {
                 json: final_admission.original_json.clone(),
                 sha256: sha256(final_admission.original_json.as_bytes()),
             };
+            let mut owned = crate::original_admission::Configuration {
+                binding_profile: final_input.profile.clone(),
+                native: row_numeric_native,
+                comparators: final_comparators.clone(),
+                records: (0..2)
+                    .map(|index| crate::original_admission::OwnedRecordSelection {
+                        index,
+                        inventory: inventory.clone(),
+                        relation_identity: "object-table".into(),
+                        discriminator_identity: "object-type".into(),
+                        relations: relations.clone(),
+                        columns: columns.clone(),
+                    })
+                    .collect(),
+                properties: vec![
+                    (index, leaves.clone()),
+                    (source_index, source_leaves.clone()),
+                ]
+                .into_iter()
+                .map(
+                    |(index, leaf_codecs)| crate::original_admission::OwnedPropertySelection {
+                        index,
+                        value_profile: pin.clone(),
+                        presence_profile: pin.clone(),
+                        leaf_codecs,
+                        record_presence: BTreeMap::new(),
+                        physical_profile: pin.clone(),
+                        inventory: inventory.clone(),
+                        relations: row_fixture.relations.clone(),
+                        columns: row_fixture.columns.clone(),
+                        row_join: Some(std::sync::Arc::new(
+                            crate::row_join_definition::tests::parse(
+                                &row_fixture.value,
+                                &row_fixture,
+                            )
+                            .unwrap(),
+                        )),
+                        obligations: row_obligations.clone(),
+                        edge_association: None,
+                        native_tree: None,
+                    },
+                )
+                .collect(),
+                relationships: [false, true]
+                    .into_iter()
+                    .map(
+                        |inverse| crate::original_admission::OwnedRelationshipSelection {
+                            index: 0,
+                            inverse,
+                            profile: final_binding["relationships"][0]["relationshipProfile"]
+                                .clone(),
+                            inventory: inventory.clone(),
+                            relation_identity: "edge".into(),
+                            relations: edge_relations.clone(),
+                            columns: edge_columns.clone(),
+                            relationship_type: "rel_type_id".into(),
+                            source_id: "source_id".into(),
+                            source_type: "source_type".into(),
+                            target_id: "target_id".into(),
+                            target_type: "target_type".into(),
+                        },
+                    )
+                    .collect(),
+            };
             let backend = crate::original_backend::OriginalBackend::new(
                 &final_input,
                 final_records,
@@ -1859,6 +1923,13 @@ mod tests {
                 assert_eq!(response["parameters"],serde_json::to_value(&compiled.emission.parameters).unwrap());
                 assert_eq!(response["columns"],serde_json::to_value(&compiled.emission.columns).unwrap());
                 assert_eq!(response["obligations"],serde_json::to_value(&compiled.emission.obligations).unwrap());
+                let owned_response=owned.compile_json(&request.to_string());
+                assert_eq!(serde_json::from_str::<Value>(&owned_response).unwrap(),response);
+                assert_eq!(owned.compile_json(&request.to_string()),owned_response);
+                owned.relationships.push(owned.relationships[0].clone());
+                let refused:Value=serde_json::from_str(&owned.compile_json(&request.to_string())).unwrap();
+                assert_eq!(refused["status"],"blocked");assert!(refused.get("sql").is_none());
+                owned.relationships.pop();
                 transport_captures.push(json!({"request":request,"response":response}));
 
                 let captures=if direction=="forward" {&mut forward_captures} else {&mut public_captures};
@@ -3333,6 +3404,7 @@ mod tests {
 
             let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs,"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
             let owned_configuration = crate::original_admission::Configuration {
+                relationships: vec![],
                 binding_profile: row_input.profile.clone(),
                 native: compound_native,
                 comparators: BTreeMap::new(),

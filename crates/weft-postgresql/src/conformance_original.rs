@@ -179,6 +179,7 @@ fn configuration(raw: &str) -> Result<Configuration> {
         });
     }
     Ok(Configuration {
+        relationships: vec![],
         binding_profile: text(&v["bindingProfile"])?.into(),
         records,
         properties,

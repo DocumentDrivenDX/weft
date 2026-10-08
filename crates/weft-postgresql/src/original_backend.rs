@@ -111,6 +111,76 @@ impl OriginalBackend {
         self.relationships = relationships;
         Ok(self)
     }
+    pub(crate) fn admit_owned_relationships(
+        self,
+        catalog: &weft_core::model::Catalog,
+        binding: &BindingInput,
+        selections: &[crate::original_admission::OwnedRelationshipSelection],
+    ) -> Result<Self> {
+        let admitted = crate::binding::Admission::parse(&binding.json, &binding.profile)?;
+        let mut relationships = BTreeMap::new();
+        for selected in selections {
+            let mapped = admitted.value["relationships"]
+                .get(selected.index)
+                .ok_or_else(|| fail("Owned relationship mapping missing"))?;
+            let role = if selected.inverse {
+                "targetTypeId"
+            } else {
+                "sourceTypeId"
+            };
+            let entity = admitted.value["entities"]
+                .as_array()
+                .and_then(|es| es.iter().find(|e| e["typeId"] == mapped[role]))
+                .ok_or_else(|| fail("Owned relationship source Record missing"))?;
+            let identity = serde_json::from_value(entity["logical"].clone())
+                .map_err(|_| fail("Owned relationship source identity invalid"))?;
+            let record = catalog.record_by_identity(&identity)?;
+            let original = admitted.decoded_json(&format!(
+                "/relationships/{}/acceptedDefinition",
+                selected.index
+            ))?;
+            let name = original[if selected.inverse { "inverse" } else { "name" }]
+                .as_str()
+                .ok_or_else(|| fail("Owned traversal name missing"))?;
+            let read = catalog.relationship_read(
+                &record,
+                &weft_core::syntax::Name {
+                    value: name.into(),
+                    quoted: true,
+                    span: weft_core::ir::Span { start: 0, end: 0 },
+                },
+            )?;
+            let relationship = crate::relationship_definition::RelationshipAdmission::admit(
+                &admitted,
+                selected.index,
+                catalog,
+                &read,
+                &self.records,
+                crate::relationship_definition::Selection {
+                    profile: &selected.profile,
+                    inventory: &selected.inventory,
+                    relation_identity: &selected.relation_identity,
+                    relations: &selected.relations,
+                    columns: &selected.columns,
+                    relationship_type: &selected.relationship_type,
+                    source_id: &selected.source_id,
+                    source_type: &selected.source_type,
+                    target_id: &selected.target_id,
+                    target_type: &selected.target_type,
+                },
+            )?;
+            if relationships
+                .insert(
+                    crate::relationship_definition::registration_key(&read),
+                    relationship,
+                )
+                .is_some()
+            {
+                return Err(fail("Repeated owned relationship direction"));
+            }
+        }
+        self.with_relationships(relationships)
+    }
     fn verify(&self, context: &Context<'_>) -> Result<()> {
         if context.binding.sha256 != self.binding_sha256 {
             return Err(fail("Registered original backend binding cut differs"));

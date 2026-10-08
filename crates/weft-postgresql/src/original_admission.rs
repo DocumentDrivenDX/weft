@@ -110,6 +110,7 @@ pub struct Configuration {
     pub properties: Vec<OwnedPropertySelection>,
     pub comparators: BTreeMap<String, crate::native_comparator_definition::Definition>,
     pub native: Native,
+    pub relationships: Vec<OwnedRelationshipSelection>,
 }
 pub struct OwnedRecordSelection {
     pub index: usize,
@@ -136,6 +137,21 @@ pub struct OwnedPropertySelection {
         crate::leaf_codec_definition::OriginalArtifact,
     )>,
     pub native_tree: Option<crate::row_tree_mapping::Procedures>,
+}
+#[derive(Clone)]
+pub struct OwnedRelationshipSelection {
+    pub index: usize,
+    pub inverse: bool,
+    pub profile: serde_json::Value,
+    pub inventory: crate::leaf_codec_definition::OriginalArtifact,
+    pub relation_identity: String,
+    pub relations: BTreeMap<String, String>,
+    pub columns: BTreeMap<String, crate::row_join_definition::Column>,
+    pub relationship_type: String,
+    pub source_id: String,
+    pub source_type: String,
+    pub target_id: String,
+    pub target_type: String,
 }
 impl Configuration {
     /// Re-admit a request's original bytes; no admitted backend is cached.
@@ -190,7 +206,8 @@ impl Configuration {
             properties,
             self.comparators.clone(),
             self.native,
-        )
+        )?
+        .admit_owned_relationships(catalog, binding, &self.relationships)
     }
     /// Shared serialized compiler transport for an explicitly selected host.
     pub fn compile_json(&self, request: &str) -> String {
