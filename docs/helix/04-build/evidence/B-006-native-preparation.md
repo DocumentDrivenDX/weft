@@ -278,3 +278,62 @@ B-006-optional-python-summary.json and B-006-optional-browser-summary.json.
 Subprocess/network/transport/trap guards remain exercised. This checkpoint is
 candidate component evidence, not production custody/delegation qualification.
 Compound/related application values and actual host enforcement remain open.
+
+### Authored relationship checkpoint — 2026-10-08
+
+The adapter admits explicit mappings of original UMF relationship definitions
+to the pinned canonical `edge_current` or serving `edge_ab` layout. Identity,
+accepted definition, original endpoints and authored keys must agree. Unknown
+mapping/identity/selected definition members and incompatible endpoint layouts
+refuse. Physical source/type/id identifies a row; its logical key is decoded
+from the separately mapped original Fields. Serving edge references are checked
+against the endpoint projection's existing node keys, not an invented encoding.
+
+`HAS_RELATED` uses existential SQL and cannot multiply its source. Bounded
+`RELATED_KEYS` ranks edges per physical source in complete typed target-key
+order, retains parallel edges, takes bound+1 before aggregation and emits exact
+string key tuples plus the truncation marker. Equal tuples preserve their edge
+multiplicity. Inverse reads reverse access while retaining authored orientation
+for multiplicity checks. Whole-input guards verify endpoints, edge IDs, physical
+row IDs, both authored keys and min/max degree; the finite signed64 ordinal
+domain refuses before ranking. Original lifecycle and complete policy/projection
+custody remain explicit host requirements, not inferred from rows.
+
+The initial Rust fixture missed required key names and failed model validation;
+that failure is not a valid backend baseline. After correcting it, the retained
+optional-only Python extension (hash cf14b0c6e31c95f32f21d02f97129dd2da590174ff276dce040ae215c00790fe)
+refuses a valid authored relationship request with WFT-BINDING; the exact
+request/refusal is B-006-relationship-baseline.json. The implemented regression
+passes 15 Ashlar Rust tests and the combined-backend runtime test, including
+eight atomic mapping refusals. All 224 prior compiler artifacts remain unchanged.
+
+`tests/ashlar-databricks/relationship-native.py` passes 52 actual Databricks cases:
+28 independent result comparisons and 24 refusals across canonical/serving
+edges and JSON/typed key homes. Cases include source singleton versus composite
+target keys, physical IDs distinct from logical keys, Unicode/trailing spaces,
+signed boundaries, parallel edges, isolated source/target records, bounds
+1/2/3/10, forward/inverse traversal, named existential parameters, absent keys,
+orphan/type references, duplicate keys/edge IDs and min/max multiplicities.
+Integrity failures hidden by the user WHERE clause refuse before user execution.
+The final run executes 272 unique native guards separately; an identical guard
+is reused only with identical SQL, used parameters and immutable fixture pins,
+and every outcome names its recorded native guard receipts. This fixture-only
+reuse is not production host cache qualification. All 52 assertions complete
+against one immutable vector; no fixture writes occur in the final run.
+
+An earlier positional fixture insert swapped canonical edge columns. The
+standalone compiler endpoint guard returned three violations on that data. A
+batched scalar-subquery guard observation disagreed with standalone checks;
+that form is excluded from the harness and no qualification relies on it.
+These nonpassing setup/control captures remain under
+B-006-relationship-setup-controls/. Corrected private v2 fixtures use named
+insert columns. A later guard-label collision was corrected before the complete
+read-only assertion run; prior observations remain in the native statement log.
+
+Fresh native Python and real Chromium/WASM builds match all 276 saved full
+artifacts byte-for-byte. Transport, trap retirement and no runtime subprocess/
+network guards remain exercised. Binary/source hashes and full native captures
+are retained in B-006-relationship-compiler.json and related receipts. This is
+candidate component evidence against synthetic admin fixtures; production
+publication/delegation qualification is not implied. Compound values, actual
+host enforcement and the B-006 acceptance audit remain open.

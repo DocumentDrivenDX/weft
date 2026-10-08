@@ -14,7 +14,7 @@ out = Path(os.environ.get('WEFT_ASHLAR_EMBEDDING_OUTPUT', root / 'target/b006/em
 out.mkdir(parents=True, exist_ok=True)
 evidence = root / 'docs/helix/04-build/evidence'
 cases = []
-for scope in ['columns-native', 'application-native', 'key-refusal', 'unsigned-columns', 'optional-native']:
+for scope in ['columns-native', 'application-native', 'key-refusal', 'unsigned-columns', 'optional-native', 'relationship-native']:
     for line in (evidence / f'B-006-{scope}/compile-artifacts.jsonl').read_text().splitlines():
         case = json.loads(line)
         case['id'] = scope + ':' + str(case['id'])
@@ -27,7 +27,7 @@ for scope in ['scalar-native', 'global-native']:
 case = json.loads((evidence / 'B-006-cross-module-native/compile.json').read_text())
 case['id'] = 'cross-module'
 cases.append(case)
-assert len(cases) == 224, len(cases)
+assert len(cases) == 276, len(cases)
 from weft import weft
 assert Path(weft.__file__).suffix in ['.so', '.pyd'], weft.__file__
 module_path = Path(weft.__file__)

@@ -1,0 +1,47 @@
+{
+  "request": {
+    "interfaceVersion": "weft-compile/0.2.0",
+    "dialect": "weft-sql/0.2.0",
+    "sql": "SELECT c.customer_id, RELATED_KEYS(c.orders, 1) AS related FROM Customer c",
+    "modules": [
+      {
+        "documentJson": "{\"umf\": \"0.7.0\", \"id\": \"relationship-fixture\", \"vocabularies\": {}, \"modules\": [{\"id\": \"main\", \"namespace\": \"relationships\", \"elements\": [{\"id\": \"customer\", \"name\": \"Customer\", \"kind\": \"record\", \"members\": [{\"module\": \"main\", \"element\": \"customer_id\"}], \"keys\": [{\"id\": \"customer-pk\", \"name\": \"primary\", \"primary\": true, \"fields\": [{\"module\": \"main\", \"element\": \"customer_id\"}]}], \"extensions\": {}}, {\"id\": \"orders\", \"name\": \"Orders\", \"kind\": \"record\", \"members\": [{\"module\": \"main\", \"element\": \"code\"}, {\"module\": \"main\", \"element\": \"rank\"}], \"keys\": [{\"id\": \"order-pk\", \"name\": \"primary\", \"primary\": true, \"fields\": [{\"module\": \"main\", \"element\": \"code\"}, {\"module\": \"main\", \"element\": \"rank\"}]}], \"extensions\": {}}, {\"id\": \"customer_id\", \"name\": \"customer_id\", \"kind\": \"field\", \"cardinality\": \"one\", \"nullability\": \"required\", \"scalarType\": \"integer\", \"extensions\": {}, \"facets\": {\"integerWidth\": {\"bits\": 64, \"signed\": true}}}, {\"id\": \"code\", \"name\": \"code\", \"kind\": \"field\", \"cardinality\": \"one\", \"nullability\": \"required\", \"scalarType\": \"string\", \"extensions\": {}}, {\"id\": \"rank\", \"name\": \"rank\", \"kind\": \"field\", \"cardinality\": \"one\", \"nullability\": \"required\", \"scalarType\": \"integer\", \"extensions\": {}, \"facets\": {\"integerWidth\": {\"bits\": 8, \"signed\": true}}}], \"relationships\": [{\"id\": \"customer-orders\", \"name\": \"orders\", \"inverse\": \"customers\", \"source\": [{\"module\": \"main\", \"element\": \"customer\"}], \"target\": [{\"module\": \"main\", \"element\": \"orders\", \"key\": \"order-pk\"}], \"directed\": true, \"targetLifecycle\": \"independent\", \"sourceMultiplicity\": {\"min\": 0, \"max\": \"*\"}, \"targetMultiplicity\": {\"min\": 0, \"max\": \"*\"}}]}], \"extensions\": {}}",
+        "pin": {
+          "documentId": "relationship-fixture",
+          "revision": "1",
+          "umfVersion": "0.7.0",
+          "sha256": "11de7de25b92ff233ae4fe036fd0b8e12686e15c62c258ecd8b77e9f7751e3af"
+        },
+        "selectedModuleIds": [
+          "main"
+        ]
+      }
+    ],
+    "target": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-candidate",
+      "targetProfile": "dbsql-candidate",
+      "bindingJson": "{\"profile\": \"ashlar-databricks-candidate/0.1.0\", \"layoutRevision\": \"ashlar-delta/0.3\", \"layoutSha256\": \"ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e\", \"modelPins\": [{\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"umfVersion\": \"0.7.0\", \"sha256\": \"11de7de25b92ff233ae4fe036fd0b8e12686e15c62c258ecd8b77e9f7751e3af\"}], \"publication\": {\"id\": \"weft-relationship-fixtures\", \"manifestUuid\": \"24f4165b-8f6b-413a-9e8d-2d3a83195ae7\", \"tables\": [{\"name\": [\"client_dev\", \"weft_b006_20261008_relationships_v2\", \"node_type_a\"], \"uuid\": \"65233fb8-04ea-474b-b9a0-89c39b2f722b\", \"version\": 1}, {\"name\": [\"client_dev\", \"weft_b006_20261008_relationships_v2\", \"edge_current\"], \"uuid\": \"a9af7d3a-5c29-4595-ac9f-906594a42191\", \"version\": 1}]}, \"records\": [{\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"customer\"}, \"table\": 0, \"kind\": \"nodeProjection\", \"sourceSystem\": \"weft-relationship-exact\", \"typeId\": \"1\", \"schemaRevision\": \"fixture-schema-1\", \"properties\": [{\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"customer_id\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"23\"}}]}, {\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"orders\"}, \"table\": 0, \"kind\": \"nodeProjection\", \"sourceSystem\": \"weft-relationship-exact\", \"typeId\": \"2\", \"schemaRevision\": \"fixture-schema-1\", \"properties\": [{\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"code\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"24\"}}, {\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"rank\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"25\"}}]}], \"relationships\": [{\"logical\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"relationship\": \"customer-orders\"}, \"acceptedDefinition\": {\"id\": \"customer-orders\", \"name\": \"orders\", \"inverse\": \"customers\", \"source\": [{\"module\": \"main\", \"element\": \"customer\"}], \"target\": [{\"module\": \"main\", \"element\": \"orders\", \"key\": \"order-pk\"}], \"directed\": true, \"targetLifecycle\": \"independent\", \"sourceMultiplicity\": {\"min\": 0, \"max\": \"*\"}, \"targetMultiplicity\": {\"min\": 0, \"max\": \"*\"}}, \"table\": 1, \"kind\": \"edge\", \"sourceSystem\": \"weft-relationship-exact\", \"typeId\": \"3\", \"schemaRevision\": \"fixture-schema-1\", \"source\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"customer\"}, \"target\": {\"documentId\": \"relationship-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"orders\"}}]}",
+      "bindingSha256": "1add2b536ce02df4dc80c1436c0f283dc46e7f8d9c893a0a1ab939db19cd3946"
+    },
+    "options": {
+      "allowCandidate": true
+    }
+  },
+  "response": {
+    "diagnostics": [
+      {
+        "code": "WFT-BINDING",
+        "message": "Unknown or malformed Ashlar mapping member",
+        "phase": "binding",
+        "recoverability": "correct-input",
+        "severity": "error"
+      }
+    ],
+    "interfaceVersion": "weft-compile/0.2.0",
+    "status": "blocked"
+  },
+  "baselineExtensionSha256": "cf14b0c6e31c95f32f21d02f97129dd2da590174ff276dce040ae215c00790fe",
+  "baselineCommit": "3facc64",
+  "scope": "Valid authored relationship request against retained optional-only native Python extension; before relationship implementation behavior"
+}

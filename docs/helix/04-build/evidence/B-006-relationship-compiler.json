@@ -1,0 +1,39 @@
+{
+  "state": "passed",
+  "scope": "B006 authored relationship candidate component; story acceptance remains open",
+  "rust": {
+    "ashlarTests": 15,
+    "combinedRuntimeTests": 1,
+    "validBeforeBehavior": "B-006-relationship-baseline.json",
+    "after": "B-006-relationship-regression-final.log"
+  },
+  "native": {
+    "cases": 52,
+    "positive": 28,
+    "refusals": 24,
+    "uniqueNativeGuards": 272,
+    "receipt": "B-006-relationship-native/summary.json"
+  },
+  "embeddings": {
+    "cases": 276,
+    "python": "B-006-relationship-python-summary.json",
+    "chromium": "B-006-relationship-browser-summary.json"
+  },
+  "priorArtifactsUnchanged": 224,
+  "sourceSha256": {
+    "crates/weft-databricks/src/binding.rs": "b10740a642284e5a6200558bd91d9a89c828945a03428aecd2f481c8042455dd",
+    "crates/weft-databricks/src/candidate.rs": "8348bd0686f960cf42a76d0cced7939b76acf6b381416ac87fcaa61bd6dfbaa2",
+    "crates/weft-databricks/src/candidate/application.rs": "439ae46e236b05de6bfef28aa7ef6a6be815e5bb647911b91dc0795d8ce8343a",
+    "crates/weft-databricks/src/candidate/relationships.rs": "a1df80e06ee5640f0435ed121ea8be506ff4ff643b333a586f8f613255078745",
+    "tests/ashlar-databricks/common.rs": "32cfaeda2b4f1837655f575604f01ba3a0305bf0acbabada255beb09fce48888",
+    "tests/ashlar-databricks/compiler.rs": "5a3a6c7be13523a823e9e88acccdd3f7d8ae312831974c39e1760c03005adf03",
+    "tests/ashlar-databricks/relationship-native.py": "2ecce51c4d9cae7badb2397348ea687b883a92c680d888c87ae479b73bca9059",
+    "tests/ashlar-databricks/python-check.py": "ed8603a7d78132c231d05a7d023c69cc83267168364d14e68d2e609de6ca65df"
+  },
+  "remaining": [
+    "compound values",
+    "actual host enforcement",
+    "B006 acceptance audit",
+    "B007 release qualification"
+  ]
+}

@@ -16,3 +16,34 @@ pub fn request(sql: &str) -> Value {
     "modules":[{"documentJson":document,"pin":pin,"selectedModuleIds":["sales"]}],
     "target":{"backendId":"ashlar.databricks","backendVersion":"0.1.0-candidate","targetProfile":"dbsql-candidate","bindingJson":binding,"bindingSha256":sha256(binding.as_bytes())},"options":{"allowCandidate":true}})
 }
+
+pub fn relationship_request(sql: &str, projection: bool) -> Value {
+    let mut request = request(sql);
+    request["interfaceVersion"] = json!("weft-compile/0.2.0");
+    request["dialect"] = json!("weft-sql/0.2.0");
+    let mut document: Value =
+        serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    let elements = document["modules"][0]["elements"].as_array_mut().unwrap();
+    elements[0]["keys"] = json!([{"id":"customer-pk","name":"primary","fields":[{"module":"sales","element":"customer-id"}],"primary":true}]);
+    elements[1]["keys"] = json!([{"id":"order-pk","name":"primary","fields":[{"module":"sales","element":"order-customer"}],"primary":true}]);
+    let definition = json!({"id":"customer-orders","name":"orders","inverse":"customer","source":[{"module":"sales","element":"customer"}],"target":[{"module":"sales","element":"orders","key":"order-pk"}],"directed":true,"sourceMultiplicity":{"min":0,"max":"*"},"targetMultiplicity":{"min":0,"max":"*"},"targetLifecycle":"independent"});
+    document["modules"][0]["relationships"] = json!([definition.clone()]);
+    let raw = document.to_string();
+    let digest = sha256(raw.as_bytes());
+    request["modules"][0]["documentJson"] = json!(raw);
+    request["modules"][0]["pin"]["sha256"] = json!(digest);
+    let mut binding: Value =
+        serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["modelPins"][0]["sha256"] = json!(digest);
+    if projection {
+        for record in binding["records"].as_array_mut().unwrap() {
+            record["kind"] = json!("nodeProjection");
+        }
+    }
+    binding["publication"]["tables"].as_array_mut().unwrap().push(json!({"name":["client_dev","weft_b006_fixture",if projection {"edge_ab"} else {"edge_current"}],"uuid":"fixture-edge-uuid","version":0}));
+    binding["relationships"] = json!([{"logical":{"documentId":"sales-fixture","revision":"1","module":"sales","relationship":"customer-orders"},"acceptedDefinition":definition,"table":1,"kind":if projection {"edgeProjection"} else {"edge"},"sourceSystem":"weft-synthetic","typeId":"3","schemaRevision":"fixture-schema-1","source":identity("customer"),"target":identity("orders")}]);
+    let raw = binding.to_string();
+    request["target"]["bindingJson"] = json!(raw);
+    request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
+    request
+}

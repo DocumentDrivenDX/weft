@@ -22,6 +22,8 @@ public Rust/Python/browser compiler parity. B-005 completes its owner-authorized
 candidate compiler scope; the [acceptance audit](04-build/evidence/B-005-acceptance.md)
 records original mappings, native PostgreSQL results and exact host boundaries. B-006 candidate work now has registered scalar lowering and native Databricks
 [preparation/corpus evidence](04-build/evidence/B-006-native-preparation.md).
-Its optional/compound/related application-read, host and embedding gates remain open. Synthetic fixture bindings do not select either
+Optional scalar values and authored relationships now have native component
+evidence and fresh Python/browser parity. Compound values and actual host
+enforcement remain open. Synthetic fixture bindings do not select either
 production profile or qualify an engine version. The complete 30-criterion release matrix remains unfinished; component/story
 evidence is scoped and does not constitute release qualification.

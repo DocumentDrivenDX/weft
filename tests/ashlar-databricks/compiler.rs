@@ -226,3 +226,74 @@ fn optional_scalar_preserves_presence_envelope_in_both_owner_homes() {
         }
     }
 }
+
+#[test]
+fn authored_relationships_compile_forward_inverse_and_existential_without_deduplication() {
+    for projection in [false, true] {
+        for sql in [
+            "SELECT c.id, RELATED_KEYS(c.orders, 2) AS related FROM Customer c",
+            "SELECT o.customer_id, RELATED_KEYS(o.customer, 2) AS related FROM Orders o",
+            "SELECT c.id FROM Customer c WHERE HAS_RELATED(c.orders, KEY(7))",
+        ] {
+            let response = run(&common::relationship_request(sql, projection));
+            assert_eq!(response["status"], "compiled", "{response}");
+            let sql = response["sql"].as_str().unwrap();
+            assert!(!sql.contains("DISTINCT"));
+            assert!(response["obligations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|o| o["id"] == "ashlar.candidate.relationshipIntegrity"));
+            if sql.contains("row_number()") {
+                assert!(sql.contains("<= 3"));
+                assert_eq!(
+                    response["columns"][1]["representation"]["kind"],
+                    "relatedKeys"
+                );
+                assert!(sql.contains("'truncated'"));
+            } else {
+                assert!(sql.contains("EXISTS"));
+            }
+        }
+    }
+}
+
+#[test]
+fn relationship_binding_refuses_missing_changed_or_unknown_authored_meaning() {
+    let base = common::relationship_request(
+        "SELECT RELATED_KEYS(c.orders, 2) AS related FROM Customer c",
+        false,
+    );
+    for mutation in 0..8 {
+        let mut request = base.clone();
+        let mut binding: Value =
+            serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+        match mutation {
+            0 => {
+                binding.as_object_mut().unwrap().remove("relationships");
+            }
+            1 => {
+                binding["relationships"][0]["acceptedDefinition"]["targetLifecycle"] =
+                    json!("owned")
+            }
+            2 => binding["relationships"][0]["logical"]["extra"] = json!(true),
+            3 => binding["relationships"][0]["target"] = common::identity("customer"),
+            4 => binding["relationships"][0]["source"]["extra"] = json!(true),
+            5 => binding["relationships"][0]["kind"] = json!("object"),
+            6 => binding["relationships"][0]["sourceSystem"] = json!("foreign-scope"),
+            _ => {
+                let duplicate = binding["relationships"][0].clone();
+                binding["relationships"]
+                    .as_array_mut()
+                    .unwrap()
+                    .push(duplicate);
+            }
+        }
+        let raw = binding.to_string();
+        request["target"]["bindingJson"] = json!(raw);
+        request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
+        let response = run(&request);
+        assert_eq!(response["status"], "blocked", "{response}");
+        assert!(response.get("sql").is_none());
+    }
+}

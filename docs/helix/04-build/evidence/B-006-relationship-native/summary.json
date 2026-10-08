@@ -1,0 +1,2453 @@
+{
+  "uniqueNativeGuards": 272,
+  "guardReuse": "Only identical SQL, used parameter values and immutable fixture publication; each outcome links the actual guard statement",
+  "state": "passed",
+  "cases": 52,
+  "positive": 28,
+  "refusals": 24,
+  "outcomes": [
+    {
+      "id": "edge_current-props-forward-1",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-forward-2",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-forward-3",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-forward-10",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-inverse",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "é",
+          "-128",
+          "{\"items\":[[\"10\"],[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "x ",
+          "127",
+          "{\"items\":[[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "3",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "2",
+          "{\"items\":[[\"20\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "é",
+          "-128",
+          {
+            "items": [
+              [
+                "10"
+              ],
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "x ",
+          "127",
+          {
+            "items": [
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "2",
+          {
+            "items": [
+              [
+                "20"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "3",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-inverse-guard-0",
+        "edge_current-props-inverse-guard-1",
+        "edge_current-props-inverse-guard-2",
+        "edge_current-props-inverse-guard-3",
+        "edge_current-props-inverse-guard-4",
+        "edge_current-props-inverse-guard-5",
+        "edge_current-props-inverse-guard-6",
+        "edge_current-props-inverse-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-inverse-guard-11",
+        "edge_current-props-inverse-guard-12"
+      ]
+    },
+    {
+      "id": "edge_current-props-exists-é",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "10"
+        ]
+      ],
+      "expected": [
+        [
+          "10"
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-exists-absent",
+      "outcome": "published-fixture-result",
+      "rows": [],
+      "expected": [],
+      "guardReceipts": [
+        "edge_current-props-forward-1-guard-0",
+        "edge_current-props-forward-1-guard-1",
+        "edge_current-props-forward-1-guard-2",
+        "edge_current-props-forward-1-guard-3",
+        "edge_current-props-forward-1-guard-4",
+        "edge_current-props-forward-1-guard-5",
+        "edge_current-props-forward-1-guard-6",
+        "edge_current-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-orphan",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-orphan-guard-0",
+        "edge_current-props-orphan-guard-1",
+        "edge_current-props-orphan-guard-2",
+        "edge_current-props-orphan-guard-3",
+        "edge_current-props-orphan-guard-4",
+        "edge_current-props-orphan-guard-5",
+        "edge_current-props-orphan-guard-6",
+        "edge_current-props-orphan-guard-7",
+        "edge_current-props-orphan-guard-8",
+        "edge_current-props-orphan-guard-9",
+        "edge_current-props-orphan-guard-10",
+        "edge_current-props-orphan-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-wrong-endpoint",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-wrong-endpoint-guard-0",
+        "edge_current-props-wrong-endpoint-guard-1",
+        "edge_current-props-wrong-endpoint-guard-2",
+        "edge_current-props-wrong-endpoint-guard-3",
+        "edge_current-props-wrong-endpoint-guard-4",
+        "edge_current-props-wrong-endpoint-guard-5",
+        "edge_current-props-wrong-endpoint-guard-6",
+        "edge_current-props-wrong-endpoint-guard-7",
+        "edge_current-props-wrong-endpoint-guard-8",
+        "edge_current-props-wrong-endpoint-guard-9",
+        "edge_current-props-wrong-endpoint-guard-10",
+        "edge_current-props-wrong-endpoint-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-duplicate-key",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-duplicate-key-guard-0",
+        "edge_current-props-duplicate-key-guard-1",
+        "edge_current-props-duplicate-key-guard-2",
+        "edge_current-props-duplicate-key-guard-3",
+        "edge_current-props-duplicate-key-guard-4",
+        "edge_current-props-duplicate-key-guard-5",
+        "edge_current-props-duplicate-key-guard-6",
+        "edge_current-props-duplicate-key-guard-7",
+        "edge_current-props-duplicate-key-guard-8",
+        "edge_current-props-duplicate-key-guard-9",
+        "edge_current-props-duplicate-key-guard-10",
+        "edge_current-props-duplicate-key-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-duplicate-edge",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-duplicate-edge-guard-0",
+        "edge_current-props-duplicate-edge-guard-1",
+        "edge_current-props-duplicate-edge-guard-2",
+        "edge_current-props-duplicate-edge-guard-3",
+        "edge_current-props-duplicate-edge-guard-4",
+        "edge_current-props-duplicate-edge-guard-5",
+        "edge_current-props-duplicate-edge-guard-6",
+        "edge_current-props-duplicate-edge-guard-7",
+        "edge_current-props-duplicate-edge-guard-8",
+        "edge_current-props-duplicate-edge-guard-9",
+        "edge_current-props-duplicate-edge-guard-10",
+        "edge_current-props-duplicate-edge-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-props-maximum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-maximum-guard-0",
+        "edge_current-props-maximum-guard-1",
+        "edge_current-props-maximum-guard-2",
+        "edge_current-props-maximum-guard-3",
+        "edge_current-props-maximum-guard-4",
+        "edge_current-props-maximum-guard-5",
+        "edge_current-props-maximum-guard-6",
+        "edge_current-props-maximum-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_current-props-minimum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-props-maximum-guard-0",
+        "edge_current-props-maximum-guard-1",
+        "edge_current-props-maximum-guard-2",
+        "edge_current-props-maximum-guard-3",
+        "edge_current-props-maximum-guard-4",
+        "edge_current-props-maximum-guard-5",
+        "edge_current-props-minimum-guard-6",
+        "edge_current-props-maximum-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_current-column-forward-1",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-forward-2",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-forward-3",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-forward-10",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-inverse",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "é",
+          "-128",
+          "{\"items\":[[\"10\"],[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "x ",
+          "127",
+          "{\"items\":[[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "3",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "2",
+          "{\"items\":[[\"20\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "é",
+          "-128",
+          {
+            "items": [
+              [
+                "10"
+              ],
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "x ",
+          "127",
+          {
+            "items": [
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "2",
+          {
+            "items": [
+              [
+                "20"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "3",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-inverse-guard-0",
+        "edge_current-column-inverse-guard-1",
+        "edge_current-column-inverse-guard-2",
+        "edge_current-column-inverse-guard-3",
+        "edge_current-column-inverse-guard-4",
+        "edge_current-column-inverse-guard-5",
+        "edge_current-column-inverse-guard-6",
+        "edge_current-column-inverse-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-inverse-guard-11",
+        "edge_current-column-inverse-guard-12"
+      ]
+    },
+    {
+      "id": "edge_current-column-exists-é",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "10"
+        ]
+      ],
+      "expected": [
+        [
+          "10"
+        ]
+      ],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-exists-absent",
+      "outcome": "published-fixture-result",
+      "rows": [],
+      "expected": [],
+      "guardReceipts": [
+        "edge_current-column-forward-1-guard-0",
+        "edge_current-column-forward-1-guard-1",
+        "edge_current-column-forward-1-guard-2",
+        "edge_current-column-forward-1-guard-3",
+        "edge_current-column-forward-1-guard-4",
+        "edge_current-column-forward-1-guard-5",
+        "edge_current-column-forward-1-guard-6",
+        "edge_current-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-orphan",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-orphan-guard-0",
+        "edge_current-column-orphan-guard-1",
+        "edge_current-column-orphan-guard-2",
+        "edge_current-column-orphan-guard-3",
+        "edge_current-column-orphan-guard-4",
+        "edge_current-column-orphan-guard-5",
+        "edge_current-column-orphan-guard-6",
+        "edge_current-column-orphan-guard-7",
+        "edge_current-column-orphan-guard-8",
+        "edge_current-column-orphan-guard-9",
+        "edge_current-column-orphan-guard-10",
+        "edge_current-column-orphan-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-wrong-endpoint",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-wrong-endpoint-guard-0",
+        "edge_current-column-wrong-endpoint-guard-1",
+        "edge_current-column-wrong-endpoint-guard-2",
+        "edge_current-column-wrong-endpoint-guard-3",
+        "edge_current-column-wrong-endpoint-guard-4",
+        "edge_current-column-wrong-endpoint-guard-5",
+        "edge_current-column-wrong-endpoint-guard-6",
+        "edge_current-column-wrong-endpoint-guard-7",
+        "edge_current-column-wrong-endpoint-guard-8",
+        "edge_current-column-wrong-endpoint-guard-9",
+        "edge_current-column-wrong-endpoint-guard-10",
+        "edge_current-column-wrong-endpoint-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-duplicate-key",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-duplicate-key-guard-0",
+        "edge_current-column-duplicate-key-guard-1",
+        "edge_current-column-duplicate-key-guard-2",
+        "edge_current-column-duplicate-key-guard-3",
+        "edge_current-column-duplicate-key-guard-4",
+        "edge_current-column-duplicate-key-guard-5",
+        "edge_current-column-duplicate-key-guard-6",
+        "edge_current-column-duplicate-key-guard-7",
+        "edge_current-column-duplicate-key-guard-8",
+        "edge_current-column-duplicate-key-guard-9",
+        "edge_current-column-duplicate-key-guard-10",
+        "edge_current-column-duplicate-key-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-duplicate-edge",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-duplicate-edge-guard-0",
+        "edge_current-column-duplicate-edge-guard-1",
+        "edge_current-column-duplicate-edge-guard-2",
+        "edge_current-column-duplicate-edge-guard-3",
+        "edge_current-column-duplicate-edge-guard-4",
+        "edge_current-column-duplicate-edge-guard-5",
+        "edge_current-column-duplicate-edge-guard-6",
+        "edge_current-column-duplicate-edge-guard-7",
+        "edge_current-column-duplicate-edge-guard-8",
+        "edge_current-column-duplicate-edge-guard-9",
+        "edge_current-column-duplicate-edge-guard-10",
+        "edge_current-column-duplicate-edge-guard-11"
+      ]
+    },
+    {
+      "id": "edge_current-column-maximum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-maximum-guard-0",
+        "edge_current-column-maximum-guard-1",
+        "edge_current-column-maximum-guard-2",
+        "edge_current-column-maximum-guard-3",
+        "edge_current-column-maximum-guard-4",
+        "edge_current-column-maximum-guard-5",
+        "edge_current-column-maximum-guard-6",
+        "edge_current-column-maximum-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_current-column-minimum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_current-column-maximum-guard-0",
+        "edge_current-column-maximum-guard-1",
+        "edge_current-column-maximum-guard-2",
+        "edge_current-column-maximum-guard-3",
+        "edge_current-column-maximum-guard-4",
+        "edge_current-column-maximum-guard-5",
+        "edge_current-column-minimum-guard-6",
+        "edge_current-column-maximum-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_ab-props-forward-1",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-forward-2",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-forward-3",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-forward-10",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-inverse",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "é",
+          "-128",
+          "{\"items\":[[\"10\"],[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "x ",
+          "127",
+          "{\"items\":[[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "3",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "2",
+          "{\"items\":[[\"20\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "é",
+          "-128",
+          {
+            "items": [
+              [
+                "10"
+              ],
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "x ",
+          "127",
+          {
+            "items": [
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "2",
+          {
+            "items": [
+              [
+                "20"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "3",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-inverse-guard-0",
+        "edge_ab-props-inverse-guard-1",
+        "edge_ab-props-inverse-guard-2",
+        "edge_ab-props-inverse-guard-3",
+        "edge_ab-props-inverse-guard-4",
+        "edge_ab-props-inverse-guard-5",
+        "edge_ab-props-inverse-guard-6",
+        "edge_ab-props-inverse-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-inverse-guard-11",
+        "edge_current-props-inverse-guard-12"
+      ]
+    },
+    {
+      "id": "edge_ab-props-exists-é",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "10"
+        ]
+      ],
+      "expected": [
+        [
+          "10"
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-exists-absent",
+      "outcome": "published-fixture-result",
+      "rows": [],
+      "expected": [],
+      "guardReceipts": [
+        "edge_ab-props-forward-1-guard-0",
+        "edge_ab-props-forward-1-guard-1",
+        "edge_ab-props-forward-1-guard-2",
+        "edge_ab-props-forward-1-guard-3",
+        "edge_ab-props-forward-1-guard-4",
+        "edge_ab-props-forward-1-guard-5",
+        "edge_ab-props-forward-1-guard-6",
+        "edge_ab-props-forward-1-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10",
+        "edge_current-props-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-orphan",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-orphan-guard-0",
+        "edge_ab-props-orphan-guard-1",
+        "edge_ab-props-orphan-guard-2",
+        "edge_ab-props-orphan-guard-3",
+        "edge_ab-props-orphan-guard-4",
+        "edge_ab-props-orphan-guard-5",
+        "edge_ab-props-orphan-guard-6",
+        "edge_ab-props-orphan-guard-7",
+        "edge_current-props-orphan-guard-8",
+        "edge_current-props-orphan-guard-9",
+        "edge_current-props-orphan-guard-10",
+        "edge_current-props-orphan-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-wrong-endpoint",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-wrong-endpoint-guard-0",
+        "edge_ab-props-wrong-endpoint-guard-1",
+        "edge_ab-props-wrong-endpoint-guard-2",
+        "edge_ab-props-wrong-endpoint-guard-3",
+        "edge_ab-props-wrong-endpoint-guard-4",
+        "edge_ab-props-wrong-endpoint-guard-5",
+        "edge_ab-props-wrong-endpoint-guard-6",
+        "edge_ab-props-wrong-endpoint-guard-7",
+        "edge_current-props-wrong-endpoint-guard-8",
+        "edge_current-props-wrong-endpoint-guard-9",
+        "edge_current-props-wrong-endpoint-guard-10",
+        "edge_current-props-wrong-endpoint-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-duplicate-key",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-duplicate-key-guard-0",
+        "edge_ab-props-duplicate-key-guard-1",
+        "edge_ab-props-duplicate-key-guard-2",
+        "edge_ab-props-duplicate-key-guard-3",
+        "edge_ab-props-duplicate-key-guard-4",
+        "edge_ab-props-duplicate-key-guard-5",
+        "edge_ab-props-duplicate-key-guard-6",
+        "edge_ab-props-duplicate-key-guard-7",
+        "edge_current-props-duplicate-key-guard-8",
+        "edge_current-props-duplicate-key-guard-9",
+        "edge_current-props-duplicate-key-guard-10",
+        "edge_current-props-duplicate-key-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-duplicate-edge",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-duplicate-edge-guard-0",
+        "edge_ab-props-duplicate-edge-guard-1",
+        "edge_ab-props-duplicate-edge-guard-2",
+        "edge_ab-props-duplicate-edge-guard-3",
+        "edge_ab-props-duplicate-edge-guard-4",
+        "edge_ab-props-duplicate-edge-guard-5",
+        "edge_ab-props-duplicate-edge-guard-6",
+        "edge_ab-props-duplicate-edge-guard-7",
+        "edge_current-props-duplicate-edge-guard-8",
+        "edge_current-props-duplicate-edge-guard-9",
+        "edge_current-props-duplicate-edge-guard-10",
+        "edge_current-props-duplicate-edge-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-props-maximum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-maximum-guard-0",
+        "edge_ab-props-maximum-guard-1",
+        "edge_ab-props-maximum-guard-2",
+        "edge_ab-props-maximum-guard-3",
+        "edge_ab-props-maximum-guard-4",
+        "edge_ab-props-maximum-guard-5",
+        "edge_ab-props-maximum-guard-6",
+        "edge_ab-props-maximum-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_ab-props-minimum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-props-maximum-guard-0",
+        "edge_ab-props-maximum-guard-1",
+        "edge_ab-props-maximum-guard-2",
+        "edge_ab-props-maximum-guard-3",
+        "edge_ab-props-maximum-guard-4",
+        "edge_ab-props-maximum-guard-5",
+        "edge_ab-props-minimum-guard-6",
+        "edge_ab-props-maximum-guard-7",
+        "edge_current-props-forward-1-guard-8",
+        "edge_current-props-forward-1-guard-9",
+        "edge_current-props-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_ab-column-forward-1",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-forward-2",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"]],\"truncated\":true}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": true
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-forward-3",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-forward-10",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"],[\"é\",\"-128\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "10",
+          {
+            "items": [
+              [
+                "x ",
+                "127"
+              ],
+              [
+                "é",
+                "-128"
+              ],
+              [
+                "é",
+                "-128"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "20",
+          {
+            "items": [
+              [
+                "é",
+                "2"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "30",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-inverse",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "é",
+          "-128",
+          "{\"items\":[[\"10\"],[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "x ",
+          "127",
+          "{\"items\":[[\"10\"]],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "3",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "é",
+          "2",
+          "{\"items\":[[\"20\"]],\"truncated\":false}"
+        ]
+      ],
+      "expected": [
+        [
+          "é",
+          "-128",
+          {
+            "items": [
+              [
+                "10"
+              ],
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "x ",
+          "127",
+          {
+            "items": [
+              [
+                "10"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "2",
+          {
+            "items": [
+              [
+                "20"
+              ]
+            ],
+            "truncated": false
+          }
+        ],
+        [
+          "é",
+          "3",
+          {
+            "items": [],
+            "truncated": false
+          }
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-inverse-guard-0",
+        "edge_ab-column-inverse-guard-1",
+        "edge_ab-column-inverse-guard-2",
+        "edge_ab-column-inverse-guard-3",
+        "edge_ab-column-inverse-guard-4",
+        "edge_ab-column-inverse-guard-5",
+        "edge_ab-column-inverse-guard-6",
+        "edge_ab-column-inverse-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-inverse-guard-11",
+        "edge_current-column-inverse-guard-12"
+      ]
+    },
+    {
+      "id": "edge_ab-column-exists-é",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "10"
+        ]
+      ],
+      "expected": [
+        [
+          "10"
+        ]
+      ],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-exists-absent",
+      "outcome": "published-fixture-result",
+      "rows": [],
+      "expected": [],
+      "guardReceipts": [
+        "edge_ab-column-forward-1-guard-0",
+        "edge_ab-column-forward-1-guard-1",
+        "edge_ab-column-forward-1-guard-2",
+        "edge_ab-column-forward-1-guard-3",
+        "edge_ab-column-forward-1-guard-4",
+        "edge_ab-column-forward-1-guard-5",
+        "edge_ab-column-forward-1-guard-6",
+        "edge_ab-column-forward-1-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10",
+        "edge_current-column-forward-1-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-orphan",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-orphan-guard-0",
+        "edge_ab-column-orphan-guard-1",
+        "edge_ab-column-orphan-guard-2",
+        "edge_ab-column-orphan-guard-3",
+        "edge_ab-column-orphan-guard-4",
+        "edge_ab-column-orphan-guard-5",
+        "edge_ab-column-orphan-guard-6",
+        "edge_ab-column-orphan-guard-7",
+        "edge_current-column-orphan-guard-8",
+        "edge_current-column-orphan-guard-9",
+        "edge_current-column-orphan-guard-10",
+        "edge_current-column-orphan-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-wrong-endpoint",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-wrong-endpoint-guard-0",
+        "edge_ab-column-wrong-endpoint-guard-1",
+        "edge_ab-column-wrong-endpoint-guard-2",
+        "edge_ab-column-wrong-endpoint-guard-3",
+        "edge_ab-column-wrong-endpoint-guard-4",
+        "edge_ab-column-wrong-endpoint-guard-5",
+        "edge_ab-column-wrong-endpoint-guard-6",
+        "edge_ab-column-wrong-endpoint-guard-7",
+        "edge_current-column-wrong-endpoint-guard-8",
+        "edge_current-column-wrong-endpoint-guard-9",
+        "edge_current-column-wrong-endpoint-guard-10",
+        "edge_current-column-wrong-endpoint-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-duplicate-key",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-duplicate-key-guard-0",
+        "edge_ab-column-duplicate-key-guard-1",
+        "edge_ab-column-duplicate-key-guard-2",
+        "edge_ab-column-duplicate-key-guard-3",
+        "edge_ab-column-duplicate-key-guard-4",
+        "edge_ab-column-duplicate-key-guard-5",
+        "edge_ab-column-duplicate-key-guard-6",
+        "edge_ab-column-duplicate-key-guard-7",
+        "edge_current-column-duplicate-key-guard-8",
+        "edge_current-column-duplicate-key-guard-9",
+        "edge_current-column-duplicate-key-guard-10",
+        "edge_current-column-duplicate-key-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-duplicate-edge",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-duplicate-edge-guard-0",
+        "edge_ab-column-duplicate-edge-guard-1",
+        "edge_ab-column-duplicate-edge-guard-2",
+        "edge_ab-column-duplicate-edge-guard-3",
+        "edge_ab-column-duplicate-edge-guard-4",
+        "edge_ab-column-duplicate-edge-guard-5",
+        "edge_ab-column-duplicate-edge-guard-6",
+        "edge_ab-column-duplicate-edge-guard-7",
+        "edge_current-column-duplicate-edge-guard-8",
+        "edge_current-column-duplicate-edge-guard-9",
+        "edge_current-column-duplicate-edge-guard-10",
+        "edge_current-column-duplicate-edge-guard-11"
+      ]
+    },
+    {
+      "id": "edge_ab-column-maximum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-maximum-guard-0",
+        "edge_ab-column-maximum-guard-1",
+        "edge_ab-column-maximum-guard-2",
+        "edge_ab-column-maximum-guard-3",
+        "edge_ab-column-maximum-guard-4",
+        "edge_ab-column-maximum-guard-5",
+        "edge_ab-column-maximum-guard-6",
+        "edge_ab-column-maximum-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10"
+      ]
+    },
+    {
+      "id": "edge_ab-column-minimum",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "guardReceipts": [
+        "edge_ab-column-maximum-guard-0",
+        "edge_ab-column-maximum-guard-1",
+        "edge_ab-column-maximum-guard-2",
+        "edge_ab-column-maximum-guard-3",
+        "edge_ab-column-maximum-guard-4",
+        "edge_ab-column-maximum-guard-5",
+        "edge_ab-column-minimum-guard-6",
+        "edge_ab-column-maximum-guard-7",
+        "edge_current-column-forward-1-guard-8",
+        "edge_current-column-forward-1-guard-9",
+        "edge_current-column-forward-1-guard-10"
+      ]
+    }
+  ],
+  "fixture": {
+    "phase": "ready",
+    "payloadSha256": "060d868302c6f5a52e4f2c1939d610280221ae27de8a61425f7c797937148e29",
+    "uuids": {
+      "node_type_a": "65233fb8-04ea-474b-b9a0-89c39b2f722b",
+      "edge_current": "a9af7d3a-5c29-4595-ac9f-906594a42191",
+      "edge_ab": "f35d01dd-fd8b-4cf5-a8d3-1c821571b507",
+      "publication_manifest": "24f4165b-8f6b-413a-9e8d-2d3a83195ae7"
+    },
+    "versions": {
+      "node_type_a": 1,
+      "edge_current": 1,
+      "edge_ab": 1
+    },
+    "publicationId": "weft-relationship-fixtures"
+  },
+  "compilerBinarySha256": "ddf99e9a47b4fc3c3e32f63032c5258633c6253f15b21e24ae3cbb1b9b59b4eb",
+  "harnessSha256": "2ecce51c4d9cae7badb2397348ea687b883a92c680d888c87ae479b73bca9059",
+  "qualification": "Actual canonical/serving edge SQL and props/typed key homes; independent forward/inverse parallel bags, bounded lookahead, EXISTS, orphan/type/key/edge/multiplicity refusals. Synthetic admin fixtures; no production policy/publication qualification."
+}

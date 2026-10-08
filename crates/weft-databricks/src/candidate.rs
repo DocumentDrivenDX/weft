@@ -1,5 +1,6 @@
 //! Candidate registered SQL lowering. Native execution/custody stays in hosts.
 mod application;
+mod relationships;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
@@ -47,7 +48,7 @@ impl Backend for Candidate {
             .collect::<Vec<_>>();
         Ok(Manifest{backend_id:"ashlar.databricks".into(),backend_version:"0.1.0-candidate".into(),interface_version:"weft-backend/0.2.0".into(),language_profiles:languages.clone(),binding_profile:binding::PROFILE.into(),
             target_profiles:vec![TargetProfile{id:"dbsql-candidate".into(),engine:"databricks-sql".into(),engine_version:"unqualified-warehouse-release".into(),session_settings:json!({"comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error","variantCarrier":"fixed-base-ten-exact-only"}),storage_layout_revision:"ashlar-delta/0.3".into(),publication_revision:"ashlar-resolver/0.1-candidate".into()}],
-            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id == "value.presence" { json!({"subset":"optional scalar envelopes; absent or exact value; explicit native null refuses"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar envelopes; absent or exact value; explicit native null refuses"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
         let binding = binding::admit(c.catalog, c.binding_value)?;
@@ -56,6 +57,14 @@ impl Backend for Candidate {
                 return Err(fail(
                     "WFT-BINDING",
                     "Selected original record has no mapping",
+                ));
+            }
+        }
+        for id in &c.selection.relationships {
+            if !binding.relationships.iter().any(|r| r.logical == json!(id)) {
+                return Err(fail(
+                    "WFT-BINDING",
+                    "Selected original relationship has no mapping",
                 ));
             }
         }
@@ -247,6 +256,7 @@ struct Lower<'a> {
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
     expressions: BTreeMap<(String, String), String>,
+    physical_ids: BTreeSet<String>,
     optional: BTreeSet<(String, String)>,
     presence: BTreeMap<(String, String), String>,
     parameters: Vec<ParameterSlot>,
@@ -260,6 +270,7 @@ impl<'a> Lower<'a> {
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
+            physical_ids: BTreeSet::new(),
             optional: BTreeSet::new(),
             presence: BTreeMap::new(),
             parameters: vec![],
@@ -322,6 +333,12 @@ impl<'a> Lower<'a> {
                 "TRUE".into()
             };
             let mut projections = Vec::new();
+            if self.physical_ids.contains(&scan) {
+                projections.push("r.id AS __id".into());
+                if record.kind == RecordKind::NodeProjection {
+                    projections.push("r.node_key AS __node_key".into());
+                }
+            }
             for ((occurrence, key), (identity, ty)) in self.fields.clone() {
                 if occurrence != scan {
                     continue;

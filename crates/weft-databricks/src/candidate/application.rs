@@ -32,16 +32,15 @@ fn collect_predicate(lower: &mut Lower<'_>, p: &app::Predicate) -> Result<()> {
                 values(lower, value);
             }
         }
-        app::Predicate::HasRelated { .. } => {
-            return Err(fail(
-                "WFT-CAPABILITY",
-                "Relationship access needs its explicit Ashlar edge mapping",
-            ))
+        app::Predicate::HasRelated { key, .. } => {
+            for v in key {
+                values(lower, v);
+            }
         }
     }
     Ok(())
 }
-fn value(lower: &mut Lower<'_>, v: &app::Value) -> Result<String> {
+pub(super) fn value(lower: &mut Lower<'_>, v: &app::Value) -> Result<String> {
     match v {
         app::Value::Field { field } => lower.expression(&legacy(field)),
         app::Value::Literal {
@@ -68,7 +67,11 @@ fn value(lower: &mut Lower<'_>, v: &app::Value) -> Result<String> {
         }
     }
 }
-fn predicate(lower: &mut Lower<'_>, p: &app::Predicate) -> Result<String> {
+fn predicate(
+    lower: &mut Lower<'_>,
+    relations: &relationships::Traversals,
+    p: &app::Predicate,
+) -> Result<String> {
     match p {
         app::Predicate::Equal { left, right } => Ok(format!(
             "({} = {})",
@@ -95,9 +98,11 @@ fn predicate(lower: &mut Lower<'_>, p: &app::Predicate) -> Result<String> {
             }
             Ok(format!("({})", clauses.join(" OR ")))
         }
-        app::Predicate::HasRelated { .. } => {
-            Err(fail("WFT-CAPABILITY", "Unmapped relationship predicate"))
-        }
+        app::Predicate::HasRelated {
+            scan,
+            relationship,
+            key,
+        } => relations.exists(lower, scan, relationship, key),
     }
 }
 fn descriptor<'a>(
@@ -171,21 +176,18 @@ pub(super) fn lower(
             }
             app::Expression::Sum { argument, .. } => field(&mut lower, argument),
             app::Expression::Count { .. } => {}
-            app::Expression::RelatedKeys { .. } => {
-                return Err(fail(
-                    "WFT-CAPABILITY",
-                    "Related-key projection needs its explicit Ashlar edge mapping",
-                ))
-            }
+            app::Expression::RelatedKeys { .. } => {}
         }
     }
+    let mut relations = relationships::Traversals::collect(&mut lower, plan)?;
     lower.prepare()?;
+    let relationship_checks = relations.prepare(&mut lower)?;
     let mut from = binding::quote(&plan.source.occurrence);
     for join in &plan.joins {
         let on = join
             .on
             .iter()
-            .map(|p| predicate(&mut lower, p))
+            .map(|p| predicate(&mut lower, &relations, p))
             .collect::<Result<Vec<_>>>()?
             .join(" AND ");
         from = format!(
@@ -196,7 +198,7 @@ pub(super) fn lower(
     let filters = plan
         .filters
         .iter()
-        .map(|p| predicate(&mut lower, p))
+        .map(|p| predicate(&mut lower, &relations, p))
         .collect::<Result<Vec<_>>>()?;
     let groups = plan
         .groups
@@ -210,7 +212,33 @@ pub(super) fn lower(
         .collect::<Result<Vec<_>>>()?;
     let mut outputs = Vec::new();
     let mut columns = Vec::new();
+    let mut related_joins = Vec::new();
     for (index, output) in plan.outputs.iter().enumerate() {
+        if let app::Expression::RelatedKeys {
+            scan,
+            relationship,
+            bound,
+        } = &output.expression
+        {
+            let (value, join) = relations.related(&mut lower, scan, relationship, *bound)?;
+            related_joins.push(join);
+            outputs.push(format!("{value} AS {}", binding::quote(&output.name)));
+            columns.push(Column {
+                position: index + 1,
+                output_name: output.name.clone(),
+                representation: Representation::RelatedKeys {
+                    relationship: relationship.identity.clone(),
+                    key: relationship.target_key.clone(),
+                    bound: *bound,
+                },
+                source_identities: std::iter::once(relationship.from.clone())
+                    .chain(std::iter::once(relationship.to.clone()))
+                    .chain(relationship.target_key.fields.clone())
+                    .collect(),
+                nullable: false,
+            });
+            continue;
+        }
         let (sql, ty, ids) = match &output.expression {
             app::Expression::Field { scan, identity } => {
                 let Shape::Scalar { logical_type } = &descriptor(plan, identity)?.shape else {
@@ -282,6 +310,9 @@ pub(super) fn lower(
             nullable,
         });
     }
+    for join in related_joins {
+        from.push_str(&format!(" {join}"));
+    }
     let mut sql = format!(
         "WITH {} SELECT {} FROM {from}",
         lower.ctes.join(", "),
@@ -308,6 +339,9 @@ pub(super) fn lower(
             failure_code: "WFT-NUMERIC-DOMAIN".into(),
         },
     ];
+    if !relationship_checks.is_empty() {
+        obligations.push(Obligation{id:"ashlar.candidate.relationshipIntegrity".into(),parameters:json!({"phase":"before-user-query","checks":relationship_checks,"success":"one exact STRING count equal to 0 per check","samePublicationRequired":true,"policy":"complete authorized source and target inputs; inverse traversal cannot broaden authority","multiplicity":"parallel edges retained; min/max checked in authored orientation","lifecycle":"host verifies the authored lifecycle and projection coverage against original publication"}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()});
+    }
     if let Some(key) = &plan.page_key {
         let record = context.catalog.record_by_identity(&plan.source.record)?;
         let authored = context.catalog.authored_key(&record, &key.id)?;

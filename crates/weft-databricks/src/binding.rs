@@ -5,8 +5,9 @@ use std::collections::BTreeSet;
 use weft_core::{
     application_model::Shape,
     error::{Diagnostic, Result},
-    ir::{Family, Identity, ModelPin},
+    ir::{Family, Identity, ModelPin, Span},
     model::Catalog,
+    syntax::Name,
 };
 
 pub const PROFILE: &str = "ashlar-databricks-candidate/0.1.0";
@@ -21,6 +22,8 @@ pub struct Binding {
     pub model_pins: Vec<ModelPin>,
     pub publication: Publication,
     pub records: Vec<Record>,
+    #[serde(default)]
+    pub relationships: Vec<Relationship>,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -88,6 +91,19 @@ pub enum Home {
         native_type: String,
     },
 }
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct Relationship {
+    pub logical: Value,
+    pub accepted_definition: Value,
+    pub table: usize,
+    pub kind: RecordKind,
+    pub source_system: String,
+    pub type_id: String,
+    pub schema_revision: String,
+    pub source: Identity,
+    pub target: Identity,
+}
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-BINDING", "binding", message)
 }
@@ -146,6 +162,22 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                         })
                 }) {
                     return Err(fail("Unknown original identity mapping member"));
+                }
+            }
+        }
+    }
+    if let Some(relationships) = value["relationships"].as_array() {
+        for relationship in relationships {
+            for id in [&relationship["source"], &relationship["target"]] {
+                if id.as_object().is_none_or(|o| {
+                    o.len() != 4
+                        || o.keys().any(|k| {
+                            !matches!(k.as_str(), "documentId" | "revision" | "module" | "element")
+                        })
+                }) {
+                    return Err(fail(
+                        "Unknown relationship endpoint identity mapping member",
+                    ));
                 }
             }
         }
@@ -275,6 +307,148 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                         return Err(fail("Native column carrier cannot establish the original logical scalar domain"));
                     }
                 }
+            }
+        }
+    }
+    let mut relationships = BTreeSet::new();
+    if binding.relationships.len() > 4096 {
+        return Err(fail("Excessive relationship mappings"));
+    }
+    for physical in &binding.relationships {
+        if physical.logical.as_object().is_none_or(|o| {
+            o.len() != 4
+                || o.keys().any(|k| {
+                    !matches!(
+                        k.as_str(),
+                        "documentId" | "revision" | "module" | "relationship"
+                    )
+                })
+        }) || !relationships.insert(physical.logical.to_string())
+            || physical.table >= binding.publication.tables.len()
+            || !matches!(physical.kind, RecordKind::Edge | RecordKind::EdgeProjection)
+            || !text(&physical.source_system)
+            || !signed(&physical.type_id)
+            || !text(&physical.schema_revision)
+        {
+            return Err(fail("Invalid original relationship mapping"));
+        }
+        let endpoints = [&physical.source, &physical.target]
+            .map(|id| binding.records.iter().find(|r| &r.logical == id));
+        let [Some(source), Some(target)] = endpoints else {
+            return Err(fail("Relationship endpoint mapping is missing"));
+        };
+        if [source, target].iter().any(|r| {
+            r.source_system != physical.source_system
+                || !matches!(r.kind, RecordKind::Object | RecordKind::NodeProjection)
+        }) || (physical.kind == RecordKind::EdgeProjection
+            && [source, target]
+                .iter()
+                .any(|r| r.kind != RecordKind::NodeProjection))
+        {
+            return Err(fail(
+                "Relationship endpoint layout or source scope is incompatible",
+            ));
+        }
+        let authored = catalog.record_by_identity(&physical.source)?;
+        let input = catalog
+            .inputs
+            .iter()
+            .find(|i| i.pin == authored.pin)
+            .unwrap();
+        let document = weft_core::json::checked_json(&input.document_json).unwrap();
+        let definition = document["modules"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|m| m["id"] == physical.logical["module"])
+            .and_then(|m| m["relationships"].as_array())
+            .and_then(|rs| {
+                rs.iter()
+                    .find(|r| r["id"] == physical.logical["relationship"])
+            })
+            .ok_or_else(|| fail("Original relationship definition is missing"))?;
+        if definition != &physical.accepted_definition
+            || definition.as_object().unwrap().keys().any(|k| {
+                !matches!(
+                    k.as_str(),
+                    "id" | "name"
+                        | "inverse"
+                        | "source"
+                        | "target"
+                        | "directed"
+                        | "sourceMultiplicity"
+                        | "targetMultiplicity"
+                        | "targetLifecycle"
+                        | "extensions"
+                )
+            })
+            || definition
+                .get("extensions")
+                .is_some_and(|e| e.as_object().is_none_or(|o| !o.is_empty()))
+        {
+            return Err(fail(
+                "Selected relationship meaning is changed or unregistered",
+            ));
+        }
+        for side in ["source", "target"] {
+            if definition[side].as_array().unwrap().iter().any(|r| {
+                r.as_object()
+                    .unwrap()
+                    .keys()
+                    .any(|k| !matches!(k.as_str(), "module" | "element" | "key"))
+            }) {
+                return Err(fail("Unregistered relationship endpoint meaning"));
+            }
+        }
+        for side in ["sourceMultiplicity", "targetMultiplicity"] {
+            if definition[side]
+                .as_object()
+                .unwrap()
+                .keys()
+                .any(|k| !matches!(k.as_str(), "min" | "max"))
+            {
+                return Err(fail("Unregistered relationship multiplicity meaning"));
+            }
+        }
+        let resolved = catalog.relationship_read(
+            &authored,
+            &Name {
+                value: definition["name"].as_str().unwrap().into(),
+                quoted: true,
+                span: Span { start: 0, end: 0 },
+            },
+        )?;
+        if serde_json::to_value(&resolved.identity).unwrap() != physical.logical
+            || resolved.from != physical.source
+            || resolved.to != physical.target
+            || resolved.inverse
+        {
+            return Err(fail("Relationship original endpoints or identity disagree"));
+        }
+        for (record, key) in [
+            (source, &resolved.source_key),
+            (target, &resolved.target_key),
+        ] {
+            let original = catalog.record_by_identity(&record.logical)?;
+            let raw = original.value["keys"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|k| k["id"] == key.id)
+                .unwrap();
+            if raw
+                .as_object()
+                .unwrap()
+                .keys()
+                .any(|k| !matches!(k.as_str(), "id" | "name" | "fields" | "primary"))
+                || key
+                    .fields
+                    .iter()
+                    .any(|id| !record.properties.iter().any(|p| &p.logical == id))
+            {
+                return Err(fail(
+                    "Relationship authored key has unknown meaning or missing homes",
+                ));
             }
         }
     }
