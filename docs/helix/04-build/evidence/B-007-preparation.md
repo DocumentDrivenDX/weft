@@ -183,3 +183,11 @@ B-007-public-corpus/ retains compiler/corpus/harness hashes and build/run logs.
 The reports harness now accepts explicit binary/output paths and checks binary
 custody across execution. Native Python/browser rebuild parity for this corpus
 is the next component.
+
+A freshly built Maturin 1.9.6 test-third-only abi3 wheel passes all 1273 public
+compile cases on native CPython 3.12.14, byte-identical to the fresh CLI reports.
+PATH is empty and subprocess calls are forbidden; non-string arguments and
+lone surrogates refuse. B-007-public-python/ records wheel/extension hashes,
+actual runtime and build/run logs. The harness accepts explicit report/output
+paths and hashes the loaded extension. This macOS ARM64 execution does not
+qualify every Python version or architecture advertised by wheel metadata.
