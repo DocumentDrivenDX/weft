@@ -521,3 +521,9 @@ reports the 195-test historical workspace checkpoint and later individually
 scoped guard/representation evidence, real native counts, local packaging,
 and unresolved native/support/release gates. The acceptance matrix links the
 new relationship and field representation receipts without promoting status.
+
+B-007-core-unit-current/ retains seven passing current core unit tests with
+none ignored or filtered. The new 0.1 projection-root corruption refuses with
+the exact intended diagnostic before output validation. This incorporates
+current field and relationship representation tests, not full workspace or
+engine qualification.
