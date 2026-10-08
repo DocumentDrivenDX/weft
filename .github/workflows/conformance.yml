@@ -31,7 +31,20 @@ jobs:
         run: bun run specs:check
       - name: Build browser ESM and declarations
         run: bun run browser:build
-      - name: Rust workspace conformance
-        run: cargo test --workspace --all-features --locked
+      - name: Candidate Rust workspace conformance
+        run: cargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+      - name: Qualified Rust workspace conformance
+        run: cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+      - name: Refuse conflicting runtime registrations
+        shell: bash
+        run: |
+          for backend in truss-postgresql ashlar-databricks; do
+            if cargo check -p weft-runtime --features "${backend}-candidate,${backend}-qualified" --locked > conflict.log 2>&1; then
+              cat conflict.log
+              exit 1
+            fi
+            cat conflict.log
+            grep -F 'Choose either candidate or qualified registration for each backend' conflict.log
+          done
       - name: Replay retained evidence and corruption controls
         run: python tests/qualify-and-evolve/check-retained-evidence.py

@@ -1,0 +1,9 @@
+{
+  "status": "workflow-corrected; remote-rerun-pending",
+  "run": "https://github.com/DocumentDrivenDX/weft/actions/runs/37817996441",
+  "sourceCheckpoint": "f81565a1addaa6d2c83561f62d3805d1167233ee",
+  "failure": "--all-features selects candidate and qualified versions simultaneously; explicit compile_error rejects this combination",
+  "failedLogUncompressedSha256": "bf7b902ddf5d6f7967c07722826fdaf93aa27f5c441a78be2dc8732280338d54",
+  "correction": "Run full candidate and qualified workspaces separately, then require both conflicting backend feature pairs to fail with the exact registration-conflict diagnostic",
+  "limits": "The retained failure is not a pass. Separate local workspace run and new remote CI must terminate before final acceptance."
+}
