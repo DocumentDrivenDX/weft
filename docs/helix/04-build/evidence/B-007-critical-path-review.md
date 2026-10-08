@@ -40,6 +40,7 @@ individual refusal guards; they supplement the earlier broad US-002 review.
 | Manifest dialect/IR acceptance and non-object JSON roots, both plans | B-007-language-root-branches |
 | Missing or wrong-revision record and field coverage, both plans | B-007-coverage-branches |
 | Missing or wrong-revision type and relationship coverage, resolved application plans | B-007-type-relationship-coverage |
+| Non-object/empty domains, malformed/duplicate/undeclared evidence and constraints, target/language declarations and malformed/duplicate obligations | B-007-capability-declaration-guards: 24 capability and nine obligation refusals, exact diagnostics, valid obligation baseline |
 | Duplicate/oversize additional capabilities; duplicate/unrequested/unsupported assessments; duplicate/undeclared/missing evidence | B-007-assessment-branches |
 | Malformed obligations, same-ID conflicting parameters/owner, identical deduplication and sorted distinct retention | B-007-obligation-branches |
 

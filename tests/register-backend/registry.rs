@@ -92,3 +92,59 @@ fn target_profiles_require_each_identity_and_object_settings() {
         assert_eq!(error.message, "Target profiles must be distinct, pinned and structurally explicit");
     }
 }
+
+#[test]
+fn capability_declaration_guards_refuse_at_their_exact_phase() {
+    let capability_error = "Capability domains, constraints and qualified evidence must be explicit";
+    let identity_error = "Capabilities must bind distinct IDs to declared target and language profiles";
+    let mut cases = Vec::new();
+    for field in ["logicalDomain", "resultDomain"] {
+        for value in [json!({}), json!([]), json!(false), json!(null)] {
+            cases.push((field, value, "WFT-CAPABILITY", capability_error));
+        }
+    }
+    for field in ["constraints", "evidence"] {
+        for value in [json!([""]), json!(["bad\u{0}id"]), json!(["fixture-scan-1", "fixture-scan-1"])] {
+            cases.push((field, value, "WFT-CAPABILITY", capability_error));
+        }
+    }
+    cases.push(("evidence", json!([]), "WFT-CAPABILITY", capability_error));
+    cases.push(("evidence", json!(["undeclared"]), "WFT-CAPABILITY", capability_error));
+    for value in [json!(""), json!("bad\u{0}id")] {
+        cases.push(("id", value, "WFT-BACKEND-VERSION", identity_error));
+    }
+    for value in [json!([]), json!([""]), json!(["fixture-only", "fixture-only"]), json!(["undeclared"])] {
+        cases.push(("targetProfiles", value, "WFT-BACKEND-VERSION", identity_error));
+    }
+    for value in [json!([]), json!([{"dialectProfile":"weft-sql/0.1.0","irVersion":"weft-ir/0.2.0"}])] {
+        cases.push(("languageProfiles", value, "WFT-BACKEND-VERSION", identity_error));
+    }
+    assert_eq!(cases.len(), 24);
+    for (field, value, code, message) in cases {
+        let mut m = manifest();
+        m["capabilities"][0][field] = value;
+        let error = validate(&m).unwrap_err();
+        assert_eq!(error.code, code, "{field}");
+        assert_eq!(error.message, message, "{field}");
+    }
+    let obligation = json!({"id":"fixture-guard", "parameters":{}, "owner":"host", "failureCode":"WFT-GUARD"});
+    let mut valid = manifest();
+    valid["capabilities"][0]["obligations"] = json!([obligation.clone()]);
+    assert!(validate(&valid).is_ok());
+    for (field, value) in [
+        ("id", json!("")), ("id", json!("bad\u{0}id")),
+        ("parameters", json!([])), ("parameters", json!(null)),
+        ("failureCode", json!("GUARD")), ("failureCode", json!("WFT-")),
+        ("failureCode", json!("WFT-lower")), ("failureCode", json!("WFT-☃")),
+    ] {
+        let mut m = valid.clone();
+        m["capabilities"][0]["obligations"][0][field] = value;
+        let error = validate(&m).unwrap_err();
+        assert_eq!(error.code, "WFT-OBLIGATION", "{field}");
+        assert_eq!(error.message, "Capability obligations are malformed or ambiguous", "{field}");
+    }
+    valid["capabilities"][0]["obligations"] = json!([obligation.clone(), obligation]);
+    let error = validate(&valid).unwrap_err();
+    assert_eq!(error.code, "WFT-OBLIGATION");
+    assert_eq!(error.message, "Capability obligations are malformed or ambiguous");
+}
