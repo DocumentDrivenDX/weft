@@ -30,7 +30,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
@@ -66,7 +66,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
@@ -111,6 +111,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "excludedClaims": [
@@ -127,7 +135,10 @@
         "rBuildHash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
         "scope": "Actual read-only current warehouse identity. Does not retroactively pin earlier corpus receipts, capture their settings, or qualify support.",
         "sameStatementUnsignedSumCases": 7,
-        "sameQueryApplicationCountCases": 32
+        "sameQueryApplicationCountCases": 32,
+        "applicationCases": 112,
+        "sameStatementApplicationCases": 96,
+        "separateEmptyPageProbes": 16
       }
     }
   ],

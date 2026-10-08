@@ -1,0 +1,2476 @@
+{
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "warehouseIdentityCaptures": [
+    {
+      "id": "8-props-props-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-props-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-props-column-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-props-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "8-column-column-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-props-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-props-column-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-props-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-join-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-group-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-empty-count",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-single-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-single-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-single-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-single-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-single-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-composite-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-composite-page-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-composite-page-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-composite-page-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "64-column-column-composite-page-4",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    }
+  ],
+  "warehouseLinkedCountCases": 0,
+  "warehouseApplicationCases": 112,
+  "state": "passed",
+  "cases": 112,
+  "outcomes": [
+    {
+      "id": "8-props-props-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-128",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-single-page-3",
+      "rows": [
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-props-props-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-128",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-props-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-props-column-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-128",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-single-page-3",
+      "rows": [
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-props-column-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-128",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-props-column-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-column-props-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-128",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-single-page-3",
+      "rows": [
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-column-props-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-128",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-props-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-column-column-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-128",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-single-page-3",
+      "rows": [
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "8-column-column-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-128",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "127",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "8-column-column-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-props-props-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-single-page-3",
+      "rows": [
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-props-props-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-props-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-props-column-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-single-page-3",
+      "rows": [
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-props-column-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-props-column-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-column-props-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-single-page-3",
+      "rows": [
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-column-props-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-props-composite-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-column-column-count",
+      "rows": [
+        [
+          "7"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-join-count",
+      "rows": [
+        [
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-group-count",
+      "rows": [
+        [
+          "é",
+          "1"
+        ],
+        [
+          "same",
+          "3"
+        ],
+        [
+          "x",
+          "1"
+        ],
+        [
+          "x ",
+          "1"
+        ],
+        [
+          "é",
+          "1"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-empty-count",
+      "rows": [
+        [
+          "0"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-single-page-0",
+      "rows": [
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ],
+        [
+          "same",
+          "1",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-single-page-1",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ],
+        [
+          "é",
+          "4",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-single-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-single-page-3",
+      "rows": [
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-single-page-4",
+      "rows": []
+    },
+    {
+      "id": "64-column-column-composite-page-0",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-9223372036854775808",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-composite-page-1",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-composite-page-2",
+      "rows": [
+        [
+          "x",
+          "5",
+          "true"
+        ],
+        [
+          "x ",
+          "6",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-composite-page-3",
+      "rows": [
+        [
+          "é",
+          "3",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "64-column-column-composite-page-4",
+      "rows": []
+    }
+  ],
+  "compilerBinarySha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "harnessSha256": "b85669581f6db7c0682bbe0e0c3845e9033a4228c369711bc7dabdad857d68b2",
+  "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+  "qualification": "Nonempty application results capture warehouse identity in the query; empty pages use a separately labeled probe after execution, not same-statement identity evidence. Registered 0.2 compiler and native required-scalar entity projection, exact bag/group/global counts and single/composite authored-key pages across four native/JSON homes and signed8/64. Same retained synthetic snapshots; no live policy/pin authority, optional/compound/related values, embedding or production qualification."
+}

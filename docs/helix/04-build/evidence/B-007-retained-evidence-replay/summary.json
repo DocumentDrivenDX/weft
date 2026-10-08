@@ -403,6 +403,26 @@
       "sourceSha256": "b1f62b27eaeb11bd2e013d236250bd10aecd7ebc22fb4876163abe9e1c559083"
     },
     {
+      "component": "reconcile-ashlar-warehouse-application.py",
+      "result": {
+        "status": "passed",
+        "cases": 112,
+        "independentRowComparisons": 112,
+        "sameStatementWarehouseCases": 96,
+        "separateEmptyQueryProbes": 16,
+        "integrityStatements": 360,
+        "terminalStatements": 488,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent COUNT bags/group order and full single/composite keyset page sequences across four typed/props homes and signed8/64. Empty pages have separately labeled warehouse probes; no same-statement identity claim for them, no fresh execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "f777d3132de180160b2880e3ac3f6f3ecbc15f681f81e66eb8165f3d92f457f9"
+    },
+    {
       "component": "reconcile-truss-archive.py",
       "result": {
         "status": "passed",
@@ -1884,6 +1904,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 95,
+  "verifiedEvidenceReferences": 97,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

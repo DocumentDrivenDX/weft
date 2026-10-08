@@ -590,7 +590,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -631,7 +631,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -672,7 +672,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -709,7 +709,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/portable-reconciliation.json",
@@ -770,7 +770,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -791,6 +791,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-reconciliation/summary.json",
           "sha256": "e2d7b5c6f3e1c93c8750122ad2dce033c352ea3ce974e313228b932dee19be20"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -811,7 +819,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -828,6 +836,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-reconciliation/summary.json",
           "sha256": "e2d7b5c6f3e1c93c8750122ad2dce033c352ea3ce974e313228b932dee19be20"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -848,7 +864,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -861,6 +877,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-ashlar-report-audit/summary.json",
           "sha256": "b43573fbb1bdbeb1f4236db6ab330902f19d2be1b6c70557a0e4e5bbb9beb21b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -877,7 +901,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
+          "sha256": "e3bcea7cda49595b30981990869d493262769d069feb9e5ebd1de096d645011f"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
@@ -1635,6 +1659,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1692,6 +1724,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1757,6 +1797,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-controls/summary.json",
           "sha256": "0e47de1eeb775ce379868fe24d534f38c50a5cf9b0cebc42e165cb16f1cfcc83"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."

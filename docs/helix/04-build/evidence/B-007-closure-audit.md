@@ -25,3 +25,13 @@ before distribution, not before this implementation PR can merge. Native tests r
 there is no missing Truss table-layout artifact blocking that work. Retesting
 already passing components without a new change or a concrete uncovered branch
 would not close the outstanding qualification gates.
+
+Current warehouse application evidence now passes all 112 native COUNT/entity/
+single/composite keyset cases with 360 integrity checks (488 terminal statements
+including 16 empty-page probes). The independent reconciliation passes all 112
+expected bags/pages and exact SQL/parameter/pin/metadata custody. Warehouse
+identity is observed with 96 nonempty results and by a separate probe after each
+of 16 empty pages. All observations are Databricks SQL 2026.39 with the same
+retained build hashes. This advances native profile qualification for this
+corpus; older compound and relationship scopes are not retroactively pinned.
+The standard replay now passes 24 components and 97 hashed references.

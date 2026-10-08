@@ -1,0 +1,12 @@
+{
+  "scope": "Fresh 112-case application corpus on retained native snapshots. Nonempty results capture warehouse identity in the query; empty pages use separately labeled probes. No inferred same-statement capture for empty results.",
+  "inputHashes": {
+    "summary.json": "773b4cfc72ba54f6c39c78b909795ec34c4f3982d31450df89854528e5422810",
+    "statements.jsonl": "42e1563dd851e54271e1686e68f50f88f326f78bacffc16b95a2fbce268aaed2",
+    "compile-artifacts.jsonl": "7b086133f8ad7f5288b9d140cbbcb06325944da2de7528bed0b9b96249892457",
+    "application-native.py": "b85669581f6db7c0682bbe0e0c3845e9033a4228c369711bc7dabdad857d68b2",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+    "run.log": "538530828b34688029f6b27ca22228253be8de97aaf19a2f7cad8a048286418f"
+  }
+}

@@ -32,3 +32,23 @@ inventory is honest but does not satisfy that requirement merely by staying
 candidate. License and package ownership decisions also remain outstanding.
 Independent criterion/critical-path review can continue while those facts remain
 unresolved; there is no new Truss storage-layout dependency.
+
+## Current warehouse application execution
+
+B-007-ashlar-warehouse-application-native records a fresh 112-case execution
+against the retained synthetic snapshots using the frozen B-006 compiler
+3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5.
+All COUNT bags/group ordering and single/composite keyset page sequences pass
+for signed8/64 across four typed/props home combinations. There are 488 terminal
+statements: 112 queries, 360 integrity checks and 16 separately labeled empty-page
+warehouse probes. The 96 nonempty queries capture current_version() in their
+results; empty pages do not have same-statement identity evidence. All observations
+identify Databricks SQL 2026.39 and the retained concrete u/r build hashes.
+
+The independent warehouse application reconciliation checks all 112 expected
+ordered bags/pages, exact compiler model/binding byte pins, emitted SQL and
+parameters, native STRING column names/order, warehouse observations and every
+integrity receipt. Raw artifacts, producer/helper source snapshots and log hashes
+are retained. This closes the missing current-build observation for this corpus;
+it does not retroactively identify older compound/relationship receipts or
+promote the candidate backend to a qualified production profile.

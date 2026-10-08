@@ -15,6 +15,8 @@ for name,digest in custody['inputHashes'].items():assert sha(BASE/name)==digest,
 assert sha(BASE/'warehouse_capture.py')==sha(ROOT/'tests/ashlar-databricks/warehouse_capture.py')
 summary=strict((BASE/'summary.json').read_text())
 assert summary['state']=='passed' and summary['cases']==summary['warehouseApplicationCases']==112
+assert sha(BASE/'application-native.py')==summary['harnessSha256']
+assert sha(BASE/'native_transport.py')==summary['transportSha256']
 warehouse=summary['warehouseIdentity']
 assert set(warehouse)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and warehouse['dbr_version'] is None
 assert all(isinstance(warehouse[k],str) and warehouse[k] for k in ['dbsql_version','u_build_hash','r_build_hash'])
@@ -66,6 +68,7 @@ def rows(label):
 for identifier,artifact in artifacts.items():
  request=artifact['request'];response=artifact['response'];assert response['status']=='compiled'
  assert request['sql']==queries[identifier]
+ assert response['modelPins']==[module['pin'] for module in request['modules']]
  for module in request['modules']:
   assert hashlib.sha256(module['documentJson'].encode()).hexdigest()==module['pin']['sha256']
  assert hashlib.sha256(request['target']['bindingJson'].encode()).hexdigest()==request['target']['bindingSha256']==response['bindingSha256']

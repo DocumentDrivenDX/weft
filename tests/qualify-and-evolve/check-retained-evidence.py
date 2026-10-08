@@ -16,6 +16,7 @@ components=[
  ('warehouse-capture-controls.py','status','controls',9),
  ('ashlar-count-controls.py','status','corruptionsRejected',15),
  ('audit-ashlar-count-hosts.py','status','hostArtifactJoins',64),
+ ('reconcile-ashlar-warehouse-application.py','status','cases',112),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -37,6 +38,8 @@ for name,status,count,expected in components:
  assert report[status]=='passed' and report[count]==expected,(name,report)
  if name=='reconcile-ashlar-warehouse-counts.py':
   assert report['logicalMetadataCases']==32
+ if name=='reconcile-ashlar-warehouse-application.py':
+  assert report['independentRowComparisons']==112 and report['sameStatementWarehouseCases']==96 and report['separateEmptyQueryProbes']==16
  if name=='audit-truss-support-reports.py':
   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
  if name=='audit-ashlar-support-reports.py':
