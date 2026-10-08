@@ -126,3 +126,13 @@ are retained. The four named semantic mutation classes (type filters, duplicate
 elimination, rounding, absent/null) now have actual source mutations detected
 at emission/token/decoder layers. This does not claim native mutant execution
 or replace the release's native evidence and complete branch/runtime audits.
+
+A fresh Python 3.12.14 host execution of all 463 saved Ashlar native-tested
+compiler artifacts passes exact full-response parity, determinism, native
+extension identity and subprocess/PATH-disabled checks. B-007-python/ records
+the extension SHA-256 and log. This reuses the final hash-pinned B-006 extension
+(8e04e6812141e895c8002624d0d81e9288dcc645d918855a2fecc5fd3546d831);
+B-007 changes thus far affect tests, development dependencies and evidence,
+not production compiler source. This is fresh host execution of saved artifacts,
+not a new build or fresh native database execution. Broader runtime/release
+qualification remains open.
