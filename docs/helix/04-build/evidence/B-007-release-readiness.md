@@ -63,3 +63,11 @@ TypeScript declaration exports. `bun run browser:build` uses pinned TypeScript
 cases against the retained test-third WASM. The earlier package inspection remains
 an accurate historical receipt. Compiler WASM remains explicitly supplied by the
 host; no bundled backend artifact, licensing or registry qualification is implied.
+
+The built browser transport is locally packed with `npm pack --ignore-scripts`
+and a writable temporary npm cache. Its four-file archive is extracted into an
+isolated consumer's node_modules. Package-name ESM import, Unicode/surrogate/trap
+controls and strict NodeNext declaration checking pass. Archive/member hashes and
+consumer sources are retained in B-007-browser-package-consumer/. This proves a
+locally consumable built transport archive; no registry upload or bundled compiler
+release occurred. Initial npm path/cache failures are excluded from passing evidence.

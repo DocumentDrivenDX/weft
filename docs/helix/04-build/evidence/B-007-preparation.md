@@ -329,3 +329,9 @@ using the newly emitted transport passes all 1,273 public test-third corpus case
 with exact native-response parity. The retained WASM compiler is unchanged.
 B-007-built-browser/ pins generated output, configuration, manifest and lockfile
 hashes. This is the transport package build, not a bundled compiler/backend release.
+
+The built browser package also passes an isolated packed-archive consumer check:
+ESM resolution by package name, scalar/trap controls and strict declaration use.
+The four archive members and exact bytes are hashed in
+B-007-browser-package-consumer/. This supplements actual-browser compiler parity;
+it does not replace it or qualify a bundled backend/registry release.
