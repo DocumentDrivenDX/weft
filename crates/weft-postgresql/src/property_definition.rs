@@ -1764,6 +1764,47 @@ mod tests {
                 },
             )
             .unwrap();
+            let customer = catalog
+                .record(
+                    None,
+                    &Name {
+                        value: "Customer".into(),
+                        quoted: true,
+                        span: Span { start: 0, end: 0 },
+                    },
+                )
+                .unwrap();
+            let forward_read = catalog
+                .relationship_read(
+                    &customer,
+                    &Name {
+                        value: "orders".into(),
+                        quoted: true,
+                        span: Span { start: 0, end: 0 },
+                    },
+                )
+                .unwrap();
+            let forward_relationship =
+                crate::relationship_definition::RelationshipAdmission::admit(
+                    &final_admission,
+                    0,
+                    &catalog,
+                    &forward_read,
+                    &final_records,
+                    crate::relationship_definition::Selection {
+                        profile: &final_binding["relationships"][0]["relationshipProfile"],
+                        inventory: &inventory,
+                        relation_identity: "edge",
+                        relations: &edge_relations,
+                        columns: &edge_columns,
+                        relationship_type: "rel_type_id",
+                        source_id: "source_id",
+                        source_type: "source_type",
+                        target_id: "target_id",
+                        target_type: "target_type",
+                    },
+                )
+                .unwrap();
             let final_input = weft_core::backend::BindingInput {
                 profile: row_input.profile.clone(),
                 json: final_admission.original_json.clone(),
@@ -1777,10 +1818,16 @@ mod tests {
                 row_numeric_native,
             )
             .unwrap()
-            .with_relationships(BTreeMap::from([(
-                crate::relationship_definition::registration_key(&read),
-                final_relationship,
-            )]))
+            .with_relationships(BTreeMap::from([
+                (
+                    crate::relationship_definition::registration_key(&read),
+                    final_relationship,
+                ),
+                (
+                    crate::relationship_definition::registration_key(&forward_read),
+                    forward_relationship,
+                ),
+            ]))
             .unwrap();
             let mut registry = weft_core::backend::Registry::default();
             registry.register(backend).unwrap();
@@ -1793,8 +1840,11 @@ mod tests {
             let compiler = weft_core::compile::Compiler { registry };
             let mut transport_captures = Vec::new();
             let mut public_captures = Vec::new();
-            for (kind,sql) in [("has","SELECT COUNT(*) AS n FROM Orders o WHERE HAS_RELATED(o.customer, KEY(:customer_id))"),("keys","SELECT o.id, RELATED_KEYS(o.customer,2) AS customers FROM Orders o ORDER BY o.id LIMIT 10")] {
-                let params=if kind=="has" {BTreeMap::from([("customer_id".into(),weft_core::application_resolve::Parameter {family:weft_core::ir::Family::Integer,value:"9007199254740993".into()})])} else {BTreeMap::new()};
+            let mut forward_captures = Vec::new();
+            for (direction,kind,sql) in [("inverse","has","SELECT COUNT(*) AS n FROM Orders o WHERE HAS_RELATED(o.customer, KEY(:customer_id))"),("inverse","keys","SELECT o.id, RELATED_KEYS(o.customer,2) AS customers FROM Orders o ORDER BY o.id LIMIT 10"),("forward","has","SELECT COUNT(*) AS n FROM Customer c WHERE HAS_RELATED(c.orders, KEY(:order_id))"),("forward","keys","SELECT c.id, RELATED_KEYS(c.orders,2) AS orders FROM Customer c ORDER BY c.id LIMIT 10")] {
+                let parameter_name=if direction=="forward" {"order_id"} else {"customer_id"};
+                let parameter_value=if direction=="forward" {"100"} else {"9007199254740993"};
+                let params=if kind=="has" {BTreeMap::from([(parameter_name.into(),weft_core::application_resolve::Parameter {family:weft_core::ir::Family::Integer,value:parameter_value.into()})])} else {BTreeMap::new()};
                 let plan=weft_core::application_resolve::resolve(&catalog,weft_core::application_syntax::parse(sql).unwrap(),params,None).unwrap();
                 let compiled=compiler.registry.compile(&catalog,weft_core::backend::Plan::V02(&plan),&target,&final_input).unwrap();
                 let checks:Vec<_>=compiled.emission.obligations.iter().filter_map(|o|o.parameters.get("sql").and_then(|v|v.as_str())).collect();
@@ -1802,7 +1852,7 @@ mod tests {
                 let mut request=cases[0]["request"].clone();request.as_object_mut().unwrap().remove("readProfile");
                 request["sql"]=json!(sql);request["target"]["backendId"]=json!("truss.postgresql.original");request["target"]["backendVersion"]=json!("0.1.0-candidate");
                 request["target"]["bindingJson"]=json!(final_input.json);request["target"]["bindingSha256"]=json!(final_input.sha256);
-                if kind=="has" {request["parameters"]=json!({"customer_id":{"family":"integer","value":"9007199254740993"}});}
+                if kind=="has" {request["parameters"]=json!({parameter_name:{"family":"integer","value":parameter_value}});}
                 let response:Value=serde_json::from_str(&compiler.compile_json(&request.to_string())).unwrap();
                 assert_eq!(response["status"],"compiled", "{response}");
                 assert_eq!(response["sql"],compiled.emission.sql);
@@ -1811,7 +1861,12 @@ mod tests {
                 assert_eq!(response["obligations"],serde_json::to_value(&compiled.emission.obligations).unwrap());
                 transport_captures.push(json!({"request":request,"response":response}));
 
-                public_captures.push(json!({"kind":kind,"sql":compiled.emission.sql,"columns":compiled.emission.columns,"parameters":compiled.emission.parameters,"checks":checks,"targetCodecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>(),"sourceCodecHex":source_leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()}));
+                let captures=if direction=="forward" {&mut forward_captures} else {&mut public_captures};
+                captures.push(json!({"kind":kind,"sql":compiled.emission.sql,"columns":compiled.emission.columns,"parameters":compiled.emission.parameters,"checks":checks,"targetCodecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>(),"sourceCodecHex":source_leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()}));
+            }
+            if let Ok(path) = std::env::var("WEFT_PUBLIC_ORIGINAL_FORWARD_CAPTURE") {
+                std::fs::write(path, serde_json::to_vec_pretty(&forward_captures).unwrap())
+                    .unwrap();
             }
             if let Ok(path) = std::env::var("WEFT_PUBLIC_ORIGINAL_RELATIONSHIP_CAPTURE") {
                 std::fs::write(path, serde_json::to_vec_pretty(&public_captures).unwrap()).unwrap();

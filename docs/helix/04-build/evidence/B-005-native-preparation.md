@@ -2690,3 +2690,51 @@ composition and actual Python/browser relationship execution remain B-005 work.
 `cargo check -p weft-postgresql --target wasm32-unknown-unknown` also passes
 (`/private/tmp/weft-public-relationship-wasm-check.log`). This is target
 compilation evidence, not browser execution. Formatting and HELIX checks pass.
+
+## Forward traversal, source key uniqueness and finite multiplicity (2026-10-07)
+
+The public original fixture registers both directions against the same binding
+cut and independently admitted native endpoint keys. Forward Customer-to-Orders
+COUNT/HAS_RELATED and keyed RELATED_KEYS reads now resolve from SQL, compile
+through Backend registration and match serialized compiler responses. The
+transport capture contains all four forward/inverse queries; separate forward
+SQL captures preserve independent native verification.
+
+The forward corpus exposed a real source-key gate gap: a HAS_RELATED count did
+not observe duplicate source logical keys unless its outer query was a keyed
+page. Original SELECT lowering now collects complete source keys from all
+selected relationship predicates/projections and emits owner-wide uniqueness
+checks, independently validating each key against its original Record mapping.
+It deduplicates checks by source occurrence/key identity and preserves existing
+page behavior. Source key checks retain guarded exact numeric correspondence;
+no query filter or LIMIT narrows their owner scope.
+
+[18 forward PostgreSQL cases](B-005-relationship-forward-public-native.json)
+and the [18 refreshed inverse cases](B-005-relationship-public-native.json)
+pass. Forward cases prove existential counts across three Customer owners,
+exact ordered Orders key tuples, duplicate-edge multiplicity, lookahead and
+empty results. The duplicate Customer key case now refuses even for a count;
+source/target overflow, codecs, endpoint type and dangling-target controls
+continue refusing before results are executed. Harnesses execute every emitted
+public SQL prerequisite independently of result queries.
+
+A new original-custody fixture changes the authored source multiplicity to 1..2
+and target multiplicity to 0..1, refreshes all existing original source artifacts
+and model digests, and re-admits both Records and relationship directions.
+[Eight PostgreSQL finite cases](B-005-finite-relationship-native.json) prove
+forward checks use target-side bounds while inverse checks use source-side
+bounds. A forward maximum violation, inverse maximum violation and inverse
+minimum violation are independently distinguished; valid layouts pass in both
+directions. This qualifies the finite prerequisite expressions over original
+admissions, not an additional standalone public finite-query/embedding corpus.
+
+New harnesses: `relationship-forward-public-native.py` and
+`finite-relationship-native.py` under `tests/truss-postgresql/`. Captures regenerate
+using absolute `WEFT_PUBLIC_ORIGINAL_FORWARD_CAPTURE` and
+`WEFT_FINITE_RELATIONSHIP_CAPTURE` paths with the original unsigned and finite
+multiplicity Rust tests, respectively. All 133 core/PostgreSQL/runtime tests
+pass with `weft-runtime/test-original`
+(`/private/tmp/weft-forward-finite-full-tests.log`); formatting and HELIX checks
+pass. Composite endpoint keys, alternate homes and owned Python/browser
+relationship composition remain B-005 work. No production qualification is
+inferred from the synthetic PostgreSQL layouts.

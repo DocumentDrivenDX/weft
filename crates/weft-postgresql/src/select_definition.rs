@@ -318,15 +318,70 @@ fn compile_registry<'a>(
         }
     }
     if let Plan::V02(plan) = context.plan {
-        if plan.page_key.is_some() {
-            let scan = prepared.scans.get(&plan.source.occurrence).ok_or_else(|| {
+        let mut selected_keys = BTreeMap::new();
+        if let Some(key) = &plan.page_key {
+            selected_keys.insert(
+                (plan.source.occurrence.clone(), key.id.clone()),
+                key.clone(),
+            );
+        }
+        for predicate in plan
+            .filters
+            .iter()
+            .chain(plan.joins.iter().flat_map(|j| &j.on))
+        {
+            if let weft_core::application_ir::Predicate::HasRelated {
+                scan, relationship, ..
+            } = predicate
+            {
+                selected_keys.insert(
+                    (scan.clone(), relationship.source_key.id.clone()),
+                    relationship.source_key.clone(),
+                );
+            }
+        }
+        for output in &plan.outputs {
+            if let weft_core::application_ir::Expression::RelatedKeys {
+                scan, relationship, ..
+            } = &output.expression
+            {
+                selected_keys.insert(
+                    (scan.clone(), relationship.source_key.id.clone()),
+                    relationship.source_key.clone(),
+                );
+            }
+        }
+        let binding =
+            crate::binding::Admission::parse(&context.binding.json, &context.binding.profile)?;
+        for ((occurrence, _), key) in selected_keys {
+            let owner = std::iter::once(&plan.source)
+                .chain(plan.joins.iter().map(|j| &j.right))
+                .find(|s| s.occurrence == occurrence)
+                .ok_or_else(|| {
+                    Diagnostic::new("WFT-BINDING", "lower", "Key owner occurrence missing")
+                })?;
+            records
+                .get(&serde_json::to_string(&owner.record).map_err(|_| {
+                    Diagnostic::new("WFT-BINDING", "lower", "Key owner encoding refused")
+                })?)
+                .ok_or_else(|| {
+                    Diagnostic::new("WFT-BINDING", "lower", "Key owner admission missing")
+                })?
+                .verify_key_mapping(&binding, context.catalog, &key)?;
+            let scan = prepared.scans.get(&occurrence).ok_or_else(|| {
                 Diagnostic::new("WFT-BINDING", "lower", "Key owner source missing")
             })?;
             let before = serde_json::to_value(parameters.clone().into_slots()).map_err(|_| {
                 Diagnostic::new("WFT-BINDING", "lower", "Key parameter encoding refused")
             })?;
             let mut keys = Vec::new();
-            for field in &plan.order {
+            for (identity, logical_type) in key.fields.iter().zip(&key.types) {
+                let field = weft_core::application_ir::Field {
+                    scan: occurrence.clone(),
+                    identity: identity.clone(),
+                    logical_type: logical_type.clone(),
+                    span: weft_core::ir::Span { start: 0, end: 0 },
+                };
                 let expression = Expression::Field {
                     scan: field.scan.clone(),
                     identity: field.identity.clone(),

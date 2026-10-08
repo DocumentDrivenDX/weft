@@ -752,3 +752,142 @@ impl RelationshipAdmission {
         Ok(())
     }
 }
+#[cfg(test)]
+mod finite_tests {
+    use super::*;
+    use base64::{engine::general_purpose::STANDARD, Engine};
+    #[test]
+    fn finite_original_multiplicity_selects_the_correct_direction() {
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let fixture = cases
+            .iter()
+            .find(|c| c["id"] == "related-page-props")
+            .unwrap();
+        let mut inputs: Vec<weft_core::model::ModuleInput> =
+            serde_json::from_value(fixture["request"]["modules"].clone()).unwrap();
+        let mut document = checked_json(&inputs[0].document_json).unwrap();
+        document["modules"][0]["relationships"][0]["sourceMultiplicity"] = json!({"min":1,"max":2});
+        document["modules"][0]["relationships"][0]["targetMultiplicity"] = json!({"min":0,"max":1});
+        inputs[0].document_json = document.to_string();
+        inputs[0].pin.sha256 = sha256(inputs[0].document_json.as_bytes());
+        let catalog = Catalog::prepare(inputs).unwrap();
+        let mut value = checked_json(
+            fixture["request"]["target"]["bindingJson"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        for group in ["entities", "properties", "keys", "relationships"] {
+            for mapped in value[group].as_array_mut().unwrap() {
+                if mapped.get("source").is_none() {
+                    continue;
+                }
+                let artifact = &mut mapped["source"];
+                artifact["bytesBase64"] = json!(STANDARD.encode(document.to_string().as_bytes()));
+                artifact["sha256"] = json!(sha256(document.to_string().as_bytes()));
+            }
+        }
+        let bytes = document["modules"][0]["relationships"][0].to_string();
+        value["relationships"][0]["acceptedDefinition"]["bytesBase64"] =
+            json!(STANDARD.encode(bytes.as_bytes()));
+        value["relationships"][0]["acceptedDefinition"]["sha256"] = json!(sha256(bytes.as_bytes()));
+        let binding = Admission::parse(
+            &value.to_string(),
+            value["bindingProfileId"].as_str().unwrap(),
+        )
+        .unwrap();
+        let inventory = OriginalArtifact {
+            identity: value["basis"]["layoutInventory"]["identity"]
+                .as_str()
+                .unwrap()
+                .into(),
+            bytes: binding.artifacts["/basis/layoutInventory"].clone(),
+        };
+        let relations = BTreeMap::from([
+            ("objects".into(), "object".into()),
+            ("edges".into(), "edge".into()),
+        ]);
+        let columns: BTreeMap<_, _> = [
+            ("type", "objects", "type_id"),
+            ("rel", "edges", "rel_type_id"),
+            ("src-id", "edges", "source_id"),
+            ("src-type", "edges", "source_type"),
+            ("dst-id", "edges", "target_id"),
+            ("dst-type", "edges", "target_type"),
+        ]
+        .into_iter()
+        .map(|(id, relation, name)| {
+            (
+                id.into(),
+                Column {
+                    relation_identity: relation.into(),
+                    name: name.into(),
+                },
+            )
+        })
+        .collect();
+        let records: BTreeMap<_, _> = (0..2)
+            .map(|index| {
+                let r = RecordAdmission::admit(
+                    &binding,
+                    index,
+                    &catalog,
+                    crate::record_definition::Selection {
+                        inventory: &inventory,
+                        relation_identity: "objects",
+                        discriminator_identity: "type",
+                        relations: &relations,
+                        columns: &columns,
+                    },
+                )
+                .unwrap();
+                (serde_json::to_string(r.identity()).unwrap(), r)
+            })
+            .collect();
+        let mut captures = Vec::new();
+        for (owner, name, inverse) in [("Customer", "orders", false), ("Orders", "customer", true)]
+        {
+            let make_name = |s: &str| Name {
+                value: s.into(),
+                quoted: true,
+                span: Span { start: 0, end: 0 },
+            };
+            let owner = catalog.record(None, &make_name(owner)).unwrap();
+            let read = catalog.relationship_read(&owner, &make_name(name)).unwrap();
+            let admitted = RelationshipAdmission::admit(
+                &binding,
+                0,
+                &catalog,
+                &read,
+                &records,
+                Selection {
+                    profile: &value["relationships"][0]["relationshipProfile"],
+                    inventory: &inventory,
+                    relation_identity: "edges",
+                    relations: &relations,
+                    columns: &columns,
+                    relationship_type: "rel",
+                    source_id: "src-id",
+                    source_type: "src-type",
+                    target_id: "dst-id",
+                    target_type: "dst-type",
+                },
+            )
+            .unwrap();
+            let mut params = Parameters::default();
+            let checks = admitted
+                .integrity_checks(&binding, &read, &mut params)
+                .unwrap();
+            let slots = params.into_slots();
+            assert_eq!(slots[3].value, if inverse { "1" } else { "0" });
+            assert_eq!(slots[4].value, if inverse { "2" } else { "1" });
+            captures.push(json!({"inverse":inverse,"checks":checks,"parameters":slots}));
+        }
+        if let Ok(path) = std::env::var("WEFT_FINITE_RELATIONSHIP_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
+    }
+}

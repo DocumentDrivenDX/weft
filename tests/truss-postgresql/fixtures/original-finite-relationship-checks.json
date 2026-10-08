@@ -1,0 +1,190 @@
+[
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"source_id\" AND weft_guard_from.type_id=weft_guard_edge.\"source_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"target_id\" AND weft_guard_to.type_id=weft_guard_edge.\"target_type\" WHERE weft_guard_edge.\"rel_type_id\"=$1::pg_catalog.int4 AND (weft_guard_edge.\"source_type\" IS DISTINCT FROM $2::pg_catalog.int4 OR weft_guard_edge.\"target_type\" IS DISTINCT FROM $3::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"source_id\"=weft_guard_from.id AND weft_guard_edge.\"source_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$1::pg_catalog.int4 AND weft_guard_edge.\"target_type\"=$3::pg_catalog.int4 WHERE weft_guard_from.type_id=$2::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"source_id\") < $4::pg_catalog.numeric OR pg_catalog.count(weft_guard_edge.\"source_id\") > $5::pg_catalog.numeric) AS weft_guard_cardinality"
+    ],
+    "inverse": false,
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 1,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 2,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 3,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 4,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "maximum"
+        },
+        "position": 5,
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"target_id\" AND weft_guard_from.type_id=weft_guard_edge.\"target_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"source_id\" AND weft_guard_to.type_id=weft_guard_edge.\"source_type\" WHERE weft_guard_edge.\"rel_type_id\"=$1::pg_catalog.int4 AND (weft_guard_edge.\"target_type\" IS DISTINCT FROM $2::pg_catalog.int4 OR weft_guard_edge.\"source_type\" IS DISTINCT FROM $3::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"target_id\"=weft_guard_from.id AND weft_guard_edge.\"target_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$1::pg_catalog.int4 AND weft_guard_edge.\"source_type\"=$3::pg_catalog.int4 WHERE weft_guard_from.type_id=$2::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"target_id\") < $4::pg_catalog.numeric OR pg_catalog.count(weft_guard_edge.\"target_id\") > $5::pg_catalog.numeric) AS weft_guard_cardinality"
+    ],
+    "inverse": true,
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 1,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 2,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 3,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 4,
+        "value": "1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "maximum"
+        },
+        "position": 5,
+        "value": "2"
+      }
+    ]
+  }
+]
