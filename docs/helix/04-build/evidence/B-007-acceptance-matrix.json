@@ -574,6 +574,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/portable-reconciliation.json",
+          "sha256": "25564cb7c0e0fa44a5339f6551d9782ef8e075f382ad725f11028df6e1020f91"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
+          "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -887,6 +895,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/portable-reconciliation.json",
+          "sha256": "25564cb7c0e0fa44a5339f6551d9782ef8e075f382ad725f11028df6e1020f91"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
+          "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -944,6 +960,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
           "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/portable-reconciliation.json",
+          "sha256": "25564cb7c0e0fa44a5339f6551d9782ef8e075f382ad725f11028df6e1020f91"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-scopes/controls.json",
+          "sha256": "f1caf9c4b7b0f718fb5978f1d6709971ba711a12371012de27a646d9d54c7e5d"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

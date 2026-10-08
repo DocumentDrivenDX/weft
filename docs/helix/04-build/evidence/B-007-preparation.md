@@ -546,3 +546,9 @@ its trusted expectation-definition prefix, eliminating the temporary binary
 dependency. portable-reconciliation.json retains the passed 76-row audit.
 Eight executable corruption controls reject row loss/duplication, altered
 numbers/pins/order, duplicate case IDs, and raw/decoded disagreement.
+
+The standard retained-evidence runner now executes ten components, including
+the portable native profile/independent-row audit and its eight corruption
+controls. It verifies 65 referenced evidence hashes. US-003/US-006 matrix
+entries link these receipts. This replay does not promote candidate profiles
+or replace engine/session provenance and host qualification.

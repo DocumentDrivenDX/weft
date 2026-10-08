@@ -8,6 +8,8 @@ components=[
  ('unsigned-reconcile-controls.py','status','controls',15),
  ('reconcile-unsigned-boundaries.py','status','cases',8),
  ('reconcile-truss-archive.py','status','cases',76),
+ ('audit-native-profile-scopes.py','status','independentRowComparisons',76),
+ ('native-scope-controls.py','status','corruptionsRejected',8),
  ('evidence-check.py','state','cases',41),
  ('reconcile-ashlar-application.py','status','cases',112),
  ('reconcile-controls.py','status','controls',11),
@@ -18,8 +20,10 @@ results=[]
 for name,status,count,expected in components:
  run=subprocess.run([sys.executable,str(HERE/name)],cwd=ROOT,capture_output=True,text=True)
  assert run.returncode==0,(name,run.stdout,run.stderr)
- report=json.loads(run.stdout.strip().splitlines()[-1])
+ report=json.loads(run.stdout)
  assert report[status]=='passed' and report[count]==expected,(name,report)
+ if name=='audit-native-profile-scopes.py':
+  assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
  results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
 references={}
 for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
