@@ -275,3 +275,43 @@ fn owning_document_and_selection_limits_are_explicit() {
     assert!(Catalog::prepare(vec![input("bytes",1,Some(4*1024*1024))]).is_ok());
     assert_eq!(Catalog::prepare(vec![input("bytes",1,Some(4*1024*1024+1))]).unwrap_err().code,"WFT-LIMIT");
 }
+
+// @covers US-006-AC2 @covers US-006-AC3
+#[test]
+fn catalog_admission_refusal_branches_are_explicit() {
+    fn input(doc: Value) -> ModuleInput {
+        let raw = doc.to_string();
+        ModuleInput { pin: ModelPin { document_id: "sales-fixture".into(), revision: "branch".into(), umf_version: "0.7.0".into(), sha256: sha256(raw.as_bytes()) }, document_json: raw, selected_module_ids: vec!["sales".into()] }
+    }
+    fn refused(inputs: Vec<ModuleInput>, code: &str, message: &str) {
+        let error = Catalog::prepare(inputs).unwrap_err();
+        assert_eq!(error.code, code);
+        assert_eq!(error.message, message);
+    }
+    assert!(Catalog::prepare(vec![input(document())]).is_ok());
+    let mut i = input(document()); i.pin.sha256 = "0".repeat(64);
+    refused(vec![i],"WFT-PIN","Owning document digest mismatch");
+    let mut i = input(document()); i.document_json = "{".into(); i.pin.sha256 = sha256(i.document_json.as_bytes());
+    refused(vec![i],"WFT-INPUT","Owning document JSON refused");
+    let mut i = input(document()); i.pin.document_id = "different".into();
+    refused(vec![i],"WFT-PIN","Owning document identity mismatch");
+    let mut d = document(); d["umf"] = json!("99.0.0");
+    refused(vec![input(d)],"WFT-MODEL-VERSION","Unsupported UMF profile");
+    let mut i = input(document()); i.pin.umf_version = "99.0.0".into();
+    refused(vec![i],"WFT-MODEL-VERSION","Unsupported UMF profile");
+    let mut i = input(document()); i.pin.revision.clear();
+    refused(vec![i],"WFT-MODEL","Empty revision or repeated owning document");
+    refused(vec![input(document()),input(document())],"WFT-MODEL","Empty revision or repeated owning document");
+    let mut d = document(); d.as_object_mut().unwrap().remove("modules");
+    refused(vec![input(d)],"WFT-MODEL","Document violates the pinned UMF envelope");
+    let mut d = document(); let mut m = d["modules"][0].clone(); m["namespace"] = json!("other"); d["modules"].as_array_mut().unwrap().push(m);
+    refused(vec![input(d)],"WFT-MODEL","Duplicate module identity");
+    let mut d = document(); let mut e = d["modules"][0]["elements"][0].clone(); e["name"] = json!("Other"); d["modules"][0]["elements"].as_array_mut().unwrap().push(e);
+    refused(vec![input(d)],"WFT-MODEL","Duplicate element identity");
+    let mut i = input(document()); i.selected_module_ids.clear();
+    refused(vec![i],"WFT-MODEL","No module selected");
+    let mut i = input(document()); i.selected_module_ids = vec!["sales".into(),"sales".into()];
+    refused(vec![i],"WFT-MODEL","Missing or repeated selected module");
+    let mut i = input(document()); i.selected_module_ids = vec!["missing".into()];
+    refused(vec![i],"WFT-MODEL","Missing or repeated selected module");
+}

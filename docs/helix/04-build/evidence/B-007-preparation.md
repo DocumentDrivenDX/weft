@@ -397,3 +397,11 @@ are in B-007-model-input-boundaries/. Do not combine these into a claimed fresh
 196-test workspace run. The named critical-path review now references the
 executed module limits and terminal checkpoint; native-profile and owner release
 qualification remain independent open gates.
+
+Catalog::prepare now has explicit guard accounting: one valid baseline and 13
+refusal assertions check both code and intended diagnostic message, supplementing
+the seven document/selection/byte boundaries. All 17 explicit refusal conditions
+(including each combined-condition operand) have a named assertion. The fresh
+filtered test executes exactly once and passes; B-007-catalog-branches/ pins test
+and implementation sources. This is one function's branch accounting, not a
+blanket claim about every compiler/schema/JSON function. No compiler behavior changed.
