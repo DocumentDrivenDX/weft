@@ -47,13 +47,21 @@ coverage.
 
 | Criterion | Inspected component evidence | Remaining proof |
 | --- | --- | --- |
-| AC1 | B-007-support-audit: 41 synthetic controls; retained replay: eight components including case-level native receipt reconciliation and corruption refusals | Every applicable case on each advertised native profile must have exact version/domain evidence. Candidate inventory remains unqualified. |
+| AC1 | B-007-support-audit: 41 synthetic controls; retained replay: twelve components, including 76 independent Truss row comparisons across 21 artifact scopes, 65 ordered comparisons, eleven native receipt/custody controls and sixteen host receipt controls | Every applicable case on each advertised native profile must have exact version/domain evidence. Candidate inventory remains unqualified. |
 | AC2 | B-007-properties: stale module SHA refusals; B-007-backend-branches: original-byte/binding/profile guards; public corpus native Python/Chromium byte parity | Final release matrix must identify applicable pin/interface cases and exact feature builds. |
 | AC3 | B-007-properties: Unicode/opaque retention and selected unknown refusal; model/backend branch receipts preserve unselected content and refuse selected meaning | Reconcile original-source retention assertions to the final shared host corpus; no opaque-to-known promotion. |
 | AC4 | B-007-resources and parser receipts: generated malformed/duplicate text and exact limits; B-007-plugin-boundary: 26 atomic failure combinations; B-007-host-resources: seven raw cases through CLI/Python/Chromium | Review the complete critical-path boundary matrix. Seven host cases do not prove every resource or plugin path. |
 
 Receipts are under `docs/helix/04-build/evidence/`. The 30-criterion acceptance
 matrix records hashes and remaining scope; its in-progress status is deliberate.
+The real Truss support-report audit joins all 76 retained compiler artifacts to
+actual Python and Chromium receipts (152 joins), with request/response hashes and
+retained runtime identities. These joins establish compiler transport parity;
+they do not establish database execution by each host or promote a candidate
+profile. The terminal Linux CI checkpoint executes 214 Rust tests across 35
+suites with no ignored or filtered tests. Its retained replay checks twelve
+components; it does not execute native engines or Chromium.
+
 Actual backend engine checks are separate from Python/browser compiler transport
 checks. The latest raw host resource run uses CPython 3.12.14, Chromium
 148.0.7778.96, the recorded candidate CLI and test-third Python/WASM artifacts.
