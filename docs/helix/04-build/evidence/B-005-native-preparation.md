@@ -2868,3 +2868,25 @@ These are synthetic fixtures over pinned draft realization contracts. Mixed
 homes, composite endpoint keys, broader original scalar semantics and released
 registration remain B-005 work. No Truss runtime or production adoption gate is
 introduced.
+
+### Original mixed-home relationship qualification (2026-10-07)
+
+Endpoint home selection is now exercised independently: Customer keys in props
+and Orders keys in native rows, then Customer keys in native rows and Orders
+keys in props. The public Configuration re-admits each selected original
+property against its binding, and every direction/operation has the same logical
+plan and result columns as the all-native reference. The fixture numeric renderer
+selects the admitted access carrier per field instead of assuming one home for
+an entire query; this is trusted Rust test composition, not a model-selected
+executable procedure.
+
+`tests/truss-postgresql/mixed-relationship-native.py` passes 72 PostgreSQL 17.9
+cases across the two home arrangements and four public queries. Each valid
+fixture executes every emitted prerequisite before SQL results; corrupt fixtures
+execute prerequisites and suppress results. Cases cover empty and populated
+owners, exact uint64 and above-JavaScript-safe key values, duplicate edge bags,
+bounded lookahead, hidden overflow at either endpoint, duplicate/missing keys,
+fractional unsigned keys, dangling endpoints and wrong endpoint types. Receipt:
+[B-005-mixed-relationship-native.json](B-005-mixed-relationship-native.json).
+No native Python/browser or production claim is added. Composite endpoint keys
+and broader original scalar semantics remain open B-005 requirements.

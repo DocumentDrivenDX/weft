@@ -1166,10 +1166,18 @@ mod tests {
             parameters: &mut crate::Parameters,
         ) -> weft_core::error::Result<String> {
             match node {
-                weft_core::ir::Expression::Field { .. } => Ok(format!(
-                    "({})::pg_catalog.numeric",
-                    access.unwrap().scalar_storage.as_ref().unwrap().carrier
-                )),
+                weft_core::ir::Expression::Field { .. } => {
+                    let access = access.unwrap();
+                    let carrier = match &access.location {
+                        crate::registered_access::Location::Props(_) => {
+                            access.scalar_storage.as_ref().unwrap().carrier.clone()
+                        }
+                        crate::registered_access::Location::Row(location) => {
+                            location.scalar_observation().native_numeric_text
+                        }
+                    };
+                    Ok(format!("({carrier})::pg_catalog.numeric"))
+                }
                 weft_core::ir::Expression::Literal {
                     value,
                     logical_type,
@@ -1956,45 +1964,74 @@ mod tests {
                 )
                 .unwrap();
             }
-            // Reuse exact logical definitions/comparators over independent props homes.
-            let mut props_binding = final_binding.clone();
-            for selected_index in [index, source_index] {
-                props_binding["properties"][selected_index]["home"] = json!("props");
-                props_binding["properties"][selected_index]["homeDefinition"] =
-                    binding["properties"][selected_index]["homeDefinition"].clone();
-            }
-            let props_json = props_binding.to_string();
+            // Independently choose endpoint homes without changing logical meanings.
+            let native_selections: Vec<_> = owned
+                .properties
+                .iter()
+                .map(|p| {
+                    (
+                        p.relations.clone(),
+                        p.columns.clone(),
+                        p.row_join.clone(),
+                        p.obligations.clone(),
+                    )
+                })
+                .collect();
             owned.native = scalar_native;
-            for property in &mut owned.properties {
-                property.relations = relations.clone();
-                property.columns = columns.clone();
-                property.row_join = None;
-                property.obligations = BTreeSet::new();
-            }
             let mut props_captures = Vec::new();
-            for transport in &transport_captures {
-                let mut request = transport["request"].clone();
-                request["target"]["bindingJson"] = json!(props_json);
-                request["target"]["bindingSha256"] = json!(sha256(props_json.as_bytes()));
-                let response: Value =
-                    serde_json::from_str(&owned.compile_json(&request.to_string())).unwrap();
-                assert_eq!(response["status"], "compiled", "{response}");
-                assert_eq!(response["columns"], transport["response"]["columns"]);
-                assert_eq!(
-                    response["logicalPlan"],
-                    transport["response"]["logicalPlan"]
-                );
-                let checks: Vec<_> = response["obligations"]
-                    .as_array()
-                    .unwrap()
-                    .iter()
-                    .filter_map(|o| o["parameters"].get("sql").and_then(|v| v.as_str()))
-                    .collect();
-                let sql = request["sql"].as_str().unwrap();
-                props_captures.push(json!({"direction":if sql.contains("FROM Customer") {"forward"} else {"inverse"},"kind":if sql.contains("COUNT") {"has"} else {"keys"},"sql":response["sql"],"columns":response["columns"],"parameters":response["parameters"],"checks":checks}));
+            let mut mixed_captures = Vec::new();
+            for props_indices in [vec![index, source_index], vec![index], vec![source_index]] {
+                let mut props_binding = final_binding.clone();
+                for (property, saved) in owned.properties.iter_mut().zip(&native_selections) {
+                    property.relations = saved.0.clone();
+                    property.columns = saved.1.clone();
+                    property.row_join = saved.2.clone();
+                    property.obligations = saved.3.clone();
+                    if props_indices.contains(&property.index) {
+                        props_binding["properties"][property.index]["home"] = json!("props");
+                        props_binding["properties"][property.index]["homeDefinition"] =
+                            binding["properties"][property.index]["homeDefinition"].clone();
+                        property.relations = relations.clone();
+                        property.columns = columns.clone();
+                        property.row_join = None;
+                        property.obligations = BTreeSet::new();
+                    }
+                }
+                let props_json = props_binding.to_string();
+                for transport in &transport_captures {
+                    let mut request = transport["request"].clone();
+                    request["target"]["bindingJson"] = json!(props_json);
+                    request["target"]["bindingSha256"] = json!(sha256(props_json.as_bytes()));
+                    let response: Value =
+                        serde_json::from_str(&owned.compile_json(&request.to_string())).unwrap();
+                    assert_eq!(response["status"], "compiled", "{response}");
+                    assert_eq!(response["columns"], transport["response"]["columns"]);
+                    assert_eq!(
+                        response["logicalPlan"],
+                        transport["response"]["logicalPlan"]
+                    );
+                    let checks: Vec<_> = response["obligations"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .filter_map(|o| o["parameters"].get("sql").and_then(|v| v.as_str()))
+                        .collect();
+                    let sql = request["sql"].as_str().unwrap();
+                    let capture = json!({"direction":if sql.contains("FROM Customer") {"forward"} else {"inverse"},"kind":if sql.contains("COUNT") {"has"} else {"keys"},"sql":response["sql"],"columns":response["columns"],"parameters":response["parameters"],"checks":checks,"customerHome":if props_indices.contains(&index) {"props"} else {"row"},"orderHome":if props_indices.contains(&source_index) {"props"} else {"row"},"customerCodecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>(),"orderCodecHex":source_leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()});
+                    if props_indices.len() == 2 {
+                        props_captures.push(capture);
+                    } else {
+                        mixed_captures.push(capture);
+                    }
+                }
             }
-            if let Ok(path) = std::env::var("WEFT_ORIGINAL_PROPS_RELATIONSHIP_CAPTURE") {
-                std::fs::write(path, serde_json::to_vec_pretty(&props_captures).unwrap()).unwrap();
+            for (variable, captures) in [
+                ("WEFT_ORIGINAL_PROPS_RELATIONSHIP_CAPTURE", &props_captures),
+                ("WEFT_ORIGINAL_MIXED_RELATIONSHIP_CAPTURE", &mixed_captures),
+            ] {
+                if let Ok(path) = std::env::var(variable) {
+                    std::fs::write(path, serde_json::to_vec_pretty(captures).unwrap()).unwrap();
+                }
             }
             let mut wrong = read.clone();
             wrong.target_key.id = "wrong".into();
