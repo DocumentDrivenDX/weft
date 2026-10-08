@@ -278,3 +278,33 @@ fn language_and_binding_root_guards_precede_backend_validation() {
         }
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC4
+#[test]
+fn selected_identity_coverage_is_revision_exact() {
+    struct Partial { mode:u8, inner:Third }
+    impl Backend for Partial {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{self.inner.describe()}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>> {
+            let mut v=self.inner.validate_binding(c)?;
+            let identities=match self.mode%2 {0=>&mut v.coverage.records,_=>&mut v.coverage.fields};
+            assert!(!identities.is_empty(),"fixture must select this identity class");
+            if self.mode<2 {identities.clear();} else {identities[0].revision="different-revision".into();}
+            Ok(v)
+        }
+        fn assess(&self,_:&Context<'_>,_:&Mapping)->weft_core::error::Result<Vec<Assessment>>{panic!("incomplete mapping must not reach assessment")}
+        fn lower(&self,_:&Context<'_>,_:&Mapping)->weft_core::error::Result<Select>{panic!("incomplete mapping must not lower")}
+        fn emit(&self,_:&Context<'_>,_:&Select)->weft_core::error::Result<Emission>{panic!("incomplete mapping must not emit")}
+    }
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for plan in [Plan::V01(&p01),Plan::V02(&p02)] {
+        for mode in 0..4 {
+            let mut r=Registry::default();r.register(Partial{mode,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+            let e=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap_err();
+            assert_eq!(e.code,"WFT-BINDING","mode {mode}");
+            assert_eq!(e.message,"Backend mapping omits a selected record, field, type or relationship identity","mode {mode}");
+        }
+    }
+}

@@ -472,3 +472,9 @@ B-007-language-root-branches/ retains 14 exact refusal assertions across
 both plan versions: an unaccepted dialect/IR pair and six non-object binding
 roots each. A panicking backend fixture proves refusal precedes validation.
 The fresh named test passes; this does not establish all dispatch branches.
+
+B-007-coverage-branches/ records eight executed coverage refusals for missing
+records/fields and revision mismatches in both plan versions. Panicking later
+phases detect accidental assessment, lowering, or emission. The fixture does
+not select named types or relationships; those coverage arms remain separate
+audit work. The initial overbroad type-fixture assertion was corrected.
