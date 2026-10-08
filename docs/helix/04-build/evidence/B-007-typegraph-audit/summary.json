@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "testsExecuted": 15,
+  "ignored": 0,
+  "filtered": 0,
+  "sourceHashes": {
+    "tests/application/model.rs": "2ee83563cf700135899c4984a404fcea6d56661dff73f07e6e524f7d165b6205",
+    "crates/weft-core/src/application_model.rs": "240a65d6d8f4aacfea6c6e8aadb6d35c8af32602eb3ad3d1c72fef14b769ab5f",
+    "spec/upstream/umf-0.7.0.schema.json": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813"
+  },
+  "logSha256": "7db65e347adf0e2fcd178c73bd47c570369124973ecf8947122531d30c861951",
+  "scope": "All application-model integration tests. Explicit envelope-versus-semantic refusal stage assertions; no native execution, support promotion, or complete critical-branch qualification."
+}

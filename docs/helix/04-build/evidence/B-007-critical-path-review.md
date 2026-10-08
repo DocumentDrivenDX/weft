@@ -113,3 +113,20 @@ corpus and the 303 initial positive queries in explicit IR 0.2. Added assertions
 cover named-parameter, expanded-entity, scan-sensitive grouping and read-profile
 recognizer gaps. Parser/exact/type-graph and backend lowering accounting remain
 separate; this scoped completion does not itself qualify native support.
+
+## Selected graph and endpoint admission checkpoint
+
+B-007-typegraph-audit retains all 15 application-model integration tests passing,
+with no ignored or filtered cases. New checks assert missing ordered members,
+non-Field members, missing selected names, container item role, structured target
+role and scalar/reference ambiguity, missing/unowned member selection and
+by-name/by-identity equivalence. Relationship checks cover polymorphic endpoints,
+non-Record target, inconsistent source multiplicity, source-key fallback and
+ambiguity, and non-member key fields.
+
+Duplicate member/key references, scalar array shapes and facets on containers
+are rejected by the pinned UMF envelope before semantic graph construction.
+Tests assert that exact admission stage without claiming execution of downstream
+defensive guards. Existing recursion, unknown meaning and exact depth/identity
+boundaries remain in this unfiltered suite. Exact-value, parser and adapter
+family review and native supported-profile qualification remain open.
