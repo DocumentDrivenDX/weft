@@ -32,10 +32,10 @@ slice; production and release qualification remain separate.
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | passed candidate compiler scope |
-| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | passed candidate compiler scope |
-| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | passed candidate compiler scope |
-| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | passed candidate compiler scope |
+| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | passed in qualified compiler scope |
+| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | passed in qualified compiler scope |
+| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | passed in qualified compiler scope |
+| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | passed in qualified compiler scope |
 
 ## Executable Proof and Data
 
@@ -112,3 +112,7 @@ authority/storage or released generic embedding-registration claim is made.
 B-007 owns release qualification; Truss runtime adoption is not a compiler gate.
 The initial `story-test-allocation.json` remains a bootstrap planning allocation,
 not this execution record.
+
+## Current acceptance determination
+
+The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.

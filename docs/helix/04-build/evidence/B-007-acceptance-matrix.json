@@ -1,12 +1,12 @@
 {
   "auditVersion": "weft-acceptance-audit/0.1.0",
-  "status": "in-progress",
+  "status": "acceptance-complete",
   "criteria": [
     {
       "id": "US-001-AC1",
       "requiredAssertion": "Identity-qualified plan; duplicate join rows contribute to SUM.",
       "plannedTest": "join_group_sum",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002-frontend.md",
@@ -31,15 +31,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+      "limitsAndRemainingAudit": "Versioned 0.1/0.2 language and independent exact bags; unsupported constructs refuse.",
+      "acceptanceReason": "Independent identity-qualified plans and duplicate-sensitive relational bags; native join/SUM and source DISTINCT mutant establish multiplicity."
     },
     {
       "id": "US-001-AC2",
       "requiredAssertion": "Distinct identities; no fallback to first match.",
       "plannedTest": "module_name_resolution",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002-frontend.md",
@@ -64,15 +81,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+      "limitsAndRemainingAudit": "Versioned 0.1/0.2 language and independent exact bags; unsupported constructs refuse.",
+      "acceptanceReason": "Independent ambiguous-module and name/identity refusal cases, catalog admission and direct resolver guards establish no first-match fallback."
     },
     {
       "id": "US-001-AC3",
       "requiredAssertion": "Unsupported nodes never pass from parser to lowering.",
       "plannedTest": "dialect_refusals",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002-frontend.md",
@@ -109,15 +143,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
           "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+      "limitsAndRemainingAudit": "Versioned 0.1/0.2 language and independent exact bags; unsupported constructs refuse.",
+      "acceptanceReason": "Initial 333 expected refusals, parser family ledger and downstream panic fixtures establish rejection before lowering."
     },
     {
       "id": "US-001-AC4",
       "requiredAssertion": "Exact independent result bags and nullable empty SUM.",
       "plannedTest": "relational_exactness",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002-frontend.md",
@@ -150,15 +201,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
           "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
+      "limitsAndRemainingAudit": "Versioned 0.1/0.2 language and independent exact bags; unsupported constructs refuse.",
+      "acceptanceReason": "13 independent initial bags and 1200 expanded relational assertions, native empty SUM/COUNT and exact numeric domains establish exact bag behavior."
     },
     {
       "id": "US-002-AC1",
       "requiredAssertion": "No frontend backend-ID switch; explicit registry selection.",
       "plannedTest": "third_backend_registration",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
@@ -243,15 +311,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+      "limitsAndRemainingAudit": "Trusted registered library plugins and exact build-time feature/version selection; no executable model plugins.",
+      "acceptanceReason": "Third synthetic Backend registers through the explicit registry; common frontend remains independent of physical backend identities."
     },
     {
       "id": "US-002-AC2",
       "requiredAssertion": "No fallback; missing manifest/interface versions identify refusal.",
       "plannedTest": "capability_negotiation",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
@@ -376,15 +461,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+      "limitsAndRemainingAudit": "Trusted registered library plugins and exact build-time feature/version selection; no executable model plugins.",
+      "acceptanceReason": "Manifest/dispatch/version boundaries and six exact qualified profile/version mismatch controls refuse without fallback."
     },
     {
       "id": "US-002-AC3",
       "requiredAssertion": "Candidate cannot masquerade as verified conformance.",
       "plannedTest": "candidate_qualification",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
@@ -473,15 +571,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-derived-capabilities/summary.json",
           "sha256": "47b01aef388f430edc78cfbed1a64214ebf4282bac7e32f3ec8da62b45c8ad85"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+      "limitsAndRemainingAudit": "Trusted registered library plugins and exact build-time feature/version selection; no executable model plugins.",
+      "acceptanceReason": "Historical Candidate opt-in remains explicit; separate Qualified registrations require hashed native evidence and preserve Unsupported dispositions."
     },
     {
       "id": "US-002-AC4",
       "requiredAssertion": "Injection/version/failure guards; trusted registration only.",
       "plannedTest": "plugin_trust_boundary",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-003-backend-interface.md",
@@ -590,15 +705,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
+      "limitsAndRemainingAudit": "Trusted registered library plugins and exact build-time feature/version selection; no executable model plugins.",
+      "acceptanceReason": "Trusted registration, hostile bindings and 26 atomic plugin failure combinations; model content never loads code."
     },
     {
       "id": "US-003-AC1",
       "requiredAssertion": "Native prepared SQL and independent exact result agreement.",
       "plannedTest": "truss_native_corpus",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
@@ -635,15 +767,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
           "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+      "limitsAndRemainingAudit": "PostgreSQL 17.9, UTF8/C and synthetic weft-truss-fixtures/0.1 realization; execution remains conditional on emitted host obligations.",
+      "acceptanceReason": "Native PostgreSQL fixture executions and independently reconstructed results join to exact Qualified artifacts; prepared bound parameters retain authored values."
     },
     {
       "id": "US-003-AC2",
       "requiredAssertion": "Stable property identities; storage ID is not logical key.",
       "plannedTest": "truss_mapping_boundaries",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
@@ -676,15 +825,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+      "limitsAndRemainingAudit": "PostgreSQL 17.9, UTF8/C and synthetic weft-truss-fixtures/0.1 realization; execution remains conditional on emitted host obligations.",
+      "acceptanceReason": "Stable logical identities, authored key paging and explicit JSONB/typed/tree homes; storage object ID cannot replace the logical key."
     },
     {
       "id": "US-003-AC3",
       "requiredAssertion": "Selected unknown/native unsupported meanings remain explicit.",
       "plannedTest": "truss_semantic_refusals",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
@@ -721,15 +887,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
           "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+      "limitsAndRemainingAudit": "PostgreSQL 17.9, UTF8/C and synthetic weft-truss-fixtures/0.1 realization; execution remains conditional on emitted host obligations.",
+      "acceptanceReason": "Unknown selected extensions/homes/native-null and hostile binding tests refuse; every admitted numeric domain is natively exercised in both scalar homes."
     },
     {
       "id": "US-003-AC4",
       "requiredAssertion": "No default JSON/float decoding; context obligations observable.",
       "plannedTest": "truss_host_obligations",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
@@ -786,15 +969,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
+      "limitsAndRemainingAudit": "PostgreSQL 17.9, UTF8/C and synthetic weft-truss-fixtures/0.1 realization; execution remains conditional on emitted host obligations.",
+      "acceptanceReason": "Exact text/NUMERIC decoders and context obligations preserved; actual buffered host driver refuses invalid transport, integrity, context and publication."
     },
     {
       "id": "US-004-AC1",
       "requiredAssertion": "Exact native corpus comparison; no smaller-engine substitute.",
       "plannedTest": "ashlar_native_corpus",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
@@ -911,15 +1111,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
           "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+      "limitsAndRemainingAudit": "Databricks SQL 2026.39 exact u/r builds, ashlar-delta/0.3 admitted homes, UTF8_BINARY and ANSI exact-or-error; no typed compound or unsigned64 BIGINT claim.",
+      "acceptanceReason": "Current Databricks SQL 2026.39 native receipts and independent reconciliations preserve exact u/r build identity; no substitute engine is used as qualification."
     },
     {
       "id": "US-004-AC2",
       "requiredAssertion": "Explicit accepted layout; no inferred JSONB or edge deduplication.",
       "plannedTest": "ashlar_layout_boundaries",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
@@ -988,15 +1205,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-reconciliation/summary.json",
           "sha256": "0149fa2c6bea90f5c9b1f440bb16f58eee5ca01d15ca01617819f08730994b6f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+      "limitsAndRemainingAudit": "Databricks SQL 2026.39 exact u/r builds, ashlar-delta/0.3 admitted homes, UTF8_BINARY and ANSI exact-or-error; no typed compound or unsigned64 BIGINT claim.",
+      "acceptanceReason": "Owner ashlar-delta/0.3 props and explicit STRING/BIGINT homes, presence columns and parallel relationship bags; no inferred JSONB or duplicate elimination."
     },
     {
       "id": "US-004-AC3",
       "requiredAssertion": "Native settings, domain boundaries and error outcomes agree.",
       "plannedTest": "ashlar_numeric_collation",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
@@ -1097,15 +1331,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
           "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Current native Databricks SQL 2026.39 builds observed for scalar/application/value/relationship corpora, every signed/unsigned BIGINT width and every decimal precision/scale pair. Candidate scope; native supported registration and final branch/domain accounting remain open. Authority/lifecycle attestations are synthetic."
+      "limitsAndRemainingAudit": "Databricks SQL 2026.39 exact u/r builds, ashlar-delta/0.3 admitted homes, UTF8_BINARY and ANSI exact-or-error; no typed compound or unsigned64 BIGINT claim.",
+      "acceptanceReason": "All signed BIGINT widths, admitted unsigned widths and 434 decimals execute on the identified warehouse; overflow, null, range, UTF8_BINARY and separate ANSI observations are qualified precisely."
     },
     {
       "id": "US-004-AC4",
       "requiredAssertion": "No mixed-publication/service-principal fallback.",
       "plannedTest": "ashlar_publication_obligations",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
@@ -1134,15 +1385,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+      "limitsAndRemainingAudit": "Databricks SQL 2026.39 exact u/r builds, ashlar-delta/0.3 admitted homes, UTF8_BINARY and ANSI exact-or-error; no typed compound or unsigned64 BIGINT claim.",
+      "acceptanceReason": "Actual buffered driver and host controls reject mixed custody/publication/principal fallback; compiler emits exact conditional obligations, not authorization attestations."
     },
     {
       "id": "US-005-AC1",
       "requiredAssertion": "Direct extension import/call; no Node/Bun/server required.",
       "plannedTest": "python_inprocess",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
@@ -1227,15 +1495,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+      "limitsAndRemainingAudit": "Observed CPython 3.12.14 macOS ARM64 ABI3 and Chromium 148.0.7778.96 WASM artifacts; wider platforms and distributable packages remain unqualified.",
+      "acceptanceReason": "Fresh actual CPython 3.12.14 ABI3 native extension compiles 2181 Qualified requests in-process with process launches disabled and PATH empty; wheel content audit excludes JS/WASM sidecars."
     },
     {
       "id": "US-005-AC2",
       "requiredAssertion": "Actual browser instance; identical canonical reports.",
       "plannedTest": "wasm_browser_parity",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
@@ -1320,15 +1601,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+      "limitsAndRemainingAudit": "Observed CPython 3.12.14 macOS ARM64 ABI3 and Chromium 148.0.7778.96 WASM artifacts; wider platforms and distributable packages remain unqualified.",
+      "acceptanceReason": "Actual Chromium 148.0.7778.96 loads hash-pinned WASM and matches all 2181 complete public Rust artifacts; network is disabled after load."
     },
     {
       "id": "US-005-AC3",
       "requiredAssertion": "No binary64 conversion; parameter/result metadata complete.",
       "plannedTest": "artifact_exact_transport",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
@@ -1405,15 +1699,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+      "limitsAndRemainingAudit": "Observed CPython 3.12.14 macOS ARM64 ABI3 and Chromium 148.0.7778.96 WASM artifacts; wider platforms and distributable packages remain unqualified.",
+      "acceptanceReason": "Complete byte parity preserves exact numeric strings, parameter types, result descriptors, pins and obligations; no metadata normalization or binary64 conversion."
     },
     {
       "id": "US-005-AC4",
       "requiredAssertion": "Thin wrappers never recreate resolver/lowering semantics.",
       "plannedTest": "wrapper_failure_parity",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
@@ -1494,15 +1801,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
+      "limitsAndRemainingAudit": "Observed CPython 3.12.14 macOS ARM64 ABI3 and Chromium 148.0.7778.96 WASM artifacts; wider platforms and distributable packages remain unqualified.",
+      "acceptanceReason": "Thin native/WASM wrappers delegate shared Rust; actual trap normalization retires the failed instance, and invalid types/surrogates/resources refuse atomically."
     },
     {
       "id": "US-006-AC1",
       "requiredAssertion": "Missing/failed/skipped evidence cannot count as supported.",
       "plannedTest": "support_evidence_audit",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
@@ -1659,15 +1979,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+      "limitsAndRemainingAudit": "Exact pins, original content, finite semantic-family assertions and deterministic generators; no private-branch percentage or every-query cross-product claim.",
+      "acceptanceReason": "41 synthetic evidence controls, real native support-report reconciliations, semantic rehash corruption controls, distinct Candidate/Qualified declarations and all 27 observed native capabilities per backend."
     },
     {
       "id": "US-006-AC2",
       "requiredAssertion": "SHA-256 bytes and identity guards; no implicit migrations.",
       "plannedTest": "pin_and_version_guards",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
@@ -1772,15 +2105,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
           "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+      "limitsAndRemainingAudit": "Exact pins, original content, finite semantic-family assertions and deterministic generators; no private-branch percentage or every-query cross-product claim.",
+      "acceptanceReason": "Original byte SHA, binding/profile/interface identity and immutable registered manifest guards refuse stale/changed versions without migration."
     },
     {
       "id": "US-006-AC3",
       "requiredAssertion": "Original bytes/content recoverable; no opaque-to-known inference.",
       "plannedTest": "unknown_content_retention",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
@@ -1845,15 +2195,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+          "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
         }
       ],
-      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+      "limitsAndRemainingAudit": "Exact pins, original content, finite semantic-family assertions and deterministic generators; no private-branch percentage or every-query cross-product claim.",
+      "acceptanceReason": "Source-retention audit recovers 304 original documents from 303 positive resolutions; Unicode/opaque properties and selected-unknown refusals prevent opaque-to-known inference."
     },
     {
       "id": "US-006-AC4",
       "requiredAssertion": "Duplicate keys, bounds, nesting, malformed text and plugin failures.",
       "plannedTest": "resource_and_fuzz_guards",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-007-support-audit/summary.json",
@@ -1966,15 +2329,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
+      "limitsAndRemainingAudit": "Exact pins, original content, finite semantic-family assertions and deterministic generators; no private-branch percentage or every-query cross-product claim.",
+      "acceptanceReason": "Deterministic malformed JSON/parser generators, exact raw limits, semantic-family refusal assertions, plugin failures and seven actual resource cases on each qualified host."
     },
     {
       "id": "US-007-AC1",
       "requiredAssertion": "Complete declared-member order and exact absent/null/value/list/structured descriptors.",
       "plannedTest": "entity_members",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2055,15 +2431,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Fresh Truss 76-case application and Ashlar compound/value native corpora independently compare ordered complete members, absence/value/list/structured graphs and exact numeric leaves; native null remains explicitly refused."
     },
     {
       "id": "US-007-AC2",
       "requiredAssertion": "Stable ascending complete-key order, exact resume comparison and enforced bound; no silent cut.",
       "plannedTest": "keyset_pages",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2144,15 +2533,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Native single/composite complete-key multi-page traversal across props/typed homes, exact large keys and terminal empty pages; parser enforces bounds 1..1000."
     },
     {
       "id": "US-007-AC3",
       "requiredAssertion": "COUNT(*) preserves duplicates; empty global count 0, grouped empty output empty.",
       "plannedTest": "exact_count",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2225,15 +2627,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Native duplicate-preserving global/join/group COUNT, global empty zero and grouped empty no rows; eight added grouped-empty cases close the explicit empty-group boundary."
     },
     {
       "id": "US-007-AC4",
       "requiredAssertion": "Existential key filtering, bounded related keys with exact truncation and inverse resolution.",
       "plannedTest": "related_reads",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2306,15 +2721,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Native forward/inverse/existential related reads preserve exact key tuples, parallel bags and truncation; Ashlar 28 positive/24 prequery refusal outcomes and Truss independently expected cases."
     },
     {
       "id": "US-007-AC5",
       "requiredAssertion": "Marker values match resolved UMF types and remain bound data; literal quoting/exactness is normative.",
       "plannedTest": "typed_parameters",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2363,15 +2791,28 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Marker domain intersection, exact literal syntax and native injection-text/composite cursor/Unicode cases preserve parameters as bound data."
     },
     {
       "id": "US-007-AC6",
       "requiredAssertion": "Named subsets have independent positive/refusal fixtures and identify excluded constructs without changing valid syntax.",
       "plannedTest": "recognizable_profiles",
-      "assessment": "component-evidence-present; full-release-closure-unproven",
+      "assessment": "passed",
       "evidence": [
         {
           "path": "docs/helix/04-build/evidence/B-002A-application-reads.md",
@@ -2428,25 +2869,32 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-criterion-review.json",
+          "sha256": "74427a3fd633cd0f1b6ce9aab8972738625b8c287128a624419d3a258a76823b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+          "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
         }
       ],
-      "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
+      "limitsAndRemainingAudit": "Named 0.2 admitted application-read graphs/homes, explicit absence and native-null refusal; production authorization/publication remains host-owned.",
+      "acceptanceReason": "Named 0.1/0.2 syntax/refusal profiles retain the original corpus unchanged; nine application resolver tests include all 303 original positive queries in explicit IR0.2 and the 620-case application corpus."
     }
   ],
   "unresolvedReleaseGates": [
-    "full release acceptance determination for all 30 criteria",
-    "complete individual critical supported/refused branch-to-assertion accounting",
-    "real qualified support reports with native/profile/provenance evidence",
-    "qualified native profiles required by implementation-plan exit",
     "owner license and release maintainer/registry ownership decisions",
     "final release-artifact qualification before distribution"
   ],
-  "meaning": "Evidence-backed component index and explicit gaps. No criterion is declared release-complete merely because a test or summary exists.",
+  "meaning": "All 30 P0 compiler criteria pass within the exact language/model/native/host scopes indexed here. Final CI and PR merge remain required; no distributed package or production compatibility claim.",
   "unresolvedMergeGates": [
-    "full release acceptance determination for all 30 criteria",
-    "complete individual critical supported/refused branch-to-assertion accounting",
-    "real qualified support reports with native/profile/provenance evidence",
-    "qualified native profiles required by implementation-plan exit"
+    "terminal corrected CI at the final PR head",
+    "final PR review and merge"
   ],
   "distributionOnlyGates": [
     "owner license and release maintainer/registry ownership decisions",

@@ -1,5 +1,5 @@
 {
-  "status": "component-review-complete; final-execution-and-CI-pending",
+  "status": "acceptance-complete; CI-and-merge-pending",
   "criteria": [
     {
       "id": "US-001-AC1",
@@ -31,8 +31,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-001-AC2",
@@ -64,8 +69,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-001-AC3",
@@ -109,8 +119,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
           "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-001-AC4",
@@ -150,8 +165,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-resolver-branch-accounting.md",
           "sha256": "50507cae1952867728644145d50bc3f6e2956cc22d8a2221daa6080b3c59f291"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-002-AC1",
@@ -243,8 +263,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-002-AC2",
@@ -376,8 +401,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-002-AC3",
@@ -473,8 +503,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-derived-capabilities/summary.json",
           "sha256": "47b01aef388f430edc78cfbed1a64214ebf4282bac7e32f3ec8da62b45c8ad85"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-002-AC4",
@@ -590,8 +625,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-003-AC1",
@@ -635,8 +675,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
           "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-003-AC2",
@@ -676,8 +721,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-003-AC3",
@@ -721,8 +771,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
           "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-003-AC4",
@@ -786,8 +841,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-004-AC1",
@@ -911,8 +971,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
           "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-004-AC2",
@@ -988,8 +1053,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-reconciliation/summary.json",
           "sha256": "0149fa2c6bea90f5c9b1f440bb16f58eee5ca01d15ca01617819f08730994b6f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-004-AC3",
@@ -1097,8 +1167,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
           "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-004-AC4",
@@ -1134,8 +1209,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
           "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-005-AC1",
@@ -1227,8 +1307,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-005-AC2",
@@ -1320,8 +1405,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-005-AC3",
@@ -1405,8 +1495,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-005-AC4",
@@ -1494,8 +1589,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-006-AC1",
@@ -1659,8 +1759,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-006-AC2",
@@ -1772,8 +1877,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
           "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-006-AC3",
@@ -1845,8 +1955,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
           "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-006-AC4",
@@ -1966,8 +2081,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC1",
@@ -2055,8 +2175,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC2",
@@ -2144,8 +2269,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC3",
@@ -2225,8 +2355,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC4",
@@ -2306,8 +2441,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC5",
@@ -2363,8 +2503,13 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     },
     {
       "id": "US-007-AC6",
@@ -2428,18 +2573,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
           "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+          "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
         }
-      ]
+      ],
+      "assessment": "passed"
     }
   ],
   "remainingMergeGates": [
-    "terminal current-source candidate and qualified workspace runs",
-    "terminal corrected remote CI",
-    "final acceptance status reconciliation and PR review/merge"
+    "terminal corrected CI at the final PR head",
+    "final PR review and merge"
   ],
   "scope": "All 30 planned P0 outcomes at the versioned compiler and native/host boundaries. Conditional host authorization/publication and exact engine settings remain obligations; no production adoption or published distribution claim.",
   "distributionOnlyGates": [
     "owner license and release maintainer/registry ownership decisions",
     "final release-artifact qualification before distribution"
-  ]
+  ],
+  "finalWorkspace": {
+    "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+    "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+  }
 }

@@ -1,7 +1,7 @@
 """Replay B-007 saved-evidence controls; never advertises full release qualification.
 @covers US-006-AC1 @covers US-006-AC2
 """
-import hashlib,json,pathlib,subprocess,sys
+import gzip,hashlib,json,pathlib,re,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
@@ -96,13 +96,39 @@ for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
  visit(value)
  if name=='B-007-acceptance-matrix.json':
   assert len(value['criteria'])==30 and len({r['id'] for r in value['criteria']})==30
-  assert value['status']=='in-progress'
+  assert value['status']=='acceptance-complete'
+  assert all(r['assessment']=='passed' and r['acceptanceReason'] and r['evidence'] for r in value['criteria'])
+  assert value['unresolvedMergeGates']==['terminal corrected CI at the final PR head','final PR review and merge']
  else:
-  assert value['status']=='native-compiler-and-host-qualified; final-acceptance-pending'
+  assert value['status']=='compiler-conformance-qualified'
   assert len(value['supportedNativeProfiles'])==2
   assert {p['targetProfile'] for p in value['supportedNativeProfiles']}=={'pg17.9-qualified-fixtures','dbsql2026.39-qualified'}
   assert all(p['backendVersion']=='0.1.0-qualified' for p in value['supportedNativeProfiles'])
   assert value['releasedPackages'] is False
+workspace_path=ROOT/'docs/helix/04-build/evidence/B-007-workspace-qualified-final'
+workspace=json.loads((workspace_path/'summary.json').read_text())
+assert workspace['status']=='passed'
+source_bytes=(workspace_path/'sources.json').read_bytes()
+assert hashlib.sha256(source_bytes).hexdigest()==workspace['sourceManifestSha256']
+for name,sha in json.loads(source_bytes).items():
+ assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==sha,name
+for composition,count in [('candidate',241),('qualified',242)]:
+ receipt=workspace[composition]
+ assert receipt['status']=='passed' and receipt['exitCode']==0 and receipt['testsExecuted']==count and receipt['terminalSuites']==35 and receipt['ignored']==receipt['filtered']==0
+ raw=gzip.decompress((workspace_path/(composition+'.log.gz')).read_bytes())
+ assert hashlib.sha256(raw).hexdigest()==receipt['logSha256']
+ suites=re.findall(rb'test result: (\w+)\. (\d+) passed; (\d+) failed; (\d+) ignored; (\d+) measured; (\d+) filtered out',raw)
+ assert len(suites)==35 and sum(int(r[1]) for r in suites)==count
+ assert all(r[0]==b'ok' and all(int(n)==0 for n in r[2:]) for r in suites)
+review=json.loads((ROOT/'docs/helix/04-build/evidence/B-007-final-criterion-review.json').read_text())
+matrix=json.loads((ROOT/'docs/helix/04-build/evidence/B-007-acceptance-matrix.json').read_text())
+assert review['status']=='acceptance-complete; CI-and-merge-pending'
+assert {r['id'] for r in review['criteria']}=={r['id'] for r in matrix['criteria']}
+for row in review['criteria']:
+ assert row['assessment']=='passed' and row['reason']
+ for reference in row['evidence']:
+  assert hashlib.sha256((ROOT/reference['path']).read_bytes()).hexdigest()==reference['sha256'],reference['path']
+results.append({'component':'final-workspace-and-criterion-records','result':{'status':'passed','candidateTests':241,'qualifiedTests':242,'criteria':30,'sourceHashesVerified':len(json.loads(source_bytes))},'scope':'Saved logs/source/acceptance custody only; fresh CI remains required at the final PR head.'})
 report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'scope':'Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
 OUT=ROOT/'docs/helix/04-build/evidence/B-007-retained-evidence-replay';OUT.mkdir(exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')

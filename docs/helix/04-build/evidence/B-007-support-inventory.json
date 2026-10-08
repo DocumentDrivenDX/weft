@@ -1,6 +1,6 @@
 {
   "inventoryVersion": "weft-support-inventory/0.1.0",
-  "status": "native-compiler-and-host-qualified; final-acceptance-pending",
+  "status": "compiler-conformance-qualified",
   "releasedPackages": false,
   "supportedNativeProfiles": [
     {
@@ -327,14 +327,10 @@
     }
   ],
   "pending": [
-    "full 30-criterion acceptance determination",
-    "complete critical supported/refused branch review",
-    "qualified native support profiles required by the implementation plan",
-    "registry ownership and release maintainer verification",
-    "license decision",
-    "final release artifact build and content inspection"
+    "owner license and release maintainer/registry ownership decisions",
+    "final release-artifact qualification before distribution"
   ],
-  "meaning": "Native semantic registrations qualified with explicit domains/host obligations; historical candidates remain separate. Final host and acceptance gates remain open.",
+  "meaning": "Exact native compiler semantics and observed Python/browser artifacts are qualified; historical candidates remain separate. Host execution/publication obligations remain conditional. Distribution ownership/license and final release artifacts are pending.",
   "nativeReviewRegistrations": [
     {
       "backend": "truss.postgresql",
@@ -390,5 +386,13 @@
       ],
       "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."
     }
-  ]
+  ],
+  "acceptanceEvidence": {
+    "path": "docs/helix/04-build/evidence/B-007-acceptance-matrix.json",
+    "sha256": "9a0574ec05df7ef8db3846e5daed783678bed1463b84fb45cb65bf881d4cbe80"
+  },
+  "finalWorkspace": {
+    "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+    "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+  }
 }

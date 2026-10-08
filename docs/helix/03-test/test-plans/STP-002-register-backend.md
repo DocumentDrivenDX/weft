@@ -31,10 +31,10 @@ planned; no compiler implementation or executed coverage exists at bootstrap.
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-002-AC1 | `third_backend_registration` | No frontend backend-ID switch; explicit registry selection. | Rust + host/contract | planned |
-| US-002-AC2 | `capability_negotiation` | No fallback; missing manifest/interface versions identify refusal. | Rust + host/contract | planned |
-| US-002-AC3 | `candidate_qualification` | Candidate cannot masquerade as verified conformance. | Rust + host/contract | planned |
-| US-002-AC4 | `plugin_trust_boundary` | Injection/version/failure guards; trusted registration only. | Rust + host/contract | planned |
+| US-002-AC1 | `third_backend_registration` | No frontend backend-ID switch; explicit registry selection. | Rust + host/contract | passed in qualified compiler scope |
+| US-002-AC2 | `capability_negotiation` | No fallback; missing manifest/interface versions identify refusal. | Rust + host/contract | passed in qualified compiler scope |
+| US-002-AC3 | `candidate_qualification` | Candidate cannot masquerade as verified conformance. | Rust + host/contract | passed in qualified compiler scope |
+| US-002-AC4 | `plugin_trust_boundary` | Injection/version/failure guards; trusted registration only. | Rust + host/contract | passed in qualified compiler scope |
 
 ## Executable Proof and Data
 
@@ -49,3 +49,7 @@ Add runnable Rust/host/native commands with pinned versions before implementatio
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## Current acceptance determination
+
+The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.

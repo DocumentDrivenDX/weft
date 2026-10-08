@@ -8,7 +8,7 @@ Initial backends: **Ashlar on Databricks** and **Truss on PostgreSQL**. Weft is 
 
 Weft implements a Rust compiler with native Python and browser WASM bindings. The versioned 0.1 scalar and 0.2 application-read dialects resolve pinned UMF modules, then lower through separately registered Truss/PostgreSQL and Ashlar/Databricks backends. Unsupported or unknown selected meaning produces an explicit refusal.
 
-Native compiler qualification is scoped to PostgreSQL 17.9 synthetic Truss fixtures and Databricks SQL 2026.39 with the exact build/settings in the [support inventory](docs/helix/04-build/evidence/B-007-support-inventory.json). Python and actual Chromium share complete artifact parity. Database execution, authorization, integrity and buffered publication remain host obligations. Final B-007 acceptance is pending; packages have not been released and production storage compatibility is unqualified.
+Native compiler qualification is scoped to PostgreSQL 17.9 synthetic Truss fixtures and Databricks SQL 2026.39 with the exact build/settings in the [support inventory](docs/helix/04-build/evidence/B-007-support-inventory.json). Python and actual Chromium share complete artifact parity. Database execution, authorization, integrity and buffered publication remain host obligations. All 30 P0 compiler acceptance criteria pass in the recorded scope. Packages have not been released and production storage compatibility is unqualified.
 
 Start at [the specification index](docs/helix/README.md), [PRD](docs/helix/01-frame/prd.md), [language contract](docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md) and [test plan](docs/helix/03-test/TP-001-compiler-conformance.md).
 

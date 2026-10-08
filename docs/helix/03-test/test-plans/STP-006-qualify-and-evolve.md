@@ -32,10 +32,10 @@ release corpus or qualify untested platforms/native domains.
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-006-AC1 | `support_evidence_audit` | Missing/failed/skipped evidence cannot count as supported. | Rust + host/contract | executed components; release closure open |
-| US-006-AC2 | `pin_and_version_guards` | SHA-256 bytes and identity guards; no implicit migrations. | Rust + host/contract | executed components; release closure open |
-| US-006-AC3 | `unknown_content_retention` | Original bytes/content recoverable; no opaque-to-known inference. | Rust + host/contract | executed components; release closure open |
-| US-006-AC4 | `resource_and_fuzz_guards` | Duplicate keys, bounds, nesting, malformed text and plugin failures. | Rust + host/contract | executed components; release closure open |
+| US-006-AC1 | `support_evidence_audit` | Missing/failed/skipped evidence cannot count as supported. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC2 | `pin_and_version_guards` | SHA-256 bytes and identity guards; no implicit migrations. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC3 | `unknown_content_retention` | Original bytes/content recoverable; no opaque-to-known inference. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC4 | `resource_and_fuzz_guards` | Duplicate keys, bounds, nesting, malformed text and plugin failures. | Rust + host/contract | passed in qualified compiler scope |
 
 ## Executable Proof and Data
 
@@ -53,7 +53,9 @@ coverage.
 | AC4 | B-007-resources and parser receipts: generated malformed/duplicate text and exact limits; B-007-plugin-boundary: 26 atomic failure combinations; B-007-host-resources: seven raw cases through CLI/Python/Chromium | Review the complete critical-path boundary matrix. Seven host cases do not prove every resource or plugin path. |
 
 Receipts are under `docs/helix/04-build/evidence/`. The 30-criterion acceptance
-matrix records hashes and remaining scope; its in-progress status is deliberate.
+matrix now records passing criterion determinations, exact hashes and qualified scope.
+The following component details are historical checkpoints; the current acceptance
+section supersedes their remaining-work statements.
 The real Truss support-report audit joins all 76 retained compiler artifacts to
 actual Python and Chromium receipts (152 joins), with request/response hashes and
 retained runtime identities. These joins establish compiler transport parity;
@@ -81,3 +83,7 @@ Their early common-boundary parity does not assert identical backend features.
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## Current acceptance determination
+
+The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.
