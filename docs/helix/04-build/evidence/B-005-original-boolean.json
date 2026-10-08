@@ -1,0 +1,16 @@
+{
+  "scope": "Conformance-only original required Boolean property page/order/equality in native row and props homes; Boolean SUM refusal; no new runtime allowlist or fresh embedding/production claim",
+  "rustTests": 148,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "cccfb60f8bf7bb4fc75d8335c5898e3e61dda82acc6ca5ffc5398f0b9bca3f11",
+    "tests/truss-postgresql/build-boolean-fixtures.py": "16ffb2c8a4bfe5e1217b6ac85c1795977264e57b3ab0b0c0066e1f46ab389ee3",
+    "tests/truss-postgresql/original-boolean-native.py": "f1abff45c506b311e8b1ebfd540c27e56284ed07a66b01c869de9a6902c26f8a",
+    "tests/truss-postgresql/fixtures/original-boolean-inputs.json": "2e045de83fd6e781ff9b1fd4eb22b47def8e619a7cd3e77df60dc68cb7f4ccc1",
+    "tests/truss-postgresql/fixtures/original-boolean-public-transport.json": "796463240d04e72a8777894ab2b4f812bc6f04e0aafc180d5089525c2695b3f1"
+  },
+  "logs": {
+    "/private/tmp/weft-boolean-full.log": "d2f5865ddb8de890b9c79d30bf194fef87220f9f82f9608abc5e892a7a5ef625",
+    "/private/tmp/weft-boolean-before.log": "c962867e650568e809e75ae50d4baca0e113780f18dff629bc09382455531339",
+    "/private/tmp/weft-boolean-capture.log": "6a21a4d219455b917537802672c6ff22a11350545d2a54fd759e846ae60ce158"
+  }
+}

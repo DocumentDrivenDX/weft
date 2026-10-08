@@ -1,0 +1,14 @@
+{
+  "scope": "Original complete entity with independently admitted native Boolean sequence and numeric structured roots plus required/optional scalars; synthetic fixture native evidence, no new runtime preset or embedding/production claim",
+  "rustTests": 152,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "65c265444d124a3456a70a6bc7d454eb4844af8b0b94636c81920c7609c495b2",
+    "tests/truss-postgresql/build-multi-recursive-entity-fixture.py": "ebf2318269fa18313075c0cbb423c888722b79c3dc96a60c99e97dcd7074cbe6",
+    "tests/truss-postgresql/multi-recursive-entity-native.py": "a1b97aed43ecddb98efc6b75b5e4397875c99ff612b56930aeaccfbbab952192",
+    "tests/truss-postgresql/fixtures/original-multi-recursive-entity-inputs.json": "56c999c2a467973e6fa1368f564d0f48b218f9641046b118c830de3216c58c87",
+    "tests/truss-postgresql/fixtures/original-multi-recursive-entity-public.json": "81ea944bb9d58637c3c3ab0873fac302549c59f72bb708149b9945c8337fa1d9"
+  },
+  "logs": {
+    "/private/tmp/weft-multi-recursive-full.log": "00d6160cdcb0f14326bd76e98488fbd84f6f4cc5f2d230982c0151936870f537"
+  }
+}

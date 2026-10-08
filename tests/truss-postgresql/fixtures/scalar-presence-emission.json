@@ -1,0 +1,61 @@
+{
+  "cases": [
+    {
+      "check": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN true WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN false ELSE ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string') END))) IS DISTINCT FROM TRUE",
+      "nullable": false,
+      "required": false,
+      "sql": "SELECT (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))) END)::text AS value FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+    },
+    {
+      "check": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN true WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN true ELSE ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string') END))) IS DISTINCT FROM TRUE",
+      "nullable": true,
+      "required": false,
+      "sql": "SELECT (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))) END)::text AS value FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+    },
+    {
+      "check": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN false WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN false ELSE ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string') END))) IS DISTINCT FROM TRUE",
+      "nullable": false,
+      "required": true,
+      "sql": "SELECT (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))) END)::text AS value FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+    },
+    {
+      "check": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN false WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN true ELSE ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string') END))) IS DISTINCT FROM TRUE",
+      "nullable": true,
+      "required": true,
+      "sql": "SELECT (CASE WHEN (CASE WHEN pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object' THEN \"weft_scan_0\".\"props\" ? $2::pg_catalog.text ELSE NULL END) IS FALSE THEN pg_catalog.jsonb_build_object('state','absent') WHEN (pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='null') IS TRUE THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',pg_catalog.to_jsonb((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))) END)::text AS value FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+    }
+  ],
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "1",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 2,
+      "value": "1"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "domainPairs": 434,
+  "storageHomes": [
+    "row",
+    "props"
+  ],
+  "cases": 4340,
+  "positiveResponses": 868,
+  "refusals": 3472,
+  "deterministicRepeats": 868,
+  "unlistedBinding": true,
+  "subprocessDisabled": true,
+  "harnessSha256": "3f7552f0305325483219a4f788186427110fee75b19f58b19c51ee99e4a36edd"
+}

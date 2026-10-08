@@ -1,0 +1,466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "resource1": {
+      "title": "Proposed exact native scalar comparator definition",
+      "description": "Admitted source/domain and native operator evidence remain required. No arbitrary SQL fragments or inferred cast safety.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-native-comparator/0.1.0"
+        },
+        "profile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "valueDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "sourceDomainDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "nativeDomainProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "nativeDomainDefinition": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "operatorInventory": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        },
+        "strategy": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "unicode-text-C"
+                },
+                "nativeType": {
+                  "const": "pg_catalog.text"
+                },
+                "encoding": {
+                  "const": "UTF8"
+                },
+                "collation": {
+                  "const": "pg_catalog.C"
+                },
+                "normalization": {
+                  "const": "none"
+                }
+              },
+              "required": [
+                "kind",
+                "nativeType",
+                "encoding",
+                "collation",
+                "normalization"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "native-boolean"
+                },
+                "nativeType": {
+                  "const": "pg_catalog.bool"
+                }
+              },
+              "required": [
+                "kind",
+                "nativeType"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "signed-integer"
+                },
+                "nativeType": {
+                  "enum": [
+                    "pg_catalog.int2",
+                    "pg_catalog.int4",
+                    "pg_catalog.int8",
+                    "pg_catalog.numeric"
+                  ]
+                },
+                "integrality": {
+                  "const": "validate-before-cast"
+                }
+              },
+              "required": [
+                "kind",
+                "nativeType",
+                "integrality"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "finite-decimal"
+                },
+                "nativeType": {
+                  "const": "pg_catalog.numeric"
+                },
+                "scaleCoercion": {
+                  "const": "forbidden"
+                },
+                "nonfinite": {
+                  "const": "refuse"
+                }
+              },
+              "required": [
+                "kind",
+                "nativeType",
+                "scaleCoercion",
+                "nonfinite"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "unsigned-integer"
+                },
+                "nativeType": {
+                  "const": "pg_catalog.numeric"
+                },
+                "integrality": {
+                  "const": "validate-before-cast"
+                },
+                "range": {
+                  "const": "original-authored-unsigned-facets"
+                }
+              },
+              "required": [
+                "kind",
+                "nativeType",
+                "integrality",
+                "range"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "castOutcome": {
+          "const": "exact-or-error"
+        },
+        "nullOperands": {
+          "const": "refuse"
+        },
+        "absentOperands": {
+          "const": "refuse"
+        },
+        "qualification": {
+          "$ref": "#/$defs/resource0/$defs/exactArtifact"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "profile",
+        "valueDefinition",
+        "sourceDomainDefinition",
+        "nativeDomainProfile",
+        "nativeDomainDefinition",
+        "operatorInventory",
+        "strategy",
+        "castOutcome",
+        "nullOperands",
+        "absentOperands",
+        "qualification"
+      ],
+      "additionalProperties": false
+    },
+    "resource0": {
+      "title": "Proposed Truss complete acceptance input",
+      "description": "Shape validation only. Duplicate JSON members, Unicode scalar validity, canonical base64, digest verification, document ordering/uniqueness, upstream validity, resource limits and authority require separate semantic validation.",
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "truss-acceptance-input/0.1.0"
+        },
+        "layoutProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "acceptanceProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "validatorProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "supportProfile": {
+          "$ref": "#/$defs/resource0/$defs/profilePin"
+        },
+        "documents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/document"
+          }
+        },
+        "binding": {
+          "$ref": "#/$defs/resource0/$defs/binding"
+        },
+        "policy": {
+          "$ref": "#/$defs/resource0/$defs/policy"
+        },
+        "transforms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/resource0/$defs/transform"
+          }
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "layoutProfile",
+        "acceptanceProfile",
+        "validatorProfile",
+        "supportProfile",
+        "documents",
+        "binding",
+        "policy",
+        "transforms"
+      ],
+      "additionalProperties": false,
+      "$defs": {
+        "profilePin": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "identity",
+            "version",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "exactArtifact": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "bytesBase64": {
+              "type": "string",
+              "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "identity",
+            "bytesBase64",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "canonicalTree": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/resource0/$defs/canonicalTree"
+              }
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/resource0/$defs/canonicalTree"
+              }
+            }
+          ]
+        },
+        "ingress": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "native"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "converted"
+                },
+                "adapterProfile": {
+                  "$ref": "#/$defs/resource0/$defs/profilePin"
+                },
+                "source": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                },
+                "lossReport": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                }
+              },
+              "required": [
+                "kind",
+                "adapterProfile",
+                "source",
+                "lossReport"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "document": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "documentRevision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "artifact": {
+              "$ref": "#/$defs/resource0/$defs/exactArtifact"
+            },
+            "umfProfile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "ingress": {
+              "$ref": "#/$defs/resource0/$defs/ingress"
+            }
+          },
+          "required": [
+            "documentId",
+            "documentRevision",
+            "artifact",
+            "umfProfile",
+            "ingress"
+          ],
+          "additionalProperties": false
+        },
+        "binding": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "absent"
+                }
+              },
+              "required": [
+                "state"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "const": "present"
+                },
+                "vocabulary": {
+                  "$ref": "#/$defs/resource0/$defs/profilePin"
+                },
+                "artifact": {
+                  "$ref": "#/$defs/resource0/$defs/exactArtifact"
+                }
+              },
+              "required": [
+                "state",
+                "vocabulary",
+                "artifact"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "policy": {
+          "type": "object",
+          "properties": {
+            "unknownEndpoint": {
+              "enum": [
+                "reject",
+                "provisional",
+                "skip"
+              ]
+            },
+            "loss": {
+              "enum": [
+                "strict",
+                "report"
+              ]
+            },
+            "profile": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            }
+          },
+          "required": [
+            "unknownEndpoint",
+            "loss",
+            "profile"
+          ],
+          "additionalProperties": false
+        },
+        "transform": {
+          "type": "object",
+          "properties": {
+            "registration": {
+              "$ref": "#/$defs/resource0/$defs/profilePin"
+            },
+            "targetDefinitionIdentity": {
+              "type": "string",
+              "minLength": 1
+            },
+            "parameters": {
+              "$ref": "#/$defs/resource0/$defs/canonicalTree"
+            }
+          },
+          "required": [
+            "registration",
+            "targetDefinitionIdentity",
+            "parameters"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/resource1"
+    }
+  ]
+}

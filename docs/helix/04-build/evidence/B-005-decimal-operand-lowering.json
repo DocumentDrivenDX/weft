@@ -1,0 +1,13 @@
+{
+  "scope": "Exact decimal operand lowering only; property storage and broader public embedding qualification remain pending",
+  "rustTestsPassed": 155,
+  "domainPairs": 434,
+  "nativeCases": 868,
+  "sources": {
+    "crates/weft-postgresql/src/conformance_original.rs": "d5e0b57be678c15f035124946b73da69ce45c8c03380f6dbdc304ee452cebb06",
+    "tests/truss-postgresql/decimal-operand-native.py": "cfea292ffc63cb99febeee1fcb74a0782c04f7fb03e9fc8cbbb4aef3ed152463"
+  },
+  "regressionBeforeLogSha256": "230d01958875c5c386b74301ee0367c415a109228dcfade0be72d27e998159f6",
+  "passingRustLogSha256": "8aec08fab181db6200ee693962257a2695703f8deda6dee46fbfe93e3af62520",
+  "nativeReceipt": "B-005-decimal-operand-native.json"
+}

@@ -1,0 +1,3021 @@
+{
+  "scope": "Original Customer name / Orders total join, UInt64 equality, Unicode C groups, decimal(28,2), all 16 row/props home cuts; synthetic candidate only",
+  "cases": 128,
+  "configurations": 16,
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "binaryProvenance": "Fresh B-005-sales-join Python extension; exact binary hash pinned",
+  "extensionSha256": "8871e297d7d691e6f9b6a0499931c09399907f5ef4ab8c5a8e40ba259576154c",
+  "sourceSha256": "58486ad549a652cefe438cf726bd5a39b0750d7ba7fb8fad9fb1615ce137c143",
+  "harnessSha256": "b15b581395ad8aaed5a80bf09a4a3402936409fcee89278b05855eb84538607e",
+  "transportSha256": "a7b66f4d03f41d356a3292f5ed7d44ae2c87d9f1da808e98343f929b7c184e13",
+  "results": [
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "8b15d429c5e7fb063c7b1861080d690b44f54138dedde5ecad06e48850bded31"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4f1abec022092578ca400aa23065bf22b9b96ed10f90306741b19920c0a66ad6"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "afc834ee01c111568a1d4fefa91047706fb81390f377ab9e13a2f85c158eaf73"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "dfafc9547e2498625554919737e3760df47a08e7cd276898a48383e77c60a1d6"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0a3da80e37b94e10ccad576dc48f2b002badf21ee23c05a1cad1e3d8c8b01c33"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bc4724bead1043d88b86d66cb3c9eadf5512bb7f11efa5545c40248c1ceeb78d"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1a15df3ffeebcba3ec9eb81850193b44d399f1ec7e53fcaca8d6727b7023ff0e"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "06da51a88aeb6d6726bab8eb81d05ca4c17fe5da6f995c887ebecb6daf0a2db2"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "7232d71770c99e977b395254603f33d1e72643512b58adee2db3c760ab864f98"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "cc92d269d3393ed85b363ba6e3cc66909675181c13ce91145e426003dcc36261"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "30abbdbc318343f44ae907ab1bf0700eed4155580c5aa8b0978c61dfb9adfd04"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "85fb2f07cbcdeadf78904d948ea892ae6f4b68431541cb1abec455e430e29902"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4fcb29da4898bf2d29f33ea1aeda210163f9ad13547de2ba94b3cf38c9a989e2"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "5675d1a1cbd214f72cd24588f89edf2f9fc935d262eabea65c0ccb456fac907c"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "714979ab9fd5353e573c02280bfb66c6651e28a3b5bf50e90ab7880a084f4be6"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b66ca9fe4e36cc3e4644e3a92688d572acf5855420ee3982d2ff941aaca3bb3d"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "ca97d67a99ad093a000b10a18bc4c89d626a2165fd9231b65f930c7927bfc091"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5961d98b808ac7bff40d35d4870c5a42ca372f01ea44ac3191e03ee0ecf7547f"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f7bdbbac265604d1a17efbe170f901e1d570ac7dcdb0faba8484312c040a289e"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f0c4dbf5c93803fd9149226f1d72c1fac0f44972041ac6dbba094487a7b48f81"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9e91dd4527cd3211c21c4bf20c7e3026794a8fb4c180840f18f7f843c7a9040f"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "eaa86c6b7bbfe4ce982efebf621c60279703ce124ca167fdeb8ec1b736eac4b1"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e314d98c70149b1b8c0f54d7849361b0e7e2ca0de3aeb386575a44ccda07c9c6"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "59109faa42cc201c52ffb523ebc21fff1234643b9efd0f2279b9fb216a793927"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "854342dfad448f69ed6caa41a98ff0ae1248d3ccd579e4d05111193a91fe9ce5"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "f3ccdf36b2cd902dc0ee3defcf7134a4722cb34206c358fcc9080b110e83b1e1"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "3552a4af9fed1ba658e4c6ed4fee46055cf8dbe548020ff671bcb69169dfb9fb"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "aefe81efca75552c57a13168cb0a21eecde8ac8921089fef77f821a12812ac2e"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "69c969e51539b012b2e145b194f2508ad54ebd092a463a0cce643afa1bb39e9c"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0071d0cce988125a49bd6f560745636982dacd51b5885f0851f6c65b8e8d6463"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6e104c3fce1c60f0dda646e2323c653e98a5d58fc6519bf6bdf61472106a44b3"
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f802b1e30b50fab6b8557ed342fd48107e985484472b361eac1c9c1f913aae21"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "96db2350613bb78930bb115adcdb2f163206a2026e2dabd878efd4e60239cfd5"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "a11b3a0cf6822935380cb8d119e9f0462e49da7b7b8c806000d3fd4731fb6ca4"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6f8faf614f183ffbda4867f7eef83ee10a66ed0c2918b6c299e06c08b3e62716"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "90a55ef886c91e65c6e427f2794ba7756477879a1e58805fd74eaa0efbb45cfa"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9ac884ae597438f63b912c389487ec2794bad000efbb985104ce737d9e19a395"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7741d9078ed8ad5871ceeb186274d4a7ce7451b1a97e7e27e6d85c9623bb9ea0"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "703b56ea350bf5019dd96a0425f25cbe399ccf08d3c7996e8bc1d01d367c98b9"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4df1c68796c37812fb710c200c57c6995f0ee5c12b37f3acd20205681dc52556"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "8ee5e4eb8c24c87bd5de9fcf88590d9a11ded74325d6d434882ba00718cdb9fe"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "05501d689120c02f3d3498e0db85568b8fe78223fa1f59cbaab4b23a3df9307b"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "cea115864044d63fb5c5da985c8a63f32a7ed343b98365c0d35a8f18ef0a5845"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e32a1fb674ac191eb344cb605064080a7a1572b6d1df74fe6ff424678cb12bf2"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "70c72557435c94f52d4c8a77dea7b42c5a4236dab020c96f805974b70981b5e8"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a32a4f0e8da307afa25da377b139dbab9a04a72f4338cffb99394b46e96610e2"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8793997af62a59b65958be081c3a6e000a5288bb029db9be716d88eeebfce2c6"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "99971a1817f677cdab23fd73c84fd8799b5780f5a555d760b3d96a1c502e373f"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "9ef2a728a42a0ef966db6a85341fc8893a929f5af3069ba0b02e18cb660149f1"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1407079181703d29585ef1e9ce6d7e9edcb41508ed39694a6c3e081781018500"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a53e6af5708c9bf14b62114ed3cdfaa82c9555136e1753c92a17a416b2e36cc3"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "fd4d3190e22d8a5cfc8e0a87557358e1990d823ac5842bb3218d74f942b15864"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "85a874db4041024da599be6dc3f00823758b727ff89f22aadda15f564b2766fb"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1b24088610f84fbdfaabecb24857196a5e97420802556d04cc802b9dd90cce0c"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "50476b30e826b00f595c62c5042454e2908879de14d293ce97be5dc3d89dc170"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9fb2f27eabdd4776e4a283a34674a404001fb55e8b5d32b4f824af321923fba2"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "ca6c060dd9f04f076e21beda156a3dbb147ff75e1069bfb2a50bd1e5d2eb43d4"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "feb9c607dc2665116c4664cd5c7cfa42496a57fabd99f5dcc86993adec6ba763"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ac8419be265a1c1ab83177afb5dee76540dae13974f36c1ef686554dc8eae8e7"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "2e2d1b7511c19c59f44856a34d0004b70583a3d358199ecc11f6352e56527290"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "c89a887fcf6d1f7279a3ca332d28260fae2fc4d8d71f1857ee1cc03477e21f0d"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "832ddcc94c3e4489bee4a0cde22219bb32deff455c8d130d4ec63d464829da48"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ceacd284cd02fb6df082a2cb492e22360dbe0a9be0fd33363d729ba921e5cf19"
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6f5b176e6ea9435980b1f1b0d1975adc76f0a7e47b8bfd3469b78fe6d257cd9d"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "6098c0c82dad7f9d3dd5055a61a22b0d0a39e4c97af2ff399f861d954c001658"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "e79ae65674596eaaa01ee718c74b0dc42d4dcaaff56c2f85f7c3f2108b7669b6"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "63e10fec821ae232a7ad01d8345acd4149b8e85a69bde5c7aa7edbccc2e78aa3"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7d45b15e5948588a3e74020f2f1ac0de2bf4bb2da4b3c61c3c58a8d84d7fc8b4"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e57175ae72e97d383442d2e2256a65357e47878aea5ec19c6eed63c1b14e8986"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a8d723295230557145ec91a60be13988f95df90902d2562cb90fdfb49723bd85"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "34baaa69577ee1a721908ef2ad49f1625b7e23f3668675a0d4e4e198683aff75"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1c072716437c9e1369f8233dbe58f354482e680f4b8d18be674a38eb62ba9fc8"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "d6120d8336d43627b66c1d1439efe79286f156aaa5eeea56d7d708b739dd0e69"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "74d3f2442dab5cae49d2cf358e1b13829054b87570a0a7690a4156b78561b717"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f7d60c9bd249afadf15e1dd01f0d3fb7a20a0d3fd0c0a9f6115259913fa4168c"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ce4885728cc86d7a6ce7f34d180fe73f4bb9d9222ba16f7b802deff291279b1a"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ef69bda78b2c5dd39a61f9114fdf623bd8e3085969da3b999c3ee047de9c9d17"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "5586d2be46d0b6cf26db2b9987ef9ff29f1380b0d56ae5583a2e057a2e664093"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1ac71538437399704fb67ff5ddae8fb7a226fd26dc7a6fe0eff8c41e9fa0e08b"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4405df0c8426554dc3c29b32073727510ce5e5aa7886f77887c0f07480637a70"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "700085d9e5d664a444c728d330b8842e0f4e89ea47af02073a0592740e749cc3"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1b5875b9ba5f4c2ed7731d6a7a365dd11bcde2da02841d403728fc38f8c8b6d1"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "621f1640e78f93f192c22c645806cedecac339736ff2606ee2f85cc6817e867f"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0cb7c38c39f064c5122d34d4e0aee6b96cb59a247663b37c9fa98d2005e42495"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8c5476c6424e03ef07b6612f3e2c76938e40a1940c418aaf90b43c9ff31fe3e4"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ea4241ab6da3a2a8ffe3f029ba72d4399840065f43b588318915facbdbdf862b"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ffa4d4464ef8eeeb317954be435860250006a6a34dcfa9464e697fc5501128df"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ca54a41938dd0d5d3a7329387266ac2dca6874f0559de38c44bb8ff101230786"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "879ae67c0677e1b70e1353f7cd12738e2c06633fbabf614a65b3105bb09c72ee"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "2e3229a263be983377b4f1771eb0309ae20e42bffa19154de066d9b9236898a2"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "170ea29d4481a411ed85ca75cde5f5f082dbf0c59cc928e6bd5591924f49fe7b"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "12b5879112aa98ab3da99cc986c2a39dd911039c38106c021f6c99384a19dbb9"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8e7a55efd6ddad78fefd6ce31b755e36ce1958b2bf85f8f3bfddc9756fc06272"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6e5523c0addd35a95b6623ab31e9f08130016f712580fed4ff75396db9d406cc"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "aeb0dc03403cc9834e73d0e86593cfce5904cb3cf24815ccc1fb05ad64e3cb88"
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "99aa43670ab05c71ce3e805ec95c8c78682336e15624a6b4a9b748b5293b9197"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "8428cc06d4e74ccb75496c776b68a554c110d8329be8063c6d28aa9edf90b7fb"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "b5935344d8fe5da343f558f323480ca58320308f62d05bd0066573ded62b0d8e"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "520bf05dd6ea5541c0f24077695d6dea7fdf78f7ea981a49cbedf8cf714dcb91"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7f50cec893960799896def4d857e1c09e5859f8209f6c6b0d2cf53405ab64645"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b0734e59241c3857a970c2440f88b8aed6c05a71ad7ccdeb629694803909a26a"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7577ea12a93deff09a81ee5f8c678e03959d28de998d7467101c6aa9706999b6"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "3623cfa10c3535769ef64faa3d4e98191ae29543c3a53765dda0e234af535e0c"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ae5e98571229eaed524ecec314c99ea40f569591b5fffc6b5b9c21efd0b347b0"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "407f2cf33bf882f51a382ef9cbde36d21ecc57d934f81b8ef5612aba6ba96a56"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "dc312c4c251dba4401a05a40baa8c561cdc410bec27c23d7b8ee0a35c7eed2e2"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "714887fca59fe22a30b7299bb79ec26d2798287bb3f65245233b66797ed538b5"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "45e460803f3bd3605d1cb105f3458710ced89b772ea199e00cd729086a2c2d74"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "10642c41d46430fae6f742f76e81c7ecaa1e996b36ab3d8d57abd18dc315d172"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bbf889f92db26168ce5ca322b66fb8744bdc77de8ca4af41d90bfe98d94b2bac"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "c349d787f901e4384f5a208a69a7d6383b0f4b48249c5c0031ab2ab282869dd3"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4c925cd5494dedf4bdb1d2d936bd2a0749aa9cc0e8dda8d68e169000f224dd97"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "de0aed5fb13a5ce2afddc91574eb3f25f065ce6ea4fc0d2525c137ec0c58eab5"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "71ff94f949990efbc8b5490239ce47f16c07bbbc440162c452e7d8592016d6e9"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4eadd7d0873f59de248e2edbc3e75c9c08aad857e6b2a74c00a3edb107fb139c"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "45ff199d22fe739ab4d44c5792429374e65884ddb1bfecea343e878fbe9fb0e5"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bcb98a009be16e23957bfa91028be3e83f6b613aed97f4776faa0d3c7d329586"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "be347d88efe33987e62cb1db65fc785bb0170d53eb5c4535b2eb22975737360f"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "57cd01fcc04c1c9120ba45d2db81ad030bceb0f2bcfc5d913ca259a70e02e15d"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "25184831fd114c43ad8120dc314ef6a0580c7719742289e94f10bc70d855e343"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "a4125042b0d07375675776858a9fc958208ff9a06452cf9936160e79b3e24a0f"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "b17162896967f2396705c62e954b5c9b7cad984c2b1713296d0ed365a6305319"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "adc9418607c59ca03ed5b7300c5c309b76157fbfed4e556f7281862232cd825d"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f8fd6117b58650eb69628c7a50f92f64947e7618c74acd481244b16955ffc1b6"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "608221a60f88c1c0343228d5a8e64ff71cf92348309f739a2141ecf576c47353"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "5ba3c8ee938dd4b583f96fdd3f8078e3529f6b44e4fbfc95c80846767fe95ddc"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ef3946517bf3e8ce1446e8ea7c5aba53ee54abea998bec6f503a5586da1c6b54"
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a8c3ac0a7416ebd757845f674175a6c46053ff9324a53e0e317f43845822140b"
+    }
+  ]
+}

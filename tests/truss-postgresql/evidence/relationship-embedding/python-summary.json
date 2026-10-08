@@ -1,0 +1,10 @@
+{
+  "cases": 44,
+  "originalConfigurations": 8,
+  "fullResponseParity": true,
+  "deterministicRepeats": 11,
+  "subprocessDisabled": true,
+  "nativeModule": "/private/tmp/weft-relationship-python-package/weft/__init__.py",
+  "version": "0.1.0",
+  "scope": "test-original feature; seven pinned compounds and one native uint64 relationship configuration"
+}

@@ -1,0 +1,1534 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "transportSha256": {
+    "decimal-map-signed-structured": "0983d070e6e390492821a9655b348191d05a558a037290f4388d5b6f9000666a",
+    "decimal-sequence-signed-structured": "b9c8255b915728364cc24fa27c16b8930100dc401168a796a45fd14fb9db8a8e",
+    "signed-map-decimal-structured": "0dc58a5d5774fbabf2de877702bafa106ed65b6ea7ccc112409d78d03dbd87f4",
+    "signed-sequence-decimal-structured": "1c5188bb265dbe072e6324444699400cde1b3802aee5d0224947ce5560f2687f"
+  },
+  "scope": "Synthetic original complete entity combining independently admitted native signed/decimal sequence/map and structured roots plus scalars; no fresh embedding or production claim",
+  "cases": 80,
+  "harnessSha256": "199a796c082ff489108b7a6aa5ce12e2040544e615343f7c110dcf4066c04741",
+  "results": [
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "62ccd9e23d29a9372a004bf198a52627b680a1feef3306ae70b5047c25e672ed"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0a67160a428bbf3fedb88ac4cfc7db66e0c601f1b1d95f4558dfce0dc477e3c4"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d028643cf25a9260c94077fd6072b1c5fd44fa4533abf22c733f29336511a704"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6e978b3313c712c15e806b0f2ecfd67456ef9e6cf245e9e863f68c0492251540"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "959a501199308b8f1424d4f7bbdd61e7e1ce979de48a4f5cdefd427566deff98"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f17817d230ec372b687da0b6c6fcc3a8543cd3ae1f03571443220631f146620c"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "dbeddddff388c44902df8a52a48c4a6a3adbbc005230ce7add85e3d628f4dc58"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "1d2f5a72f8b7678b6c9ace169165dde95435442f9a0e031e62e205c7618da702"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c1836fa4428bc8c409c239e9182c66f8d48a825815fa8d6c259a76e23a8972f1"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 10,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "92e9ee4125e399ebe1f5bbb91b08ac5f31468b79b8ae8d0ffc855c7039c5c23e"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0cd2f4c74f102e330961b61c3d3b76c5adce3e451f40805dea459f5e8d5c5283"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "bada0ff320c5c4229543e445a61040ec1cb787fed841014eee679cda7cfb54bd"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "efbda27628e3c704536369f63dfb16a3e0b4cc0b4160adfdaff2133ce6e745e7"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6e978b3313c712c15e806b0f2ecfd67456ef9e6cf245e9e863f68c0492251540"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "959a501199308b8f1424d4f7bbdd61e7e1ce979de48a4f5cdefd427566deff98"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f17817d230ec372b687da0b6c6fcc3a8543cd3ae1f03571443220631f146620c"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "dbeddddff388c44902df8a52a48c4a6a3adbbc005230ce7add85e3d628f4dc58"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "5119e1b15dc786b22cadea0ed5acd3213e7a0619ac507e52c8ac54bba27bd428"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c1836fa4428bc8c409c239e9182c66f8d48a825815fa8d6c259a76e23a8972f1"
+    },
+    {
+      "fixture": "signed-sequence-decimal-structured",
+      "bound": 1,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "92e9ee4125e399ebe1f5bbb91b08ac5f31468b79b8ae8d0ffc855c7039c5c23e"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "34b1933c49b9ceb592930de51061dca83f565e8902e1d255f3fcdcf0232302c6"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e93452d5e474b5ee5d61d9e53b643928effd08f214a1ac5bb0751d7efb7ecbeb"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c10db704eaf141e5815a952dbeb23e6de5741e412be0345e5a7e3d7d2d5e075e"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "540bed908279faa3687af4bdf725c9bf9b568f9c0633df8bbc5da16503f14ef9"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4c7b51585681cf91b7114766c36545144aeb8309919ea8c1a9de8ce1d357cd44"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bff5ec15c8dad88810b746a9fc09bf5609ad1c6758eb61d4348cb85486485eef"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e6ffa6be8bf32ec83e6e62189fa61b0544ad1d5011f88f87c66d7172f5acb526"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f3e332511f9576d1735845e256eae1654d8e401aedae0e2a7cc50347d818b4b9"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "280e20fe2ca6f9cbd103e69d6601edd0bc9cbefcfff440f7be0eeffb8f671714"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 10,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b180d2cb3f4e599048c780b07eb872861de9f1d81c8d68319aa16aeaeb3f2025"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f96437422f0e558300f6665b57c46155a5efb28c63a1cf7f7ae56ba71ecadaf9"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7bd5f010c20432ffca93c511c9799d1b0b54c12747bd6b5e8b7787f1932ea8ca"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "b257b7d1ad551775c01ef2b40f3cee872a92c160f69d9f7ef445ab2ae66af580"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "540bed908279faa3687af4bdf725c9bf9b568f9c0633df8bbc5da16503f14ef9"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4c7b51585681cf91b7114766c36545144aeb8309919ea8c1a9de8ce1d357cd44"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bff5ec15c8dad88810b746a9fc09bf5609ad1c6758eb61d4348cb85486485eef"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e6ffa6be8bf32ec83e6e62189fa61b0544ad1d5011f88f87c66d7172f5acb526"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4effde348df5e62afa8f2f5a09b4c2d4808b5155a540bd5592550ebd11f3204a"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "280e20fe2ca6f9cbd103e69d6601edd0bc9cbefcfff440f7be0eeffb8f671714"
+    },
+    {
+      "fixture": "decimal-sequence-signed-structured",
+      "bound": 1,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b180d2cb3f4e599048c780b07eb872861de9f1d81c8d68319aa16aeaeb3f2025"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "695738d993974fbf387c89ea354c5aefe2eed33d7e8cc060061e57a201030425"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9856e0c2c8656b953b4ead034ff081379106faf70c722f0e55933e4e9d61cfa2"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "79182844a25657941c3ac799a119ddae6c629755c6c3652238ca42b87d6da340"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "294db095fa9419b4255f370cbf3ea8399d6c885efbbdf9244f51470591e39d12"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "660085035b0e55c74b655d8ea8e43545088efced7d3ec159528962d95b2efcd5"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8ed0dc9cdab3c0394323955ccc42fc96bfdc817436767c2106bf5f2b51e0394d"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "27d23ed088056f4996516c146da7279b67d6bb4e960b7fcee0fdd2379ea21696"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9b679f961b3835a048dc61b792e40fa9f65bcf2ce1ac0be158b1b2b5c3b1e5d9"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a50e170dd3d7eae258dc2634726d0c4ed02f16bf1b1dc1e114ea26102ab2d52e"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 10,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a0fa617e5de4ac89b11727d064734700531338e4b7b64c620624c6379b803067"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4d25d9f5e85f34e8bc5ce048250bbb4182225c682b620b0ecaaf10622a8c91d1"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "843fe1797bda39178128c4c0eb38ca829d632f973043b3f4d34c537a889de108"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "b724e6910c45de6639f83a521bdbc5bb866fb794de6f5c5c2b4de41519d7231e"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "294db095fa9419b4255f370cbf3ea8399d6c885efbbdf9244f51470591e39d12"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "660085035b0e55c74b655d8ea8e43545088efced7d3ec159528962d95b2efcd5"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8ed0dc9cdab3c0394323955ccc42fc96bfdc817436767c2106bf5f2b51e0394d"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "27d23ed088056f4996516c146da7279b67d6bb4e960b7fcee0fdd2379ea21696"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "cb652d0d8a7b2bef8866343834dc78fb6f9e30ed00e4f2ede8fd609c9257dc60"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a50e170dd3d7eae258dc2634726d0c4ed02f16bf1b1dc1e114ea26102ab2d52e"
+    },
+    {
+      "fixture": "signed-map-decimal-structured",
+      "bound": 1,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a0fa617e5de4ac89b11727d064734700531338e4b7b64c620624c6379b803067"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "32982034cf7d3ee755cbc192307afc9ac7bb5bc920843057ea8fa3bea5720949"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "298db38d2f007c0b69658fafebff328f0e9c724d63f2a424e9765a68d7d50533"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "8bf5977d046c09ff42ed2e17d3e0d732d4477fab29c95634f360fd7506e90cce"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0d61da2537748668a54e0d0049ff524f61ffa24a218077d951a35b5109f31d05"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f6b5a41adcf9f4aadb2e4b98ca0598a1eaeda8cebc98e3d7c7cc74639e7bac15"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "41fbe420fdb909c7f544c382cd7f14ed565e82dfb1a2de682ccaabe00ea7634c"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "85ec9a13bfe3c998f6e6b0086fba95ff11c3c0da7d96f9b696c082d843356ed6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "97b8e62bbe7885e3ede5f966296559e37ee45a10f28624f9c9b75d7da1b027d6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c930945e5fdcf835a4e03792aa31242b3afbf44005a52920360432a928a5abf6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 10,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c0bd3b148845b68dc96ee05d3dcbfb26d1a4566ee0127baad26363a64c66cac2"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ec3c78a81acb32abe50ab2b9b7e911259a34e34ebc5f8662bc177183727b47e6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "empty-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "74035405ef8976cc018e69c285eb45ae951b515051c166a2053a1b753379c3c0"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "42958255557cd54ad653077ce82716938c46bc24c4122636ca9597a87174451b"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "missing-container",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0d61da2537748668a54e0d0049ff524f61ffa24a218077d951a35b5109f31d05"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "hidden-container-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f6b5a41adcf9f4aadb2e4b98ca0598a1eaeda8cebc98e3d7c7cc74639e7bac15"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "41fbe420fdb909c7f544c382cd7f14ed565e82dfb1a2de682ccaabe00ea7634c"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "85ec9a13bfe3c998f6e6b0086fba95ff11c3c0da7d96f9b696c082d843356ed6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a111cbf85039391acc2c717d4f704e884b135f5e3e38ab21fc33782486fa9ebf"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "hidden-container-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c930945e5fdcf835a4e03792aa31242b3afbf44005a52920360432a928a5abf6"
+    },
+    {
+      "fixture": "decimal-map-signed-structured",
+      "bound": 1,
+      "case": "hidden-address-domain",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c0bd3b148845b68dc96ee05d3dcbfb26d1a4566ee0127baad26363a64c66cac2"
+    }
+  ]
+}

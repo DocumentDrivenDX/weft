@@ -1,0 +1,14 @@
+{
+  "scope": "Test-only original relationship composition capture and independent byte custody; no new database or embedding execution",
+  "rustTests": 133,
+  "compositions": 8,
+  "compilerResponses": 11,
+  "logSha256": "eb416b1e566ba40a0eecf1bfec01dfac298c1c15852bf2ac7105ca3ff1c43db7",
+  "files": {
+    "crates/weft-postgresql/src/original_admission.rs": "adb96451b616ad9b366386cd40eed41fb80160f743a2b78529bae54f868dba24",
+    "crates/weft-postgresql/src/property_definition.rs": "ef582aede881b333ea59fc5649137593b15f46392cbf7589a554616dfc7b365e",
+    "tests/truss-postgresql/check-composition-custody.py": "e87654fc778e93170efc665645e8aaaff1774744bf1161c071c33d0f284b40b8",
+    "tests/truss-postgresql/fixtures/original-relationship-composition.json": "75a6b107f267287de5e4fbd4e1d3ff7bf4999a97a42d3da5d00be45cce93d0e4",
+    "tests/truss-postgresql/fixtures/original-relationship-public-transport.json": "eb1c3cdd0dc7c04580a85e89d07ae20adc4e9953781f977dbc2971857937616b"
+  }
+}

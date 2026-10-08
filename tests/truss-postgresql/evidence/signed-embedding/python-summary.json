@@ -1,0 +1,10 @@
+{
+  "cases": 300,
+  "originalConfigurations": 34,
+  "fullResponseParity": true,
+  "deterministicRepeats": 75,
+  "subprocessDisabled": true,
+  "nativeModule": "/private/tmp/weft-signed-python-package/weft/__init__.py",
+  "version": "0.1.0",
+  "scope": "test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations"
+}

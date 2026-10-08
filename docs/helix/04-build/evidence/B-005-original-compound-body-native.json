@@ -1,0 +1,127 @@
+{
+  "scope": "Original-topology recursive JSONB observation and logical result SQL on admitted sequence/structured props; no public projection or production qualification",
+  "captureSha256": {
+    "tags": "ced6f2d30d2b5980c01b93b231a331636627350b1a2299a17b14b2b070579080",
+    "address": "fdc58e8b01023219efc5b42b46c5e92abdf3e18bab002d719f1094913d049d93"
+  },
+  "harnessSha256": "c663a740821eb2e380365f21fdc531f6d3c79f86f493a41a07b338e3d69a9b06",
+  "results": [
+    {
+      "property": "tags",
+      "case": "exact",
+      "integrity": true,
+      "bodyChecked": true,
+      "sqlSha256": "913c50d07b0f646694e91042b97beddaaeb99e41a2f416be31b898ff1ea0fcf0"
+    },
+    {
+      "property": "tags",
+      "case": "empty",
+      "integrity": true,
+      "bodyChecked": true,
+      "sqlSha256": "90601951c1512e537f680ade49ca06ed92f55657ae9af94b5f8606623df7dd96"
+    },
+    {
+      "property": "tags",
+      "case": "number",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "1a88abb287c663579ee17496473cd35e96f1b8ef41800053c60ce1960412ef69"
+    },
+    {
+      "property": "tags",
+      "case": "null-leaf",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "2491b92a4e2811b6d6b2e3d249cbbcc40fb67dda8928eba32909ab0f5abbc0f5"
+    },
+    {
+      "property": "tags",
+      "case": "object",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "ec061cbd9b50d9a9c3033f596bb33991ee9a1fc680d4f277383eaeadc94a8d66"
+    },
+    {
+      "property": "tags",
+      "case": "native-null",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "652ed91b3995426efa89902befd0966cb698ecb52122cfc01d14338f68c844a6"
+    },
+    {
+      "property": "tags",
+      "case": "absent",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "ea9e976b048150564c52fa88c81dec5ef6dc2c575782777be2d1aa07c7a26fad"
+    },
+    {
+      "property": "address",
+      "case": "required",
+      "integrity": true,
+      "bodyChecked": true,
+      "sqlSha256": "e00503f28831fdd79079fd4c3c02fb2635ff799b49d447b1b0ee5c8e35d2f4ce"
+    },
+    {
+      "property": "address",
+      "case": "optional-present",
+      "integrity": true,
+      "bodyChecked": true,
+      "sqlSha256": "d83222dd3d9fdb65d4e012094f03b46b679be405190440862ed18a492bbe6592"
+    },
+    {
+      "property": "address",
+      "case": "missing-required",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "39d3f3a8f9829f6fd27f9caaab3187fb672f894a76a55c525f8ffe8741f852e8"
+    },
+    {
+      "property": "address",
+      "case": "null-leaf",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "391287c5524b51722c0a0c6fcf0d2f40bbb25380e3f4d22f3f66c3457ab1b73e"
+    },
+    {
+      "property": "address",
+      "case": "unknown",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "6b26c1008c68e76c260e444643fd2c8de0619eb2e8841605d0932353ac09e32a"
+    },
+    {
+      "property": "address",
+      "case": "wrong-name",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "ac3ea7ddb15728ce7088c9008b75de669830a9605068f09e923689d032e04a6b"
+    },
+    {
+      "property": "address",
+      "case": "array",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "8d189b233663c54f8a6bf308ff2c42e6e4652ed31d1a6de256b9f03768620c87"
+    },
+    {
+      "property": "address",
+      "case": "native-null",
+      "integrity": false,
+      "bodyChecked": false,
+      "sqlSha256": "7252cdc725e9ad78a2fe2e733d2908cc71711b7e94e74ceea92861a8c1fef6d0"
+    },
+    {
+      "property": "address",
+      "case": "absent",
+      "integrity": true,
+      "bodyChecked": false,
+      "sqlSha256": "f1d4d9b2b1a22caa24bcc4d78f2e9cba264692483b66f4932b2705939eeb6ea7"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/recursive_observation.rs": "9a9c8c69357fca264cd6b1857fe32235caf5a93202b7d21e3fb248315f38e522",
+    "crates/weft-postgresql/src/property_definition.rs": "0f3e8cd160d8f0c2a47d928039bb8d91f4db6dae48a6cef51c1327b8a3cee93d"
+  },
+  "testLogSha256": "6e05dff794accc96de5e3a2c001c7bbb7665e5f7f076f2afa481b93b334f89bf"
+}

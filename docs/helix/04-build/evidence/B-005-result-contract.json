@@ -1,0 +1,10 @@
+{
+  "scope": "Admitted property descriptor to existing Weft Column ABI metadata only; no executable source/native decoder or result publication qualification",
+  "rustCrateTests": 65,
+  "sha256": {
+    "crates/weft-postgresql/src/result_definition.rs": "c960429b86078724f23ec8c67ed1befcf64bc4efdc14d6de79bcb101980fa7f8",
+    "crates/weft-postgresql/src/property_definition.rs": "0969b34bd1777588f7768168b1020618224505ac395b322bba63a0dd6ca40e6c",
+    "crates/weft-postgresql/src/lib.rs": "d7381d3a3e2056b36b4a4cee63c1c7d430db52eecb8304b521df4392b5dea0f3"
+  },
+  "testLogSha256": "6af80bf1c31fb9195150220419c231992ed66cd96fdf4725e5947f749ffab072"
+}

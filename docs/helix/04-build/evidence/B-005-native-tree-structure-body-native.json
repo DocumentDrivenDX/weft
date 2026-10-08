@@ -1,0 +1,234 @@
+{
+  "scope": "Intermediate native stored/logical body SQL; no complete native structural/source qualification or public projection",
+  "harnessSha256": "3aa6c5f99fc4ebc01c58a29f2d63699a222366902b264016b8d77b04898e67dc",
+  "results": [
+    {
+      "fixture": "address",
+      "case": "valid",
+      "stored": {
+        "slot.0": "\u00e9  "
+      },
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "985df42c18916bb0653c4f399dbd5b60db9680b0261b3d312b6e0e67b6865e99"
+    },
+    {
+      "fixture": "address",
+      "case": "missing-required",
+      "stored": {},
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "street": {
+          "state": "absent"
+        }
+      },
+      "integrity": false,
+      "structure": true,
+      "captureSha256": "57cc8bbe3759fbc7578c3339e178c3ad5dc197759177fcb2fc07f3cb4b85260a",
+      "sqlSha256": "9fb7c4803b0a299cf80321df6a1f782c9d5eeeffa1e035e2d3653d7f17c90250"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "valid",
+      "stored": {
+        "slot.0": "outer",
+        "slot.2": {
+          "slot.0": "inner"
+        }
+      },
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "next": {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "absent"
+            },
+            "street": "inner"
+          }
+        },
+        "street": "outer"
+      },
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "58f2475da344893ac8aedcbbf026239be6bd427694a7b2c9c54d89f1b82fa65d",
+      "sqlSha256": "6931689f9fc28f27f28fc7dee456166399e61fb0618f157a3da9c2f1d8fe222d"
+    },
+    {
+      "fixture": "map",
+      "case": "valid",
+      "stored": {
+        "": "",
+        "\u96ea": "x",
+        "1.a[0]": "\u00e9  "
+      },
+      "logical": {
+        "": "",
+        "\u96ea": "x",
+        "1.a[0]": "\u00e9  "
+      },
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "dd21fb8aa86114725fa40f6f7ca497a8246a563accdc6d2d706da5bd05a256fd",
+      "sqlSha256": "2bda530792c547903fbaa74d29b3ca5552a82cab4400cd7ab04c8e925ad99385"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "valid",
+      "stored": [
+        [
+          "9007199254740993",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "logical": [
+        [
+          "9007199254740993",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "12fca9ef89013c0dc2d72162ac3901ee022f22e92bc9cbf3106e257a2ec2c5c2"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "overflow",
+      "stored": [
+        [
+          "18446744073709551616",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "logical": [
+        [
+          "18446744073709551616",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "integrity": false,
+      "structure": true,
+      "captureSha256": "4b7a6fb56826490e94a231f31e802113f531d3184378b161cfd14315275f6846",
+      "sqlSha256": "eb51ef43ee7fd131218244a4d7b15bb93c6c223de4cd05e629c56e0fe37ae910"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "valid",
+      "stored": {
+        "slot.0": "\u00e9  ",
+        "slot.1": "18446744073709551615"
+      },
+      "logical": {
+        "zip": {
+          "state": "value",
+          "value": "18446744073709551615"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "1d0dee3122f80baad20d644853fd92de473a961fdb2de1fbe2d07520567ac6b9"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "overflow",
+      "stored": {
+        "slot.0": "\u00e9  ",
+        "slot.1": "18446744073709551616"
+      },
+      "logical": {
+        "zip": {
+          "state": "value",
+          "value": "18446744073709551616"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": false,
+      "structure": true,
+      "captureSha256": "3f4aa0c14fe43a991ff3d4ece16ce2503b3ffd761359716c211a3f68114d7c46",
+      "sqlSha256": "4740e9ae79d65502c61ee9777faa98a6d68fcdea4ce2bfc344b9de1b7108cd34"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "valid",
+      "stored": {
+        "": "9007199254740993",
+        "9.a": "18446744073709551615"
+      },
+      "logical": {
+        "": "9007199254740993",
+        "9.a": "18446744073709551615"
+      },
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "eed989653f85882cbf3f7709fc0dd6ac8f34412dcfdfe0e463f5ce035ed6d20d"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "overflow",
+      "stored": {
+        "": "18446744073709551616",
+        "9.a": "18446744073709551615"
+      },
+      "logical": {
+        "": "18446744073709551616",
+        "9.a": "18446744073709551615"
+      },
+      "integrity": false,
+      "structure": true,
+      "captureSha256": "f053faa16f4f14c1b92baa8a77fbe883bfd0a028c00114e27575e462c3edc29d",
+      "sqlSha256": "90688bfe02d6763f50576a0e8c9a04eb4f9951b8ad09cebea2877cf61d4f1b79"
+    },
+    {
+      "fixture": "tags",
+      "case": "valid",
+      "stored": [
+        "\u00e9  ",
+        "1.a[0]",
+        ""
+      ],
+      "logical": [
+        "\u00e9  ",
+        "1.a[0]",
+        ""
+      ],
+      "integrity": true,
+      "structure": true,
+      "captureSha256": "d7fe4d03c3e5a126d1d890d1431caa750aba9997f82b8896a600e4abcba86091",
+      "sqlSha256": "fb0a3880b791584c742122ad8efbd4aef081d9442125c0ead289041bb95b6a93"
+    }
+  ]
+}

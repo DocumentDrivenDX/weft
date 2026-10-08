@@ -1,0 +1,46 @@
+{
+  "scope": "Selected signed64/decimal(28,2) native maps and structured values, original definitions and exact presence/key/member semantics",
+  "nativeCases": 68,
+  "embeddingCasesPerRuntime": 20,
+  "positiveFullResponses": 4,
+  "embeddingRefusals": 16,
+  "pythonDeterministicRepeats": 4,
+  "rustRegressionsPassed": 158,
+  "rustNote": "Unchanged exhaustive decimal composition test retains earlier evidence",
+  "binaryProvenance": "Reuse native extension/WASM from B-005-numeric-sequence.json; runtime code unchanged, new fixture builder/tests/harness only",
+  "wasmSha256": "ea27bbe61f7af3dc4e5e68905b493a49ac05c2da810522d0694df460780fa5f1",
+  "sources": {
+    "crates/weft-postgresql/src/conformance_original.rs": "1fa5ea1a042a4317a3c01194600c4fe3c5da14b388e7116d3b3d3351528e2dd3",
+    "tests/truss-postgresql/build-numeric-container-fixtures.py": "f7ebb53cb2cb64f1578dd4c0ebb886eead21a102ec40567a266be0fbc7e78581",
+    "tests/truss-postgresql/numeric-container-embedding-check.py": "7b51186f2877e0f744ebe23e61744851e59b795f3886069c4dc2f331349fce1a",
+    "tests/truss-postgresql/fixtures/original-signed-map-inputs.json": "c243f0d1c8f272b0a8eaeb553db84c9d85a805398379ac8d697b38a84781f038",
+    "tests/truss-postgresql/fixtures/original-signed-map-tree.json": "4bc436e145b028d89729ab6527309ec1cf042dbd1ba1f8fae4ba1af3583c6ccf",
+    "tests/truss-postgresql/fixtures/original-signed-map-public.json": "e1c1772cd4de389c8aa25a44475b3bee1cefc40737fcc11ae7afa8dc25add589",
+    "tests/truss-postgresql/fixtures/original-decimal-map-inputs.json": "b1123a964581679140e44166031e56d2897f3bf46926fa5861d13491cf041f5b",
+    "tests/truss-postgresql/fixtures/original-decimal-map-tree.json": "a3266e1db7e9ed748870a7114667723689ef3aede20938348cebd69469b22d69",
+    "tests/truss-postgresql/fixtures/original-decimal-map-public.json": "3132c36bdddea6ca2362371beb96c8236e8e7b1d5391b12497286b8a7421e895",
+    "tests/truss-postgresql/fixtures/original-signed-structured-inputs.json": "02827a11e5a24b3189b24d2e9c9d5a1e0ea157575b1740071fb70ef50f51f36b",
+    "tests/truss-postgresql/fixtures/original-signed-structured-tree.json": "609f2293bcb0dbc71c608791d1327849dfaf24d22e06e1f1caeb9a8d4c35ae28",
+    "tests/truss-postgresql/fixtures/original-signed-structured-public.json": "e805de6c7dfa66341e736c2ec15047a9eaca3fa05fc1163f95cc8e9096582cf6",
+    "tests/truss-postgresql/fixtures/original-decimal-structured-inputs.json": "f449e3755370542b67d35630ce31ded606698a08c8fd05f7d28a65658281d2a5",
+    "tests/truss-postgresql/fixtures/original-decimal-structured-tree.json": "f79a901be80cce86e83aa1033ddfe122e07b7652ce2dfa3f8dadbd8a09daa512",
+    "tests/truss-postgresql/fixtures/original-decimal-structured-public.json": "a0ed7978e27c0771e80d0da2be9c414ed13488c1bc4db6c5c66f16122bd4f0cc",
+    "tests/truss-postgresql/original-signed-decimal-container-native.py": "ff07029f2d1541ef5f9c1780e9a2571c8ccfc6b988dd586fdafe008837c42f8a"
+  },
+  "logs": {
+    "weft-numeric-container-compile.log": "bdaeec9b01a930d7ce91a5e2f28e0e9667ccc3c2d441a11f220de11276d5740d",
+    "weft-numeric-container-native.log": "d04f32993c32786f573375763507a47b170ec330b1fbc25dcf446322a1921bc4",
+    "weft-numeric-container-regressions.log": "5b5ce27c54c58343f7cdf9511dd6b7d9d4b04251636df957e573c18a5c96cb26",
+    "weft-numeric-container-python.log": "d909f30e061a76e2febc9bbe407b5e4f161d733a02b519cf5992e7764adfcb43",
+    "weft-numeric-container-browser.log": "38116d024204f1186a37802ed62692e89e9ed62a4407f602da14af27085b9498"
+  },
+  "corpusSha256": "0112640d29c6458e32216ede335d8866170093979c620913c165598620d125d9",
+  "reportsSha256": "9d66155d33c591ff19d8c8ef555dc32149b111d803e8fb7c842fc8cf2c4305e9",
+  "nativeReceipt": "B-005-numeric-container-native.json",
+  "limitations": [
+    "Selected canonical numeric token subset only",
+    "Whole-entity numeric composition and wider relational audit remain pending",
+    "No installed/production Truss or released host configuration claim"
+  ],
+  "nativeHarnessNote": "Existing numeric-container runner restored unchanged; 68 cases rerun successfully through separately named signed/decimal runner."
+}

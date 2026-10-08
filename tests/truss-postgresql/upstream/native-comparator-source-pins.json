@@ -1,0 +1,12 @@
+[
+  {
+    "id": "urn:truss:acceptance-input:0.1.0",
+    "file": "acceptance-input-v0.1.schema.json",
+    "sha256": "0278cbbbde843091c005b688fd9c081a2fdff843b9adda006ba80fb87828d7cd"
+  },
+  {
+    "id": "urn:truss:draft:native-comparator:0.1.0",
+    "file": "truss-native-comparator-v0.1.proposal.schema.json",
+    "sha256": "26f3a754456e01984841d01dd972c2051d8611b9c0f9182f48721ec6000ebd4b"
+  }
+]

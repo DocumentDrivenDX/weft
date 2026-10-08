@@ -1,0 +1,80 @@
+[
+  {
+    "codec": "pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex')",
+    "custody": [
+      "(\"weft_scalar_3\".\"node_id\" IS NOT NULL)::pg_catalog.text AS \"scalar_present\"",
+      "\"weft_scalar_3\".\"scalar_kind\" AS \"scalar_kind\"",
+      "\"weft_scalar_3\".\"text_value\" AS \"text_value\"",
+      "\"weft_scalar_3\".\"boolean_value\"::pg_catalog.text AS \"boolean_value\"",
+      "\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text AS \"native_numeric_text\"",
+      "\"weft_scalar_3\".\"numeric_token\" AS \"original_numeric_token\"",
+      "pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') AS \"codec_bytes_hex\"",
+      "pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') AS \"source_bytes_hex\""
+    ],
+    "kind": "object",
+    "numeric": "\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text",
+    "payloads": [
+      {
+        "carrier": "\"weft_scalar_3\".\"text_value\"",
+        "family": "string",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='string' AND (\"weft_scalar_3\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_3\".\"boolean_value\" IS NULL AND \"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_3\".\"numeric_token\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"boolean_value\"::pg_catalog.text",
+        "family": "boolean",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='boolean' AND (\"weft_scalar_3\".\"boolean_value\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_3\".\"numeric_token\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"numeric_token\"",
+        "family": "integer",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='integer' AND (\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NOT NULL AND \"weft_scalar_3\".\"numeric_token\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"boolean_value\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"numeric_token\"",
+        "family": "decimal",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='decimal' AND (\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NOT NULL AND \"weft_scalar_3\".\"numeric_token\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"boolean_value\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      }
+    ],
+    "source": "pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex')",
+    "token": "\"weft_scalar_3\".\"numeric_token\""
+  },
+  {
+    "codec": "pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex')",
+    "custody": [
+      "(\"weft_scalar_3\".\"node_id\" IS NOT NULL)::pg_catalog.text AS \"scalar_present\"",
+      "\"weft_scalar_3\".\"scalar_kind\" AS \"scalar_kind\"",
+      "\"weft_scalar_3\".\"text_value\" AS \"text_value\"",
+      "\"weft_scalar_3\".\"boolean_value\"::pg_catalog.text AS \"boolean_value\"",
+      "\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text AS \"native_numeric_text\"",
+      "\"weft_scalar_3\".\"numeric_token\" AS \"original_numeric_token\"",
+      "pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') AS \"codec_bytes_hex\"",
+      "pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') AS \"source_bytes_hex\""
+    ],
+    "kind": "edge",
+    "numeric": "\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text",
+    "payloads": [
+      {
+        "carrier": "\"weft_scalar_3\".\"text_value\"",
+        "family": "string",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='string' AND (\"weft_scalar_3\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_3\".\"boolean_value\" IS NULL AND \"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_3\".\"numeric_token\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"boolean_value\"::pg_catalog.text",
+        "family": "boolean",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='boolean' AND (\"weft_scalar_3\".\"boolean_value\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_3\".\"numeric_token\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"numeric_token\"",
+        "family": "integer",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='integer' AND (\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NOT NULL AND \"weft_scalar_3\".\"numeric_token\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"boolean_value\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      },
+      {
+        "carrier": "\"weft_scalar_3\".\"numeric_token\"",
+        "family": "decimal",
+        "integrity": "((\"weft_scalar_3\".\"node_id\" IS NOT NULL) AND \"weft_scalar_3\".\"scalar_kind\"='decimal' AND (\"weft_scalar_3\".\"numeric_value\"::pg_catalog.text IS NOT NULL AND \"weft_scalar_3\".\"numeric_token\" IS NOT NULL) AND (\"weft_scalar_3\".\"text_value\" IS NULL AND \"weft_scalar_3\".\"boolean_value\" IS NULL) AND (\"weft_scalar_3\".\"binary_value\" IS NULL AND \"weft_scalar_3\".\"temporal_text\" IS NULL AND \"weft_scalar_3\".\"temporal_instant\" IS NULL AND \"weft_scalar_3\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_3\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex') IS NOT NULL)"
+      }
+    ],
+    "source": "pg_catalog.encode(\"weft_scalar_3\".\"original_source_bytes\",'hex')",
+    "token": "\"weft_scalar_3\".\"numeric_token\""
+  }
+]

@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-07",
+  "scope": "Owned pure Rust original backend configuration for repeated serialized compilation",
+  "tests": {
+    "command": "cargo test -p weft-core -p weft-postgresql",
+    "passed": 130,
+    "failed": 0,
+    "logSha256": "b1544cc378661723d03fae524c0fee63a13f9a387214c6d97dd65aafc7d645e2"
+  },
+  "wasmCheck": {
+    "command": "cargo check -p weft-postgresql --target wasm32-unknown-unknown",
+    "passed": true,
+    "logSha256": "a539a20ca6e6de5684211ae5e185b485bd479dbaf6bb517dc7c2e4df929671b8",
+    "scope": "Target compilation only, not browser execution"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/original_admission.rs": "79ab332a515faae7448e4f9c2de6ac7ceda69a0d237dbdbdd273cba665b2b5f9",
+    "crates/weft-postgresql/src/native_comparator_definition.rs": "a4f19e1041ba29416aab9764da7b61bd4f9a9c779e4a282efdf697a5e45398fb",
+    "crates/weft-postgresql/src/property_definition.rs": "974a0f0cdb74f3e57e2e989bac93f87d11e824c031edc2396035cd31d9c74ee8"
+  },
+  "evidence": [
+    "Owned configuration supplies physical/codec/presence/comparator meanings and statically selected native procedures without borrowed host temporaries",
+    "Seven compound fixtures match complete factory responses and repeat deterministically while re-admitting each request",
+    "Seven backend substitution attempts refuse without SQL"
+  ],
+  "limits": [
+    "Configuration deliberately has no serde executable-procedure selection",
+    "Python/WASM entry-point adapter integration and real embedding execution remain unfinished",
+    "No fresh database execution or adopted production codec claim"
+  ]
+}

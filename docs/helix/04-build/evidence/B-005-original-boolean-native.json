@@ -1,0 +1,477 @@
+{
+  "scope": "Original Boolean required property ordering/equality on synthetic native/props fixtures; no runtime embedding or production qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 39,
+  "harnessSha256": "f1abff45c506b311e8b1ebfd540c27e56284ed07a66b01c869de9a6902c26f8a",
+  "transportSha256": "796463240d04e72a8777894ab2b4f812bc6f04e0aafc180d5089525c2695b3f1",
+  "results": [
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "05ed1acd79d3a3ea34884e35e25d2dcf7313ab68f3b27cb327f598bff6d67c27"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6ffe73326cd0f29365bd9e920ebb7c4c6b67fed7d419b2eb652b669ec4a97868"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "12735a272045a8d90fe1037821e9dbf5f9cb227fec4e8662dae0145d12fa1df3"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0be0f776f25732375ed4079e86d7457f3f2fc4eb1890343bfa79c63a4ee2f8db"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "64acc461daa733dfaf2b985c4c659865770faf267d4be9caccb876220c65e25d"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4372a4047071517f64d080612a6e4e050b763c3ace78ff70bc4e2538ba17ee59"
+    },
+    {
+      "home": "row",
+      "kind": "page",
+      "case": "wrong-codec",
+      "violations": [
+        2,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bcc8df99151124bbadf7fc58c0622a0121a9a4f0a3c484a1f08175a54580c47a"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "76468110885523b746aba21516846c732f4f7c827b45f56724249a57a6d8cb15"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4965b2d0aa9df7486a788693814d5349e2c3c3cbfdd3a58e180f9ef5dde35733"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "de3afc33079bb67ad21ee946680d9ff5634681e7938aae50a1066bdac3519e57"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5dcf8fe2c0559624e070437129ba1bf7a1d629784d83fa682710cf68d5afb7b4"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f0714fd23ac9aa7daff3cd49ee71aefa4b390836905fca8467fb00fce95185b8"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7b256355d3363bcef3d0e557b545b85a1b4166165c8622a5b788005bc325310b"
+    },
+    {
+      "home": "row",
+      "kind": "true",
+      "case": "wrong-codec",
+      "violations": [
+        2,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f40c25e94ca5ec936e6b684a422bb43e473fe5bac2d040ac6c4dcf173330ee5a"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "8d320f2d233cd7394457cffc21d0c0cf3942a2ebff6ee0e5af3956a1bc62ed4e"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7850d400c06779c432e5358c714f5cd7505bf01f024ccc6f89e26e368f418fa1"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2b946f53b0c8c45752878b2ecc4e1dafbae304835a93c34c11d15817b32dbf99"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7be837d6de2348f4b7e5455cb6632de4238c43c189ea13f13110375a10d90a21"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "dc61dd4bac6e4f81ac0d6f7e0d8bd2e425560ae52bf8293f3ceb3b913eff566e"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a15fb2c56cf3fc9d9e74f2423c1ae9cd9c0c8ae5628f363a55d103d23d1e91a2"
+    },
+    {
+      "home": "row",
+      "kind": "false",
+      "case": "wrong-codec",
+      "violations": [
+        2,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "511472db8399fd7d29feb1ecd22195d92bff40a1dc809d79601ff3e12f68853d"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7526c7927226823d63038058f1b41979fde24dd0c92b6cac65c800ca064b235b"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d91737b1d64c68e5968f79b795e10df7245707858dcc892f62b446c5f61a3c29"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4482ff0c3a2e8a48af438765139ab20374eb64603d16b52e41053e634e665e0e"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8d2de37e7c058c68cd4d7aee822ada042256d27f9d8885ab1aab9a15c32e2cc5"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6bb8a3a67842caddfd813a752487bf9990bfd2df2361c18d9bb52a4e54fe8d1f"
+    },
+    {
+      "home": "props",
+      "kind": "page",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "29dfb71b03a981a08ec749497c223ac57ec083087c51c9f27b95d36ddcb7373f"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0a35f21599acb3d5327881b76938e1cb4bee13428893b9b5579f078a8bbb3669"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "169b969a10af8265dcb7431c52378a92a978ea8e6c4ffd4d7cee94390d462470"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d2c9b56ea44b9350f3bf7659a9c6e588d6ba1bde40aab6dcde5dc2181866b3a4"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2adbce8564349efa2b2568a627d2103e554221dfdd2f27401b87f7074c570022"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8011ac0859b89f298256cdead7d0f33628b06257a389b17b4d0ad5983823a615"
+    },
+    {
+      "home": "props",
+      "kind": "true",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fcfd7d08df37ae92f60c966febd2ba8f03067ba2fecae07cea43b5b82ec95795"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c703cf5c5719344ec1a336b5e34a1e6c0c96586d526f4ac4cfdd4fa302142aee"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "cc0c083afd6d56e3320b717037421c8175abd913818ae4ea0ea12adecdaec73a"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "required-absent",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f8722f8f84229e9e1534e17e4c09015ebd7ef801b40601db5125887cada58e85"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "wrong-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "846c25126203198a854c6ac08cdabde04b88878acd82127ed32940d455ae3c42"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "null-carrier",
+      "violations": [
+        2,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d7fb86aba48269b84754af6212a19ae2d6276a1d967f65e5fc31565540213583"
+    },
+    {
+      "home": "props",
+      "kind": "false",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4e39e6f09f3ff4892fea65cdcafa3182085abf5951bb7b70c16b7d3c54ba3871"
+    }
+  ]
+}

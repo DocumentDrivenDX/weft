@@ -1,0 +1,2057 @@
+{
+  "scope": "Conformance original scalar renderer integer literals; signed/unsigned widths 1..64 exact native numeric transport, not new storage codec or production/domain admission qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 256,
+  "captureSha256": "3cad69b5d8aaafdda62685ebd85bb437431b208be6299169a4c64e13e33b6a49",
+  "harnessSha256": "d83d468c04df4c9197cf982e1f907d63f86a2b2901a92886d1b11b2d1d446938",
+  "results": [
+    {
+      "bits": 1,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 1,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1",
+      "actual": "1",
+      "executedSqlSha256": "7bbe3f84cfdf1bd538761805799a3aa71c5be7293891bd0127d93b38e1955891"
+    },
+    {
+      "bits": 1,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1",
+      "actual": "-1",
+      "executedSqlSha256": "06d3ec061857491a0167827feb8f34711dfea8740f4792cde3d042fc3ddd6b8f"
+    },
+    {
+      "bits": 1,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 2,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 2,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "3",
+      "actual": "3",
+      "executedSqlSha256": "ef8867e06acaec346fe6df166542f7c0bfcd5f944b440bbc9f67acae0f95e037"
+    },
+    {
+      "bits": 2,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2",
+      "actual": "-2",
+      "executedSqlSha256": "64b0276013934826dc1803e4485679b4d9e8cb863f44523bf48537496d815adc"
+    },
+    {
+      "bits": 2,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1",
+      "actual": "1",
+      "executedSqlSha256": "7bbe3f84cfdf1bd538761805799a3aa71c5be7293891bd0127d93b38e1955891"
+    },
+    {
+      "bits": 3,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 3,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "7",
+      "actual": "7",
+      "executedSqlSha256": "20e132615cdb7413a32588a541f508ac5973c3537208aeb3e1779e5b319b1764"
+    },
+    {
+      "bits": 3,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4",
+      "actual": "-4",
+      "executedSqlSha256": "bd21b02b87bd493b5eaf878552f416af32872ae8f8eea190f27a0bb306106d48"
+    },
+    {
+      "bits": 3,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "3",
+      "actual": "3",
+      "executedSqlSha256": "ef8867e06acaec346fe6df166542f7c0bfcd5f944b440bbc9f67acae0f95e037"
+    },
+    {
+      "bits": 4,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 4,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "15",
+      "actual": "15",
+      "executedSqlSha256": "ed45e8bbe9e261e88588df2ac1ab39cd353ec51e5450093c2633e4e471d35528"
+    },
+    {
+      "bits": 4,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-8",
+      "actual": "-8",
+      "executedSqlSha256": "0f7da72cab6ce1a97e8726967b99dc1f9b0272b8899624fc70e83d6a0edd1e8b"
+    },
+    {
+      "bits": 4,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "7",
+      "actual": "7",
+      "executedSqlSha256": "20e132615cdb7413a32588a541f508ac5973c3537208aeb3e1779e5b319b1764"
+    },
+    {
+      "bits": 5,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 5,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "31",
+      "actual": "31",
+      "executedSqlSha256": "b4a1c562f08462afa95e78ea768827c4a317343ea7db679b80a35e5576251464"
+    },
+    {
+      "bits": 5,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-16",
+      "actual": "-16",
+      "executedSqlSha256": "5b7b302ddfc90bf5b7ad082e8c3d485d47268c172a5c76d172ab282746a2a2c6"
+    },
+    {
+      "bits": 5,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "15",
+      "actual": "15",
+      "executedSqlSha256": "ed45e8bbe9e261e88588df2ac1ab39cd353ec51e5450093c2633e4e471d35528"
+    },
+    {
+      "bits": 6,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 6,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "63",
+      "actual": "63",
+      "executedSqlSha256": "1959105c0e99b31e3bb2775ee9dbc0d63b121ea43786f3c7a3eb88375b135de4"
+    },
+    {
+      "bits": 6,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-32",
+      "actual": "-32",
+      "executedSqlSha256": "502eb700f5638160bd84f5a0f331a7fc86867fb7ab0a06f6c3470ec671acf3af"
+    },
+    {
+      "bits": 6,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "31",
+      "actual": "31",
+      "executedSqlSha256": "b4a1c562f08462afa95e78ea768827c4a317343ea7db679b80a35e5576251464"
+    },
+    {
+      "bits": 7,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 7,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "127",
+      "actual": "127",
+      "executedSqlSha256": "87fef32657c5be137429f0d8e4d3a1d6bbe09e9c6f0bece573f9892810673a1b"
+    },
+    {
+      "bits": 7,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-64",
+      "actual": "-64",
+      "executedSqlSha256": "599b9f0eb4118bdf309200a9a5e96d9767084be209caf5cad0b81a3ca5a85cdc"
+    },
+    {
+      "bits": 7,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "63",
+      "actual": "63",
+      "executedSqlSha256": "1959105c0e99b31e3bb2775ee9dbc0d63b121ea43786f3c7a3eb88375b135de4"
+    },
+    {
+      "bits": 8,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 8,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "255",
+      "actual": "255",
+      "executedSqlSha256": "8da053ad0180a54fb3b395e915c4967324d166fb5b5cda56fcb26565fdd25569"
+    },
+    {
+      "bits": 8,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-128",
+      "actual": "-128",
+      "executedSqlSha256": "561272de3818a9002c0e3b4ac106577a6dd21d0e6bcbdb69d6bf224d5ad48efa"
+    },
+    {
+      "bits": 8,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "127",
+      "actual": "127",
+      "executedSqlSha256": "87fef32657c5be137429f0d8e4d3a1d6bbe09e9c6f0bece573f9892810673a1b"
+    },
+    {
+      "bits": 9,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 9,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "511",
+      "actual": "511",
+      "executedSqlSha256": "c48172e13e82c845b4b2dcd70b90dcdbb770b4e87a8de5ccdde4a1bd9e73f0da"
+    },
+    {
+      "bits": 9,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-256",
+      "actual": "-256",
+      "executedSqlSha256": "75f1ca835ff800d4fd7b3372dd13bf976f93389dc98476698c3eccc891f2b991"
+    },
+    {
+      "bits": 9,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "255",
+      "actual": "255",
+      "executedSqlSha256": "8da053ad0180a54fb3b395e915c4967324d166fb5b5cda56fcb26565fdd25569"
+    },
+    {
+      "bits": 10,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 10,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1023",
+      "actual": "1023",
+      "executedSqlSha256": "37b822eedaa8ee17063ec1c4b121b3b52f2b46b22509552263bf5cc34702c82b"
+    },
+    {
+      "bits": 10,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-512",
+      "actual": "-512",
+      "executedSqlSha256": "c0bf557107f4b39257ef3473e9ac96efb009c1e6acaaff72ef2f46f4e914d1a0"
+    },
+    {
+      "bits": 10,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "511",
+      "actual": "511",
+      "executedSqlSha256": "c48172e13e82c845b4b2dcd70b90dcdbb770b4e87a8de5ccdde4a1bd9e73f0da"
+    },
+    {
+      "bits": 11,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 11,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2047",
+      "actual": "2047",
+      "executedSqlSha256": "d59a0783c22b88ad8f5863de3eab24b8bf875d492ef5a989b23487d3d1930ec4"
+    },
+    {
+      "bits": 11,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1024",
+      "actual": "-1024",
+      "executedSqlSha256": "674348960fbfe1dba2e9a9e856f55c847ee6df4824ef061d8e515647ba5b71e3"
+    },
+    {
+      "bits": 11,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1023",
+      "actual": "1023",
+      "executedSqlSha256": "37b822eedaa8ee17063ec1c4b121b3b52f2b46b22509552263bf5cc34702c82b"
+    },
+    {
+      "bits": 12,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 12,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4095",
+      "actual": "4095",
+      "executedSqlSha256": "4bfdfc05bcb002b91c6e098ae6a49b97c853b11177038d246e1137fdc253a634"
+    },
+    {
+      "bits": 12,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2048",
+      "actual": "-2048",
+      "executedSqlSha256": "7a74462e3800756a493884cf10c7ff934c0663505d442c5274b51c2de936e9f6"
+    },
+    {
+      "bits": 12,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2047",
+      "actual": "2047",
+      "executedSqlSha256": "d59a0783c22b88ad8f5863de3eab24b8bf875d492ef5a989b23487d3d1930ec4"
+    },
+    {
+      "bits": 13,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 13,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "8191",
+      "actual": "8191",
+      "executedSqlSha256": "821e5943d99a35bd1e2d35d4e08cd687a03d8a8cd9a962a819cf1d5d1f53cf81"
+    },
+    {
+      "bits": 13,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4096",
+      "actual": "-4096",
+      "executedSqlSha256": "97c643781640563ba46704e54f94cd229ec2bb0eb2c0bd792314f51d4bd03725"
+    },
+    {
+      "bits": 13,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4095",
+      "actual": "4095",
+      "executedSqlSha256": "4bfdfc05bcb002b91c6e098ae6a49b97c853b11177038d246e1137fdc253a634"
+    },
+    {
+      "bits": 14,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 14,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "16383",
+      "actual": "16383",
+      "executedSqlSha256": "a0671018f8b9677bcfc280af2fd90c4189ef44dc9ddecce0db4c775b01b92b0d"
+    },
+    {
+      "bits": 14,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-8192",
+      "actual": "-8192",
+      "executedSqlSha256": "d2324e57ad24af15ca8ba6294731fb72d4527f84c4e44d169ae1c6babe86a0ce"
+    },
+    {
+      "bits": 14,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "8191",
+      "actual": "8191",
+      "executedSqlSha256": "821e5943d99a35bd1e2d35d4e08cd687a03d8a8cd9a962a819cf1d5d1f53cf81"
+    },
+    {
+      "bits": 15,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 15,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "32767",
+      "actual": "32767",
+      "executedSqlSha256": "929096a7058255020b87530f31f5e3025bdc974b815cfd156b366fe3f8ffe07b"
+    },
+    {
+      "bits": 15,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-16384",
+      "actual": "-16384",
+      "executedSqlSha256": "bce452914a3d668babb8c84ca0db5783504550bf136dc1804ef803997080f75d"
+    },
+    {
+      "bits": 15,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "16383",
+      "actual": "16383",
+      "executedSqlSha256": "a0671018f8b9677bcfc280af2fd90c4189ef44dc9ddecce0db4c775b01b92b0d"
+    },
+    {
+      "bits": 16,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 16,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "65535",
+      "actual": "65535",
+      "executedSqlSha256": "8e1ec629bfd179a09c044465e6cc40830a016d68baa77972a827313cb60db71d"
+    },
+    {
+      "bits": 16,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-32768",
+      "actual": "-32768",
+      "executedSqlSha256": "159101d9ca83cada57084020754af731ad051c43c298b04dafb6c315f0e2b83f"
+    },
+    {
+      "bits": 16,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "32767",
+      "actual": "32767",
+      "executedSqlSha256": "929096a7058255020b87530f31f5e3025bdc974b815cfd156b366fe3f8ffe07b"
+    },
+    {
+      "bits": 17,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 17,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "131071",
+      "actual": "131071",
+      "executedSqlSha256": "a584582f76f18634069a4ba8a7fca5aefc7bf23688aa8cb053c1fb85d87ef64c"
+    },
+    {
+      "bits": 17,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-65536",
+      "actual": "-65536",
+      "executedSqlSha256": "c47539b8c34d8ef87bede39f08188d9f482deb1533186dd001ece9b91a319fcd"
+    },
+    {
+      "bits": 17,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "65535",
+      "actual": "65535",
+      "executedSqlSha256": "8e1ec629bfd179a09c044465e6cc40830a016d68baa77972a827313cb60db71d"
+    },
+    {
+      "bits": 18,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 18,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "262143",
+      "actual": "262143",
+      "executedSqlSha256": "18a9afa07fc83abf093a957161368442c8b1a73a0059b363713df57432a616e4"
+    },
+    {
+      "bits": 18,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-131072",
+      "actual": "-131072",
+      "executedSqlSha256": "b69892b311f57edb0a8c91a47ebbbf520a3f276bde25213be83e156c9141fc41"
+    },
+    {
+      "bits": 18,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "131071",
+      "actual": "131071",
+      "executedSqlSha256": "a584582f76f18634069a4ba8a7fca5aefc7bf23688aa8cb053c1fb85d87ef64c"
+    },
+    {
+      "bits": 19,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 19,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "524287",
+      "actual": "524287",
+      "executedSqlSha256": "0d061c6a9dc451825a05b61718a87a9762bc69d4f81654223b4c2e52e015920a"
+    },
+    {
+      "bits": 19,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-262144",
+      "actual": "-262144",
+      "executedSqlSha256": "d34ddb050b0aa1c66b69a0c1854ae4274578d5a8a160b5388a461c3c8c05607d"
+    },
+    {
+      "bits": 19,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "262143",
+      "actual": "262143",
+      "executedSqlSha256": "18a9afa07fc83abf093a957161368442c8b1a73a0059b363713df57432a616e4"
+    },
+    {
+      "bits": 20,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 20,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1048575",
+      "actual": "1048575",
+      "executedSqlSha256": "71a234802ed749dfce456447584695945621793e10fd10618d1adbf4d95845d6"
+    },
+    {
+      "bits": 20,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-524288",
+      "actual": "-524288",
+      "executedSqlSha256": "eefe7c7d4fdb9a9d0322778d212dd3942d45f3922c107b1dd930d5166cecd4ab"
+    },
+    {
+      "bits": 20,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "524287",
+      "actual": "524287",
+      "executedSqlSha256": "0d061c6a9dc451825a05b61718a87a9762bc69d4f81654223b4c2e52e015920a"
+    },
+    {
+      "bits": 21,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 21,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2097151",
+      "actual": "2097151",
+      "executedSqlSha256": "fdfd3bb729fe0002a5b6c541518db28ae8832e7dc4d18e45dbdb681acdc3f904"
+    },
+    {
+      "bits": 21,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1048576",
+      "actual": "-1048576",
+      "executedSqlSha256": "1d5c8793f13f6069bfbd26003fb6420d5487e25f4d2b84f245d60e04ed1f7663"
+    },
+    {
+      "bits": 21,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1048575",
+      "actual": "1048575",
+      "executedSqlSha256": "71a234802ed749dfce456447584695945621793e10fd10618d1adbf4d95845d6"
+    },
+    {
+      "bits": 22,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 22,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4194303",
+      "actual": "4194303",
+      "executedSqlSha256": "eeccac1b2ba206198e2dd4802661ae0e8d8fba28d8813fda73bb27db5815c32f"
+    },
+    {
+      "bits": 22,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2097152",
+      "actual": "-2097152",
+      "executedSqlSha256": "afebfc4605b2bdf68b5ab15aacaf183e345c519c7147bed4f54ab058f64f1f21"
+    },
+    {
+      "bits": 22,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2097151",
+      "actual": "2097151",
+      "executedSqlSha256": "fdfd3bb729fe0002a5b6c541518db28ae8832e7dc4d18e45dbdb681acdc3f904"
+    },
+    {
+      "bits": 23,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 23,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "8388607",
+      "actual": "8388607",
+      "executedSqlSha256": "0da56b7846af546e8e2cf4d799fb4248f850d5ed054c911daf44a43cb4d74975"
+    },
+    {
+      "bits": 23,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4194304",
+      "actual": "-4194304",
+      "executedSqlSha256": "96069c761eecb4e9e73627a93574071e2a2a55f5525c0fd3ed2c546b498d05e2"
+    },
+    {
+      "bits": 23,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4194303",
+      "actual": "4194303",
+      "executedSqlSha256": "eeccac1b2ba206198e2dd4802661ae0e8d8fba28d8813fda73bb27db5815c32f"
+    },
+    {
+      "bits": 24,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 24,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "16777215",
+      "actual": "16777215",
+      "executedSqlSha256": "9d8e2fbaad06049a2976965f667b281ccfbc08198093a282ed43c9432340a184"
+    },
+    {
+      "bits": 24,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-8388608",
+      "actual": "-8388608",
+      "executedSqlSha256": "07b3168a253c108c42d4ac139f85a9074db95c37e5418a8938d241870167baf3"
+    },
+    {
+      "bits": 24,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "8388607",
+      "actual": "8388607",
+      "executedSqlSha256": "0da56b7846af546e8e2cf4d799fb4248f850d5ed054c911daf44a43cb4d74975"
+    },
+    {
+      "bits": 25,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 25,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "33554431",
+      "actual": "33554431",
+      "executedSqlSha256": "3b76eccea4a9a39bc12c8556221a126f40b8f49091e9e76715dbb23837cd79cf"
+    },
+    {
+      "bits": 25,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-16777216",
+      "actual": "-16777216",
+      "executedSqlSha256": "0d66885febcfc800af6fa63627fca0373af4d76f3c0f91aa84ed007bc8ddf0ff"
+    },
+    {
+      "bits": 25,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "16777215",
+      "actual": "16777215",
+      "executedSqlSha256": "9d8e2fbaad06049a2976965f667b281ccfbc08198093a282ed43c9432340a184"
+    },
+    {
+      "bits": 26,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 26,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "67108863",
+      "actual": "67108863",
+      "executedSqlSha256": "19d538ead56fed9fc71feb0a1ebd1262d3cac79eb591963662cb124a9b98ed8e"
+    },
+    {
+      "bits": 26,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-33554432",
+      "actual": "-33554432",
+      "executedSqlSha256": "11ec061277fa3653969d79075b6c5ee57cb61b135c1ace0f0f722836f3d5e696"
+    },
+    {
+      "bits": 26,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "33554431",
+      "actual": "33554431",
+      "executedSqlSha256": "3b76eccea4a9a39bc12c8556221a126f40b8f49091e9e76715dbb23837cd79cf"
+    },
+    {
+      "bits": 27,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 27,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "134217727",
+      "actual": "134217727",
+      "executedSqlSha256": "1bc8bf22964be60e7765243280206083d9ef468f6ebaae5aaf0772df923008e8"
+    },
+    {
+      "bits": 27,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-67108864",
+      "actual": "-67108864",
+      "executedSqlSha256": "d32d617bc393380123e4d67acefe1eca536be82fc77e3e0ab00ad4f371bbcfbb"
+    },
+    {
+      "bits": 27,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "67108863",
+      "actual": "67108863",
+      "executedSqlSha256": "19d538ead56fed9fc71feb0a1ebd1262d3cac79eb591963662cb124a9b98ed8e"
+    },
+    {
+      "bits": 28,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 28,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "268435455",
+      "actual": "268435455",
+      "executedSqlSha256": "2f8e1b807371d8a4ea0b06d89556268b353bc5aea2b848b742279383793aa0ec"
+    },
+    {
+      "bits": 28,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-134217728",
+      "actual": "-134217728",
+      "executedSqlSha256": "cbe32bd00325185cbb22149c03b4e3251ead0b34fad00ecfb7634e96ec38d364"
+    },
+    {
+      "bits": 28,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "134217727",
+      "actual": "134217727",
+      "executedSqlSha256": "1bc8bf22964be60e7765243280206083d9ef468f6ebaae5aaf0772df923008e8"
+    },
+    {
+      "bits": 29,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 29,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "536870911",
+      "actual": "536870911",
+      "executedSqlSha256": "6cbfc718ee5a84a9370639575c11af363e19d2b38eba84c5485278bbcba0ab6e"
+    },
+    {
+      "bits": 29,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-268435456",
+      "actual": "-268435456",
+      "executedSqlSha256": "afe7d97d9f2216317130beea818a1ef14da1c2f4573c017363e2cce9352a96e5"
+    },
+    {
+      "bits": 29,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "268435455",
+      "actual": "268435455",
+      "executedSqlSha256": "2f8e1b807371d8a4ea0b06d89556268b353bc5aea2b848b742279383793aa0ec"
+    },
+    {
+      "bits": 30,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 30,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1073741823",
+      "actual": "1073741823",
+      "executedSqlSha256": "5d1f5994e76c067e60f003da3cf1f00b098b5b87aaee9c67964241691c8afa3f"
+    },
+    {
+      "bits": 30,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-536870912",
+      "actual": "-536870912",
+      "executedSqlSha256": "5141491abc2985e1ac7009c3a638cf36f910736ee8da234040b6bf0872abedab"
+    },
+    {
+      "bits": 30,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "536870911",
+      "actual": "536870911",
+      "executedSqlSha256": "6cbfc718ee5a84a9370639575c11af363e19d2b38eba84c5485278bbcba0ab6e"
+    },
+    {
+      "bits": 31,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 31,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2147483647",
+      "actual": "2147483647",
+      "executedSqlSha256": "f5ae3f281aea1156abbf900537c890e661562e9c8c0d95aa50b04940375a1194"
+    },
+    {
+      "bits": 31,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1073741824",
+      "actual": "-1073741824",
+      "executedSqlSha256": "567e26c41862a5a994faf120fd070385af90c04e7d0a7247e9119c72bcf48088"
+    },
+    {
+      "bits": 31,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1073741823",
+      "actual": "1073741823",
+      "executedSqlSha256": "5d1f5994e76c067e60f003da3cf1f00b098b5b87aaee9c67964241691c8afa3f"
+    },
+    {
+      "bits": 32,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 32,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4294967295",
+      "actual": "4294967295",
+      "executedSqlSha256": "d5178614d547dcf993eff40bb4a1347be78c33028a0959d9335388339c08bc0d"
+    },
+    {
+      "bits": 32,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2147483648",
+      "actual": "-2147483648",
+      "executedSqlSha256": "9aa9ed0fbd3a7c9dad163d6e6a146b8b019ab7a48cae51fd0484e310c503df3d"
+    },
+    {
+      "bits": 32,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2147483647",
+      "actual": "2147483647",
+      "executedSqlSha256": "f5ae3f281aea1156abbf900537c890e661562e9c8c0d95aa50b04940375a1194"
+    },
+    {
+      "bits": 33,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 33,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "8589934591",
+      "actual": "8589934591",
+      "executedSqlSha256": "a76ca0cc04ffb0aea49af72360cdd6f543a5567d330296b818f8f3ff47d1c7fe"
+    },
+    {
+      "bits": 33,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4294967296",
+      "actual": "-4294967296",
+      "executedSqlSha256": "d08354f331065b8c74f6bea19bb76ae2212fe704e0e9722b0ea66e2b40f4c3d5"
+    },
+    {
+      "bits": 33,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4294967295",
+      "actual": "4294967295",
+      "executedSqlSha256": "d5178614d547dcf993eff40bb4a1347be78c33028a0959d9335388339c08bc0d"
+    },
+    {
+      "bits": 34,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 34,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "17179869183",
+      "actual": "17179869183",
+      "executedSqlSha256": "29bf510dc88d9851d91f4cc655c80569380e8d873d470f2769bbeaf324aa987b"
+    },
+    {
+      "bits": 34,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-8589934592",
+      "actual": "-8589934592",
+      "executedSqlSha256": "e6ab5577d25c0173f25acbdf3fd4a78c416ab8d3f330a9cb1510a11a226a9ad3"
+    },
+    {
+      "bits": 34,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "8589934591",
+      "actual": "8589934591",
+      "executedSqlSha256": "a76ca0cc04ffb0aea49af72360cdd6f543a5567d330296b818f8f3ff47d1c7fe"
+    },
+    {
+      "bits": 35,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 35,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "34359738367",
+      "actual": "34359738367",
+      "executedSqlSha256": "3763a497820f24d327853079aa2b99f2b2479e8f30ef944f5f9ee5366bb74526"
+    },
+    {
+      "bits": 35,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-17179869184",
+      "actual": "-17179869184",
+      "executedSqlSha256": "cc63c20926389d30397745dd0022e1fa6cee30b2cdd7c22a4012c31e1c7ee6f1"
+    },
+    {
+      "bits": 35,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "17179869183",
+      "actual": "17179869183",
+      "executedSqlSha256": "29bf510dc88d9851d91f4cc655c80569380e8d873d470f2769bbeaf324aa987b"
+    },
+    {
+      "bits": 36,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 36,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "68719476735",
+      "actual": "68719476735",
+      "executedSqlSha256": "ed5ce9b2294ce37ba812033b82e6ee1718a9efb9bf2247fe529f9ddf3703e5dd"
+    },
+    {
+      "bits": 36,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-34359738368",
+      "actual": "-34359738368",
+      "executedSqlSha256": "30c0ebad16bb380cbd43696da938308663ae299cdba295a75c0f25d5473c25e4"
+    },
+    {
+      "bits": 36,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "34359738367",
+      "actual": "34359738367",
+      "executedSqlSha256": "3763a497820f24d327853079aa2b99f2b2479e8f30ef944f5f9ee5366bb74526"
+    },
+    {
+      "bits": 37,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 37,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "137438953471",
+      "actual": "137438953471",
+      "executedSqlSha256": "186c75dd2b216feb7446f39d999a09f2dceb3b7fcfbe636a038e0d7bd5dcc8a6"
+    },
+    {
+      "bits": 37,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-68719476736",
+      "actual": "-68719476736",
+      "executedSqlSha256": "1e3b29bdb90a9a616bb080ee96bebb3828e35ba89af079904d93068fd1575dfa"
+    },
+    {
+      "bits": 37,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "68719476735",
+      "actual": "68719476735",
+      "executedSqlSha256": "ed5ce9b2294ce37ba812033b82e6ee1718a9efb9bf2247fe529f9ddf3703e5dd"
+    },
+    {
+      "bits": 38,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 38,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "274877906943",
+      "actual": "274877906943",
+      "executedSqlSha256": "c0cca970d2a399b394611943a339847d993d132019396b3236cb88f858b44814"
+    },
+    {
+      "bits": 38,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-137438953472",
+      "actual": "-137438953472",
+      "executedSqlSha256": "c799d3c5b5101fdd98be2a9b723a7b1bcc5df53d79178bcb72c890a94d654e71"
+    },
+    {
+      "bits": 38,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "137438953471",
+      "actual": "137438953471",
+      "executedSqlSha256": "186c75dd2b216feb7446f39d999a09f2dceb3b7fcfbe636a038e0d7bd5dcc8a6"
+    },
+    {
+      "bits": 39,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 39,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "549755813887",
+      "actual": "549755813887",
+      "executedSqlSha256": "764cd59eeb60a563561f2fbc0340103ea43cbea777e6684686c65bd2d8db0f21"
+    },
+    {
+      "bits": 39,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-274877906944",
+      "actual": "-274877906944",
+      "executedSqlSha256": "1f87bba3df1cf38d0cb04227475aba858f7b9abac1ba31ff0c1d21c802fdcac9"
+    },
+    {
+      "bits": 39,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "274877906943",
+      "actual": "274877906943",
+      "executedSqlSha256": "c0cca970d2a399b394611943a339847d993d132019396b3236cb88f858b44814"
+    },
+    {
+      "bits": 40,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 40,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1099511627775",
+      "actual": "1099511627775",
+      "executedSqlSha256": "9bb5f80a8c0399efb086cf5ddad222196c1ca4d640455328557e550cdae986f5"
+    },
+    {
+      "bits": 40,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-549755813888",
+      "actual": "-549755813888",
+      "executedSqlSha256": "4471885aec9722354c4ce284ec5109495259958645d9315b6440b93d25d8b995"
+    },
+    {
+      "bits": 40,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "549755813887",
+      "actual": "549755813887",
+      "executedSqlSha256": "764cd59eeb60a563561f2fbc0340103ea43cbea777e6684686c65bd2d8db0f21"
+    },
+    {
+      "bits": 41,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 41,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2199023255551",
+      "actual": "2199023255551",
+      "executedSqlSha256": "a58d59d950c23def49096a9743c287182b8c2770fe721bac5b5fec8a92b22d19"
+    },
+    {
+      "bits": 41,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1099511627776",
+      "actual": "-1099511627776",
+      "executedSqlSha256": "8c0ea81f09b7fb9f766b1e0053ee7b24493db5adc21fbe9817b501bad8920294"
+    },
+    {
+      "bits": 41,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1099511627775",
+      "actual": "1099511627775",
+      "executedSqlSha256": "9bb5f80a8c0399efb086cf5ddad222196c1ca4d640455328557e550cdae986f5"
+    },
+    {
+      "bits": 42,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 42,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4398046511103",
+      "actual": "4398046511103",
+      "executedSqlSha256": "8d51f3e8b4a601a22c5d551ba35568f8d5e2a85ac58e65392d3cc7b589dd2a7a"
+    },
+    {
+      "bits": 42,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2199023255552",
+      "actual": "-2199023255552",
+      "executedSqlSha256": "702275addf18e2c6931c32e20d54b1aa3bd020d41372d487b8a73110de847eba"
+    },
+    {
+      "bits": 42,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2199023255551",
+      "actual": "2199023255551",
+      "executedSqlSha256": "a58d59d950c23def49096a9743c287182b8c2770fe721bac5b5fec8a92b22d19"
+    },
+    {
+      "bits": 43,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 43,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "8796093022207",
+      "actual": "8796093022207",
+      "executedSqlSha256": "b4ddb9b49b50aab896ec45111f0339c2597a94f1212b0b106dafae94f1ea99e0"
+    },
+    {
+      "bits": 43,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4398046511104",
+      "actual": "-4398046511104",
+      "executedSqlSha256": "8e44d1c65b7f7e041c62b69db549bd457ad17aa18777278d996396d14ba24211"
+    },
+    {
+      "bits": 43,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4398046511103",
+      "actual": "4398046511103",
+      "executedSqlSha256": "8d51f3e8b4a601a22c5d551ba35568f8d5e2a85ac58e65392d3cc7b589dd2a7a"
+    },
+    {
+      "bits": 44,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 44,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "17592186044415",
+      "actual": "17592186044415",
+      "executedSqlSha256": "f62d6faf20e44cc02c0a90cc1d3a0de192247163b7e3f6a0690a1634502f1a74"
+    },
+    {
+      "bits": 44,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-8796093022208",
+      "actual": "-8796093022208",
+      "executedSqlSha256": "31cd0abe1f7d4e5f29c58d5e9729ee1a371624440a5ce96eb49e186ad03b7535"
+    },
+    {
+      "bits": 44,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "8796093022207",
+      "actual": "8796093022207",
+      "executedSqlSha256": "b4ddb9b49b50aab896ec45111f0339c2597a94f1212b0b106dafae94f1ea99e0"
+    },
+    {
+      "bits": 45,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 45,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "35184372088831",
+      "actual": "35184372088831",
+      "executedSqlSha256": "19ca40f997fb6fc8ba5c8e15d9ae97cc604ae75c0c08f10b40d8fe2dda86fa7b"
+    },
+    {
+      "bits": 45,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-17592186044416",
+      "actual": "-17592186044416",
+      "executedSqlSha256": "a7f26cd33c53eed88c11ae46b6d4a3497139492dacaf48bf8cd6c58ccf756cf2"
+    },
+    {
+      "bits": 45,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "17592186044415",
+      "actual": "17592186044415",
+      "executedSqlSha256": "f62d6faf20e44cc02c0a90cc1d3a0de192247163b7e3f6a0690a1634502f1a74"
+    },
+    {
+      "bits": 46,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 46,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "70368744177663",
+      "actual": "70368744177663",
+      "executedSqlSha256": "43931515bd8f1a870f86163e52ee506619e02e397848debf9350830543a46bad"
+    },
+    {
+      "bits": 46,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-35184372088832",
+      "actual": "-35184372088832",
+      "executedSqlSha256": "8691e3cff47887a19666fe9460a50e4ac85747bb20b2223a7c52f314155ecd31"
+    },
+    {
+      "bits": 46,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "35184372088831",
+      "actual": "35184372088831",
+      "executedSqlSha256": "19ca40f997fb6fc8ba5c8e15d9ae97cc604ae75c0c08f10b40d8fe2dda86fa7b"
+    },
+    {
+      "bits": 47,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 47,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "140737488355327",
+      "actual": "140737488355327",
+      "executedSqlSha256": "9f41f04d311b385a9044868ef4deb15a4fd9baf4d8697e1ae5058e77e5a0fc66"
+    },
+    {
+      "bits": 47,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-70368744177664",
+      "actual": "-70368744177664",
+      "executedSqlSha256": "4f1e06af6a0421432dbf37a8c33215e7fcc81901d4881c6c4e687e6c8f39668f"
+    },
+    {
+      "bits": 47,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "70368744177663",
+      "actual": "70368744177663",
+      "executedSqlSha256": "43931515bd8f1a870f86163e52ee506619e02e397848debf9350830543a46bad"
+    },
+    {
+      "bits": 48,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 48,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "281474976710655",
+      "actual": "281474976710655",
+      "executedSqlSha256": "471325569fe00324f61f6ae4b0c162dd4eb106897ca738cee0b12d43ef076fbd"
+    },
+    {
+      "bits": 48,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-140737488355328",
+      "actual": "-140737488355328",
+      "executedSqlSha256": "4ae44574ec785039265ca3d04dd1eb1fbf87de4f58001fcc9983545c79191773"
+    },
+    {
+      "bits": 48,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "140737488355327",
+      "actual": "140737488355327",
+      "executedSqlSha256": "9f41f04d311b385a9044868ef4deb15a4fd9baf4d8697e1ae5058e77e5a0fc66"
+    },
+    {
+      "bits": 49,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 49,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "562949953421311",
+      "actual": "562949953421311",
+      "executedSqlSha256": "8eb1bd4b6479815030ffe72577eba79853d972f61af12e902486a211e311d433"
+    },
+    {
+      "bits": 49,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-281474976710656",
+      "actual": "-281474976710656",
+      "executedSqlSha256": "2b658bf28217653529d3ee7b5f0bfa289d553f026b87e42b9b7cd103a3dd0d26"
+    },
+    {
+      "bits": 49,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "281474976710655",
+      "actual": "281474976710655",
+      "executedSqlSha256": "471325569fe00324f61f6ae4b0c162dd4eb106897ca738cee0b12d43ef076fbd"
+    },
+    {
+      "bits": 50,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 50,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1125899906842623",
+      "actual": "1125899906842623",
+      "executedSqlSha256": "9bab4ba21dac0a1dd02332d1ad8af3eb138e5090c2fd1b5c2c72b519dc6ac19c"
+    },
+    {
+      "bits": 50,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-562949953421312",
+      "actual": "-562949953421312",
+      "executedSqlSha256": "f775d58873f931af08afb408c5517f0fbc34b5fd789e1380debc9dda16434a64"
+    },
+    {
+      "bits": 50,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "562949953421311",
+      "actual": "562949953421311",
+      "executedSqlSha256": "8eb1bd4b6479815030ffe72577eba79853d972f61af12e902486a211e311d433"
+    },
+    {
+      "bits": 51,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 51,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2251799813685247",
+      "actual": "2251799813685247",
+      "executedSqlSha256": "4504390b6065f009bd13b7ad435268b87e8ab6976fadf044bc1fae99bbee72df"
+    },
+    {
+      "bits": 51,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1125899906842624",
+      "actual": "-1125899906842624",
+      "executedSqlSha256": "1de92c62a0181b54c08c36329344f74f0fae037446c8bbe2be6f6fafad4ea76a"
+    },
+    {
+      "bits": 51,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1125899906842623",
+      "actual": "1125899906842623",
+      "executedSqlSha256": "9bab4ba21dac0a1dd02332d1ad8af3eb138e5090c2fd1b5c2c72b519dc6ac19c"
+    },
+    {
+      "bits": 52,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 52,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4503599627370495",
+      "actual": "4503599627370495",
+      "executedSqlSha256": "d3dcbe5574f0d00521b27f1391bfe98b455bc51908c95e61d805382b37eaa943"
+    },
+    {
+      "bits": 52,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2251799813685248",
+      "actual": "-2251799813685248",
+      "executedSqlSha256": "03ee8b223de930f4da297f8853fc759948b9a26a089beb3d5816bdadbb5c0d37"
+    },
+    {
+      "bits": 52,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2251799813685247",
+      "actual": "2251799813685247",
+      "executedSqlSha256": "4504390b6065f009bd13b7ad435268b87e8ab6976fadf044bc1fae99bbee72df"
+    },
+    {
+      "bits": 53,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 53,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "9007199254740991",
+      "actual": "9007199254740991",
+      "executedSqlSha256": "25a9bb873f7d139b580a16313810760c89ec35f1993629a860a74f3e43ffc3d4"
+    },
+    {
+      "bits": 53,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4503599627370496",
+      "actual": "-4503599627370496",
+      "executedSqlSha256": "9bc38605d2aa94b0f096ff7a550a190f33abff776de3007918a27d17b5b8745c"
+    },
+    {
+      "bits": 53,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4503599627370495",
+      "actual": "4503599627370495",
+      "executedSqlSha256": "d3dcbe5574f0d00521b27f1391bfe98b455bc51908c95e61d805382b37eaa943"
+    },
+    {
+      "bits": 54,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 54,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "18014398509481983",
+      "actual": "18014398509481983",
+      "executedSqlSha256": "b7fc85bb63327fa1bd788f3dcd91e0dadec9e9781cdcc8d4a647c2478b2576cc"
+    },
+    {
+      "bits": 54,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-9007199254740992",
+      "actual": "-9007199254740992",
+      "executedSqlSha256": "e85d40b2f441c0f722552c2781e59b8893ee83c6992d07c1f13ee73980958209"
+    },
+    {
+      "bits": 54,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "9007199254740991",
+      "actual": "9007199254740991",
+      "executedSqlSha256": "25a9bb873f7d139b580a16313810760c89ec35f1993629a860a74f3e43ffc3d4"
+    },
+    {
+      "bits": 55,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 55,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "36028797018963967",
+      "actual": "36028797018963967",
+      "executedSqlSha256": "4c22a751d2410ca549ab8032ce05f58887c1ec4c993291a06792800ce45f8c0c"
+    },
+    {
+      "bits": 55,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-18014398509481984",
+      "actual": "-18014398509481984",
+      "executedSqlSha256": "7eaa068aa72e986cb93b03c199a1cbc04daa0dc73a5b292e9141619e5dfa9777"
+    },
+    {
+      "bits": 55,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "18014398509481983",
+      "actual": "18014398509481983",
+      "executedSqlSha256": "b7fc85bb63327fa1bd788f3dcd91e0dadec9e9781cdcc8d4a647c2478b2576cc"
+    },
+    {
+      "bits": 56,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 56,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "72057594037927935",
+      "actual": "72057594037927935",
+      "executedSqlSha256": "f754c553b872996163c662a9f451645ef886a1807964aa6e8cbcb8daaafcbd9a"
+    },
+    {
+      "bits": 56,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-36028797018963968",
+      "actual": "-36028797018963968",
+      "executedSqlSha256": "907901926439a05295a6e0e2b3419d69b649bc70ce5a720cec96ea59e09ecc1c"
+    },
+    {
+      "bits": 56,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "36028797018963967",
+      "actual": "36028797018963967",
+      "executedSqlSha256": "4c22a751d2410ca549ab8032ce05f58887c1ec4c993291a06792800ce45f8c0c"
+    },
+    {
+      "bits": 57,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 57,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "144115188075855871",
+      "actual": "144115188075855871",
+      "executedSqlSha256": "1d62d432be192f51c28f05a73088daf663903682c2e32a00323e37897089914c"
+    },
+    {
+      "bits": 57,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-72057594037927936",
+      "actual": "-72057594037927936",
+      "executedSqlSha256": "8063ceeb20768d8d991617aaa52b305aecb31a0e1979332fa58662dff2380869"
+    },
+    {
+      "bits": 57,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "72057594037927935",
+      "actual": "72057594037927935",
+      "executedSqlSha256": "f754c553b872996163c662a9f451645ef886a1807964aa6e8cbcb8daaafcbd9a"
+    },
+    {
+      "bits": 58,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 58,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "288230376151711743",
+      "actual": "288230376151711743",
+      "executedSqlSha256": "55028a8dbc9b81463e2be42e68402103829ca07566ba0bfc61532b2184b02bf9"
+    },
+    {
+      "bits": 58,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-144115188075855872",
+      "actual": "-144115188075855872",
+      "executedSqlSha256": "8771648b6d8720d3c33b6a39e2abb2f9015bc2ea16282c10ceb7ff8b4809503d"
+    },
+    {
+      "bits": 58,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "144115188075855871",
+      "actual": "144115188075855871",
+      "executedSqlSha256": "1d62d432be192f51c28f05a73088daf663903682c2e32a00323e37897089914c"
+    },
+    {
+      "bits": 59,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 59,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "576460752303423487",
+      "actual": "576460752303423487",
+      "executedSqlSha256": "eb79109a187ff17709db7d042189b55428fb9e19396623ecc351ef72343fb4e9"
+    },
+    {
+      "bits": 59,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-288230376151711744",
+      "actual": "-288230376151711744",
+      "executedSqlSha256": "a5e85ebd2c7187fe99b1fbae1d8a3b543d1a7992d4ebf6349d34e6b2fa500854"
+    },
+    {
+      "bits": 59,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "288230376151711743",
+      "actual": "288230376151711743",
+      "executedSqlSha256": "55028a8dbc9b81463e2be42e68402103829ca07566ba0bfc61532b2184b02bf9"
+    },
+    {
+      "bits": 60,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 60,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "1152921504606846975",
+      "actual": "1152921504606846975",
+      "executedSqlSha256": "f86bdb97676debbc1c2b6f05c9675bbf20752cf02ca88bcc77984f820af08333"
+    },
+    {
+      "bits": 60,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-576460752303423488",
+      "actual": "-576460752303423488",
+      "executedSqlSha256": "dc9a5eabd6475d258a6a8de17ff54f85677a5f981da44afc7b67395df9c2a833"
+    },
+    {
+      "bits": 60,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "576460752303423487",
+      "actual": "576460752303423487",
+      "executedSqlSha256": "eb79109a187ff17709db7d042189b55428fb9e19396623ecc351ef72343fb4e9"
+    },
+    {
+      "bits": 61,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 61,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "2305843009213693951",
+      "actual": "2305843009213693951",
+      "executedSqlSha256": "a57759b7697f3a0ba77ab01da405d114a611a67ac43011046adc80aa2e097074"
+    },
+    {
+      "bits": 61,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-1152921504606846976",
+      "actual": "-1152921504606846976",
+      "executedSqlSha256": "6a7560d5b467dceac17c10bddf9988cfe18fa2d0dc1eb6ba14515692d584950b"
+    },
+    {
+      "bits": 61,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "1152921504606846975",
+      "actual": "1152921504606846975",
+      "executedSqlSha256": "f86bdb97676debbc1c2b6f05c9675bbf20752cf02ca88bcc77984f820af08333"
+    },
+    {
+      "bits": 62,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 62,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "4611686018427387903",
+      "actual": "4611686018427387903",
+      "executedSqlSha256": "f54eed58b433c05bed904fdb5ce0a4c8855e82f4700e27d06591caf7da3aa6b9"
+    },
+    {
+      "bits": 62,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-2305843009213693952",
+      "actual": "-2305843009213693952",
+      "executedSqlSha256": "ff0f54d0ec7c3e4eefc788cbeab965211675ba0028344ddadd92f82397610903"
+    },
+    {
+      "bits": 62,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "2305843009213693951",
+      "actual": "2305843009213693951",
+      "executedSqlSha256": "a57759b7697f3a0ba77ab01da405d114a611a67ac43011046adc80aa2e097074"
+    },
+    {
+      "bits": 63,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 63,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "9223372036854775807",
+      "actual": "9223372036854775807",
+      "executedSqlSha256": "4dab1c5d9f02ed056a0560cb924746088d7fd0487e18b763a03d8c6f27092208"
+    },
+    {
+      "bits": 63,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-4611686018427387904",
+      "actual": "-4611686018427387904",
+      "executedSqlSha256": "98273b2b4df671e75f8035b64e0276ff8fbddad9a4c6b751cdb2d0c81f8101fd"
+    },
+    {
+      "bits": 63,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "4611686018427387903",
+      "actual": "4611686018427387903",
+      "executedSqlSha256": "f54eed58b433c05bed904fdb5ce0a4c8855e82f4700e27d06591caf7da3aa6b9"
+    },
+    {
+      "bits": 64,
+      "signed": false,
+      "boundary": "minimum",
+      "expected": "0",
+      "actual": "0",
+      "executedSqlSha256": "5e72979cf02b0735ecc75ee07f30bb2f4ab0e606e607ab6009b9046f2a4ab880"
+    },
+    {
+      "bits": 64,
+      "signed": false,
+      "boundary": "maximum",
+      "expected": "18446744073709551615",
+      "actual": "18446744073709551615",
+      "executedSqlSha256": "abbe29a2ceddac851964df5f687b8ac9efb8f95790e47e6f3847aadacc1a5d78"
+    },
+    {
+      "bits": 64,
+      "signed": true,
+      "boundary": "minimum",
+      "expected": "-9223372036854775808",
+      "actual": "-9223372036854775808",
+      "executedSqlSha256": "6710920e50093fcc41ea9a8a1ad15a1c660649cf0fdd8793fff8682b59ff76b6"
+    },
+    {
+      "bits": 64,
+      "signed": true,
+      "boundary": "maximum",
+      "expected": "9223372036854775807",
+      "actual": "9223372036854775807",
+      "executedSqlSha256": "4dab1c5d9f02ed056a0560cb924746088d7fd0487e18b763a03d8c6f27092208"
+    }
+  ]
+}

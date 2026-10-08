@@ -1,0 +1,5807 @@
+{
+  "scope": "Original sales join across all 16 row/props cuts via psycopg native prepared placeholders; exact text results and injected prepublication views, synthetic candidate only",
+  "server": "17.9 (Debian 17.9-1.pgdg13+1)",
+  "driver": "3.2.10",
+  "libpq": 170005,
+  "cases": 224,
+  "setupsSha256": "24a65b87e513395e55e9dcee3706f1f378acd319e49a47114f4c9ee6b0a6c4e2",
+  "sourceHashes": {
+    "tests/truss-postgresql/sales-join-driver-native.py": "5107d13eb2e9eede55e01570d884d8d6034745bbfbcd67e01e8894922e017fc4",
+    "tests/truss-postgresql/host_obligation_fixture.py": "3668e04fca3939d51cfd9d0cfada4a9858aeeadfe9a633350041b414517130d4",
+    "tests/truss-postgresql/original-sales-join-native.py": "b15b581395ad8aaed5a80bf09a4a3402936409fcee89278b05855eb84538607e"
+  },
+  "results": [
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "row",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "row",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "row",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "row"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "exact",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": true,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "authority-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "binding-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "empty",
+      "scenario": "visibility-revoked",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "query",
+        "context"
+      ],
+      "published": false,
+      "carrierOids": [
+        25,
+        25
+      ]
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "missing-hidden-name",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-name-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "wrong-total-carrier",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-foreign-key-domain",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    },
+    {
+      "homes": [
+        "props",
+        "props",
+        "props",
+        "props"
+      ],
+      "case": "hidden-total-scale",
+      "scenario": "stored-data",
+      "events": [
+        "context",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard",
+        "guard"
+      ],
+      "published": false,
+      "carrierOids": []
+    }
+  ]
+}

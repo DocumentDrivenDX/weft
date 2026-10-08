@@ -1,0 +1,275 @@
+{
+  "scope": "Original/public admitted uint64 map and structured members: exact carriers and complete-owner native numeric-domain prerequisites; source lexical grammar, recursive row-tree and production qualification remain separate",
+  "captureSha256": {
+    "numeric-map": "00c9cebc13cb2fd2e343e97256d00075d1ca5d4170a6331a4a9396c6951c02c8",
+    "numeric-address": "7cdcd64ec1d5a8d8d4322c5868d131dbe3ff7b119b18c1876b34167712e84b17"
+  },
+  "harnessSha256": "495f7e61a5b88f55de440db0793a3ea4265d5864071255bcf0b12e0ad8b2a60b",
+  "results": [
+    {
+      "property": "numeric-map",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "a606e6d08f68896b83a08b896e74ccec7983987d1dc2645bbf460aa3b6195d41"
+    },
+    {
+      "property": "numeric-map",
+      "case": "exact-numeric",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "d8706cfa1c91a7a8f9c377dafa82aebf4c330bb683d57c6d2dd0cb2858ce4cd7"
+    },
+    {
+      "property": "numeric-map",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5cd4ee1839c2d3d377c5468f04e1fc217f70ca93d0710634c9c0f043c3adcfb7"
+    },
+    {
+      "property": "numeric-map",
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "612ee585198ee5e4fdef1b26d4bd6df961b702df6e39f02c02da0e2dac57ea7d"
+    },
+    {
+      "property": "numeric-map",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "cfc211cfe47ca1d8557f5dee454e4f925797f6075d01f2da9fd1cffed0a38e9a"
+    },
+    {
+      "property": "numeric-map",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0b39c1d283af0a352a72adb0a48e82e8df2ef4ee9f861fac21b70e390ae336f5"
+    },
+    {
+      "property": "numeric-map",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "2fad79c23fd3f036f7f0a155e2b4cf4183595e20aad60cb25a0f275e9b6e1acb"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain--1",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f359ba0ff352dcdea480cdbc5600bc2b8f225fc3e14a6df3e5ce80692a6d6a4c"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain-1.5",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b2063e1f20cc1b38b5dc5366be652da07c17bb2247916a109a318cc7cf204f0e"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain-18446744073709551616",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d49c70544b5f8438a1cad3a74438b739c2932dc05f3540c7908a69f024a1a654"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain-NaN",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7563015aabff9c191d8a710fe9c42f9def0a9d139538ef23cb1460aa7c75c5cf"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain-Infinity",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b34343fef498a5298b06d5ef51955f08bd9ec94d7f2241c2cd1dacae70fc09be"
+    },
+    {
+      "property": "numeric-map",
+      "case": "numeric-domain-not-a-number",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4a0ae97dd9309419a21d22063f31e62357559fd57f5e0a03a3a27f5ca3b22aa4"
+    },
+    {
+      "property": "numeric-address",
+      "case": "empty-owner",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5775a222f4bc2ddf73fb56348bf5ea22ec5d7d545ccf414274cd625e09a4cb9a"
+    },
+    {
+      "property": "numeric-address",
+      "case": "exact-numeric",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "545898077a23a063cb9ad631152121a571133d2a0f2f1cbba8bb206bba961045"
+    },
+    {
+      "property": "numeric-address",
+      "case": "empty-value",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "087b8c119d92f68a4a0d5482e2d96c920e803bd6b41e1f20ac13e19c46729e43"
+    },
+    {
+      "property": "numeric-address",
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "cb54bfc17bf0180249e406a4e0e660c7fda8b1a919bfe25182005a3d1952bea4"
+    },
+    {
+      "property": "numeric-address",
+      "case": "explicit-null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8bd5a16699e2cbb638e4794e8c5ef7268b166ed59f713652b29616de3f359cfc"
+    },
+    {
+      "property": "numeric-address",
+      "case": "hidden-malformed",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "fc0806c6b8a73a7a5715fa1a5b57c18aad94aedf5a57fc2a1dd204191b27a982"
+    },
+    {
+      "property": "numeric-address",
+      "case": "wrong-root-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7e1c815d6a1cde348cb33b56b5bf40d78d028351d48a830489c1f0f6e8272c81"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain--1",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ec28a3a6f1089b8ad17c8878d0e07fb0dee954c5d25f295c57adf0316594386b"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain-1.5",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7cdffce88915fa1a5e2200cd8e4e844839f61154124f7374ea1c6e492f1842a2"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain-18446744073709551616",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "804eddd054155390cf525ca56ac7f28b49622caaf54a3d06f7047518fc7f0eac"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain-NaN",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "243b3797aca67e38a62c0bd1aca10a7247fc34cdcc2d6aaae4a19790fd175ab0"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain-Infinity",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "4f58e40ea9e807eba85685d253a8ac17359ab1895fa235b58639109f36e05670"
+    },
+    {
+      "property": "numeric-address",
+      "case": "numeric-domain-not-a-number",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "22512923913da50bcc05745b5f38551cb5f190fe8fa1ac919c9d543870afc8fc"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "a2c8e4d249dba75961f52be247aa3e1b3e0bb261029b08d51d824b0d95dbf790",
+    "crates/weft-postgresql/src/recursive_observation.rs": "335d00b42f2f3296704ea8c78494dc890f244f9c9e03d629813c7e5142adff50"
+  },
+  "testLogSha256": "c77265c535d7470c415a5ccd66f66013aa25521a1fcd5d167a20832274e0c0cd"
+}

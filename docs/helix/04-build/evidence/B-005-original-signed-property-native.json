@@ -1,0 +1,847 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "scope": "Original signed integer properties in native row/props homes at widths 1/8/16/32/64; synthetic pinned fixture source semantics, no production or embedding qualification",
+  "harnessSha256": "afa056a274314daf4304b5d1a6ff1bdf10b4c6e20f658bfd7d80a6e37991c6ac",
+  "results": [
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "3ebf56319409b6d1d44dab165b31b07af437f2debe09dfb09db1bfdcce7c8d2a",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "0f3b5830f91613620e6c17be3be01077e5747fda8c37da933cdc4579a5f7ecd0",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "85d71597e419df0bb32bd0b83260c8d2dd80130b13537ca66a8db1a9dbe8cf51",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "46ec59676c90936476ea6fc4f50b696d4d379a1a99ba21399eccb857d5df98df",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "40ff8e0676a9df300e8ca867e4f3ba4f225525e2441a39846a88ad63a36222a7",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "34df0355f12b502e586b13ed0ae2da0ad49c75ae5412aab4ec8201d5f3339ad8",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "dc16f6980adb3fad1df68b6dfc85eeedbfb1b44ad732fdadf93550d344c51ad4",
+      "captureSha256": "01220ff2a180feea066f939b4f55fc1fd0838233d99c22a6c706aedbefac8114"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5a323be115d22961f2461ef1f1b3c50c34fcb5216d79daec96d6ae35510d44c7",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4f4c8541abdb20947a919fc57fb89295332ea24ed4f192eeaa94eb8af69c6756",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "47db3c197fd0e19a181c300c395670eb95acecd83ca363e44ad7a457a35f99dd",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "457bfb1ee796ac56e776b15bc81c284f252336369ffb9e46eb53b44af0df4170",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f306181e77bfefc8757905026708c392c6144c9018d2ba29fff038582a5a7281",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a2f4a06b0cffe0eb6666b37a218e52f0d12783be4e7bd47857abede44dd67290",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-1-props-sum",
+      "case": "wrong-carrier",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ab6ffcf331c172b256264c577b7e3452d7f3a4fb14696d852d1f1f866f6b0f7b",
+      "captureSha256": "22c79f120bd1581257415fcb22931c1a5cbc775ac354307aa60904f77f6631ab"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4330dabce142986296267133c11fdb5f34fdb085c0806dbcc98b7130b478021b",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "e5e02b4edc8be3257e01a44ea9e3114b8b49352b8697ce85b02f067a894f2921",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "61ea09bb88ccd1b2d19a231e57a57457a4222bfc4118b71e029c2d076eb1f29b",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "16b2328accfbbf3d1a778887d0ad8cf6f31fae719b84081966b38ad09c5b2622",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "25c43f0b71f6f9f3abe6b501670008868e006b6ebca59b833899df714e28468d",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "7c1229dc43f2edc93e6cc913ee82f1a0ca0612dd69241a47d1d48de41bc76e27",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a1dccfa76425138849ce9ce2d8b3695af4ccb4354ec3fb0c9079c12887d7ab09",
+      "captureSha256": "9a79f22c7c3c43d4bb68924219758cbc37409cba4e241d1908e40f0ed913c6c1"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "f3144c49e94b7a986feea2a0dcb0ee19a6e4bb7bac5bfb7c758d2df009e27543",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1736dba8999ab441657a3c5e9e55070243c6b332738f2b01bfbdaaa99e4dc2dd",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0c05741848d1e3177ec57ac9cb0c250fe3cd0cd7991f87a6bd47de3af3593c56",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d0d37fb9062dc3652ef8cec3d69c838fa1dea6e0d37359a00a94b8dbf6daef40",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "fa8f9dd13e5fb0c2e3722e80bd1c687eb135214cc1754ee41e6f87ff8dd00a9d",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "500f49e8f5ab50b35f94dbfc603e816fc922036c1e22fdc488e2bafac21ceb1e",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-8-props-sum",
+      "case": "wrong-carrier",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "75ee6d982db69af6230565af0c09c2f0696d1ed4532d71295cecb32be73797cf",
+      "captureSha256": "18c2c7d147504f6f6845c6ef81caa01b6be34d40ea1a793168e919250d8a355a"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "dbba745bf66a11d0ca23a26ffb3683b48c5a9cf9c8a3d15f1d442a3f580aa023",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "cf061313f8c5c4531a2142587816c196ddae7ab2c7a17cbcf2be509648ca0652",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f216381626ee3eca13ce8db57845785e8d3a9913f2cc5a3e088d1b5722df9fc1",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "93952f3453e15bb8c74ec555c90b71dac0806933da0578779430cbb56d2ccec7",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ba85cef3f69b52dc4ce87f13057d1b1ea692ca48a04ac30533c45253eac532ef",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1807fb99df59e77e301b66223894ad1adde3d6080d62f193902cfe92e72bd1ef",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a8f965bfd6676113d93cf123ade31f8aff8a7a2279f330388102ffc5694a166c",
+      "captureSha256": "dbbe8f05636d5b8ea8f238be8dd63e7f5cd0e4840046a5ad26c9efca869c2e50"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "a42cc32895af1b155255f3876132432f3e2b595ef1b01194579c44dc9eebfa97",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "c83b8884a186fbb14523a2f227cec8f818962ab6849620b53892a45e5a856381",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bde4d3878847f409f2feab8723c70a33003219925499205417932fb1a386f96e",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "22de2f977b74b5acd7a7843ae46d718a1d4abe8cb7bf5d77410e4f5177f23aaf",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9f65584d57692f649299107163a91f9b03609eed8824e9df87a29469c245d4b1",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1e7ac7bdbbf5143c77be1ae03ba44cc79995a78c86ec860626b46b42579d86e7",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-16-props-sum",
+      "case": "wrong-carrier",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "2bec35714ad8392e5f56b064e165ed2e55267491291a6e6e6ac560e2fff376fb",
+      "captureSha256": "325d68395cd49629591466dee9898f8afb8352f20c07335bcdb1166df8ac5a93"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "cbb68d2841c2b7bd3487c99e211f9b1e5ebf67aa7340d9810a20ff9b51ca4fe6",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "fb128ffe741c8b5e121b7240611c84178f4a8b024420a7e885e712001e1c57e1",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b4a3e97445606da8c4fe71f7b42dd49a80d6c69700feb719f69a0ac7d2bd2627",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "2530b64e2e31e739477ca9a722b9bc234f7265c16a6c18f5bbb78c51e7edfb9f",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "ed6a949edf465e52af33ef9f07b87b14ee2d4bef45ae8bc19649007ae8267f38",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8de3f99748883546bd920efd3eafc482528f19c0f6f6166e3a32c1cd8c0b87b3",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "cf8c1ec7c2f744b75dc5814809b6ecbf12aa5a34444b1786b8724b910ff96203",
+      "captureSha256": "04efc8fe6bd1e4f945b46587ed8f4736fbd8cb79ed82d4d076d94f07fd105265"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5a28c49cc6fd00b2e285f53994e2fcbc501126cea8334520a6800fd10cbc0621",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "03d7114d8bcb8390648eae49cf444fa85612fbd3c3aee78bd9c0273db6b2a2c9",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "38f5c623735803b9ad96736fe4a50198d4a14646fc0440598f6465ed38780d6f",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1af12109dbd624d1a1cd2a855e3e1ace14c30ff3acedd1071c2492b144025410",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "e60855ff902615dcc9b48428fed701e4f4e82f0e86f9201787d63d1b05a8606d",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "59522028d83cd8918cafff6dd64211616a552126f113aa77c0caf73d3baea143",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-32-props-sum",
+      "case": "wrong-carrier",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b1ee029b48cc06197f61ab3c8fa2d04e096b95c99a3942dc422e804e345ed780",
+      "captureSha256": "cb812912fade655548fffb9aa257b4434e2f6befd2986ac79988a6a59d3d6962"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "f5bc51cd5899a4e47ae102b30d55efc41a9f261d824e5137a23ad5bef7f3ee30",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "1595f310871ffcbd8de7c5d09aded3b511d269e829d79f76988f21ee8c92cb99",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "81b39a051b50dd8683fbfec00f0caab152ddf3a423d7fa106c09366b9e2087e3",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "28768cc398948684d048331d6ffcb3e57bdf22c21be7e3adb03a36c725acffb3",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0a372c585dd675620f7fefae2b62dff36d899567e4300c51fd34bb8f3571dac7",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8423bb45c9fbb360c6a87775d9729b1eb062c4131d324b032c7b34a311890a5d",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-row-sum",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "a9c3391c744e9663f2e23176ee3a240806dbb08aaba58c73303f119f301c2f38",
+      "captureSha256": "2f8b06b4009a26950d827332724a4dc1e0cb8f9e03a90669c2f80e5d739cf4be"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "679e421f883085f8b3721345a3cbe2e1ed4200d843d6c3d40b26dcee36333894",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4707dbe44b7af127aaef1b4bb9e051893bd07755d9092300fa359bcd9455cd70",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "below-minimum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "26a07779655ff3e02101e305db6f348c968275dfc31cd7b3ce9aefcd3d2a0af8",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "above-maximum",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "25eb4b388dcd12ddbb18e2e99f36875c622021ce1ca8fcd08ddd3bf972868523",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "1cb1f10f90aeb7d8a615430910a54496e547c18c21c7db696e2642cd282883ba",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "required-absent",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9cad1281dbb6c51130a3f13c39e62854d3c41bc0a4cae8ef18477d3444de76ef",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    },
+    {
+      "fixture": "original-signed-64-props-sum",
+      "case": "wrong-carrier",
+      "violations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "34d1bfdacc3db8f673b7e3d8b0666a0325ea52e7b81c1221857fb315808d3865",
+      "captureSha256": "37f0531b62d427df4879f49612af971a0888ea48277bca225b0181646778e4ce"
+    }
+  ]
+}

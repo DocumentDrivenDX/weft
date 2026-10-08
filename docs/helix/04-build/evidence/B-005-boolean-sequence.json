@@ -1,0 +1,17 @@
+{
+  "scope": "Original recursive Boolean sequence with synthetic native row fixture codec/source procedures; no new runtime preset or fresh embedding/production claim",
+  "rustTests": 150,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "f95359da8f4a3af2d24a9ba30acacf5ac28a7d18accad7abbf29fd7452be9ae7",
+    "tests/truss-postgresql/build-boolean-sequence-fixture.py": "8180529d67bc54c2962bc3e1512e321017b125b06ec249b0c20daad15114e5a4",
+    "tests/truss-postgresql/original-boolean-sequence-native.py": "b43d8a74760fa86dfbc63047636f60d2b06ac8ef2c82217b78db435478ba4305",
+    "tests/truss-postgresql/fixtures/original-boolean-sequence-inputs.json": "f4eefcf2f7116298234789040785459acaaf764a60b4a0a8e28b22da57452b3c",
+    "tests/truss-postgresql/fixtures/original-boolean-sequence-tree.json": "906a1dda8f5624ba2b6aa20365d6fde0774c173f12e607cd62efe9e1ada6bae4",
+    "tests/truss-postgresql/fixtures/original-boolean-sequence-public.json": "0fd3b2bde5d23639e9cf33dfcbb2496232914cb9893912f9465af6bb0b5ba3b0"
+  },
+  "logs": {
+    "/private/tmp/weft-boolean-sequence-full.log": "066670b0d4b5e26202a459857008153790d5e57fea911f454773ec3f61a366d5",
+    "/private/tmp/weft-boolean-sequence-before.log": "431a180eb74876180a5c6d7b5ea720ae113ccb6ff2108309f64932a35ac167df",
+    "/private/tmp/weft-boolean-sequence-capture.log": "b8b9ff4502f00944061606ee4abe5ef9bb388a0add40d3d3040d699fdf2319ed"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "Selected comparator SUM SQL over synthetic exact text inputs; not full admitted property/SELECT or production support",
+  "captureSha256": "cde203114669af5d2b60a297f0ba53cd625d553ba2586217a1cd1f2f1e01ef91",
+  "harnessSha256": "a8cd43227c7b7b2cdc660c5ee2bb5d9628512ff60834454091d2146d28b3862f",
+  "results": [
+    {
+      "family": "uint64",
+      "case": "empty",
+      "result": "__null__",
+      "sqlSha256": "cadb0e9499555a7fe1d5eeb07bf229eae718dc1ad146e0009eb048bc622c5557"
+    },
+    {
+      "family": "uint64",
+      "case": "exact",
+      "result": "36893488147419103230",
+      "sqlSha256": "8a9a8a4fd7c6316e64a33dd358d0a71cf9e5bbc35367a5e3428f9e86820031ab"
+    },
+    {
+      "family": "decimal",
+      "case": "empty",
+      "result": "__null__",
+      "sqlSha256": "cadb0e9499555a7fe1d5eeb07bf229eae718dc1ad146e0009eb048bc622c5557"
+    },
+    {
+      "family": "decimal",
+      "case": "exact",
+      "result": "9999999999999999999.123456788",
+      "sqlSha256": "2912af8cb261f8529bc9ed21f60d72082b8bfb711b5320081cb567cf16fc4729"
+    }
+  ]
+}

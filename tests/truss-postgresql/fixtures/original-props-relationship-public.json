@@ -1,0 +1,1186 @@
+[
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_related_0_scan_0\".\"props\" -> $4::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND ((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"target_id\" AND weft_guard_from.type_id=weft_guard_edge.\"target_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"source_id\" AND weft_guard_to.type_id=weft_guard_edge.\"source_type\" WHERE weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND (weft_guard_edge.\"target_type\" IS DISTINCT FROM $9::pg_catalog.int4 OR weft_guard_edge.\"source_type\" IS DISTINCT FROM $10::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"target_id\"=weft_guard_from.id AND weft_guard_edge.\"target_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND weft_guard_edge.\"source_type\"=$10::pg_catalog.int4 WHERE weft_guard_from.type_id=$9::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"target_id\") < $11::pg_catalog.numeric) AS weft_guard_cardinality",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_duplicate_keys"
+    ],
+    "columns": [
+      {
+        "nullable": false,
+        "outputName": "n",
+        "position": 1,
+        "representation": {
+          "carrier": "text",
+          "decoder": "exact-integer",
+          "kind": "scalar",
+          "logicalType": {
+            "facets": {},
+            "family": "integer",
+            "nullable": false
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "orders",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      }
+    ],
+    "direction": "inverse",
+    "kind": "has",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-2",
+          "use": "admitted-owner-scan"
+        },
+        "position": 1,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "6",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 2,
+        "value": "6"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1",
+          "use": "admitted-owner-scan"
+        },
+        "position": 3,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "0",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 4,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 5,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 6,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 7,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 8,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 9,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 10,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 11,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "parameter": "customer_id",
+          "span": {
+            "end": 81,
+            "start": 70
+          }
+        },
+        "position": 12,
+        "value": "9007199254740993"
+      }
+    ],
+    "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS \"n\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND EXISTS (SELECT 1 FROM \"pg_temp\".\"edge\" AS \"weft_related_0_edge\" JOIN \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" ON \"weft_related_0_scan_0\".id=\"weft_related_0_edge\".\"source_id\" AND \"weft_related_0_scan_0\".type_id=\"weft_related_0_edge\".\"source_type\" WHERE \"weft_related_0_edge\".\"rel_type_id\"=$5::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_type\"=$6::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_type\"=$7::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_id\"=\"weft_scan_0\".\"id\" AND \"weft_scan_0\".\"type_id\"=\"weft_related_0_edge\".\"target_type\" AND (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric)=($12::pg_catalog.numeric))"
+  },
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_related_0_scan_0\".\"props\" -> $4::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND ((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"target_id\" AND weft_guard_from.type_id=weft_guard_edge.\"target_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"source_id\" AND weft_guard_to.type_id=weft_guard_edge.\"source_type\" WHERE weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND (weft_guard_edge.\"target_type\" IS DISTINCT FROM $9::pg_catalog.int4 OR weft_guard_edge.\"source_type\" IS DISTINCT FROM $10::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"target_id\"=weft_guard_from.id AND weft_guard_edge.\"target_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND weft_guard_edge.\"source_type\"=$10::pg_catalog.int4 WHERE weft_guard_from.type_id=$9::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"target_id\") < $11::pg_catalog.numeric) AS weft_guard_cardinality",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_duplicate_keys"
+    ],
+    "columns": [
+      {
+        "nullable": false,
+        "outputName": "id",
+        "position": 1,
+        "representation": {
+          "carrier": "text",
+          "decoder": "exact-integer",
+          "kind": "scalar",
+          "logicalType": {
+            "facets": {
+              "integerWidth": {
+                "bits": 64,
+                "signed": false
+              }
+            },
+            "family": "integer",
+            "nullable": false
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "order-id",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      },
+      {
+        "nullable": false,
+        "outputName": "customers",
+        "position": 2,
+        "representation": {
+          "bound": 2,
+          "key": {
+            "fields": [
+              {
+                "documentId": "sales-fixture",
+                "element": "customer-id",
+                "module": "sales",
+                "revision": "application-fixture-1"
+              }
+            ],
+            "id": "customer-pk",
+            "types": [
+              {
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": false
+                  }
+                },
+                "family": "integer",
+                "nullable": false
+              }
+            ]
+          },
+          "kind": "relatedKeys",
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "customer-id",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      }
+    ],
+    "direction": "inverse",
+    "kind": "keys",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-2",
+          "use": "admitted-owner-scan"
+        },
+        "position": 1,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "6",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 2,
+        "value": "6"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1",
+          "use": "admitted-owner-scan"
+        },
+        "position": 3,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "0",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 4,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 5,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 6,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 7,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 8,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 9,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 10,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 11,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 16,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relatedBound": 2
+        },
+        "position": 12,
+        "value": "2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 16,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relatedProbe": 3
+        },
+        "position": 13,
+        "value": "3"
+      }
+    ],
+    "sql": "SELECT ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text AS \"id\", ((SELECT pg_catalog.jsonb_build_object('items',COALESCE(pg_catalog.jsonb_agg(k ORDER BY ord) FILTER (WHERE ord<=$12::pg_catalog.int4),'[]'::pg_catalog.jsonb),'truncated',pg_catalog.count(*)>$12::pg_catalog.int4)::pg_catalog.text FROM (SELECT pg_catalog.jsonb_build_array((((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric)::pg_catalog.text) AS k, pg_catalog.row_number() OVER (ORDER BY ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AS ord FROM \"pg_temp\".\"edge\" AS \"weft_related_0_edge\" JOIN \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" ON \"weft_related_0_scan_0\".id=\"weft_related_0_edge\".\"source_id\" AND \"weft_related_0_scan_0\".type_id=\"weft_related_0_edge\".\"source_type\" WHERE \"weft_related_0_edge\".\"rel_type_id\"=$5::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_type\"=$6::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_type\"=$7::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_id\"=\"weft_scan_0\".\"id\" AND \"weft_scan_0\".\"type_id\"=\"weft_related_0_edge\".\"target_type\" AND (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) ORDER BY ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric LIMIT $13::pg_catalog.int4) AS weft_related_0_bounded)) AS \"customers\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) ORDER BY (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ASC LIMIT 10"
+  },
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_related_0_scan_0\".\"props\" -> $4::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND ((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"source_id\" AND weft_guard_from.type_id=weft_guard_edge.\"source_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"target_id\" AND weft_guard_to.type_id=weft_guard_edge.\"target_type\" WHERE weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND (weft_guard_edge.\"source_type\" IS DISTINCT FROM $9::pg_catalog.int4 OR weft_guard_edge.\"target_type\" IS DISTINCT FROM $10::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"source_id\"=weft_guard_from.id AND weft_guard_edge.\"source_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND weft_guard_edge.\"target_type\"=$10::pg_catalog.int4 WHERE weft_guard_from.type_id=$9::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"source_id\") < $11::pg_catalog.numeric) AS weft_guard_cardinality",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_duplicate_keys"
+    ],
+    "columns": [
+      {
+        "nullable": false,
+        "outputName": "n",
+        "position": 1,
+        "representation": {
+          "carrier": "text",
+          "decoder": "exact-integer",
+          "kind": "scalar",
+          "logicalType": {
+            "facets": {},
+            "family": "integer",
+            "nullable": false
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "customer",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      }
+    ],
+    "direction": "forward",
+    "kind": "has",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1",
+          "use": "admitted-owner-scan"
+        },
+        "position": 1,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "0",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 2,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-2",
+          "use": "admitted-owner-scan"
+        },
+        "position": 3,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "6",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 4,
+        "value": "6"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 5,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 6,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 7,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 8,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 9,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 10,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 11,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "parameter": "order_id",
+          "span": {
+            "end": 78,
+            "start": 70
+          }
+        },
+        "position": 12,
+        "value": "100"
+      }
+    ],
+    "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS \"n\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND EXISTS (SELECT 1 FROM \"pg_temp\".\"edge\" AS \"weft_related_0_edge\" JOIN \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" ON \"weft_related_0_scan_0\".id=\"weft_related_0_edge\".\"target_id\" AND \"weft_related_0_scan_0\".type_id=\"weft_related_0_edge\".\"target_type\" WHERE \"weft_related_0_edge\".\"rel_type_id\"=$5::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_type\"=$6::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_type\"=$7::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_id\"=\"weft_scan_0\".\"id\" AND \"weft_scan_0\".\"type_id\"=\"weft_related_0_edge\".\"source_type\" AND (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric)=($12::pg_catalog.numeric))"
+  },
+  {
+    "checks": [
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_related_0_scan_0\".\"props\" -> $4::pg_catalog.text))='string')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND ((\"weft_related_0_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_related_0_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"edge\" weft_guard_edge LEFT JOIN \"pg_temp\".\"object\" weft_guard_from ON weft_guard_from.id=weft_guard_edge.\"source_id\" AND weft_guard_from.type_id=weft_guard_edge.\"source_type\" LEFT JOIN \"pg_temp\".\"object\" weft_guard_to ON weft_guard_to.id=weft_guard_edge.\"target_id\" AND weft_guard_to.type_id=weft_guard_edge.\"target_type\" WHERE weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND (weft_guard_edge.\"source_type\" IS DISTINCT FROM $9::pg_catalog.int4 OR weft_guard_edge.\"target_type\" IS DISTINCT FROM $10::pg_catalog.int4 OR weft_guard_from.id IS NULL OR weft_guard_to.id IS NULL)",
+      "SELECT count(*) AS violations FROM (SELECT weft_guard_from.id FROM \"pg_temp\".\"object\" weft_guard_from LEFT JOIN \"pg_temp\".\"edge\" weft_guard_edge ON weft_guard_edge.\"source_id\"=weft_guard_from.id AND weft_guard_edge.\"source_type\"=weft_guard_from.type_id AND weft_guard_edge.\"rel_type_id\"=$8::pg_catalog.int4 AND weft_guard_edge.\"target_type\"=$10::pg_catalog.int4 WHERE weft_guard_from.type_id=$9::pg_catalog.int4 GROUP BY weft_guard_from.id,weft_guard_from.type_id HAVING pg_catalog.count(weft_guard_edge.\"source_id\") < $11::pg_catalog.numeric) AS weft_guard_cardinality",
+      "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" WHERE (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",
+      "SELECT count(*) AS violations FROM (SELECT CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) GROUP BY CASE WHEN (CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) THEN (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ELSE NULL END HAVING pg_catalog.count(*)>1) AS weft_duplicate_keys"
+    ],
+    "columns": [
+      {
+        "nullable": false,
+        "outputName": "id",
+        "position": 1,
+        "representation": {
+          "carrier": "text",
+          "decoder": "exact-integer",
+          "kind": "scalar",
+          "logicalType": {
+            "facets": {
+              "integerWidth": {
+                "bits": 64,
+                "signed": false
+              }
+            },
+            "family": "integer",
+            "nullable": false
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "customer-id",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      },
+      {
+        "nullable": false,
+        "outputName": "orders",
+        "position": 2,
+        "representation": {
+          "bound": 2,
+          "key": {
+            "fields": [
+              {
+                "documentId": "sales-fixture",
+                "element": "order-id",
+                "module": "sales",
+                "revision": "application-fixture-1"
+              }
+            ],
+            "id": "order-pk",
+            "types": [
+              {
+                "facets": {
+                  "integerWidth": {
+                    "bits": 64,
+                    "signed": false
+                  }
+                },
+                "family": "integer",
+                "nullable": false
+              }
+            ]
+          },
+          "kind": "relatedKeys",
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          }
+        },
+        "sourceIdentities": [
+          {
+            "documentId": "sales-fixture",
+            "element": "order-id",
+            "module": "sales",
+            "revision": "application-fixture-1"
+          }
+        ]
+      }
+    ],
+    "direction": "forward",
+    "kind": "keys",
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-1",
+          "use": "admitted-owner-scan"
+        },
+        "position": 1,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "0",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 2,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "typeId": "-2",
+          "use": "admitted-owner-scan"
+        },
+        "position": 3,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "propertyId": "6",
+          "use": "admitted-jsonb-member"
+        },
+        "position": 4,
+        "value": "6"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "relationship"
+        },
+        "position": 5,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "from-type"
+        },
+        "position": 6,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationship": {
+            "documentId": "sales-fixture",
+            "module": "sales",
+            "relationship": "customer-orders",
+            "revision": "application-fixture-1"
+          },
+          "role": "to-type"
+        },
+        "position": 7,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "discriminator"
+        },
+        "position": 8,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "from-type"
+        },
+        "position": 9,
+        "value": "-1"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 32,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "to-type"
+        },
+        "position": 10,
+        "value": "-2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relationshipGuard": "minimum"
+        },
+        "position": 11,
+        "value": "0"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 16,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relatedBound": 2
+        },
+        "position": 12,
+        "value": "2"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 16,
+              "signed": false
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "relatedProbe": 3
+        },
+        "position": 13,
+        "value": "3"
+      }
+    ],
+    "sql": "SELECT ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text AS \"id\", ((SELECT pg_catalog.jsonb_build_object('items',COALESCE(pg_catalog.jsonb_agg(k ORDER BY ord) FILTER (WHERE ord<=$12::pg_catalog.int4),'[]'::pg_catalog.jsonb),'truncated',pg_catalog.count(*)>$12::pg_catalog.int4)::pg_catalog.text FROM (SELECT pg_catalog.jsonb_build_array((((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric)::pg_catalog.text) AS k, pg_catalog.row_number() OVER (ORDER BY ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric) AS ord FROM \"pg_temp\".\"edge\" AS \"weft_related_0_edge\" JOIN \"pg_temp\".\"object\" AS \"weft_related_0_scan_0\" ON \"weft_related_0_scan_0\".id=\"weft_related_0_edge\".\"target_id\" AND \"weft_related_0_scan_0\".type_id=\"weft_related_0_edge\".\"target_type\" WHERE \"weft_related_0_edge\".\"rel_type_id\"=$5::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_type\"=$6::pg_catalog.int4 AND \"weft_related_0_edge\".\"target_type\"=$7::pg_catalog.int4 AND \"weft_related_0_edge\".\"source_id\"=\"weft_scan_0\".\"id\" AND \"weft_scan_0\".\"type_id\"=\"weft_related_0_edge\".\"source_type\" AND (\"weft_related_0_scan_0\".\"type_id\" = $3::pg_catalog.int4) ORDER BY ((\"weft_related_0_scan_0\".\"props\" ->> $4::pg_catalog.text))::pg_catalog.numeric LIMIT $13::pg_catalog.int4) AS weft_related_0_bounded)) AS \"orders\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) ORDER BY (((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.numeric) ASC LIMIT 10"
+  }
+]

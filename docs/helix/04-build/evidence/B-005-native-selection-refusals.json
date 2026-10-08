@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original native procedure selection refusal boundaries",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "67e0e5f5d2bf6b8a68b2570c97e0840a4c1077507b08303b102332753a45cc5f"
+  },
+  "sourceSha256": "da9a5ef57ceacebeea5d0e066c187f18765b33e6ffb0c0803ff06b31c83f69e2",
+  "cases": 7,
+  "refusals": {
+    "projection": 7,
+    "payloadObservation": 7,
+    "oneCallCompiler": 7
+  },
+  "parameterRollbackChecks": 14,
+  "embeddingFinding": {
+    "runtime": "crates/weft-runtime/src/lib.rs",
+    "runtimeSha256": "4fccfe9605f6b4f8d8700e2c80be54bb0f206b6c7c8b866b324e0faa03eb1c41",
+    "finding": "compile_json registers fixed candidate backend; original-registry serialized admission/composition is unfinished shared-Rust work"
+  },
+  "limits": [
+    "No new native SQL execution; existing selected positive corpus remains tested",
+    "No fresh original-registry Python/browser qualification",
+    "Missing embedding composition is compiler work, not a Truss adoption dependency"
+  ]
+}

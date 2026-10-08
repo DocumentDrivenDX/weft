@@ -1,0 +1,223 @@
+{
+  "scope": "Intermediate native stored/logical body SQL; no complete native structural/source qualification or public projection",
+  "harnessSha256": "ef54a0e7240217d5d1263289b0da335c9674d733c0c05bbc83539ef3f961acc3",
+  "results": [
+    {
+      "fixture": "address",
+      "case": "valid",
+      "stored": {
+        "slot.0": "\u00e9  "
+      },
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": true,
+      "captureSha256": "cb9a8bcfda7bef20e2722217cc141f7bc776104a8c74c75ccae6a0a8f4028b5f",
+      "sqlSha256": "e4692fb531ec30fd4404b4e5675ce5f5d63e9413d052200c7dd1b4f930f6e20e"
+    },
+    {
+      "fixture": "address",
+      "case": "missing-required",
+      "stored": {},
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "street": {
+          "state": "absent"
+        }
+      },
+      "integrity": false,
+      "captureSha256": "cb9a8bcfda7bef20e2722217cc141f7bc776104a8c74c75ccae6a0a8f4028b5f",
+      "sqlSha256": "119d205b5026d5e1080d67beb7cea8598c688f3511864c30b7f6674032df1fa0"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "valid",
+      "stored": {
+        "slot.0": "outer",
+        "slot.2": {
+          "slot.0": "inner"
+        }
+      },
+      "logical": {
+        "zip": {
+          "state": "absent"
+        },
+        "next": {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "absent"
+            },
+            "street": "inner"
+          }
+        },
+        "street": "outer"
+      },
+      "integrity": true,
+      "captureSha256": "062aeda97a363a168cb1ebf61880eafe7c94a1c3fb4fc7ae543c3fcf474f2c9b",
+      "sqlSha256": "cdf69a5371f3e96ac975fc396043a8943bee99c77fac03e7efa10d1e1a690f05"
+    },
+    {
+      "fixture": "map",
+      "case": "valid",
+      "stored": {
+        "": "",
+        "\u96ea": "x",
+        "1.a[0]": "\u00e9  "
+      },
+      "logical": {
+        "": "",
+        "\u96ea": "x",
+        "1.a[0]": "\u00e9  "
+      },
+      "integrity": true,
+      "captureSha256": "b41b7aa9c6ea36786a708fc81b41011a4c0ad2d00a572cf2941f8b51324885ca",
+      "sqlSha256": "6ee285980a90bdd78302cf7f31e1f4bd6bbba65acddf081f9bf688ef95778646"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "valid",
+      "stored": [
+        [
+          "9007199254740993",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "logical": [
+        [
+          "9007199254740993",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "integrity": true,
+      "captureSha256": "0caf0f94a85cb379f4e55ae84b81e648982ed025bfb762842b5b5addbd569b59",
+      "sqlSha256": "80990da467ae5014abec6bbc806775d87a63df1c86480aaa0dc2178fdd153abd"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "overflow",
+      "stored": [
+        [
+          "18446744073709551616",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "logical": [
+        [
+          "18446744073709551616",
+          "18446744073709551615"
+        ],
+        [],
+        [
+          "0"
+        ]
+      ],
+      "integrity": false,
+      "captureSha256": "0caf0f94a85cb379f4e55ae84b81e648982ed025bfb762842b5b5addbd569b59",
+      "sqlSha256": "6da6225ae858b242aa43093f089463e4c34495b6727e2a9dd7c0fd8cf07f4b43"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "valid",
+      "stored": {
+        "slot.0": "\u00e9  ",
+        "slot.1": "18446744073709551615"
+      },
+      "logical": {
+        "zip": {
+          "state": "value",
+          "value": "18446744073709551615"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": true,
+      "captureSha256": "5399cf19b1d40f3d65277b6d61cd81aa5d5311b66ef7194d26d7aba5a6d0b5eb",
+      "sqlSha256": "e6e64ba7ff74e3b236b552583445d9dee2a8b4c82edaaf2d22cba0de302d770f"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "overflow",
+      "stored": {
+        "slot.0": "\u00e9  ",
+        "slot.1": "18446744073709551616"
+      },
+      "logical": {
+        "zip": {
+          "state": "value",
+          "value": "18446744073709551616"
+        },
+        "street": "\u00e9  "
+      },
+      "integrity": false,
+      "captureSha256": "5399cf19b1d40f3d65277b6d61cd81aa5d5311b66ef7194d26d7aba5a6d0b5eb",
+      "sqlSha256": "2d16f9d3439eaa19e3727c204cd4c381a6120f0cdab2dee3e80607f881ca7cd8"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "valid",
+      "stored": {
+        "": "9007199254740993",
+        "9.a": "18446744073709551615"
+      },
+      "logical": {
+        "": "9007199254740993",
+        "9.a": "18446744073709551615"
+      },
+      "integrity": true,
+      "captureSha256": "814a4dc59cf35dfa5804b5491609a2db7f614e74d76406f6d788d4e8c902738e",
+      "sqlSha256": "bfae7f32116b5e3114f76300d872cc788c916552351e8acc3cd4584997b2a6a4"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "overflow",
+      "stored": {
+        "": "18446744073709551616",
+        "9.a": "18446744073709551615"
+      },
+      "logical": {
+        "": "18446744073709551616",
+        "9.a": "18446744073709551615"
+      },
+      "integrity": false,
+      "captureSha256": "814a4dc59cf35dfa5804b5491609a2db7f614e74d76406f6d788d4e8c902738e",
+      "sqlSha256": "16f37ea27fe61e7c74a86e3a774209a0593ab235f1ed66df97a1742f4f30c892"
+    },
+    {
+      "fixture": "tags",
+      "case": "valid",
+      "stored": [
+        "\u00e9  ",
+        "1.a[0]",
+        ""
+      ],
+      "logical": [
+        "\u00e9  ",
+        "1.a[0]",
+        ""
+      ],
+      "integrity": true,
+      "captureSha256": "2c6e2363edb781f6bed9c007bde195f526a0b4c9ea6d9fb7d9300b4155759864",
+      "sqlSha256": "801cc3f3a96e0eb079882cffb4b47c3a6e3407d0187cda07c260d8da1f8d5c82"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 [workspace]
-members = ["crates/weft-runtime","crates/weft-python","crates/weft-wasm","tests/register-backend/probe","tests/frontend/wasm-probe","crates/weft-core", "spikes/b001/core", "spikes/b001/python", "spikes/b001/wasm"]
+members = ["crates/weft-postgresql","crates/weft-runtime","crates/weft-python","crates/weft-wasm","tests/register-backend/probe","tests/frontend/wasm-probe","crates/weft-core", "spikes/b001/core", "spikes/b001/python", "spikes/b001/wasm"]
 resolver = "2"
 [workspace.package]
 version = "0.1.0"

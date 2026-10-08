@@ -40,12 +40,40 @@ struct Request01;
     path = "../../docs/helix/02-design/contracts/compile-request-v0.2.schema.json"
 )]
 struct Request02;
+/// Validated request target supplied to trusted host composition code.
+/// Binding bytes/digest, modules and SQL/plan have passed transport admission.
+pub struct CompositionInput<'a> {
+    pub backend_id: &'a str,
+    pub backend_version: &'a str,
+    pub target_profile: &'a str,
+    pub binding_json: &'a str,
+    pub binding_sha256: &'a str,
+    pub allow_candidate: bool,
+}
+/// Called once per valid resolved request. Models cannot select executable code.
+/// Hosts provide pure admission/registration; execution and IO stay outside.
+pub type RegistryFactory<'a> =
+    dyn FnMut(&crate::model::Catalog, Plan<'_>, CompositionInput<'_>) -> Result<Registry> + 'a;
 #[derive(Default)]
 pub struct Compiler {
     pub registry: Registry,
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
+        self.compile_json_internal(raw, None)
+    }
+    pub fn compile_json_with_factory(
+        &self,
+        raw: &str,
+        factory: &mut RegistryFactory<'_>,
+    ) -> String {
+        self.compile_json_internal(raw, Some(factory))
+    }
+    fn compile_json_internal(
+        &self,
+        raw: &str,
+        factory: Option<&mut RegistryFactory<'_>>,
+    ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
             if raw.len() > 16 * 1024 * 1024 {
@@ -125,6 +153,7 @@ impl Compiler {
                     Plan::V01(&plan),
                     req.target,
                     req.options.allow_candidate,
+                    factory,
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
@@ -141,6 +170,7 @@ impl Compiler {
                     Plan::V02(&plan),
                     req.target,
                     req.options.allow_candidate,
+                    factory,
                 )
             }
         })();
@@ -161,8 +191,25 @@ impl Compiler {
         plan: Plan<'_>,
         target: TargetRequest,
         allow_candidate: bool,
+        factory: Option<&mut RegistryFactory<'_>>,
     ) -> Result<Value> {
-        let manifest = self.registry.manifest(&target.backend_id).ok_or_else(|| {
+        let composed = match factory {
+            Some(factory) => Some(factory(
+                catalog,
+                plan,
+                CompositionInput {
+                    backend_id: &target.backend_id,
+                    backend_version: &target.backend_version,
+                    target_profile: &target.target_profile,
+                    binding_json: &target.binding_json,
+                    binding_sha256: &target.binding_sha256,
+                    allow_candidate,
+                },
+            )?),
+            None => None,
+        };
+        let registry = composed.as_ref().unwrap_or(&self.registry);
+        let manifest = registry.manifest(&target.backend_id).ok_or_else(|| {
             Diagnostic::new(
                 "WFT-BACKEND-MISSING",
                 "capability",
@@ -180,7 +227,7 @@ impl Compiler {
             profile_id: target.target_profile,
             allow_candidate,
         };
-        let compiled = self.registry.compile(catalog, plan, &target, &binding)?;
+        let compiled = registry.compile(catalog, plan, &target, &binding)?;
         let candidate = compiled
             .qualifications
             .iter()

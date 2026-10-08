@@ -1,0 +1,81 @@
+{
+  "checks": [
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object')) IS DISTINCT FROM TRUE",
+    "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (((\"weft_scan_0\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_scan_0\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_scan_0\".\"props\" -> $2::pg_catalog.text))='string')) IS DISTINCT FROM TRUE"
+  ],
+  "columns": [
+    {
+      "nullable": false,
+      "outputName": "name",
+      "position": 1,
+      "representation": {
+        "carrier": "text",
+        "decoder": "text",
+        "kind": "scalar",
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        }
+      },
+      "sourceIdentities": [
+        {
+          "documentId": "sales-fixture",
+          "element": "customer-name",
+          "module": "sales",
+          "revision": "fixture-r1"
+        }
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "propertyId": "1",
+        "use": "admitted-jsonb-member"
+      },
+      "position": 2,
+      "value": "1"
+    },
+    {
+      "logicalType": {
+        "facets": {},
+        "family": "string",
+        "nullable": false
+      },
+      "origin": {
+        "parameter": "selected_name",
+        "span": {
+          "end": 0,
+          "start": 0
+        }
+      },
+      "position": 3,
+      "value": "A"
+    }
+  ],
+  "sql": "SELECT ((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text))::pg_catalog.text AS \"name\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (ROW(((\"weft_scan_0\".\"props\" ->> $2::pg_catalog.text)) COLLATE \"C\") > ROW($3::pg_catalog.text)) LIMIT 3"
+}

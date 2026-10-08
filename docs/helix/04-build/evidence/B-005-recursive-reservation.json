@@ -1,0 +1,7 @@
+{
+  "scope": "Rust original-layout recursive traversal pending-work reservation; no recursive SQL/native/embedding qualification",
+  "sourceSha256": "2565993694817cda0d57ea4152ec6e2b1fbdb028fc5fcbf547e4bbc4d3af8ad2",
+  "testLogSha256": "f6188bfea60fbdff3a192a1ea6184239a37205258b0a6d8907c190a12e8ab389",
+  "tests": 82,
+  "newCase": "nested cyclic sequence: six-node budget refuses before three children are queued; exact seven-node budget succeeds with zero remaining nodes"
+}

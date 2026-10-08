@@ -1,0 +1,9 @@
+{
+  "scope": "Private eight-cell scalar observation admission, canonical hex and original codec custody, cumulative bounded copying; not source/native semantic correspondence or logical presence decoding",
+  "sourceSha256": "3b9f630a4a013e2aeeaa04c17c84d9f92a6f2275a0a31b60c54e9f8da70cacab",
+  "rustTestLogSha256": "1eded09731bd7f7ee03f9edc153c906ffc3862c4f058293d09ac4359e9060aee",
+  "recordedNativeReceiptSha256": "c9a02209a194554f01d87b3489853faab88a87a8a71d85f7b025def071b3f648",
+  "rustTestsPassed": 70,
+  "recordedNativeVectorsAdmitted": 16,
+  "newNativeExecution": false
+}

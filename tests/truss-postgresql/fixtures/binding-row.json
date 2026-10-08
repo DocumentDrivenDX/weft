@@ -1,0 +1,146 @@
+{
+  "interfaceVersion": "truss-postgresql-binding/0.1.0",
+  "bindingProfile": {
+    "identity": "candidate-test-profile",
+    "version": "0.1.0",
+    "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+  },
+  "bindingProfileId": "candidate-test-binding/0.1.0",
+  "basis": {
+    "modelBundle": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "catalogRevision": "0",
+    "acceptedCatalog": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutInventory": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "layoutSql": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "exporterProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "namespace": "truss",
+    "identityProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "valueProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "keyProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "readContextProfile": {
+      "identity": "candidate-test-profile",
+      "version": "0.1.0",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    "readContextDefinition": {
+      "identity": "candidate-test-artifact",
+      "bytesBase64": "e30=",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    }
+  },
+  "entities": [
+    {
+      "logical": {
+        "documentId": "d",
+        "revision": "r",
+        "module": "m",
+        "element": "entity"
+      },
+      "typeId": "-1",
+      "acceptedDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "source": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    }
+  ],
+  "properties": [
+    {
+      "logical": {
+        "documentId": "d",
+        "revision": "r",
+        "module": "m",
+        "element": "field"
+      },
+      "ownerTypeId": "-1",
+      "propertyId": "0",
+      "home": "row",
+      "homeProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "homeDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "eyJpbnRlcmZhY2VWZXJzaW9uIjoidHJ1c3Mtcm93LWhvbWUvMC4xLjAiLCJsYXlvdXRJbnZlbnRvcnkiOnsiaWRlbnRpdHkiOiJjYW5kaWRhdGUtdGVzdC1hcnRpZmFjdCIsImJ5dGVzQmFzZTY0IjoiZTMwPSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwicmVjb3JkS2luZCI6Im9iamVjdCIsIm93bmVyQ2F0YWxvZ0lkIjoiLTEiLCJwcm9wZXJ0eUNhdGFsb2dJZCI6IjAiLCJzdGF0ZVJlbGF0aW9uUGh5c2ljYWxJZGVudGl0eSI6InN0YXRlIiwibm9kZVJlbGF0aW9uUGh5c2ljYWxJZGVudGl0eSI6Im5vZGUiLCJzY2FsYXJSZWxhdGlvblBoeXNpY2FsSWRlbnRpdHkiOiJzY2FsYXIiLCJqb2luUHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJ2ZXJzaW9uIjoiMC4xLjAiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIn0sImpvaW5EZWZpbml0aW9uIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtYXJ0aWZhY3QiLCJieXRlc0Jhc2U2NCI6ImUzMD0iLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIn0sImFjY2VzcyI6InNjYWxhci1yb290IiwicHJlc2VuY2VEZWZpbml0aW9uIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtYXJ0aWZhY3QiLCJieXRlc0Jhc2U2NCI6ImUzMD0iLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIn0sInZhbHVlRGVmaW5pdGlvbiI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LWFydGlmYWN0IiwiYnl0ZXNCYXNlNjQiOiJlMzA9Iiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJzdG9yZWREb21haW5PYmxpZ2F0aW9uIjoiY2FuZGlkYXRlLXN0b3JlZC1kb21haW4ifQ==",
+        "sha256": "85ddb56450d16b169a23be443fb84c763305204b3ee69a016d59506e24fa2a19"
+      },
+      "valueProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "valueDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "presenceProfile": {
+        "identity": "candidate-test-profile",
+        "version": "0.1.0",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "presenceDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "acceptedDefinition": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "source": {
+        "identity": "candidate-test-artifact",
+        "bytesBase64": "e30=",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      }
+    }
+  ],
+  "keys": [],
+  "relationships": [],
+  "executionObligations": [],
+  "qualification": []
+}

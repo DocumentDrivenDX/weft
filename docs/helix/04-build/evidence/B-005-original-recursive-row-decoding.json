@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original UMF-admitted compound row reconstruction and logical decoding using recorded PostgreSQL custody cells",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "command": "cargo test -p weft-postgresql",
+    "logSha256": "91256970f4d96588e78e5c5cfa66a4db3d3c9edac9f5eb4cf143bd2c879a4cce"
+  },
+  "sourceSha256": "ba784b8fc2fbe9c2bbd7a25e3208ec9823aeff7304a8803edddc0a0c95bf24fe",
+  "nativeReceiptSha256": "4fe80b2cf9824669a3d2c7a29d92330999ba5d5acd7694d42615bcc67eeaa0b6",
+  "fixtures": {
+    "original-address-native-tree.json": "a17d92bb71be943c461a8908384b907327d529ad12a88bdc32c99feac73c8f22",
+    "original-cyclic-native-tree.json": "3a7930548714fc33863037509cac9e68871ae775ddf8ddcada30bd1ad79bab9c",
+    "original-map-native-tree.json": "6a38cc4d6e733a1f609de0c02f901abb130f212926cf6c6ee64303000454c3ba",
+    "original-nested-sequence-native-tree.json": "be0a66d9c481397092eae21b005f38e82f625cdfceaf4a23c069aedfa3a3d0ab",
+    "original-numeric-address-native-tree.json": "7ebafa3dd8b8726e14002dd86ff42d6500c1214d07b124b7baec711da721a078",
+    "original-numeric-map-native-tree.json": "771c921a5a239b9956ce0d041aa14bb7ee5e3c60715a19c39d4a9ae2fe15dc2f",
+    "original-tags-native-tree.json": "6e2f819e10bca0270c500594dfc91d75eff20b65a1b98876c4d15e6b21a2fb81"
+  },
+  "cases": [
+    "sequence",
+    "structured optional member",
+    "literal map keys",
+    "cyclic structured metadata",
+    "nested uint64 sequences",
+    "uint64 map",
+    "structured uint64 member"
+  ],
+  "limits": [
+    "14 PostgreSQL cases qualify private custody transport across both owner layouts, not public recursive row SQL",
+    "Logical decoder uses independently admitted object row access; edge property semantic admission remains separate",
+    "Selected exact JSON field-identity bytes and source/leaf procedures are fixture meanings, not adopted Truss encodings"
+  ]
+}

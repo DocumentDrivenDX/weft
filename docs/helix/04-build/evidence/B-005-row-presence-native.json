@@ -1,0 +1,409 @@
+{
+  "scope": "Native row scalar presence SQL matrix using captured original home/location with explicit descriptor flags; synthetic object state/node/scalar storage; not full optional/nullable original-model compilation, recursive values or installed host qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "3c9657bfbfa334327eb812539832ec5874f8d8ae22e8a2b80e5d99165aa6be2e",
+  "harnessSha256": "a6293f79127ae4285af39034613473fbcfe2d41c32edbbff18fdd59b2c2e34a4",
+  "results": [
+    {
+      "required": false,
+      "nullable": false,
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "06ccb932cab61626b5fdb66eac3002ceb457ba0c6ec57a3c222ced78238eaf81"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "80f3df50ec3166c857181df190e5755428885c451be3826cc34637214312799e"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "d018c2af9c2c354da1fdb24ee63d7caeb01470d9ffdabd4f80a260f81989fac7"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "unicode",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "873cf79d47de4c1bf939e779328645a2c293f0dca5c02f647cf566e8035753b5"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "null-with-payload",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "86a0c520a058e11a3d8ffcf60a568ee825fa4a4713be7cac9e0d4f41fa246ef3"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "missing-root",
+      "violations": [
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6097f65d70b0128dff4df48d5a9c9d2b872a03ce1aa547c5d57f3e993594cec0"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "54c49f9e0435177843303e92cd3d3006929860ada47b23ed4b77a3357349677c"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "missing-source",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "799ec674e5d606b2734ce8166e9e129bedc2f63fe5ce763b6637017fd94b806d"
+    },
+    {
+      "required": false,
+      "nullable": false,
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "136e5eee21f586aa0ec12b11379ef70814f52fd61b69d90ab13b5b6d908d12ba"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "absent",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "e93cdf28c2912b4acc35cbd1ad83a764c84a351cec7214079c9c17e7e278d8e6"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "null",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "670523aad938ddf4855ec6f92f589fc756b3ea5d06a1f0d64375f80708a3ee0d"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "c8c74409a20d2bc800f88b7c0f284f7d9f6c5b03e50a33858a1910de9e9d8057"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "unicode",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "24ed5176083dc2099337f4c86e576015c8c645cce25229e4667c6ec349245710"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "null-with-payload",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "33ace98581460f06258a4fbde6698e6865e041c9dcac8a86ccf0a463485df551"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "missing-root",
+      "violations": [
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "8bb7ea2f2bb4ea5431cefc14fa217edc356ece27460b0fb76b71c596d3526448"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "3e0da5257e1a4671cf92a1eef5352d84b71c2e14ccea5151bd09462792e2346a"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "missing-source",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "c54b3f8aa85ac0bd075eba7f1bf25992c290eab1457d5c41eb2f1662f23e0166"
+    },
+    {
+      "required": false,
+      "nullable": true,
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "863156f212d622a501da0652fd7034312e879940828c601f20c459c702423b16"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b94cee546cb2b6f673d85723a91a27fb2d06d954ae89070c3afe8ea3db3843f3"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "null",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "687d4c5b4e338ccf71d27b41ad4ef84499c74eb0d63e018262713837f16fa9c1"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "2bfaa4bda3555be91d44dc4f7a3a3c80ed9921c6f20a0a7860b4b899c2a432f1"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "unicode",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "39b7c32ed66a55005a0dd98ae01f6fccb5e88d80caaf8e05683cab449b341a5f"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "null-with-payload",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d4f6a41fac9edb0082ce79ececec673c7ccd3c9d061f280c9eccb9fd71585bcf"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "missing-root",
+      "violations": [
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "29ef5726e3ab68ccc0cee522edcb6fe591f02cf291eb908f76bbecf7ee0dd875"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "03e7ec89e939d50c8ba2078606f2dc65673d244ae318ef71266af216e5a0bfed"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "missing-source",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d2a7368fa06cbd5b47a680ea33bf015d07b26afd700a1be765082c6f6622bea2"
+    },
+    {
+      "required": true,
+      "nullable": false,
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "30848b965cc7cd970df491d9dd505d1c568ab7c329025cd4ff923ba4a4e568da"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "absent",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "93209eae4e6afe8e91a1f4db5e41fa0525aa0cc9210a22ef222cb4a643ff9e88"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "null",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "0e8a18facc9426c518d1789dea3ff9d58531d0e0490c2095aa9a1fe0be58d435"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "e20495e9be28e435883fc9ce78db883aa22280300853dd6ccd63c275876ad3e8"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "unicode",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4b80476b6bc1ba6196e2e8cd7631d41f9ef9e8a2d85ea7c19bf7e03ff56f07f5"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "null-with-payload",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "841564554ec258a35887f365e783c5b645815b0179913d640fe09fa507a29c3d"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "missing-root",
+      "violations": [
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "b7119daa2b2eb47da3def6caf32163c9c1576d06aa65cd7cead588914dde9bf1"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "6838deeab958fe49dcc3b27162c4380603002154a21b2197c36826695d5f1057"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "missing-source",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "9e2417d6a60ad4a6c42a9cff880b944844d5122f18e37ab03b15ef3bcbffd71d"
+    },
+    {
+      "required": true,
+      "nullable": true,
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d35636f35d4fdcfd5971d852ed046ffb92e435198c65d8de7b699d4b30631d6f"
+    }
+  ],
+  "sourcePins": {
+    "crates/weft-postgresql/src/result_definition.rs": "432e036d9ea19db6abd660c6e0780677d63051cac786a95b51c8e06e80fce8a2",
+    "crates/weft-postgresql/src/property_definition.rs": "034180c6d0b91ffb3595ae8c49da79a6c886e5a1146aa11942d3e913b629f2db"
+  },
+  "rustTestLogSha256": "d260553de0ff6963ed8e582b4328635b9f9411fe3448e9e0cbdaf6ce6ab64d3c"
+}

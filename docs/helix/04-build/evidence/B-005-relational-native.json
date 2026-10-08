@@ -1,0 +1,43 @@
+{
+  "scope": "Fresh fixed synthetic candidate V01 relational emitter verification; not adopted Truss profile or deployment qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 26,
+  "rustCrateTests": 61,
+  "sha256": {
+    "crates/weft-postgresql/src/relational.rs": "2eca0e30cfd4404a0db6bd544b3f8d42cafac9f2030cbae43d469bd3246678d6",
+    "crates/weft-postgresql/src/expression.rs": "b2867d312f9aafc1651a709ceea0e215af6206b6cb8ebbba74472685e8fdacd5",
+    "crates/weft-postgresql/src/candidate.rs": "636794ae472ecad13d9957a9a30b32c624951c83ebeda6806afee8739dc35c17",
+    "tests/truss-postgresql/compiler-native.py": "583462db48ebb3210515b20f458401be44b87ba30701b8f8e0c199e2a2348f6d",
+    "tests/truss-postgresql/fixtures/compiler-cases.json": "5e7cd906dc0fc81b0714dc82d8df66492e3b6fde39e3f2e74038472f3dc38e37",
+    "target/debug/examples/compile_probe": "88c86d75fb2a2ec896aa70b426d01998db43bfec85e33c5a63b3fa2b1dd41d9d",
+    "target/b005/compiler-reports.json": "644e79bd6fb2eadd433b0d2b99637e35da124f1132870d0b4a4a443bf04efe5d"
+  },
+  "ids": [
+    "sales-join-truss.postgresql-props",
+    "sales-join-truss.postgresql-row",
+    "empty-global-truss.postgresql-props",
+    "empty-global-truss.postgresql-row",
+    "empty-grouped-truss.postgresql-props",
+    "empty-grouped-truss.postgresql-row",
+    "sales-join-ashlar.databricks-props",
+    "sales-join-ashlar.databricks-row",
+    "empty-global-ashlar.databricks-props",
+    "empty-global-ashlar.databricks-row",
+    "empty-grouped-ashlar.databricks-props",
+    "empty-grouped-ashlar.databricks-row",
+    "string-exact-0-props",
+    "string-exact-0-row",
+    "string-exact-1-props",
+    "string-exact-1-row",
+    "string-exact-2-props",
+    "string-exact-2-row",
+    "string-exact-3-props",
+    "string-exact-3-row",
+    "string-exact-4-props",
+    "string-exact-4-row",
+    "string-exact-5-props",
+    "string-exact-5-row",
+    "string-exact-6-props",
+    "string-exact-6-row"
+  ]
+}

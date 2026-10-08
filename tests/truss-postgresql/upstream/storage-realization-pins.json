@@ -1,0 +1,24 @@
+{
+  "source": "DocumentDrivenDX/truss",
+  "publishedCheckoutCommit": "d3dcddeec888cae4336b18af43a31fd19b93cf79",
+  "draftWorktree": "/private/tmp/claude-501/truss-spec-wt",
+  "status": "draft storage realization; no runtime adoption required for compiler development",
+  "files": [
+    {
+      "path": "docs/helix/02-design/models/truss-layout-0.2.umf.json",
+      "sha256": "e5fee4f5c3404dbd88fccc09453b4b0a31e9bc8e43332bda11b282d9e4115381"
+    },
+    {
+      "path": "docs/helix/02-design/models/truss-layout-0.2.generated.sql",
+      "sha256": "4e7fb8739c42163c5a113ed215d944994edb8bc09e63bc151f711b3c869db6ab"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/row-home-tree-v0.1.proposal.sql",
+      "sha256": "3ffa469a40cd37cf86edae88c864e850d514fd36d41c79205cf5511a7dca0c72"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/row-home-scalar-v0.1.proposal.sql",
+      "sha256": "95a6ed245d05abbbac6288d73c548855f3adfcfc8e4b789a224a01cf70c898f7"
+    }
+  ]
+}

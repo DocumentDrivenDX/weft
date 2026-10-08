@@ -1,0 +1,24 @@
+{
+  "scope": "B-005 owner-authorized candidate compiler acceptance; US-003-AC1 through AC4, no release/production promotion",
+  "sources": {
+    "docs/helix/04-build/evidence/B-005-acceptance.md": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689",
+    "tests/truss-postgresql/original-sales-join-native.py": "b15b581395ad8aaed5a80bf09a4a3402936409fcee89278b05855eb84538607e",
+    "tests/truss-postgresql/sales-join-driver-native.py": "5107d13eb2e9eede55e01570d884d8d6034745bbfbcd67e01e8894922e017fc4",
+    "docs/helix/04-build/evidence/B-005-sales-join-driver-native.json": "034c481f5de62f9781a7da9d52e8d015b12ca287c4853241aabace357f7626fb"
+  },
+  "logs": {
+    "weft-sales-join-driver-preparation.log": "1d42589bc5b6db9986f6d1171d76c3832117a88b0bb257aebec16a05617e4c18",
+    "weft-sales-join-driver-acceptance.log": "34cc07567ce204fe8b5e50950b6d1a2f08fed29aa880d17ee78e725d0840a59e",
+    "weft-b005-acceptance-specs.log": "82925ebb4d9409ebd9400b4ba5e8525f59f10f51a186c33cd149a010d55b7466"
+  },
+  "driverCases": 224,
+  "published": 32,
+  "beforeQueryRefusals": 96,
+  "beforePublicationRefusals": 96,
+  "criterionState": {
+    "US-003-AC1": "passed candidate compiler scope",
+    "US-003-AC2": "passed candidate compiler scope",
+    "US-003-AC3": "passed candidate compiler scope",
+    "US-003-AC4": "passed candidate compiler scope"
+  }
+}

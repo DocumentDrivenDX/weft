@@ -1,0 +1,21 @@
+{
+  "scope": "test-original only; seven compound presets plus one uint64 relationship preset; no production or generic plugin qualification",
+  "rustTests": 134,
+  "embeddingCases": 44,
+  "fullResponseCases": 11,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "e5e5b094e0ac9259df60abfcf4498531b49dd41e0431517ac0cd155b27adbe87",
+    "crates/weft-runtime/src/lib.rs": "bc678300671349a76b122814f867090f6690dcfe3964af47d5f3da1d6ed891c1",
+    "tests/truss-postgresql/original-embedding-check.py": "2bdbca02f866244d9eb35770aa31eccbd10cda3593e27817e6e52fdddac8e78c",
+    "tests/truss-postgresql/fixtures/original-relationship-composition.json": "75a6b107f267287de5e4fbd4e1d3ff7bf4999a97a42d3da5d00be45cce93d0e4",
+    "tests/truss-postgresql/evidence/relationship-embedding/python-summary.json": "52ba79c335a6bb89b66db90f86293f1e61de36341b321adcb598bd469effbf89",
+    "tests/truss-postgresql/evidence/relationship-embedding/browser-summary.json": "1d6d010295dcfb98f9c70edeed98b859b3a6a1a3880c93cbcd960e6e1b08e0d2"
+  },
+  "logs": {
+    "/private/tmp/weft-relationship-runtime-tests.log": "d3b17db3a9bfd72a0886b8ea5f335fd3bd572d284ae53c4e0155b91d1c5ab50c",
+    "/private/tmp/weft-relationship-python-build.log": "fd4feb2caaa284fbe0cda56a877609b9d2d388d51fc7bd254321ba6f5c1fa99f",
+    "/private/tmp/weft-relationship-wasm-build.log": "ab4b8dddd3c7d4146849b3ec09005bb46993cba145cc9be2fc83d92201158486"
+  },
+  "wheelSha256": "93dea07c8d011214d64d1e5a15053b2350f3671cf15a9f3b6a13b5fac682ff84",
+  "wasmSha256": "be5a1a1624f78dedea2793d788b9af096b941be7f28f9cce9aa64199c8c4b222"
+}

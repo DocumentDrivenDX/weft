@@ -1,0 +1,49 @@
+{
+  "checks": [],
+  "columns": [
+    {
+      "nullable": false,
+      "outputName": "count",
+      "position": 1,
+      "representation": {
+        "carrier": "text",
+        "decoder": "exact-integer",
+        "kind": "scalar",
+        "logicalType": {
+          "facets": {},
+          "family": "integer",
+          "nullable": false
+        }
+      },
+      "sourceIdentities": [
+        {
+          "documentId": "sales-fixture",
+          "element": "customer",
+          "module": "sales",
+          "revision": "fixture-r1"
+        }
+      ]
+    }
+  ],
+  "parameters": [
+    {
+      "logicalType": {
+        "facets": {
+          "integerWidth": {
+            "bits": 32,
+            "signed": true
+          }
+        },
+        "family": "integer",
+        "nullable": false
+      },
+      "origin": {
+        "typeId": "-1",
+        "use": "admitted-owner-scan"
+      },
+      "position": 1,
+      "value": "-1"
+    }
+  ],
+  "sql": "SELECT pg_catalog.count(*)::pg_catalog.text AS \"count\" FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4)"
+}

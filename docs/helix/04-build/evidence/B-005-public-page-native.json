@@ -1,0 +1,68 @@
+{
+  "scope": "Public Rust Registry V02 original UMF uint64 entity paging with complete-owner uniqueness and numeric-domain prerequisites over synthetic props storage; no production or embedding qualification",
+  "captureSha256": "76e4ac89fafa4715399725fe44d26ba4053adbeb3aa687df0d5a63dbee117fb7",
+  "harnessSha256": "37b77bb73206e0f271b1a5837c56e23b874c8c782d43bb0ed4c55e67ff03b74a",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "0cc2ff4d0262d1f401b2b3eebc9385704eb6c3c49a30603e8a097fa0dcfaaf3a"
+    },
+    {
+      "case": "numeric-order",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "7aeed5bfa074dd077f32370cb563999271844d7a115d9a88154cb0e50c44d558"
+    },
+    {
+      "case": "hidden-by-limit",
+      "violations": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "f840c075ae5f60fc57c3e258191f29454cc8b1f25000924d23bf00bced9165f2"
+    },
+    {
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "0c81545b7065d4af3b001556f6f0679d0e86e0e05e1c30af2d1ab0de8a19262d"
+    },
+    {
+      "case": "invalid-key",
+      "violations": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "33b2a877965ca91cabdb08c82e5b135cc92146dbc989fc007720f45c66b46998"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/original_backend.rs": "fedd0934be9d20a845e90ac8e88ba7f5a8a396d63c89d884ce261d5fcd894ee0",
+    "crates/weft-postgresql/src/property_definition.rs": "17ec7d566c2d56f9f2db5d3bc9650694102e2e3a60e4bbee605d14ca9a1c0853",
+    "crates/weft-postgresql/src/select_definition.rs": "f9526ce8b7b85ed5748e0fc20d8b58ecd4466643d10f83e22e333701d7623522"
+  },
+  "testLogSha256": "9c9e23c4aba4abfd132897f158da5da56c2db721d606828ee5f47dbb0bb67c92"
+}

@@ -1,0 +1,10 @@
+{
+  "cases": 180,
+  "originalConfigurations": 24,
+  "fullResponseParity": true,
+  "deterministicRepeats": 45,
+  "subprocessDisabled": true,
+  "nativeModule": "/private/tmp/weft-entity-python-package/weft/__init__.py",
+  "version": "0.1.0",
+  "scope": "test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts"
+}

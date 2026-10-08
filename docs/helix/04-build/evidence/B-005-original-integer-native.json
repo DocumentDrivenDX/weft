@@ -1,0 +1,101 @@
+{
+  "scope": "Original uint64 UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification",
+  "captureSha256": "370997547ccb644c74d3d4d3ec7821044c8c305cc00c810dc1b1727d4c5aa89c",
+  "harnessSha256": "7c69b58686fc275c08aa571b05500dda39ae116fcf0a771f8d62a847676ecc82",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "__null__",
+      "queryExecuted": true,
+      "sqlSha256": "82db2850ea567af4ddb25ade3538b3afa9438e269e911da3a502cbe71372a73d"
+    },
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "36893488147419103230",
+      "queryExecuted": true,
+      "sqlSha256": "11181aa7f9a0d4581afda8a1dd223784d80791f2a27d918a6545c738fec43034"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        0,
+        1,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "288920b2f9d3b196cceda8ff4e66b39cc4a0d19ba4e0593ac39c3999fce03af7"
+    },
+    {
+      "case": "fraction",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "306d258810001faa5b42e8b6372f4b3126d68e4b4e3f9ec0295f05e5fdcadfd9"
+    },
+    {
+      "case": "negative",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "bb32b0e6a9d0983085587af590fd694614cf68e96ff5494432f552fe2935851d"
+    },
+    {
+      "case": "overflow",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "b0404ba0d9b75a6fab11aa27773c4151fcf28210bbc088f43ce8aa2cfff363b6"
+    },
+    {
+      "case": "nonfinite",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "d976a5543664a1e3841c082ef1ed81e3cce9695e92ffd64f429085959e32d6d0"
+    },
+    {
+      "case": "invalid-native",
+      "violations": [
+        0,
+        0,
+        1
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "5252a9b4c3551a45984b4fb2f41cdcb9bd8543f7466f5e7f1a3eeaaf2e149a10"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "a4f512cef57b313a6bc2eca0f138c36ef12244f91773f39d7d79081495fca855",
+    "crates/weft-postgresql/src/select_definition.rs": "52ebe993760a5ebb48741a472f034d3aa59e643732ef17b932ae89595679ac30",
+    "crates/weft-postgresql/src/native_comparator_definition.rs": "e3b6ac4fef5e29f00b6cb12f92440df6bca77ea52b42580564df42e58bdb47ba"
+  },
+  "testLogSha256": "396ace23ab555f451330b0f7f292fb1c1fc14e6c2cd1a2995177da5297cae404"
+}

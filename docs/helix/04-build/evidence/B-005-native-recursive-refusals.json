@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original compound native fixture semantic refusal matrix",
+  "sourceSha256": "0a3bc5873918a38d83f6f6244474a3d3bdf9890ea3c3dd42a7829299c1edac2e",
+  "nativeReceiptSha256": "4fe80b2cf9824669a3d2c7a29d92330999ba5d5acd7694d42615bcc67eeaa0b6",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "5f93771d1f9e39f9e1027f44ba9a88ebf126a16d447bb72fd8576a664e0a36a0"
+  },
+  "refusalAssertions": 21,
+  "cases": {
+    "changedDefinitionBytes": 7,
+    "changedSourceBytes": 7,
+    "uint64Overflow": 3,
+    "unknownNativeFieldIdentity": 3,
+    "missingRequiredMember": 1
+  },
+  "limits": [
+    "Mutations of recorded native PostgreSQL cells; no fresh SQL execution",
+    "Definition/source and field-identity meaning are selected fixture procedures",
+    "Public recursive row SQL remains unfinished"
+  ]
+}

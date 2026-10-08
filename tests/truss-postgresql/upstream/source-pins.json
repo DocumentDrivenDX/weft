@@ -1,0 +1,27 @@
+[
+  {
+    "id": "urn:truss:acceptance-input:0.1.0",
+    "file": "acceptance-input-v0.1.schema.json",
+    "sha256": "0278cbbbde843091c005b688fd9c081a2fdff843b9adda006ba80fb87828d7cd"
+  },
+  {
+    "id": "urn:truss:draft:postgresql-binding:0.1.0",
+    "file": "truss-postgresql-binding-v0.1.proposal.schema.json",
+    "sha256": "2a37a1775dfa6e245053e8975df349c5522cf9cb4d5f1d1b1d0f34602b2883e6"
+  },
+  {
+    "id": "urn:truss:draft:property-home:0.1.0",
+    "file": "truss-property-home-v0.1.proposal.schema.json",
+    "sha256": "15e78a535adcf2786af3521abdf52a634e98ef3096ebed84652fed7ab6e2eaae"
+  },
+  {
+    "id": "urn:truss:draft:row-home:0.1.0",
+    "file": "truss-row-home-v0.1.proposal.schema.json",
+    "sha256": "3d35289dc9e5286bc17b1d4a40f68dc5cfc174d23ac97381dc7de3c8f9856e23"
+  },
+  {
+    "id": "urn:truss:draft:row-join-definition:0.1.0",
+    "file": "truss-row-join-definition-v0.1.proposal.schema.json",
+    "sha256": "ddc7528dd546dfc76092076613fa612caee55a45ed51f46a553675b6f4e9d2b1"
+  }
+]

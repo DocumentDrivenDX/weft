@@ -1,0 +1,87 @@
+{
+  "scope": "Original-admitted compound props home complete-owner physical prerequisites; no public projection, recursive row-tree or production qualification",
+  "captureSha256": {
+    "tags": "37e48f75365e44fca7fd8ab206fe1ea72486a13550a3678af0b93ba5f2939f8c",
+    "address": "b805b64b79ad946a427dcfcccc8c6a57274f447068e6f4cf9a3b3f79cea39d8b"
+  },
+  "harnessSha256": "eac2d42afed2532f1a060c3416c1f8d666905d007ab237e63c50fba26a7645c2",
+  "results": [
+    {
+      "property": "tags",
+      "case": "empty",
+      "violations": 0,
+      "sqlSha256": "b3f180c77d4ccb8236273937f9e9770c78fe93c538d0f48b796b1af4d96a2a68"
+    },
+    {
+      "property": "tags",
+      "case": "exact",
+      "violations": 0,
+      "sqlSha256": "fb393e55d5189c20927c15e166449176d79702e2977cabc145f7c4bb02e151b0"
+    },
+    {
+      "property": "tags",
+      "case": "root-array",
+      "violations": 1,
+      "sqlSha256": "2d971142aa8dd053f6b45135aef811e14ef2c0f33e12fa8dafc1b197120457a3"
+    },
+    {
+      "property": "tags",
+      "case": "hidden-malformed",
+      "violations": 1,
+      "sqlSha256": "fe7360e3d95ea8697192e78dafcbe04dee65e922ec733f7ae05cd13dc2b7f335"
+    },
+    {
+      "property": "tags",
+      "case": "absent",
+      "violations": 1,
+      "sqlSha256": "58e536ffc39bbb666ca59b5bc59e18cafe4f41d4b0a94c865a2a60b1dfa1324d"
+    },
+    {
+      "property": "tags",
+      "case": "explicit-null",
+      "violations": 1,
+      "sqlSha256": "1dc7d5d365617740e94def633df1641e812f7051b4b676672cc284fafecbcf26"
+    },
+    {
+      "property": "address",
+      "case": "empty",
+      "violations": 0,
+      "sqlSha256": "5f2c8a6afb78745708efc2e035fa3fd9303f4107bb93b7e4c247eefe7a335279"
+    },
+    {
+      "property": "address",
+      "case": "exact",
+      "violations": 0,
+      "sqlSha256": "f59fa5988bc3861c56d8b316da04416c8eb1fbb9bd870100d1d00418c0112f47"
+    },
+    {
+      "property": "address",
+      "case": "root-array",
+      "violations": 1,
+      "sqlSha256": "0e73b81bc1234a77a5093308f135866e2b1eecd73bc4c73b12e35da612a5ba5f"
+    },
+    {
+      "property": "address",
+      "case": "hidden-malformed",
+      "violations": 1,
+      "sqlSha256": "8b55e6f77933a07e4cc0f944eb397eacbc9c541ad48116687cd8a4ddebf7e838"
+    },
+    {
+      "property": "address",
+      "case": "absent",
+      "violations": 0,
+      "sqlSha256": "32d4171c748dede62017aa513fecc821d2dd5dcee14047c946b72cc0054cb8a0"
+    },
+    {
+      "property": "address",
+      "case": "explicit-null",
+      "violations": 1,
+      "sqlSha256": "aa778e9234c0e933960b3acfe835facfc36d8f2eece1c859879b9bdfc984658f"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/recursive_observation.rs": "9a9c8c69357fca264cd6b1857fe32235caf5a93202b7d21e3fb248315f38e522",
+    "crates/weft-postgresql/src/property_definition.rs": "0f3e8cd160d8f0c2a47d928039bb8d91f4db6dae48a6cef51c1327b8a3cee93d"
+  },
+  "testLogSha256": "6e05dff794accc96de5e3a2c001c7bbb7665e5f7f076f2afa481b93b334f89bf"
+}

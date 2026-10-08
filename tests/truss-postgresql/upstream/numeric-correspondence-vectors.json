@@ -1,0 +1,115 @@
+{
+  "scope": "independently authored finite mathematical normalization witnesses only; not source grammar/facets/native representability or codec/engine qualification",
+  "vectors": [
+    {
+      "token": "9007199254740993.000",
+      "negative": false,
+      "digits": "9007199254740993",
+      "exponent": "0"
+    },
+    {
+      "token": "9007199254740993",
+      "negative": false,
+      "digits": "9007199254740993",
+      "exponent": "0"
+    },
+    {
+      "token": "9007199254740992",
+      "negative": false,
+      "digits": "9007199254740992",
+      "exponent": "0"
+    },
+    {
+      "token": "1.2300e2",
+      "negative": false,
+      "digits": "123",
+      "exponent": "0"
+    },
+    {
+      "token": "123",
+      "negative": false,
+      "digits": "123",
+      "exponent": "0"
+    },
+    {
+      "token": "1.2300e1",
+      "negative": false,
+      "digits": "123",
+      "exponent": "-1"
+    },
+    {
+      "token": "-0.00",
+      "negative": false,
+      "digits": "0",
+      "exponent": "0"
+    },
+    {
+      "token": "0e1000000",
+      "negative": false,
+      "digits": "0",
+      "exponent": "0"
+    },
+    {
+      "token": "1e1000000",
+      "negative": false,
+      "digits": "1",
+      "exponent": "1000000"
+    },
+    {
+      "token": "10e999999",
+      "negative": false,
+      "digits": "1",
+      "exponent": "1000000"
+    },
+    {
+      "token": "-1e1000000",
+      "negative": true,
+      "digits": "1",
+      "exponent": "1000000"
+    }
+  ],
+  "pairs": [
+    {
+      "left": 0,
+      "right": 1,
+      "mathematicallyEqual": true,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 0,
+      "right": 2,
+      "mathematicallyEqual": false,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 3,
+      "right": 4,
+      "mathematicallyEqual": true,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 3,
+      "right": 5,
+      "mathematicallyEqual": false,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 6,
+      "right": 7,
+      "mathematicallyEqual": true,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 8,
+      "right": 9,
+      "mathematicallyEqual": true,
+      "lexicallyEqual": false
+    },
+    {
+      "left": 8,
+      "right": 10,
+      "mathematicallyEqual": false,
+      "lexicallyEqual": false
+    }
+  ]
+}

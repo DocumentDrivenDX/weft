@@ -1,0 +1,95 @@
+{
+  "scope": "Original uint64 UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification",
+  "captureSha256": "f7b0225a31072cbc316222b8feca0c0cceab3387e4d7b54a61ff84cb043d605a",
+  "harnessSha256": "cfc79c4777872b1a819e2db82ac551be9fb3972e9363f244fdc065efde92c71d",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "__null__",
+      "queryExecuted": true,
+      "sqlSha256": "df81e5266bb330896c9d8ad3404cc7c4571228a5e0bb092fd38c00f8e0481c04"
+    },
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "36893488147419103230",
+      "queryExecuted": true,
+      "sqlSha256": "7a29b9c7ac6808aecd085c245b2df19bdb63f98383d6a49d750abe76011dfffe"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "6f2bd090ff7350f3c0fbb2e50c8bd06d2c5354079dfa8ce277bef3d033544afa"
+    },
+    {
+      "case": "fraction",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "339d273076717dd68949982ae068c2f22f86257dbb21a93a264d2ae06acea68e"
+    },
+    {
+      "case": "negative",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "4555c3f04fb0b048fef7364a1c00a745a175a36d1e32f65e29aafb45ee1ad2b9"
+    },
+    {
+      "case": "overflow",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "d3985df85057edf56b45e800c95a7aba37e33d2fbef976ca871d02e45e5c1ad8"
+    },
+    {
+      "case": "nonfinite",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "1134796fb2d43a731cc5c7d82276b6f019187a0dbb587db5569c09977d21c5ea"
+    },
+    {
+      "case": "invalid-native",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "e2517ba60f402f2bddd953f5494d1053956fb274c556f6b3a5510ad67cc3ed93"
+    }
+  ]
+}

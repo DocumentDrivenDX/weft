@@ -1,0 +1,59 @@
+"""Execute original signed SUM/page/cursor in native row/props homes and every prerequisite.
+@covers US-003-AC1: exact independently calculated signed results.
+@covers US-003-AC3: width/fraction/codec/absence integrity refusal.
+"""
+import csv, hashlib, io, json, subprocess
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[2]
+quote=lambda v: "'"+v.replace("'", "''")+"'"
+results=[]
+transports=json.loads((ROOT/'tests/truss-postgresql/fixtures/original-signed-public-transport.json').read_text())
+for transport in transports:
+    bits=transport['bits'];home=transport['home'];kind=transport['kind'];fixture=f'original-signed-{bits}-{home}-{kind}'
+    response=transport['response'];raw=json.dumps(transport).encode()
+    e=dict(sql=response['sql'],columns=response['columns'],parameters=response['parameters'],checks=[o['parameters']['sql'] for o in response['obligations'] if 'sql' in o['parameters']])
+    composition=json.loads((ROOT/'tests/truss-postgresql/fixtures'/f'original-signed-{bits}-{home}-composition.json').read_text())
+    if home=='row':e['codecHex']=composition['properties'][0]['leafCodecs']['root']['originalJson'].encode().hex()
+    family='integer'
+    minimum=-(2**(bits-1));maximum=2**(bits-1)-1
+    samples=[('empty',[],False),('exact',[str(minimum),str(maximum)],False),('below-minimum',[str(minimum-1)],True),('above-maximum',[str(maximum+1)],True),('fraction',['-0.5'],True),('required-absent',['0'],True)]
+    if home=='row':samples.append(('wrong-codec',['0'],True))
+    else:samples.append(('wrong-carrier',['0'],True))
+    for case,values,corrupt in samples:
+        sql='''BEGIN; SET standard_conforming_strings=on;
+CREATE TEMP TABLE object(id bigint,type_id int,props jsonb);
+CREATE TEMP TABLE row_home_state(state_id bigint,owner_kind text,object_id bigint,object_type_id int,edge_id bigint,relationship_type_id int,property_owner_type_id int,property_id int,root_node_id bigint);
+CREATE TEMP TABLE row_home_node(state_id bigint,node_id bigint,parent_node_id bigint);
+CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind text,text_value text,boolean_value bool,numeric_value numeric,numeric_token text,codec_definition_bytes bytea,original_source_bytes bytea,binary_value bytea,temporal_text text,temporal_instant timestamptz,opaque_bytes bytea);
+'''
+        oid=e['parameters'][0]['value'];pid=e['parameters'][2]['value'] if home=='row' else e['parameters'][1]['value']
+        for i,value in enumerate(values):
+            props={} if case=='required-absent' or home=='row' else {pid: int(value) if case=='wrong-carrier' else value}
+            sql+=f"INSERT INTO object VALUES ({i+1},{oid},'{json.dumps(props)}'::jsonb);\n"
+            if home=='props':continue
+            if case=='required-absent':continue
+            sql+=f"INSERT INTO row_home_state VALUES ({i+10},'object',{i+1},{oid},NULL,NULL,{oid},{pid},{i+20});\nINSERT INTO row_home_node VALUES ({i+10},{i+20},NULL);\n"
+            codec='00' if case=='wrong-codec' else e['codecHex']
+            sql+=f"INSERT INTO row_home_scalar(state_id,node_id,scalar_kind,numeric_value,numeric_token,codec_definition_bytes,original_source_bytes) VALUES ({i+10},{i+20},'{family}',{quote(value)}::numeric,{quote(value)},decode('{codec}','hex'),decode('fe00','hex'));\n"
+        sql+="INSERT INTO object VALUES (100,-999,'{}'::jsonb);\n"
+        types=','.join('text' for p in e['parameters']);args=','.join(quote(p['value']) for p in e['parameters'])
+        for i,check in enumerate(e['checks']):sql+=f'PREPARE check_{i}({types}) AS {check}; EXECUTE check_{i}({args});\n'
+        if not corrupt:sql+=f"PREPARE query({types}) AS {e['sql']}; EXECUTE query({args});\n"
+        sql+='ROLLBACK;\n'
+        out=subprocess.check_output(['docker','exec','-i','weft-b005-pg17','psql','-U','postgres','-X','-q','--csv','-P','null=__null__','-v','ON_ERROR_STOP=1'],input=sql.encode()).decode(); rows=list(csv.reader(io.StringIO(out)))
+        counts=[]
+        for i in range(len(e['checks'])):
+            assert rows[2*i]==['violations'];counts.append(int(rows[2*i+1][0]))
+        assert any(counts) if corrupt else not any(counts),(fixture,case,counts)
+        remaining=rows[len(counts)*2:]
+        if not corrupt:
+            assert remaining[0]==[c['outputName'] for c in e['columns']]
+            if kind=='sum':expected=[['__null__' if not values else str(sum(map(int,values)))]]
+            else:expected=[[str(v)] for v in sorted(map(int,values)) if kind!='cursor' or v>-1]
+            assert remaining[1:]==expected,(fixture,case,remaining)
+        else:assert not remaining
+        results.append(dict(fixture=fixture,case=case,violations=counts,queryExecuted=not corrupt,sqlSha256=hashlib.sha256(sql.encode()).hexdigest(),captureSha256=hashlib.sha256(raw).hexdigest()))
+server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
+report=dict(server=server,scope='Original signed integer properties in native row/props homes at widths 1/8/16/32/64; synthetic pinned fixture source semantics, no production or embedding qualification',harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
+(ROOT/'docs/helix/04-build/evidence/B-005-original-signed-public-native.json').write_text(json.dumps(report,indent=2)+'\n')
+print(f'{len(results)} original signed public native cases passed')

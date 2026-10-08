@@ -1,0 +1,85 @@
+{
+  "scope": "Captured Rust owner-wide structural check SQL over synthetic props roots; fixture withholding on corruption only, not general host, codec, stored-domain or adopted Truss qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "bd523baf6fe68e8cfb7d2578bca3ec9644bca38da01b03eced8aaa15d8829c07",
+  "harnessSha256": "0926b7ae9eddfe66aa8e6c2f08ff509a80fdfd6611f8214ec63b4a64f5a8a0b5",
+  "results": [
+    {
+      "id": "empty",
+      "violationsPerOccurrence": 0,
+      "queryExecuted": true,
+      "queryRows": [],
+      "executedSqlSha256": "e222c8818cd7ea7b9fb2ee86a528b575cedfe19b30bbf0cb77bc742c1e824608"
+    },
+    {
+      "id": "valid-bag",
+      "violationsPerOccurrence": 0,
+      "queryExecuted": true,
+      "queryRows": [
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          "é ",
+          "é "
+        ],
+        [
+          "é",
+          "é"
+        ]
+      ],
+      "executedSqlSha256": "6d192a6bd4e8d8236c9557c9e4db79a81f96711cfffff7717d840e68275eafcd"
+    },
+    {
+      "id": "array",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "executedSqlSha256": "2ea0116a6e7a8627267a006da34fc05ad054c0668457d41ac698a293b31cc507"
+    },
+    {
+      "id": "json-null",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "executedSqlSha256": "49e8b5f0539526b8f3783049b1de5cfc7d269132b5d13032618e60ee7566f8e3"
+    },
+    {
+      "id": "number",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "executedSqlSha256": "a4da12a3c248c7c40f5f39e799d63280f97aa2224e410b6a8a407245e6d3b602"
+    },
+    {
+      "id": "sql-null",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "executedSqlSha256": "606685de281e8c5fd7de53c0f867fdc1b2bb555211446f5417aff96535f6fd54"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/registered_access.rs": "4ff1f93d3e5646c204db018afb39c2de2f2249f48de48807d3bc0ba96e9289f6",
+    "crates/weft-postgresql/src/property_definition.rs": "3450a7d7c8ce59543032200afc597484d6fe4f2df34808c942f4547781caf424"
+  },
+  "rustCrateTests": 62,
+  "testLogSha256": "947ceafbd2f3b69b9adf2d6eb41221456c69f1b3862d11e9253a72deb8fdab31"
+}

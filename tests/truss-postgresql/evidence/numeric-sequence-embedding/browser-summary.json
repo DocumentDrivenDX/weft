@@ -1,0 +1,32 @@
+{
+  "cases": 10,
+  "batchSize": 8,
+  "streamingCorpus": false,
+  "browser": "153.0.8010.12",
+  "playwrightVersion": "1.62.1",
+  "wasmBytes": 16465875,
+  "wasmSha256": "ea27bbe61f7af3dc4e5e68905b493a49ac05c2da810522d0694df460780fa5f1",
+  "jsGlueBytes": 7353,
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    }
+  ],
+  "initialMemoryBytes": 4587520,
+  "finalMemoryBytes": 6225920,
+  "networkRequests": [
+    "http://weft.spike.test/",
+    "http://weft.spike.test/spike.wasm",
+    "http://weft.spike.test/spike.js",
+    "http://weft.spike.test/wrapper.js"
+  ],
+  "nodeGlobals": false,
+  "byteParity": true
+}

@@ -1,0 +1,31 @@
+{
+  "scope": "Explicit host-supplied test-original conformance configuration through fresh Rust, Python ABI and Chromium WASM; not released generic profile registration",
+  "casesPerEmbedding": 420,
+  "positiveFullResponses": 84,
+  "refusals": 336,
+  "pythonDeterministicRepeats": 84,
+  "unlistedBindingHashes": true,
+  "regressionTestsPassed": 156,
+  "exhaustiveDecimalTest": "Unchanged test excluded from this invocation; earlier 434-pair execution retained in B-005-original-decimal-domains.json",
+  "rustLogSha256": "5378791d0647eedd6df4de57447a9942d0e883deb946ce5cafc402a20805455a",
+  "pythonBuildLogSha256": "dabeff367bc6cf69f3c28e77eb0ff6aa9b9a1b10bfc212a5fe87bcacf9480877",
+  "wasmBuildLogSha256": "d97cf55ad5534a76defb2bbf2cc53b330680faaa2a3cad0574385f0e1e5e8fd3",
+  "wheelSha256": "00b13dd3dbd4adc989fb791d35a97169e9f0a588d4e3b972f61d6031b766e109",
+  "wasmSha256": "1f3f3177ab70a668be0abd0643ec44776319bf067b1db23c25c906db828b6ead",
+  "sources": {
+    "crates/weft-postgresql/src/conformance_original.rs": "f39a721b9579d390e4d92d9404f389c33ae628b5b1e36409258543632a37d731",
+    "crates/weft-runtime/src/lib.rs": "fb3340349f30d138bbd3da0d19b8563c0ed8591090a90aee43ad55b311c3f5cd",
+    "crates/weft-python/src/lib.rs": "4a348481922988a364ab280b6f3fb4fae1a9940afa447e4282f4a704b6905366",
+    "crates/weft-wasm/src/lib.rs": "0afb607c939e226ab1f55494ff68e6e58ca0f1c806a3095a03ac527ab7855ee3",
+    "tests/compile/browser-check.mjs": "9d3d90c0815960797faa87d2e44e215cfc2c1992501b64b150b09e675788df3b",
+    "tests/truss-postgresql/host-configuration-embedding-check.py": "44c1f411758ec7accd733cc1e73bb6cba6962b71e24c2a0e0709a324f9cf73a7"
+  },
+  "corpusSha256": "80284ce86ab5cefa4e946c5582c6d193a4664b761e627a593f975958691d5b54",
+  "reportsSha256": "4f8be09f0d93469ee5e2bda246e2f7bb9577694cdf7a704fabde9760babee411",
+  "browserBulkAttempt": "Failed: target page/context/browser closed while receiving full corpus. No pass claimed. Same corpus subsequently passed in batches of eight using one initialized WASM instance.",
+  "limitations": [
+    "Only explicitly enabled test-original builds export this instrumentation",
+    "Compiler still does not own IO, policy or publication",
+    "No production storage, released generic host configuration or new decimal embedding support claimed"
+  ]
+}

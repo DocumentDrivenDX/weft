@@ -1,0 +1,46 @@
+{
+  "scope": "Original-admitted two-scan string cursor tuple and named origins; not authored unique page-key or public paging qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "b31178b7cd331cea805a80acd402ed9665e727a05935864ac7cb65994f0312d7",
+  "harnessSha256": "0d230645820d914de62ded42d19eeb34eaed5341165d08f87bc7d5ea1715a22a",
+  "results": [
+    {
+      "id": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "61e29cfce4b76f44b7be80b1eb75c322f3259d4c21f7dbe2e295cd9b9d61ae57"
+    },
+    {
+      "id": "duplicate-unicode-empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "bc6bc405ba947bbeed2e2ce0e312ad607ae5f6a026ff052bd199403e01fb2202"
+    },
+    {
+      "id": "predicate-read-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8114bc468f07898cfd106b0adbb7fded79181cf49a2a932e243b30ff8348108c"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/select_definition.rs": "ee238dce7999a8841efd1129497ded5d203c72804417f8c8374f3bc554af2054",
+    "crates/weft-postgresql/src/property_definition.rs": "359dd50cd3a85d51bfd1e39076a31a54109c744f90a67128f754937bd76d47ec"
+  },
+  "testLogSha256": "61e1568f72bed12cf20122943dc497cf1de43247050b6c401702bf3eea692681"
+}

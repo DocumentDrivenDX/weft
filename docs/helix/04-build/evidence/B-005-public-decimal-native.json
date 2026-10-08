@@ -1,0 +1,89 @@
+{
+  "scope": "Original decimal(28,2) UMF/property/codec/comparator V01 and V02 identical SUM SQL on synthetic JSONB rows; no complete domain/production qualification; capture returned through public Registry V02 Emission",
+  "captureSha256": "e708f39b256c7d357159aeea6ab4b7c0ce0dfca6bcb002e10d1735d2787962f2",
+  "harnessSha256": "2f84b692093a1000cf10d3e585ddd818a8e765ed7a76a0c3872c032a7d8571b8",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "__null__",
+      "queryExecuted": true,
+      "sqlSha256": "9f473b736983900dc72239b34cce51bfb33ae450b5bdba9c886641932ca2b8e1"
+    },
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0
+      ],
+      "result": "9999999999999999999.13",
+      "queryExecuted": true,
+      "sqlSha256": "8eeacd4ca6f7f0746c67ee65470a0f9377aa9e3719f35ca6ea2b760fb7e68d01"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "fa6d5b13ccb56c623b675cd63899d89dcfcba5fa152e426182a12cfd00781200"
+    },
+    {
+      "case": "scale",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "17ef1a30faa0d282d4784507cc76ce90f75fa1a04447a2d48b0b715c8d1c1b66"
+    },
+    {
+      "case": "precision",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "c8e8bdc8be576861e742319723dc7eb3f51fe65afa82855cc8b266ba1dfc4703"
+    },
+    {
+      "case": "nonfinite",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "41731df1fd30c07084a6fd848f44a333406c9616fc97576163dc1856f9ba26b6"
+    },
+    {
+      "case": "invalid-native",
+      "violations": [
+        0,
+        1,
+        0
+      ],
+      "result": null,
+      "queryExecuted": false,
+      "sqlSha256": "b22a5d39e195039b4a9a35219b59935ea9bcad8793f2b2224a209eb4a38d28b7"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/original_backend.rs": "5bd674d9eb10b67d8fd47e097780736cf675f0df58e70bd82587bfbbbd9d744c",
+    "crates/weft-postgresql/src/property_definition.rs": "2ad7f4f737b297e0591e81fe16512d7423cff2867125f2e0f902da9b6ba169e4"
+  },
+  "testLogSha256": "4eb4cf9460a38335011b15e104ab3549ba23ca661b40ff0707f51af0f3583a23"
+}

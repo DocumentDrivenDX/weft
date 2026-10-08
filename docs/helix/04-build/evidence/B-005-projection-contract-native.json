@@ -1,0 +1,92 @@
+{
+  "scope": "Captured Rust owner-wide structural check SQL over synthetic props roots; fixture withholding on corruption only, not general host, codec, stored-domain or adopted Truss qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "8e8df65ea1fe6e8c1a28f5533d1f83cb955fcf27617c31d46034efefe6fb21d7",
+  "harnessSha256": "059167b972ee4bca6128ded89e1a071e320736875daea3e65d2589b99307c71e",
+  "results": [
+    {
+      "id": "empty",
+      "violationsPerOccurrence": 0,
+      "queryExecuted": true,
+      "queryRows": [],
+      "columnMetadataChecked": true,
+      "executedSqlSha256": "44fc3278a859236894cb3c82aef0d2ff005b2926c383a2f7dcff15fcc95c9a71"
+    },
+    {
+      "id": "valid-bag",
+      "violationsPerOccurrence": 0,
+      "queryExecuted": true,
+      "queryRows": [
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "A",
+          "A"
+        ],
+        [
+          "",
+          ""
+        ],
+        [
+          "é ",
+          "é "
+        ],
+        [
+          "é",
+          "é"
+        ]
+      ],
+      "columnMetadataChecked": true,
+      "executedSqlSha256": "8ec718e8ac3550fd861ad0a3c12cba1d110eac610c6f0e0238871b0188c9f424"
+    },
+    {
+      "id": "array",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "columnMetadataChecked": false,
+      "executedSqlSha256": "8d149e00e21eea2a5d20bb59388f764f599eb6ae2d5f7fe5ade2d32c3c173afb"
+    },
+    {
+      "id": "json-null",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "columnMetadataChecked": false,
+      "executedSqlSha256": "3c559382d33f46979ba28737a92c9988f131801cb1ccd0641ccc122fea426a2e"
+    },
+    {
+      "id": "number",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "columnMetadataChecked": false,
+      "executedSqlSha256": "eb7f01f67305b1bffdf997296b059d3a72970696571c0ef63b5141632145e326"
+    },
+    {
+      "id": "sql-null",
+      "violationsPerOccurrence": 1,
+      "queryExecuted": false,
+      "queryRows": [],
+      "columnMetadataChecked": false,
+      "executedSqlSha256": "b63b8f97c7519e80e1ff679086b464392f9e6b57d5840a465c94ce9073d7082c"
+    }
+  ],
+  "sourceSha256": {
+    "crates/weft-postgresql/src/result_definition.rs": "3e0486901bc93408154cce68a43a76aa806ffdb2204cbfae4d7591379eb5e4dc",
+    "crates/weft-postgresql/src/property_definition.rs": "942daa357071a89d14fdce15fc4c949ccaf9a771d97ac01fcf9ec028fdc64628",
+    "crates/weft-postgresql/src/record_definition.rs": "f457b364f115e79b3f6fd407dd9dee3d6ca34ac1cbaec73c5d9c26c0955d49a4"
+  },
+  "rustCrateTests": 66,
+  "testLogSha256": "8bd076b31f449c6f064795320dc7234a34b7129eda231786168291ecbcdd5097"
+}

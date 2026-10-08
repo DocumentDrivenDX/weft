@@ -1,0 +1,10 @@
+{
+  "cases": 334,
+  "originalConfigurations": 37,
+  "fullResponseParity": true,
+  "deterministicRepeats": 82,
+  "subprocessDisabled": true,
+  "nativeModule": "/private/tmp/weft-boolseq-python-package/weft/__init__.py",
+  "version": "0.1.0",
+  "scope": "test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations and two Boolean scalar configurations and one native Boolean sequence configuration"
+}

@@ -1,0 +1,22 @@
+{
+  "scope": "Bounded complete-state physical tree indexing and structural refusal over recorded native custody; no original UMF topology/codec semantics or logical result qualification",
+  "sourceSha256": "172cb81bd5c303ffdcd0cdc4825759bc578d1129f88d2a83b79e3ea6eea95d7e",
+  "nativeReceiptSha256": "154a0ea1c47b6a5f227de6ff048f034d4c879b9b613219fd9b26fe934765111f",
+  "testLogSha256": "122e9ca699894124e51d6ca9cffe5c3c939d86648bb2ac635b79b9b4e4ff1efd",
+  "tests": 90,
+  "nativeBagsChecked": 10,
+  "refusalCases": [
+    "missing root",
+    "duplicate node/payload",
+    "orphan payload",
+    "foreign state",
+    "missing parent",
+    "incompatible slot",
+    "sequence gap",
+    "noncanonical ordinal",
+    "payload ownership mismatch",
+    "disconnected cycle",
+    "node work bound",
+    "depth bound"
+  ]
+}

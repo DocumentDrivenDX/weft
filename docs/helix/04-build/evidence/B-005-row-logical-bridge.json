@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-07",
+  "scope": "Admitted native reconstruction to shared UMF logical member representation",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "command": "cargo test -p weft-postgresql",
+    "logSha256": "43909708b973d4c7cb37bf39f87531233517317b8de5b37f0205808f586f540c"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_value_traversal.rs": "578bb1774307b6e193f8e5c7eb7269d5ffd115666869e686278f8c500611ca3f",
+    "crates/weft-postgresql/src/property_definition.rs": "1f6b7b10d0caa9897abc0603642ee9d8c73f0fe3c3767b9c53844cdee3488fc9"
+  },
+  "evidence": [
+    "Admitted original string property preserves Unicode and trailing spaces through native reconstruction and logical decoding",
+    "Single shared node budget refuses the second pass after native reconstruction consumes the last reservation"
+  ],
+  "limits": [
+    "Recursive structured native corpus and emitted SQL still require integration evidence",
+    "Root absence/null publication requires the separately selected root presence gate",
+    "No new PostgreSQL execution or Python/WASM qualification"
+  ]
+}

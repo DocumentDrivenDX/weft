@@ -1,0 +1,88 @@
+{
+  "scope": "Original admitted finite multiplicity prerequisites only; no standalone public finite query or embedding qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "sourceMultiplicity": {
+    "min": 1,
+    "max": 2
+  },
+  "targetMultiplicity": {
+    "min": 0,
+    "max": 1
+  },
+  "captureSha256": "285c64598d86032a453466a7a1bca7ce83bbb8e5a7279e0b87362dda20a96455",
+  "harnessSha256": "7334788641021ccb8737e21f6dd4ca3e64553385fb4594f73334da254255705a",
+  "results": [
+    {
+      "case": "valid",
+      "inverse": false,
+      "violations": [
+        0,
+        0
+      ],
+      "executedSqlSha256": "d10f98b8442151d7c2ec19cb990ce44b88125cd351e924a24b0b27a20e3caafe"
+    },
+    {
+      "case": "forward-maximum",
+      "inverse": false,
+      "violations": [
+        0,
+        1
+      ],
+      "executedSqlSha256": "3a30ffaab2fcf0737251cdbb83bbf8558f3688c87cd6f8fcf5df3bdff9d12663"
+    },
+    {
+      "case": "inverse-maximum",
+      "inverse": false,
+      "violations": [
+        0,
+        0
+      ],
+      "executedSqlSha256": "e2cadf3c0bc9ebf0613c3e3ea6767d95328fd8201640f74f36c19cbd235da231"
+    },
+    {
+      "case": "inverse-minimum",
+      "inverse": false,
+      "violations": [
+        0,
+        0
+      ],
+      "executedSqlSha256": "449041f7bd9dc334366c9df31ceafa3c9ba82e858c279945b7441365963f307f"
+    },
+    {
+      "case": "valid",
+      "inverse": true,
+      "violations": [
+        0,
+        0
+      ],
+      "executedSqlSha256": "cf4db08bdcc561906a1f9fb946ed2b9c365efa555be37e83bd3689ca215c8aa8"
+    },
+    {
+      "case": "forward-maximum",
+      "inverse": true,
+      "violations": [
+        0,
+        0
+      ],
+      "executedSqlSha256": "6ba6a5d984f2ebe2adb35ce199d2c7a9fa8f74821a7dc47d9ed4fadb315ea524"
+    },
+    {
+      "case": "inverse-maximum",
+      "inverse": true,
+      "violations": [
+        0,
+        1
+      ],
+      "executedSqlSha256": "5df8148c6ebfd93e3b4985afb2c62c1676aac8ff5d6c207361b55715309bdf08"
+    },
+    {
+      "case": "inverse-minimum",
+      "inverse": true,
+      "violations": [
+        0,
+        1
+      ],
+      "executedSqlSha256": "6fa86db15ca72869b12f97bc7c3253ebb65c119ffbb372f6c99bc6011fbe46e1"
+    }
+  ]
+}

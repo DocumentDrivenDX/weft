@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original compound native result projection and independent complete-owner prerequisite",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "10df257a8b135b2b196a52dc11e79cc6a315013de60107e1910be2b09de837c3"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/result_definition.rs": "fcecfe1647874c1cbccc00f0489b4594b6813cd342c0f44f8be59c175019eb51",
+    "crates/weft-postgresql/src/property_definition.rs": "858f04ad535a31372fefd6410c8a99d4110f633fc2538bebed4ef5ecb1c36306"
+  },
+  "nativeCases": 28,
+  "nativeReceiptSha256": "8ecdaf837b17b9aad7bbf7307a47b1e1b5c877cd074b019519d114fc29caf1c5",
+  "cases": [
+    "Valid logical value envelopes for seven original compound trees",
+    "Absent root carrier with required/optional prerequisite policy",
+    "Corrupt owned data outside projection filter/LIMIT triggers prerequisite failure",
+    "Foreign owner type does not widen selected owner scope"
+  ],
+  "limits": [
+    "Selected native procedures are fixture meanings, not adopted production codecs",
+    "Public registry/one-call compiler and Python/WASM integration remain unfinished",
+    "Host must execute prerequisites in the qualified complete authorized read context before publication",
+    "Compound explicit null remains unsupported"
+  ]
+}

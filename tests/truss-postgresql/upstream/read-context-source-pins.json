@@ -1,0 +1,12 @@
+[
+  {
+    "id": "urn:truss:acceptance-input:0.1.0",
+    "file": "acceptance-input-v0.1.schema.json",
+    "sha256": "0278cbbbde843091c005b688fd9c081a2fdff843b9adda006ba80fb87828d7cd"
+  },
+  {
+    "id": "urn:truss:draft:read-context-definition:0.1.0",
+    "file": "truss-read-context-definition-v0.1.proposal.schema.json",
+    "sha256": "01eef30067e6ce3ff3957475e163e8c9e870d1fa36b67c94aa6b2fe11d5e14cb"
+  }
+]

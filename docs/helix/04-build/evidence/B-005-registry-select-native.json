@@ -1,0 +1,46 @@
+{
+  "scope": "One-call original registry compilation with independently tested prepared sources, selected projection and complete physical preflight; synthetic string self-join and fixture operation callback, not public Backend trait dispatch, V02 or production qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "4419d65e6411b50a144330f04ba4ca08cb69812c035143588909b06fa90c305d",
+  "harnessSha256": "82c9956b3f5d52d2ee595bf40b95e2909708ed607b9c430d2d7fc229bab652c2",
+  "results": [
+    {
+      "id": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "03261bda76516943d1c9272caaeef40896fa8867c3e8971e0bd9814d6349faa6"
+    },
+    {
+      "id": "duplicate-unicode-empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a959ee7c84510680eb234b30c15907c3ee26c0229a69db056b2b6ae7c33c604e"
+    },
+    {
+      "id": "predicate-read-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5d214a0c4afc52d64abb144ea5209953fac251d4047f960b5b871df2c4f9b177"
+    }
+  ],
+  "sourcePins": {
+    "crates/weft-postgresql/src/select_definition.rs": "04b8e81b8c26e051987796e14c122fb2a7805e57be521622add45a2f11e6c7b5",
+    "crates/weft-postgresql/src/property_definition.rs": "ecc46df9ccf1c4c5aa3e04d14a035d832c9882ece1acc6119302ab4dbc7a7454"
+  },
+  "rustTestLogSha256": "c3f2e572ffe5828d345dbe0eda829a9df43b93e08481b829d980b0db1763f2a0"
+}

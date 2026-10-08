@@ -1,0 +1,9 @@
+{
+  "scope": "Original-profile preparation access/expression bridge component only; no public backend or native qualification",
+  "rustCrateTests": 61,
+  "sha256": {
+    "crates/weft-postgresql/src/registered_access.rs": "ab79e8dd600a6f4270d187605cd9837cb40b0e81be20ad8ef637f0a7c60d2545",
+    "crates/weft-postgresql/src/property_definition.rs": "0c5fd8c4c7ab4ed74dfb0fea0663bb84d465ae6f2d3b1b607bf971d3e58fb331"
+  },
+  "testLogSha256": "b98531edb09847a583534a210046d41d2d21c40512ee58b01f791735b53a063f"
+}

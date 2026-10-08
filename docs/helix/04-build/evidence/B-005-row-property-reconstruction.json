@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original row-property admission gate for intermediate storage-body reconstruction",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "command": "cargo test -p weft-postgresql",
+    "logSha256": "a8d3d9225143fe4b2693be03c8678c75e22a5546a7d499eb629bef4802ae5f6d"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_value_traversal.rs": "c709321ce7e90bf98dd060de64590b93329cfbe0d2b60589425ce738d6d2c8a2",
+    "crates/weft-postgresql/src/property_definition.rs": "eb86becc8f35a68483e252c25e60d68be2b6f33eef2619389f3e63939c5cd3c2"
+  },
+  "evidence": [
+    "Original admitted UMF string property and row access decode synthetic native text custody preserving Unicode and spaces",
+    "Substituted original props binding refuses before observer or decoder",
+    "Gate rechecks graph/descriptors, member presence and captured scalar codec bytes"
+  ],
+  "limits": [
+    "Synthetic text custody has no new native database execution claim",
+    "Host procedures remain responsible for native definition/source interpretation and scalar domain qualification",
+    "No public recursive row SQL or Python/WASM qualification"
+  ]
+}

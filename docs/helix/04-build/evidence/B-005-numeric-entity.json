@@ -1,0 +1,41 @@
+{
+  "scope": "Four original complete entity configurations combining native signed64/decimal(28,2) sequence/map and structured roots plus exact scalar keys/note",
+  "nativeCases": 80,
+  "embeddingCasesPerRuntime": 40,
+  "positiveFullResponses": 8,
+  "embeddingRefusals": 32,
+  "pythonDeterministicRepeats": 8,
+  "rustRegressionsPassed": 159,
+  "rustNote": "Unchanged exhaustive decimal composition test retains earlier evidence",
+  "binaryProvenance": "Reuse B-005-numeric-sequence native extension/WASM; runtime code unchanged, only new fixture/test data",
+  "wasmSha256": "ea27bbe61f7af3dc4e5e68905b493a49ac05c2da810522d0694df460780fa5f1",
+  "sources": {
+    "crates/weft-postgresql/src/conformance_original.rs": "bafb61e17ea72ffc7713ba79a01af4562bf4964766b17c3885344859e4601bb9",
+    "tests/truss-postgresql/build-numeric-entity-fixtures.py": "ddd5d1af1b495e02cd9ae749d2fb0dddc116ac3ecc0b582d37467ed1f56b259e",
+    "tests/truss-postgresql/numeric-entity-native.py": "199a796c082ff489108b7a6aa5ce12e2040544e615343f7c110dcf4066c04741",
+    "tests/truss-postgresql/numeric-entity-embedding-check.py": "c19d2299f7e62f83a0d4c69316b7a370f6404ec6e6f58b12ac4d873525b0e0b4",
+    "tests/truss-postgresql/fixtures/original-entity-signed-sequence-decimal-structured-inputs.json": "2a05bde8be0d1a2fffd8b76df667926af79f500394dea49c9e4f97ea7f666246",
+    "tests/truss-postgresql/fixtures/original-entity-signed-sequence-decimal-structured-public.json": "1c5188bb265dbe072e6324444699400cde1b3802aee5d0224947ce5560f2687f",
+    "tests/truss-postgresql/fixtures/original-entity-decimal-sequence-signed-structured-inputs.json": "7f04abc009c6a6e529a474d32ada34fd400a85f80738ea8c2ecf590e9b777f23",
+    "tests/truss-postgresql/fixtures/original-entity-decimal-sequence-signed-structured-public.json": "b9c8255b915728364cc24fa27c16b8930100dc401168a796a45fd14fb9db8a8e",
+    "tests/truss-postgresql/fixtures/original-entity-signed-map-decimal-structured-inputs.json": "e46b9b58a44b1e185e8949723ef62db2758bcc8419eb8e15fd49d3f1c164b58f",
+    "tests/truss-postgresql/fixtures/original-entity-signed-map-decimal-structured-public.json": "0dc58a5d5774fbabf2de877702bafa106ed65b6ea7ccc112409d78d03dbd87f4",
+    "tests/truss-postgresql/fixtures/original-entity-decimal-map-signed-structured-inputs.json": "62e5945dd5df79744af5e537b6b37afedbf3a164d67dd2a943da18abb4179c69",
+    "tests/truss-postgresql/fixtures/original-entity-decimal-map-signed-structured-public.json": "0983d070e6e390492821a9655b348191d05a558a037290f4388d5b6f9000666a"
+  },
+  "logs": {
+    "weft-numeric-entity-compile.log": "9530d896053e4755ad30031e5ca2e6c131d343b2a83109b94f18eb030a16d27a",
+    "weft-numeric-entity-native.log": "afd6d09fee046d5d3f128c42356e71c9d35773f4449827834da114184d8bff27",
+    "weft-numeric-entity-regressions.log": "98023cc1644243cb0a5fd88a7d1836ec39a20545893b6f65bff7a761dcdcd892",
+    "weft-numeric-entity-python.log": "73c3f9b80cd694dbee0acde71309793082b4001e9beddc56ce6cafb9aee92ac6",
+    "weft-numeric-entity-browser.log": "863e20efdeec5a4eeba962c8d289c6ffafecc92837cf4dc0cfbe25e41911d7df"
+  },
+  "corpusSha256": "89e9464443648f22df549be46e334966dec2a26a77b21f85412a532b27817628",
+  "reportsSha256": "5deeab908bf4b89067835d0ecbbf5dcd7b2743d87aa3fc6fadcf0af29c4c9ec4",
+  "nativeReceipt": "B-005-numeric-entity-native.json",
+  "limitations": [
+    "Selected source types/domains and canonical numeric tokens only",
+    "Original relational composition/final story acceptance remain under audit",
+    "No installed/production Truss or released generic host registration claim"
+  ]
+}

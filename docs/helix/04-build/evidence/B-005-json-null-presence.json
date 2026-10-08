@@ -1,0 +1,10 @@
+{
+  "scope": "Pure original JSONB presence interpretation following UMF nullability and the pinned jsonNullMember rule; not SQL null, native row null-node or full result publication support",
+  "sourcePins": {
+    "crates/weft-postgresql/src/presence_definition.rs": "96d4043ab805a5465974ee1921d802b2e370da88e9c0db2cdabc53d3e30d3f5f",
+    "tests/truss-postgresql/upstream/presence-definition.schema.json": "08270a400dceb28e855ead142e31cfad1a30fd116d84b5380022fa3de4542f11"
+  },
+  "rustTestLogSha256": "d5c93f64eecbad4d0eece139a84f71e7e05ca5734388ae4d78fd53caec8f84bc",
+  "rustTestsPassed": 71,
+  "newNativeExecution": false
+}

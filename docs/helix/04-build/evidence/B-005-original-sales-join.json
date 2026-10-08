@@ -1,0 +1,78 @@
+{
+  "scope": "Original sales join, all 16 homes for customer id/name and order customer_id/total, selected UInt64 / Unicode C / decimal(28,2)",
+  "before": {
+    "failingCase": "row/row/row/row hidden-foreign-key-domain",
+    "observedViolations": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "diagnosis": "Native numeric domain prerequisites were limited to SUM/key operations"
+  },
+  "change": "Require owner-wide numeric domain prerequisites for every selected numeric comparison operation",
+  "nativeCases": 128,
+  "embeddingCasesPerRuntime": 80,
+  "positiveFullResponses": 16,
+  "embeddingRefusals": 64,
+  "pythonDeterministicRepeats": 16,
+  "rustRegressionsPassed": 160,
+  "rustNote": "Core/PostgreSQL passed; three fixture parity failures refreshed after proving only added domain obligations; runtime rerun passes 9. Unchanged exhaustive decimal SUM composition retains earlier evidence.",
+  "legacyEmbeddingCasesPerRuntime": 342,
+  "legacyPythonRepeats": 84,
+  "affectedNativeRegressionCases": {
+    "optional": 48,
+    "entities": 168,
+    "multi": 16,
+    "driver": 252,
+    "hostCallbacks": 588
+  },
+  "browser": "148.0.7778.96",
+  "wasmSha256": "c8d72e088a15302d1b48fc93e94415a2086a25134317dba90fc72ab612244061",
+  "extensionSha256": "8871e297d7d691e6f9b6a0499931c09399907f5ef4ab8c5a8e40ba259576154c",
+  "wheelSha256": "56e2c2ee8db78f49e58a35c7e349c7506032cf155133ccf8960868652fc4b339",
+  "sources": {
+    "crates/weft-postgresql/src/select_definition.rs": "978baab8919bdca2f90c97add4e7bea0cff158cabef81b17d04bec18b3307346",
+    "crates/weft-postgresql/src/conformance_original.rs": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63",
+    "tests/truss-postgresql/build-original-sales-join-fixtures.py": "5106134fc2479dd3b4e6d4cc8e2de844a871b20782adbb0bee2c376221dd7bc1",
+    "tests/truss-postgresql/original-sales-join-native.py": "5de40872703d2d2ea000345660b354352b64c689943352f9793ac19721af2446",
+    "tests/truss-postgresql/sales-join-embedding-check.py": "a739446ad2cba611d1ce53dd80ca4ff3fd5feef61648b76bda5aa1c2bd8fc612",
+    "tests/truss-postgresql/fixtures/original-sales-join-public.json": "a7b66f4d03f41d356a3292f5ed7d44ae2c87d9f1da808e98343f929b7c184e13",
+    "tests/truss-postgresql/fixtures/original-sales-join-inputs.json": "58486ad549a652cefe438cf726bd5a39b0750d7ba7fb8fad9fb1615ce137c143",
+    "tests/truss-postgresql/fixtures/original-sales-join-rust-public.json": "a7b66f4d03f41d356a3292f5ed7d44ae2c87d9f1da808e98343f929b7c184e13",
+    "tests/truss-postgresql/fixtures/original-sales-decimal-templates.json": "ef08df9bd3a7ffa25e5ff9b14e9a011e038ebaea2b7438c1d0469c6f22a1b0eb"
+  },
+  "logs": {
+    "weft-sales-join-domain-before.log": "755fc87bcf3a639319a87e638bcbb88e4a48287db28c91001e80d56b1ba28720",
+    "weft-sales-join-rust.log": "881494666cd83de49e0bdcbd754d2e1f1436bd73fb9ffefc57a9c62b856c89b9",
+    "weft-original-sales-join-native.log": "1d42589bc5b6db9986f6d1171d76c3832117a88b0bb257aebec16a05617e4c18",
+    "weft-sales-join-python-build.log": "f1689a64d8e472530782de1ed1579ebb1d43f8bfb031f07f5c2e8eaf95b3bf35",
+    "weft-sales-join-python-install.log": "b8969a8d3979faf852929951e375311ccb0e1765bb95f554e8ed02d664901cba",
+    "weft-sales-join-wasm-build.log": "d90edb67a0c51d5452103762d4a7799a293b4f877a734eeb6d36cb3fbfff9d66",
+    "weft-sales-join-wasm-glue.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "weft-sales-join-python.log": "bffd64e0d262761529bfd933e4c8cddd971432f4c2eade692cb5c2a64d301c6c",
+    "weft-sales-join-browser.log": "83ef94b721eb598eca98af3c3d818185b2deb7a2252d0387136abdc76e5b7396",
+    "weft-sales-join-regressions.log": "2b9cfe45779784a2b912d241f26d7b07e656b6eead6f9a95e27f4f2b4d6e048d",
+    "weft-sales-join-runtime-regressions.log": "8a8ae39ca5e26e0fc6947206ff57a207d54a55556109beffa3fa30dc293d5e41",
+    "weft-sales-join-legacy-python.log": "b8b991c881f76d80d4c57ae86014e7fd3b226fdbcdf410ffe02c536ec16e6aa0",
+    "weft-sales-join-legacy-browser.log": "495ed2080eb92c1de41639a7f686adc5f9e341d162314cacb7a1a89bb3f01bbe",
+    "weft-sales-join-host.log": "bde5d45401faa1f6df88e5df652e6196b7879f65dcb0a33ce41119477d5e632b",
+    "weft-sales-join-optional-native.log": "164944cb732786d384b8b7941d543390540f625b77e245b6af211d246298b95e",
+    "weft-sales-join-entity-native.log": "0f033b33891ec37419849c463b2a2d2e2bc110df6b747ee540a788645cf0d1a3",
+    "weft-sales-join-multi-native.log": "17387470421c1c3fe42eeba8e891e6b9b95c2466e17213720b9cbc9e5d1f2833",
+    "weft-sales-join-driver.log": "f40c0cc121d43aaced44676647fa1cb1976830d62e22d58a87077d91b583f0fc",
+    "weft-sales-join-specs.log": "82925ebb4d9409ebd9400b4ba5e8525f59f10f51a186c33cd149a010d55b7466"
+  },
+  "limitations": [
+    "Synthetic pinned candidate realization; no installed or production Truss qualification",
+    "Conformance configuration embedding API remains test-original instrumentation",
+    "Policy/context enforcement uses injected host evidence, not a production authority service",
+    "Final B-005 story acceptance audit remains open"
+  ],
+  "sourceFormattingNote": "Final select_definition.rs indentation was corrected after native binary verification; no token or semantic change."
+}

@@ -1,0 +1,562 @@
+{
+  "scope": "Public original backend registry native compound SELECT and prerequisites, with explicitly selected fixture procedures; Python/WASM unqualified",
+  "harnessSha256": "3e2990998b24af1ac8f9b5825c88d8bf2e31283d965cbe08c507f54e6b2d8771",
+  "results": [
+    {
+      "fixture": "address",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "c55bec502ceafdea006f5d032d89d7d4365d98d7da43a1675a63dd1552fa986c",
+      "sqlSha256": "c93665f80009aafce8dcc3ba97cc30c4c1705a8a178b8f99742d95d4be97c13b"
+    },
+    {
+      "fixture": "address",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "street": "\u00e9  "
+          }
+        },
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "c55bec502ceafdea006f5d032d89d7d4365d98d7da43a1675a63dd1552fa986c",
+      "sqlSha256": "56421fd57be5014a3ba015275acff7f0b3286db6b4f78b0539c0c210ae01cb40"
+    },
+    {
+      "fixture": "address",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "c55bec502ceafdea006f5d032d89d7d4365d98d7da43a1675a63dd1552fa986c",
+      "sqlSha256": "60b3ddeaa33303f95ea640a37b3934d8aea78042b4ca52dea20c3d156b1b2d75"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "zip": {
+                  "state": "absent"
+                },
+                "next": {
+                  "state": "absent"
+                },
+                "street": "inner"
+              }
+            },
+            "street": "outer"
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "83b83e028373a7268f8fb5c0769d31bea9b2ca22a2a9439ae45695a2e5ac00ac",
+      "sqlSha256": "3e8de4b58920817e55bf211ca0d7e753eb984cc7b475c25b846b6ed5b166ec1a"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "zip": {
+                  "state": "absent"
+                },
+                "next": {
+                  "state": "absent"
+                },
+                "street": "inner"
+              }
+            },
+            "street": "outer"
+          }
+        },
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "zip": {
+                  "state": "absent"
+                },
+                "next": {
+                  "state": "absent"
+                },
+                "street": "inner"
+              }
+            },
+            "street": "outer"
+          }
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "83b83e028373a7268f8fb5c0769d31bea9b2ca22a2a9439ae45695a2e5ac00ac",
+      "sqlSha256": "2cc4c5fe5f8aa85d624bd1a57ba37294ea9a8398689129fb5e70e731cff6674a"
+    },
+    {
+      "fixture": "cyclic",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "zip": {
+                  "state": "absent"
+                },
+                "next": {
+                  "state": "absent"
+                },
+                "street": "inner"
+              }
+            },
+            "street": "outer"
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "83b83e028373a7268f8fb5c0769d31bea9b2ca22a2a9439ae45695a2e5ac00ac",
+      "sqlSha256": "1e134d40112ce575726615ba33b399795a7cd40f630f719b4d59c5aa889bf557"
+    },
+    {
+      "fixture": "map",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "",
+            "\u96ea": "x",
+            "1.a[0]": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "f3560e4db47d7a09e7449aa0693ec4d3ca6151256bfbbfb3eacba45e48042b24",
+      "sqlSha256": "873772dd86112b21cb13dcab6446b51a4d71a545513de7230131f9085635e820"
+    },
+    {
+      "fixture": "map",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "",
+            "\u96ea": "x",
+            "1.a[0]": "\u00e9  "
+          }
+        },
+        {
+          "state": "value",
+          "value": {
+            "": "",
+            "\u96ea": "x",
+            "1.a[0]": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "f3560e4db47d7a09e7449aa0693ec4d3ca6151256bfbbfb3eacba45e48042b24",
+      "sqlSha256": "6d75582c31a64d7f34edc10df6934fccf50f9067529df7f98c57a9a42f04a27b"
+    },
+    {
+      "fixture": "map",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "",
+            "\u96ea": "x",
+            "1.a[0]": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "f3560e4db47d7a09e7449aa0693ec4d3ca6151256bfbbfb3eacba45e48042b24",
+      "sqlSha256": "2431fcfc8c9cd391ebef50c41b18cf1ee94ad7f9d6b0e2602349c7abe964e118"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            [
+              "9007199254740993",
+              "18446744073709551615"
+            ],
+            [],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "26e5fb841fc2c437a567bf517319c7f5f976246cee86e6cb7145316e686269ba",
+      "sqlSha256": "b4dda2160235e52f283984e5f65e42e7b29512ab61a23958b367d27f3b7c1fc1"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            [
+              "9007199254740993",
+              "18446744073709551615"
+            ],
+            [],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "state": "value",
+          "value": [
+            [
+              "9007199254740993",
+              "18446744073709551615"
+            ],
+            [],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "26e5fb841fc2c437a567bf517319c7f5f976246cee86e6cb7145316e686269ba",
+      "sqlSha256": "554f310bc51d416c87d7d0ce55f5138d4dbaa99d830d04e10b3a6075632fa8d2"
+    },
+    {
+      "fixture": "nested-sequence",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            [
+              "9007199254740993",
+              "18446744073709551615"
+            ],
+            [],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "26e5fb841fc2c437a567bf517319c7f5f976246cee86e6cb7145316e686269ba",
+      "sqlSha256": "80fe63c6eea78fef8e22eb24eca1913f5ed61ac5b44ccb97bdb6fad221da00d9"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "value",
+              "value": "18446744073709551615"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "1a2c25e903b9343b37bac95f3d358f2f47be673f75fa27ea5d3ff4ac076ffc59",
+      "sqlSha256": "d21cebf96cf11f4d971c68a43d82d1e093b0a3d76bbcb2552c1549eeab4f26d1"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "value",
+              "value": "18446744073709551615"
+            },
+            "street": "\u00e9  "
+          }
+        },
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "value",
+              "value": "18446744073709551615"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "1a2c25e903b9343b37bac95f3d358f2f47be673f75fa27ea5d3ff4ac076ffc59",
+      "sqlSha256": "bc5b538e18656b7f4d2e082ce743c528ae79471218d930c65dc3f7dc380fb851"
+    },
+    {
+      "fixture": "numeric-address",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "zip": {
+              "state": "value",
+              "value": "18446744073709551615"
+            },
+            "street": "\u00e9  "
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "1a2c25e903b9343b37bac95f3d358f2f47be673f75fa27ea5d3ff4ac076ffc59",
+      "sqlSha256": "fb8043f85572d326934fccf648ba7df36c1516c93762dbd16d5fa249dbe1d0b9"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "9007199254740993",
+            "9.a": "18446744073709551615"
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "f0209684863fc5b75e5ad44191581587006b170b0501321f6bdd38b4b5a3a8c8",
+      "sqlSha256": "a753ed58a06bbd3be20dbd305813d872a26b98005cb9a12eeaf9fd5e881f94dd"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "9007199254740993",
+            "9.a": "18446744073709551615"
+          }
+        },
+        {
+          "state": "value",
+          "value": {
+            "": "9007199254740993",
+            "9.a": "18446744073709551615"
+          }
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "f0209684863fc5b75e5ad44191581587006b170b0501321f6bdd38b4b5a3a8c8",
+      "sqlSha256": "e4d6de8f4d468072c1b49b3aa40034fa3cc6223c6e4d3b7240789a3789fb6b02"
+    },
+    {
+      "fixture": "numeric-map",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": {
+            "": "9007199254740993",
+            "9.a": "18446744073709551615"
+          }
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "f0209684863fc5b75e5ad44191581587006b170b0501321f6bdd38b4b5a3a8c8",
+      "sqlSha256": "e7a4360dc01a8230ca65d077658b554da41f2922b01d3875180263d15a58ad44"
+    },
+    {
+      "fixture": "tags",
+      "case": "valid",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            "\u00e9  ",
+            "1.a[0]",
+            ""
+          ]
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "c7cf375d81bf8e5b6bc67644ae04a2199b55c6ec82aaaeae2d544294110931c9",
+      "sqlSha256": "4aa00ada16ae8943472b7f74ed185caa913c6a6812befe1ac5cb273a1db1fc9f"
+    },
+    {
+      "fixture": "tags",
+      "case": "hidden-corruption",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            "\u00e9  ",
+            "1.a[0]",
+            ""
+          ]
+        },
+        {
+          "state": "value",
+          "value": [
+            "\u00e9  ",
+            "1.a[0]",
+            ""
+          ]
+        }
+      ],
+      "violations": [
+        1,
+        0
+      ],
+      "captureSha256": "c7cf375d81bf8e5b6bc67644ae04a2199b55c6ec82aaaeae2d544294110931c9",
+      "sqlSha256": "abcbcaad0f75d6d5f4783cfab38a5fe1c967a7ea40f15692c2d61a66a8375983"
+    },
+    {
+      "fixture": "tags",
+      "case": "foreign-owner",
+      "carriers": [
+        {
+          "state": "value",
+          "value": [
+            "\u00e9  ",
+            "1.a[0]",
+            ""
+          ]
+        }
+      ],
+      "violations": [
+        0,
+        0
+      ],
+      "captureSha256": "c7cf375d81bf8e5b6bc67644ae04a2199b55c6ec82aaaeae2d544294110931c9",
+      "sqlSha256": "1672b2216b5263db3fa501a5bb7e8dad95616332a2078b025ca349895100c647"
+    }
+  ]
+}

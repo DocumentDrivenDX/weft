@@ -7,6 +7,8 @@ publish.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+test-original=["weft-runtime/test-original"]
+truss-postgresql-candidate=["weft-runtime/truss-postgresql-candidate"]
 test-third=["weft-runtime/test-third"]
 [dependencies]
 weft-runtime={path="../weft-runtime"}

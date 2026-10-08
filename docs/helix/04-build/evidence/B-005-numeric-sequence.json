@@ -1,0 +1,42 @@
+{
+  "scope": "Selected original native signed64 and decimal(28,2) sequence roots; exact token strings/order/multiplicity, native integrity/domain refusals and fresh public conformance embeddings",
+  "nativeCases": 34,
+  "embeddingCasesPerRuntime": 10,
+  "positiveFullResponses": 2,
+  "embeddingRefusals": 8,
+  "pythonDeterministicRepeats": 2,
+  "rustRegressionsPassed": 157,
+  "rustNote": "Unchanged exhaustive decimal composition test excluded; retained separate prior evidence",
+  "sources": {
+    "crates/weft-postgresql/src/conformance_original.rs": "ded3d92c7933c426bc91bdf9af70bee3f3152c7b216a97ae82af1c93bb04aea1",
+    "tests/truss-postgresql/build-numeric-sequence-fixtures.py": "b862bb0ab0b15d955fef313ddd9a685c4f4522cf4f1fed7def9b8d01d269d40f",
+    "tests/truss-postgresql/original-numeric-sequence-native.py": "60c568f74b1d132d716ce2ee09661485c61ab376284777b55ccdd770cccd04a8",
+    "tests/truss-postgresql/numeric-sequence-embedding-check.py": "65cc9bab5240abc6032891556c376bd3df8250b19d3dc67d63896da04f0e8010",
+    "tests/truss-postgresql/fixtures/original-decimal-sequence-inputs.json": "2bdb4569232a10792d34858107b4f1a88b26f27a159e381a76064a01673cfcbb",
+    "tests/truss-postgresql/fixtures/original-decimal-sequence-public.json": "cd6afbce566329031e56e6e85d87514019675347fcf77f987ca339c7fbda72f2",
+    "tests/truss-postgresql/fixtures/original-decimal-sequence-tree.json": "87f8030b29de7c6031fc11264cf5b0d5c3993b2f468f70244960e6ffcff53b27",
+    "tests/truss-postgresql/fixtures/original-signed-sequence-inputs.json": "53ef2dbfca465fa9b591d3702a8a0cd8ef76df03b3bc94d894d9c976809352b7",
+    "tests/truss-postgresql/fixtures/original-signed-sequence-public.json": "db461a504bb36cf3d204f03ebbb4d36029acc42e7c2080584d21c6a767e2034c",
+    "tests/truss-postgresql/fixtures/original-signed-sequence-tree.json": "668b57323d9323c86c6febfa90d8d845b8ed68fabb1483cddccbf9949afd142d"
+  },
+  "logs": {
+    "weft-numeric-sequence-before.log": "1a49f1695e007d9160d6d9509a45bcc69256040c7f3396439cdb1e3d6fd5d32c",
+    "weft-signed-sequence-before-native.log": "b1dae42e7df881655e90bcaceedc897ef47c98fd9e641d4794a05aa69772a52c",
+    "weft-numeric-sequence-after.log": "140fb7eba672be84a7dc49e742c4ea1ec6044aabaf4335a3575376de4763eddf",
+    "weft-numeric-sequence-native.log": "1c5799f5b5b7697554a7153cd3d2a011cee01418865faa4979cf050253df7e91",
+    "weft-numeric-sequence-regressions.log": "e11a052e275d5e98a775473c0ae7dad43e1bc66a96dd899704db2329ded4e051",
+    "weft-numeric-sequence-python-build.log": "173e1ad9eab3f127d37332d3ba99fc474e742bd62034a5659595bb39bb5f55fb",
+    "weft-numeric-sequence-wasm-build.log": "9e61bd99a838c790dbb47d94a7ab6a78f73325dc04ecb8575631a5f5ded92771",
+    "weft-numeric-sequence-browser.log": "ce3fca000deee4e9122db18668976e4514591f1aa33414378d7144ddda3046ca"
+  },
+  "wheelSha256": "42715f77b1b6a81416034ba3d46d18629d734282539f2fd9f0bc5f0c6c252b1b",
+  "wasmSha256": "ea27bbe61f7af3dc4e5e68905b493a49ac05c2da810522d0694df460780fa5f1",
+  "corpusSha256": "8f3f3031ee8c818b5810204a359b4722deadf6ea347607bbab0576c270938fff",
+  "reportsSha256": "ad6f0002a6739a06f4c597282acc4cc6963536c207e89d17a0efdcff23020a74",
+  "nativeReceipt": "B-005-numeric-sequence-native.json",
+  "limitations": [
+    "Only selected sequence roots and canonical numeric token subset",
+    "Map/structured/whole-entity signed/decimal paths still require evidence",
+    "No production storage, installed Truss or released host configuration claim"
+  ]
+}

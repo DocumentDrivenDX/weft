@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-07",
+  "scope": "Original native topology packet and private custody SQL for recursive lowering preparation",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "a47004bf408327eabb43362bf07e870b002ff377c887e9637e50bf6a43bb472f"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "7d3ad72ce9d91d9311690df00daf40a55219db12cead270288dc115a770a255f",
+    "crates/weft-postgresql/src/property_definition.rs": "00f1c94fa2b330af3e6e96b495acfbb5858d6e5a826d37803dff8a28e8aad66c"
+  },
+  "cases": 7,
+  "refusals": [
+    "Selected field encoding aliases original record members in three compound fixtures",
+    "Substituted original binding refuses before encoding callback in all seven fixtures",
+    "Parameter slots remain unchanged after each refusal"
+  ],
+  "limits": [
+    "Native field identity encoding is selected trusted backend code",
+    "Packet and custody SQL are intermediate lowering inputs, not public logical value carrier",
+    "No fresh native SQL execution or Python/WASM qualification"
+  ]
+}

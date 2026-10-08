@@ -23,7 +23,8 @@ ddx:
 
 ## Testing Strategy
 
-Goal: establish that Weft SQL + supplied UMF modules produces target SQL with the defined logical meaning, or a precise refusal. SQL snapshots alone are insufficient. Every support claim names compiler, model, backend, storage profile, engine version, settings and evidence revision. This is a planned strategy; no compiler or native conformance suite exists yet.
+Goal: establish that Weft SQL + supplied UMF modules produces target SQL with the defined logical meaning, or a precise refusal. SQL snapshots alone are insufficient. Every support claim names compiler, model, backend, storage profile, engine version, settings and evidence revision. B-001 through B-005 now have scoped compiler, native and embedding evidence;
+B-006 and the full B-007 release matrix remain unfinished.
 
 ### Test Levels
 
@@ -91,7 +92,7 @@ Engine numeric ranges, aggregate widening, collation and session settings can di
 
 ## Build Handoff
 
-Current executable command: `bun run specs:check` validates documents, schemas, allocations and fixture integrity only. Compiler commands will be added when their runners exist, with exact execution evidence. Release blocks on unresolved P0 criteria, missing native evidence, semantic mismatches, unreviewed binding profiles or undocumented skips. A candidate artifact can be explicitly requested for experimentation; it is not release conformance.
+The executable command `bun run specs:check` validates documents, schemas, initial planning allocations and fixture integrity only. Rust, native and host commands now exist and are pinned in the build evidence. The [B-005 acceptance audit](../04-build/evidence/B-005-acceptance.md) maps the Truss compiler criteria to actual native/compiler evidence; it does not qualify the release matrix. Release blocks on unresolved P0 criteria, missing native evidence, semantic mismatches, unreviewed binding profiles or undocumented skips. A candidate artifact can be explicitly requested for experimentation; it is not release conformance.
 
 ## Application-read extension
 

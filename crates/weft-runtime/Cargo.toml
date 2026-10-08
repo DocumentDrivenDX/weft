@@ -4,7 +4,13 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+test-original=["dep:weft-postgresql","weft-postgresql/conformance-original"]
+truss-postgresql-candidate=["dep:weft-postgresql"]
 test-third=["dep:weft-backend-probe"]
 [dependencies]
 weft-core={path="../weft-core"}
 weft-backend-probe={path="../../tests/register-backend/probe",optional=true}
+weft-postgresql={path="../weft-postgresql",optional=true}
+
+[dev-dependencies]
+serde_json.workspace=true

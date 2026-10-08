@@ -1,0 +1,9 @@
+{
+  "cases": 80,
+  "positiveResponses": 16,
+  "refusals": 64,
+  "deterministicRepeats": 16,
+  "unlistedBinding": true,
+  "subprocessDisabled": true,
+  "harnessSha256": "a739446ad2cba611d1ce53dd80ca4ff3fd5feef61648b76bda5aa1c2bd8fc612"
+}

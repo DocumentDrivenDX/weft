@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:truss:draft:presence-definition:0.1.0",
+  "title": "Proposed JSONB property presence interpretation",
+  "description": "Exact props presence definition; authored nullability and native behavior require separate admission. Does not replace Weft result decoder ABI.",
+  "type": "object",
+  "properties": {
+    "interfaceVersion": {"const": "truss-presence-definition/0.1.0"},
+    "profile": {"$ref": "urn:truss:acceptance-input:0.1.0#/$defs/profilePin"},
+    "carrierSchema": {"const": "urn:truss:draft:exact-value:0.1.0#/$defs/presence"},
+    "storageRoot": {"const": "nonnull-jsonb-object"},
+    "absentMember": {"const": "present-false"},
+    "jsonNullMember": {"const": "present-null-if-authored-nullable"},
+    "emptyCollection": {"const": "present-empty-typed-value"},
+    "sqlNullRoot": {"const": "integrity-refusal"},
+    "nativeNullValue": {"const": "unsupported-without-separate-profile"},
+    "defaultApplication": {"const": "none-on-read"},
+    "acceptedDefinition": {"$ref": "urn:truss:acceptance-input:0.1.0#/$defs/exactArtifact"}
+  },
+  "required": ["interfaceVersion", "profile", "carrierSchema", "storageRoot", "absentMember", "jsonNullMember", "emptyCollection", "sqlNullRoot", "nativeNullValue", "defaultApplication", "acceptedDefinition"],
+  "additionalProperties": false
+}

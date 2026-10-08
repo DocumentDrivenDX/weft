@@ -1,0 +1,10 @@
+{
+  "scope": "Admitted original-profile owner source preparation component; not native/profile/public backend qualification",
+  "rustCrateTests": 62,
+  "sha256": {
+    "crates/weft-postgresql/src/property_definition.rs": "0d1cca5e661fd3d95186c3597b252f68fb002785019f2e13e85bf301a35d9328",
+    "crates/weft-postgresql/src/registered_access.rs": "3bf3a16696587e1de592232c7b6c65284ec7031be9553089d013be88ebe01f01",
+    "crates/weft-postgresql/src/row_join_definition.rs": "27ab9b7cbf1fb59b207c705533ccfad14e8f56a5b5cbc52079b060d4f8126ad1"
+  },
+  "testLogSha256": "8b9ed9be6ef88c3ad1ec66d93058f872ea4c12823b27b0b5cbf00e109675bf34"
+}

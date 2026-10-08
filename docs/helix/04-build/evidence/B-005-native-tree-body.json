@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-07",
+  "scope": "Intermediate stored body and UMF logical body assembly from original native topology pairing",
+  "tests": {
+    "passed": 92,
+    "failed": 0,
+    "logSha256": "37787203638219fd21446974283c94faf071d88febc2775791901da2a11d7250"
+  },
+  "sources": {
+    "crates/weft-postgresql/src/row_tree_mapping.rs": "f7520d3e855cee61b8c4827b470c97ff54bbb0d12ab9408ef2f07d8e46a894e9",
+    "crates/weft-postgresql/src/property_definition.rs": "e7cf2c43c04c14246d5e9e22d52b258d5948e254e8f77d82a145a8c7f276c583"
+  },
+  "nativeCases": 11,
+  "nativeReceiptSha256": "8d49b8c2ea8d0c6fd256af82c22a1c73df6241bf0fc0b6d36e422e476f846584",
+  "limits": [
+    "Selected native leaf SQL procedures return exact JSONB; original codec logical checks do not replace native source interpretation",
+    "Full native physical integrity and owner-wide prerequisite checks remain unfinished",
+    "No public result projection or embedding claim",
+    "SQL depth/aggregation is not a bounded database allocation guarantee"
+  ]
+}

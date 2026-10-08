@@ -1,0 +1,30 @@
+{
+  "scope": "Distinct scoped target native row access and outer correlation only; full relationship lowering and publication remain unfinished",
+  "harnessSha256": "1100e4e724d12e32d971e818f9a47be7d6af1e2edb74d938cc0eab69967baf81",
+  "results": [
+    {
+      "scope": 0,
+      "case": "empty",
+      "captureSha256": "b9c43c278edb131d4bfc9dc0a46d11b807575332a70b8d81f3e1c8d4a9bc573d",
+      "executedSqlSha256": "e8709a0be497b9d5f913e268dacbfb3f282a352d3d17ec5f9cedaad938b6aedc"
+    },
+    {
+      "scope": 0,
+      "case": "exact",
+      "captureSha256": "b9c43c278edb131d4bfc9dc0a46d11b807575332a70b8d81f3e1c8d4a9bc573d",
+      "executedSqlSha256": "d8d6b4a76472e951d7f9acefdb38bb511707fa01d9466cbb1be627dd3aadbc20"
+    },
+    {
+      "scope": 1,
+      "case": "empty",
+      "captureSha256": "7025e1acc2d467c1a6a2f238c6c050d2754d3266f99a89275a34d705cdfc78e5",
+      "executedSqlSha256": "f0729c5ef7770b7673bd9ed367aa0106ca922876412753c57d9541355a01e8a9"
+    },
+    {
+      "scope": 1,
+      "case": "exact",
+      "captureSha256": "7025e1acc2d467c1a6a2f238c6c050d2754d3266f99a89275a34d705cdfc78e5",
+      "executedSqlSha256": "55d6ad91d086bafcf14dc217f4416222b571f2b6a024fad0d4c469a69402faa7"
+    }
+  ]
+}

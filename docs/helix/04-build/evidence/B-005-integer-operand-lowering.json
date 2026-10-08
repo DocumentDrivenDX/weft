@@ -1,0 +1,12 @@
+{
+  "scope": "Conformance scalar expression renderer signed/unsigned widths 1..64; no full original signed storage/profile or fresh embedding claim",
+  "rustTests": 145,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "6f7d1ead7ed3b68097d73c92cf8cf76ce7307d3f57398a4ec01db835fcb111a4",
+    "tests/truss-postgresql/integer-operand-native.py": "d83d468c04df4c9197cf982e1f907d63f86a2b2901a92886d1b11b2d1d446938"
+  },
+  "logs": {
+    "/private/tmp/weft-integer-operand-before.log": "31f35a10a755d0aebe9113442232e316df815023cc10781ba636758e615dc742",
+    "/private/tmp/weft-integer-operand-after.log": "424bd7abc6f96d15e1d9e08385a9b0620497c12d7c534f47ff2c3c44a4e42e85"
+  }
+}

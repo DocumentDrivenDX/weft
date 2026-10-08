@@ -1,0 +1,26 @@
+{
+  "scope": "test-original only; thirty-eight exact configurations including one complete multiple-recursive-root entity cut; no generic released runtime or production qualification",
+  "rustTests": 153,
+  "embeddingCorpusCases": 342,
+  "fullResponseCases": 84,
+  "booleanSumRefusals": 6,
+  "pythonDeterministicRepeats": 84,
+  "pythonCompileCalls": 426,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "e7cf4b902d72d7c65098956e539e9f4c8178cefe43fff510bc1f45e129d01fbf",
+    "crates/weft-runtime/src/lib.rs": "74e9e7502d9386567d1daaf951bbacf7a4e90cf3cf01efb56e17be0bfdd9def7",
+    "tests/truss-postgresql/check-composition-custody.py": "99063573101e1b00eedbf14501a4e3083be08608e3e48b6ebbb37db7c8a145b9",
+    "tests/truss-postgresql/original-embedding-check.py": "0afa27265e0d290c359c19f72e3836de25ff69a6aa9f62f03a8efd94d9782fee",
+    "tests/truss-postgresql/fixtures/original-multi-recursive-entity-composition.json": "2c28a3afc39b308d18a2334bcef5d850f136180df7dfe527f35765ddfa812383",
+    "tests/truss-postgresql/evidence/multi-recursive-embedding/python-summary.json": "ca4b71dc7f681a5ae9d029419f1bf52a75518a40870ab66e86d0b1817f48844e",
+    "tests/truss-postgresql/evidence/multi-recursive-embedding/browser-summary.json": "7feef0d7b039919c2de086eaae09db291758dccb2043fd41c3f92b70a602e727"
+  },
+  "logs": {
+    "/private/tmp/weft-multi-runtime.log": "02850cc97559f6ef7b8fa6deca0d169f945d0b5f24f917ebd5b203d8b8510c5b",
+    "/private/tmp/weft-multi-python-build.log": "019cb87ebcd70f21cbe463609557da7172ccb25cc17e1ad9f147921fcb904996",
+    "/private/tmp/weft-multi-python-install.log": "e500961ac2327f7c3f77081e1f9be34cc444de68a691044f010b3eb6dfc69a6b",
+    "/private/tmp/weft-multi-wasm-build.log": "bb658f5d1dcd39c0c3d037f5d9f9281b698ca1627eb7818879c6b67f38eda427"
+  },
+  "wheelSha256": "5324ce04a7ce169cac9581d51e49cdde5438fb6970827bf8569dffabbc555bf9",
+  "wasmSha256": "4f0289463bc2d6c79ed828145455e31b28794daa0b891fb7992f9593e35c9dfb"
+}
