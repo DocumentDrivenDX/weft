@@ -421,3 +421,11 @@ receives pinned catalog/typed plan/binding context and supplies the emitted back
 A stale binding digest refuses before the factory is called. The named test passes
 once; exact hashes/log are in B-007-factory-branches/. Arbitrary trusted host callback
 panic containment is not claimed by these error-return tests.
+
+The JSON inspector has 25 explicit value/error assertions: ten accepted values
+include each primitive/container branch and an integer beyond machine ranges;
+eleven malformed/trailing/nonfinite spellings refuse; four duplicate cases cover
+raw keys, Unicode-escaped equivalent keys and nested array/object propagation.
+The fresh named test passes and its implementation/test hashes are retained in
+B-007-json-branches/. Exact node/byte limits remain separately evidenced; no new
+claim about every recursion-depth boundary is made.

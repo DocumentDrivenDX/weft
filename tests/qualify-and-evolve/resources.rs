@@ -64,3 +64,19 @@ fn parser_limits_have_explicit_boundary_branches() {
     }
     println!("PARSER_BOUNDARY_REPORT dialects=2 outputs=256/257 joins=16/17 bytes=65536/65537 tokens=4096/4097 applicationBounds=1,1000 refusedBounds=6");
 }
+
+// @covers US-006-AC3 @covers US-006-AC4
+#[test]
+fn json_value_and_refusal_branches_are_explicit() {
+    for raw in ["{}","[]","null","true","false","0","-1","\"é😀\""," {\"x\":[null,true,{},[]]} "] {
+        assert!(checked_json(raw).is_ok(),"{raw}");
+    }
+    let integer="999999999999999999999999999999999999999999999999999999999999999999";
+    assert_eq!(checked_json(integer).unwrap().to_string(),integer);
+    for raw in ["", " ", "{", "[", "{\"x\":}", "[1,]", "\"unterminated", "NaN", "Infinity", "{} {}", "true false"] {
+        assert_eq!(checked_json(raw).unwrap_err(),"WFT-INPUT","{raw}");
+    }
+    for raw in ["{\"x\":1,\"x\":2}", "{\"x\":1,\"\\u0078\":2}", "[{\"x\":1,\"x\":2}]", "{\"outer\":{\"x\":1,\"x\":2}}"] {
+        assert_eq!(checked_json(raw).unwrap_err(),"WFT-JSON-DUPLICATE","{raw}");
+    }
+}
