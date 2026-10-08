@@ -797,8 +797,8 @@ mod tests {
         }
     }
     #[test]
-    fn original_decimal_boundary_domains_compile_both_storage_homes() {
-        for (precision, scale) in [(1, 0), (1, 1), (18, 9), (28, 0), (28, 28)] {
+    fn original_decimal_domains_compile_both_storage_homes() {
+        for (precision, scale) in (1..=28).flat_map(|p| (0..=p).map(move |s| (p, s))) {
             original_numeric_property_fixture(
                 "Orders",
                 "total",
@@ -2279,8 +2279,20 @@ mod tests {
             serde_json::to_value(&row_public.emission.parameters).unwrap(),
             serde_json::to_value(&row_sum.parameters).unwrap()
         );
+        let capture_path = |suffix: &str| {
+            std::env::var(format!("{capture}_{suffix}"))
+                .ok()
+                .or_else(|| {
+                    decimal_facets.and_then(|(precision, scale)| {
+                        std::env::var("WEFT_ORIGINAL_DECIMAL_CAPTURE_DIR").ok().map(|directory| {
+                        let home=if suffix=="ROW_SUM" { "row" } else { "props" };
+                        format!("{directory}/original-decimal-{precision}-{scale}-{home}-sum.json")
+                    })
+                    })
+                })
+        };
         let capture_row = |suffix: &str, emission: &weft_core::backend::Emission| {
-            if let Ok(path) = std::env::var(format!("{capture}_{suffix}")) {
+            if let Some(path) = capture_path(suffix) {
                 let checks: Vec<_> = emission
                     .obligations
                     .iter()
@@ -2370,7 +2382,7 @@ mod tests {
             .map(|obligation| obligation.parameters["sql"].as_str().unwrap())
             .collect();
         assert_eq!(public_checks.len(), 3);
-        if let Ok(path) = std::env::var(format!("{capture}_PUBLIC")) {
+        if let Some(path) = capture_path("PUBLIC") {
             std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":public.emission.sql,"columns":public.emission.columns,"checks":public_checks,"parameters":public.emission.parameters})).unwrap()).unwrap();
         }
         if family == "integer" {

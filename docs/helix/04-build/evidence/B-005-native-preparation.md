@@ -3568,3 +3568,32 @@ These five domains establish original property compilation/native execution.
 All admitted decimal property pairs, broader queries and fresh public embedding
 configuration coverage remain pending. This does not qualify installed Truss or
 production compatibility, nor close B-005 acceptance.
+
+### Exhaustive original decimal property domains (2026-10-07)
+
+The original-definition property test now covers every admitted decimal precision
+1..28 and scale 0..precision: 434 pairs, each in both native row and props homes.
+Each case reauthors the UMF Field, owning source and accepted definition pins
+before admission; it does not relabel the earlier decimal(28,2) fixture.
+The test generates 868 exact SQL/parameter/guard captures for independent native
+execution. All 156 Rust tests pass (the exhaustive test plus 155 other tests in
+a separate invocation that skips only the already completed exhaustive test).
+
+All 6,076 PostgreSQL 17.9 cases pass: for every domain/home, empty and exact sums,
+both out-of-range boundaries, excess scale, required absence and wrong codec or
+carrier. Independent arbitrary-precision arithmetic establishes expected values;
+malformed storage produces emitted guard violations before query execution.
+The five-domain checkpoint remains a retained smaller reproduction, superseded
+by this exhaustive matrix for the admitted decimal property domain.
+
+Receipts: [B-005-original-decimal-domains.json](B-005-original-decimal-domains.json)
+and [B-005-original-decimal-domain-native.json](B-005-original-decimal-domain-native.json).
+The compiler receipt records every capture hash and reproduction commands.
+Existing custody (38 configurations/84 responses) and specification integrity
+(43 artifacts/10 schemas/30 planned criteria/636 scenarios) still pass. They do
+not qualify the new domains through public Python/browser configuration paths.
+
+This completes original property SUM/native integrity coverage for the admitted
+decimal precision/scale pairs. Fresh public embedding evidence, broader query
+composition and the final US-003 acceptance audit remain open. No installed
+Truss, production storage or native-null compatibility claim is added.
