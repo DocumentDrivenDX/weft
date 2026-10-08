@@ -36,3 +36,20 @@ The complete B-007 gates remain intact:
 
 The first component closes none of those broader gates by itself. No package
 publication, production profile or broader platform claim is made.
+
+The second component passes 10000 deterministic frontend property cases using
+pinned Proptest 1.11.0 and ChaCha seeds recorded in B-007-properties/summary.json.
+Independent integer bounds and decimal coefficient arithmetic check acceptance
+and exact literal retention; further properties check Unicode/opaque-content
+retention, stale pins, selected unknown meaning, duplicate JSON keys and multiple
+statements. All four properties pass, with no minimized failures to persist.
+The configured failure persistence file is property-regressions.txt; future
+failures shrink and persist there. Generator version is weft-properties/0.1.0.
+[Proptest configuration](https://docs.rs/proptest/1.11.0/proptest/test_runner/struct.Config.html)
+defines successful-case counts and failure persistence. Repeated generated
+requests are counted transparently: unique request digests are recorded separately
+and do not stand in for the distinct expanded-assertion gate.
+
+This closes the generated frontend-case count component only. Relational/bag
+semantics, mutation/fuzz, full fixture and runtime matrices, support inventory
+and release gates remain open. These receipts do not qualify a native engine.

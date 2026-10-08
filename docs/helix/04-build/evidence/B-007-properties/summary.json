@@ -1,0 +1,51 @@
+{
+  "status": "passed",
+  "layer": "frontend",
+  "successfulGeneratedCases": 10000,
+  "properties": [
+    {
+      "generatorVersion": "weft-properties/0.1.0",
+      "layer": "frontend",
+      "property": "hostile-json-multi-statement",
+      "proptest": "1.11.0",
+      "rng": "ChaCha",
+      "seed": 95955044271876,
+      "successfulGeneratedCases": 1000,
+      "uniqueRequestDigests": 1000
+    },
+    {
+      "generatorVersion": "weft-properties/0.1.0",
+      "layer": "frontend",
+      "property": "unicode-retention-pins-meaning",
+      "proptest": "1.11.0",
+      "rng": "ChaCha",
+      "seed": 95955044271875,
+      "successfulGeneratedCases": 1600,
+      "uniqueRequestDigests": 1600
+    },
+    {
+      "generatorVersion": "weft-properties/0.1.0",
+      "layer": "frontend",
+      "property": "decimal-domains",
+      "proptest": "1.11.0",
+      "rng": "ChaCha",
+      "seed": 95955044271874,
+      "successfulGeneratedCases": 3200,
+      "uniqueRequestDigests": 2714
+    },
+    {
+      "generatorVersion": "weft-properties/0.1.0",
+      "layer": "frontend",
+      "property": "integer-domains",
+      "proptest": "1.11.0",
+      "rng": "ChaCha",
+      "seed": 95955044271873,
+      "successfulGeneratedCases": 4200,
+      "uniqueRequestDigests": 1397
+    }
+  ],
+  "sourceSha256": "45dbe35ed2f5c269b31a516ece80580074d2614d4462468ebde2d1d6c9ef3876",
+  "cargoLockSha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e",
+  "minimizedFailures": 0,
+  "qualification": "Frontend properties only; no native backend or embedding qualification."
+}
