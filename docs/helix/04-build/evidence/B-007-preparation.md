@@ -90,3 +90,14 @@ is claimed. Every named refusal exposes no SQL, parameters, logical plan,
 result or host obligations. B-007-resources/ retains the log, seed, source hash
 and explicit branch list. This bounded generator is not coverage-guided parser
 fuzzing, and does not close plugin-failure or all critical-branch coverage.
+
+Three actual compiler-source guard mutations are detected by existing tests:
+disabling nested duplicate-key validation, disabling JSON node-count refusal,
+and disabling original UMF module digest validation. Temporary copies alone
+are mutated; the main checkout is untouched. B-007-source-mutations/ retains
+exact substitutions, original/mutant hashes and failing test logs. The pin
+mutation shrinks to (empty text, opaque zero); its persisted mutant-only seed
+is retained as such, not counted as an actual compiler defect. These three
+controls establish source-mutation sensitivity for those guards only. Required
+backend type-filter, duplicate, rounding and absent/null source mutations remain
+to be verified.

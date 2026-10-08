@@ -1,0 +1,43 @@
+{
+  "status": "passed",
+  "detected": 3,
+  "mutations": [
+    {
+      "mutation": "duplicate-key-guard",
+      "source": "crates/weft-core/src/json.rs",
+      "before": "if !keys.insert(key) {",
+      "after": "if false && !keys.insert(key) {",
+      "originalSha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+      "mutantSha256": "361dd4ee2b0432c08626d477471b567c85d1ff11277466fd02252775753592e7",
+      "test": "qualification-resources",
+      "filter": "generated_truncated_json_and_nested_duplicates",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
+      "mutation": "node-limit-guard",
+      "source": "crates/weft-core/src/json.rs",
+      "before": "if depth > 128 || *count >= 100_000 {",
+      "after": "if depth > 128 || false {",
+      "originalSha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+      "mutantSha256": "25517f123ba1d1a0160678f66d8151251fc8810185550e19bb888e0d41fc9e0a",
+      "test": "qualification-resources",
+      "filter": "json_node_and_request_byte_limits",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
+      "mutation": "module-pin-guard",
+      "source": "crates/weft-core/src/model.rs",
+      "before": "if input.pin.sha256 != sha256(input.document_json.as_bytes()) {",
+      "after": "if false && input.pin.sha256 != sha256(input.document_json.as_bytes()) {",
+      "originalSha256": "82ca7345b1a5826e7e3960a8ce4f70deb59dfb99c191efaacb297da44393ebee",
+      "mutantSha256": "65ec6f51ddf361a6ee6b279cdb77accaddc4358119db89d57427480bb5289747",
+      "test": "qualification-properties",
+      "filter": "generated_unicode_retention_pins_and_selected_meaning",
+      "exitCode": 101,
+      "status": "detected"
+    }
+  ],
+  "scope": "Three source guard mutations only; not all backend semantic mutations."
+}
