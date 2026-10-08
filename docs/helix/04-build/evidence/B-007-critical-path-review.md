@@ -36,6 +36,7 @@ individual refusal guards; they supplement the earlier broad US-002 review.
 | Guard | Exact assertion evidence |
 | --- | --- |
 | Manifest identities/evidence/language declarations; target count 256/257, capability count 4096/4097 and raw JSON one-MiB boundary | B-007-manifest-admission-boundaries: 17 refusals and three admitted boundaries; seven registry tests pass |
+| Immutable registered manifest, describe-once and version/settings retention after backing declaration changes | B-007-manifest-snapshot: both IR versions, changed-version refusal, sixteen pipeline tests pass |
 | Backend version, actual IR, duplicate operation IDs, target profile, binding profile, model pins, binding size/digest/JSON | B-007-dispatch-branches |
 | Each target identity field rejects empty/NUL values; session settings reject non-object shapes | B-007-target-profile-guards: fifteen explicit refusals with exact diagnostics and positive retained-version/settings assertions |
 | Manifest dialect/IR acceptance and non-object JSON roots, both plans | B-007-language-root-branches |

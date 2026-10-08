@@ -340,6 +340,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-manifest-final-gaps/summary.json",
           "sha256": "478523943a386636a14b6d80f32a5b529f81db9573ba59f0769bcb40ad33f168"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-manifest-snapshot/summary.json",
+          "sha256": "f6951fb0a37256a6cb7e41c446a883ed25aeb0df4b65198348ce37927f12300f"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -1295,7 +1299,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "95c803767d4b20fd745c641ca4e1970178b4ad1460162e17e1ca735df5e1711c"
+          "sha256": "8e41b14d8f9645b21b3522a477cca4ded5f42fcc601a676d8f117cead4bedde8"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1348,6 +1352,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-manifest-snapshot/summary.json",
+          "sha256": "f6951fb0a37256a6cb7e41c446a883ed25aeb0df4b65198348ce37927f12300f"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1457,7 +1465,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "95c803767d4b20fd745c641ca4e1970178b4ad1460162e17e1ca735df5e1711c"
+          "sha256": "8e41b14d8f9645b21b3522a477cca4ded5f42fcc601a676d8f117cead4bedde8"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",

@@ -443,3 +443,45 @@ fn emission_bounds_slots_and_column_provenance_refuse() {
         }
     }
 }
+
+// @covers US-002-AC2 @covers US-006-AC2
+#[test]
+fn registration_snapshots_manifest_once_for_both_ir_versions() {
+    use std::sync::{Arc,Mutex,atomic::{AtomicUsize,Ordering}};
+    struct Snapshot { declaration:Arc<Mutex<Manifest>>, calls:Arc<AtomicUsize>, inner:Third }
+    impl Backend for Snapshot {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{
+            self.calls.fetch_add(1,Ordering::SeqCst);
+            Ok(self.declaration.lock().unwrap().clone())
+        }
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{self.inner.validate_binding(c)}
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{self.inner.assess(c,m)}
+        fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{self.inner.lower(c,m)}
+        fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{self.inner.emit(c,p)}
+    }
+    let original=manifest(Status::Supported);
+    let declaration=Arc::new(Mutex::new(original.clone()));let calls=Arc::new(AtomicUsize::new(0));
+    let mut r=Registry::default();
+    r.register(Snapshot{declaration:declaration.clone(),calls:calls.clone(),inner:Third{manifest:original.clone(),behavior:Behavior::Normal}}).unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst),1);
+    {
+        let mut changed=declaration.lock().unwrap();changed.backend_version="99".into();
+        changed.target_profiles[0].engine_version="changed-engine".into();
+        changed.target_profiles[0].session_settings=json!({"comparison":"changed"});
+    }
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for plan in [Plan::V01(&p01),Plan::V02(&p02)] {
+        let result=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap();
+        assert_eq!(result.backend_version,original.backend_version);
+        assert_eq!(result.target_profile.engine_version,original.target_profiles[0].engine_version);
+        assert_eq!(result.target_profile.session_settings,original.target_profiles[0].session_settings);
+        let mut changed=target(false);changed.backend_version="99".into();
+        let error=r.compile(&catalog,plan,&changed,&binding(&catalog)).unwrap_err();
+        assert_eq!(error.code,"WFT-BACKEND-VERSION");
+        assert_eq!(error.message,"Selected backend version is not registered");
+    }
+    assert_eq!(r.manifest("test.third").unwrap().backend_version,original.backend_version);
+    assert_eq!(calls.load(Ordering::SeqCst),1);
+}
