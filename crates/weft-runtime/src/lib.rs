@@ -74,3 +74,23 @@ include_str!("../../../tests/truss-postgresql/fixtures/original-tags-compile-tra
         }
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod relationship_tests {
+    #[test]
+    fn original_relationship_runtime_matches_all_public_responses() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-relationship-public-transport.json"
+        ))
+        .unwrap();
+        for case in cases.as_array().unwrap() {
+            let request = case["request"].to_string();
+            let response = super::compile_json(&request);
+            assert_eq!(
+                serde_json::from_str::<serde_json::Value>(&response).unwrap(),
+                case["response"]
+            );
+            assert_eq!(super::compile_json(&request), response);
+        }
+    }
+}

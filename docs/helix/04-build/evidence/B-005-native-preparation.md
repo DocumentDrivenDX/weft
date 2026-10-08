@@ -2793,3 +2793,46 @@ HELIX checks pass. Runtime conformance loading of the new relationship capture
 and actual Python/browser execution remain the next embedding work. No new
 native database execution, embedding support or production compatibility is
 claimed by this data-custody checkpoint.
+
+## Original relationship native Python/browser execution (2026-10-07)
+
+The optional `test-original` runtime now includes the one exact captured native
+uint64 relationship binding alongside the seven compound presets. Shared Rust
+reconstructs original comparator artifacts/types from the current Catalog,
+selects the closed fixture numeric operand procedure, respects scalar-vs-tree
+procedure selection and re-admits both relationship directions for every compile.
+The binding allowlist remains exact. No executable procedure is loaded from
+model content; this is conformance-only composition, not general released
+backend registration or production codec compatibility.
+
+All 134 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-relationship-runtime-tests.log`). A runtime regression matches
+all four full relationship responses and deterministic repeats. The real native
+Python extension, freshly built by maturin 1.9.6 / Rust 1.90 / Python 3.12.14
+with `--features test-original`, passes the expanded
+`tests/truss-postgresql/original-embedding-check.py`: 11 complete expected
+responses, 11 deterministic repeats and 33 candidate-opt-out/digest/unsupported-
+binding refusals, with subprocess entry points disabled. The wheel is local
+macOS 11 ARM64 abi3 cp39; other platforms remain unqualified.
+
+A fresh WASM build with the same feature and wasm-bindgen 0.2.105 web glue passes
+all 44 requests byte-for-byte against Python in Chromium 153.0.8010.12 /
+Playwright 1.62.1. The existing browser harness uses generated
+`target/b005/original-embedding/{cases,reports}.json`, fresh web JS/WASM paths and
+the same compile wrapper. Network APIs are disabled after initialization; only
+string/error/memory glue imports exist, and no Node globals or external network
+requests appear. Wrapper transport/trap-retirement checks also pass. Chromium
+requires sandbox escalation for macOS process services; compiler IO capabilities
+are unchanged.
+
+[Receipt](B-005-relationship-embedding.json) pins source, logs, summaries and
+binary hashes; summaries are in
+`tests/truss-postgresql/evidence/relationship-embedding/`. Wheel SHA256:
+`93dea07c8d011214d64d1e5a15053b2350f3671cf15a9f3b6a13b5fac682ff84`.
+WASM SHA256:
+`be5a1a1624f78dedea2793d788b9af096b941be7f28f9cce9aa64199c8c4b222`.
+Formatting, HELIX and eight-configuration/eleven-response custody checks pass.
+This establishes actual embedding behavior for the selected forward/inverse
+native-key subset. Composite relationship keys, alternate homes, broader query
+coverage and generic released composition remain B-005 work; no fresh database
+or production compatibility claim is added by this embedding run.

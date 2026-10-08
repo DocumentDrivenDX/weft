@@ -1,4 +1,4 @@
-//! Explicit seven-fixture runtime composition, enabled only for conformance.
+//! Explicit pinned-fixture runtime composition, enabled only for conformance.
 use crate::{
     leaf_codec_definition::{self, OriginalArtifact},
     original_admission::*,
@@ -74,7 +74,7 @@ fn originals(v: &Value, document: &Value) -> Result<BTreeMap<String, OriginalArt
         })
         .collect()
 }
-fn configuration(raw: &str) -> Result<Configuration> {
+fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
     let v = weft_core::json::checked_json(raw)
         .map_err(|_| fail("Embedded conformance JSON invalid"))?;
     if v["interfaceVersion"] != "weft-original-conformance-composition/0.1.0" {
@@ -168,23 +168,107 @@ fn configuration(raw: &str) -> Result<Configuration> {
             obligations: serde_json::from_value(p["obligations"].clone())
                 .map_err(|_| fail("Obligations invalid"))?,
             edge_association: None,
-            native_tree: Some(crate::row_tree_mapping::Procedures {
-                field_identity: |identity| {
-                    serde_json::to_vec(identity)
-                        .map_err(|_| fail("Field identity serialization failed"))
-                },
-                scalar: fixture_native_leaf,
-                node_source: fixture_native_source,
-            }),
+            native_tree: if p["nativeTree"] == false {
+                None
+            } else {
+                Some(crate::row_tree_mapping::Procedures {
+                    field_identity: |identity| {
+                        serde_json::to_vec(identity)
+                            .map_err(|_| fail("Field identity serialization failed"))
+                    },
+                    scalar: fixture_native_leaf,
+                    node_source: fixture_native_source,
+                })
+            },
         });
     }
+    let mut comparators = BTreeMap::new();
+    if let Some(items) = v["comparators"].as_object() {
+        for (key, definition) in items {
+            let identity = weft_core::json::checked_json(key)
+                .map_err(|_| fail("Comparator identity invalid"))?;
+            let owner = serde_json::from_value(identity["owner"].clone())
+                .map_err(|_| fail("Comparator owner invalid"))?;
+            let field = serde_json::from_value(identity["field"].clone())
+                .map_err(|_| fail("Comparator field invalid"))?;
+            let record = catalog.record_by_identity(&owner)?;
+            let (_, descriptors) = catalog.member_descriptor_by_identity(&record, &field)?;
+            let logical = descriptors
+                .iter()
+                .find_map(|d| {
+                    if d.identity == field {
+                        if let weft_core::application_model::Shape::Scalar { logical_type } =
+                            &d.shape
+                        {
+                            Some(logical_type)
+                        } else {
+                            None
+                        }
+                    } else {
+                        None
+                    }
+                })
+                .ok_or_else(|| fail("Conformance comparator requires scalar original field"))?;
+            let raw = text(&definition["originalJson"])?;
+            let document =
+                weft_core::json::checked_json(raw).map_err(|_| fail("Comparator JSON invalid"))?;
+            let artifacts = originals(&definition["originalArtifacts"], &document)?;
+            use crate::native_comparator_definition::{Definition, Operation, Selection};
+            let parsed = Definition::parse(
+                raw,
+                Selection {
+                    profile: &document["profile"],
+                    native_profile: &document["nativeDomainProfile"],
+                    original_artifacts: &artifacts,
+                    operations: &std::collections::BTreeSet::from([
+                        Operation::Equality,
+                        Operation::Ordering,
+                        Operation::Key,
+                        Operation::Sum,
+                    ]),
+                },
+                logical,
+            )?;
+            comparators.insert(key.clone(), parsed);
+        }
+    }
+    let mut relationships = Vec::new();
+    if let Some(items) = v["relationships"].as_array() {
+        for r in items {
+            relationships.push(OwnedRelationshipSelection {
+                index: r["index"]
+                    .as_u64()
+                    .ok_or_else(|| fail("Relationship index missing"))?
+                    as usize,
+                inverse: r["inverse"]
+                    .as_bool()
+                    .ok_or_else(|| fail("Relationship direction missing"))?,
+                profile: r["profile"].clone(),
+                inventory: artifact(&r["inventory"])?,
+                relation_identity: text(&r["relationIdentity"])?.into(),
+                relations: serde_json::from_value(r["relations"].clone())
+                    .map_err(|_| fail("Relationship relations invalid"))?,
+                columns: columns(&r["columns"])?,
+                relationship_type: text(&r["relationshipType"])?.into(),
+                source_id: text(&r["sourceId"])?.into(),
+                source_type: text(&r["sourceType"])?.into(),
+                target_id: text(&r["targetId"])?.into(),
+                target_type: text(&r["targetType"])?.into(),
+            });
+        }
+    }
+    let numeric = !relationships.is_empty();
     Ok(Configuration {
-        relationships: vec![],
+        relationships,
         binding_profile: text(&v["bindingProfile"])?.into(),
         records,
         properties,
-        comparators: BTreeMap::new(),
-        native: unsupported_expression,
+        comparators,
+        native: if numeric {
+            numeric_expression
+        } else {
+            unsupported_expression
+        },
     })
 }
 fn unsupported_expression(
@@ -210,12 +294,20 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
  ("45c68c4b4ef0067e636c504b0f32dc4e4ae72121732fda00bc82ad1094ea0600",include_str!("../../../tests/truss-postgresql/fixtures/original-numeric-map-composition.json")),
  ("3f87a9cf0298f6b8a9e0cdabf3be8e7d10b71ed52aafdbdf7339a1d5516a2300",include_str!("../../../tests/truss-postgresql/fixtures/original-tags-composition.json")),
  ];
-    let raw = presets
-        .iter()
-        .find(|(pin, _)| *pin == target.binding_sha256)
-        .map(|(_, raw)| *raw)
-        .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?;
-    let selected = configuration(raw)?;
+    let raw = if target.binding_sha256
+        == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
+    {
+        include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-relationship-composition.json"
+        )
+    } else {
+        presets
+            .iter()
+            .find(|(pin, _)| *pin == target.binding_sha256)
+            .map(|(_, raw)| *raw)
+            .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?
+    };
+    let selected = configuration(raw, catalog)?;
     let binding = BindingInput {
         profile: selected.binding_profile.clone(),
         json: target.binding_json.into(),
@@ -265,4 +357,49 @@ fn fixture_native_source(
         .map(|b| format!("{b:02x}"))
         .collect();
     Ok(format!("w.r->>8='{codec}' AND w.r->>9=''"))
+}
+
+fn numeric_expression(
+    node: &weft_core::ir::Expression,
+    _: &[String],
+    access: Option<&crate::registered_access::Access<'_>>,
+    parameters: &mut crate::Parameters,
+) -> Result<String> {
+    use weft_core::ir::{Expression, Family};
+    let logical = node.logical_type();
+    if logical.family != Family::Integer
+        || logical.nullable
+        || logical.facets != serde_json::json!({"integerWidth":{"bits":64,"signed":false}})
+    {
+        return Err(fail(
+            "Conformance numeric procedure only selects nonnullable uint64 operands",
+        ));
+    }
+    match node {
+        Expression::Field { .. } => {
+            let crate::registered_access::Location::Row(location) = &access
+                .ok_or_else(|| fail("Numeric field access missing"))?
+                .location
+            else {
+                return Err(fail("Conformance numeric operand requires row home"));
+            };
+            Ok(format!(
+                "({})::pg_catalog.numeric",
+                location.scalar_observation().native_numeric_text
+            ))
+        }
+        Expression::Literal {
+            value,
+            logical_type,
+            span,
+        } => Ok(format!(
+            "{}::pg_catalog.numeric",
+            parameters.push(
+                logical_type.clone(),
+                value.clone(),
+                serde_json::json!({"literalSpan":span})
+            )?
+        )),
+        _ => Err(fail("Unselected conformance numeric operation")),
+    }
 }
