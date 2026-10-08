@@ -41,9 +41,9 @@ pub(super) fn encode(lower:&mut Lower<'_>,graph:&[Descriptor],root:&Identity,tab
     let graph_cte=format!("{g} AS (SELECT pos AS id, col AS d FROM posexplode(from_json({slot}, 'ARRAY<STRUCT<kind:STRING,optional:BOOLEAN,item:INT,members:ARRAY<STRUCT<name:STRING,id:INT>>>>')))");
     let quoted_name=json_string("m.name");
     let map_key=json_string("m.key");
-    let record_child=format!("transform(g.d.members, (m, i) -> named_struct('id',m.id,'v',variant_get(w.v,concat('$[',{quoted_name},']')),'slot',i,'prefix',concat(CASE WHEN i>0 THEN ',' ELSE '' END,{quoted_name},':'),'allow_absent',TRUE))");
+    let record_child=format!("transform(g.d.members, (m, i) -> named_struct('id',m.id,'v',element_at(try_cast(w.v AS MAP<STRING COLLATE UTF8_BINARY,VARIANT>),m.name COLLATE UTF8_BINARY),'slot',i,'prefix',concat(CASE WHEN i>0 THEN ',' ELSE '' END,{quoted_name},':'),'allow_absent',TRUE))");
     let sequence_child="transform(try_cast(w.v AS ARRAY<VARIANT>), (v, i) -> named_struct('id',g.d.item,'v',v,'slot',i,'prefix',CASE WHEN i>0 THEN ',' ELSE '' END,'allow_absent',FALSE))";
-    let map_child=format!("transform(array_sort(map_entries(try_cast(w.v AS MAP<STRING,VARIANT>)), (a,b) -> CASE WHEN (a.key COLLATE UTF8_BINARY) < (b.key COLLATE UTF8_BINARY) THEN -1 WHEN (a.key COLLATE UTF8_BINARY) > (b.key COLLATE UTF8_BINARY) THEN 1 ELSE 0 END), (m,i) -> named_struct('id',g.d.item,'v',m.value,'slot',i,'prefix',concat(CASE WHEN i>0 THEN ',' ELSE '' END,{map_key},':'),'allow_absent',FALSE))");
+    let map_child=format!("transform(array_sort(map_entries(try_cast(w.v AS MAP<STRING COLLATE UTF8_BINARY,VARIANT>)), (a,b) -> CASE WHEN (a.key COLLATE UTF8_BINARY) < (b.key COLLATE UTF8_BINARY) THEN -1 WHEN (a.key COLLATE UTF8_BINARY) > (b.key COLLATE UTF8_BINARY) THEN 1 ELSE 0 END), (m,i) -> named_struct('id',g.d.item,'v',m.value,'slot',i,'prefix',concat(CASE WHEN i>0 THEN ',' ELSE '' END,{map_key},':'),'allow_absent',FALSE))");
     let children=format!("CASE WHEN g.d.kind='record' AND schema_of_variant(w.v) RLIKE '^OBJECT' THEN {record_child} WHEN g.d.kind='sequence' AND schema_of_variant(w.v) RLIKE '^ARRAY' THEN {sequence_child} WHEN g.d.kind='map' AND schema_of_variant(w.v) RLIKE '^OBJECT' THEN {map_child} ELSE CAST(array() AS ARRAY<STRUCT<id:INT,v:VARIANT,slot:INT,prefix:STRING,allow_absent:BOOLEAN>>) END");
     let walk_cte=format!("{walk}(owner_id,id,v,path,prefix,depth,tagged,allow_absent,base_valid) MAX RECURSION LEVEL 130 AS (SELECT r.id,{root_index},variant_get(parse_json(r.props_json),{path}),CAST(array() AS ARRAY<INT>),'',0,TRUE,TRUE,(schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND ({revision})) FROM {table} r WHERE {owner} UNION ALL SELECT w.owner_id,children.col.id,children.col.v,concat(w.path,array(children.col.slot)),children.col.prefix,w.depth+1,cg.d.optional,children.col.allow_absent,w.base_valid FROM {walk} w JOIN {g} g ON w.id=g.id, LATERAL explode({children}) children JOIN {g} cg ON cg.id=children.col.id WHERE w.depth<128 AND w.v IS NOT NULL AND NOT is_variant_null(w.v))");
     let scalar="CAST(w.v AS STRING)";let schema="schema_of_variant(w.v)";
@@ -61,8 +61,8 @@ pub(super) fn encode(lower:&mut Lower<'_>,graph:&[Descriptor],root:&Identity,tab
             render_arms.push(format!("WHEN {id} THEN {render}"));
         }
     }
-    let member_names="transform(g.d.members, m -> m.name)";
-    let object_keys="map_keys(try_cast(w.v AS MAP<STRING,VARIANT>))";
+    let member_names="transform(g.d.members, m -> m.name COLLATE UTF8_BINARY)";
+    let object_keys="map_keys(try_cast(w.v AS MAP<STRING COLLATE UTF8_BINARY,VARIANT>))";
     let valid=format!("w.base_valid AND w.depth<128 AND CASE WHEN w.v IS NULL THEN g.d.optional AND w.allow_absent ELSE CASE g.d.kind WHEN 'scalar' THEN CASE g.id {} ELSE FALSE END WHEN 'sequence' THEN {schema} RLIKE '^ARRAY' WHEN 'map' THEN {schema} RLIKE '^OBJECT' AND forall({object_keys}, k -> instr(k,char(0))=0) WHEN 'record' THEN {schema} RLIKE '^OBJECT' AND forall({object_keys}, k -> array_contains({member_names},k)) ELSE FALSE END END",valid_arms.join(" "));
     let scalar_render=format!("CASE g.id {} ELSE 'null' END",render_arms.join(" "));
     let start=format!("concat(w.prefix,CASE WHEN w.v IS NULL THEN '{{\"state\":\"absent\"}}' ELSE concat(CASE WHEN w.tagged THEN '{{\"state\":\"value\",\"value\":' ELSE '' END, CASE g.d.kind WHEN 'scalar' THEN CASE WHEN ({valid}) THEN {scalar_render} ELSE 'null' END WHEN 'sequence' THEN '[' ELSE '{{' END, CASE WHEN g.d.kind='scalar' AND w.tagged THEN '}}' ELSE '' END) END)");

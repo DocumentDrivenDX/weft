@@ -12,9 +12,10 @@ depth/node guards and duplicate physical-ID guards precede user predicates.
 The valid new compiler test failed at mapping admission before implementation;
 17 Ashlar Rust tests now pass, including recursive/cyclic graphs and four
 encoding/dependency refusals. All 276 previous full artifacts remain unchanged.
-133 independently authored native cases compile before fixture creation. Their
-native execution is running against one private immutable publication; the
-complete result is not yet available.
+133 independently authored native cases compile before fixture creation. All 133 completed against one private immutable publication: 56 exact results
+and 77 refusals before the user query. The original complete receipts are in
+B-006-compound-native-initial/. A dictionary-lookup revision is being verified
+against that same immutable publication.
 
 Read-only prerequisite probes prove recursive VARIANT traversal, exact
 container casts, explicit JSON-null distinction and ordered token assembly on
@@ -22,8 +23,9 @@ the existing warehouse. Correlated seeds are refused by the engine, so the
 codec uses independent whole-owner CTEs. The first generated walk used an
 incorrect explode struct reference; it was corrected and the native run resumed
 read-only against the same publication. The quoted/backslash member-path probe
-failed, so dictionary-based member lookup must replace that path construction
-before general structured-name coverage is qualified. Depth/node boundaries,
+failed. Exact dictionary lookup with explicitly binary string keys passed
+both read-only native probes and now replaces member-path construction.
+General structured-name coverage still needs its separate native regression. Depth/node boundaries,
 compound embeddings and actual host enforcement remain unfinished.
 
 Native recursive syntax and limits were checked against the official
