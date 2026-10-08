@@ -458,15 +458,24 @@ fn numeric_expression(
                                 == serde_json::json!({"integerWidth":{"bits":bits,"signed":signed}})
                         })
             });
-    let selected_domain = integer_domain
-        || (logical.family == Family::Decimal
-            && logical.facets == serde_json::json!({"precision":28,"scale":2}));
+    let decimal_domain = logical.family == Family::Decimal
+        && logical.facets["precision"]
+            .as_u64()
+            .is_some_and(|precision| {
+                (1..=28).contains(&precision)
+                    && logical.facets["scale"].as_u64().is_some_and(|scale| {
+                        scale <= precision
+                            && logical.facets
+                                == serde_json::json!({"precision":precision,"scale":scale})
+                    })
+            });
+    let selected_domain = integer_domain || decimal_domain;
     let string_domain = logical.family == Family::String && logical.facets == serde_json::json!({});
     let boolean_domain =
         logical.family == Family::Boolean && logical.facets == serde_json::json!({});
     if logical.nullable || !(selected_domain || string_domain || boolean_domain) {
         return Err(fail(
-            "Conformance numeric procedure only selects required signed/unsigned integer widths 1..64, decimal(28,2), Boolean or Unicode string operands",
+            "Conformance numeric procedure only selects required signed/unsigned integer widths 1..64, decimal precision 1..28 with scale 0..precision, Boolean or Unicode string operands",
         ));
     }
     match node {
@@ -1222,6 +1231,87 @@ mod multi_recursive_entity_tests {
         }
         if let Ok(path) = std::env::var("WEFT_MULTI_RECURSIVE_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
+        }
+    }
+}
+
+#[cfg(test)]
+mod decimal_operand_tests {
+    use super::*;
+    use weft_core::ir::{Expression, Family, LogicalType, Span};
+    #[test]
+    fn admitted_decimal_precision_scale_pairs_preserve_exact_operands() {
+        let mut captures = Vec::new();
+        for precision in 1..=28usize {
+            for scale in 0..=precision {
+                let digits = "9".repeat(precision);
+                let maximum = if scale == 0 {
+                    digits
+                } else if scale == precision {
+                    format!("0.{digits}")
+                } else {
+                    format!(
+                        "{}.{}",
+                        &digits[..precision - scale],
+                        &digits[precision - scale..]
+                    )
+                };
+                for value in [maximum.clone(), format!("-{maximum}")] {
+                    let logical_type = LogicalType {
+                        family: Family::Decimal,
+                        facets: serde_json::json!({"precision":precision,"scale":scale}),
+                        nullable: false,
+                    };
+                    let node = Expression::Literal {
+                        value: value.clone(),
+                        logical_type: logical_type.clone(),
+                        span: Span {
+                            start: 0,
+                            end: value.len(),
+                        },
+                    };
+                    let mut parameters = crate::Parameters::default();
+                    let sql = numeric_expression(&node, &[], None, &mut parameters).unwrap();
+                    let slots = parameters.into_slots();
+                    assert_eq!(sql, "$1::pg_catalog.numeric");
+                    assert_eq!(slots[0].value, value);
+                    assert_eq!(slots[0].logical_type, logical_type);
+                    captures.push(serde_json::json!({"precision":precision,"scale":scale,"value":value,"sql":sql}));
+                }
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_DECIMAL_OPERAND_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
+    }
+}
+
+#[cfg(test)]
+mod decimal_operand_refusal_tests {
+    use super::*;
+    use weft_core::ir::{Expression, Family, LogicalType, Span};
+    #[test]
+    fn decimal_operands_refuse_unadmitted_facets_without_slots() {
+        for facets in [
+            serde_json::json!({"precision":0,"scale":0}),
+            serde_json::json!({"precision":29,"scale":0}),
+            serde_json::json!({"precision":28,"scale":29}),
+            serde_json::json!({"precision":28,"scale":-1}),
+            serde_json::json!({"precision":28,"scale":2,"future":true}),
+            serde_json::json!({"precision":28}),
+        ] {
+            let node = Expression::Literal {
+                value: "0".into(),
+                logical_type: LogicalType {
+                    family: Family::Decimal,
+                    facets,
+                    nullable: false,
+                },
+                span: Span { start: 0, end: 1 },
+            };
+            let mut parameters = crate::Parameters::default();
+            assert!(numeric_expression(&node, &[], None, &mut parameters).is_err());
+            assert!(parameters.into_slots().is_empty());
         }
     }
 }

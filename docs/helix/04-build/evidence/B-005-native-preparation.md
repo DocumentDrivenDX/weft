@@ -3528,3 +3528,20 @@ The selected multi-root entity now has original compiler, native PostgreSQL and
 fresh public Rust/Python/browser evidence. Broader scalar/query domains and full
 host/story qualification remain open. This is exact conformance evidence, not a
 generic released backend or production storage claim.
+
+### Exact decimal operand domains (2026-10-07)
+
+A regression reproduced the mismatch between comparator admission (precision
+1..28, scale 0..precision) and literal rendering (previously only 28,2).
+The renderer now accepts exactly those admitted facets and preserves the source
+numeric token in an unbounded PostgreSQL numeric parameter. Six unadmitted facet
+forms refuse without allocating parameter slots. All 155 Rust tests pass.
+
+Independent native PostgreSQL 17.9 checks pass both signed extrema for all 434
+precision/scale pairs: 868 exact text results, without typemod rounding. Receipts:
+[B-005-decimal-operand-lowering.json](B-005-decimal-operand-lowering.json) and
+[B-005-decimal-operand-native.json](B-005-decimal-operand-native.json).
+
+This qualifies operand lowering only. Original property storage and fresh public
+embedding evidence for broader decimal domains remain open B-005 work. No broader
+codec, storage or production compatibility claim follows from this matrix.

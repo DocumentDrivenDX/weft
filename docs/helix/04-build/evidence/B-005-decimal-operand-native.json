@@ -1,0 +1,6086 @@
+{
+  "scope": "Original conformance decimal literal renderer for precisions 1..28 and scales 0..precision; exact native numeric text, not new storage/domain/production qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 868,
+  "captureSha256": "bd7af38c7304b9ce42347b85f6830764030b51711c01f81358d00fe12ddbacdd",
+  "harnessSha256": "cfea292ffc63cb99febeee1fcb74a0782c04f7fb03e9fc8cbbb4aef3ed152463",
+  "executedSqlSha256": "78f032b293626b517822262e02ba1f763a7898da91d0ebf91136446ddd6ef760",
+  "results": [
+    {
+      "precision": 1,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9",
+      "actual": "9"
+    },
+    {
+      "precision": 1,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9",
+      "actual": "-9"
+    },
+    {
+      "precision": 1,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "0.9",
+      "actual": "0.9"
+    },
+    {
+      "precision": 1,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-0.9",
+      "actual": "-0.9"
+    },
+    {
+      "precision": 2,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99",
+      "actual": "99"
+    },
+    {
+      "precision": 2,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99",
+      "actual": "-99"
+    },
+    {
+      "precision": 2,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9.9",
+      "actual": "9.9"
+    },
+    {
+      "precision": 2,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9.9",
+      "actual": "-9.9"
+    },
+    {
+      "precision": 2,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "0.99",
+      "actual": "0.99"
+    },
+    {
+      "precision": 2,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-0.99",
+      "actual": "-0.99"
+    },
+    {
+      "precision": 3,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999",
+      "actual": "999"
+    },
+    {
+      "precision": 3,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999",
+      "actual": "-999"
+    },
+    {
+      "precision": 3,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99.9",
+      "actual": "99.9"
+    },
+    {
+      "precision": 3,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99.9",
+      "actual": "-99.9"
+    },
+    {
+      "precision": 3,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9.99",
+      "actual": "9.99"
+    },
+    {
+      "precision": 3,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9.99",
+      "actual": "-9.99"
+    },
+    {
+      "precision": 3,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "0.999",
+      "actual": "0.999"
+    },
+    {
+      "precision": 3,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-0.999",
+      "actual": "-0.999"
+    },
+    {
+      "precision": 4,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999",
+      "actual": "9999"
+    },
+    {
+      "precision": 4,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999",
+      "actual": "-9999"
+    },
+    {
+      "precision": 4,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999.9",
+      "actual": "999.9"
+    },
+    {
+      "precision": 4,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999.9",
+      "actual": "-999.9"
+    },
+    {
+      "precision": 4,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99.99",
+      "actual": "99.99"
+    },
+    {
+      "precision": 4,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99.99",
+      "actual": "-99.99"
+    },
+    {
+      "precision": 4,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9.999",
+      "actual": "9.999"
+    },
+    {
+      "precision": 4,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9.999",
+      "actual": "-9.999"
+    },
+    {
+      "precision": 4,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "0.9999",
+      "actual": "0.9999"
+    },
+    {
+      "precision": 4,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-0.9999",
+      "actual": "-0.9999"
+    },
+    {
+      "precision": 5,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999",
+      "actual": "99999"
+    },
+    {
+      "precision": 5,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999",
+      "actual": "-99999"
+    },
+    {
+      "precision": 5,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999.9",
+      "actual": "9999.9"
+    },
+    {
+      "precision": 5,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999.9",
+      "actual": "-9999.9"
+    },
+    {
+      "precision": 5,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999.99",
+      "actual": "999.99"
+    },
+    {
+      "precision": 5,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999.99",
+      "actual": "-999.99"
+    },
+    {
+      "precision": 5,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99.999",
+      "actual": "99.999"
+    },
+    {
+      "precision": 5,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99.999",
+      "actual": "-99.999"
+    },
+    {
+      "precision": 5,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9.9999",
+      "actual": "9.9999"
+    },
+    {
+      "precision": 5,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9.9999",
+      "actual": "-9.9999"
+    },
+    {
+      "precision": 5,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "0.99999",
+      "actual": "0.99999"
+    },
+    {
+      "precision": 5,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-0.99999",
+      "actual": "-0.99999"
+    },
+    {
+      "precision": 6,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999",
+      "actual": "999999"
+    },
+    {
+      "precision": 6,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999",
+      "actual": "-999999"
+    },
+    {
+      "precision": 6,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999.9",
+      "actual": "99999.9"
+    },
+    {
+      "precision": 6,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999.9",
+      "actual": "-99999.9"
+    },
+    {
+      "precision": 6,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999.99",
+      "actual": "9999.99"
+    },
+    {
+      "precision": 6,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999.99",
+      "actual": "-9999.99"
+    },
+    {
+      "precision": 6,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999.999",
+      "actual": "999.999"
+    },
+    {
+      "precision": 6,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999.999",
+      "actual": "-999.999"
+    },
+    {
+      "precision": 6,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99.9999",
+      "actual": "99.9999"
+    },
+    {
+      "precision": 6,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99.9999",
+      "actual": "-99.9999"
+    },
+    {
+      "precision": 6,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9.99999",
+      "actual": "9.99999"
+    },
+    {
+      "precision": 6,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9.99999",
+      "actual": "-9.99999"
+    },
+    {
+      "precision": 6,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "0.999999",
+      "actual": "0.999999"
+    },
+    {
+      "precision": 6,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-0.999999",
+      "actual": "-0.999999"
+    },
+    {
+      "precision": 7,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999",
+      "actual": "9999999"
+    },
+    {
+      "precision": 7,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999",
+      "actual": "-9999999"
+    },
+    {
+      "precision": 7,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999.9",
+      "actual": "999999.9"
+    },
+    {
+      "precision": 7,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999.9",
+      "actual": "-999999.9"
+    },
+    {
+      "precision": 7,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999.99",
+      "actual": "99999.99"
+    },
+    {
+      "precision": 7,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999.99",
+      "actual": "-99999.99"
+    },
+    {
+      "precision": 7,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999.999",
+      "actual": "9999.999"
+    },
+    {
+      "precision": 7,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999.999",
+      "actual": "-9999.999"
+    },
+    {
+      "precision": 7,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999.9999",
+      "actual": "999.9999"
+    },
+    {
+      "precision": 7,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999.9999",
+      "actual": "-999.9999"
+    },
+    {
+      "precision": 7,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99.99999",
+      "actual": "99.99999"
+    },
+    {
+      "precision": 7,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99.99999",
+      "actual": "-99.99999"
+    },
+    {
+      "precision": 7,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9.999999",
+      "actual": "9.999999"
+    },
+    {
+      "precision": 7,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9.999999",
+      "actual": "-9.999999"
+    },
+    {
+      "precision": 7,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "0.9999999",
+      "actual": "0.9999999"
+    },
+    {
+      "precision": 7,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-0.9999999",
+      "actual": "-0.9999999"
+    },
+    {
+      "precision": 8,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999",
+      "actual": "99999999"
+    },
+    {
+      "precision": 8,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999",
+      "actual": "-99999999"
+    },
+    {
+      "precision": 8,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999.9",
+      "actual": "9999999.9"
+    },
+    {
+      "precision": 8,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999.9",
+      "actual": "-9999999.9"
+    },
+    {
+      "precision": 8,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999.99",
+      "actual": "999999.99"
+    },
+    {
+      "precision": 8,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999.99",
+      "actual": "-999999.99"
+    },
+    {
+      "precision": 8,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999.999",
+      "actual": "99999.999"
+    },
+    {
+      "precision": 8,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999.999",
+      "actual": "-99999.999"
+    },
+    {
+      "precision": 8,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999.9999",
+      "actual": "9999.9999"
+    },
+    {
+      "precision": 8,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999.9999",
+      "actual": "-9999.9999"
+    },
+    {
+      "precision": 8,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999.99999",
+      "actual": "999.99999"
+    },
+    {
+      "precision": 8,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999.99999",
+      "actual": "-999.99999"
+    },
+    {
+      "precision": 8,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99.999999",
+      "actual": "99.999999"
+    },
+    {
+      "precision": 8,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99.999999",
+      "actual": "-99.999999"
+    },
+    {
+      "precision": 8,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9.9999999",
+      "actual": "9.9999999"
+    },
+    {
+      "precision": 8,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9.9999999",
+      "actual": "-9.9999999"
+    },
+    {
+      "precision": 8,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "0.99999999",
+      "actual": "0.99999999"
+    },
+    {
+      "precision": 8,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-0.99999999",
+      "actual": "-0.99999999"
+    },
+    {
+      "precision": 9,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999",
+      "actual": "999999999"
+    },
+    {
+      "precision": 9,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999",
+      "actual": "-999999999"
+    },
+    {
+      "precision": 9,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999.9",
+      "actual": "99999999.9"
+    },
+    {
+      "precision": 9,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999.9",
+      "actual": "-99999999.9"
+    },
+    {
+      "precision": 9,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999.99",
+      "actual": "9999999.99"
+    },
+    {
+      "precision": 9,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999.99",
+      "actual": "-9999999.99"
+    },
+    {
+      "precision": 9,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999.999",
+      "actual": "999999.999"
+    },
+    {
+      "precision": 9,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999.999",
+      "actual": "-999999.999"
+    },
+    {
+      "precision": 9,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999.9999",
+      "actual": "99999.9999"
+    },
+    {
+      "precision": 9,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999.9999",
+      "actual": "-99999.9999"
+    },
+    {
+      "precision": 9,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999.99999",
+      "actual": "9999.99999"
+    },
+    {
+      "precision": 9,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999.99999",
+      "actual": "-9999.99999"
+    },
+    {
+      "precision": 9,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999.999999",
+      "actual": "999.999999"
+    },
+    {
+      "precision": 9,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999.999999",
+      "actual": "-999.999999"
+    },
+    {
+      "precision": 9,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99.9999999",
+      "actual": "99.9999999"
+    },
+    {
+      "precision": 9,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99.9999999",
+      "actual": "-99.9999999"
+    },
+    {
+      "precision": 9,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9.99999999",
+      "actual": "9.99999999"
+    },
+    {
+      "precision": 9,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9.99999999",
+      "actual": "-9.99999999"
+    },
+    {
+      "precision": 9,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "0.999999999",
+      "actual": "0.999999999"
+    },
+    {
+      "precision": 9,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-0.999999999",
+      "actual": "-0.999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999",
+      "actual": "9999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999",
+      "actual": "-9999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999.9",
+      "actual": "999999999.9"
+    },
+    {
+      "precision": 10,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999.9",
+      "actual": "-999999999.9"
+    },
+    {
+      "precision": 10,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999.99",
+      "actual": "99999999.99"
+    },
+    {
+      "precision": 10,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999.99",
+      "actual": "-99999999.99"
+    },
+    {
+      "precision": 10,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999.999",
+      "actual": "9999999.999"
+    },
+    {
+      "precision": 10,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999.999",
+      "actual": "-9999999.999"
+    },
+    {
+      "precision": 10,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999.9999",
+      "actual": "999999.9999"
+    },
+    {
+      "precision": 10,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999.9999",
+      "actual": "-999999.9999"
+    },
+    {
+      "precision": 10,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999.99999",
+      "actual": "99999.99999"
+    },
+    {
+      "precision": 10,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999.99999",
+      "actual": "-99999.99999"
+    },
+    {
+      "precision": 10,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999.999999",
+      "actual": "9999.999999"
+    },
+    {
+      "precision": 10,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999.999999",
+      "actual": "-9999.999999"
+    },
+    {
+      "precision": 10,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999.9999999",
+      "actual": "999.9999999"
+    },
+    {
+      "precision": 10,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999.9999999",
+      "actual": "-999.9999999"
+    },
+    {
+      "precision": 10,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99.99999999",
+      "actual": "99.99999999"
+    },
+    {
+      "precision": 10,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99.99999999",
+      "actual": "-99.99999999"
+    },
+    {
+      "precision": 10,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9.999999999",
+      "actual": "9.999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9.999999999",
+      "actual": "-9.999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "0.9999999999",
+      "actual": "0.9999999999"
+    },
+    {
+      "precision": 10,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-0.9999999999",
+      "actual": "-0.9999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999",
+      "actual": "99999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999",
+      "actual": "-99999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999.9",
+      "actual": "9999999999.9"
+    },
+    {
+      "precision": 11,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999.9",
+      "actual": "-9999999999.9"
+    },
+    {
+      "precision": 11,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999.99",
+      "actual": "999999999.99"
+    },
+    {
+      "precision": 11,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999.99",
+      "actual": "-999999999.99"
+    },
+    {
+      "precision": 11,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999.999",
+      "actual": "99999999.999"
+    },
+    {
+      "precision": 11,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999.999",
+      "actual": "-99999999.999"
+    },
+    {
+      "precision": 11,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999.9999",
+      "actual": "9999999.9999"
+    },
+    {
+      "precision": 11,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999.9999",
+      "actual": "-9999999.9999"
+    },
+    {
+      "precision": 11,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999.99999",
+      "actual": "999999.99999"
+    },
+    {
+      "precision": 11,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999.99999",
+      "actual": "-999999.99999"
+    },
+    {
+      "precision": 11,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999.999999",
+      "actual": "99999.999999"
+    },
+    {
+      "precision": 11,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999.999999",
+      "actual": "-99999.999999"
+    },
+    {
+      "precision": 11,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999.9999999",
+      "actual": "9999.9999999"
+    },
+    {
+      "precision": 11,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999.9999999",
+      "actual": "-9999.9999999"
+    },
+    {
+      "precision": 11,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999.99999999",
+      "actual": "999.99999999"
+    },
+    {
+      "precision": 11,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999.99999999",
+      "actual": "-999.99999999"
+    },
+    {
+      "precision": 11,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99.999999999",
+      "actual": "99.999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99.999999999",
+      "actual": "-99.999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9.9999999999",
+      "actual": "9.9999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9.9999999999",
+      "actual": "-9.9999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "0.99999999999",
+      "actual": "0.99999999999"
+    },
+    {
+      "precision": 11,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-0.99999999999",
+      "actual": "-0.99999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999",
+      "actual": "999999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999",
+      "actual": "-999999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999.9",
+      "actual": "99999999999.9"
+    },
+    {
+      "precision": 12,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999.9",
+      "actual": "-99999999999.9"
+    },
+    {
+      "precision": 12,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999.99",
+      "actual": "9999999999.99"
+    },
+    {
+      "precision": 12,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999.99",
+      "actual": "-9999999999.99"
+    },
+    {
+      "precision": 12,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999.999",
+      "actual": "999999999.999"
+    },
+    {
+      "precision": 12,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999.999",
+      "actual": "-999999999.999"
+    },
+    {
+      "precision": 12,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999.9999",
+      "actual": "99999999.9999"
+    },
+    {
+      "precision": 12,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999.9999",
+      "actual": "-99999999.9999"
+    },
+    {
+      "precision": 12,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999.99999",
+      "actual": "9999999.99999"
+    },
+    {
+      "precision": 12,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999.99999",
+      "actual": "-9999999.99999"
+    },
+    {
+      "precision": 12,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999.999999",
+      "actual": "999999.999999"
+    },
+    {
+      "precision": 12,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999.999999",
+      "actual": "-999999.999999"
+    },
+    {
+      "precision": 12,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999.9999999",
+      "actual": "99999.9999999"
+    },
+    {
+      "precision": 12,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999.9999999",
+      "actual": "-99999.9999999"
+    },
+    {
+      "precision": 12,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999.99999999",
+      "actual": "9999.99999999"
+    },
+    {
+      "precision": 12,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999.99999999",
+      "actual": "-9999.99999999"
+    },
+    {
+      "precision": 12,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999.999999999",
+      "actual": "999.999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999.999999999",
+      "actual": "-999.999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99.9999999999",
+      "actual": "99.9999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99.9999999999",
+      "actual": "-99.9999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9.99999999999",
+      "actual": "9.99999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9.99999999999",
+      "actual": "-9.99999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "0.999999999999",
+      "actual": "0.999999999999"
+    },
+    {
+      "precision": 12,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-0.999999999999",
+      "actual": "-0.999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999",
+      "actual": "9999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999",
+      "actual": "-9999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999.9",
+      "actual": "999999999999.9"
+    },
+    {
+      "precision": 13,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999.9",
+      "actual": "-999999999999.9"
+    },
+    {
+      "precision": 13,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999.99",
+      "actual": "99999999999.99"
+    },
+    {
+      "precision": 13,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999.99",
+      "actual": "-99999999999.99"
+    },
+    {
+      "precision": 13,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999.999",
+      "actual": "9999999999.999"
+    },
+    {
+      "precision": 13,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999.999",
+      "actual": "-9999999999.999"
+    },
+    {
+      "precision": 13,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999.9999",
+      "actual": "999999999.9999"
+    },
+    {
+      "precision": 13,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999.9999",
+      "actual": "-999999999.9999"
+    },
+    {
+      "precision": 13,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999.99999",
+      "actual": "99999999.99999"
+    },
+    {
+      "precision": 13,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999.99999",
+      "actual": "-99999999.99999"
+    },
+    {
+      "precision": 13,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999.999999",
+      "actual": "9999999.999999"
+    },
+    {
+      "precision": 13,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999.999999",
+      "actual": "-9999999.999999"
+    },
+    {
+      "precision": 13,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999.9999999",
+      "actual": "999999.9999999"
+    },
+    {
+      "precision": 13,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999.9999999",
+      "actual": "-999999.9999999"
+    },
+    {
+      "precision": 13,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999.99999999",
+      "actual": "99999.99999999"
+    },
+    {
+      "precision": 13,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999.99999999",
+      "actual": "-99999.99999999"
+    },
+    {
+      "precision": 13,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999.999999999",
+      "actual": "9999.999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999.999999999",
+      "actual": "-9999.999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999.9999999999",
+      "actual": "999.9999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999.9999999999",
+      "actual": "-999.9999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99.99999999999",
+      "actual": "99.99999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99.99999999999",
+      "actual": "-99.99999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9.999999999999",
+      "actual": "9.999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9.999999999999",
+      "actual": "-9.999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "0.9999999999999",
+      "actual": "0.9999999999999"
+    },
+    {
+      "precision": 13,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999",
+      "actual": "-0.9999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999999",
+      "actual": "99999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999999",
+      "actual": "-99999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999999.9",
+      "actual": "9999999999999.9"
+    },
+    {
+      "precision": 14,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999999.9",
+      "actual": "-9999999999999.9"
+    },
+    {
+      "precision": 14,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999999.99",
+      "actual": "999999999999.99"
+    },
+    {
+      "precision": 14,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999999.99",
+      "actual": "-999999999999.99"
+    },
+    {
+      "precision": 14,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999999.999",
+      "actual": "99999999999.999"
+    },
+    {
+      "precision": 14,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999999.999",
+      "actual": "-99999999999.999"
+    },
+    {
+      "precision": 14,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999999.9999",
+      "actual": "9999999999.9999"
+    },
+    {
+      "precision": 14,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999999.9999",
+      "actual": "-9999999999.9999"
+    },
+    {
+      "precision": 14,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999999.99999",
+      "actual": "999999999.99999"
+    },
+    {
+      "precision": 14,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999999.99999",
+      "actual": "-999999999.99999"
+    },
+    {
+      "precision": 14,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999999.999999",
+      "actual": "99999999.999999"
+    },
+    {
+      "precision": 14,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999999.999999",
+      "actual": "-99999999.999999"
+    },
+    {
+      "precision": 14,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999999.9999999",
+      "actual": "9999999.9999999"
+    },
+    {
+      "precision": 14,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999999.9999999",
+      "actual": "-9999999.9999999"
+    },
+    {
+      "precision": 14,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999999.99999999",
+      "actual": "999999.99999999"
+    },
+    {
+      "precision": 14,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999999.99999999",
+      "actual": "-999999.99999999"
+    },
+    {
+      "precision": 14,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99999.999999999",
+      "actual": "99999.999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99999.999999999",
+      "actual": "-99999.999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9999.9999999999",
+      "actual": "9999.9999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9999.9999999999",
+      "actual": "-9999.9999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "999.99999999999",
+      "actual": "999.99999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-999.99999999999",
+      "actual": "-999.99999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "99.999999999999",
+      "actual": "99.999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-99.999999999999",
+      "actual": "-99.999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "9.9999999999999",
+      "actual": "9.9999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-9.9999999999999",
+      "actual": "-9.9999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "0.99999999999999",
+      "actual": "0.99999999999999"
+    },
+    {
+      "precision": 14,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-0.99999999999999",
+      "actual": "-0.99999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999999",
+      "actual": "999999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999999",
+      "actual": "-999999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999999.9",
+      "actual": "99999999999999.9"
+    },
+    {
+      "precision": 15,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999999.9",
+      "actual": "-99999999999999.9"
+    },
+    {
+      "precision": 15,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999999.99",
+      "actual": "9999999999999.99"
+    },
+    {
+      "precision": 15,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999999.99",
+      "actual": "-9999999999999.99"
+    },
+    {
+      "precision": 15,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999999.999",
+      "actual": "999999999999.999"
+    },
+    {
+      "precision": 15,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999999.999",
+      "actual": "-999999999999.999"
+    },
+    {
+      "precision": 15,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999999.9999",
+      "actual": "99999999999.9999"
+    },
+    {
+      "precision": 15,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999999.9999",
+      "actual": "-99999999999.9999"
+    },
+    {
+      "precision": 15,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999999.99999",
+      "actual": "9999999999.99999"
+    },
+    {
+      "precision": 15,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999999.99999",
+      "actual": "-9999999999.99999"
+    },
+    {
+      "precision": 15,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999999.999999",
+      "actual": "999999999.999999"
+    },
+    {
+      "precision": 15,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999999.999999",
+      "actual": "-999999999.999999"
+    },
+    {
+      "precision": 15,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999999.9999999",
+      "actual": "99999999.9999999"
+    },
+    {
+      "precision": 15,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999999.9999999",
+      "actual": "-99999999.9999999"
+    },
+    {
+      "precision": 15,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999999.99999999",
+      "actual": "9999999.99999999"
+    },
+    {
+      "precision": 15,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999999.99999999",
+      "actual": "-9999999.99999999"
+    },
+    {
+      "precision": 15,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999999.999999999",
+      "actual": "999999.999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999999.999999999",
+      "actual": "-999999.999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99999.9999999999",
+      "actual": "99999.9999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99999.9999999999",
+      "actual": "-99999.9999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9999.99999999999",
+      "actual": "9999.99999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9999.99999999999",
+      "actual": "-9999.99999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "999.999999999999",
+      "actual": "999.999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-999.999999999999",
+      "actual": "-999.999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "99.9999999999999",
+      "actual": "99.9999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-99.9999999999999",
+      "actual": "-99.9999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "9.99999999999999",
+      "actual": "9.99999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-9.99999999999999",
+      "actual": "-9.99999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "0.999999999999999",
+      "actual": "0.999999999999999"
+    },
+    {
+      "precision": 15,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-0.999999999999999",
+      "actual": "-0.999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999999",
+      "actual": "9999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999999",
+      "actual": "-9999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999999.9",
+      "actual": "999999999999999.9"
+    },
+    {
+      "precision": 16,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999999.9",
+      "actual": "-999999999999999.9"
+    },
+    {
+      "precision": 16,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999999.99",
+      "actual": "99999999999999.99"
+    },
+    {
+      "precision": 16,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999999.99",
+      "actual": "-99999999999999.99"
+    },
+    {
+      "precision": 16,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999999.999",
+      "actual": "9999999999999.999"
+    },
+    {
+      "precision": 16,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999999.999",
+      "actual": "-9999999999999.999"
+    },
+    {
+      "precision": 16,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999999.9999",
+      "actual": "999999999999.9999"
+    },
+    {
+      "precision": 16,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999999.9999",
+      "actual": "-999999999999.9999"
+    },
+    {
+      "precision": 16,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999999.99999",
+      "actual": "99999999999.99999"
+    },
+    {
+      "precision": 16,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999999.99999",
+      "actual": "-99999999999.99999"
+    },
+    {
+      "precision": 16,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999999.999999",
+      "actual": "9999999999.999999"
+    },
+    {
+      "precision": 16,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999999.999999",
+      "actual": "-9999999999.999999"
+    },
+    {
+      "precision": 16,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999999.9999999",
+      "actual": "999999999.9999999"
+    },
+    {
+      "precision": 16,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999999.9999999",
+      "actual": "-999999999.9999999"
+    },
+    {
+      "precision": 16,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999999.99999999",
+      "actual": "99999999.99999999"
+    },
+    {
+      "precision": 16,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999999.99999999",
+      "actual": "-99999999.99999999"
+    },
+    {
+      "precision": 16,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999999.999999999",
+      "actual": "9999999.999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999999.999999999",
+      "actual": "-9999999.999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999999.9999999999",
+      "actual": "999999.9999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999999.9999999999",
+      "actual": "-999999.9999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99999.99999999999",
+      "actual": "99999.99999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99999.99999999999",
+      "actual": "-99999.99999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9999.999999999999",
+      "actual": "9999.999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9999.999999999999",
+      "actual": "-9999.999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "999.9999999999999",
+      "actual": "999.9999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-999.9999999999999",
+      "actual": "-999.9999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "99.99999999999999",
+      "actual": "99.99999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-99.99999999999999",
+      "actual": "-99.99999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "9.999999999999999",
+      "actual": "9.999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-9.999999999999999",
+      "actual": "-9.999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "0.9999999999999999",
+      "actual": "0.9999999999999999"
+    },
+    {
+      "precision": 16,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999999",
+      "actual": "-0.9999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999999999",
+      "actual": "99999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999999999",
+      "actual": "-99999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999999999.9",
+      "actual": "9999999999999999.9"
+    },
+    {
+      "precision": 17,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.9",
+      "actual": "-9999999999999999.9"
+    },
+    {
+      "precision": 17,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999999999.99",
+      "actual": "999999999999999.99"
+    },
+    {
+      "precision": 17,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999999999.99",
+      "actual": "-999999999999999.99"
+    },
+    {
+      "precision": 17,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999999999.999",
+      "actual": "99999999999999.999"
+    },
+    {
+      "precision": 17,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999999999.999",
+      "actual": "-99999999999999.999"
+    },
+    {
+      "precision": 17,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999999999.9999",
+      "actual": "9999999999999.9999"
+    },
+    {
+      "precision": 17,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999999999.9999",
+      "actual": "-9999999999999.9999"
+    },
+    {
+      "precision": 17,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999999999.99999",
+      "actual": "999999999999.99999"
+    },
+    {
+      "precision": 17,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999999999.99999",
+      "actual": "-999999999999.99999"
+    },
+    {
+      "precision": 17,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999999999.999999",
+      "actual": "99999999999.999999"
+    },
+    {
+      "precision": 17,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999999999.999999",
+      "actual": "-99999999999.999999"
+    },
+    {
+      "precision": 17,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999999999.9999999",
+      "actual": "9999999999.9999999"
+    },
+    {
+      "precision": 17,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999999999.9999999",
+      "actual": "-9999999999.9999999"
+    },
+    {
+      "precision": 17,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999999999.99999999",
+      "actual": "999999999.99999999"
+    },
+    {
+      "precision": 17,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999999999.99999999",
+      "actual": "-999999999.99999999"
+    },
+    {
+      "precision": 17,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99999999.999999999",
+      "actual": "99999999.999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99999999.999999999",
+      "actual": "-99999999.999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9999999.9999999999",
+      "actual": "9999999.9999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9999999.9999999999",
+      "actual": "-9999999.9999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "999999.99999999999",
+      "actual": "999999.99999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-999999.99999999999",
+      "actual": "-999999.99999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "99999.999999999999",
+      "actual": "99999.999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-99999.999999999999",
+      "actual": "-99999.999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "9999.9999999999999",
+      "actual": "9999.9999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-9999.9999999999999",
+      "actual": "-9999.9999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "999.99999999999999",
+      "actual": "999.99999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-999.99999999999999",
+      "actual": "-999.99999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "99.999999999999999",
+      "actual": "99.999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-99.999999999999999",
+      "actual": "-99.999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "9.9999999999999999",
+      "actual": "9.9999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-9.9999999999999999",
+      "actual": "-9.9999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "0.99999999999999999",
+      "actual": "0.99999999999999999"
+    },
+    {
+      "precision": 17,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-0.99999999999999999",
+      "actual": "-0.99999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999999999",
+      "actual": "999999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999999999",
+      "actual": "-999999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999999999.9",
+      "actual": "99999999999999999.9"
+    },
+    {
+      "precision": 18,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.9",
+      "actual": "-99999999999999999.9"
+    },
+    {
+      "precision": 18,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999999999.99",
+      "actual": "9999999999999999.99"
+    },
+    {
+      "precision": 18,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.99",
+      "actual": "-9999999999999999.99"
+    },
+    {
+      "precision": 18,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999999999.999",
+      "actual": "999999999999999.999"
+    },
+    {
+      "precision": 18,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999999999.999",
+      "actual": "-999999999999999.999"
+    },
+    {
+      "precision": 18,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999999999.9999",
+      "actual": "99999999999999.9999"
+    },
+    {
+      "precision": 18,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999999999.9999",
+      "actual": "-99999999999999.9999"
+    },
+    {
+      "precision": 18,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999999999.99999",
+      "actual": "9999999999999.99999"
+    },
+    {
+      "precision": 18,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999999999.99999",
+      "actual": "-9999999999999.99999"
+    },
+    {
+      "precision": 18,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999999999.999999",
+      "actual": "999999999999.999999"
+    },
+    {
+      "precision": 18,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999999999.999999",
+      "actual": "-999999999999.999999"
+    },
+    {
+      "precision": 18,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999999999.9999999",
+      "actual": "99999999999.9999999"
+    },
+    {
+      "precision": 18,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999999999.9999999",
+      "actual": "-99999999999.9999999"
+    },
+    {
+      "precision": 18,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999999999.99999999",
+      "actual": "9999999999.99999999"
+    },
+    {
+      "precision": 18,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999999999.99999999",
+      "actual": "-9999999999.99999999"
+    },
+    {
+      "precision": 18,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999999999.999999999",
+      "actual": "999999999.999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999999999.999999999",
+      "actual": "-999999999.999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99999999.9999999999",
+      "actual": "99999999.9999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99999999.9999999999",
+      "actual": "-99999999.9999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9999999.99999999999",
+      "actual": "9999999.99999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9999999.99999999999",
+      "actual": "-9999999.99999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "999999.999999999999",
+      "actual": "999999.999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-999999.999999999999",
+      "actual": "-999999.999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "99999.9999999999999",
+      "actual": "99999.9999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-99999.9999999999999",
+      "actual": "-99999.9999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "9999.99999999999999",
+      "actual": "9999.99999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-9999.99999999999999",
+      "actual": "-9999.99999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "999.999999999999999",
+      "actual": "999.999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-999.999999999999999",
+      "actual": "-999.999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "99.9999999999999999",
+      "actual": "99.9999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-99.9999999999999999",
+      "actual": "-99.9999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "9.99999999999999999",
+      "actual": "9.99999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-9.99999999999999999",
+      "actual": "-9.99999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "0.999999999999999999",
+      "actual": "0.999999999999999999"
+    },
+    {
+      "precision": 18,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-0.999999999999999999",
+      "actual": "-0.999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999999999",
+      "actual": "9999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999",
+      "actual": "-9999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999999999.9",
+      "actual": "999999999999999999.9"
+    },
+    {
+      "precision": 19,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.9",
+      "actual": "-999999999999999999.9"
+    },
+    {
+      "precision": 19,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999999999.99",
+      "actual": "99999999999999999.99"
+    },
+    {
+      "precision": 19,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.99",
+      "actual": "-99999999999999999.99"
+    },
+    {
+      "precision": 19,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999999999.999",
+      "actual": "9999999999999999.999"
+    },
+    {
+      "precision": 19,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.999",
+      "actual": "-9999999999999999.999"
+    },
+    {
+      "precision": 19,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999999999.9999",
+      "actual": "999999999999999.9999"
+    },
+    {
+      "precision": 19,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999999999.9999",
+      "actual": "-999999999999999.9999"
+    },
+    {
+      "precision": 19,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999999999.99999",
+      "actual": "99999999999999.99999"
+    },
+    {
+      "precision": 19,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999999999.99999",
+      "actual": "-99999999999999.99999"
+    },
+    {
+      "precision": 19,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999999999.999999",
+      "actual": "9999999999999.999999"
+    },
+    {
+      "precision": 19,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999999999.999999",
+      "actual": "-9999999999999.999999"
+    },
+    {
+      "precision": 19,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999999999.9999999",
+      "actual": "999999999999.9999999"
+    },
+    {
+      "precision": 19,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999999999.9999999",
+      "actual": "-999999999999.9999999"
+    },
+    {
+      "precision": 19,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999999999.99999999",
+      "actual": "99999999999.99999999"
+    },
+    {
+      "precision": 19,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999999999.99999999",
+      "actual": "-99999999999.99999999"
+    },
+    {
+      "precision": 19,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999999999.999999999",
+      "actual": "9999999999.999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999999999.999999999",
+      "actual": "-9999999999.999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999999999.9999999999",
+      "actual": "999999999.9999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999999999.9999999999",
+      "actual": "-999999999.9999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99999999.99999999999",
+      "actual": "99999999.99999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99999999.99999999999",
+      "actual": "-99999999.99999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9999999.999999999999",
+      "actual": "9999999.999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9999999.999999999999",
+      "actual": "-9999999.999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "999999.9999999999999",
+      "actual": "999999.9999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-999999.9999999999999",
+      "actual": "-999999.9999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "99999.99999999999999",
+      "actual": "99999.99999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-99999.99999999999999",
+      "actual": "-99999.99999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "9999.999999999999999",
+      "actual": "9999.999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-9999.999999999999999",
+      "actual": "-9999.999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "999.9999999999999999",
+      "actual": "999.9999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-999.9999999999999999",
+      "actual": "-999.9999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "99.99999999999999999",
+      "actual": "99.99999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-99.99999999999999999",
+      "actual": "-99.99999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "9.999999999999999999",
+      "actual": "9.999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-9.999999999999999999",
+      "actual": "-9.999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "0.9999999999999999999",
+      "actual": "0.9999999999999999999"
+    },
+    {
+      "precision": 19,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999999999",
+      "actual": "-0.9999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999999999999",
+      "actual": "99999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999",
+      "actual": "-99999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.9",
+      "actual": "9999999999999999999.9"
+    },
+    {
+      "precision": 20,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.9",
+      "actual": "-9999999999999999999.9"
+    },
+    {
+      "precision": 20,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999999999999.99",
+      "actual": "999999999999999999.99"
+    },
+    {
+      "precision": 20,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.99",
+      "actual": "-999999999999999999.99"
+    },
+    {
+      "precision": 20,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999999999999.999",
+      "actual": "99999999999999999.999"
+    },
+    {
+      "precision": 20,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.999",
+      "actual": "-99999999999999999.999"
+    },
+    {
+      "precision": 20,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999999999999.9999",
+      "actual": "9999999999999999.9999"
+    },
+    {
+      "precision": 20,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.9999",
+      "actual": "-9999999999999999.9999"
+    },
+    {
+      "precision": 20,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999999999999.99999",
+      "actual": "999999999999999.99999"
+    },
+    {
+      "precision": 20,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999999999999.99999",
+      "actual": "-999999999999999.99999"
+    },
+    {
+      "precision": 20,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999999999999.999999",
+      "actual": "99999999999999.999999"
+    },
+    {
+      "precision": 20,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999999999999.999999",
+      "actual": "-99999999999999.999999"
+    },
+    {
+      "precision": 20,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999999999999.9999999",
+      "actual": "9999999999999.9999999"
+    },
+    {
+      "precision": 20,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999999999999.9999999",
+      "actual": "-9999999999999.9999999"
+    },
+    {
+      "precision": 20,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999999999999.99999999",
+      "actual": "999999999999.99999999"
+    },
+    {
+      "precision": 20,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999999999999.99999999",
+      "actual": "-999999999999.99999999"
+    },
+    {
+      "precision": 20,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99999999999.999999999",
+      "actual": "99999999999.999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99999999999.999999999",
+      "actual": "-99999999999.999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9999999999.9999999999",
+      "actual": "9999999999.9999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9999999999.9999999999",
+      "actual": "-9999999999.9999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "999999999.99999999999",
+      "actual": "999999999.99999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-999999999.99999999999",
+      "actual": "-999999999.99999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "99999999.999999999999",
+      "actual": "99999999.999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-99999999.999999999999",
+      "actual": "-99999999.999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "9999999.9999999999999",
+      "actual": "9999999.9999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-9999999.9999999999999",
+      "actual": "-9999999.9999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "999999.99999999999999",
+      "actual": "999999.99999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-999999.99999999999999",
+      "actual": "-999999.99999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "99999.999999999999999",
+      "actual": "99999.999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-99999.999999999999999",
+      "actual": "-99999.999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "9999.9999999999999999",
+      "actual": "9999.9999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-9999.9999999999999999",
+      "actual": "-9999.9999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "999.99999999999999999",
+      "actual": "999.99999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-999.99999999999999999",
+      "actual": "-999.99999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "99.999999999999999999",
+      "actual": "99.999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-99.999999999999999999",
+      "actual": "-99.999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "9.9999999999999999999",
+      "actual": "9.9999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-9.9999999999999999999",
+      "actual": "-9.9999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "0.99999999999999999999",
+      "actual": "0.99999999999999999999"
+    },
+    {
+      "precision": 20,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-0.99999999999999999999",
+      "actual": "-0.99999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999999999999",
+      "actual": "999999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999",
+      "actual": "-999999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.9",
+      "actual": "99999999999999999999.9"
+    },
+    {
+      "precision": 21,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.9",
+      "actual": "-99999999999999999999.9"
+    },
+    {
+      "precision": 21,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.99",
+      "actual": "9999999999999999999.99"
+    },
+    {
+      "precision": 21,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.99",
+      "actual": "-9999999999999999999.99"
+    },
+    {
+      "precision": 21,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999999999999.999",
+      "actual": "999999999999999999.999"
+    },
+    {
+      "precision": 21,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.999",
+      "actual": "-999999999999999999.999"
+    },
+    {
+      "precision": 21,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999999999999.9999",
+      "actual": "99999999999999999.9999"
+    },
+    {
+      "precision": 21,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.9999",
+      "actual": "-99999999999999999.9999"
+    },
+    {
+      "precision": 21,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999999999999.99999",
+      "actual": "9999999999999999.99999"
+    },
+    {
+      "precision": 21,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.99999",
+      "actual": "-9999999999999999.99999"
+    },
+    {
+      "precision": 21,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999999999999.999999",
+      "actual": "999999999999999.999999"
+    },
+    {
+      "precision": 21,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999999999999.999999",
+      "actual": "-999999999999999.999999"
+    },
+    {
+      "precision": 21,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999999999999.9999999",
+      "actual": "99999999999999.9999999"
+    },
+    {
+      "precision": 21,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999999999999.9999999",
+      "actual": "-99999999999999.9999999"
+    },
+    {
+      "precision": 21,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999999999999.99999999",
+      "actual": "9999999999999.99999999"
+    },
+    {
+      "precision": 21,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999999999999.99999999",
+      "actual": "-9999999999999.99999999"
+    },
+    {
+      "precision": 21,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999999999999.999999999",
+      "actual": "999999999999.999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999999999999.999999999",
+      "actual": "-999999999999.999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99999999999.9999999999",
+      "actual": "99999999999.9999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99999999999.9999999999",
+      "actual": "-99999999999.9999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9999999999.99999999999",
+      "actual": "9999999999.99999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9999999999.99999999999",
+      "actual": "-9999999999.99999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "999999999.999999999999",
+      "actual": "999999999.999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-999999999.999999999999",
+      "actual": "-999999999.999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "99999999.9999999999999",
+      "actual": "99999999.9999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-99999999.9999999999999",
+      "actual": "-99999999.9999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "9999999.99999999999999",
+      "actual": "9999999.99999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-9999999.99999999999999",
+      "actual": "-9999999.99999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "999999.999999999999999",
+      "actual": "999999.999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-999999.999999999999999",
+      "actual": "-999999.999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "99999.9999999999999999",
+      "actual": "99999.9999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-99999.9999999999999999",
+      "actual": "-99999.9999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "9999.99999999999999999",
+      "actual": "9999.99999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-9999.99999999999999999",
+      "actual": "-9999.99999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "999.999999999999999999",
+      "actual": "999.999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-999.999999999999999999",
+      "actual": "-999.999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "99.9999999999999999999",
+      "actual": "99.9999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-99.9999999999999999999",
+      "actual": "-99.9999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "9.99999999999999999999",
+      "actual": "9.99999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-9.99999999999999999999",
+      "actual": "-9.99999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "0.999999999999999999999",
+      "actual": "0.999999999999999999999"
+    },
+    {
+      "precision": 21,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-0.999999999999999999999",
+      "actual": "-0.999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999",
+      "actual": "9999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999",
+      "actual": "-9999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.9",
+      "actual": "999999999999999999999.9"
+    },
+    {
+      "precision": 22,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.9",
+      "actual": "-999999999999999999999.9"
+    },
+    {
+      "precision": 22,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.99",
+      "actual": "99999999999999999999.99"
+    },
+    {
+      "precision": 22,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.99",
+      "actual": "-99999999999999999999.99"
+    },
+    {
+      "precision": 22,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.999",
+      "actual": "9999999999999999999.999"
+    },
+    {
+      "precision": 22,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.999",
+      "actual": "-9999999999999999999.999"
+    },
+    {
+      "precision": 22,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999999999999.9999",
+      "actual": "999999999999999999.9999"
+    },
+    {
+      "precision": 22,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.9999",
+      "actual": "-999999999999999999.9999"
+    },
+    {
+      "precision": 22,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999999999999.99999",
+      "actual": "99999999999999999.99999"
+    },
+    {
+      "precision": 22,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.99999",
+      "actual": "-99999999999999999.99999"
+    },
+    {
+      "precision": 22,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999999999999.999999",
+      "actual": "9999999999999999.999999"
+    },
+    {
+      "precision": 22,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.999999",
+      "actual": "-9999999999999999.999999"
+    },
+    {
+      "precision": 22,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999999999999.9999999",
+      "actual": "999999999999999.9999999"
+    },
+    {
+      "precision": 22,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999999999999.9999999",
+      "actual": "-999999999999999.9999999"
+    },
+    {
+      "precision": 22,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999999999999.99999999",
+      "actual": "99999999999999.99999999"
+    },
+    {
+      "precision": 22,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999999999999.99999999",
+      "actual": "-99999999999999.99999999"
+    },
+    {
+      "precision": 22,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999999999999.999999999",
+      "actual": "9999999999999.999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999999999999.999999999",
+      "actual": "-9999999999999.999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999999999999.9999999999",
+      "actual": "999999999999.9999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999999999999.9999999999",
+      "actual": "-999999999999.9999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99999999999.99999999999",
+      "actual": "99999999999.99999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99999999999.99999999999",
+      "actual": "-99999999999.99999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9999999999.999999999999",
+      "actual": "9999999999.999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9999999999.999999999999",
+      "actual": "-9999999999.999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "999999999.9999999999999",
+      "actual": "999999999.9999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-999999999.9999999999999",
+      "actual": "-999999999.9999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "99999999.99999999999999",
+      "actual": "99999999.99999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-99999999.99999999999999",
+      "actual": "-99999999.99999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "9999999.999999999999999",
+      "actual": "9999999.999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-9999999.999999999999999",
+      "actual": "-9999999.999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "999999.9999999999999999",
+      "actual": "999999.9999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-999999.9999999999999999",
+      "actual": "-999999.9999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "99999.99999999999999999",
+      "actual": "99999.99999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-99999.99999999999999999",
+      "actual": "-99999.99999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "9999.999999999999999999",
+      "actual": "9999.999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-9999.999999999999999999",
+      "actual": "-9999.999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "999.9999999999999999999",
+      "actual": "999.9999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-999.9999999999999999999",
+      "actual": "-999.9999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "99.99999999999999999999",
+      "actual": "99.99999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-99.99999999999999999999",
+      "actual": "-99.99999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "9.999999999999999999999",
+      "actual": "9.999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-9.999999999999999999999",
+      "actual": "-9.999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "0.9999999999999999999999",
+      "actual": "0.9999999999999999999999"
+    },
+    {
+      "precision": 22,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999999999999",
+      "actual": "-0.9999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999",
+      "actual": "99999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999",
+      "actual": "-99999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.9",
+      "actual": "9999999999999999999999.9"
+    },
+    {
+      "precision": 23,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.9",
+      "actual": "-9999999999999999999999.9"
+    },
+    {
+      "precision": 23,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.99",
+      "actual": "999999999999999999999.99"
+    },
+    {
+      "precision": 23,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.99",
+      "actual": "-999999999999999999999.99"
+    },
+    {
+      "precision": 23,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.999",
+      "actual": "99999999999999999999.999"
+    },
+    {
+      "precision": 23,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.999",
+      "actual": "-99999999999999999999.999"
+    },
+    {
+      "precision": 23,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.9999",
+      "actual": "9999999999999999999.9999"
+    },
+    {
+      "precision": 23,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.9999",
+      "actual": "-9999999999999999999.9999"
+    },
+    {
+      "precision": 23,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999999999999999.99999",
+      "actual": "999999999999999999.99999"
+    },
+    {
+      "precision": 23,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.99999",
+      "actual": "-999999999999999999.99999"
+    },
+    {
+      "precision": 23,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999999999999999.999999",
+      "actual": "99999999999999999.999999"
+    },
+    {
+      "precision": 23,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.999999",
+      "actual": "-99999999999999999.999999"
+    },
+    {
+      "precision": 23,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999999999999999.9999999",
+      "actual": "9999999999999999.9999999"
+    },
+    {
+      "precision": 23,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.9999999",
+      "actual": "-9999999999999999.9999999"
+    },
+    {
+      "precision": 23,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999999999999999.99999999",
+      "actual": "999999999999999.99999999"
+    },
+    {
+      "precision": 23,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999999999999999.99999999",
+      "actual": "-999999999999999.99999999"
+    },
+    {
+      "precision": 23,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99999999999999.999999999",
+      "actual": "99999999999999.999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99999999999999.999999999",
+      "actual": "-99999999999999.999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9999999999999.9999999999",
+      "actual": "9999999999999.9999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9999999999999.9999999999",
+      "actual": "-9999999999999.9999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "999999999999.99999999999",
+      "actual": "999999999999.99999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-999999999999.99999999999",
+      "actual": "-999999999999.99999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "99999999999.999999999999",
+      "actual": "99999999999.999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-99999999999.999999999999",
+      "actual": "-99999999999.999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "9999999999.9999999999999",
+      "actual": "9999999999.9999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-9999999999.9999999999999",
+      "actual": "-9999999999.9999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "999999999.99999999999999",
+      "actual": "999999999.99999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-999999999.99999999999999",
+      "actual": "-999999999.99999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "99999999.999999999999999",
+      "actual": "99999999.999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-99999999.999999999999999",
+      "actual": "-99999999.999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "9999999.9999999999999999",
+      "actual": "9999999.9999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-9999999.9999999999999999",
+      "actual": "-9999999.9999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "999999.99999999999999999",
+      "actual": "999999.99999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-999999.99999999999999999",
+      "actual": "-999999.99999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "99999.999999999999999999",
+      "actual": "99999.999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-99999.999999999999999999",
+      "actual": "-99999.999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "9999.9999999999999999999",
+      "actual": "9999.9999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-9999.9999999999999999999",
+      "actual": "-9999.9999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "999.99999999999999999999",
+      "actual": "999.99999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-999.99999999999999999999",
+      "actual": "-999.99999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "99.999999999999999999999",
+      "actual": "99.999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-99.999999999999999999999",
+      "actual": "-99.999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "9.9999999999999999999999",
+      "actual": "9.9999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-9.9999999999999999999999",
+      "actual": "-9.9999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "0.99999999999999999999999",
+      "actual": "0.99999999999999999999999"
+    },
+    {
+      "precision": 23,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-0.99999999999999999999999",
+      "actual": "-0.99999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999",
+      "actual": "999999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999",
+      "actual": "-999999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999.9",
+      "actual": "99999999999999999999999.9"
+    },
+    {
+      "precision": 24,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999.9",
+      "actual": "-99999999999999999999999.9"
+    },
+    {
+      "precision": 24,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.99",
+      "actual": "9999999999999999999999.99"
+    },
+    {
+      "precision": 24,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.99",
+      "actual": "-9999999999999999999999.99"
+    },
+    {
+      "precision": 24,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.999",
+      "actual": "999999999999999999999.999"
+    },
+    {
+      "precision": 24,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.999",
+      "actual": "-999999999999999999999.999"
+    },
+    {
+      "precision": 24,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.9999",
+      "actual": "99999999999999999999.9999"
+    },
+    {
+      "precision": 24,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.9999",
+      "actual": "-99999999999999999999.9999"
+    },
+    {
+      "precision": 24,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.99999",
+      "actual": "9999999999999999999.99999"
+    },
+    {
+      "precision": 24,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.99999",
+      "actual": "-9999999999999999999.99999"
+    },
+    {
+      "precision": 24,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999999999999999.999999",
+      "actual": "999999999999999999.999999"
+    },
+    {
+      "precision": 24,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.999999",
+      "actual": "-999999999999999999.999999"
+    },
+    {
+      "precision": 24,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999999999999999.9999999",
+      "actual": "99999999999999999.9999999"
+    },
+    {
+      "precision": 24,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.9999999",
+      "actual": "-99999999999999999.9999999"
+    },
+    {
+      "precision": 24,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999999999999999.99999999",
+      "actual": "9999999999999999.99999999"
+    },
+    {
+      "precision": 24,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.99999999",
+      "actual": "-9999999999999999.99999999"
+    },
+    {
+      "precision": 24,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999999999999999.999999999",
+      "actual": "999999999999999.999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999999999999999.999999999",
+      "actual": "-999999999999999.999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99999999999999.9999999999",
+      "actual": "99999999999999.9999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99999999999999.9999999999",
+      "actual": "-99999999999999.9999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9999999999999.99999999999",
+      "actual": "9999999999999.99999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9999999999999.99999999999",
+      "actual": "-9999999999999.99999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "999999999999.999999999999",
+      "actual": "999999999999.999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-999999999999.999999999999",
+      "actual": "-999999999999.999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "99999999999.9999999999999",
+      "actual": "99999999999.9999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-99999999999.9999999999999",
+      "actual": "-99999999999.9999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "9999999999.99999999999999",
+      "actual": "9999999999.99999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-9999999999.99999999999999",
+      "actual": "-9999999999.99999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "999999999.999999999999999",
+      "actual": "999999999.999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-999999999.999999999999999",
+      "actual": "-999999999.999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "99999999.9999999999999999",
+      "actual": "99999999.9999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-99999999.9999999999999999",
+      "actual": "-99999999.9999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "9999999.99999999999999999",
+      "actual": "9999999.99999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-9999999.99999999999999999",
+      "actual": "-9999999.99999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "999999.999999999999999999",
+      "actual": "999999.999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-999999.999999999999999999",
+      "actual": "-999999.999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "99999.9999999999999999999",
+      "actual": "99999.9999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-99999.9999999999999999999",
+      "actual": "-99999.9999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "9999.99999999999999999999",
+      "actual": "9999.99999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-9999.99999999999999999999",
+      "actual": "-9999.99999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "999.999999999999999999999",
+      "actual": "999.999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-999.999999999999999999999",
+      "actual": "-999.999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "99.9999999999999999999999",
+      "actual": "99.9999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-99.9999999999999999999999",
+      "actual": "-99.9999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "9.99999999999999999999999",
+      "actual": "9.99999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-9.99999999999999999999999",
+      "actual": "-9.99999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 24,
+      "boundary": "maximum",
+      "expected": "0.999999999999999999999999",
+      "actual": "0.999999999999999999999999"
+    },
+    {
+      "precision": 24,
+      "scale": 24,
+      "boundary": "minimum",
+      "expected": "-0.999999999999999999999999",
+      "actual": "-0.999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999999",
+      "actual": "9999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999999",
+      "actual": "-9999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999.9",
+      "actual": "999999999999999999999999.9"
+    },
+    {
+      "precision": 25,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999.9",
+      "actual": "-999999999999999999999999.9"
+    },
+    {
+      "precision": 25,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999.99",
+      "actual": "99999999999999999999999.99"
+    },
+    {
+      "precision": 25,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999.99",
+      "actual": "-99999999999999999999999.99"
+    },
+    {
+      "precision": 25,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.999",
+      "actual": "9999999999999999999999.999"
+    },
+    {
+      "precision": 25,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.999",
+      "actual": "-9999999999999999999999.999"
+    },
+    {
+      "precision": 25,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.9999",
+      "actual": "999999999999999999999.9999"
+    },
+    {
+      "precision": 25,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.9999",
+      "actual": "-999999999999999999999.9999"
+    },
+    {
+      "precision": 25,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.99999",
+      "actual": "99999999999999999999.99999"
+    },
+    {
+      "precision": 25,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.99999",
+      "actual": "-99999999999999999999.99999"
+    },
+    {
+      "precision": 25,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.999999",
+      "actual": "9999999999999999999.999999"
+    },
+    {
+      "precision": 25,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.999999",
+      "actual": "-9999999999999999999.999999"
+    },
+    {
+      "precision": 25,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999999999999999.9999999",
+      "actual": "999999999999999999.9999999"
+    },
+    {
+      "precision": 25,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.9999999",
+      "actual": "-999999999999999999.9999999"
+    },
+    {
+      "precision": 25,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999999999999999.99999999",
+      "actual": "99999999999999999.99999999"
+    },
+    {
+      "precision": 25,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.99999999",
+      "actual": "-99999999999999999.99999999"
+    },
+    {
+      "precision": 25,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999999999999999.999999999",
+      "actual": "9999999999999999.999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.999999999",
+      "actual": "-9999999999999999.999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999999999999999.9999999999",
+      "actual": "999999999999999.9999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999999999999999.9999999999",
+      "actual": "-999999999999999.9999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99999999999999.99999999999",
+      "actual": "99999999999999.99999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99999999999999.99999999999",
+      "actual": "-99999999999999.99999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9999999999999.999999999999",
+      "actual": "9999999999999.999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9999999999999.999999999999",
+      "actual": "-9999999999999.999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "999999999999.9999999999999",
+      "actual": "999999999999.9999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-999999999999.9999999999999",
+      "actual": "-999999999999.9999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "99999999999.99999999999999",
+      "actual": "99999999999.99999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-99999999999.99999999999999",
+      "actual": "-99999999999.99999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "9999999999.999999999999999",
+      "actual": "9999999999.999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-9999999999.999999999999999",
+      "actual": "-9999999999.999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "999999999.9999999999999999",
+      "actual": "999999999.9999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-999999999.9999999999999999",
+      "actual": "-999999999.9999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "99999999.99999999999999999",
+      "actual": "99999999.99999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-99999999.99999999999999999",
+      "actual": "-99999999.99999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "9999999.999999999999999999",
+      "actual": "9999999.999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-9999999.999999999999999999",
+      "actual": "-9999999.999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "999999.9999999999999999999",
+      "actual": "999999.9999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-999999.9999999999999999999",
+      "actual": "-999999.9999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "99999.99999999999999999999",
+      "actual": "99999.99999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-99999.99999999999999999999",
+      "actual": "-99999.99999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "9999.999999999999999999999",
+      "actual": "9999.999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-9999.999999999999999999999",
+      "actual": "-9999.999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "999.9999999999999999999999",
+      "actual": "999.9999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-999.9999999999999999999999",
+      "actual": "-999.9999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "99.99999999999999999999999",
+      "actual": "99.99999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-99.99999999999999999999999",
+      "actual": "-99.99999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 24,
+      "boundary": "maximum",
+      "expected": "9.999999999999999999999999",
+      "actual": "9.999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 24,
+      "boundary": "minimum",
+      "expected": "-9.999999999999999999999999",
+      "actual": "-9.999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 25,
+      "boundary": "maximum",
+      "expected": "0.9999999999999999999999999",
+      "actual": "0.9999999999999999999999999"
+    },
+    {
+      "precision": 25,
+      "scale": 25,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999999999999999",
+      "actual": "-0.9999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999999",
+      "actual": "99999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999999",
+      "actual": "-99999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999999.9",
+      "actual": "9999999999999999999999999.9"
+    },
+    {
+      "precision": 26,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999999.9",
+      "actual": "-9999999999999999999999999.9"
+    },
+    {
+      "precision": 26,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999.99",
+      "actual": "999999999999999999999999.99"
+    },
+    {
+      "precision": 26,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999.99",
+      "actual": "-999999999999999999999999.99"
+    },
+    {
+      "precision": 26,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999.999",
+      "actual": "99999999999999999999999.999"
+    },
+    {
+      "precision": 26,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999.999",
+      "actual": "-99999999999999999999999.999"
+    },
+    {
+      "precision": 26,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.9999",
+      "actual": "9999999999999999999999.9999"
+    },
+    {
+      "precision": 26,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.9999",
+      "actual": "-9999999999999999999999.9999"
+    },
+    {
+      "precision": 26,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.99999",
+      "actual": "999999999999999999999.99999"
+    },
+    {
+      "precision": 26,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.99999",
+      "actual": "-999999999999999999999.99999"
+    },
+    {
+      "precision": 26,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.999999",
+      "actual": "99999999999999999999.999999"
+    },
+    {
+      "precision": 26,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.999999",
+      "actual": "-99999999999999999999.999999"
+    },
+    {
+      "precision": 26,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.9999999",
+      "actual": "9999999999999999999.9999999"
+    },
+    {
+      "precision": 26,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.9999999",
+      "actual": "-9999999999999999999.9999999"
+    },
+    {
+      "precision": 26,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "999999999999999999.99999999",
+      "actual": "999999999999999999.99999999"
+    },
+    {
+      "precision": 26,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.99999999",
+      "actual": "-999999999999999999.99999999"
+    },
+    {
+      "precision": 26,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "99999999999999999.999999999",
+      "actual": "99999999999999999.999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.999999999",
+      "actual": "-99999999999999999.999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "9999999999999999.9999999999",
+      "actual": "9999999999999999.9999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.9999999999",
+      "actual": "-9999999999999999.9999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "999999999999999.99999999999",
+      "actual": "999999999999999.99999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-999999999999999.99999999999",
+      "actual": "-999999999999999.99999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "99999999999999.999999999999",
+      "actual": "99999999999999.999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-99999999999999.999999999999",
+      "actual": "-99999999999999.999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "9999999999999.9999999999999",
+      "actual": "9999999999999.9999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-9999999999999.9999999999999",
+      "actual": "-9999999999999.9999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "999999999999.99999999999999",
+      "actual": "999999999999.99999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-999999999999.99999999999999",
+      "actual": "-999999999999.99999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "99999999999.999999999999999",
+      "actual": "99999999999.999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-99999999999.999999999999999",
+      "actual": "-99999999999.999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "9999999999.9999999999999999",
+      "actual": "9999999999.9999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-9999999999.9999999999999999",
+      "actual": "-9999999999.9999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "999999999.99999999999999999",
+      "actual": "999999999.99999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-999999999.99999999999999999",
+      "actual": "-999999999.99999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "99999999.999999999999999999",
+      "actual": "99999999.999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-99999999.999999999999999999",
+      "actual": "-99999999.999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "9999999.9999999999999999999",
+      "actual": "9999999.9999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-9999999.9999999999999999999",
+      "actual": "-9999999.9999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "999999.99999999999999999999",
+      "actual": "999999.99999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-999999.99999999999999999999",
+      "actual": "-999999.99999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "99999.999999999999999999999",
+      "actual": "99999.999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-99999.999999999999999999999",
+      "actual": "-99999.999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "9999.9999999999999999999999",
+      "actual": "9999.9999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-9999.9999999999999999999999",
+      "actual": "-9999.9999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "999.99999999999999999999999",
+      "actual": "999.99999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-999.99999999999999999999999",
+      "actual": "-999.99999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 24,
+      "boundary": "maximum",
+      "expected": "99.999999999999999999999999",
+      "actual": "99.999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 24,
+      "boundary": "minimum",
+      "expected": "-99.999999999999999999999999",
+      "actual": "-99.999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 25,
+      "boundary": "maximum",
+      "expected": "9.9999999999999999999999999",
+      "actual": "9.9999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 25,
+      "boundary": "minimum",
+      "expected": "-9.9999999999999999999999999",
+      "actual": "-9.9999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 26,
+      "boundary": "maximum",
+      "expected": "0.99999999999999999999999999",
+      "actual": "0.99999999999999999999999999"
+    },
+    {
+      "precision": 26,
+      "scale": 26,
+      "boundary": "minimum",
+      "expected": "-0.99999999999999999999999999",
+      "actual": "-0.99999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999999",
+      "actual": "999999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999999",
+      "actual": "-999999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999999.9",
+      "actual": "99999999999999999999999999.9"
+    },
+    {
+      "precision": 27,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999999.9",
+      "actual": "-99999999999999999999999999.9"
+    },
+    {
+      "precision": 27,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999999.99",
+      "actual": "9999999999999999999999999.99"
+    },
+    {
+      "precision": 27,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999999.99",
+      "actual": "-9999999999999999999999999.99"
+    },
+    {
+      "precision": 27,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999.999",
+      "actual": "999999999999999999999999.999"
+    },
+    {
+      "precision": 27,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999.999",
+      "actual": "-999999999999999999999999.999"
+    },
+    {
+      "precision": 27,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999.9999",
+      "actual": "99999999999999999999999.9999"
+    },
+    {
+      "precision": 27,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999.9999",
+      "actual": "-99999999999999999999999.9999"
+    },
+    {
+      "precision": 27,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.99999",
+      "actual": "9999999999999999999999.99999"
+    },
+    {
+      "precision": 27,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.99999",
+      "actual": "-9999999999999999999999.99999"
+    },
+    {
+      "precision": 27,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.999999",
+      "actual": "999999999999999999999.999999"
+    },
+    {
+      "precision": 27,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.999999",
+      "actual": "-999999999999999999999.999999"
+    },
+    {
+      "precision": 27,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.9999999",
+      "actual": "99999999999999999999.9999999"
+    },
+    {
+      "precision": 27,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.9999999",
+      "actual": "-99999999999999999999.9999999"
+    },
+    {
+      "precision": 27,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.99999999",
+      "actual": "9999999999999999999.99999999"
+    },
+    {
+      "precision": 27,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.99999999",
+      "actual": "-9999999999999999999.99999999"
+    },
+    {
+      "precision": 27,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "999999999999999999.999999999",
+      "actual": "999999999999999999.999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.999999999",
+      "actual": "-999999999999999999.999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "99999999999999999.9999999999",
+      "actual": "99999999999999999.9999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.9999999999",
+      "actual": "-99999999999999999.9999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "9999999999999999.99999999999",
+      "actual": "9999999999999999.99999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.99999999999",
+      "actual": "-9999999999999999.99999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "999999999999999.999999999999",
+      "actual": "999999999999999.999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-999999999999999.999999999999",
+      "actual": "-999999999999999.999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "99999999999999.9999999999999",
+      "actual": "99999999999999.9999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-99999999999999.9999999999999",
+      "actual": "-99999999999999.9999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "9999999999999.99999999999999",
+      "actual": "9999999999999.99999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-9999999999999.99999999999999",
+      "actual": "-9999999999999.99999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "999999999999.999999999999999",
+      "actual": "999999999999.999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-999999999999.999999999999999",
+      "actual": "-999999999999.999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "99999999999.9999999999999999",
+      "actual": "99999999999.9999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-99999999999.9999999999999999",
+      "actual": "-99999999999.9999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "9999999999.99999999999999999",
+      "actual": "9999999999.99999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-9999999999.99999999999999999",
+      "actual": "-9999999999.99999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "999999999.999999999999999999",
+      "actual": "999999999.999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-999999999.999999999999999999",
+      "actual": "-999999999.999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "99999999.9999999999999999999",
+      "actual": "99999999.9999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-99999999.9999999999999999999",
+      "actual": "-99999999.9999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "9999999.99999999999999999999",
+      "actual": "9999999.99999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-9999999.99999999999999999999",
+      "actual": "-9999999.99999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "999999.999999999999999999999",
+      "actual": "999999.999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-999999.999999999999999999999",
+      "actual": "-999999.999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "99999.9999999999999999999999",
+      "actual": "99999.9999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-99999.9999999999999999999999",
+      "actual": "-99999.9999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "9999.99999999999999999999999",
+      "actual": "9999.99999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-9999.99999999999999999999999",
+      "actual": "-9999.99999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 24,
+      "boundary": "maximum",
+      "expected": "999.999999999999999999999999",
+      "actual": "999.999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 24,
+      "boundary": "minimum",
+      "expected": "-999.999999999999999999999999",
+      "actual": "-999.999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 25,
+      "boundary": "maximum",
+      "expected": "99.9999999999999999999999999",
+      "actual": "99.9999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 25,
+      "boundary": "minimum",
+      "expected": "-99.9999999999999999999999999",
+      "actual": "-99.9999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 26,
+      "boundary": "maximum",
+      "expected": "9.99999999999999999999999999",
+      "actual": "9.99999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 26,
+      "boundary": "minimum",
+      "expected": "-9.99999999999999999999999999",
+      "actual": "-9.99999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 27,
+      "boundary": "maximum",
+      "expected": "0.999999999999999999999999999",
+      "actual": "0.999999999999999999999999999"
+    },
+    {
+      "precision": 27,
+      "scale": 27,
+      "boundary": "minimum",
+      "expected": "-0.999999999999999999999999999",
+      "actual": "-0.999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 0,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999999999",
+      "actual": "9999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 0,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999999999",
+      "actual": "-9999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 1,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999999.9",
+      "actual": "999999999999999999999999999.9"
+    },
+    {
+      "precision": 28,
+      "scale": 1,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999999.9",
+      "actual": "-999999999999999999999999999.9"
+    },
+    {
+      "precision": 28,
+      "scale": 2,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999999.99",
+      "actual": "99999999999999999999999999.99"
+    },
+    {
+      "precision": 28,
+      "scale": 2,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999999.99",
+      "actual": "-99999999999999999999999999.99"
+    },
+    {
+      "precision": 28,
+      "scale": 3,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999999.999",
+      "actual": "9999999999999999999999999.999"
+    },
+    {
+      "precision": 28,
+      "scale": 3,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999999.999",
+      "actual": "-9999999999999999999999999.999"
+    },
+    {
+      "precision": 28,
+      "scale": 4,
+      "boundary": "maximum",
+      "expected": "999999999999999999999999.9999",
+      "actual": "999999999999999999999999.9999"
+    },
+    {
+      "precision": 28,
+      "scale": 4,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999999.9999",
+      "actual": "-999999999999999999999999.9999"
+    },
+    {
+      "precision": 28,
+      "scale": 5,
+      "boundary": "maximum",
+      "expected": "99999999999999999999999.99999",
+      "actual": "99999999999999999999999.99999"
+    },
+    {
+      "precision": 28,
+      "scale": 5,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999999.99999",
+      "actual": "-99999999999999999999999.99999"
+    },
+    {
+      "precision": 28,
+      "scale": 6,
+      "boundary": "maximum",
+      "expected": "9999999999999999999999.999999",
+      "actual": "9999999999999999999999.999999"
+    },
+    {
+      "precision": 28,
+      "scale": 6,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999999.999999",
+      "actual": "-9999999999999999999999.999999"
+    },
+    {
+      "precision": 28,
+      "scale": 7,
+      "boundary": "maximum",
+      "expected": "999999999999999999999.9999999",
+      "actual": "999999999999999999999.9999999"
+    },
+    {
+      "precision": 28,
+      "scale": 7,
+      "boundary": "minimum",
+      "expected": "-999999999999999999999.9999999",
+      "actual": "-999999999999999999999.9999999"
+    },
+    {
+      "precision": 28,
+      "scale": 8,
+      "boundary": "maximum",
+      "expected": "99999999999999999999.99999999",
+      "actual": "99999999999999999999.99999999"
+    },
+    {
+      "precision": 28,
+      "scale": 8,
+      "boundary": "minimum",
+      "expected": "-99999999999999999999.99999999",
+      "actual": "-99999999999999999999.99999999"
+    },
+    {
+      "precision": 28,
+      "scale": 9,
+      "boundary": "maximum",
+      "expected": "9999999999999999999.999999999",
+      "actual": "9999999999999999999.999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 9,
+      "boundary": "minimum",
+      "expected": "-9999999999999999999.999999999",
+      "actual": "-9999999999999999999.999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 10,
+      "boundary": "maximum",
+      "expected": "999999999999999999.9999999999",
+      "actual": "999999999999999999.9999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 10,
+      "boundary": "minimum",
+      "expected": "-999999999999999999.9999999999",
+      "actual": "-999999999999999999.9999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 11,
+      "boundary": "maximum",
+      "expected": "99999999999999999.99999999999",
+      "actual": "99999999999999999.99999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 11,
+      "boundary": "minimum",
+      "expected": "-99999999999999999.99999999999",
+      "actual": "-99999999999999999.99999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 12,
+      "boundary": "maximum",
+      "expected": "9999999999999999.999999999999",
+      "actual": "9999999999999999.999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 12,
+      "boundary": "minimum",
+      "expected": "-9999999999999999.999999999999",
+      "actual": "-9999999999999999.999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 13,
+      "boundary": "maximum",
+      "expected": "999999999999999.9999999999999",
+      "actual": "999999999999999.9999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 13,
+      "boundary": "minimum",
+      "expected": "-999999999999999.9999999999999",
+      "actual": "-999999999999999.9999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 14,
+      "boundary": "maximum",
+      "expected": "99999999999999.99999999999999",
+      "actual": "99999999999999.99999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 14,
+      "boundary": "minimum",
+      "expected": "-99999999999999.99999999999999",
+      "actual": "-99999999999999.99999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 15,
+      "boundary": "maximum",
+      "expected": "9999999999999.999999999999999",
+      "actual": "9999999999999.999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 15,
+      "boundary": "minimum",
+      "expected": "-9999999999999.999999999999999",
+      "actual": "-9999999999999.999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 16,
+      "boundary": "maximum",
+      "expected": "999999999999.9999999999999999",
+      "actual": "999999999999.9999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 16,
+      "boundary": "minimum",
+      "expected": "-999999999999.9999999999999999",
+      "actual": "-999999999999.9999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 17,
+      "boundary": "maximum",
+      "expected": "99999999999.99999999999999999",
+      "actual": "99999999999.99999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 17,
+      "boundary": "minimum",
+      "expected": "-99999999999.99999999999999999",
+      "actual": "-99999999999.99999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 18,
+      "boundary": "maximum",
+      "expected": "9999999999.999999999999999999",
+      "actual": "9999999999.999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 18,
+      "boundary": "minimum",
+      "expected": "-9999999999.999999999999999999",
+      "actual": "-9999999999.999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 19,
+      "boundary": "maximum",
+      "expected": "999999999.9999999999999999999",
+      "actual": "999999999.9999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 19,
+      "boundary": "minimum",
+      "expected": "-999999999.9999999999999999999",
+      "actual": "-999999999.9999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 20,
+      "boundary": "maximum",
+      "expected": "99999999.99999999999999999999",
+      "actual": "99999999.99999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 20,
+      "boundary": "minimum",
+      "expected": "-99999999.99999999999999999999",
+      "actual": "-99999999.99999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 21,
+      "boundary": "maximum",
+      "expected": "9999999.999999999999999999999",
+      "actual": "9999999.999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 21,
+      "boundary": "minimum",
+      "expected": "-9999999.999999999999999999999",
+      "actual": "-9999999.999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 22,
+      "boundary": "maximum",
+      "expected": "999999.9999999999999999999999",
+      "actual": "999999.9999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 22,
+      "boundary": "minimum",
+      "expected": "-999999.9999999999999999999999",
+      "actual": "-999999.9999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 23,
+      "boundary": "maximum",
+      "expected": "99999.99999999999999999999999",
+      "actual": "99999.99999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 23,
+      "boundary": "minimum",
+      "expected": "-99999.99999999999999999999999",
+      "actual": "-99999.99999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 24,
+      "boundary": "maximum",
+      "expected": "9999.999999999999999999999999",
+      "actual": "9999.999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 24,
+      "boundary": "minimum",
+      "expected": "-9999.999999999999999999999999",
+      "actual": "-9999.999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 25,
+      "boundary": "maximum",
+      "expected": "999.9999999999999999999999999",
+      "actual": "999.9999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 25,
+      "boundary": "minimum",
+      "expected": "-999.9999999999999999999999999",
+      "actual": "-999.9999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 26,
+      "boundary": "maximum",
+      "expected": "99.99999999999999999999999999",
+      "actual": "99.99999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 26,
+      "boundary": "minimum",
+      "expected": "-99.99999999999999999999999999",
+      "actual": "-99.99999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 27,
+      "boundary": "maximum",
+      "expected": "9.999999999999999999999999999",
+      "actual": "9.999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 27,
+      "boundary": "minimum",
+      "expected": "-9.999999999999999999999999999",
+      "actual": "-9.999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 28,
+      "boundary": "maximum",
+      "expected": "0.9999999999999999999999999999",
+      "actual": "0.9999999999999999999999999999"
+    },
+    {
+      "precision": 28,
+      "scale": 28,
+      "boundary": "minimum",
+      "expected": "-0.9999999999999999999999999999",
+      "actual": "-0.9999999999999999999999999999"
+    }
+  ]
+}
