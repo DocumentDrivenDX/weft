@@ -1,0 +1,96 @@
+{
+  "scope": "Original candidate grouped equality self-join over native UInt64 and Unicode C roots; no original name/total-field or production qualification",
+  "cases": 6,
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "binaryProvenance": "B-005-numeric-sequence native extension reused; compiler runtime unchanged",
+  "deterministicPythonRepeat": true,
+  "sourceSha256": "56c999c2a467973e6fa1368f564d0f48b218f9641046b118c830de3216c58c87",
+  "harnessSha256": "a51b7507d935a4e0d50c11791df52e40ffdde7e268cc0e243ced8ffa0b40a5cb",
+  "responseSha256": "e262186cf08556e262616011ca6abff6d72a753b8ea355027f1590b393c91d45",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5bef3d850a859a295e69d8056f9205a630b7c5b26918c1cc8de2e858127c6c65"
+    },
+    {
+      "case": "bag-multiplicity",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "5db06ae84697dcc126330190060d0f0892b6a6ebf5151b71bdc73f5666e0eba7"
+    },
+    {
+      "case": "unicode-and-spaces",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "e87a904b4c33e7f34cb43a7688a86df04cd29f424de959cde536bc75dfd1e92d"
+    },
+    {
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "d66eb2db7a715a85d0d006cc119a9737db0822c489de97be0fe44b0a07a35bd2"
+    },
+    {
+      "case": "out-of-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "12ebc4fc79671c673adf800b515306fafb3f1c55fb43d3b785884090f85ac168"
+    },
+    {
+      "case": "repeated-numeric-values",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "c8c07846e5c1dfe03aea4961727268c435c4e9ea5a103d9901873680affd1ca4"
+    }
+  ]
+}

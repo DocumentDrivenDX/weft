@@ -1,0 +1,124 @@
+{
+  "scope": "Original candidate grouped equality Customer/Orders join over native UInt64 and Unicode C roots; no original name/total-field or production qualification",
+  "cases": 8,
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "binaryProvenance": "B-005-numeric-sequence native extension reused; compiler runtime unchanged",
+  "deterministicPythonRepeat": true,
+  "sourceSha256": "56c999c2a467973e6fa1368f564d0f48b218f9641046b118c830de3216c58c87",
+  "harnessSha256": "a51b7507d935a4e0d50c11791df52e40ffdde7e268cc0e243ced8ffa0b40a5cb",
+  "responseSha256": "7df0628fd526decc7e006f5353f829efa5892361143dd63cdb0286cb6f1a7554",
+  "results": [
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "4a5fe60825dfaea7dd237c94234250935e63b69d40b6a891b56181e12797cb1a"
+    },
+    {
+      "case": "bag-multiplicity",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "60bbc684f1b90d7c6e0533921ac319b49fffa3860cc4b19d35d6d93620452bc6"
+    },
+    {
+      "case": "unicode-and-spaces",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "06e6d7211f7146591b931d1033ec34a986d44e076d5e4b2e5422253bad78ffda"
+    },
+    {
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bc93ddc9e82ec5c6017143c264d296f6b8df2b7267a153d31af7625c78e5215d"
+    },
+    {
+      "case": "out-of-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "35c82ddfaea2c6e0cb3e4f67c65f5b466c351067d8c5a037e7b6d0cc8f43a66c"
+    },
+    {
+      "case": "repeated-numeric-values",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "sqlSha256": "348e4a8aee004c28fbc476f929c021437efb961e3f0a9e77cf7bfc7023684d52"
+    },
+    {
+      "case": "wrong-right-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "049d61ec35743cad310314e60195e1bea5c068b2fd5181571c3f61347c53aed6"
+    },
+    {
+      "case": "right-out-of-domain",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "sqlSha256": "bda692975aa623fb841f7328cd972abfd61a976d11072a5ff9dcb70047e9a172"
+    }
+  ]
+}

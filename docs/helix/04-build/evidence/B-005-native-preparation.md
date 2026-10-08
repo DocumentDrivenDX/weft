@@ -3808,3 +3808,45 @@ preceding checkpoints. It does not infer support for every numeric/container
 combination. Wider original relational query composition and final US-003
 acceptance still need their requirement/evidence audit. Production qualification
 and released host registration remain separate.
+
+## Original grouped equality joins (2026-10-08)
+
+`tests/truss-postgresql/original-grouped-join-native.py` exercises the actual
+Python ABI with the already admitted original multi-recursive configuration.
+It compiles `SELECT c.part, SUM(o.id) AS total FROM Customer c JOIN Customer o
+ON o.part = c.part GROUP BY c.part`, and `--cross-record` replaces the right
+source with Orders. The latter uses distinct type/property IDs for both owners.
+The native extension is reused from B-005-numeric-sequence; compiler runtime
+code is unchanged. No fresh binary build or Chromium proof is claimed here.
+
+Run from the checkout with `PYTHONPATH=/private/tmp/weft-numeric-sequence-python-package`
+and `/private/tmp/weft-toolchain/venv/bin/python` using the harness path, then
+again with `--cross-record`. PostgreSQL 17.9 executes every emitted prerequisite
+and successful query with prepared text parameter slots in one transaction.
+Final terminal logs are `/private/tmp/weft-original-grouped-join-native.log`
+and `/private/tmp/weft-original-grouped-cross-record-native.log`.
+
+The final runs pass six self-join and eight cross-record cases. Independent
+Python nested loops and arbitrary-precision integers supply expected rows and
+sums; expected values do not use emitted SQL. Cases prove empty groups, bag
+fanout, exact UInt64 values with sums beyond UInt64, distinct trailing-space and
+canonically distinct Unicode groups under C collation, repeated numeric values
+with distinct complete keys, unmatched cross-record rows, and unrelated-type
+exclusion. Selected left join-field and right aggregate-field codec corruption,
+and selected numeric domain corruption, prevent query execution. Actual Python
+compilation is deterministic across a repeated complete response.
+
+Early harness assumptions about duplicate complete keys and an unselected left
+numeric field did not match the emitted query prerequisites. They are not
+compiler failures or passing refusal cases: duplicate keys were replaced with
+repeated numeric values on distinct complete keys; cross-record left corruption
+now targets the selected string join field. This does not claim validation of
+unselected source fields or implicit key uniqueness for every relational query.
+
+Receipts `B-005-original-grouped-join-native.json` and
+`B-005-original-grouped-cross-record-join-native.json` pin the source fixture,
+harness, complete Python response, and per-case SQL hashes. These establish
+original-owned grouped-join composition for the selected native fields. The
+original name/customer_id/total query, mixed-home grouped-join variants and
+final US-003 story acceptance remain unproven; candidate/production status is
+unchanged.
