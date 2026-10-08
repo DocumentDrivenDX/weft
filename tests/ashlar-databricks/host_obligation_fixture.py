@@ -76,7 +76,11 @@ def execute(artifact,snapshot,query,session):
   for row in rows:
    for value,col in zip(row,artifact['columns']):
     require(value is None and col['nullable'] or isinstance(value,str))
-    if value is not None and col['representation']['kind'] in ['value','entity','relatedKeys']:strict_json(value)
+    if artifact['interfaceVersion']=='weft-compile/0.2.0':
+     require('representation' in col);kind=col['representation']['kind']
+    else:
+     require(artifact['interfaceVersion']=='weft-compile/0.1.0' and 'logicalType' in col and 'decoder' in col);kind='scalar'
+    if value is not None and kind in ['value','entity','relatedKeys']:strict_json(value)
   current=snapshot();validate(current);require(current==initial)
   return rows
  except Refused:raise

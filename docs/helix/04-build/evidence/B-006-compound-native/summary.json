@@ -1,0 +1,1655 @@
+{
+  "state": "passed",
+  "cases": 133,
+  "positive": 56,
+  "refusals": 77,
+  "outcomes": [
+    {
+      "id": "integer-list-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"-9223372036854775808\",\"9223372036854775807\",\"0\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "-9223372036854775808",
+            "9223372036854775807",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "integer-list-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "integer-list-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-list-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-list-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-list-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "integer-list-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"-9223372036854775808\",\"9223372036854775807\",\"0\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "-9223372036854775808",
+            "9223372036854775807",
+            "0"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "integer-list-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "integer-list-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "integer-list-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-list-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-list-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "boolean-list-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[false,true,false]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            false,
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boolean-list-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "boolean-list-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "boolean-list-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "boolean-list-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "boolean-list-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "boolean-list-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[false,true,false]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            false,
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boolean-list-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "boolean-list-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "boolean-list-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "boolean-list-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "boolean-list-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "string-list-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"é\",\"é\",\"x \",\"\\\"\\\\\\n\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "é",
+            "é",
+            "x ",
+            "\"\\\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string-list-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "string-list-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "string-list-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "string-list-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "string-list-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "string-list-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"é\",\"é\",\"x \",\"\\\"\\\\\\n\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "é",
+            "é",
+            "x ",
+            "\"\\\n"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "string-list-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "string-list-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "string-list-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "string-list-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "string-list-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "decimal-list-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"12345678901234567890123456.78\",\"0.01\",\"0.00\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "12345678901234567890123456.78",
+            "0.01",
+            "0.00"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decimal-list-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "decimal-list-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "decimal-list-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "decimal-list-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "decimal-list-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "decimal-list-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[\"12345678901234567890123456.78\",\"0.01\",\"0.00\"]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            "12345678901234567890123456.78",
+            "0.01",
+            "0.00"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decimal-list-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "decimal-list-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "decimal-list-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "decimal-list-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "decimal-list-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "integer-map-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"a.b\\\"\\\\\":\"0\",\"é\":\"127\",\"é\":\"-128\"}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "é": "-128",
+            "é": "127",
+            "a.b\"\\": "0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "integer-map-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {}
+        }
+      ]
+    },
+    {
+      "id": "integer-map-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-map-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-map-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-map-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "integer-map-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"a.b\\\"\\\\\":\"0\",\"é\":\"127\",\"é\":\"-128\"}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "é": "-128",
+            "é": "127",
+            "a.b\"\\": "0"
+          }
+        }
+      ]
+    },
+    {
+      "id": "integer-map-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {}
+        }
+      ]
+    },
+    {
+      "id": "integer-map-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "integer-map-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-map-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "integer-map-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "nested-list-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            [
+              "1",
+              "2"
+            ],
+            [],
+            [
+              "-128",
+              "127"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nested-list-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "nested-list-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "nested-list-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "nested-list-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "nested-list-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "nested-list-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            [
+              "1",
+              "2"
+            ],
+            [],
+            [
+              "-128",
+              "127"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nested-list-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "nested-list-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "nested-list-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "nested-list-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "nested-list-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "structured-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "9223372036854775807",
+            "note": {
+              "state": "value",
+              "value": "é"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structured-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"0\",\"note\":{\"state\":\"absent\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "0",
+            "note": {
+              "state": "absent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structured-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "structured-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "structured-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "structured-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "structured-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "9223372036854775807",
+            "note": {
+              "state": "value",
+              "value": "é"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structured-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"0\",\"note\":{\"state\":\"absent\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "0",
+            "note": {
+              "state": "absent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "structured-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "structured-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "structured-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "structured-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "cyclic-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "7",
+            "note": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "leaf": "-128",
+                "note": {
+                  "state": "value",
+                  "value": "é"
+                },
+                "next": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cyclic-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"0\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"absent\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "0",
+            "note": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "absent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cyclic-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "cyclic-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "cyclic-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "cyclic-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "cyclic-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "7",
+            "note": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "value",
+              "value": {
+                "leaf": "-128",
+                "note": {
+                  "state": "value",
+                  "value": "é"
+                },
+                "next": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cyclic-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"0\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"absent\"}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "leaf": "0",
+            "note": {
+              "state": "absent"
+            },
+            "next": {
+              "state": "absent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "cyclic-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "cyclic-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "cyclic-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "cyclic-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "optional-items-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[{\"state\":\"value\",\"value\":false},{\"state\":\"value\",\"value\":true}]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            {
+              "state": "value",
+              "value": false
+            },
+            {
+              "state": "value",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optional-items-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "optional-items-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "optional-items-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "optional-items-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "optional-items-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "optional-items-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[{\"state\":\"value\",\"value\":false},{\"state\":\"value\",\"value\":true}]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            {
+              "state": "value",
+              "value": false
+            },
+            {
+              "state": "value",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "optional-items-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "optional-items-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "optional-items-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "optional-items-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "optional-items-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "map-structured-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "x": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "map-structured-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {}
+        }
+      ]
+    },
+    {
+      "id": "map-structured-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "map-structured-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "map-structured-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "map-structured-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "map-structured-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {
+            "x": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "map-structured-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{}}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": {}
+        }
+      ]
+    },
+    {
+      "id": "map-structured-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "map-structured-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "map-structured-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "map-structured-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "list-map-False-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[{\"x\":\"0.00\"},{}]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            {
+              "x": "0.00"
+            },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "list-map-False-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "list-map-False-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "list-map-False-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "list-map-False-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "list-map-False-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "list-map-True-exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[{\"x\":\"0.00\"},{}]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": [
+            {
+              "x": "0.00"
+            },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "list-map-True-empty",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":[]}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "value",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "list-map-True-absent",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        {
+          "state": "absent"
+        }
+      ]
+    },
+    {
+      "id": "list-map-True-explicit-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "list-map-True-wrong-root",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1"
+      ]
+    },
+    {
+      "id": "list-map-True-hidden-bad-leaf",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "id": "empty-owner",
+      "outcome": "published-fixture-result",
+      "rows": [],
+      "expected": []
+    }
+  ],
+  "fixture": {
+    "phase": "ready",
+    "payloadSha256": "19a5688348a10ecbe46141326d743ec3dbbeadf6371c4b8c9450aab507e8a860",
+    "tableUuid": "fb602d36-a961-47d5-a7e6-f5bfda0d65fb",
+    "version": 1,
+    "manifestUuid": "c641c9d9-6803-49fa-a3ac-209c91024418",
+    "publicationId": "weft-compound-fixtures"
+  },
+  "compilerBinarySha256": "3148f1c8bf4767c5526379ee4a4aa91a16f767c7e8d7574be7e711141d78d5c4",
+  "harnessSha256": "66d99df0c399bea5fdbe7e9b81ad1e81c1c45af07cefe5537e01ca83535789d3",
+  "qualification": "Synthetic pinned projection, exact recursive JSON profile; independent scalar/list/map/structured/cyclic and presence oracles. No host/production publication qualification; limit boundaries not included in this receipt."
+}

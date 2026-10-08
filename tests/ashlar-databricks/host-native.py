@@ -21,7 +21,7 @@ def require(value):
  if not value:raise Refused('native fixture custody refused')
 def schema(table,label):
  owner=table.rsplit('.',1)[-1];ddl=re.search(r'CREATE TABLE '+owner+r' \((.*?)\n\)',layout,re.S).group(1)
- expected=[(m.group(1),m.group(2).lower()) for m in re.finditer(r'^\s*(\w+)\s+(STRING|BIGINT|BOOLEAN|DOUBLE|TIMESTAMP)\b',ddl,re.M)]
+ expected=[(m.group(1),m.group(2).lower()) for m in re.finditer(r'\b(\w+)\s+(STRING|BIGINT|BOOLEAN|DOUBLE|TIMESTAMP)\b',ddl,re.M)]
  rows=c.sql(label,'DESCRIBE TABLE '+table);actual=[(r[0],r[1]) for r in rows[:len(expected)]];require(actual==expected and expected)
  return expected
 outcomes=[];compiled=[]
@@ -37,7 +37,7 @@ for label,saved in selected:
  def snapshot():
   require(c.sql(label+'-context-caller','SELECT current_user()')==[[caller]])
   require(detail(manifest,label+'-manifest-identity')['id']==pub['manifestUuid'])
-  versions=c.sql(label+'-manifest-vector','SELECT storage_layout_revision,table_versions_json FROM '+manifest+' WHERE publication_id=:id',[p('id',pub['id'])]);require(len(versions)==1 and versions[0][0]=='ashlar-delta/0.3')
+  versions=c.sql(label+'-manifest-vector','SELECT profile_version,table_versions_json FROM '+manifest+' WHERE publication_id=:id',[p('id',pub['id'])]);require(len(versions)==1 and versions[0][0]=='ashlar-delta/0.3')
   vector=json.loads(versions[0][1]);require(all(vector[t]==v['version'] for t,v in zip(tables,pub['tables'])))
   for i,(table,pin) in enumerate(zip(tables,pub['tables'])):
    require(detail(table,label+'-table-identity-'+str(i))['id']==pin['uuid'])

@@ -14,8 +14,8 @@ The valid new compiler test failed at mapping admission before implementation;
 encoding/dependency refusals. All 276 previous full artifacts remain unchanged.
 133 independently authored native cases compile before fixture creation. All 133 completed against one private immutable publication: 56 exact results
 and 77 refusals before the user query. The original complete receipts are in
-B-006-compound-native-initial/. A dictionary-lookup revision is being verified
-against that same immutable publication.
+B-006-compound-native-initial/. The dictionary-lookup revision also passed all 133 against that same immutable
+publication. Its exact receipts are in B-006-compound-native/.
 
 Read-only prerequisite probes prove recursive VARIANT traversal, exact
 container casts, explicit JSON-null distinction and ordered token assembly on
@@ -29,8 +29,15 @@ The separate read-only native controls now pass six cases: escaped/Unicode/case/
 trailing-space member names, unknown members, exactly 100000 nodes, 100001-node
 refusal, depth below 128 and depth-128 refusal. These use a synthetic owner relation;
 they do not claim publication qualification. Complete receipts are in
-B-006-compound-boundaries-native/. Compound embeddings and actual host enforcement
-remain unfinished. A test-only buffered host fixture passes 49 independent phase/
+B-006-compound-boundaries-native/. Fresh native Python and real Chromium/WASM builds match 415 full artifacts: the
+276 previous cases, 133 compounds and six boundary controls. The Python extension
+has SHA-256 ea82e542ff6a3f046b549519349a963a0f5681029c121c9b1a5c3b468895acb3;
+the WASM has SHA-256 5549ad4be06a9ebea158f13eb32ce3f4fa224bd3ca4487ef783151cb8f960245.
+Complete summaries are B-006-compound-{python,browser}-summary.json. Python runs
+with PATH empty and subprocess creation forbidden; Chromium 148.0.7778.96 proves
+byte parity without runtime IO or Node globals and exercises actual trap
+retirement. Compound entity/keyset combinations and actual host enforcement
+remain in progress. A test-only buffered host fixture passes 49 independent phase/
 transport/unknown-meaning controls; its actual native transport driver is prepared
 but has not completed. B-006-host-before.log retains the missing-helper baseline.
 
