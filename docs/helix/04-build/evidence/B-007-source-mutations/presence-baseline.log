@@ -1,14 +1,5 @@
-
-running 1 test
-test generated_unicode_retention_pins_and_selected_meaning ... FAILED
-
-failures:
-
-failures:
-    generated_unicode_retention_pins_and_selected_meaning
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 4.05s
-
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
 warning: unexpected `cfg` condition value: `128`
    --> vendor/ahash/src/fallback_hash.rs:164:11
     |
@@ -67,8 +58,8 @@ warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x
    = note: `#[warn(dead_code)]` on by default
 
 warning: `ahash` (lib) generated 4 warnings
+   Compiling base64 v0.22.1
 warning: `ahash` (lib) generated 4 warnings (4 duplicates)
-   Compiling weft-core v0.1.0 (/private/tmp/weft-b007-mutants/module-pin-guard/crates/weft-core)
 warning: method `finish` is never used
    --> crates/weft-core/src/syntax.rs:243:19
     |
@@ -81,10 +72,31 @@ warning: method `finish` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: `weft-core` (lib) generated 1 warning
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.92s
-     Running ../../tests/qualify-and-evolve/properties.rs (/private/tmp/weft-b007-mutation-target/debug/deps/qualification_properties-7a3cd0c09ca515e1)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-build/crates/weft-postgresql)
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1025:39
+     |
+1025 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
 
-thread 'generated_unicode_retention_pins_and_selected_meaning' panicked at crates/weft-core/../../tests/qualify-and-evolve/properties.rs:92:8:
-called `Result::unwrap()` on an `Err` value: Fail(Reason("assertion failed: `(left == right)` \n  left: `Null`,\n right: `\"WFT-PIN\"` at crates/weft-core/../../tests/qualify-and-evolve/properties.rs:88"), ("", 0))
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-error: test failed, to rerun pass `-p weft-core --test qualification-properties`
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:842:13
+    |
+842 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.94s
+     Running unittests src/lib.rs (/private/tmp/weft-b007-target/debug/deps/weft_postgresql-5bf20d342390444d)
+
+running 1 test
+test presence_definition::tests::original_definition_drives_presence_without_coercion ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 75 filtered out; finished in 0.00s
+

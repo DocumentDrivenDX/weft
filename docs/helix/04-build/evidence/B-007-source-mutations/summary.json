@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "detected": 3,
+  "detected": 4,
   "mutations": [
     {
       "mutation": "duplicate-key-guard",
@@ -27,6 +27,18 @@
       "status": "detected"
     },
     {
+      "mutation": "presence-null-to-absence",
+      "source": "crates/weft-postgresql/src/presence_definition.rs",
+      "before": "Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(",
+      "after": "Some(v) if v.is_null() => Ok(Presence::Absent),\n            Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(",
+      "originalSha256": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75",
+      "mutantSha256": "79b52b0276ef27f817fd141e12b792cb0e69f17538a98c3e96ff786643f680c0",
+      "test": "postgresql-lib",
+      "filter": "original_definition_drives_presence_without_coercion",
+      "exitCode": 101,
+      "status": "detected"
+    },
+    {
       "mutation": "module-pin-guard",
       "source": "crates/weft-core/src/model.rs",
       "before": "if input.pin.sha256 != sha256(input.document_json.as_bytes()) {",
@@ -39,5 +51,5 @@
       "status": "detected"
     }
   ],
-  "scope": "Three source guard mutations only; not all backend semantic mutations."
+  "scope": "Source guard and PostgreSQL presence mutations only; not all backend semantic mutations."
 }

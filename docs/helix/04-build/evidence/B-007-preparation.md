@@ -101,3 +101,11 @@ is retained as such, not counted as an actual compiler defect. These three
 controls establish source-mutation sensitivity for those guards only. Required
 backend type-filter, duplicate, rounding and absent/null source mutations remain
 to be verified.
+
+The source-mutation suite now also detects explicit native JSON null being
+substituted with absence in PostgreSQL's registered presence observation.
+The unchanged original-definition presence test passes first; the temporary
+mutant fails its expected null refusal. Exact source hashes, replacement and
+baseline/failure logs are retained with the four-mutant summary. This covers
+the presence decoder mutation, not target SQL null behavior or the remaining
+type-filter, duplicate-elimination and numeric-rounding source mutations.
