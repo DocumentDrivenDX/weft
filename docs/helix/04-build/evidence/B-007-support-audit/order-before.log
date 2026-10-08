@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence-check.py", line 20, in probe
+    result=audit(c);assert expected_pass,name;assert result==dict(status='verified',cases=1,layers=['native'])
+           ^^^^^^^^
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence_audit.py", line 28, in audit
+    require(set(case)=={'id','expected'} and isinstance(case['id'],str) and case['id'] and case['id'] not in expected and isinstance(case['expected'],list))
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence_audit.py", line 9, in require
+    if not value:raise Refused('unverified support claim')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+evidence_audit.Refused: unverified support claim
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence-check.py", line 23, in <module>
+    probe('complete-exact-bag',expected_pass=True)
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence-check.py", line 21, in probe
+    except Refused:assert not expected_pass,name
+                          ^^^^^^^^^^^^^^^^^
+AssertionError: complete-exact-bag

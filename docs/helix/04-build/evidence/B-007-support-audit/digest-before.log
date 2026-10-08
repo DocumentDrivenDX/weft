@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence-check.py", line 52, in <module>
+    probe('matched-invalid-'+key,lambda r,k=key:r['profile'].update({k:'not-a-digest'}),lambda c,k=key:c['profile'].update({k:'not-a-digest'}))
+  File "/private/tmp/weft-build/tests/qualify-and-evolve/evidence-check.py", line 20, in probe
+    result=audit(c);assert expected_pass,name;assert result==dict(status='verified',cases=1,layers=['native'])
+                           ^^^^^^^^^^^^^
+AssertionError: matched-invalid-modelSha256
