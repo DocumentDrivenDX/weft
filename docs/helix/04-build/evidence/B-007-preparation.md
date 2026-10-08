@@ -461,3 +461,9 @@ the emission. B-007-obligation-branches/ retains source hashes and executed test
 An initial fixture move-check error was corrected before successful execution;
 compiler implementation remains unchanged. Actual host fulfillment is separately
 proved by native driver controls, not by these merge assertions.
+
+The expanded combined guard regression passes 36 tests across five suites,
+with none ignored or filtered. B-007-guard-regression-expanded/ retains the
+terminal log and current test-source hashes. US-002 matrix entries now link
+dispatch, capability-assessment, and obligation-merge branch receipts. This
+component checkpoint does not replace full-workspace or native qualification.
