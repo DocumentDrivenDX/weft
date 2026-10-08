@@ -1,8 +1,9 @@
 {
+  "nativeTextColumnCollation": "database default",
   "scope": "Public original owned composite decimal(28,2)/uint64 relationship keys, source arity 2 and target arity 3, independently selected native-row/JSONB synthetic PostgreSQL fixtures; not embedding or production qualification",
   "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
   "captureSha256": "fad989ad2807ac329097f71d1552a61cf50f43620fd59f1e54f74ca56be0b5b1",
-  "harnessSha256": "799abca018660f2918f6fd545ae79918b1e22c7557f5121ee276b99ed90cb601",
+  "harnessSha256": "3066343e3e7d4c40be72e1e0c97a2ef2db2772ac65be1deb2e1bfe6c9d29b151",
   "results": [
     {
       "propsPropertyIds": [],
@@ -31,7 +32,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "6607e391561fcc2cfdcc14a2816caf8bc3279bccb5d92a2966aaa82f3cffee21"
+      "executedSqlSha256": "24721d79e1316afcffcf1ff43b979dc815b4905ef6187761891911b4033275a4"
     },
     {
       "propsPropertyIds": [],
@@ -60,7 +61,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "055df675433b9370cd0e0311ea60600e538f154f699078639398e01618ca2b95"
+      "executedSqlSha256": "0add421219898b71e7bc4a8a5fcbdf2f69b3c6ff17462e88b1241d63a18eabda"
     },
     {
       "propsPropertyIds": [],
@@ -89,7 +90,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "198fe097cd724a232643f90816a2c265fd725adbf3971f73df1cc2ee61a06456"
+      "executedSqlSha256": "4d2af2291de9e535ed30be0f79a17d7ed60d03a8918a83ca7f48a926d550fae7"
     },
     {
       "propsPropertyIds": [],
@@ -118,7 +119,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "921d84a5d53a9bf90dacbd5565a410dd7a3d0702b23080df825da60364a5309f"
+      "executedSqlSha256": "4114b0f511ed81101b7d51aad7b23cb78c85076a84aaa3364ff79c40c1bcf606"
     },
     {
       "propsPropertyIds": [],
@@ -147,7 +148,7 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "1149224c7a413e37471a8db18d1a639cde8fe6014ea295b7772e027b34978524"
+      "executedSqlSha256": "01034c16e488168273552f182fd99896b48f46590081450b606412da063fbcd2"
     },
     {
       "propsPropertyIds": [],
@@ -176,7 +177,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "a164a00a066d7ffa485b9422c5630a6971a93860800266c60b7559828d10a554"
+      "executedSqlSha256": "cb749caddc5d56f5c4228b74a6d0d2d1b48aada919e8107b041f0b7d5bc27157"
     },
     {
       "propsPropertyIds": [],
@@ -205,7 +206,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "5b45f51115af3a29d1f44f35c302c2cc88afb0a168fe030450b281fadf2f632a"
+      "executedSqlSha256": "10d80a5b94e9848e38c97b91f18083402d950f095ff25d8bbec1d07db1161e71"
     },
     {
       "propsPropertyIds": [],
@@ -234,7 +235,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "61c069e2a614691203362407a24da2abc6ee01f67e7e9738456b0cb97ca5baa9"
+      "executedSqlSha256": "3ae315877fea98c8a8769062f1768ce079ad001c86b2555d6ec4f49ca09d7e40"
     },
     {
       "propsPropertyIds": [],
@@ -263,7 +264,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "0b2404cd1e1553e9141431fdd8f5db9a06b57d4be5d7d8e248d445ac2bb3252a"
+      "executedSqlSha256": "bb4d8b6f5097ae41f1bbb3ad3c291c5a46f067a577f78590f9a5fd2895921e03"
     },
     {
       "propsPropertyIds": [],
@@ -292,7 +293,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "ec19846845c5e61d7b50ebb44cb9dfa235a3447294bb39963c3321185d74d7e3"
+      "executedSqlSha256": "8db1b5c468888c101563441c33bbbcf560e84b82cbb286e07344273f33f51c9a"
     },
     {
       "propsPropertyIds": [],
@@ -321,7 +322,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "68551ed43faa0e997ccb6d2e467a8d6b68db93eb730c395cc5cd232f5c39224a"
+      "executedSqlSha256": "e63bb2c258d2abb941c2374eefadbccfdd0f10f45501456cf5228d2e9957b6d0"
     },
     {
       "propsPropertyIds": [],
@@ -350,7 +351,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "4054763945563e9e848b47d41799633a1cff1c15d9892e79651a37b2dfadbaa2"
+      "executedSqlSha256": "925faff59822636b6a52321feba578102019062266e75fe99d038fea7b64cdb1"
     },
     {
       "propsPropertyIds": [],
@@ -379,7 +380,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "507fea5695af637445b79524cc312203f750f749688ee9f365701ca941a35f16"
+      "executedSqlSha256": "39b2b914f5637fb37b58f80705c88506abdc4fa725748cbded1cf7af70d29331"
     },
     {
       "propsPropertyIds": [],
@@ -408,7 +409,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "35d08566677e9fa887a3784c6dd7396733822669c01a30022851982607a84d7a"
+      "executedSqlSha256": "48cfc9647c5bdf429a3f7db7591979da6baa3462a46e00035c0b4919b1db7673"
     },
     {
       "propsPropertyIds": [],
@@ -437,7 +438,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "3c358c6bb6f0daac8aa80566e032a766e9eaba60c037d0e2e642bb12a63632aa"
+      "executedSqlSha256": "9ed338cc1a932f1f1aa5d5707d1df12b6971007cddd4efaac02b274a41d03c0f"
     },
     {
       "propsPropertyIds": [],
@@ -466,7 +467,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "e556df154ef5ac3b372fb51a02b059562d33b2e29128da1be1152e72e3014e11"
+      "executedSqlSha256": "916cc2c0c3cb563869f1158b0cc6acec4bf63ea525ddce0118dc1830e44c8d66"
     },
     {
       "propsPropertyIds": [],
@@ -495,7 +496,7 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "77ad91758d5893894d1c00e79e8fc814820bdaed05fa14830be63ce09efac849"
+      "executedSqlSha256": "8782ae8b2f85bf2421d7ffffdffee39ede1c03b5b99addfb8d1b4a7b04e97093"
     },
     {
       "propsPropertyIds": [],
@@ -524,7 +525,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "a4777d23194dca3e0f9c25c71f6dccaa12d5b10d16547e8da7c4eff32e853a54"
+      "executedSqlSha256": "d2b9cb81503bee4fda77d5102737a75bf14e76cedab05472e5d18b9da07c86d0"
     },
     {
       "propsPropertyIds": [],
@@ -553,7 +554,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "e715c4f50a2ce615be498e37da8809517676653b1e56fa24a477665fce0edca9"
+      "executedSqlSha256": "23632b0d049bb0e8b0a4aa8c9d45e3a3c8bbc707f6c01da186e1837075efa292"
     },
     {
       "propsPropertyIds": [],
@@ -582,7 +583,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "6a0e45097ae808e8b28ad9c6fca11bf365c4737da321b8d5d356f0b60e5b4ed2"
+      "executedSqlSha256": "f979cc427c5e02088efca8f11db69c35a2f8623a9004117f271f8ac95e9116bf"
     },
     {
       "propsPropertyIds": [],
@@ -611,7 +612,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "d5f84787b86318c5b5b97b1ed92c9fa90cf665dfdd5384687e5b3183f3621954"
+      "executedSqlSha256": "9914f829bc29cae1316ee0933db8bdb5636ca7eeba8e3386a438fc5ba87f37bb"
     },
     {
       "propsPropertyIds": [],
@@ -640,7 +641,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "37382729e55e6c2638f05b63a3e3daa2ee13ddf393637425ed14d1c91cb18eca"
+      "executedSqlSha256": "b8ab60d52b25d423c97a10da9931b3d2efce18fd45f36c85aa50d29732daa5c0"
     },
     {
       "propsPropertyIds": [],
@@ -669,7 +670,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "6e6d17ef7f7a06a1c4aeadb05761d9d81553f1fcd859c548fec9b42b815015d4"
+      "executedSqlSha256": "618064c8a2d8ad90073ab8f722f5a24e96b5a330d31465cd66881787d6f1f3ff"
     },
     {
       "propsPropertyIds": [],
@@ -698,7 +699,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "660c973958d5f2e15599d64cdf38065a3573a64f7573fed132c4cdb3c8654079"
+      "executedSqlSha256": "6c4144d5076315c0b29cee2da55f969a7d4f5aaefde75b3030c4eb6a235ca398"
     },
     {
       "propsPropertyIds": [],
@@ -727,7 +728,7 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "ba9a5176b100255a50ab55aa904ae7bf1ea29538a6c950b40f999f8f4242bdf7"
+      "executedSqlSha256": "9dbb21b488e8e3408d0f99cc1e706005181e0ce3d44f5059eb9aebe58c330a9a"
     },
     {
       "propsPropertyIds": [],
@@ -756,7 +757,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "b90c889a667416730eab4fab90ae152d4347e20b7c7e5274f16d930d72984ba1"
+      "executedSqlSha256": "b0d335ab2d64ef5ce11263ce8956c393e33d7b3399ebb0e97080a57425e651f7"
     },
     {
       "propsPropertyIds": [],
@@ -785,7 +786,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "2179cd16bc8e62927f1f712eef836e8a629c10f0d5af568c3da93ca81c72efe1"
+      "executedSqlSha256": "e3cb77a3a2e343a675b32803153a511f1bf5983ca759bf93bc2f5b825668f878"
     },
     {
       "propsPropertyIds": [],
@@ -814,7 +815,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "4d303b8f5f56319803a1f5b01759b38b391d0e9c94b95411e18d1307977be2b8"
+      "executedSqlSha256": "5156e5e62c6a0ca74440ae5970e88f28905175a16853e80f2be6354a4a223358"
     },
     {
       "propsPropertyIds": [],
@@ -843,7 +844,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "64abf157759cd873071b4c6420da3ccca454bf5f00d089681d3efe59225610a9"
+      "executedSqlSha256": "3050d384edbbd5b84ca03285adc3b9b025e07698dfab46b14fcd5e42533153fe"
     },
     {
       "propsPropertyIds": [],
@@ -872,7 +873,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "092c1ad5c9e59fb8ca47348ce8fbd7590754cddd53e568fcef18b672e675ec5a"
+      "executedSqlSha256": "7cddca42f424b71a38ec26293e5931d4bc441f8a386b3d837a2afc4890f0da63"
     },
     {
       "propsPropertyIds": [],
@@ -901,7 +902,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "f26526e76a349e687fbb42ebb4153c6cb1fbf14e3061b92f3d79137ec0c93bc6"
+      "executedSqlSha256": "e78ee3abfba768d85aeaf7824ab0c817b63f0f81b50cb2196f6e08e75f8d4dda"
     },
     {
       "propsPropertyIds": [],
@@ -930,7 +931,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "f4697f011c8e96306639bb79096a0af849032a38f697f6036f04bd30d5ed9ef9"
+      "executedSqlSha256": "465433a1859e42f50921c3cd6f89a622e638a0184fec10e0531ff5aa3d72cbd5"
     },
     {
       "propsPropertyIds": [],
@@ -959,7 +960,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "3c1713984ce9b4c387baa129df384105ccd96bd37052fcda572e0826a848be17"
+      "executedSqlSha256": "1465d431499ad75eb85a6ca26f5c30691b35eaa283d6b36e57820af3c5edffa0"
     },
     {
       "propsPropertyIds": [],
@@ -988,7 +989,7 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "44b08b735df34f77313de8fd5c386a34a947dbe39118c5a88f97f23e501d740d"
+      "executedSqlSha256": "7774f39ca3578953900bef305f2322040ad92859c7f71cd3fd725e2e8215cfcf"
     },
     {
       "propsPropertyIds": [],
@@ -1017,7 +1018,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "39cfae3a28b5ef5fab4a263964402a9251b1726331454c55627a941d9ccea337"
+      "executedSqlSha256": "4eccc1fd5ffe470e0dce524c83f04ad59c69caab878fd5f90d8e9d3c52004b46"
     },
     {
       "propsPropertyIds": [],
@@ -1046,7 +1047,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "bbf8d1d83f12339a7be0fb879e6f26e3135c3aca40edb8fe0c75bff9c815868f"
+      "executedSqlSha256": "1f3e813861324cbe6571b44124f982560d2bbf056dfaf07b7d638d83f3b5d8aa"
     },
     {
       "propsPropertyIds": [],
@@ -1075,7 +1076,7 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "9cc94baeaa80b929131508732ed7430d4f68ecc79f8efb4536074db2f97e6968"
+      "executedSqlSha256": "3e9e8e433e69f14b9101374b056ecd7fe67f257401d7bd3d28e9c3fff23abfc4"
     },
     {
       "propsPropertyIds": [],
@@ -1104,7 +1105,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "7ebb3cb43bc906be09e3e0f504580cb3d1345f5a7b5cffd7b9d49331d29e97a2"
+      "executedSqlSha256": "4a42cde41e46d0269ea71dfa379a2e09f03f74d9e75d31a31d19074017f4e008"
     },
     {
       "propsPropertyIds": [],
@@ -1133,7 +1134,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "0ed981a15744b9ad8d213f30596a182fa2c59d6d046e6545307f861838332a55"
+      "executedSqlSha256": "c2a64d37c3260f3bef3f1aa48e1fae869de65238d9c709f299dcd28328f10996"
     },
     {
       "propsPropertyIds": [],
@@ -1162,7 +1163,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "e2fc12ebd71c69209d2aff0b6a44f321fe8fb93f997923f35da8f776185453a5"
+      "executedSqlSha256": "9d22c58343f1c627a65edc487c449cea0c6b687fb55e2e37ac41af9799321cd4"
     }
   ]
 }

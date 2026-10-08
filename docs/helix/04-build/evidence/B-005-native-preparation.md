@@ -3008,3 +3008,41 @@ This is original compiler and synthetic PostgreSQL evidence for the named exact
 numeric heterogeneous subset. UTF-8/C-collation string components, other scalar
 domains, broader source-token grammars and fresh Python/browser transports remain
 unqualified. No installed Truss or production compatibility claim follows.
+
+### Unicode string composite keys and explicit collation (2026-10-07)
+
+`tests/truss-postgresql/build-string-relationship-fixture.py` authors an original
+string/uint64 composite key variant with required Unicode string first components,
+`unicode-text-C` comparators, UTF8 encoding and normalization `none`. String leaf
+codecs preserve Unicode scalars and exclude numeric adoption artifacts. Changed
+original artifacts are re-pinned from bytes; model content does not choose
+executable procedures. The runtime's existing exact binding allowlist is unchanged.
+
+The separate string Rust regression compiles sixteen requests across native-row,
+Customer-props, Orders-props and within-key mixed homes, including eighty missing
+component-comparator refusals and deterministic restoration. Its trusted
+conformance renderer explicitly selects native `text_value` or the admitted
+props carrier and applies `COLLATE pg_catalog."C"` to string fields/parameters.
+The first PostgreSQL run exposed its previous native numeric-carrier assumption;
+that test-only renderer was corrected and captures regenerated before qualification.
+
+`tests/truss-postgresql/composite-relationship-native.py --string` passes 32
+PostgreSQL 17.9 cases; adding `--mixed` passes 96. Composed `é` and decomposed
+`e` plus combining acute remain distinct complete keys even with the same uint64
+component, and ordering matches independent UTF8-byte/C expectations. Related-key
+bags, complete-tuple uniqueness, empty results, lookahead and corruption checks
+retain the earlier independent assertions.
+
+Native text columns use an adversarial ICU `und-u-ks-level1` nondeterministic
+collation. Every string case first positively verifies that this collation treats
+the two Unicode spellings as equal. Emitted explicit C comparison/order then
+preserves distinctness; this avoids inferring correctness from a database whose
+default locale is already C. Receipts:
+[B-005-string-relationship-native.json](B-005-string-relationship-native.json) and
+[B-005-string-mixed-native.json](B-005-string-mixed-native.json).
+
+All 138 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`.
+This qualifies the selected original required Unicode-string/uint64 composite
+subset over synthetic PostgreSQL fixtures. Other string facets/collations,
+additional scalar domains, fresh Python/browser transport and installed Truss
+compatibility remain outside this evidence.

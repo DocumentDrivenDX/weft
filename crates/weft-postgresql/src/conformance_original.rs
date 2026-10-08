@@ -371,9 +371,10 @@ fn numeric_expression(
         && logical.facets == serde_json::json!({"integerWidth":{"bits":64,"signed":false}}))
         || (logical.family == Family::Decimal
             && logical.facets == serde_json::json!({"precision":28,"scale":2}));
-    if logical.nullable || !selected_domain {
+    let string_domain = logical.family == Family::String && logical.facets == serde_json::json!({});
+    if logical.nullable || !(selected_domain || string_domain) {
         return Err(fail(
-            "Conformance numeric procedure only selects required uint64 or decimal(28,2) operands",
+            "Conformance numeric procedure only selects required uint64, decimal(28,2) or Unicode string operands",
         ));
     }
     match node {
@@ -381,7 +382,11 @@ fn numeric_expression(
             let access = access.ok_or_else(|| fail("Numeric field access missing"))?;
             let carrier = match &access.location {
                 crate::registered_access::Location::Row(location) => {
-                    location.scalar_observation().native_numeric_text
+                    if string_domain {
+                        location.scalar_observation().text
+                    } else {
+                        location.scalar_observation().native_numeric_text
+                    }
                 }
                 crate::registered_access::Location::Props(_) => access
                     .scalar_storage
@@ -390,20 +395,28 @@ fn numeric_expression(
                     .carrier
                     .clone(),
             };
-            Ok(format!("({carrier})::pg_catalog.numeric"))
+            Ok(if string_domain {
+                format!("({carrier})::pg_catalog.text COLLATE pg_catalog.\"C\"")
+            } else {
+                format!("({carrier})::pg_catalog.numeric")
+            })
         }
         Expression::Literal {
             value,
             logical_type,
             span,
-        } => Ok(format!(
-            "{}::pg_catalog.numeric",
-            parameters.push(
+        } => {
+            let slot = parameters.push(
                 logical_type.clone(),
                 value.clone(),
-                serde_json::json!({"literalSpan":span})
-            )?
-        )),
+                serde_json::json!({"literalSpan":span}),
+            )?;
+            Ok(if string_domain {
+                format!("{slot}::pg_catalog.text COLLATE pg_catalog.\"C\"")
+            } else {
+                format!("{slot}::pg_catalog.numeric")
+            })
+        }
         _ => Err(fail("Unselected conformance numeric operation")),
     }
 }
@@ -430,6 +443,18 @@ mod composite_tests {
             inputs,
             "WEFT_ORIGINAL_HETEROGENEOUS_CAPTURE",
             "WEFT_ORIGINAL_HETEROGENEOUS_MIXED_CAPTURE",
+        );
+    }
+    #[test]
+    fn string_composite_relationships_compile_through_original_owned_configuration() {
+        let inputs: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-string-relationship-inputs.json"
+        ))
+        .unwrap();
+        exercise(
+            inputs,
+            "WEFT_ORIGINAL_STRING_CAPTURE",
+            "WEFT_ORIGINAL_STRING_MIXED_CAPTURE",
         );
     }
     fn exercise(inputs: Value, native_variable: &str, mixed_variable: &str) {
