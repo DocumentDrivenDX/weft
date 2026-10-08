@@ -747,6 +747,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-model-boundaries/summary.json",
           "sha256": "08f6efa218d52ee3a31ff3dc368e867b3d51f1a4059230e217f8f1e0075ef3f9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -788,6 +796,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-parser-boundaries/summary.json",
           "sha256": "05d0286922f2a3e1f2729aeb5e3f1052b79a86f7e30462b0107da3581d30c9cd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -825,6 +841,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
           "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -866,6 +890,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-model-boundaries/summary.json",
           "sha256": "08f6efa218d52ee3a31ff3dc368e867b3d51f1a4059230e217f8f1e0075ef3f9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -899,6 +931,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -940,6 +980,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-parser-boundaries/summary.json",
           "sha256": "05d0286922f2a3e1f2729aeb5e3f1052b79a86f7e30462b0107da3581d30c9cd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/summary.json",
+          "sha256": "35cc2eb4cc9e74464aef17b747b8ee451c044bae1b705a3ce342fd1f9bfa2d26"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
+          "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
