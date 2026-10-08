@@ -1,0 +1,238 @@
+{
+  "bindingProfile": "truss-postgresql-candidate/0.1.0",
+  "interfaceVersion": "weft-original-conformance-composition/0.1.0",
+  "procedureScope": "Compiled fixture-only exact JSON field identities, original codec bytes, empty source bytes and closed text/uint64 slots; no executable names in metadata",
+  "properties": [
+    {
+      "columns": {
+        "relation:object:id": {
+          "name": "id",
+          "relationIdentity": "relation:object"
+        },
+        "relation:object:type_id": {
+          "name": "type_id",
+          "relationIdentity": "relation:object"
+        },
+        "relation:row_home_node:definition_bytes": {
+          "name": "definition_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:map_key": {
+          "name": "map_key",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:node_id": {
+          "name": "node_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:parent_node_id": {
+          "name": "parent_node_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:record_field_identity_bytes": {
+          "name": "record_field_identity_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:sequence_ordinal": {
+          "name": "sequence_ordinal",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:slot_kind": {
+          "name": "slot_kind",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:source_bytes": {
+          "name": "source_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:value_kind": {
+          "name": "value_kind",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_scalar:binary_value": {
+          "name": "binary_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:boolean_value": {
+          "name": "boolean_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:codec_definition_bytes": {
+          "name": "codec_definition_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:node_id": {
+          "name": "node_id",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:numeric_token": {
+          "name": "numeric_token",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:numeric_value": {
+          "name": "numeric_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:opaque_bytes": {
+          "name": "opaque_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:original_source_bytes": {
+          "name": "original_source_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:scalar_kind": {
+          "name": "scalar_kind",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:temporal_instant": {
+          "name": "temporal_instant",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:temporal_text": {
+          "name": "temporal_text",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:text_value": {
+          "name": "text_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_state:edge_id": {
+          "name": "edge_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:object_id": {
+          "name": "object_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:object_type_id": {
+          "name": "object_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:owner_kind": {
+          "name": "owner_kind",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:property_id": {
+          "name": "property_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:property_owner_type_id": {
+          "name": "property_owner_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:relationship_type_id": {
+          "name": "relationship_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:root_node_id": {
+          "name": "root_node_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_state"
+        }
+      },
+      "index": 5,
+      "inventory": {
+        "bytesBase64": "e30=",
+        "identity": "candidate-test-artifact",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "leafCodecs": {
+        "2": {
+          "originalArtifacts": {
+            "authoredDefinition": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InN0cmVldCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJzdHJlZXQiLCJudWxsYWJpbGl0eSI6InJlcXVpcmVkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9",
+            "nativeDomainDefinition": "e30=",
+            "sourceInterpretationDefinition": "e30="
+          },
+          "originalJson": "{\"authoredDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InN0cmVldCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJzdHJlZXQiLCJudWxsYWJpbGl0eSI6InJlcXVpcmVkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9\",\"identity\":\"street\",\"sha256\":\"24eff6dd91f4a374edd13db8dc1633a832b93f354d42336702ead1cce67acf5a\"},\"coercion\":\"none\",\"interfaceVersion\":\"truss-jsonb-leaf-codec/0.1.0\",\"invalidStoredValue\":\"complete-result-refusal\",\"nativeDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"nativeDomainProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"readDefault\":\"none\",\"rule\":{\"decodedCarrierKind\":\"string\",\"encoding\":\"preserve-unicode-scalars\",\"family\":\"string\",\"storageRepresentation\":\"json-string\"},\"sourceInterpretationDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"sourceInterpretationProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"}}"
+        },
+        "3": {
+          "originalArtifacts": {
+            "authoredDefinition": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InppcCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJ6aXAiLCJudWxsYWJpbGl0eSI6ImFic2VudC1hbGxvd2VkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9",
+            "nativeDomainDefinition": "e30=",
+            "sourceInterpretationDefinition": "e30="
+          },
+          "originalJson": "{\"authoredDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InppcCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJ6aXAiLCJudWxsYWJpbGl0eSI6ImFic2VudC1hbGxvd2VkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9\",\"identity\":\"zip\",\"sha256\":\"c2262427c6b4358dc1c555e0f39dab963ec723f7e1a3415855165a47910738fa\"},\"coercion\":\"none\",\"interfaceVersion\":\"truss-jsonb-leaf-codec/0.1.0\",\"invalidStoredValue\":\"complete-result-refusal\",\"nativeDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"nativeDomainProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"readDefault\":\"none\",\"rule\":{\"decodedCarrierKind\":\"string\",\"encoding\":\"preserve-unicode-scalars\",\"family\":\"string\",\"storageRepresentation\":\"json-string\"},\"sourceInterpretationDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"sourceInterpretationProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"}}"
+        }
+      },
+      "obligations": [
+        "candidate-stored-domain"
+      ],
+      "physicalProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      },
+      "presenceProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      },
+      "recordPresence": {
+        "/nodes/1/shape/members/0/presenceDefinition": {
+          "acceptedDefinitionBase64": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InN0cmVldCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJzdHJlZXQiLCJudWxsYWJpbGl0eSI6InJlcXVpcmVkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9",
+          "originalJson": "{\"absentMember\":\"present-false\",\"acceptedDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InN0cmVldCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJzdHJlZXQiLCJudWxsYWJpbGl0eSI6InJlcXVpcmVkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9\",\"identity\":\"street\",\"sha256\":\"24eff6dd91f4a374edd13db8dc1633a832b93f354d42336702ead1cce67acf5a\"},\"carrierSchema\":\"urn:truss:draft:exact-value:0.1.0#/$defs/presence\",\"defaultApplication\":\"none-on-read\",\"emptyCollection\":\"present-empty-typed-value\",\"interfaceVersion\":\"truss-presence-definition/0.1.0\",\"jsonNullMember\":\"present-null-if-authored-nullable\",\"nativeNullValue\":\"unsupported-without-separate-profile\",\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"sqlNullRoot\":\"integrity-refusal\",\"storageRoot\":\"nonnull-jsonb-object\"}"
+        },
+        "/nodes/1/shape/members/1/presenceDefinition": {
+          "acceptedDefinitionBase64": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InppcCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJ6aXAiLCJudWxsYWJpbGl0eSI6ImFic2VudC1hbGxvd2VkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9",
+          "originalJson": "{\"absentMember\":\"present-false\",\"acceptedDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6InppcCIsImtpbmQiOiJmaWVsZCIsIm5hbWUiOiJ6aXAiLCJudWxsYWJpbGl0eSI6ImFic2VudC1hbGxvd2VkIiwic2NhbGFyVHlwZSI6InN0cmluZyJ9\",\"identity\":\"zip\",\"sha256\":\"c2262427c6b4358dc1c555e0f39dab963ec723f7e1a3415855165a47910738fa\"},\"carrierSchema\":\"urn:truss:draft:exact-value:0.1.0#/$defs/presence\",\"defaultApplication\":\"none-on-read\",\"emptyCollection\":\"present-empty-typed-value\",\"interfaceVersion\":\"truss-presence-definition/0.1.0\",\"jsonNullMember\":\"present-null-if-authored-nullable\",\"nativeNullValue\":\"unsupported-without-separate-profile\",\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"sqlNullRoot\":\"integrity-refusal\",\"storageRoot\":\"nonnull-jsonb-object\"}"
+        }
+      },
+      "relations": {
+        "relation:object": "object",
+        "relation:row_home_node": "row_home_node",
+        "relation:row_home_scalar": "row_home_scalar",
+        "relation:row_home_state": "row_home_state"
+      },
+      "rowJoin": {
+        "originalArtifacts": {
+          "constraintEvidence/0": "e30=",
+          "layoutInventory": "e30=",
+          "storedDomainDefinition": "e30="
+        },
+        "originalJson": "{\"authorityView\":\"same-original-admitted-catalog-authority-and-snapshot\",\"constraintEvidence\":[{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}],\"containerRoot\":\"complete-value-tree-only\",\"integrityAdmission\":\"qualified-stored-domain-before-publication-independent-of-predicate-order\",\"interfaceVersion\":\"truss-row-join-definition/0.1.0\",\"invalidObservation\":\"whole-result-integrity-refusal\",\"layoutInventory\":{\"bytesBase64\":\"e30=\",\"identity\":\"candidate-test-artifact\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"node\":{\"columns\":{\"definition_bytes\":\"relation:row_home_node:definition_bytes\",\"map_key\":\"relation:row_home_node:map_key\",\"node_id\":\"relation:row_home_node:node_id\",\"parent_node_id\":\"relation:row_home_node:parent_node_id\",\"record_field_identity_bytes\":\"relation:row_home_node:record_field_identity_bytes\",\"sequence_ordinal\":\"relation:row_home_node:sequence_ordinal\",\"slot_kind\":\"relation:row_home_node:slot_kind\",\"source_bytes\":\"relation:row_home_node:source_bytes\",\"state_id\":\"relation:row_home_node:state_id\",\"value_kind\":\"relation:row_home_node:value_kind\"},\"relationName\":\"row_home_node\",\"relationPhysicalIdentity\":\"relation:row_home_node\"},\"nullRoot\":\"present-null-with-zero-scalar-payloads\",\"optionalAbsence\":\"complete-authorized-state-absence\",\"owner\":{\"discriminatorColumnPhysicalIdentity\":\"relation:object:type_id\",\"idColumnPhysicalIdentity\":\"relation:object:id\",\"relationName\":\"object\",\"relationPhysicalIdentity\":\"relation:object\"},\"ownerJoin\":\"object-id-and-type\",\"ownerMultiplicity\":\"preserve-each-admitted-owner-occurrence\",\"payloadJoin\":\"root-state-id-and-node-id-to-scalar-state-id-and-node-id\",\"profile\":{\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"recordKind\":\"object\",\"requiredAbsence\":\"integrity-refusal\",\"rootJoin\":\"state-id-and-root-node-id-to-node-state-id-and-node-id\",\"scalar\":{\"columns\":{\"binary_value\":\"relation:row_home_scalar:binary_value\",\"boolean_value\":\"relation:row_home_scalar:boolean_value\",\"codec_definition_bytes\":\"relation:row_home_scalar:codec_definition_bytes\",\"node_id\":\"relation:row_home_scalar:node_id\",\"numeric_token\":\"relation:row_home_scalar:numeric_token\",\"numeric_value\":\"relation:row_home_scalar:numeric_value\",\"opaque_bytes\":\"relation:row_home_scalar:opaque_bytes\",\"original_source_bytes\":\"relation:row_home_scalar:original_source_bytes\",\"scalar_kind\":\"relation:row_home_scalar:scalar_kind\",\"state_id\":\"relation:row_home_scalar:state_id\",\"temporal_instant\":\"relation:row_home_scalar:temporal_instant\",\"temporal_text\":\"relation:row_home_scalar:temporal_text\",\"text_value\":\"relation:row_home_scalar:text_value\"},\"relationName\":\"row_home_scalar\",\"relationPhysicalIdentity\":\"relation:row_home_scalar\"},\"scalarRoot\":\"present-scalar-with-exactly-one-qualified-payload\",\"state\":{\"columns\":{\"edge_id\":\"relation:row_home_state:edge_id\",\"object_id\":\"relation:row_home_state:object_id\",\"object_type_id\":\"relation:row_home_state:object_type_id\",\"owner_kind\":\"relation:row_home_state:owner_kind\",\"property_id\":\"relation:row_home_state:property_id\",\"property_owner_type_id\":\"relation:row_home_state:property_owner_type_id\",\"relationship_type_id\":\"relation:row_home_state:relationship_type_id\",\"root_node_id\":\"relation:row_home_state:root_node_id\",\"state_id\":\"relation:row_home_state:state_id\"},\"relationName\":\"row_home_state\",\"relationPhysicalIdentity\":\"relation:row_home_state\"},\"stateSelection\":\"owner-kind-and-independent-property-owner-and-property\",\"storedDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}}"
+      },
+      "valueProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      }
+    }
+  ],
+  "records": [
+    {
+      "columns": {
+        "object-props": {
+          "name": "props",
+          "relationIdentity": "object-table"
+        },
+        "object-type": {
+          "name": "type_id",
+          "relationIdentity": "object-table"
+        }
+      },
+      "discriminatorIdentity": "object-type",
+      "index": 0,
+      "inventory": {
+        "bytesBase64": "e30=",
+        "identity": "candidate-test-artifact",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "relationIdentity": "object-table",
+      "relations": {
+        "object-table": "object"
+      }
+    }
+  ]
+}

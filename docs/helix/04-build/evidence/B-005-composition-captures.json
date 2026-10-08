@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-07",
+  "scope": "Static conformance composition/transport data for forthcoming real embedding harness",
+  "tests": {
+    "passed": 130,
+    "failed": 0,
+    "logSha256": "3995989cbbeef459210bf2638a7a9982ff31d6bd30efa788b1439dbbb1acfd4b"
+  },
+  "sourceSha256": "7081a5e2af5bfeb3ae186edf003ab2cfb6029cff4266e0189c639875a1f8725f",
+  "custodyHarnessSha256": "b97b7f8bb04f215a17dabf313ce32021952f5ec7b6dab9e85fa47e9f1d6cfc43",
+  "captures": {
+    "original-address-composition.json": "4180b2fd6703d3ccfd1c1b6d03a1bd5a46d611432052af76dcf2f85245d49f47",
+    "original-cyclic-composition.json": "8960a60259ee7648856b7a1cf65d7014e0df218551768cc73b08b79184e6f9ed",
+    "original-map-composition.json": "4df7bfcc18116fc27a494d9f8b9ffb5ea4b2f3f0327d20900cda40be423fdd80",
+    "original-nested-sequence-composition.json": "a6d19424b02f2e61569b46227a7d5fb156b9c69c6b4792906eddcf7810f226d6",
+    "original-numeric-address-composition.json": "8f08b6090760c9675cfa4a79219d0ad359cf172b768f31681a9fccb96e1aa5cb",
+    "original-numeric-map-composition.json": "c00c09e4f3d6ac7a5d7dbe9c57735424af2660df3ff45332f37fee0dace17786",
+    "original-tags-composition.json": "4df7bfcc18116fc27a494d9f8b9ffb5ea4b2f3f0327d20900cda40be423fdd80",
+    "original-address-compile-transport.json": "f3c74718592f81858ebc3c1edc4427633b1640e82a7a0e4cad37e631944d8fdb",
+    "original-cyclic-compile-transport.json": "97e63efaa1ec2a2ecdcfbf13400ea3a0b8d36365b9062b295bb46e450731f396",
+    "original-map-compile-transport.json": "bcc410107ded9c40b1aadac3a894dded339644411f57e9076109cdaa4b43913b",
+    "original-nested-sequence-compile-transport.json": "a04d09067c40dfc5c5ca8f198840496e5d8e03268bf93da71a057bc3f556926e",
+    "original-numeric-address-compile-transport.json": "26bbf2e66c7a8e3ee5f4cf8727e71f500262ee819cfe4795563fcb7229849ddc",
+    "original-numeric-map-compile-transport.json": "97d4621ead31985f0b9e3c947fdff401ca662a689a39fa74ddaf86a29b8dbe8e",
+    "original-tags-compile-transport.json": "4d645b7cc98c83f62a897c163427e16848ef70935a060f5d41de43cac79947d0"
+  },
+  "limits": [
+    "Conformance fixture packet is not a released host registration protocol",
+    "Procedure selection is compiled Rust code, never loaded from metadata",
+    "Real Python/browser entry-point execution remains unfinished"
+  ]
+}

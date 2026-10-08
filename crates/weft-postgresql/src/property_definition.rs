@@ -2722,6 +2722,40 @@ mod tests {
             )
             .unwrap();
             assert_eq!(owned_response, transported);
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_CONFIGURATION_CAPTURE") {
+                let original = |a: &crate::leaf_codec_definition::OriginalArtifact| json!({"identity":a.identity,"bytesBase64":STANDARD.encode(&a.bytes),"sha256":sha256(&a.bytes)});
+                let columns = |columns: &BTreeMap<String, crate::row_join_definition::Column>| {
+                    columns
+                        .iter()
+                        .map(|(id, c)| {
+                            (
+                                id.clone(),
+                                json!({"relationIdentity":c.relation_identity,"name":c.name}),
+                            )
+                        })
+                        .collect::<serde_json::Map<String, Value>>()
+                };
+                let configuration = json!({"interfaceVersion":"weft-original-conformance-composition/0.1.0","bindingProfile":owned_configuration.binding_profile,
+                    "records":owned_configuration.records.iter().map(|r|json!({"index":r.index,"inventory":original(&r.inventory),"relationIdentity":r.relation_identity,"discriminatorIdentity":r.discriminator_identity,"relations":r.relations,"columns":columns(&r.columns)})).collect::<Vec<_>>(),
+                    "properties":owned_configuration.properties.iter().map(|p|json!({"index":p.index,"valueProfile":p.value_profile,"presenceProfile":p.presence_profile,"leafCodecs":p.leaf_codecs.iter().map(|(id,d)|(id.clone(),json!({"originalJson":d.original_json,"originalArtifacts":d.original_artifacts.iter().map(|(path,bytes)|(path.clone(),STANDARD.encode(bytes))).collect::<BTreeMap<_,_>>()}))).collect::<BTreeMap<_,_>>(),"recordPresence":p.record_presence.iter().map(|(path,d)|(path.clone(),json!({"originalJson":d.original_json,"acceptedDefinitionBase64":STANDARD.encode(&d.accepted_definition)}))).collect::<BTreeMap<_,_>>(),"physicalProfile":p.physical_profile,"inventory":original(&p.inventory),"relations":p.relations,"columns":columns(&p.columns),"rowJoin":p.row_join.as_ref().map(|j|json!({"originalJson":j.original_json,"originalArtifacts":j.original_artifacts.iter().map(|(path,bytes)|(path.clone(),STANDARD.encode(bytes))).collect::<BTreeMap<_,_>>() })),"obligations":p.obligations})).collect::<Vec<_>>(),
+                    "procedureScope":"Compiled fixture-only exact JSON field identities, original codec bytes, empty source bytes and closed text/uint64 slots; no executable names in metadata"});
+                std::fs::write(
+                    std::path::Path::new(&directory)
+                        .join(format!("original-{fixture_name}-composition.json")),
+                    serde_json::to_vec_pretty(&configuration).unwrap(),
+                )
+                .unwrap();
+                std::fs::write(
+                    std::path::Path::new(&directory)
+                        .join(format!("original-{fixture_name}-compile-transport.json")),
+                    serde_json::to_vec_pretty(
+                        &json!({"request":serialized_request,"response":owned_response}),
+                    )
+                    .unwrap(),
+                )
+                .unwrap();
+            }
+
             assert_eq!(
                 owned_configuration.compile_json(&serialized_request.to_string()),
                 owned_configuration.compile_json(&serialized_request.to_string())
