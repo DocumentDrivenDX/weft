@@ -3705,3 +3705,39 @@ The updated browser harness also passes all 342 existing default-compile JSON-ar
 cases with the same exact native bytes. Custody (38 configurations/84 responses)
 and specification integrity (43 artifacts/10 schemas/30 planned criteria/636
 scenarios) still pass; those checks do not close the recursive numeric gaps.
+
+### Original native signed and decimal sequence leaves (2026-10-08)
+
+Original-authored sequence fixtures reproduce both audited failures: decimal
+composition returned WFT-CAPABILITY, and native signed64 extrema triggered an
+integrity violation despite compiling. The native-leaf procedure now reads
+signedness from the original pinned authored Field; unsigned canonical-token SQL
+is unchanged. Signed canonical integer tokens admit a minus sign. Decimal leaves
+return original token strings and require canonical finite decimal tokens whose
+numeric value matches the stored native payload. Malformed original numeric
+codec/Field bytes or missing authored signedness refuse explicitly. Logical
+width/precision/scale remain validated by the existing type-directed domain
+prerequisites; no typemod rounding or JSONB fallback is introduced.
+
+Thirty-four independent PostgreSQL 17.9 cases pass across signed64 and
+Decimal(28,2): signed extrema/large decimal fractions, empty sequences, repeated
+zero tokens (including 0.00 spelling), missing/malformed tokens, null payload,
+extra carrier, wrong kind/codec/source, missing root, duplicate ordinal, payload
+mismatch, both domain boundaries, fraction/excess scale and NaN. Exact results
+retain strings, order and duplicates; every corrupt case blocks query execution.
+All 157 other Rust tests pass; the unchanged exhaustive decimal composition test
+has separately retained evidence.
+
+Fresh CPython abi3 and Chromium WASM each pass ten cases: both complete artifacts,
+eight configuration/version/candidate/digest refusals, with Python deterministic
+repeats and subprocess disabled. Browser responses match native Python bytes
+without Node globals or compile-time network IO. Existing custody and
+specification checks pass. Receipts:
+[B-005-numeric-sequence.json](B-005-numeric-sequence.json) and
+[B-005-numeric-sequence-native.json](B-005-numeric-sequence-native.json).
+
+This supersedes the earlier procedure-level gap for these two selected sequence
+roots only. Signed/decimal map, structured and whole-entity native paths, broader
+original relational composition and final US-003 acceptance still require their
+own evidence. No installed/production Truss or released generic host-registration
+support is claimed.

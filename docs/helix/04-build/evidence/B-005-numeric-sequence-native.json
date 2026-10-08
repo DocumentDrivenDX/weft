@@ -1,0 +1,352 @@
+{
+  "scope": "Original native numeric sequence over synthetic pinned fixture codec/source procedures; no runtime embedding or production claim",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 34,
+  "harnessSha256": "60c568f74b1d132d716ce2ee09661485c61ab376284777b55ccdd770cccd04a8",
+  "captureSha256": {
+    "decimal": "cd6afbce566329031e56e6e85d87514019675347fcf77f987ca339c7fbda72f2",
+    "signed": "db461a504bb36cf3d204f03ebbb4d36029acc42e7c2080584d21c6a767e2034c"
+  },
+  "results": [
+    {
+      "fixture": "signed",
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "3fff8915c4339007a77952840a8a0d5b06366816cff41afe2aa7facfe05c47f7"
+    },
+    {
+      "fixture": "signed",
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ff80b005d209cb2bffba115ce242d04fad3180d42b733bcb3bc9e881e09dea82"
+    },
+    {
+      "fixture": "signed",
+      "case": "zero",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "90135b767f6ead90b69332b9f150cb7f1e87c49e6fd67189873563023eebabc4"
+    },
+    {
+      "fixture": "signed",
+      "case": "missing-token",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "cdb70b2e7b8087a2f43b42ed7326de9e0f8a6e3c216f92172c793bfddc04d99f"
+    },
+    {
+      "fixture": "signed",
+      "case": "malformed-token",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e054bc3c5c0a58747d52b050ead68c3d8e77fdaefe05462707c4e759812a3c32"
+    },
+    {
+      "fixture": "signed",
+      "case": "null-number",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3cdc1a58cd6331e119a26b5a586f5caba7e06166117cd33c8c212e9861972422"
+    },
+    {
+      "fixture": "signed",
+      "case": "extra-text",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "581183c4fa7c8890e178e2ab71d14a51d0e5b90a806d087da3f847263fb22241"
+    },
+    {
+      "fixture": "signed",
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "475f2a4d32bfce1703a0dd68d245c19ab5c9630c4adae518b1cf29e691c902c5"
+    },
+    {
+      "fixture": "signed",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "88f9e6a47f640509f781a496bfdaf6928eef316127e762115e7508954d15ecc0"
+    },
+    {
+      "fixture": "signed",
+      "case": "wrong-source",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f5e602eb6749037ef1159b85e1d4b6cbce3fe578bf23767054d9935fd59b645f"
+    },
+    {
+      "fixture": "signed",
+      "case": "absent-root",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d44d0ea41a209a34b14e40fedd545509afa3f5ce32e022475bc000f1a1d97649"
+    },
+    {
+      "fixture": "signed",
+      "case": "duplicate-ordinal",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a75d33ea5536864e44b549c3b71608e982a494ac195d118af39070aa10913aa0"
+    },
+    {
+      "fixture": "signed",
+      "case": "payload-disagrees",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3e283329533e4df865d973345f30f8e4113293d03eddf3fa94784aeccc0f4956"
+    },
+    {
+      "fixture": "signed",
+      "case": "above-domain",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5e46a6ca373184ecedf070ba8465116e2dc8ec2b7937071b11a8e0fe84913884"
+    },
+    {
+      "fixture": "signed",
+      "case": "below-domain",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c13156f84823cb893ef196a1ee86ccd15c073b9be7ecd8a974fd3ae3a4020b49"
+    },
+    {
+      "fixture": "signed",
+      "case": "excess-scale",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ba29304d5da04042619e4cf5fb82c218c18f22f19266caa9b43030bdb550dae2"
+    },
+    {
+      "fixture": "signed",
+      "case": "nonfinite",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e55f37cdf2a25608c0da8e8d3ea6fac86820593165e0f9139b397bac0530978f"
+    },
+    {
+      "fixture": "decimal",
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9c109972f75d2072ccc28ab9463c359c3f07eeca75a15cadf5f8df17b3fbf88f"
+    },
+    {
+      "fixture": "decimal",
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4d5aef9849c1ce4199bf234b3a9c8ea57a0ec8e05b57eacee81f3af383727062"
+    },
+    {
+      "fixture": "decimal",
+      "case": "zero",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4a1cf7f4d75af72ad124e55c0f0c3037b5e35a4f9162c3a646cab864a41f2aa3"
+    },
+    {
+      "fixture": "decimal",
+      "case": "missing-token",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "36e3d0156a030c405e498a381a91d0fffafc716b1c69f5c80eb9014e2ed90e5d"
+    },
+    {
+      "fixture": "decimal",
+      "case": "malformed-token",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "05be262da2fd7bde201fc9a57a481b150296632ca5db0be14457dde8de8faddf"
+    },
+    {
+      "fixture": "decimal",
+      "case": "null-number",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ecea35b1a7345d2f48acbb103daadf564ea5140efc9135d68bf6c8eeb30715ed"
+    },
+    {
+      "fixture": "decimal",
+      "case": "extra-text",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "889017598760e74db4c6f2edde3c1d9bea7b7773e7864e44b68abecc76ebe35a"
+    },
+    {
+      "fixture": "decimal",
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "da7e02092a58b1316da83707a8ef598a9246c8efbafd617fd57bf03007703c2b"
+    },
+    {
+      "fixture": "decimal",
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "1612fde4bc261c3d9d284ee1b5e4627956edef575481dd697bb7e70a36ff6632"
+    },
+    {
+      "fixture": "decimal",
+      "case": "wrong-source",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7f7f5bdcf59e18cb124a6fe03bb0ac958251535f9a6db054d199e429e5777a6b"
+    },
+    {
+      "fixture": "decimal",
+      "case": "absent-root",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2b0c0e6d41e9852e19d990d7b5c83421b16c8336f857d91549eb27021ed513d8"
+    },
+    {
+      "fixture": "decimal",
+      "case": "duplicate-ordinal",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9ed739e02182bf5def4bcf5474cbb880753389921eb864815adead1af6e718e0"
+    },
+    {
+      "fixture": "decimal",
+      "case": "payload-disagrees",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4b8262b6c07631f8591916d081e74ea7d3ae5353e996d8a3eab04af161dca0af"
+    },
+    {
+      "fixture": "decimal",
+      "case": "above-domain",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "940b1635580b9facacf0627ae069dc6dd9510df8b05b43f5be6c6785e82b4b16"
+    },
+    {
+      "fixture": "decimal",
+      "case": "below-domain",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "669f7738a527b1b5e3646c22cc39c8fdd91d0810a0df0d63edf281d34d956c7d"
+    },
+    {
+      "fixture": "decimal",
+      "case": "excess-scale",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "46bd9a8cd9139aa792a0d41d1e7276c544363cc45909776adf900faea5e57e26"
+    },
+    {
+      "fixture": "decimal",
+      "case": "nonfinite",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3a4d02926434dfe103f7c5a9a9dcbc0c5f4af94cc87b5de0b7f55ec6197bb6c7"
+    }
+  ]
+}

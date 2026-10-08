@@ -414,6 +414,9 @@ fn fixture_native_leaf(
             family: "integer", ..
         } => ("to_jsonb(w.r->>16)", "integer", vec![15, 16]),
         crate::value_definition::LayoutShape::Scalar {
+            family: "decimal", ..
+        } => ("to_jsonb(w.r->>16)", "decimal", vec![15, 16]),
+        crate::value_definition::LayoutShape::Scalar {
             family: "string", ..
         } => ("to_jsonb(w.r->>13)", "text", vec![13]),
         crate::value_definition::LayoutShape::Scalar {
@@ -439,8 +442,32 @@ fn fixture_native_leaf(
         .map(|i| format!("w.r->>{i} IS NULL"))
         .collect::<Vec<_>>()
         .join(" AND ");
-    let numeric = if kind == "integer" {
-        " AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+    let numeric = if kind == "integer" || kind == "decimal" {
+        let codec = weft_core::json::checked_json(
+            std::str::from_utf8(node.codec_bytes)
+                .map_err(|_| fail("Numeric codec bytes are not UTF8"))?,
+        )
+        .map_err(|_| fail("Numeric codec JSON invalid"))?;
+        let authored = artifact(&codec["authoredDefinition"])?;
+        let field = weft_core::json::checked_json(
+            std::str::from_utf8(&authored.bytes)
+                .map_err(|_| fail("Numeric authored definition is not UTF8"))?,
+        )
+        .map_err(|_| fail("Numeric authored definition JSON invalid"))?;
+        if field["scalarType"] != kind {
+            return Err(fail("Native numeric family differs from authored Field"));
+        }
+        if kind == "decimal" {
+            " AND CASE WHEN w.r->>16 ~ '^-?(0|[1-9][0-9]*)([.][0-9]+)?$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+        } else if field["facets"]["integerWidth"]["signed"] == true {
+            " AND CASE WHEN w.r->>16 ~ '^-?(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+        } else if field["facets"]["integerWidth"]["signed"] == false {
+            " AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+        } else {
+            return Err(fail(
+                "Native integer procedure requires authored signedness",
+            ));
+        }
     } else if kind == "boolean" {
         " AND w.r->>14 IN ('true','false')"
     } else {
@@ -1334,6 +1361,30 @@ mod decimal_operand_refusal_tests {
             let mut parameters = crate::Parameters::default();
             assert!(numeric_expression(&node, &[], None, &mut parameters).is_err());
             assert!(parameters.into_slots().is_empty());
+        }
+    }
+}
+
+#[cfg(test)]
+mod numeric_sequence_tests {
+    use super::*;
+    #[test]
+    fn original_signed_and_decimal_sequences_compile_exact_numeric_leaves() {
+        for (label,raw) in [
+            ("signed",include_str!("../../../tests/truss-postgresql/fixtures/original-signed-sequence-inputs.json")),
+            ("decimal",include_str!("../../../tests/truss-postgresql/fixtures/original-decimal-sequence-inputs.json")),
+        ] {
+            let cut:Value=serde_json::from_str(raw).unwrap();
+            let request=&cut["request"];
+            let catalog=Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+            let config=configuration(&cut["composition"].to_string(),&catalog).unwrap();
+            let compiled=config.compile_json(&request.to_string());
+            let response:Value=serde_json::from_str(&compiled).unwrap();
+            assert_eq!(response["status"],"compiled","{label}: {response}");
+            assert_eq!(compiled,config.compile_json(&request.to_string()));
+            if let Ok(directory)=std::env::var("WEFT_NUMERIC_SEQUENCE_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{label}-sequence-public.json")),serde_json::to_vec_pretty(&serde_json::json!({"request":request,"response":response})).unwrap()).unwrap();
+            }
         }
     }
 }
