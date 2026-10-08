@@ -14,7 +14,7 @@ components=[
  ('audit-ashlar-support-reports.py','status','casesAudited',22),
  ('reconcile-ashlar-warehouse-counts.py','status','cases',32),
  ('warehouse-capture-controls.py','status','controls',9),
- ('ashlar-count-controls.py','status','corruptionsRejected',10),
+ ('ashlar-count-controls.py','status','corruptionsRejected',15),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -34,6 +34,8 @@ for name,status,count,expected in components:
  assert run.returncode==0,(name,run.stdout,run.stderr)
  report=json.loads(run.stdout)
  assert report[status]=='passed' and report[count]==expected,(name,report)
+ if name=='reconcile-ashlar-warehouse-counts.py':
+  assert report['logicalMetadataCases']==32
  if name=='audit-truss-support-reports.py':
   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
  if name=='audit-ashlar-support-reports.py':

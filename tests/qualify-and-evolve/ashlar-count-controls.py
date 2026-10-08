@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 BASE=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native'
 rejected=[]
-for label in ['count','group-multiplicity','group-order','warehouse','parameters','sql','statement-id','extra-receipt','model-pin','custody']:
+for label in ['count','group-multiplicity','group-order','warehouse','parameters','sql','statement-id','extra-receipt','model-pin','decoder','logical-family','nullability','position','source-identity','custody']:
  with tempfile.TemporaryDirectory() as directory:
   path=Path(directory)
   for name in ['summary.json','compile-artifacts.jsonl','statements.jsonl','warehouse_capture.py','custody.json']:(path/name).write_bytes((BASE/name).read_bytes())
@@ -23,8 +23,14 @@ for label in ['count','group-multiplicity','group-order','warehouse','parameters
   elif label=='statement-id':records[1]['response']['statement_id']=records[0]['response']['statement_id']
   elif label=='extra-receipt':
    extra=json.loads(json.dumps(count));extra['label']='unexpected';records.append(extra)
-  elif label=='model-pin':
-   artifacts=[json.loads(line) for line in (path/'compile-artifacts.jsonl').read_text().splitlines()];artifacts[0]['request']['modules'][0]['pin']['sha256']='0'*64
+  elif label in ['model-pin','decoder','logical-family','nullability','position','source-identity']:
+   artifacts=[json.loads(line) for line in (path/'compile-artifacts.jsonl').read_text().splitlines()];column=artifacts[0]['response']['columns'][0]
+   if label=='model-pin':artifacts[0]['request']['modules'][0]['pin']['sha256']='0'*64
+   elif label=='decoder':column['representation']['decoder']='text'
+   elif label=='logical-family':column['representation']['logicalType']['family']='string'
+   elif label=='nullability':column['nullable']=True
+   elif label=='position':column['position']=99
+   elif label=='source-identity':column['sourceIdentities'][0]['element']='wrong'
    (path/'compile-artifacts.jsonl').write_text('\n'.join(json.dumps(r) for r in artifacts)+'\n')
   (path/'statements.jsonl').write_text('\n'.join(json.dumps(r) for r in records)+'\n')
   custody=json.loads((path/'custody.json').read_text())

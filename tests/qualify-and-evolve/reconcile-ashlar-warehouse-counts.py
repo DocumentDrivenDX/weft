@@ -27,6 +27,13 @@ for id,artifact in artifacts.items():
  assert response['modelPins']==[m['pin'] for m in request['modules']]
  for module in request['modules']:assert hashlib.sha256(module['documentJson'].encode()).hexdigest()==module['pin']['sha256']
  assert hashlib.sha256(request['target']['bindingJson'].encode()).hexdigest()==request['target']['bindingSha256']==response['bindingSha256']
+ pin=request['modules'][0]['pin']
+ def column(position,name,family,element,copies=1):
+  identity={'documentId':pin['documentId'],'revision':pin['revision'],'module':'main','element':element}
+  return {'position':position,'outputName':name,'nullable':False,'representation':{'kind':'scalar','carrier':'text','decoder':'exact-integer' if family=='integer' else 'text','logicalType':{'family':family,'facets':{},'nullable':False}},'sourceIdentities':[identity for _ in range(copies)]}
+ wanted_columns=([column(1,'name','string','name'),column(2,'total','integer','thing')] if kind=='group-count' else [column(1,'total','integer','thing',2 if kind=='join-count' else 1)])
+ assert response['columns']==wanted_columns,'Logical result metadata changed'
+
  parameters=[{'name':'p'+str(p['position']),'type':'STRING','value':p['value']} for p in response['parameters']]
  query=statements[id+'-user-query'];used.add(id+'-user-query')
  assert query['sql']==capture.capture(response['sql']) and query['parameters']==parameters
@@ -45,5 +52,5 @@ for id,artifact in artifacts.items():
    assert not gm['truncated'] and gm['total_row_count']==gr['row_count']==1 and gm['total_chunk_count']==1 and gr['row_offset']==0
    assert gr['data_array']==[['0']];guards+=1
 assert used==set(statements) and guards==40
-report={'status':'passed','cases':32,'integrityReceipts':40,'warehouseIdentity':warehouse,'scope':'Saved native exact COUNT, duplicate join/group, Unicode comparison and empty-count results over four homes and signed8/64 with same-query warehouse builds. No fresh execution, entity/keyset, host or production qualification.'}
+report={'status':'passed','cases':32,'integrityReceipts':40,'logicalMetadataCases':32,'warehouseIdentity':warehouse,'scope':'Saved native exact COUNT, duplicate join/group, Unicode comparison and empty-count results over four homes and signed8/64 with same-query warehouse builds. No fresh execution, entity/keyset, host or production qualification.'}
 print(json.dumps(report))

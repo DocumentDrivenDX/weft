@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "corruptionsRejected": 10,
+  "corruptionsRejected": 15,
   "controls": [
     "count",
     "group-multiplicity",
@@ -11,7 +11,12 @@
     "statement-id",
     "extra-receipt",
     "model-pin",
+    "decoder",
+    "logical-family",
+    "nullability",
+    "position",
+    "source-identity",
     "custody"
   ],
-  "sourceSha256": "3a4e16a7fb29ff7b210cce92f72451e8273d4965f15d931f777d1d0be2663249"
+  "sourceSha256": "3bfc521cc13d7cba23bba8b5dbbdb85f7f93a0aba961a7732c477813bd7031d1"
 }

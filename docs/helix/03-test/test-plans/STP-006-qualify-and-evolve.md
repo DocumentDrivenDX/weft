@@ -65,7 +65,7 @@ and six session-custody corruption controls, plus Ashlar same-statement engine
 reconciliation and six corruption controls, plus warehouse/build-linked unsigned
 SUM reconciliation and six further controls, plus seven-scope real Ashlar report
 consistency across 22 native outcomes, plus 32 warehouse-linked native COUNT
-cases, nine projection-annotation controls and ten count-custody corruption
+cases, nine projection-annotation controls and fifteen count-custody/result-metadata corruption
 controls, for twenty-two components; it does not execute native engines or Chromium.
 
 Actual backend engine checks are separate from Python/browser compiler transport

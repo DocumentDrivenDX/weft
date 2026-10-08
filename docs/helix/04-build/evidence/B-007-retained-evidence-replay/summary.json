@@ -345,6 +345,7 @@
         "status": "passed",
         "cases": 32,
         "integrityReceipts": 40,
+        "logicalMetadataCases": 32,
         "warehouseIdentity": {
           "dbr_version": null,
           "dbsql_version": "2026.39",
@@ -353,7 +354,7 @@
         },
         "scope": "Saved native exact COUNT, duplicate join/group, Unicode comparison and empty-count results over four homes and signed8/64 with same-query warehouse builds. No fresh execution, entity/keyset, host or production qualification."
       },
-      "sourceSha256": "351c078d3584ae71d6a6b2f93d9d45d892ac444ecf5b49ce5faf7fd5eccc34c5"
+      "sourceSha256": "f0c5c9798662c10072cb0ca53f0c3a9a66c1aae60e59710ebc6e6c538d73e3c3"
     },
     {
       "component": "warehouse-capture-controls.py",
@@ -370,7 +371,7 @@
       "component": "ashlar-count-controls.py",
       "result": {
         "status": "passed",
-        "corruptionsRejected": 10,
+        "corruptionsRejected": 15,
         "controls": [
           "count",
           "group-multiplicity",
@@ -381,10 +382,15 @@
           "statement-id",
           "extra-receipt",
           "model-pin",
+          "decoder",
+          "logical-family",
+          "nullability",
+          "position",
+          "source-identity",
           "custody"
         ]
       },
-      "sourceSha256": "3a4e16a7fb29ff7b210cce92f72451e8273d4965f15d931f777d1d0be2663249"
+      "sourceSha256": "3bfc521cc13d7cba23bba8b5dbbdb85f7f93a0aba961a7732c477813bd7031d1"
     },
     {
       "component": "reconcile-truss-archive.py",
