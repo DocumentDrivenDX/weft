@@ -414,7 +414,7 @@ fn fixture_native_source(
 
 fn numeric_expression(
     node: &weft_core::ir::Expression,
-    _: &[String],
+    operands: &[String],
     access: Option<&crate::registered_access::Access<'_>>,
     parameters: &mut crate::Parameters,
 ) -> Result<String> {
@@ -436,9 +436,11 @@ fn numeric_expression(
         || (logical.family == Family::Decimal
             && logical.facets == serde_json::json!({"precision":28,"scale":2}));
     let string_domain = logical.family == Family::String && logical.facets == serde_json::json!({});
-    if logical.nullable || !(selected_domain || string_domain) {
+    let boolean_domain =
+        logical.family == Family::Boolean && logical.facets == serde_json::json!({});
+    if logical.nullable || !(selected_domain || string_domain || boolean_domain) {
         return Err(fail(
-            "Conformance numeric procedure only selects required signed/unsigned integer widths 1..64, decimal(28,2) or Unicode string operands",
+            "Conformance numeric procedure only selects required signed/unsigned integer widths 1..64, decimal(28,2), Boolean or Unicode string operands",
         ));
     }
     match node {
@@ -448,6 +450,8 @@ fn numeric_expression(
                 crate::registered_access::Location::Row(location) => {
                     if string_domain {
                         location.scalar_observation().text
+                    } else if boolean_domain {
+                        location.scalar_observation().boolean
                     } else {
                         location.scalar_observation().native_numeric_text
                     }
@@ -461,6 +465,8 @@ fn numeric_expression(
             };
             Ok(if string_domain {
                 format!("({carrier})::pg_catalog.text COLLATE pg_catalog.\"C\"")
+            } else if boolean_domain {
+                format!("({carrier})::pg_catalog.bool")
             } else {
                 format!("({carrier})::pg_catalog.numeric")
             })
@@ -477,11 +483,19 @@ fn numeric_expression(
             )?;
             Ok(if string_domain {
                 format!("{slot}::pg_catalog.text COLLATE pg_catalog.\"C\"")
+            } else if boolean_domain {
+                format!("{slot}::pg_catalog.bool")
             } else {
                 format!("{slot}::pg_catalog.numeric")
             })
         }
-        _ => Err(fail("Unselected conformance numeric operation")),
+        Expression::Equal { .. } if boolean_domain && operands.len() == 2 => {
+            Ok(format!("({} = {})", operands[0], operands[1]))
+        }
+        Expression::And { .. } if boolean_domain && operands.len() == 2 => {
+            Ok(format!("({} AND {})", operands[0], operands[1]))
+        }
+        _ => Err(fail("Unselected conformance scalar operation")),
     }
 }
 
@@ -1058,6 +1072,46 @@ mod integer_domain_refusal_tests {
             let mut slots = crate::Parameters::default();
             assert!(numeric_expression(&node, &[], None, &mut slots).is_err());
             assert!(slots.into_slots().is_empty());
+        }
+    }
+}
+
+#[cfg(test)]
+mod boolean_property_tests {
+    use super::*;
+    #[test]
+    fn original_boolean_properties_compile_pages_and_typed_filters() {
+        let inputs: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-boolean-inputs.json"
+        ))
+        .unwrap();
+        let mut transports = Vec::new();
+        for cut in inputs.as_array().unwrap() {
+            for case in cut["requests"].as_array().unwrap() {
+                let request = &case["request"];
+                let catalog =
+                    Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap())
+                        .unwrap();
+                let config = configuration(&cut["composition"].to_string(), &catalog).unwrap();
+                let response: Value =
+                    serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                assert_eq!(response["status"], "compiled", "{response}");
+                assert_eq!(
+                    config.compile_json(&request.to_string()),
+                    response.to_string()
+                );
+                let mut invalid = request.clone();
+                invalid["sql"] = serde_json::json!("SELECT SUM(c.id) AS total FROM Customer c");
+                invalid.as_object_mut().unwrap().remove("readProfile");
+                let refused: Value =
+                    serde_json::from_str(&config.compile_json(&invalid.to_string())).unwrap();
+                assert_eq!(refused["status"], "blocked");
+                assert!(refused.get("sql").is_none());
+                transports.push(serde_json::json!({"home":cut["home"],"kind":case["kind"],"request":request,"response":response}));
+            }
+        }
+        if let Ok(path) = std::env::var("WEFT_BOOLEAN_TRANSPORT_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
         }
     }
 }

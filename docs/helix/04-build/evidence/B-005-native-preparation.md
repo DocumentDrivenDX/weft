@@ -3381,3 +3381,31 @@ runner consumes the generated corpus/reports in target/b005/original-embedding.
 This closes the fresh embedding gap for the selected signed paths. Broader
 original scalar/query domains, multiple recursive roots and full host/story
 qualification remain B-005 work. No production compatibility is claimed.
+
+### Original required Boolean property pages and equality (2026-10-07)
+
+The independent Boolean fixture builder authors selected Field/source/graph/leaf
+and native-Boolean comparator definitions from the original storage scaffolding.
+It re-pins changed original bytes and retains independent row or props home
+selection. The new tests-before-code compiler regression refused Boolean operand
+rendering. The scalar procedure now selects required Boolean facets exactly,
+uses native boolean_value or the admitted props Boolean carrier and emits
+pg_catalog.bool casts for typed literal slots. Equal/AND nodes use their resolved
+operand SQL after comparator admission. Boolean SUM remains refused without SQL;
+it cannot acquire numeric SUM through comparator registration.
+
+Six original public requests cover ordered pages and true/false typed filters in
+each storage home. `original-boolean-native.py` passes 39 PostgreSQL 17.9 cases
+with independent Boolean results. False precedes true; predicates retain actual
+Boolean meaning. Required absence, wrong/null carriers, wrong native codec and
+duplicate logical keys refuse through prerequisites before result SQL. An
+unrelated object discriminator is excluded. All 148 Rust tests and the prior
+34-configuration/75-response custody checks pass. Receipts:
+[B-005-original-boolean.json](B-005-original-boolean.json) and
+[B-005-original-boolean-native.json](B-005-original-boolean-native.json).
+
+These new cuts compile through owned original Configuration; they are not yet
+runtime allowlist presets and have no fresh Python/browser embedding evidence.
+Recursive Boolean leaves, optional Boolean roots and production qualification
+remain outside this evidence. This extends compiler functionality without
+claiming those broader meanings.
