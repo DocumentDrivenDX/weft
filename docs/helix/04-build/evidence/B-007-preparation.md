@@ -467,3 +467,8 @@ with none ignored or filtered. B-007-guard-regression-expanded/ retains the
 terminal log and current test-source hashes. US-002 matrix entries now link
 dispatch, capability-assessment, and obligation-merge branch receipts. This
 component checkpoint does not replace full-workspace or native qualification.
+
+B-007-language-root-branches/ retains 14 exact refusal assertions across
+both plan versions: an unaccepted dialect/IR pair and six non-object binding
+roots each. A panicking backend fixture proves refusal precedes validation.
+The fresh named test passes; this does not establish all dispatch branches.

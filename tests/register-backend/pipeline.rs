@@ -253,3 +253,28 @@ fn obligation_merge_refuses_conflicts_and_preserves_requirements() {
         else {let e=out.unwrap_err();assert_eq!(e.code,"WFT-OBLIGATION");assert_eq!(e.message,if mode<6 {"Backend returned a malformed obligation"} else {"Obligation ID has conflicting requirements"});}
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC4
+#[test]
+fn language_and_binding_root_guards_precede_backend_validation() {
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for (index,plan) in [Plan::V01(&p01),Plan::V02(&p02)].into_iter().enumerate() {
+        let mut m=manifest(Status::Supported);
+        m.language_profiles.remove(index);
+        for capability in &mut m.capabilities {capability.language_profiles=m.language_profiles.clone();}
+        let mut r=Registry::default();
+        // Any accidental call into the fixture backend panics and changes the diagnostic.
+        r.register(Third{manifest:m,behavior:Behavior::Panics}).unwrap();
+        let e=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap_err();
+        assert_eq!(e.code,"WFT-BACKEND-VERSION");
+        assert_eq!(e.message,"Registered backend does not accept the selected dialect/IR pair");
+        let r=registry(Status::Supported,Behavior::Panics);
+        for root in ["null","true","false","0","\"binding\"","[]"] {
+            let mut b=binding(&catalog);b.json=root.into();b.sha256=weft_core::json::sha256(b.json.as_bytes());
+            let e=r.compile(&catalog,plan,&target(false),&b).unwrap_err();
+            assert_eq!(e.code,"WFT-BINDING","root {root}");
+            assert_eq!(e.message,"Binding root must be an object","root {root}");
+        }
+    }
+}
