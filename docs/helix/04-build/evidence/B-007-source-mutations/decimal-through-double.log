@@ -100,7 +100,7 @@ warning: variable does not need to be mutable
     = note: `#[warn(unused_mut)]` on by default
 
 warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.87s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.46s
      Running unittests src/lib.rs (/private/tmp/weft-b007-mutation-target/debug/deps/weft_postgresql-6a233a0ae34bb11f)
 
 thread 'conformance_original::decimal_operand_tests::admitted_decimal_precision_scale_pairs_preserve_exact_operands' panicked at crates/weft-postgresql/src/conformance_original.rs:1326:21:

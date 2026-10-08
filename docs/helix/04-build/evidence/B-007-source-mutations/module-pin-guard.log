@@ -7,7 +7,7 @@ failures:
 failures:
     generated_unicode_retention_pins_and_selected_meaning
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 4.00s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 4.16s
 
 warning: unexpected `cfg` condition value: `128`
    --> vendor/ahash/src/fallback_hash.rs:164:11
@@ -81,7 +81,7 @@ warning: method `finish` is never used
     = note: `#[warn(dead_code)]` on by default
 
 warning: `weft-core` (lib) generated 1 warning
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.72s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.04s
      Running ../../tests/qualify-and-evolve/properties.rs (/private/tmp/weft-b007-mutation-target/debug/deps/qualification_properties-7a3cd0c09ca515e1)
 
 thread 'generated_unicode_retention_pins_and_selected_meaning' panicked at crates/weft-core/../../tests/qualify-and-evolve/properties.rs:92:8:

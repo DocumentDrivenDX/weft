@@ -81,7 +81,7 @@ warning: method `finish` is never used
 
 warning: `weft-core` (lib) generated 1 warning
    Compiling weft-postgresql v0.1.0 (/private/tmp/weft-b007-mutants/scan-type-filter/crates/weft-postgresql)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.00s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.16s
      Running ../../tests/truss-postgresql/compiler.rs (/private/tmp/weft-b007-mutation-target/debug/deps/candidate_compiler-9a4c8820a3933b2f)
 
 thread 'relational_emission_keeps_owner_selection_and_bag_projection' panicked at crates/weft-postgresql/../../tests/truss-postgresql/compiler.rs:676:9:

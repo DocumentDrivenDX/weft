@@ -12,7 +12,11 @@
       "test": "qualification-resources",
       "filter": "generated_truncated_json_and_nested_duplicates",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "resources.rs:33:",
+        "on an `Ok` value: Object"
+      ]
     },
     {
       "mutation": "node-limit-guard",
@@ -24,7 +28,11 @@
       "test": "qualification-resources",
       "filter": "json_node_and_request_byte_limits",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "resources.rs:16:",
+        "on an `Ok` value: Array"
+      ]
     },
     {
       "mutation": "scan-type-filter",
@@ -36,7 +44,10 @@
       "test": "postgresql-candidate",
       "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "owner type selection must survive lowering"
+      ]
     },
     {
       "mutation": "projection-distinct",
@@ -48,7 +59,10 @@
       "test": "postgresql-candidate",
       "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "projection must retain duplicate names"
+      ]
     },
     {
       "mutation": "decimal-through-double",
@@ -60,7 +74,11 @@
       "test": "postgresql-original",
       "filter": "admitted_decimal_precision_scale_pairs_preserve_exact_operands",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "10000000000000000",
+        "9999999999999999"
+      ]
     },
     {
       "mutation": "presence-null-to-absence",
@@ -72,7 +90,10 @@
       "test": "postgresql-lib",
       "filter": "original_definition_drives_presence_without_coercion",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "on an `Ok` value: Absent"
+      ]
     },
     {
       "mutation": "module-pin-guard",
@@ -84,7 +105,11 @@
       "test": "qualification-properties",
       "filter": "generated_unicode_retention_pins_and_selected_meaning",
       "exitCode": 101,
-      "status": "detected"
+      "status": "detected",
+      "expectedFailureSignatures": [
+        "WFT-PIN",
+        "left: `Null`"
+      ]
     }
   ],
   "scope": "Source guards, SQL emission, numeric token and presence mutations; no native mutated-result qualification."

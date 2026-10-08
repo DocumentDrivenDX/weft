@@ -14,6 +14,15 @@ cases=[
  ('presence-null-to-absence','crates/weft-postgresql/src/presence_definition.rs','Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','Some(v) if v.is_null() => Ok(Presence::Absent),\n            Some(v) if v.is_null() && !authored_nullable => Err(Diagnostic::new(','postgresql-lib','original_definition_drives_presence_without_coercion'),
  ('module-pin-guard','crates/weft-core/src/model.rs','if input.pin.sha256 != sha256(input.document_json.as_bytes()) {','if false && input.pin.sha256 != sha256(input.document_json.as_bytes()) {','qualification-properties','generated_unicode_retention_pins_and_selected_meaning'),
 ]
+signatures={
+ 'duplicate-key-guard':['resources.rs:33:', 'on an `Ok` value: Object'],
+ 'node-limit-guard':['resources.rs:16:', 'on an `Ok` value: Array'],
+ 'scan-type-filter':['owner type selection must survive lowering'],
+ 'projection-distinct':['projection must retain duplicate names'],
+ 'decimal-through-double':['10000000000000000','9999999999999999'],
+ 'presence-null-to-absence':['on an `Ok` value: Absent'],
+ 'module-pin-guard':['WFT-PIN','left: `Null`'],
+}
 reports=[]
 for name,file,before,after,test,filter in cases:
  dest=BASE/name;dest.mkdir(parents=True,exist_ok=True)
@@ -29,9 +38,9 @@ for name,file,before,after,test,filter in cases:
  cmd+=['--locked','--offline',filter,'--','--nocapture']
  run=subprocess.run(cmd,cwd=dest,env=env,capture_output=True,text=True)
  log=run.stdout+run.stderr;(OUT/(name+'.log')).write_text(log)
- assert run.returncode==101 and 'test result: FAILED.' in log and 'panicked at' in log,(name,run.returncode,log[-2000:])
+ assert run.returncode==101 and 'test result: FAILED.' in log and 'panicked at' in log and filter in log and all(marker in log for marker in signatures[name]),(name,run.returncode,log[-2000:])
  regression=dest/'tests/qualify-and-evolve/property-regressions.txt'
  if regression.exists():shutil.copyfile(regression,OUT/(name+'-mutant-regression.txt'))
- reports.append({'mutation':name,'source':file,'before':before,'after':after,'originalSha256':hashlib.sha256(original.encode()).hexdigest(),'mutantSha256':hashlib.sha256(mutant.encode()).hexdigest(),'test':test,'filter':filter,'exitCode':run.returncode,'status':'detected'})
+ reports.append({'mutation':name,'source':file,'before':before,'after':after,'originalSha256':hashlib.sha256(original.encode()).hexdigest(),'mutantSha256':hashlib.sha256(mutant.encode()).hexdigest(),'test':test,'filter':filter,'exitCode':run.returncode,'status':'detected','expectedFailureSignatures':signatures[name]})
  print(json.dumps(reports[-1]),flush=True)
 (OUT/'summary.json').write_text(json.dumps({'status':'passed','detected':len(reports),'mutations':reports,'scope':'Source guards, SQL emission, numeric token and presence mutations; no native mutated-result qualification.'},indent=2)+'\n')

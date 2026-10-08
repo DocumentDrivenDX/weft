@@ -155,3 +155,9 @@ parameters, logical plan, columns or obligations. B-007-plugin-boundary/ records
 the passing log, source hash and named branches. Trusted synthetic plugins
 exercise the actual Rust public envelope; this does not claim all plugin phases
 or cross-runtime panic equivalence.
+
+The seven-mutant suite was rerun with expected failure-signature checks. Each
+mutant must fail its selected test at the intended semantic assertion; a generic
+nonzero exit, build failure or unrelated panic cannot count as detection.
+The summary now retains those signatures alongside substitutions/source hashes.
+All seven pass this stricter detection audit.
