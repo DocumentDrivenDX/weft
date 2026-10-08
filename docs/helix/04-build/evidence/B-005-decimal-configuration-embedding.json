@@ -1,0 +1,31 @@
+{
+  "scope": "All 434 admitted decimal domains, row/props original-owned configuration, complete Python/Chromium compile artifacts and refusals; no production claim",
+  "domainPairs": 434,
+  "positiveFullResponses": 868,
+  "refusals": 3472,
+  "casesPerEmbedding": 4340,
+  "pythonDeterministicRepeats": 868,
+  "binaryProvenance": "Reuse native extension and WASM from B-005-host-configuration-embedding.json; core/backend/wrapper runtime source unchanged, only conformance test/capture/harness changed",
+  "wasmSha256": "1f3f3177ab70a668be0abd0643ec44776319bf067b1db23c25c906db828b6ead",
+  "nativeLink": "All 868 SQL/parameter/guard sets match the earlier captures exercised in 6,076 native PostgreSQL cases",
+  "sources": {
+    "tests/truss-postgresql/decimal-configuration-embedding-check.py": "3f7552f0305325483219a4f788186427110fee75b19f58b19c51ee99e4a36edd",
+    "tests/compile/browser-check.mjs": "140427a4807fa6fe570a43fabaa234f6aac0063926a9f2219fd958954531e803",
+    "tests/compile/json-array-to-lines.py": "21ce4a3dc70cf32a9b1d6a51de0e0331990c7418a757848a2855c3222d7ffdc8"
+  },
+  "executedPythonHarnessSha256": "3f7552f0305325483219a4f788186427110fee75b19f58b19c51ee99e4a36edd",
+  "corpusSha256": "f3ef9c18d61e810da0d4b88a8444721d10714d1ec32287651859f6bd6ffa420a",
+  "jsonLinesCorpusSha256": "8120193bdf9777bffd77dba86b8c4bfc5eae00eedd742f9f62948d245471bfc5",
+  "reportsSha256": "ca885cc1261a2e5299d15e278cfc76cd4bf12a93a56800eaae3b6578d0c8cf2b",
+  "pythonLogSha256": "8d029776014c1cf0857654fdd04cadf15557437e5da101874d535b53c058de93",
+  "browserLogSha256": "f65dd6063e299b13416158dcc1d399e00595c108a6e531e9d879ed7efe8a43f8",
+  "failedAttempt": "Original JSON-array browser input exceeded Node single-string length at readFile before compilation; retained failure log and no pass claimed. All 4,340 records subsequently converted without changing values and passed as streamed JSON Lines.",
+  "failedAttemptLogSha256": "e5fce54d283b0cbd1c68c981622c9d5f9ebe4d8b1953038d0deb854131190bdf",
+  "limitations": [
+    "Explicit test-original conformance export only",
+    "No native null or installed/production Truss qualification",
+    "Recursive signed/decimal native procedures still require original/native/embedding evidence"
+  ],
+  "legacyJsonArrayCasesPassed": 342,
+  "legacyBrowserLogSha256": "4a0193cc94911b53c4fbda725a3174450853c3e865864f449b07357ceeed2c1a"
+}

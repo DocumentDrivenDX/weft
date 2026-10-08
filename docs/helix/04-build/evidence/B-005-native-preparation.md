@@ -3651,3 +3651,57 @@ Python/browser decimal-domain pass is claimed. The new harness will compare all
 868 complete responses and four refusal variants per request through the
 explicitly enabled conformance configuration export. Browser verification and
 final US-003 acceptance remain pending. No released/production support is added.
+
+### Acceptance audit: distinguish scalar and recursive numeric procedures (2026-10-08)
+
+Current-state inspection of `conformance_original::fixture_native_leaf` establishes
+an explicit remaining conformance gap: its native-tree scalar dispatch accepts
+integer/string/Boolean, while decimal is among the deliberately refused families
+in `native_leaf_refusal_tests`. The integer procedure also requires a non-negative
+canonical token. This is evidence about the selected conformance procedure,
+not a claim that the public Rust Configuration cannot install another trusted
+procedure. It does not establish recursive signed or decimal native support.
+
+CONTRACT-004 requires type-directed exact numeric leaves in recursive carriers;
+TD-003 requires native homes without JSONB fallback. The new scalar decimal SUM
+matrix cannot close that recursive obligation. Next work needs original-authored
+signed and decimal recursive fixtures, independently arranged native payloads,
+negative/domain/carrier checks and actual public embedding evidence, before those
+conformance procedures can be qualified. The current decimal procedure refusal
+must remain explicit until its replacement has evidence. Wider original relational
+query composition still needs its own requirement/evidence audit rather than a
+blanket inference from scalar SUM. Truss runtime/adoption remains outside the
+compiler dependency boundary; the pinned draft storage layout suffices for this
+candidate work.
+
+### Exhaustive decimal configuration embedding results (2026-10-07–08)
+
+The pending Python matrix has completed: all 4,340 cases pass, covering 868
+complete decimal SUM artifacts and 3,472 malformed/version/candidate/digest
+refusals. Python repeats every positive response (868 deterministic repeats)
+with subprocess calls disabled. Independent custody and exact native
+SQL/parameter/guard parity checks pass for every configuration before execution.
+
+Chromium 153.0.8010.12 also passes all 4,340 cases with exact Python byte parity,
+no Node globals and network APIs disabled during compilation. The first browser
+attempt exceeded Node's single-string size while reading the 652,998,979-byte
+corpus; it failed before compilation and is not counted as a pass. A converter
+verified unchanged record values and produced JSON Lines. The browser harness
+now streams those records in batches of eight through one WASM instance, verifies
+each complete response and checks the final corpus/report count. Existing JSON
+array inputs remain supported and are separately checked below.
+
+This run reuses the actual native extension and WASM binaries from the preceding
+host-configuration proof. Runtime source is unchanged; the changes add test
+composition/captures and harness transport. Receipt and retained summaries:
+[B-005-decimal-configuration-embedding.json](B-005-decimal-configuration-embedding.json).
+This supersedes the pending decimal embedding status in the earlier composition
+checkpoint. Scalar decimal property SUM now has original Rust, native PostgreSQL
+and actual Python/browser evidence across all admitted precision/scale pairs.
+It does not qualify recursive decimal/signed native procedures or production
+storage. The acceptance-audit gap recorded above remains open.
+
+The updated browser harness also passes all 342 existing default-compile JSON-array
+cases with the same exact native bytes. Custody (38 configurations/84 responses)
+and specification integrity (43 artifacts/10 schemas/30 planned criteria/636
+scenarios) still pass; those checks do not close the recursive numeric gaps.
