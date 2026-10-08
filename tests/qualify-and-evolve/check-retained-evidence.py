@@ -25,6 +25,8 @@ components=[
  ('../ashlar-databricks/host-obligation-check.py','state','cases',53),
  ('reconcile-unsigned-all-widths.py','status','cases',64),
  ('reconcile-signed-boundaries.py','status','cases',64),
+ ('reconcile-decimal-domains.py','status','cases',434),
+ ('decimal-reconcile-controls.py','status','corruptionsRejected',7),
  ('signed-reconcile-controls.py','status','corruptionsRejected',7),
  ('audit-current-hosts.py','status','hostArtifactJoins',1182),
  ('reconcile-truss-archive.py','status','cases',76),

@@ -637,6 +637,48 @@
       "sourceSha256": "5371d8409077bb77c187f660e2642611451ba85aa9c8559bdd14a682a1b31ad5"
     },
     {
+      "component": "reconcile-decimal-domains.py",
+      "result": {
+        "status": "passed",
+        "cases": 434,
+        "nativeAssertions": 1302,
+        "nativeReceipts": 58,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "sourceSha256": "c1431f5ff2e38fd3fcbc8580e5ddce7cc5f105e0bcfe6a33f488619a8eb68ea1",
+        "inputHashes": {
+          "custody.json": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd",
+          "summary.json": "f8bbad1fba44657bcde0cf1388498ab0ba3b4f194a62f94b0d023666ff3ac3a1",
+          "compile-artifacts.jsonl.gz": "34f4d57e0a804aa0d3196c2b87cc5368fd9fba542927f93db6f9b7dd2270f488",
+          "statements.jsonl.gz": "d02043abfa374844043cc72bb501442ebe7a61860f83569cbb0bbf78a0bd651a"
+        },
+        "scope": "All decimal precision 1..28 and valid scales; exact emitted SQL/params/pins, duplicate extrema and least-positive coefficient, five invalid values per domain, and same-statement warehouse build. Separate read-only ANSI observation. Synthetic owners, no production custody/support promotion."
+      },
+      "sourceSha256": "c1431f5ff2e38fd3fcbc8580e5ddce7cc5f105e0bcfe6a33f488619a8eb68ea1"
+    },
+    {
+      "component": "decimal-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 7,
+        "controls": [
+          "rounded-sum",
+          "lost-invalid-value",
+          "wrong-warehouse",
+          "changed-slot",
+          "stale-module",
+          "changed-result-scale",
+          "duplicate-native-receipt"
+        ],
+        "scope": "Semantically corrupted archived native receipts with recomputed custody digests refuse. No native execution or support promotion."
+      },
+      "sourceSha256": "d0b070ad3c7bb3f467c0fa22e069f1f165ffe9085d6bacd0dadd8b053f71709c"
+    },
+    {
       "component": "signed-reconcile-controls.py",
       "result": {
         "status": "passed",
@@ -2148,6 +2190,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 121,
+  "verifiedEvidenceReferences": 124,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

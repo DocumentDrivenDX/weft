@@ -191,6 +191,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
           "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/custody.json",
+          "sha256": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+          "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
+          "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
         }
       ],
       "excludedClaims": [

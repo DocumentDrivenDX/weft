@@ -875,6 +875,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
           "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/custody.json",
+          "sha256": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+          "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
+          "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -1049,9 +1061,21 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
           "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/custody.json",
+          "sha256": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+          "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
+          "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
         }
       ],
-      "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
+      "limitsAndRemainingAudit": "Current native Databricks SQL 2026.39 builds observed for scalar/application/value/relationship corpora, every signed/unsigned BIGINT width and every decimal precision/scale pair. Candidate scope; native supported registration and final branch/domain accounting remain open. Authority/lifecycle attestations are synthetic."
     },
     {
       "id": "US-004-AC4",
@@ -1567,6 +1591,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-224/summary.json",
           "sha256": "c381667c788efdcff4a2278159c59d23b28dc0ac08988892ec55625c059d2f6a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/custody.json",
+          "sha256": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+          "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
+          "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1607,7 +1643,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "b78ce53eecc1e8ab37f44e24a7aa7a360e0728c2526f7dd6a1b6c2db7954a709"
+          "sha256": "1860611e89ffcd6661d7a31f3e220d2461aae3027ccb57282707de104906ecdb"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1805,7 +1841,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "b78ce53eecc1e8ab37f44e24a7aa7a360e0728c2526f7dd6a1b6c2db7954a709"
+          "sha256": "1860611e89ffcd6661d7a31f3e220d2461aae3027ccb57282707de104906ecdb"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",

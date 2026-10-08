@@ -139,3 +139,30 @@ and scoped historical property/resource receipts. Two new exact tests pass
 with five property tests intentionally filtered; all six application syntax
 tests pass unfiltered. No production source changed. Backend lowering review
 and supported native-profile qualification remain open.
+
+## Every Ashlar scalar decimal domain
+
+B-007-decimal-domains-native now records all 434 precision 1..28 and scale
+0..precision pairs passing on Databricks SQL 2026.39 with the retained exact
+u/r build hashes. There are 1,302 assertions in 55 batched native queries plus
+three read-only engine/ANSI probes: 58 terminal successful statements. Per-domain
+checks admit repeated positive/negative extrema and the least positive coefficient,
+produce its exact SUM, and detect both precision overflow directions, excess
+scale, native null and absence. Engine identity accompanies every assertion in
+the same native statement. Separate ANSI probes observe true; they do not
+attest settings for arbitrary hosts.
+
+The fresh compiler is hash-pinned, with source/build custody. Independent
+reconciliation reconstructs exact SQL, parameters, model/binding pins, result
+scale and expected integer-coefficient arithmetic. Seven corruption controls
+refuse after valid archive/custody rehashing. Compressed archives preserve the
+original 11.6 MB artifacts/receipts in about 350 KB of retained evidence.
+These are read-only synthetic owner substitutions for scalar props storage.
+They qualify observed domain operations, not stored-table/publication custody
+or a supported backend registration. The cancellation dataset alone does not
+detect DISTINCT; separate retained duplicate-sensitive native/source-mutation
+checks own that guarantee. No typed decimal home is invented for Ashlar's layout.
+
+The exact/parser semantic-family review is now recorded separately; backend
+lowering and final graph accounting, supported native registrations and the
+final acceptance audit remain required.

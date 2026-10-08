@@ -39,3 +39,14 @@ recorded authored expectations where named. It cannot create producer provenance
 new native execution, a production policy service or qualified warehouse release.
 The release gate still requires the exact support/acceptance audit, critical
 branch review and owner decisions recorded in B-007-release-readiness.md.
+
+The decimal-domain native harness compiles every valid precision/scale pair and
+executes read-only emitted-SQL owner substitutions on the existing fixture
+warehouse. Set `WEFT_ASHLAR_COMPILER` to a freshly built/frozen Databricks example
+and `WEFT_ASHLAR_EVIDENCE_OUTPUT` to a fresh output directory; run
+`tests/ashlar-databricks/decimal-domains-native.py` with the existing SDK host.
+`WEFT_DECIMAL_PREPARE_ONLY=1` compiles without database calls. Frozen producer
+source, build/source hashes and exact compressed archives are retained in
+B-007-decimal-domains-native. `reconcile-decimal-domains.py` and
+`decimal-reconcile-controls.py` replay independently without native access;
+both are included in the standard retained-evidence check.

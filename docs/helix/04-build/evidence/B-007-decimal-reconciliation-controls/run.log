@@ -1,0 +1,1 @@
+{"status": "passed", "corruptionsRejected": 7, "controls": ["rounded-sum", "lost-invalid-value", "wrong-warehouse", "changed-slot", "stale-module", "changed-result-scale", "duplicate-native-receipt"], "scope": "Semantically corrupted archived native receipts with recomputed custody digests refuse. No native execution or support promotion."}
