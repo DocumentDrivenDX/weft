@@ -540,3 +540,9 @@ canonicalization, including 65 ordered comparisons. Original request
 model and binding digests are verified per case. row-reconciliation.json
 retains this expanded observation separately from the original scope-only
 receipt. Only expectation definitions execute; no compiler or database rerun.
+
+The saved native scope/row audit now removes compiler-path/hash setup from
+its trusted expectation-definition prefix, eliminating the temporary binary
+dependency. portable-reconciliation.json retains the passed 76-row audit.
+Eight executable corruption controls reject row loss/duplication, altered
+numbers/pins/order, duplicate case IDs, and raw/decoded disagreement.

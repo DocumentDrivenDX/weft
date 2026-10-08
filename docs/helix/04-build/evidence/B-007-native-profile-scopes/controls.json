@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "corruptionsRejected": 8,
+  "names": [
+    "lost-row",
+    "duplicate-row",
+    "rounded-integer",
+    "wrong-binding-pin",
+    "wrong-model-pin",
+    "changed-raw-only",
+    "duplicate-case-id",
+    "changed-order"
+  ],
+  "scope": "Saved native row/pin audit negative controls; no engine rerun.",
+  "sourceSha256": "0daca42e3548dd6e2b12226432488d08c01b681f6a93fb0e00143886434da5ea"
+}

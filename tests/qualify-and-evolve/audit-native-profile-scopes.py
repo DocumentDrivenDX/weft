@@ -1,18 +1,19 @@
 """Inspect actual retained native artifacts without promoting support status."""
-import gzip,hashlib,json,os
+import ast,gzip,hashlib,json,os
 from collections import Counter
 from pathlib import Path
 root=Path(__file__).resolve().parents[2]
-source=root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports.json.gz'
+source=Path(os.environ.get('WEFT_SCOPE_REPORTS',str(root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports.json.gz')))
 reports=json.loads(gzip.decompress(source.read_bytes()))
 harness=root/'tests/truss-postgresql/application-native.py'
-# Evaluate only trusted expectation definitions, stopping before the native loop.
-# The prefix reads the pinned local compiler for its hash; it executes no SQL.
-os.environ['WEFT_TRUSS_COMPILER']='/private/tmp/weft-b007-truss-compile-frozen'
+# Evaluate trusted expectation definitions only; drop compiler-path/hash setup.
+# No compilation, database execution, or temporary binary is needed.
 namespace={'__file__':str(harness)}
 prefix=harness.read_text().split('reports=[]\n',1)[0]
 assert 'for c in cases:' not in prefix
-exec(compile(prefix,str(harness),'exec'),namespace)
+module=ast.parse(prefix,filename=str(harness))
+module.body=[node for node in module.body if not (isinstance(node,ast.Assign) and any(isinstance(target,ast.Name) and target.id in {'BINARY','BINARY_SHA'} for target in node.targets))]
+exec(compile(module,str(harness),'exec'),namespace)
 requests={c['id']:c['request'] for c in namespace['cases']}
 ordered=0
 scopes={};states=Counter();seen=set()
