@@ -75,7 +75,7 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   results.append(dict(fixture=e['fixture'],noteHome=e['noteHome'],bound=e['bound'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Complete original scalar/recursive entities over seven selected graph shapes with mixed optional scalar homes; synthetic PostgreSQL fixtures, not new embedding or production qualification',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-(ROOT/'docs/helix/04-build/evidence/B-005-recursive-entity-native.json').write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original recursive entity native cases passed')
+Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-recursive-entity-native.json")).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} original recursive entity native cases passed')
 
 if os.environ.get("WEFT_ENTITY_DRIVER_SETUPS"):
  Path(os.environ["WEFT_ENTITY_DRIVER_SETUPS"]).write_text(json.dumps(driver_setups)+"\n")

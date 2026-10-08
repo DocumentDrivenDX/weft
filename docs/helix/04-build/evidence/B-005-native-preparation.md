@@ -3850,3 +3850,69 @@ original-owned grouped-join composition for the selected native fields. The
 original name/customer_id/total query, mixed-home grouped-join variants and
 final US-003 story acceptance remain unproven; candidate/production status is
 unchanged.
+
+## Original sales query and numeric comparison domain fix (2026-10-08)
+
+The original query `SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN
+Orders o ON o.customer_id = c.id GROUP BY c.name` now has original-owned
+configuration and native execution evidence for all 16 row/props combinations
+of its four selected fields. `build-original-sales-join-fixtures.py` authors
+these bindings from checked fixtures, including retained decimal(28,2)
+templates. It does not depend on temporary capture directories or emitted SQL.
+The owning source records retain the selected authored fields, and every graph,
+codec, comparator, owner/catalog mapping and source pin is admitted afresh.
+
+An independent corrupt-data case failed before the compiler change: an
+out-of-range UInt64 foreign key on an unmatched order produced nine zero
+violations. `/private/tmp/weft-sales-join-domain-before.log` retains that failure.
+`select_definition::compile_registry` previously emitted numeric-domain
+prerequisites only for SUM or key requirements. It now emits them for every
+selected numeric comparator requirement, including equality and ordering,
+independently of logical filters and join matches. Unknown/non-numeric domains
+retain their existing admission behavior. The Rust regression explicitly
+requires domain prerequisites for both numeric equality fields across all cuts.
+
+The fresh Python extension executes 128 PostgreSQL 17.9 cases through
+`original-sales-join-native.py`. Independent Decimal arithmetic at precision
+100 and nested-loop relational expectations verify grouped bag semantics,
+large exact values, sums beyond the source Decimal precision, C-collated Unicode
+and trailing-space distinctions, empty results, unrelated types and unmatched
+rows. Missing/invalid selected fields on unmatched owners, wrong carriers,
+excess scale and numeric overflow block query execution. Queries and all
+prerequisites use prepared text slots in one transaction. The final receipt is
+`B-005-original-sales-join-native.json`; no skipped query is reported as a
+successful execution.
+
+Fresh maturin and wasm32/wasm-bindgen builds use `test-original` and the existing
+pinned toolchain. `sales-join-embedding-check.py` passes 80 actual Python cases:
+16 complete Rust-response comparisons, 64 malformed/version/pin/candidate
+refusals and 16 deterministic repeats. Each successful request uses an unlisted
+binding digest to exercise the explicit configuration boundary. Real Chromium
+148.0.7778.96 / Playwright 1.62.1 passes the same 80 cases with exact Python byte
+parity, browser-only imports and no Node globals. The former Chromium 153 cache
+path was absent; launch failures provided no evidence. This checkpoint pins
+and qualifies the actual installed browser, not the absent executable.
+
+The broadened domain checks add obligations to 36 existing optional/entity
+response fixtures. Refreshing them first proved that SQL, parameters, columns,
+all other response metadata and every previous obligation stayed identical;
+only owner-wide numeric domain obligations were added. Core/PostgreSQL tests
+passed, then all nine runtime tests passed against the refreshed fixtures,
+for 160 Rust regressions total. The unchanged exhaustive Decimal SUM composition
+keeps its earlier evidence; this is not a claim that it was rerun. Actual Python
+and fresh Chromium also pass all 342 existing original embedding cases, with
+84 deterministic Python repeats. Separate current regression receipts retain
+48 optional native cases, 168 recursive entities, 16 multi-root entities,
+588 host callback checks and 252 actual psycopg 3.2.10/libpq 17.5 entity executions.
+The driver container is ephemeral and removed after success; policy/context
+callbacks remain injected evidence. `WEFT_EVIDENCE_OUTPUT` lets these harnesses
+retain new receipts under `sales-join-regression/` without overwriting history.
+
+`B-005-original-sales-join.json` pins the source/harness/fixture, native extension,
+wheel and WASM hashes, terminal log hashes and limits of each scope. Python/
+browser commands and receipts use `target/b005/sales-join-embedding/`; Rust
+captures use `WEFT_SALES_JOIN_CAPTURE=/private/tmp/weft-sales-join-rust` with
+`cargo test -p weft-postgresql --features conformance-original sales_join_tests`.
+`bun run specs:check` remains integrity evidence only. This closes the selected
+original grouped-join gap; final US-003 acceptance is still under audit, with
+no installed/production Truss or released generic configuration API claim.

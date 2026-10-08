@@ -2,6 +2,7 @@
 @covers US-003-AC4: pins/visibility/authority and preparation gate publication.
 """
 import copy, hashlib, json
+import os
 from pathlib import Path
 from host_obligation_fixture import Refused, execute
 ROOT=Path(__file__).resolve().parents[2]
@@ -49,5 +50,5 @@ for transport in transports:
    if case.startswith('guard-'):assert 'query' not in events
   results.append(dict(fixture=transport['fixture'],noteHome=transport['noteHome'],case=case,events=events,published=published))
 receipt=dict(scope='Test-only host orchestration using independent injected driver/context callbacks; no native driver, storage or production host qualification',cases=len(results),sourceHashes={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [Path(__file__),Path(__file__).with_name('host_obligation_fixture.py')]},results=results)
-(ROOT/'docs/helix/04-build/evidence/B-005-host-obligation-orchestration.json').write_text(json.dumps(receipt,indent=2)+'\n')
+Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-host-obligation-orchestration.json")).write_text(json.dumps(receipt,indent=2)+'\n')
 print(f'{len(results)} host orchestration cases passed')

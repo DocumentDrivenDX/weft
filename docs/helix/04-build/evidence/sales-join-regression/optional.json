@@ -1,0 +1,776 @@
+{
+  "scope": "Original optional Unicode scalar and complete three-scalar entity over props/native row homes; native null explicitly unsupported by pinned presence profile; synthetic PostgreSQL fixtures only",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "007dd79a84f7d94db15d2cdaac37834b5f0597e707730a845757eed84054972a",
+  "harnessSha256": "f78ac8a49d93f976d65316a558023d8401e6212ab826c99c0de538668429d4a2",
+  "results": [
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "07b86dd55a569f94c2e5d53be97ee0c0881eebb2302078b4debf835191805c21"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "44941fb5a9108ae9a1998c95a5f93fdfafc154f3311a9c44628f1b82ebaf1ac3"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "35b759191aac015e8748d7cf201cc275e481250da0f3ebcde96eefe919fefe32"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a239a34764f8d1dd6969ea75fb209b0ea314dddcd44ccb7a2b2de429a53df433"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "894e8740d602b7e753a910df1833ae5dd685403cbd8a789350f45838db8a96ce"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "missing-root",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4023076d56034b88b39fc3aeebbdfc1e79c0fb04a1790f16580d336208dd9073"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "duplicate-state",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f14570a4edb73cee0e9968a99df183d5df811d58abfe3d69a70aad3bfb6b76af"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "orphan-scalar",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7db7957111505ddfc183a59290b0930be44e771843620808cfe745fcf600f1cb"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9764153cc2bdbc413e14376083a130e6653fb1ab3ee14921124da34ea3b89321"
+    },
+    {
+      "home": "row",
+      "kind": "entity",
+      "case": "null-node-with-payload",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b5b156b9074aa6d2178078197c64a4fce5f76f6358231a1e02465051cfc9f160"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "075a1097074289fe3b7afbd7187de5ac6bd13441aa6ab4282985a31c1d219e62"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "69371614383c0bd81395a3a52087f73b0cde1c75c8c0d4d1781486174a8e4da3"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "35b759191aac015e8748d7cf201cc275e481250da0f3ebcde96eefe919fefe32"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a239a34764f8d1dd6969ea75fb209b0ea314dddcd44ccb7a2b2de429a53df433"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "894e8740d602b7e753a910df1833ae5dd685403cbd8a789350f45838db8a96ce"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "missing-root",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4023076d56034b88b39fc3aeebbdfc1e79c0fb04a1790f16580d336208dd9073"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "duplicate-state",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f14570a4edb73cee0e9968a99df183d5df811d58abfe3d69a70aad3bfb6b76af"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "orphan-scalar",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7db7957111505ddfc183a59290b0930be44e771843620808cfe745fcf600f1cb"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9764153cc2bdbc413e14376083a130e6653fb1ab3ee14921124da34ea3b89321"
+    },
+    {
+      "home": "row",
+      "kind": "scalar",
+      "case": "null-node-with-payload",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b5b156b9074aa6d2178078197c64a4fce5f76f6358231a1e02465051cfc9f160"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "aba6b7cfe5d90d8c08cd5431c7e24573049ebefc36add4218d599406f599e239"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f75f0baf042a2429a661f87fdb04c859a9327c7548de615e4ec35d324c7d4bb0"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "35b759191aac015e8748d7cf201cc275e481250da0f3ebcde96eefe919fefe32"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a239a34764f8d1dd6969ea75fb209b0ea314dddcd44ccb7a2b2de429a53df433"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "894e8740d602b7e753a910df1833ae5dd685403cbd8a789350f45838db8a96ce"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "missing-root",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4023076d56034b88b39fc3aeebbdfc1e79c0fb04a1790f16580d336208dd9073"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "duplicate-state",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f14570a4edb73cee0e9968a99df183d5df811d58abfe3d69a70aad3bfb6b76af"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "orphan-scalar",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7db7957111505ddfc183a59290b0930be44e771843620808cfe745fcf600f1cb"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9764153cc2bdbc413e14376083a130e6653fb1ab3ee14921124da34ea3b89321"
+    },
+    {
+      "home": "row",
+      "kind": "entity-bounded",
+      "case": "null-node-with-payload",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b5b156b9074aa6d2178078197c64a4fce5f76f6358231a1e02465051cfc9f160"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "721e305afd71f1f02dbd176af52fb78d31155a0da82c112b0d5fd6286235199d"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9f18fe22b3e238c9711195e3a3fe04eb5d3711d1ec12432900768b5f989e7b58"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5026cd7e75552bdb07b2bf2715aa6d13d20b17b612e6514c1f5d1193e5cb1d11"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb1994d1c4eaf12429c5ade327c1e3630dbbddc2a55512bd70023ea344446c73"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f537eaa6957a52b1fac4db4541a28dd7e4de684f651045595117dc478f2b29c5"
+    },
+    {
+      "home": "props",
+      "kind": "entity",
+      "case": "root-array",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b0cacb0112dc8d7ae6b130906773a628dfdc7fe4dd45f70f6adae32c320565e7"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "b3aed6a226db2330ac9db2bfdf874566ffa8a5e8cd65cc518122b97d30cb2273"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4e79eba05b00ce1f8df5a57409ee0bbabf9c9d6c454373f33f225fa0297f4947"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5026cd7e75552bdb07b2bf2715aa6d13d20b17b612e6514c1f5d1193e5cb1d11"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb1994d1c4eaf12429c5ade327c1e3630dbbddc2a55512bd70023ea344446c73"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f537eaa6957a52b1fac4db4541a28dd7e4de684f651045595117dc478f2b29c5"
+    },
+    {
+      "home": "props",
+      "kind": "scalar",
+      "case": "root-array",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b0cacb0112dc8d7ae6b130906773a628dfdc7fe4dd45f70f6adae32c320565e7"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "empty-owners",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "20c4c8a1bb41dd53825197b563f04a12b70bceeb70dafde67e0fe40522bf2300"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "absence-empty-unicode",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "669fc8f44eb1d766db8958fd09ac0c0a362ccc6d9164f235e36c32c91529a594"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "unexpected-null",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5026cd7e75552bdb07b2bf2715aa6d13d20b17b612e6514c1f5d1193e5cb1d11"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "wrong-value-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb1994d1c4eaf12429c5ade327c1e3630dbbddc2a55512bd70023ea344446c73"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "sql-null-carrier",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f537eaa6957a52b1fac4db4541a28dd7e4de684f651045595117dc478f2b29c5"
+    },
+    {
+      "home": "props",
+      "kind": "entity-bounded",
+      "case": "root-array",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b0cacb0112dc8d7ae6b130906773a628dfdc7fe4dd45f70f6adae32c320565e7"
+    }
+  ]
+}

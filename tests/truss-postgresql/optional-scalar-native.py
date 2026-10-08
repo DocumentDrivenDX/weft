@@ -4,6 +4,7 @@
 @covers US-003-AC3: null and corrupt stored meanings report violations.
 """
 import csv,hashlib,io,json,subprocess
+import os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures'
 path=F/'original-optional-scalar-public.json';raw=path.read_bytes();captures=json.loads(raw)
@@ -67,5 +68,5 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   results.append(dict(home=e['home'],kind=e['kind'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(scope='Original optional Unicode scalar and complete three-scalar entity over props/native row homes; native null explicitly unsupported by pinned presence profile; synthetic PostgreSQL fixtures only',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-(ROOT/'docs/helix/04-build/evidence/B-005-optional-scalar-native.json').write_text(json.dumps(receipt,indent=2)+'\n')
+Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-optional-scalar-native.json")).write_text(json.dumps(receipt,indent=2)+'\n')
 print(f'{len(results)} original optional scalar/entity native cases passed')

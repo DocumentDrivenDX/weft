@@ -264,12 +264,7 @@ fn compile_registry<'a>(
         if !matches!(
             requirement.logical_type.family,
             weft_core::ir::Family::Integer | weft_core::ir::Family::Decimal
-        ) || !(requirement
-            .operations
-            .contains(&crate::native_comparator_definition::Operation::Sum)
-            || requirement
-                .operations
-                .contains(&crate::native_comparator_definition::Operation::Key))
+        )
         {
             continue;
         }
@@ -278,7 +273,7 @@ fn compile_registry<'a>(
             &requirement.identity,
         );
         let comparator = comparators.get(&key).ok_or_else(|| {
-            Diagnostic::new("WFT-BINDING", "lower", "SUM domain comparator missing")
+            Diagnostic::new("WFT-BINDING", "lower", "Numeric domain comparator missing")
         })?;
         for access in prepared.accesses.iter().filter(|access| {
             access.owner == requirement.owner && access.field == requirement.identity
@@ -288,7 +283,7 @@ fn compile_registry<'a>(
                     .scalar_storage
                     .as_ref()
                     .ok_or_else(|| {
-                        Diagnostic::new("WFT-BINDING", "lower", "SUM scalar carrier missing")
+                        Diagnostic::new("WFT-BINDING", "lower", "Numeric scalar carrier missing")
                     })?
                     .carrier
                     .clone(),
@@ -300,7 +295,7 @@ fn compile_registry<'a>(
             let scan = prepared
                 .scans
                 .get(&access.scan)
-                .ok_or_else(|| Diagnostic::new("WFT-BINDING", "lower", "SUM owner scan missing"))?;
+                .ok_or_else(|| Diagnostic::new("WFT-BINDING", "lower", "Numeric owner scan missing"))?;
             let mut check = select
                 .payload_checks
                 .iter()
@@ -309,7 +304,7 @@ fn compile_registry<'a>(
                     Diagnostic::new(
                         "WFT-BINDING",
                         "lower",
-                        "SUM original payload prerequisite missing",
+                        "Numeric original payload prerequisite missing",
                     )
                 })?
                 .clone();

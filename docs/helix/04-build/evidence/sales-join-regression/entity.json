@@ -1,0 +1,3200 @@
+{
+  "scope": "Complete original scalar/recursive entities over seven selected graph shapes with mixed optional scalar homes; synthetic PostgreSQL fixtures, not new embedding or production qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "9b4091475f3463530a442085e37fe7ab4629bde90fffb7948eca6f21bb1606f5",
+  "harnessSha256": "4cd0463102fd42728d5ba64d7c6a966dabd499b841e307af6e239abfaabaec7d",
+  "results": [
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a07013ac4d41e5e8061c073e94e8e030a05e30dd49386d390ac71d97c1214211"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "189465dc091ba9dc5cdda2bbd67acbbc0a0a594ea3fb2a209866f8e67f1cb141"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3b80bfb7c5b60e3bdf8c63802d2bf0e1e1353a91b83d47aad088ae50c77b9a83"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "50eae49e49a8446d40af1fc17d94f541d9cab8677f48bde6b51f129fb321cf8a"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "903c698c7184a25ff619c6493b9e2e8f184ea15be4f622813417ba9fb608dc09"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0b084a21496425308d2eac8ea5c3bc4aac52d8c459733ebc799d860d16277466"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "94448984aa6add28e2d18660a7c2bdbe1340da25faac8519c065d200e08965d4"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "189465dc091ba9dc5cdda2bbd67acbbc0a0a594ea3fb2a209866f8e67f1cb141"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3b80bfb7c5b60e3bdf8c63802d2bf0e1e1353a91b83d47aad088ae50c77b9a83"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "50eae49e49a8446d40af1fc17d94f541d9cab8677f48bde6b51f129fb321cf8a"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "131ff9d71256c0552c3cfb06f9db880ccb9e5ca89514daa4b95798b32f57a2fb"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "931cf9e2899e4235f2d32c339837fcf0b2ad8b9d7939c45aa5cc526cda9ececf"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9e6fd496e5668798baec2c9922f6808d1fcf8cb803739c5f45a3ca9dd7e422b0"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "558d84889901d012193cc1805a57ae8f4ecaa4b2e541008ff00826f75dc708df"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d9040d441e747bc28f6f8a755d544bf0c087ff6c2cba0fa19a8a38cff35ceb87"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "286871ee6dcbb77617d1bf821b1e17abb8b0e65e52eb72092240fef08c40c79a"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "93b7ff5e629cf75a2c9c50ccb8c7121cdb4b78c07471ebef3e6c04eda8bf4168"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "66fc4b8e75683997f266a784daf0e5f444e22ed6148e0327dbee5533e8adbe28"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "3e447eaac6db9469bb87abf5b5f84f3ceaa21adc06b4bb0fe3e7d70cbd7dcbeb"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "558d84889901d012193cc1805a57ae8f4ecaa4b2e541008ff00826f75dc708df"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d9040d441e747bc28f6f8a755d544bf0c087ff6c2cba0fa19a8a38cff35ceb87"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "286871ee6dcbb77617d1bf821b1e17abb8b0e65e52eb72092240fef08c40c79a"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f59fd5da605ea397ac4dc38a896ac55211786ab1b895890d2630baa1713e586b"
+    },
+    {
+      "fixture": "address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d280bf84e740e49dd8d9b1dbe0e2ae469c2bb0cc7dabb73357662d61a26f487b"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "eeff793433e8cc9c6cf93413f07a37c81e744b6d608b5ca912070b8461584ce1"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2e28241978ba41aeb1f50480a71b64a69fc6a360d77460db39eb71e2605798be"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c7c1932ab9db0dca842ca01d5aa58331cdec352997d71f9928108282b9d9e8c3"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "114f944c39cef4baebeb8e781c3a455bb59d74c95ade199f36e5489ec6aa4277"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "03764cf1aaa113983297fe2d0fc657e9efe063a149ee6232cee9cb7ad9a1b2a9"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "2c35a14f9efa680ba30b189f9613cfa2ada1103640ef57835714310cfb5f7728"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "3484ef6297dc8d949f7de8ade616927d2ab2a13082e65b89b5b5756abe4f3d08"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2e28241978ba41aeb1f50480a71b64a69fc6a360d77460db39eb71e2605798be"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c7c1932ab9db0dca842ca01d5aa58331cdec352997d71f9928108282b9d9e8c3"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "114f944c39cef4baebeb8e781c3a455bb59d74c95ade199f36e5489ec6aa4277"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "468b4010f1c41e41a474e6c083523ae789484d6555abe057ac1cdcaf4d4fb6ca"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7b03dee4d958ff80e489a126f3775a5c818d64e8d97a40b34342714054c736cb"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e16d64cf96c6f41955b5e0face282fb9d59a48b891bc95f7f6828fd103c62a7d"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb4b6384fdfd40afe8958d4aff94d15337f9231fd886ae74b6a3a149ab9e4332"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e02b86b97a0bb3a58fdf2cd5668c0bfbb4be60e936e0c239f0a4c6f70799c044"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "294fa7339d8ed29d40d7ca3fac73e86ff90fcf0ea637ade099543dbdc08baa75"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "772efa2eca0b1f3ee063dc9f9307918b547f580ccab8f7fd4a00516e92a67162"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "968f32e448138cb691a82a2c8ec6fc1efb8daf2908d89c8a9dfd7144a219bf28"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e59a78aa58d93ae884b8fabd9b327e5b2fcacaec04a073c6798929647e8c28da"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb4b6384fdfd40afe8958d4aff94d15337f9231fd886ae74b6a3a149ab9e4332"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e02b86b97a0bb3a58fdf2cd5668c0bfbb4be60e936e0c239f0a4c6f70799c044"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "294fa7339d8ed29d40d7ca3fac73e86ff90fcf0ea637ade099543dbdc08baa75"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ea2e8f61377540f006a6d203907c06d78a6fd3362f53bab7d10f94892fd0dab3"
+    },
+    {
+      "fixture": "cyclic",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0d0b1eb421d6e4d63e172f9947ad4dac459e801eee25abc57379e5002763e5bc"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "5bc958d3f60e9824405a7be931e882643decf7c5fab39e21def6091ca7bfcc1d"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6ab17e7d0dec72ec40645265c6fa3efeb34ccc4826287b719968991b1de0896c"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5a63f66a70ac5a35a971d14a454c9144765310290a3ec6b940c3a0ed6f3d6ec1"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4bea16f37c7f5a1c7ec36dec9c3c1f9efa0573405443b6c46335b500a847fd69"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d0f113abf0a78d1755e4c921a7d14b81383dde87b783630af67748507c549ebc"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "276a4025b47fc892c44d7ffad716228e6f47794e32b4401583faf82b7d573f2f"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "29c8f7d46e30e495b5f0e1b38cad9d41517f973a29a72e11c65dcba3f6054daa"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6ab17e7d0dec72ec40645265c6fa3efeb34ccc4826287b719968991b1de0896c"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5a63f66a70ac5a35a971d14a454c9144765310290a3ec6b940c3a0ed6f3d6ec1"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4bea16f37c7f5a1c7ec36dec9c3c1f9efa0573405443b6c46335b500a847fd69"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "eb0bab98586b7cb8d868b5a61db066f69e8dd10c9d47f5235afe6c9794e409a4"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "276a4025b47fc892c44d7ffad716228e6f47794e32b4401583faf82b7d573f2f"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "79d6285490f26dbd0c5a77fedd7bec75e97bdcf22f7a163d3df94a2df507601c"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "1461a2766845a263c6c09da875d07e5ebd50e78467cf15cfc5e297804b5b183b"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2efdcb45817c6b37d99e191cdb5d561dd4257ddf5960d1d58c06d4bc6f5d2377"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b6624545dd3fbd729be4a88438e715d6f66fb8200c9a53a73cbafc97efd6a0ac"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "be642d5c26102577a15eb137482b7e8e16d7255fce2f1811302e1b238e566f46"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0a8fe4e71f97a0aba69cf8ef0bdc94748bc7b98498b48ff2e833887a925c75c5"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "fd02794e75cca7f317a65df8d295440aec93ee9bb7c252dae5f4027be086d2ab"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "1461a2766845a263c6c09da875d07e5ebd50e78467cf15cfc5e297804b5b183b"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2efdcb45817c6b37d99e191cdb5d561dd4257ddf5960d1d58c06d4bc6f5d2377"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b6624545dd3fbd729be4a88438e715d6f66fb8200c9a53a73cbafc97efd6a0ac"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ad72abef792d44bfd8aa5cad1052a0b4a14edb68f4c3d0bad8aa1941e0b2adca"
+    },
+    {
+      "fixture": "map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0a8fe4e71f97a0aba69cf8ef0bdc94748bc7b98498b48ff2e833887a925c75c5"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0b629682958325bb31da7464ddd522d15535446ffec414da9a12fa8653803da1"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3f19b590affa4b523d79ba3b516d00c911ccf400cac32551e3841a7e41b7b69c"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "83a0f9a226c65362a6e3ce884715e2db5d10d930a4a9d7af170c1f090b29cc4b"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "26b5d5d7f564aef1b0c71a9c99651c399d9945e73d516239ca441ca6957d21e2"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c505a9e83604ec693e7052a517a5d6ef9d85700b6605b2fbe31e98f5dbda980e"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4aa495d9c9db73c1031a328ecdb9493eee539a0e190a989504a7002826bef3df"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e2d13ae61732f56bb856fc231b350d2a2ca6749e01008192a78ac2236e4db791"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3f19b590affa4b523d79ba3b516d00c911ccf400cac32551e3841a7e41b7b69c"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "83a0f9a226c65362a6e3ce884715e2db5d10d930a4a9d7af170c1f090b29cc4b"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "26b5d5d7f564aef1b0c71a9c99651c399d9945e73d516239ca441ca6957d21e2"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c5333dce86157927cabb988c7885d422620cfd8b64bc8307c22d3730b972b3b0"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4aa495d9c9db73c1031a328ecdb9493eee539a0e190a989504a7002826bef3df"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c06837b9708b1ce5a713c7b75f5e4dd6622ba2a3588f5582dfaa9427cae1cc5e"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "15e52918f24340d88f88b55e6dfc675b4e8d8e5fde5d4d15b1ef4c2716bf1bda"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8575708a40c5d92b7b8af8cb1b18d5d55828b4d3d6c41a37b5823ec192a67ef4"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0f59f1cb89111c071fee58ae652259e3ceb0a0a6df37589794da744dc7d059eb"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "93b6e1758c55c1f7ab92863ea66a83b4e791661fe34a49b35bde87e40320cbc8"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2d1ad08eb6417261001cad884b6e028ce6f43dc5881a64c68b5bd968755dec56"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "32963502d32913ec6a218cbe1e8c4547e15d96641607f18ba4293b17a520ce6b"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "15e52918f24340d88f88b55e6dfc675b4e8d8e5fde5d4d15b1ef4c2716bf1bda"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8575708a40c5d92b7b8af8cb1b18d5d55828b4d3d6c41a37b5823ec192a67ef4"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0f59f1cb89111c071fee58ae652259e3ceb0a0a6df37589794da744dc7d059eb"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9ca66e0fb0ca67b22b0d964f3bcb5ecef1b2e2b9c18b2e5df3ae00bcc6a2639a"
+    },
+    {
+      "fixture": "nested-sequence",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2d1ad08eb6417261001cad884b6e028ce6f43dc5881a64c68b5bd968755dec56"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "cc0c995c536bd5cfc15b383744514112bdcc7866851e9a9ff8344e61e441bf05"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8b8e10d67457c2ba94dc3d64fd4febad72bef2c7fd1e5d27f7c62f0309eac3f2"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "90bd35c42d724fa41b7333d6da346771284811e16952ecb043f608b8deeaebd6"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5a654fec6247feb72ac3aad621d8537734335d4214cfc938669255bd58d16921"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a26cb022d874be246c2e1e157eda0f7c3d486f74192f6f07adf73b7ce1d01c35"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6cb349a0f6db788e1013ea433837afbe30de34e94dade4552bb48864c427c08a"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "baf9f14fb298a8b2eb4b934b7b525be670e64dc06eefd32e06341f80ada558a7"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8b8e10d67457c2ba94dc3d64fd4febad72bef2c7fd1e5d27f7c62f0309eac3f2"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "90bd35c42d724fa41b7333d6da346771284811e16952ecb043f608b8deeaebd6"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "5a654fec6247feb72ac3aad621d8537734335d4214cfc938669255bd58d16921"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ce7f437ec76186c3115c8f1ebb3a88861fe416b72d9fb09c32f66a02aa3c4e43"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "5faf7e5935727a0cfa0a935926a1a59546b716e5d09937369ab9149533412ac4"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c52e8a024ce27ee50a7ee9818a93df5676d4276a2d2557229cf8e31af8e3565f"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "64722e8f75ed1cf991db5ae4603c888484184b8eb48f35df66f679b6bb6e1a1d"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7592decf2112f04a2342036f5affa49d9c72d4c043a781e6b3a937f2d1fd06e3"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "79bfef4e310edc5844c90d58f29c63ec58d1c24db713455a0e64fd25683cf7ed"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "b93679a4cd34d60759fde76d9921fb5756142c4267bc7152291efd1bf22a74c4"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6567bb6f13052c7309f9bebbe5a1deb4839fecc2ecc9cec5a7502dfc4d43444e"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4d5baa31742b3c34a85608c14e9b4274a1aa4d35d7c67f6a2520ad442e5d3a39"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "64722e8f75ed1cf991db5ae4603c888484184b8eb48f35df66f679b6bb6e1a1d"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7592decf2112f04a2342036f5affa49d9c72d4c043a781e6b3a937f2d1fd06e3"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "79bfef4e310edc5844c90d58f29c63ec58d1c24db713455a0e64fd25683cf7ed"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c2ad59658ebaa40849e61cdb871b8405a768569b97c9b89236ca264a791970c2"
+    },
+    {
+      "fixture": "numeric-address",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "70278ef030ada352752bbca88deb44d2c144321f69ed3cb219477bb90de2c5b1"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f2d5ddc75143b023fd73872bc3884c4b41cf03744683f64c29816b649a98a4fc"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "48c1eb762a4a22ff3cd145498312591c83540e5e3322796c6b04fdf3f43564a0"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7d4f961c99b7eba333b86bf3dbab2568aaea0e64e385b30b1327cd81ffbb83b8"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f0491c257c45a97067131ccea08fc224f4d336a0034734899a5dc6f7846cccac"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "2cef9d558ad43cc3ad052006a9d6d6857e463b9c9f5f575e52851d71e4466599"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "435a6394e9942ea2af24db580c00d57cc3f3a42db594211ece25f4258a1a576b"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6742a2741cbabc9e49c6fc27f77b8cee5898ba71ea2eb58502349716868be168"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "48c1eb762a4a22ff3cd145498312591c83540e5e3322796c6b04fdf3f43564a0"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7d4f961c99b7eba333b86bf3dbab2568aaea0e64e385b30b1327cd81ffbb83b8"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f0491c257c45a97067131ccea08fc224f4d336a0034734899a5dc6f7846cccac"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4b4dc6bc1f76f7d5cf5d810d85879803d1a9b4eb23d3b4e17821ff584fd5d8f4"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "435a6394e9942ea2af24db580c00d57cc3f3a42db594211ece25f4258a1a576b"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "b797d873c71de6364827f02fc596c3585d59b339af0dc5d23e6e41c4a8284715"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ea4e0fa28cc4cd80819b90bc9db600b98c9bd2576fef00a84246d798e2356c46"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c8c8b20a9756db66538c8f6844be461134c4a79a4f7a77138a030cedc2b3152b"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "37d91da04878a775731b277dc08a16644f70b759d2de5579a6be8779627225d1"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e557c53d74750fd5368e9112bc0a5f3c387a04921d928f5709dc3c5dae2c8c88"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "87e05c4c59e6fff8457941537c754506928fcfd60c5b1a69bd57670f27378ce3"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ac34b0a9d1050bfad44b4c287903b65829534dbdf43d5e1df5756198ac992cd3"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ea4e0fa28cc4cd80819b90bc9db600b98c9bd2576fef00a84246d798e2356c46"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c8c8b20a9756db66538c8f6844be461134c4a79a4f7a77138a030cedc2b3152b"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "37d91da04878a775731b277dc08a16644f70b759d2de5579a6be8779627225d1"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e40e0ca276d059711292b476ed2a185fccfdb91c5439a8ca5cf9a0c1fae5750b"
+    },
+    {
+      "fixture": "numeric-map",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "87e05c4c59e6fff8457941537c754506928fcfd60c5b1a69bd57670f27378ce3"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0ee84c8b040ab2bd0de79bfe97a665b3bf49cc2ee1bb5c750e1956dfb6f73179"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "25be75bc29208041e195abc814fec488a0fa51c97f75c87accf7f6869079a5d6"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4a29d402b245f34304b298b64c83f1b9dd2bb8d8317a34d797437ae671f968a7"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "449514b87024631460ad873f7abd3cee4459b777efb804dc2a444648ae08cca4"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4f378bf07c247ab9cf016cd1760477642cfea6bff86903284eda5cdbe0955a5b"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9d30a38494da41d105851a91d502e4acd5fb275f74e3fccf974b46a7d0e043a6"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "c9e7726f9e9d9dcbdda7904ea0d9c2ce5825f4c7148f022b2c04746edb74effa"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "25be75bc29208041e195abc814fec488a0fa51c97f75c87accf7f6869079a5d6"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4a29d402b245f34304b298b64c83f1b9dd2bb8d8317a34d797437ae671f968a7"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "449514b87024631460ad873f7abd3cee4459b777efb804dc2a444648ae08cca4"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d4996cd8919569519f8c2b433bf2f94211938e6699d71982b232dbffdf2a4324"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "row",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9d30a38494da41d105851a91d502e4acd5fb275f74e3fccf974b46a7d0e043a6"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "dfee66e1bf49f9310aa9aa09e66ee1bc841a0dd2e6062dae9fda22eb036a7ae4"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8b88145d9a53acf90e39167a03fe990e5e19d80ae5e5b1c6b9ca84092737c2b2"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "173a93a34ff218db8ee73683048dfeb3d0b69d1ab7922aea6ff9218453b77f63"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fce842d38db37505e076cae02ed7e5502e41e91ec136ed21b8647f4d6ae57dcc"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "25048779c28b3174cd83831994c246cab342acbc4aa66739e64cda1f5fc924f7"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 10,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f6e323342590b6c3fc224e599c602bba3ed7181db4db2146e0556b80824738bc"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "valid",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "5a05ee78c69098b795a85b04e84b62a20a86dd7884b3b448a246774a9a8e19f6"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-compound-corruption",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8b88145d9a53acf90e39167a03fe990e5e19d80ae5e5b1c6b9ca84092737c2b2"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-key-corruption",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "173a93a34ff218db8ee73683048dfeb3d0b69d1ab7922aea6ff9218453b77f63"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "hidden-note-corruption",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fce842d38db37505e076cae02ed7e5502e41e91ec136ed21b8647f4d6ae57dcc"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "foreign-owner",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "330534d1bd9ba95af66027d65139f11a7b434b1c3bfc5788cbbc812536ea6a55"
+    },
+    {
+      "fixture": "tags",
+      "noteHome": "props",
+      "bound": 1,
+      "case": "absent-compound",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f6e323342590b6c3fc224e599c602bba3ed7181db4db2146e0556b80824738bc"
+    }
+  ]
+}

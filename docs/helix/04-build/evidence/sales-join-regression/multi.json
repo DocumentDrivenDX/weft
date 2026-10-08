@@ -1,0 +1,313 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "transportSha256": "dc022ff188f4c10e7d5541ed83d6a8984f45adebe5a06abafa85676a19ec0999",
+  "scope": "Synthetic original complete entity combining independently admitted native Boolean sequence and numeric structured roots plus scalars; no fresh embedding or production claim",
+  "cases": 16,
+  "harnessSha256": "8af6f5ff0de98aa1a7bdff3f6899586551a2a21c9e0fe655083688bc505f0ec1",
+  "results": [
+    {
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "1c54ebd5f737dbfe806478ff74005fc3da483f31787ba3b4c3725013ebd5476b"
+    },
+    {
+      "bound": 10,
+      "case": "empty-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "bbb2c1eb08a96a3d521ff6aaa44f1f1fe8bbed46567d28d6dc1dff7523e7cba5"
+    },
+    {
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "415034766ad5ef41fda80191eb176fe5e9f57826dcfe65e626b53a10e0f36e52"
+    },
+    {
+      "bound": 10,
+      "case": "missing-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "34fa2ce12c0a4090bd2116da5495c824cc294ca8fd8337ab312079aebba71fda"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-sequence-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fd02d82d5ddf71ac8cc6f33af16aed7a76dd3275bcca766d012995e2fb225220"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "80c19e23f44336b51fe0de5cf0d1ff08834b09445cae64db06164e8ec624e2b9"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c6c4cdbbf3026aafaafa6e69ec86a66d29e69ad947b7e12464d226d61352a293"
+    },
+    {
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f45b3203540ddf9334da93eaf4b4852d65649618a863a86996080c9bb0510b77"
+    },
+    {
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "d95bec26a22c6fa8497baa61dc06ae0240ac6694714104ee9443c83182841853"
+    },
+    {
+      "bound": 1,
+      "case": "empty-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ae8b699b31e397e3cebbce4b770079bf721db751eb8ac9ef1f1f71f08f6bfc58"
+    },
+    {
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6e273d6dea5f783d246a7a912761b7892c9f24a655c9d3a13238ddff0eba4de0"
+    },
+    {
+      "bound": 1,
+      "case": "missing-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "34fa2ce12c0a4090bd2116da5495c824cc294ca8fd8337ab312079aebba71fda"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-sequence-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fd02d82d5ddf71ac8cc6f33af16aed7a76dd3275bcca766d012995e2fb225220"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "80c19e23f44336b51fe0de5cf0d1ff08834b09445cae64db06164e8ec624e2b9"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c6c4cdbbf3026aafaafa6e69ec86a66d29e69ad947b7e12464d226d61352a293"
+    },
+    {
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a9bd5599da516e158b9fbea92284ec1bfde869dc29b61d532431e9616a8f633a"
+    }
+  ]
+}

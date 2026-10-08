@@ -3,6 +3,7 @@
 @covers US-003-AC3: each root's corruption blocks even a one-row page.
 """
 import copy,csv,hashlib,io,json,subprocess
+import os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures'
 cut=json.loads((F/'original-multi-recursive-entity-inputs.json').read_text());binding=json.loads(cut['requests'][0]['request']['target']['bindingJson']);transports=json.loads((F/'original-multi-recursive-entity-public.json').read_text());trees={4:json.loads((F/'original-boolean-sequence-tree.json').read_text()),5:json.loads((F/'original-numeric-address-native-tree.json').read_text())};codecs={int(binding['properties'][p['index']]['propertyId']):p['leafCodecs']['root']['originalJson'].encode().hex() for p in cut['composition']['properties'] if not p.get('nativeTree',True)};results=[]
@@ -56,4 +57,4 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   results.append(dict(bound=t['bound'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
 receipt=dict(server=server,transportSha256=hashlib.sha256((F/'original-multi-recursive-entity-public.json').read_bytes()).hexdigest(),scope='Synthetic original complete entity combining independently admitted native Boolean sequence and numeric structured roots plus scalars; no fresh embedding or production claim',cases=len(results),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-(ROOT/'docs/helix/04-build/evidence/B-005-multi-recursive-entity-native.json').write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} multi-recursive entity native cases passed')
+Path(os.environ.get("WEFT_EVIDENCE_OUTPUT", ROOT/"docs/helix/04-build/evidence/B-005-multi-recursive-entity-native.json")).write_text(json.dumps(receipt,indent=2)+'\n');print(f'{len(results)} multi-recursive entity native cases passed')

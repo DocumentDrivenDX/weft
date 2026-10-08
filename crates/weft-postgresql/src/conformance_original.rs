@@ -1443,3 +1443,34 @@ mod numeric_entity_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod sales_join_tests {
+    use super::*;
+    #[test]
+    fn original_sales_join_retains_all_sixteen_storage_home_cuts() {
+        let cuts:Value=serde_json::from_str(include_str!("../../../tests/truss-postgresql/fixtures/original-sales-join-inputs.json")).unwrap();
+        for cut in cuts.as_array().unwrap() {
+            let request=&cut["request"];
+            let catalog=Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+            let config=configuration(&cut["configuration"].to_string(),&catalog).unwrap();
+            let compiled=config.compile_json(&request.to_string());
+            let response:Value=serde_json::from_str(&compiled).unwrap();
+            assert_eq!(response["status"],"compiled","{:?}: {response}",cut["homes"]);
+            assert_eq!(compiled,config.compile_json(&request.to_string()));
+            assert_eq!(response["columns"].as_array().unwrap().iter().map(|c|c["outputName"].as_str().unwrap()).collect::<Vec<_>>(),["name","total"]);
+            let sql=response["sql"].as_str().unwrap();
+            assert!(sql.contains("INNER JOIN") && sql.contains("GROUP BY"));
+            for field in ["customer-id", "order-customer"] {
+                assert!(response["obligations"].as_array().unwrap().iter().any(|o| {
+                    o["parameters"]["field"]["element"] == field
+                        && o["parameters"]["sql"].as_str().is_some_and(|sql|sql.contains("pg_catalog.power"))
+                }), "selected numeric equality field {field} needs an owner-wide domain prerequisite");
+            }
+            if let Ok(directory)=std::env::var("WEFT_SALES_JOIN_CAPTURE") {
+                let label=cut["homes"].as_array().unwrap().iter().map(|h|h.as_str().unwrap().chars().next().unwrap()).collect::<String>();
+                std::fs::write(std::path::Path::new(&directory).join(format!("{label}.json")),serde_json::to_vec_pretty(&response).unwrap()).unwrap();
+            }
+        }
+    }
+}

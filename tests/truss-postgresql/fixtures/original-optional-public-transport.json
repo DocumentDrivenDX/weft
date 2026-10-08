@@ -808,6 +808,147 @@
         },
         {
           "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 4,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23"
+                },
+                "position": 5,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 6,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 7,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_1\" ON \"weft_state_1\".\"owner_kind\"='object' AND \"weft_state_1\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_1\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_1\".\"property_owner_type_id\"=$4::pg_catalog.int4 AND \"weft_state_1\".\"property_id\"=$5::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_1\" ON \"weft_node_1\".\"state_id\"=\"weft_state_1\".\"state_id\" AND \"weft_node_1\".\"node_id\"=\"weft_state_1\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_1\" ON \"weft_scalar_1\".\"state_id\"=\"weft_node_1\".\"state_id\" AND \"weft_scalar_1\".\"node_id\"=\"weft_node_1\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$6::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$7::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
           "id": "truss.original.owner-structural-0",
           "owner": "host",
           "parameters": {
@@ -2582,6 +2723,147 @@
             "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKallYSmthVzVoYkdsMGVTSTZJbTl1WlNJc0ltVjRkR1Z1YzJsdmJuTWlPbnQ5TENKbVlXTmxkSE1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFhCaGNuUWlMQ0pyYVc1a0lqb2labWxsYkdRaUxDSnVZVzFsSWpvaWNHRnlkQ0lzSW01MWJHeGhZbWxzYVhSNUlqb2ljbVZ4ZFdseVpXUWlMQ0p6WTJGc1lYSlVlWEJsSWpvaWMzUnlhVzVuSW4wPSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MS1jdXN0b21lci1wYXJ0LXN0cmluZyIsInNoYTI1NiI6IjA2MjBmYjJmMTM3OTU3YzRhMjRmYjBjNzk4Mzk1N2JkNGU4ODcxYjAxNzU4NjJiYzczZmVhNjVkNGI1MTM4ZGUifSwiY2FycmllclNjaGVtYSI6InVybjp0cnVzczpkcmFmdDpleGFjdC12YWx1ZTowLjEuMCMvJGRlZnMvcHJlc2VuY2UiLCJkZWZhdWx0QXBwbGljYXRpb24iOiJub25lLW9uLXJlYWQiLCJlbXB0eUNvbGxlY3Rpb24iOiJwcmVzZW50LWVtcHR5LXR5cGVkLXZhbHVlIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLXByZXNlbmNlLWRlZmluaXRpb24vMC4xLjAiLCJqc29uTnVsbE1lbWJlciI6InByZXNlbnQtbnVsbC1pZi1hdXRob3JlZC1udWxsYWJsZSIsIm5hdGl2ZU51bGxWYWx1ZSI6InVuc3VwcG9ydGVkLXdpdGhvdXQtc2VwYXJhdGUtcHJvZmlsZSIsInByb2ZpbGUiOnsiaWRlbnRpdHkiOiJjYW5kaWRhdGUtdGVzdC1wcm9maWxlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSIsInZlcnNpb24iOiIwLjEuMCJ9LCJzcWxOdWxsUm9vdCI6ImludGVncml0eS1yZWZ1c2FsIiwic3RvcmFnZVJvb3QiOiJub25udWxsLWpzb25iLW9iamVjdCJ9",
             "scan": "s0",
             "sql": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$6::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$7::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((((\"weft_scalar_2\".\"node_id\" IS NOT NULL) AND \"weft_scalar_2\".\"scalar_kind\"='string' AND (\"weft_scalar_2\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_2\".\"boolean_value\" IS NULL AND \"weft_scalar_2\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_2\".\"numeric_token\" IS NULL) AND (\"weft_scalar_2\".\"binary_value\" IS NULL AND \"weft_scalar_2\".\"temporal_text\" IS NULL AND \"weft_scalar_2\".\"temporal_instant\" IS NULL AND \"weft_scalar_2\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_2\".\"original_source_bytes\",'hex') IS NOT NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') = '7b22617574686f726564446566696e6974696f6e223a7b226279746573426173653634223a2265794a6a59584a6b6157356862476c3065534936496d39755a534973496d56346447567563326c76626e4d694f6e74394c434a6d59574e6c64484d694f6e74394c434a705a434936496d4e3163335276625756794c584268636e51694c434a726157356b496a6f695a6d6c6c624751694c434a755957316c496a6f696347467964434973496d353162477868596d6c7361585235496a6f69636d567864576c795a5751694c434a7a5932467359584a556558426c496a6f69633352796157356e496e303d222c226964656e74697479223a2263616e6469646174652d666978747572652d373163323837393735386532383539393363323833656236663833316265646135663736653331353130386661623632363362326537386666323862636137312d637573746f6d65722d706172742d737472696e67222c22736861323536223a2230363230666232663133373935376334613234666230633739383339353762643465383837316230313735383632626337336665613635643462353133386465227d2c22636f657263696f6e223a226e6f6e65222c22696e7465726661636556657273696f6e223a2274727573732d6a736f6e622d6c6561662d636f6465632f302e312e30222c22696e76616c696453746f72656456616c7565223a22636f6d706c6574652d726573756c742d7265667573616c222c226e6174697665446f6d61696e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c226e6174697665446f6d61696e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c2270726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c227265616444656661756c74223a226e6f6e65222c2272756c65223a7b226465636f646564436172726965724b696e64223a22737472696e67222c22656e636f64696e67223a2270726573657276652d756e69636f64652d7363616c617273222c2266616d696c79223a22737472696e67222c2273746f72616765526570726573656e746174696f6e223a226a736f6e2d737472696e67227d2c22736f75726365496e746572707265746174696f6e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c22736f75726365496e746572707265746174696f6e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d7d')) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 4,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23"
+                },
+                "position": 5,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 6,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 7,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_1\" ON \"weft_state_1\".\"owner_kind\"='object' AND \"weft_state_1\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_1\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_1\".\"property_owner_type_id\"=$4::pg_catalog.int4 AND \"weft_state_1\".\"property_id\"=$5::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_1\" ON \"weft_node_1\".\"state_id\"=\"weft_state_1\".\"state_id\" AND \"weft_node_1\".\"node_id\"=\"weft_state_1\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_1\" ON \"weft_scalar_1\".\"state_id\"=\"weft_node_1\".\"state_id\" AND \"weft_scalar_1\".\"node_id\"=\"weft_node_1\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$6::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$7::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
           }
         },
         {
@@ -4386,6 +4668,147 @@
             "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKallYSmthVzVoYkdsMGVTSTZJbTl1WlNJc0ltVjRkR1Z1YzJsdmJuTWlPbnQ5TENKbVlXTmxkSE1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFhCaGNuUWlMQ0pyYVc1a0lqb2labWxsYkdRaUxDSnVZVzFsSWpvaWNHRnlkQ0lzSW01MWJHeGhZbWxzYVhSNUlqb2ljbVZ4ZFdseVpXUWlMQ0p6WTJGc1lYSlVlWEJsSWpvaWMzUnlhVzVuSW4wPSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MS1jdXN0b21lci1wYXJ0LXN0cmluZyIsInNoYTI1NiI6IjA2MjBmYjJmMTM3OTU3YzRhMjRmYjBjNzk4Mzk1N2JkNGU4ODcxYjAxNzU4NjJiYzczZmVhNjVkNGI1MTM4ZGUifSwiY2FycmllclNjaGVtYSI6InVybjp0cnVzczpkcmFmdDpleGFjdC12YWx1ZTowLjEuMCMvJGRlZnMvcHJlc2VuY2UiLCJkZWZhdWx0QXBwbGljYXRpb24iOiJub25lLW9uLXJlYWQiLCJlbXB0eUNvbGxlY3Rpb24iOiJwcmVzZW50LWVtcHR5LXR5cGVkLXZhbHVlIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLXByZXNlbmNlLWRlZmluaXRpb24vMC4xLjAiLCJqc29uTnVsbE1lbWJlciI6InByZXNlbnQtbnVsbC1pZi1hdXRob3JlZC1udWxsYWJsZSIsIm5hdGl2ZU51bGxWYWx1ZSI6InVuc3VwcG9ydGVkLXdpdGhvdXQtc2VwYXJhdGUtcHJvZmlsZSIsInByb2ZpbGUiOnsiaWRlbnRpdHkiOiJjYW5kaWRhdGUtdGVzdC1wcm9maWxlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSIsInZlcnNpb24iOiIwLjEuMCJ9LCJzcWxOdWxsUm9vdCI6ImludGVncml0eS1yZWZ1c2FsIiwic3RvcmFnZVJvb3QiOiJub25udWxsLWpzb25iLW9iamVjdCJ9",
             "scan": "s0",
             "sql": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$6::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$7::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((((\"weft_scalar_2\".\"node_id\" IS NOT NULL) AND \"weft_scalar_2\".\"scalar_kind\"='string' AND (\"weft_scalar_2\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_2\".\"boolean_value\" IS NULL AND \"weft_scalar_2\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_2\".\"numeric_token\" IS NULL) AND (\"weft_scalar_2\".\"binary_value\" IS NULL AND \"weft_scalar_2\".\"temporal_text\" IS NULL AND \"weft_scalar_2\".\"temporal_instant\" IS NULL AND \"weft_scalar_2\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_2\".\"original_source_bytes\",'hex') IS NOT NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') = '7b22617574686f726564446566696e6974696f6e223a7b226279746573426173653634223a2265794a6a59584a6b6157356862476c3065534936496d39755a534973496d56346447567563326c76626e4d694f6e74394c434a6d59574e6c64484d694f6e74394c434a705a434936496d4e3163335276625756794c584268636e51694c434a726157356b496a6f695a6d6c6c624751694c434a755957316c496a6f696347467964434973496d353162477868596d6c7361585235496a6f69636d567864576c795a5751694c434a7a5932467359584a556558426c496a6f69633352796157356e496e303d222c226964656e74697479223a2263616e6469646174652d666978747572652d373163323837393735386532383539393363323833656236663833316265646135663736653331353130386661623632363362326537386666323862636137312d637573746f6d65722d706172742d737472696e67222c22736861323536223a2230363230666232663133373935376334613234666230633739383339353762643465383837316230313735383632626337336665613635643462353133386465227d2c22636f657263696f6e223a226e6f6e65222c22696e7465726661636556657273696f6e223a2274727573732d6a736f6e622d6c6561662d636f6465632f302e312e30222c22696e76616c696453746f72656456616c7565223a22636f6d706c6574652d726573756c742d7265667573616c222c226e6174697665446f6d61696e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c226e6174697665446f6d61696e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c2270726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c227265616444656661756c74223a226e6f6e65222c2272756c65223a7b226465636f646564436172726965724b696e64223a22737472696e67222c22656e636f64696e67223a2270726573657276652d756e69636f64652d7363616c617273222c2266616d696c79223a22737472696e67222c2273746f72616765526570726573656e746174696f6e223a226a736f6e2d737472696e67227d2c22736f75726365496e746572707265746174696f6e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c22736f75726365496e746572707265746174696f6e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d7d')) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 4,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23"
+                },
+                "position": 5,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 6,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 7,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_1\" ON \"weft_state_1\".\"owner_kind\"='object' AND \"weft_state_1\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_1\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_1\".\"property_owner_type_id\"=$4::pg_catalog.int4 AND \"weft_state_1\".\"property_id\"=$5::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_1\" ON \"weft_node_1\".\"state_id\"=\"weft_state_1\".\"state_id\" AND \"weft_node_1\".\"node_id\"=\"weft_state_1\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_1\" ON \"weft_scalar_1\".\"state_id\"=\"weft_node_1\".\"state_id\" AND \"weft_scalar_1\".\"node_id\"=\"weft_node_1\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$6::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$7::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
           }
         },
         {
@@ -6196,6 +6619,126 @@
         },
         {
           "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {},
+                  "family": "string",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23",
+                  "use": "admitted-jsonb-member"
+                },
+                "position": 4,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 5,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 6,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$5::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$6::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
           "id": "truss.original.owner-structural-0",
           "owner": "host",
           "parameters": {
@@ -7823,6 +8366,126 @@
             "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKallYSmthVzVoYkdsMGVTSTZJbTl1WlNJc0ltVjRkR1Z1YzJsdmJuTWlPbnQ5TENKbVlXTmxkSE1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFhCaGNuUWlMQ0pyYVc1a0lqb2labWxsYkdRaUxDSnVZVzFsSWpvaWNHRnlkQ0lzSW01MWJHeGhZbWxzYVhSNUlqb2ljbVZ4ZFdseVpXUWlMQ0p6WTJGc1lYSlVlWEJsSWpvaWMzUnlhVzVuSW4wPSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MS1jdXN0b21lci1wYXJ0LXN0cmluZyIsInNoYTI1NiI6IjA2MjBmYjJmMTM3OTU3YzRhMjRmYjBjNzk4Mzk1N2JkNGU4ODcxYjAxNzU4NjJiYzczZmVhNjVkNGI1MTM4ZGUifSwiY2FycmllclNjaGVtYSI6InVybjp0cnVzczpkcmFmdDpleGFjdC12YWx1ZTowLjEuMCMvJGRlZnMvcHJlc2VuY2UiLCJkZWZhdWx0QXBwbGljYXRpb24iOiJub25lLW9uLXJlYWQiLCJlbXB0eUNvbGxlY3Rpb24iOiJwcmVzZW50LWVtcHR5LXR5cGVkLXZhbHVlIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLXByZXNlbmNlLWRlZmluaXRpb24vMC4xLjAiLCJqc29uTnVsbE1lbWJlciI6InByZXNlbnQtbnVsbC1pZi1hdXRob3JlZC1udWxsYWJsZSIsIm5hdGl2ZU51bGxWYWx1ZSI6InVuc3VwcG9ydGVkLXdpdGhvdXQtc2VwYXJhdGUtcHJvZmlsZSIsInByb2ZpbGUiOnsiaWRlbnRpdHkiOiJjYW5kaWRhdGUtdGVzdC1wcm9maWxlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSIsInZlcnNpb24iOiIwLjEuMCJ9LCJzcWxOdWxsUm9vdCI6ImludGVncml0eS1yZWZ1c2FsIiwic3RvcmFnZVJvb3QiOiJub25udWxsLWpzb25iLW9iamVjdCJ9",
             "scan": "s0",
             "sql": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$5::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$6::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((((\"weft_scalar_2\".\"node_id\" IS NOT NULL) AND \"weft_scalar_2\".\"scalar_kind\"='string' AND (\"weft_scalar_2\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_2\".\"boolean_value\" IS NULL AND \"weft_scalar_2\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_2\".\"numeric_token\" IS NULL) AND (\"weft_scalar_2\".\"binary_value\" IS NULL AND \"weft_scalar_2\".\"temporal_text\" IS NULL AND \"weft_scalar_2\".\"temporal_instant\" IS NULL AND \"weft_scalar_2\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_2\".\"original_source_bytes\",'hex') IS NOT NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') = '7b22617574686f726564446566696e6974696f6e223a7b226279746573426173653634223a2265794a6a59584a6b6157356862476c3065534936496d39755a534973496d56346447567563326c76626e4d694f6e74394c434a6d59574e6c64484d694f6e74394c434a705a434936496d4e3163335276625756794c584268636e51694c434a726157356b496a6f695a6d6c6c624751694c434a755957316c496a6f696347467964434973496d353162477868596d6c7361585235496a6f69636d567864576c795a5751694c434a7a5932467359584a556558426c496a6f69633352796157356e496e303d222c226964656e74697479223a2263616e6469646174652d666978747572652d373163323837393735386532383539393363323833656236663833316265646135663736653331353130386661623632363362326537386666323862636137312d637573746f6d65722d706172742d737472696e67222c22736861323536223a2230363230666232663133373935376334613234666230633739383339353762643465383837316230313735383632626337336665613635643462353133386465227d2c22636f657263696f6e223a226e6f6e65222c22696e7465726661636556657273696f6e223a2274727573732d6a736f6e622d6c6561662d636f6465632f302e312e30222c22696e76616c696453746f72656456616c7565223a22636f6d706c6574652d726573756c742d7265667573616c222c226e6174697665446f6d61696e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c226e6174697665446f6d61696e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c2270726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c227265616444656661756c74223a226e6f6e65222c2272756c65223a7b226465636f646564436172726965724b696e64223a22737472696e67222c22656e636f64696e67223a2270726573657276652d756e69636f64652d7363616c617273222c2266616d696c79223a22737472696e67222c2273746f72616765526570726573656e746174696f6e223a226a736f6e2d737472696e67227d2c22736f75726365496e746572707265746174696f6e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c22736f75726365496e746572707265746174696f6e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d7d')) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {},
+                  "family": "string",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23",
+                  "use": "admitted-jsonb-member"
+                },
+                "position": 4,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 5,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 6,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$5::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$6::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
           }
         },
         {
@@ -9480,6 +10143,126 @@
             "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKallYSmthVzVoYkdsMGVTSTZJbTl1WlNJc0ltVjRkR1Z1YzJsdmJuTWlPbnQ5TENKbVlXTmxkSE1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFhCaGNuUWlMQ0pyYVc1a0lqb2labWxsYkdRaUxDSnVZVzFsSWpvaWNHRnlkQ0lzSW01MWJHeGhZbWxzYVhSNUlqb2ljbVZ4ZFdseVpXUWlMQ0p6WTJGc1lYSlVlWEJsSWpvaWMzUnlhVzVuSW4wPSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MS1jdXN0b21lci1wYXJ0LXN0cmluZyIsInNoYTI1NiI6IjA2MjBmYjJmMTM3OTU3YzRhMjRmYjBjNzk4Mzk1N2JkNGU4ODcxYjAxNzU4NjJiYzczZmVhNjVkNGI1MTM4ZGUifSwiY2FycmllclNjaGVtYSI6InVybjp0cnVzczpkcmFmdDpleGFjdC12YWx1ZTowLjEuMCMvJGRlZnMvcHJlc2VuY2UiLCJkZWZhdWx0QXBwbGljYXRpb24iOiJub25lLW9uLXJlYWQiLCJlbXB0eUNvbGxlY3Rpb24iOiJwcmVzZW50LWVtcHR5LXR5cGVkLXZhbHVlIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLXByZXNlbmNlLWRlZmluaXRpb24vMC4xLjAiLCJqc29uTnVsbE1lbWJlciI6InByZXNlbnQtbnVsbC1pZi1hdXRob3JlZC1udWxsYWJsZSIsIm5hdGl2ZU51bGxWYWx1ZSI6InVuc3VwcG9ydGVkLXdpdGhvdXQtc2VwYXJhdGUtcHJvZmlsZSIsInByb2ZpbGUiOnsiaWRlbnRpdHkiOiJjYW5kaWRhdGUtdGVzdC1wcm9maWxlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSIsInZlcnNpb24iOiIwLjEuMCJ9LCJzcWxOdWxsUm9vdCI6ImludGVncml0eS1yZWZ1c2FsIiwic3RvcmFnZVJvb3QiOiJub25udWxsLWpzb25iLW9iamVjdCJ9",
             "scan": "s0",
             "sql": "SELECT count(*) AS violations FROM \"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$5::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$6::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\" WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND ((((\"weft_scalar_2\".\"node_id\" IS NOT NULL) AND \"weft_scalar_2\".\"scalar_kind\"='string' AND (\"weft_scalar_2\".\"text_value\" IS NOT NULL) AND (\"weft_scalar_2\".\"boolean_value\" IS NULL AND \"weft_scalar_2\".\"numeric_value\"::pg_catalog.text IS NULL AND \"weft_scalar_2\".\"numeric_token\" IS NULL) AND (\"weft_scalar_2\".\"binary_value\" IS NULL AND \"weft_scalar_2\".\"temporal_text\" IS NULL AND \"weft_scalar_2\".\"temporal_instant\" IS NULL AND \"weft_scalar_2\".\"opaque_bytes\" IS NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') IS NOT NULL AND pg_catalog.encode(\"weft_scalar_2\".\"original_source_bytes\",'hex') IS NOT NULL) AND pg_catalog.encode(\"weft_scalar_2\".\"codec_definition_bytes\",'hex') = '7b22617574686f726564446566696e6974696f6e223a7b226279746573426173653634223a2265794a6a59584a6b6157356862476c3065534936496d39755a534973496d56346447567563326c76626e4d694f6e74394c434a6d59574e6c64484d694f6e74394c434a705a434936496d4e3163335276625756794c584268636e51694c434a726157356b496a6f695a6d6c6c624751694c434a755957316c496a6f696347467964434973496d353162477868596d6c7361585235496a6f69636d567864576c795a5751694c434a7a5932467359584a556558426c496a6f69633352796157356e496e303d222c226964656e74697479223a2263616e6469646174652d666978747572652d373163323837393735386532383539393363323833656236663833316265646135663736653331353130386661623632363362326537386666323862636137312d637573746f6d65722d706172742d737472696e67222c22736861323536223a2230363230666232663133373935376334613234666230633739383339353762643465383837316230313735383632626337336665613635643462353133386465227d2c22636f657263696f6e223a226e6f6e65222c22696e7465726661636556657273696f6e223a2274727573732d6a736f6e622d6c6561662d636f6465632f302e312e30222c22696e76616c696453746f72656456616c7565223a22636f6d706c6574652d726573756c742d7265667573616c222c226e6174697665446f6d61696e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c226e6174697665446f6d61696e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c2270726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d2c227265616444656661756c74223a226e6f6e65222c2272756c65223a7b226465636f646564436172726965724b696e64223a22737472696e67222c22656e636f64696e67223a2270726573657276652d756e69636f64652d7363616c617273222c2266616d696c79223a22737472696e67222c2273746f72616765526570726573656e746174696f6e223a226a736f6e2d737472696e67227d2c22736f75726365496e746572707265746174696f6e446566696e6974696f6e223a7b226279746573426173653634223a226533303d222c226964656e74697479223a2266697874757265222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861227d2c22736f75726365496e746572707265746174696f6e50726f66696c65223a7b226964656e74697479223a2263616e6469646174652d746573742d70726f66696c65222c22736861323536223a2234343133366661333535623336373861313134366164313666376538363439653934666234666332316665373765383331306330363066363163616166663861222c2276657273696f6e223a22302e312e30227d7d')) IS DISTINCT FROM TRUE"
+          }
+        },
+        {
+          "failureCode": "WFT-OBLIGATION",
+          "id": "truss.original.owner-payload-3",
+          "owner": "host",
+          "parameters": {
+            "beforeQuery": true,
+            "codecBytesBase64": "eyJhdXRob3JlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYm1GdFpTSTZJbWxrSWl3aWEybHVaQ0k2SW1acFpXeGtJaXdpYzJOaGJHRnlWSGx3WlNJNkltbHVkR1ZuWlhJaUxDSnVkV3hzWVdKcGJHbDBlU0k2SW5KbGNYVnBjbVZrSWl3aVkyRnlaR2x1WVd4cGRIa2lPaUp2Ym1VaUxDSmxlSFJsYm5OcGIyNXpJanA3ZlN3aVptRmpaWFJ6SWpwN0ltbHVkR1ZuWlhKWGFXUjBhQ0k2ZXlKaWFYUnpJam8yTkN3aWMybG5ibVZrSWpwbVlXeHpaWDE5ZlE9PSIsImlkZW50aXR5IjoiY2FuZGlkYXRlLWZpeHR1cmUtNzFjMjg3OTc1OGUyODU5OTNjMjgzZWI2ZjgzMWJlZGE1Zjc2ZTMxNTEwOGZhYjYyNjNiMmU3OGZmMjhiY2E3MSIsInNoYTI1NiI6IjcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEifSwiY29lcmNpb24iOiJub25lIiwiaW50ZXJmYWNlVmVyc2lvbiI6InRydXNzLWpzb25iLWxlYWYtY29kZWMvMC4xLjAiLCJpbnZhbGlkU3RvcmVkVmFsdWUiOiJjb21wbGV0ZS1yZXN1bHQtcmVmdXNhbCIsIm5hdGl2ZURvbWFpbkRlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJlMzA9IiwiaWRlbnRpdHkiOiJmaXh0dXJlIiwic2hhMjU2IjoiNDQxMzZmYTM1NWIzNjc4YTExNDZhZDE2ZjdlODY0OWU5NGZiNGZjMjFmZTc3ZTgzMTBjMDYwZjYxY2FhZmY4YSJ9LCJuYXRpdmVEb21haW5Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJlYWREZWZhdWx0Ijoibm9uZSIsInJ1bGUiOnsiZGVjb2RlZENhcnJpZXJLaW5kIjoiaW50ZWdlciIsImVuY29kaW5nIjoicHJlc2VydmUtYWRtaXR0ZWQtc291cmNlLXRva2VuIiwiZmFtaWx5IjoiaW50ZWdlciIsIm51bWVyaWNBZG9wdGlvbkV2aWRlbmNlIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1zdHJpbmcifSwic291cmNlSW50ZXJwcmV0YXRpb25EZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZTMwPSIsImlkZW50aXR5IjoiZml4dHVyZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEifSwic291cmNlSW50ZXJwcmV0YXRpb25Qcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifX0=",
+            "expectedViolations": "0",
+            "field": {
+              "documentId": "sales-fixture",
+              "element": "customer-id",
+              "module": "sales",
+              "revision": "application-fixture-1"
+            },
+            "parameters": [
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1",
+                  "use": "admitted-owner-scan"
+                },
+                "position": 1,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 2,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "0"
+                },
+                "position": 3,
+                "value": "0"
+              },
+              {
+                "logicalType": {
+                  "facets": {},
+                  "family": "string",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "23",
+                  "use": "admitted-jsonb-member"
+                },
+                "position": 4,
+                "value": "23"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "typeId": "-1"
+                },
+                "position": 5,
+                "value": "-1"
+              },
+              {
+                "logicalType": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 32,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                },
+                "origin": {
+                  "propertyId": "20"
+                },
+                "position": 6,
+                "value": "20"
+              }
+            ],
+            "presenceBytesBase64": "eyJhYnNlbnRNZW1iZXIiOiJwcmVzZW50LWZhbHNlIiwiYWNjZXB0ZWREZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKcFpDSTZJbU4xYzNSdmJXVnlMV2xrSWl3aWJtRnRaU0k2SW1sa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWMyTmhiR0Z5Vkhsd1pTSTZJbWx1ZEdWblpYSWlMQ0p1ZFd4c1lXSnBiR2wwZVNJNkluSmxjWFZwY21Wa0lpd2lZMkZ5WkdsdVlXeHBkSGtpT2lKdmJtVWlMQ0psZUhSbGJuTnBiMjV6SWpwN2ZTd2labUZqWlhSeklqcDdJbWx1ZEdWblpYSlhhV1IwYUNJNmV5SmlhWFJ6SWpvMk5Dd2ljMmxuYm1Wa0lqcG1ZV3h6WlgxOWZRPT0iLCJpZGVudGl0eSI6ImNhbmRpZGF0ZS1maXh0dXJlLTcxYzI4Nzk3NThlMjg1OTkzYzI4M2ViNmY4MzFiZWRhNWY3NmUzMTUxMDhmYWI2MjYzYjJlNzhmZjI4YmNhNzEiLCJzaGEyNTYiOiI3MWMyODc5NzU4ZTI4NTk5M2MyODNlYjZmODMxYmVkYTVmNzZlMzE1MTA4ZmFiNjI2M2IyZTc4ZmYyOGJjYTcxIn0sImNhcnJpZXJTY2hlbWEiOiJ1cm46dHJ1c3M6ZHJhZnQ6ZXhhY3QtdmFsdWU6MC4xLjAjLyRkZWZzL3ByZXNlbmNlIiwiZGVmYXVsdEFwcGxpY2F0aW9uIjoibm9uZS1vbi1yZWFkIiwiZW1wdHlDb2xsZWN0aW9uIjoicHJlc2VudC1lbXB0eS10eXBlZC12YWx1ZSIsImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy1wcmVzZW5jZS1kZWZpbml0aW9uLzAuMS4wIiwianNvbk51bGxNZW1iZXIiOiJwcmVzZW50LW51bGwtaWYtYXV0aG9yZWQtbnVsbGFibGUiLCJuYXRpdmVOdWxsVmFsdWUiOiJ1bnN1cHBvcnRlZC13aXRob3V0LXNlcGFyYXRlLXByb2ZpbGUiLCJwcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwic3FsTnVsbFJvb3QiOiJpbnRlZ3JpdHktcmVmdXNhbCIsInN0b3JhZ2VSb290Ijoibm9ubnVsbC1qc29uYi1vYmplY3QifQ==",
+            "scan": "s0",
+            "sql": "SELECT count(*) AS violations FROM (\"pg_temp\".\"object\" AS \"weft_scan_0\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_0\" ON \"weft_state_0\".\"owner_kind\"='object' AND \"weft_state_0\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_0\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_0\".\"property_owner_type_id\"=$2::pg_catalog.int4 AND \"weft_state_0\".\"property_id\"=$3::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_0\" ON \"weft_node_0\".\"state_id\"=\"weft_state_0\".\"state_id\" AND \"weft_node_0\".\"node_id\"=\"weft_state_0\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_0\" ON \"weft_scalar_0\".\"state_id\"=\"weft_node_0\".\"state_id\" AND \"weft_scalar_0\".\"node_id\"=\"weft_node_0\".\"node_id\" LEFT JOIN \"pg_temp\".\"row_home_state\" AS \"weft_state_2\" ON \"weft_state_2\".\"owner_kind\"='object' AND \"weft_state_2\".\"object_id\"=\"weft_scan_0\".\"id\" AND \"weft_state_2\".\"object_type_id\"=\"weft_scan_0\".\"type_id\" AND \"weft_state_2\".\"property_owner_type_id\"=$5::pg_catalog.int4 AND \"weft_state_2\".\"property_id\"=$6::pg_catalog.int4 LEFT JOIN \"pg_temp\".\"row_home_node\" AS \"weft_node_2\" ON \"weft_node_2\".\"state_id\"=\"weft_state_2\".\"state_id\" AND \"weft_node_2\".\"node_id\"=\"weft_state_2\".\"root_node_id\" LEFT JOIN \"pg_temp\".\"row_home_scalar\" AS \"weft_scalar_2\" ON \"weft_scalar_2\".\"state_id\"=\"weft_node_2\".\"state_id\" AND \"weft_scalar_2\".\"node_id\"=\"weft_node_2\".\"node_id\") WHERE (\"weft_scan_0\".\"type_id\" = $1::pg_catalog.int4) AND (CASE WHEN pg_catalog.pg_input_is_valid((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.text,'pg_catalog.numeric') THEN ((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric=pg_catalog.trunc((\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric) AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric>=0 AND (\"weft_scalar_0\".\"numeric_value\"::pg_catalog.text)::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END) IS DISTINCT FROM TRUE"
           }
         },
         {
