@@ -5,6 +5,7 @@ import hashlib,json,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
+ ('audit-qualified-registration-receipts.py','status','cases',2181),
  ('reconcile-truss-review-numerics.py','status','cases',1124),
  ('truss-review-numeric-controls.py','status','corruptionsRejected',8),
  ('reconcile-conjunction-native.py','status','cases',32),
@@ -95,7 +96,10 @@ for name in ['B-007-acceptance-matrix.json','B-007-support-inventory.json']:
   assert len(value['criteria'])==30 and len({r['id'] for r in value['criteria']})==30
   assert value['status']=='in-progress'
  else:
-  assert value['status']=='candidate-preparation' and value['supportedNativeProfiles']==[]
+  assert value['status']=='native-compiler-qualified; final-host-acceptance-pending'
+  assert len(value['supportedNativeProfiles'])==2
+  assert {p['targetProfile'] for p in value['supportedNativeProfiles']}=={'pg17.9-qualified-fixtures','dbsql2026.39-qualified'}
+  assert all(p['backendVersion']=='0.1.0-qualified' for p in value['supportedNativeProfiles'])
   assert value['releasedPackages'] is False
 report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'scope':'Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
 OUT=ROOT/'docs/helix/04-build/evidence/B-007-retained-evidence-replay';OUT.mkdir(exist_ok=True)

@@ -221,19 +221,3 @@ per-query assessments grounded in the retained operation/type/home/domain maps;
 final Python/browser composition; final current-source workspace and all 30
 criteria; PR #9 review/merge. Host authorization/publication obligations remain
 explicit conditions on execution, not compiler adoption or distribution gates.
-
-## Supported registration checkpoint
-
-The separately versioned Qualified library registrations now declare supported
-native compiler semantics under exact host obligations, referenced by hashed
-qualification records. Direct preservation passes all 2,181 native-tested inputs
-with candidate opt-in disabled; six mismatch controls refuse. Runtime qualified
-composition passes two unfiltered tests. This closes the supported declaration/
-assessment seam while leaving final Python/browser composition, deliberate feature
-conflict checks, current workspace evidence and all-criterion acceptance open.
-No actual publication/database authorization is inferred from a supported artifact.
-
-Qualified runtime composition and both incompatible-feature refusals now pass.
-Two scoped historical NativeReview library regressions pass with incremental
-compilation disabled after a retained cache build failure. Final actual Python/
-Chromium builds, current workspace and all-criterion acceptance remain open.

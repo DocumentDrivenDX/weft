@@ -2,6 +2,18 @@
   "status": "passed",
   "components": [
     {
+      "component": "audit-qualified-registration-receipts.py",
+      "result": {
+        "status": "passed",
+        "cases": 2181,
+        "compiled": 2180,
+        "blocked": 1,
+        "capabilitiesPerBackend": 27,
+        "scope": "Saved supported-registration receipts, exact pins/profile/evidence and manifest disposition checks. Producer differential execution separately preserves native-tested SQL. No rebuilding or new native/host execution."
+      },
+      "sourceSha256": "68b64f55400a8898e7861f59a631f3a4ab3094815abd8cf3e6ea8a4d422b1568"
+    },
+    {
       "component": "reconcile-truss-review-numerics.py",
       "result": {
         "status": "passed",
@@ -10,7 +22,7 @@
         "postgresqlTransactions": 1,
         "scope": "Exact Truss registration, all 434 decimal and 128 integer domains per props/typed home, independent integer coefficient expectations, complete executed SQL/parameter/fixture/guard/pin correspondence. No support promotion."
       },
-      "sourceSha256": "842f327ceb587ddd642712b60246fc7d6332555842b884a56d83722ed009e3dd"
+      "sourceSha256": "84160353539b3a5fb22ccbb12ba9e8112468aa0a0d8b0babeaa944eeb132e87c"
     },
     {
       "component": "truss-review-numeric-controls.py",
@@ -2274,6 +2286,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 127,
+  "verifiedEvidenceReferences": 132,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

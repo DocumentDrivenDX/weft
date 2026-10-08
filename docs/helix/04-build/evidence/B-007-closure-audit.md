@@ -11,16 +11,16 @@ executed compiler components from release/native support qualification.
 | At least 1000 distinct expanded assertions across matrices | 1200 independently generated relational assertions plus public/backend/runtime/native component cases | Count floor met. Public 1273-case host matrix is seven compiled fixture successes and 1266 refusals, not native target coverage. |
 | At least 10000 deterministic properties | Four pinned Proptest generators total 10000; parser text adds 5000; seeded JSON checks separately recorded | Count/seed/library evidence present. No observed failure needs minimization; future failures have configured persistence. |
 | Mutations and fuzz/resource exercises | Seven source mutants detected, including type filter/DISTINCT/rounding/presence; parser/JSON generators and actual-host resource cases | Named mechanisms executed. No coverage-guided fuzzing claim is made or required by an invented gate. |
-| Every critical supported/refused semantic branch | Named critical-path and emission assertion maps; terminal Linux CI checkpoint at f9101d9: 214 tests; local workspace checkpoint B-007-workspace-218: 218 tests across 35 suites, none ignored/filtered; the subsequent eight-test registry checkpoint retains separate scope | P0 path review present. It is not a proof of every individual supported/refused branch: complete branch-to-assertion accounting remains necessary under TP-001. |
-| Both initial adapters have qualified native profiles | Native PostgreSQL 17.9 and observed Databricks receipts; original-byte/layout/custody checks; explicit candidates | Not met. Inventory has no supportedNativeProfiles. The current warehouse is identified as Databricks SQL 2026.39 with concrete u/r build hashes using current_version(); the earlier zero-build 4.2.0 value identifies Spark. Corpus-linked warehouse/settings/domain evidence still needs qualification; candidate realization/capability statuses cannot silently become supported. Production adoption is separate, but that does not erase native qualification. |
+| Every critical supported/refused semantic branch | Finite resolver/graph/parser/exact/common-pipeline/backend semantic-family ledgers and their passing scoped assertions; native domain/operation reconciliation | Family accounting is complete at the declared boundaries. Final current-source workspace execution remains pending. No claim of every private branch or every possible cross-product. |
+| Both initial adapters have qualified native profiles | Hashed native-semantic qualification records; separate Supported registrations; all 2,181 native-tested inputs preserve SQL/guards/meaning with candidate opt-in disabled | Native compiler-semantics declarations and assessments are now qualified. Final Python/browser composition and current acceptance remain pending; no production data/publication attestation is inferred. |
 | Real support-report audit | 41 synthetic verifier controls; real retained Truss report consistency across 21 scopes/76 cases, independent expectations and 65 ordered comparisons; standard retained receipt/corruption replay | Synthetic controls and real native-data consistency pass. B-007-real-ashlar-report-audit adds seven warehouse/build-linked scopes, 21 successful native statements and one expected overflow refusal with independent unsigned expectations. Exact artifact/model/binding scopes and independent expected rows are reconciled for Truss. Python/browser compiler-artifact joins now cover all 76 cases per host, with sixteen corruption controls and retained runtime identity checks. Fresh B-007-truss-session-native retains the engine, UTF8/C locale, standard-conforming strings and repeatable-read settings from every successful query transaction, plus SQL digests; all 76 artifacts/rows/topology agree with prior receipts. The real report audit now reads and validates that archive, using observed server version/settings in all 21 scopes and retaining its custody hashes. Final profile/producer provenance and host execution qualification remain unproved; these passes do not promote candidate capabilities. |
 | Native Python and actual browser | Fresh public/Truss builds and Ashlar host replays, exact metadata, traps/resources, loaded artifact hashes | Observed host component matrix passes. Platform metadata does not qualify every interpreter/OS. |
-| Versioned support inventory | Candidate inventory with exact evidence hashes and explicit exclusions | Exists, but remains candidate preparation rather than qualified support inventory. |
+| Versioned support inventory | Two separately versioned supported native-semantic registrations, with historical candidates retained | Exact records/source hashes and host conditions are indexed. Final host acceptance remains pending. |
 | Packaging/release procedures and ownership/license | Native wheel RECORD/content audit, built/packed browser transport and isolated consumer, release procedure | Local packaging checks pass. Owner license and actual release maintainer/registry ownership remain unresolved. The implementation plan requires these decisions before distribution; distribution was not requested, so they are not B-007 merge blockers. Final distributable binaries likewise remain a publication gate. |
 | Sequential reviewed PR and merge | B-002–B-006 merged; B-007 PR #9 open/draft | Must merge B-007 only after its gates are satisfied. |
 
-Next compiler work is complete critical branch accounting and a real qualified
-support report for each exact claimed profile. Owner release decisions are needed
+Next compiler work is final qualified Python/browser composition, current-source
+workspace checks and the 30-criterion acceptance determination. Owner release decisions are needed
 before distribution, not before this implementation PR can merge. Native tests remain possible against owned synthetic fixtures;
 there is no missing Truss table-layout artifact blocking that work. Retesting
 already passing components without a new change or a concrete uncovered branch
@@ -171,3 +171,14 @@ per-query assessments grounded in the retained operation/type/home/domain maps;
 final Python/browser composition; final current-source workspace and all 30
 criteria; PR #9 review/merge. Host authorization/publication obligations remain
 explicit conditions on execution, not compiler adoption or distribution gates.
+
+## Supported registration checkpoint
+
+The separately versioned Qualified library registrations now declare supported
+native compiler semantics under exact host obligations, referenced by hashed
+qualification records. Direct preservation passes all 2,181 native-tested inputs
+with candidate opt-in disabled; six mismatch controls refuse. Runtime qualified
+composition passes two unfiltered tests. This closes the supported declaration/
+assessment seam while leaving final Python/browser composition, deliberate feature
+conflict checks, current workspace evidence and all-criterion acceptance open.
+No actual publication/database authorization is inferred from a supported artifact.

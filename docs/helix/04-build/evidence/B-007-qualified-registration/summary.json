@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "cases": 2181,
+  "compiled": 2180,
+  "blocked": 1,
+  "defaultSupported": true,
+  "mismatchControls": 6,
+  "controls": [
+    "truss.postgresql backendVersion 0.1.0-native-review",
+    "truss.postgresql targetProfile unregistered",
+    "truss.postgresql backendVersion newer",
+    "ashlar.databricks backendVersion 0.1.0-native-review",
+    "ashlar.databricks targetProfile unregistered",
+    "ashlar.databricks backendVersion newer"
+  ],
+  "capabilitiesPerBackend": 27,
+  "compilerSha256": "9ee6967dbd5c3a65b18d2f57f3761c7f8dd25a26f09d6fa318b3c53fd82545d1",
+  "harnessSha256": "1b6b9bde854df5b39f20133231856532d7471e12179b06dc8d0d456bf3581bba",
+  "inputHashes": {
+    "docs/helix/04-build/evidence/B-007-native-registration-join/joined-artifacts.jsonl.gz": "4943d890e794098411abb82e5b3cf1ae44cea0badc0facf6da95549141437065",
+    "docs/helix/04-build/evidence/B-007-conjunction-native/compile-artifacts.jsonl": "e1cd4ba19f0971b382e365c91ba73ec06338e9907601bce6767edf85cf524661",
+    "docs/helix/04-build/evidence/B-007-truss-review-numerics/compile-artifacts.jsonl.gz": "143ad1d36f7deb6725c38258dda5a6db937ee5323e6c81dfc114cfc1a7a5c4db"
+  },
+  "artifactSha256": "39039daf794bac5ff2bfd4761e72a605ed0f6f8be776e31673d661377f431763",
+  "scope": "Explicit qualified registrations preserve every meaning-bearing artifact across 2,181 native-tested inputs with candidate opt-in disabled. All 27 capabilities observed per backend; exact evidence/profile/obligations and mismatch refusals. No new database executions or final Python/browser qualification."
+}

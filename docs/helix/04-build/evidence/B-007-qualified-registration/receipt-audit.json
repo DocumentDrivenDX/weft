@@ -1,0 +1,1 @@
+{"status": "passed", "cases": 2181, "compiled": 2180, "blocked": 1, "capabilitiesPerBackend": 27, "scope": "Saved supported-registration receipts, exact pins/profile/evidence and manifest disposition checks. Producer differential execution separately preserves native-tested SQL. No rebuilding or new native/host execution."}

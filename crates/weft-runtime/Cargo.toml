@@ -4,6 +4,8 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+truss-postgresql-qualified=["dep:weft-postgresql"]
+ashlar-databricks-qualified=["dep:weft-databricks"]
 ashlar-databricks-candidate=["dep:weft-databricks"]
 test-original=["dep:weft-postgresql","weft-postgresql/conformance-original"]
 truss-postgresql-candidate=["dep:weft-postgresql"]
@@ -19,4 +21,8 @@ serde_json.workspace=true
 
 [[example]]
 name="compile_native_review"
+required-features=["truss-postgresql-candidate","ashlar-databricks-candidate"]
+
+[[example]]
+name="compile_qualified"
 required-features=["truss-postgresql-candidate","ashlar-databricks-candidate"]

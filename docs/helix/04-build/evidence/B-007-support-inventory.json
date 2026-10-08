@@ -1,8 +1,47 @@
 {
   "inventoryVersion": "weft-support-inventory/0.1.0",
-  "status": "candidate-preparation",
+  "status": "native-compiler-qualified; final-host-acceptance-pending",
   "releasedPackages": false,
-  "supportedNativeProfiles": [],
+  "supportedNativeProfiles": [
+    {
+      "backend": "truss.postgresql",
+      "backendVersion": "0.1.0-qualified",
+      "targetProfile": "pg17.9-qualified-fixtures",
+      "surface": "Trusted Rust registration and qualified runtime features; final Python/browser build qualification pending",
+      "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
+      "qualification": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-truss.json",
+        "sha256": "3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+      },
+      "registrationEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+        "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+      },
+      "implementation": {
+        "path": "crates/weft-postgresql/src/qualified_profile.rs",
+        "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+      }
+    },
+    {
+      "backend": "ashlar.databricks",
+      "backendVersion": "0.1.0-qualified",
+      "targetProfile": "dbsql2026.39-qualified",
+      "surface": "Trusted Rust registration and qualified runtime features; final Python/browser build qualification pending",
+      "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
+      "qualification": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-ashlar.json",
+        "sha256": "b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+      },
+      "registrationEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+        "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+      },
+      "implementation": {
+        "path": "crates/weft-databricks/src/qualified_profile.rs",
+        "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+      }
+    }
+  ],
   "candidateProfiles": [
     {
       "backend": "truss.postgresql",
@@ -287,7 +326,7 @@
     "license decision",
     "final release artifact build and content inspection"
   ],
-  "meaning": "Evidence index, not compiler manifest or qualification certificate. Candidate statuses remain candidate; references do not prove every explicit release gate.",
+  "meaning": "Native semantic registrations qualified with explicit domains/host obligations; historical candidates remain separate. Final host and acceptance gates remain open.",
   "nativeReviewRegistrations": [
     {
       "backend": "truss.postgresql",

@@ -81,3 +81,36 @@ no Spark observation is reinterpreted as a warehouse release. Library-registrati
 checks must prove exact identity/settings, whole-operation refusal for stale
 versions/profiles, no default candidate bypass, preserved typed/props lowering,
 and retention of the new host obligation alongside existing obligations.
+
+## Evidence-qualified registrations
+
+B-007 now defines a separate `Qualified` implementation in each backend package,
+version `0.1.0-qualified`, with profiles `pg17.9-qualified-fixtures` and
+`dbsql2026.39-qualified`. Hashed native-qualification records enumerate admitted
+logical/storage domains, exact engine/settings and exclusions. The Truss profile
+explicitly names the independently tested fixture realization; the Ashlar profile
+retains its pinned owner layout. Neither claims installed-runtime adoption.
+
+Binding admission, lowering and emission delegate to the native-tested kernels.
+The separately declared supported dispositions and query assessments cite the
+qualification record. Unsupported dispositions are never upgraded. A mismatched
+profile/version refuses; an admitted model cannot load implementation code.
+Historical candidate registrations and receipts remain separate. Host obligations
+retain their stable historical IDs, including IDs containing `candidate`; those
+IDs identify prerequisites, not qualification status. The native-profile
+obligation targets the exact new profile, and existing integrity/read-context
+requirements survive unchanged.
+
+Runtime, Python and WASM hosts explicitly select `truss-postgresql-qualified`
+and/or `ashlar-databricks-qualified` features. Selecting a candidate and qualified
+implementation for the same backend is a compile-time conflict, rather than a
+silent override or runtime fallback. Build/test candidate and qualified feature
+compositions separately; `--all-features` includes intentionally incompatible
+registrations. Trusted Rust callers may register either implementation directly.
+
+The direct-registration differential harness proves full query/guard/parameter/
+decoder/model-pin preservation on 2,181 native-tested inputs with candidate opt-in
+disabled: 2,180 conformance-verified artifacts and one identical refusal. All 27
+capability IDs are observed per backend; six profile/version controls refuse.
+This proves registration correspondence, not another database execution. Final
+public Python/browser builds and acceptance are separate remaining gates.
