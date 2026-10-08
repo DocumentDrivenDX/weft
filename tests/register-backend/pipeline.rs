@@ -190,3 +190,36 @@ fn adapter_dispatch_guards_refuse_before_lowering() {
         let error=registry.compile(&catalog,Plan::V01(&p),&t,&b).unwrap_err();assert_eq!(error.code,code,"mode {mode}");assert_eq!(error.message,message,"mode {mode}");
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC3 @covers US-002-AC4
+#[test]
+fn capability_assessment_guards_prevent_lowering() {
+    struct Altered { mode:u8, inner:Third }
+    impl Backend for Altered {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{self.inner.describe()}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{
+            let mut v=self.inner.validate_binding(c)?;
+            if self.mode==0 {v.additional_capabilities=vec!["extra".into(),"extra".into()];}
+            if self.mode==1 {v.additional_capabilities=(0..4097).map(|i|format!("extra-{i}")).collect();}
+            Ok(v)
+        }
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{
+            let mut a=self.inner.assess(c,m)?;
+            match self.mode {
+                2=>a.push(a[0].clone()),3=>a[0].id="unrequested".into(),4=>a[0].status=Status::Unsupported,
+                5=>{let proof=a[0].evidence[0].clone();a[0].evidence.push(proof);},6=>a[0].evidence=vec!["untrusted-proof".into()],7=>a[0].evidence.clear(),_=>{}
+            }
+            Ok(a)
+        }
+        fn lower(&self,_:&Context<'_>,_:&Mapping)->weft_core::error::Result<Select>{panic!("guard must precede lowering")}
+        fn emit(&self,_:&Context<'_>,_:&Select)->weft_core::error::Result<Emission>{panic!("guard must precede emission")}
+    }
+    let (catalog,plan)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    for mode in 0..8 {
+        let mut r=Registry::default();r.register(Altered{mode,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+        let error=r.compile(&catalog,Plan::V01(&plan),&target(false),&binding(&catalog)).unwrap_err();
+        assert_eq!(error.code,"WFT-CAPABILITY","mode {mode}");
+        assert_eq!(error.message,match mode {0|1=>"Binding-derived capabilities must be distinct and bounded",2|3=>"Assessment has duplicate or unrequested operations",4=>"Selected operation is unsupported",_=>"Assessment has missing or undeclared qualification evidence"},"mode {mode}");
+    }
+}

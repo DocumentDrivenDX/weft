@@ -444,3 +444,12 @@ correctly hashed malformed/duplicate-key binding JSON. They reach the intended
 pre-lowering guards. B-007-dispatch-branches/ retains the fresh named test and
 source hashes. V0.2 positive composition remains separately tested; later
 capability/mapping/emission branches are not declared complete by this component.
+
+Eight assessment guard cases pass: duplicate/over4096 additional capabilities,
+duplicate/unrequested assessments, unsupported assessment and duplicate/undeclared/
+missing supported evidence. A fixture panic forbids reaching lowering/emission;
+exact capability diagnostics demonstrate each intended earlier guard. The initial
+fixture borrow-check error was corrected before successful test execution and is
+not semantic evidence. B-007-assessment-branches/ retains the passed named-test
+log and source hashes. Existing candidate opt-in/upgrade and missing-assessment
+checks remain separate.
