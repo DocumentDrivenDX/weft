@@ -2,7 +2,7 @@
 import contextlib,hashlib,io,json,os,runpy,tempfile
 from decimal import Decimal
 from pathlib import Path
-from evidence_audit import audit
+from evidence_audit import audit,strict
 root=Path(__file__).resolve().parents[2]
 with contextlib.redirect_stdout(io.StringIO()):
     ns=runpy.run_path(str(root/'tests/qualify-and-evolve/audit-native-profile-scopes.py'))
@@ -19,7 +19,7 @@ by_id={r['id']:r for r in ns['reports']};results=[]
 hosts={}
 for host in ['python','browser']:
     path=Path(os.environ.get(f'WEFT_{host.upper()}_RECEIPTS',str(root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json')))
-    receipt=json.loads(path.read_text());summary=receipt['summary']
+    receipt=strict(path.read_text());summary=receipt['summary']
     assert summary['cases']==76 and summary['byteParity'] is True
     retained=json.loads((root/f'docs/helix/04-build/evidence/B-007-truss-embeddings/{host}-summary.json').read_text())
     keys=['extensionSha256','python','version'] if host=='python' else ['wasmSha256','browser','playwrightVersion','wasmBytes']

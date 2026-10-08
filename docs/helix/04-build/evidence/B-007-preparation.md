@@ -611,3 +611,8 @@ B-007-scalar-representation/ retains ten accepted and twenty-eight refused
 carrier/type combinations across all four scalar families and both nullable
 states. Exact facets, nullability and decoder semantics are checked by the
 passed named unit test. This does not expand qualified native support.
+
+Host receipt reading now uses the strict support-audit JSON reader. Two
+conflicting duplicate byteParity member controls refuse rather than losing
+meaning through last-member selection. Sixteen host corruption controls and
+all twelve retained-evidence components pass at current source.
