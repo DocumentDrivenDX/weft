@@ -19,14 +19,14 @@
         "warehouseIdentity": null,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
         },
         "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
       },
-      "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d"
+      "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee"
     },
     {
       "component": "reconcile-ashlar-engines.py",
@@ -38,7 +38,7 @@
         "warehouseIdentity": null,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
@@ -78,7 +78,7 @@
         },
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "f72af790b0140d962cc0b9f064ae4c5975931bf05adcb0d5414fed4b08078c6d",
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37"
@@ -585,6 +585,30 @@
         "qualification": "Host fixture phase/control evidence; synthetic callback trust, native execution tested separately."
       },
       "sourceSha256": "5bbceb2d6ede57ae3c41db12b24f8790443d398e77f0826f4f72dcad9f459958"
+    },
+    {
+      "component": "reconcile-unsigned-all-widths.py",
+      "result": {
+        "status": "passed",
+        "cases": 64,
+        "nativeReceipts": 190,
+        "sameStatementEngineResults": 63,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "successfulReceipts": 189,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "15def268e32ad360d4423c9f798eb558cffbb764d6a4b70fe59094dee540ccea",
+          "statements.jsonl": "f525ccaf207060b93146f104d7e4d2a666a0f2a14438d12f1140a24c4f0e46b1"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "ca82dfd08b2662a438c9011f9ca8700c96253f3df48fe8580f22577b31ba9d26"
     },
     {
       "component": "reconcile-truss-archive.py",
@@ -2068,6 +2092,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 107,
+  "verifiedEvidenceReferences": 109,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

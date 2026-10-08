@@ -30,7 +30,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "ddd12a640dbde65c6213072fd918961eca7c8bbf1ad6f995015f8d115ce8f647"
+          "sha256": "e005b54014f5840686e0209f46ae87c8e783314658664f59514272104260d1c3"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
@@ -66,7 +66,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "ddd12a640dbde65c6213072fd918961eca7c8bbf1ad6f995015f8d115ce8f647"
+          "sha256": "e005b54014f5840686e0209f46ae87c8e783314658664f59514272104260d1c3"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
@@ -82,7 +82,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
-          "sha256": "37bd12c5b9ff09e2e80662e28cf6973ddb49b23673c3b3647b7ffb088c6fe409"
+          "sha256": "0c7645dfc6c18b676a8eaf81f3647d9e35ac9bda843e7e5d1696a74b53eef4b3"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-dbsql-version-native/summary.json",
@@ -94,7 +94,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-reconciliation/summary.json",
-          "sha256": "47d25960bc0a552f8291e68fb77a178e3debc8a207878d142baf58f93e6307e5"
+          "sha256": "07874a409643d2c57ae4c3a4d62da134a1fea12632c4a68fd6783a755982c3df"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-real-ashlar-report-audit/summary.json",
@@ -159,6 +159,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-warehouse-metadata-correction/summary.json",
           "sha256": "c5ca8caed543fb3d6c1c7bb880b40f6654a2fb7395ead03d4067de0bfa574593"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-native/custody.json",
+          "sha256": "cd4e72a1896d8ea76866ec0cc1204d6ef0a9fd049e544abc9030380aaacf3112"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-reconciliation/summary.json",
+          "sha256": "1243d76240053eca9a8a2ff52f7bc124493beaf1505f6ba77f42decd9ae1f493"
         }
       ],
       "excludedClaims": [
@@ -196,7 +204,8 @@
         "valueOutcomes": 133,
         "valuePositiveCases": 56,
         "valueRefusals": 77,
-        "sameStatementValueResultsAndGuards": 343
+        "sameStatementValueResultsAndGuards": 343,
+        "sameStatementEveryUnsignedBigintWidthSumCases": 63
       }
     }
   ],

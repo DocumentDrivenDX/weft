@@ -1,0 +1,10 @@
+{
+  "scope": "Fresh unsigned width 1..63 guards/SUM and width-64 compile refusal; synthetic owner substitutions only.",
+  "inputHashes": {
+    "summary.json": "f918ac38653ed8e73e3d77ff57012e0629e2557b12396935cc5c6cbf004d7d3d",
+    "harness.py": "384237f4a142398c406481481f014c2f489f12e12151494527913c6b0226d0b0",
+    "run.log": "4ebf4af72d66b14668854efd54b0f6d03311d048c108ae87bcb986ae1c76be30",
+    "statements.jsonl": "f525ccaf207060b93146f104d7e4d2a666a0f2a14438d12f1140a24c4f0e46b1",
+    "compile-artifacts.jsonl": "15def268e32ad360d4423c9f798eb558cffbb764d6a4b70fe59094dee540ccea"
+  }
+}

@@ -7,9 +7,12 @@ ROOT=pathlib.Path(__file__).resolve().parents[2]
 BASE=pathlib.Path(os.environ.get('WEFT_UNSIGNED_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-boundaries-native')))
 artifacts=[json.loads(l) for l in (BASE/'compile-artifacts.jsonl').read_text().splitlines()]
 receipts=[json.loads(l) for l in (BASE/'statements.jsonl').read_text().splitlines()]
-assert len(artifacts)==8 and len(receipts)==22
-by_label={r['label']:r for r in receipts};assert len(by_label)==22
-assert len({r['response']['statement_id'] for r in receipts})==22
+all_widths=os.environ.get('WEFT_UNSIGNED_ALL_WIDTHS')=='1'
+widths=list(range(1,65)) if all_widths else [1,2,3,8,16,32,63,64]
+receipt_count=(len(widths)-1)*3+1
+assert len(artifacts)==len(widths) and len(receipts)==receipt_count
+by_label={r['label']:r for r in receipts};assert len(by_label)==receipt_count
+assert len({r['response']['statement_id'] for r in receipts})==receipt_count
 engine_receipts=os.environ.get('WEFT_UNSIGNED_ENGINE_RECEIPTS')=='1'
 warehouse_receipts=os.environ.get('WEFT_UNSIGNED_WAREHOUSE_RECEIPTS')=='1'
 assert not warehouse_receipts or engine_receipts
@@ -19,14 +22,14 @@ if engine_receipts:
  for name,digest in custody['inputHashes'].items():assert hashlib.sha256((BASE/name).read_bytes()).hexdigest()==digest
  summary=json.loads((BASE/'summary.json').read_text())
  engines={row['bits']:row['sameStatementEngine'] for row in summary['outcomes'] if 'sameStatementEngine' in row}
- assert set(engines)=={1,2,3,8,16,32,63} and len(set(engines.values()))==1 and all(isinstance(v,str) and v for v in engines.values())
+ assert set(engines)==set(widths)-{64} and len(set(engines.values()))==1 and all(isinstance(v,str) and v for v in engines.values())
  if warehouse_receipts:
   assert summary['engineProbe']=='current_version'
   warehouse=json.loads(next(iter(engines.values())))
   assert set(warehouse)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and warehouse['dbr_version'] is None
   assert all(isinstance(warehouse[k],str) and warehouse[k] for k in ['dbsql_version','u_build_hash','r_build_hash'])
 used=set()
-for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
+for artifact,bits in zip(artifacts,widths,strict=True):
  assert artifact['id']=='unsigned-'+str(bits)
  request=artifact['request'];response=artifact['response']
  module=request['modules'][0]
@@ -73,7 +76,7 @@ for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
  check(f'{bits}-invalid-guard',checks[0]['sql'],invalid,len(invalid))
  if bits==63:check('63-carrier-overflow',checks[0]['sql'],[2**63])
 assert used==set(by_label)
-report={'status':'passed','cases':8,'nativeReceipts':22,'sameStatementEngineResults':len(engines),'warehouseIdentity':warehouse if warehouse_receipts else None,'successfulReceipts':21,'expectedFailedReceipts':1,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inputHashes':{n:hashlib.sha256((BASE/n).read_bytes()).hexdigest() for n in ['compile-artifacts.jsonl','statements.jsonl']},'scope':'Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification.'}
+report={'status':'passed','cases':len(widths),'nativeReceipts':receipt_count,'sameStatementEngineResults':len(engines),'warehouseIdentity':warehouse if warehouse_receipts else None,'successfulReceipts':receipt_count-1,'expectedFailedReceipts':1,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inputHashes':{n:hashlib.sha256((BASE/n).read_bytes()).hexdigest() for n in ['compile-artifacts.jsonl','statements.jsonl']},'scope':'Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification.'}
 OUT=pathlib.Path(os.environ.get('WEFT_UNSIGNED_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation')));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report))

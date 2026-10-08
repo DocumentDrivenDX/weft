@@ -130,3 +130,22 @@ The obsolete field is the sole output difference: target SQL, parameters,
 model/binding pins, logical plans, result representations and candidate status
 are unchanged. The native receipts remain at their original compiler hashes;
 this comparison does not relabel them or claim a new database execution.
+
+## Every unsigned BIGINT width
+
+B-007-unsigned-all-widths-native executes every admitted unsigned BIGINT width
+1 through 63, plus the width-64 compile refusal. Each admitted width passes its
+valid guard, exact SUM and out-of-domain guard. There are 190 terminal receipts:
+189 successful statements and one expected CAST_OVERFLOW refusal at the physical
+BIGINT boundary. All 63 SUM results capture Databricks SQL 2026.39 and the same
+u/r build hashes in their statements. The corrected compiler binary is
+a372f4f7fca7535026e69ffe94fda23c114a264640a3e2e9964c4949d4ae21d7.
+
+Independent reconciliation checks each width and model/binding digest, exact
+emitted SQL owner substitution, parameter slots, result schema and terminal
+rows/errors against integer arithmetic. The producer source is frozen and
+hashed with the original artifacts/receipts; older sampled runs remain unchanged.
+This closes the unsigned-width sampling gap for this carrier. Synthetic owner
+substitutions do not establish stored table/publication custody or promote the
+registered candidate. Other native domain/home and semantic branch accounting
+remain separate requirements.
