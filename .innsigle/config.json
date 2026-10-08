@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "issuer": {
+    "id": "weft",
+    "name": "Weft",
+    "key_id": "ed25519:00b0e3a624616098f54e5294784bf62f",
+    "key_url": "https://documentdrivendx.github.io/weft/.well-known/innsigle/keys.json"
+  },
+  "paths": {
+    "public": ".innsigle/public",
+    "keys": ".innsigle/public/keys.json",
+    "claims_dir": ".innsigle/public/claims"
+  }
+}

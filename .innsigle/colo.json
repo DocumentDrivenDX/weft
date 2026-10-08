@@ -1,0 +1,22 @@
+{
+  "schema_version": "1",
+  "composition": "model-primary",
+  "ingredients": [
+    {
+      "kind": "model",
+      "name": "OpenAI Codex",
+      "role": "draft and implementation"
+    },
+    {
+      "kind": "human",
+      "name": "project operator",
+      "role": "commission and direction"
+    },
+    {
+      "kind": "tool",
+      "name": "Innsigle",
+      "role": "content signing"
+    }
+  ],
+  "notes": "Model-primary microsite commissioned by the project operator. No human-input percentage asserted."
+}
