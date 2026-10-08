@@ -3409,3 +3409,26 @@ runtime allowlist presets and have no fresh Python/browser embedding evidence.
 Recursive Boolean leaves, optional Boolean roots and production qualification
 remain outside this evidence. This extends compiler functionality without
 claiming those broader meanings.
+
+### Boolean original runtime and fresh embedding (2026-10-07)
+
+The runtime conformance registry now admits the two exact Boolean configurations
+and compares all six complete responses against owned Configuration results.
+All 149 Rust tests pass. The independent custody checker verifies thirty-six
+configurations against eighty-one complete compiler responses.
+
+Fresh CPython abi3 and real Chromium WASM builds pass 330 embedding cases:
+eighty-one full responses, 243 candidate/digest/unsupported-binding refusals and
+six Boolean SUM refusals. SUM cases clear unrelated parameters and require the
+WFT-TYPE diagnostic, proving numeric-domain refusal rather than an incidental
+input failure. Python repeats all eighty-one successful calls deterministically,
+for 411 native calls with subprocess execution disabled. Chromium 153.0.8010.12
+matches response bytes without Node globals or external network dependencies.
+Receipt and committed summaries:
+[B-005-boolean-embedding.json](B-005-boolean-embedding.json).
+
+This qualifies the selected required Boolean page/order/equality paths through
+the public Rust/native Python/browser core. Optional and recursive Boolean paths,
+broader query/domain coverage and full host/story qualification remain required
+work; exact conformance allowlisting does not imply generic released runtime or
+production compatibility.

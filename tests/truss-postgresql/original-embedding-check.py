@@ -18,7 +18,9 @@ entity_path=ROOT/'tests/truss-postgresql/fixtures/original-entity-public-transpo
 entries += [(entity_path.with_name(f'entity-{index}.json'),fixture) for index,fixture in enumerate(json.loads(entity_path.read_text()))]
 signed_path=ROOT/'tests/truss-postgresql/fixtures/original-signed-public-transport.json'
 entries += [(signed_path.with_name(f'signed-{index}.json'),fixture) for index,fixture in enumerate(json.loads(signed_path.read_text()))]
-assert len(entries)==75
+boolean_path=ROOT/'tests/truss-postgresql/fixtures/original-boolean-public-transport.json'
+entries += [(boolean_path.with_name(f'boolean-{index}.json'),fixture) for index,fixture in enumerate(json.loads(boolean_path.read_text()))]
+assert len(entries)==81
 for path,fixture in entries:
     request = fixture['request']
     raw = weft.compile_json(json.dumps(request))
@@ -36,10 +38,21 @@ for path,fixture in entries:
         refused = json.loads(refused_raw)
         assert refused['status'] == 'blocked' and 'sql' not in refused, (path.name, kind)
         cases.append(dict(id=path.stem+'-'+kind, request=altered)); reports.append(dict(raw=refused_raw))
+    if path.stem.startswith('boolean-'):
+        altered = json.loads(json.dumps(request))
+        altered['sql'] = 'SELECT SUM(c.id) AS total FROM Customer c'
+        altered.pop('readProfile', None)
+        altered['parameters'] = {}
+        refused_raw = weft.compile_json(json.dumps(altered))
+        refused = json.loads(refused_raw)
+        assert refused['status'] == 'blocked' and 'sql' not in refused
+        assert any(d['code'] == 'WFT-TYPE' for d in refused['diagnostics'])
+        cases.append(dict(id=path.stem+'-boolean-sum', request=altered))
+        reports.append(dict(raw=refused_raw))
 assert len(files) == 7
 out = ROOT/'target/b005/original-embedding'; out.mkdir(parents=True, exist_ok=True)
 (out/'cases.json').write_text(json.dumps(cases)+'\n')
 (out/'reports.json').write_text(json.dumps(reports)+'\n')
-summary = dict(cases=len(cases), originalConfigurations=34, fullResponseParity=True, deterministicRepeats=75, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations')
+summary = dict(cases=len(cases), originalConfigurations=36, fullResponseParity=True, deterministicRepeats=81, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations and two Boolean scalar configurations')
 (out/'python-summary.json').write_text(json.dumps(summary, indent=2)+'\n')
 print(json.dumps(summary))

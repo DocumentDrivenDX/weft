@@ -1,0 +1,235 @@
+{
+  "bindingProfile": "truss-postgresql-candidate/0.1.0",
+  "comparators": {
+    "{\"field\":{\"documentId\":\"sales-fixture\",\"element\":\"customer-id\",\"module\":\"sales\",\"revision\":\"application-fixture-1\"},\"owner\":{\"documentId\":\"sales-fixture\",\"element\":\"customer\",\"module\":\"sales\",\"revision\":\"application-fixture-1\"}}": {
+      "originalArtifacts": {
+        "nativeDomainDefinition": "e30=",
+        "operatorInventory": "e30=",
+        "qualification": "e30=",
+        "sourceDomainDefinition": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6ImN1c3RvbWVyLWlkIiwia2luZCI6ImZpZWxkIiwibmFtZSI6ImlkIiwibnVsbGFiaWxpdHkiOiJyZXF1aXJlZCIsInNjYWxhclR5cGUiOiJib29sZWFuIn0=",
+        "valueDefinition": "eyJhY2NlcHRlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpqWVhKa2FXNWhiR2wwZVNJNkltOXVaU0lzSW1WNGRHVnVjMmx2Ym5NaU9udDlMQ0pwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYTJsdVpDSTZJbVpwWld4a0lpd2libUZ0WlNJNkltbGtJaXdpYm5Wc2JHRmlhV3hwZEhraU9pSnlaWEYxYVhKbFpDSXNJbk5qWVd4aGNsUjVjR1VpT2lKaWIyOXNaV0Z1SW4wPSIsImlkZW50aXR5Ijoic2lnbmVkLWZpZWxkLWJvb2xlYW4iLCJzaGEyNTYiOiI3NzFiNmU5ZjRkN2Y5NDE2ZTNhODQ3M2JmYTU0Njc1OThiYjU1ODI3Yzg1MjJlYWMxOWJlZjIwZWI2ZmQyMzA1In0sImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy12YWx1ZS1kZWZpbml0aW9uLzAuMS4wIiwibm9kZXMiOlt7ImF1dGhvcmVkRGVmaW5pdGlvbiI6eyJieXRlc0Jhc2U2NCI6ImV5SmpZWEprYVc1aGJHbDBlU0k2SW05dVpTSXNJbVY0ZEdWdWMybHZibk1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFdsa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWJtRnRaU0k2SW1sa0lpd2liblZzYkdGaWFXeHBkSGtpT2lKeVpYRjFhWEpsWkNJc0luTmpZV3hoY2xSNWNHVWlPaUppYjI5c1pXRnVJbjA9IiwiaWRlbnRpdHkiOiJzaWduZWQtZmllbGQtYm9vbGVhbiIsInNoYTI1NiI6Ijc3MWI2ZTlmNGQ3Zjk0MTZlM2E4NDczYmZhNTQ2NzU5OGJiNTU4MjdjODUyMmVhYzE5YmVmMjBlYjZmZDIzMDUifSwiYXV0aG9yZWRJZGVudGl0eSI6eyJkb2N1bWVudElkIjoic2FsZXMtZml4dHVyZSIsImVsZW1lbnQiOiJjdXN0b21lci1pZCIsIm1vZHVsZSI6InNhbGVzIiwicmV2aXNpb24iOiJhcHBsaWNhdGlvbi1maXh0dXJlLTEifSwiY29kZWNEZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKaGRYUm9iM0psWkVSbFptbHVhWFJwYjI0aU9uc2lZbmwwWlhOQ1lYTmxOalFpT2lKbGVVcHFXVmhLYTJGWE5XaGlSMnd3WlZOSk5rbHRPWFZhVTBselNXMVdOR1JIVm5Wak1teDJZbTVOYVU5dWREbE1RMHB3V2tOSk5rbHRUakZqTTFKMllsZFdlVXhYYkd0SmFYZHBZVEpzZFZwRFNUWkpiVnB3V2xkNGEwbHBkMmxpYlVaMFdsTkpOa2x0Ykd0SmFYZHBZbTVXYzJKSFJtbGhWM2h3WkVocmFVOXBTbmxhV0VZeFlWaEtiRnBEU1hOSmJrNXFXVmQ0YUdOc1VqVmpSMVZwVDJsS2FXSXlPWE5hVjBaMVNXNHdQU0lzSW1sa1pXNTBhWFI1SWpvaWMybG5ibVZrTFdacFpXeGtMV0p2YjJ4bFlXNGlMQ0p6YUdFeU5UWWlPaUkzTnpGaU5tVTVaalJrTjJZNU5ERTJaVE5oT0RRM00ySm1ZVFUwTmpjMU9UaGlZalUxT0RJM1l6ZzFNakpsWVdNeE9XSmxaakl3WldJMlptUXlNekExSW4wc0ltTnZaWEpqYVc5dUlqb2libTl1WlNJc0ltbHVkR1Z5Wm1GalpWWmxjbk5wYjI0aU9pSjBjblZ6Y3kxcWMyOXVZaTFzWldGbUxXTnZaR1ZqTHpBdU1TNHdJaXdpYVc1MllXeHBaRk4wYjNKbFpGWmhiSFZsSWpvaVkyOXRjR3hsZEdVdGNtVnpkV3gwTFhKbFpuVnpZV3dpTENKdVlYUnBkbVZFYjIxaGFXNUVaV1pwYm1sMGFXOXVJanA3SW1KNWRHVnpRbUZ6WlRZMElqb2laVE13UFNJc0ltbGtaVzUwYVhSNUlqb2labWw0ZEhWeVpTSXNJbk5vWVRJMU5pSTZJalEwTVRNMlptRXpOVFZpTXpZM09HRXhNVFEyWVdReE5tWTNaVGcyTkRsbE9UUm1ZalJtWXpJeFptVTNOMlU0TXpFd1l6QTJNR1kyTVdOaFlXWm1PR0VpZlN3aWJtRjBhWFpsUkc5dFlXbHVVSEp2Wm1sc1pTSTZleUpwWkdWdWRHbDBlU0k2SW1OaGJtUnBaR0YwWlMxMFpYTjBMWEJ5YjJacGJHVWlMQ0p6YUdFeU5UWWlPaUkwTkRFek5tWmhNelUxWWpNMk56aGhNVEUwTm1Ga01UWm1OMlU0TmpRNVpUazBabUkwWm1NeU1XWmxOemRsT0RNeE1HTXdOakJtTmpGallXRm1aamhoSWl3aWRtVnljMmx2YmlJNklqQXVNUzR3SW4wc0luQnliMlpwYkdVaU9uc2lhV1JsYm5ScGRIa2lPaUpqWVc1a2FXUmhkR1V0ZEdWemRDMXdjbTltYVd4bElpd2ljMmhoTWpVMklqb2lORFF4TXpabVlUTTFOV0l6TmpjNFlURXhORFpoWkRFMlpqZGxPRFkwT1dVNU5HWmlOR1pqTWpGbVpUYzNaVGd6TVRCak1EWXdaall4WTJGaFptWTRZU0lzSW5abGNuTnBiMjRpT2lJd0xqRXVNQ0o5TENKeVpXRmtSR1ZtWVhWc2RDSTZJbTV2Ym1VaUxDSnlkV3hsSWpwN0ltUmxZMjlrWldSRFlYSnlhV1Z5UzJsdVpDSTZJbUp2YjJ4bFlXNGlMQ0psYm1OdlpHbHVaeUk2SW5CeVpYTmxjblpsTFdKdmIyeGxZVzRpTENKbVlXMXBiSGtpT2lKaWIyOXNaV0Z1SWl3aWMzUnZjbUZuWlZKbGNISmxjMlZ1ZEdGMGFXOXVJam9pYW5OdmJpMWliMjlzWldGdUluMHNJbk52ZFhKalpVbHVkR1Z5Y0hKbGRHRjBhVzl1UkdWbWFXNXBkR2x2YmlJNmV5SmllWFJsYzBKaGMyVTJOQ0k2SW1Vek1EMGlMQ0pwWkdWdWRHbDBlU0k2SW1acGVIUjFjbVVpTENKemFHRXlOVFlpT2lJME5ERXpObVpoTXpVMVlqTTJOemhoTVRFME5tRmtNVFptTjJVNE5qUTVaVGswWm1JMFptTXlNV1psTnpkbE9ETXhNR013TmpCbU5qRmpZV0ZtWmpoaEluMHNJbk52ZFhKalpVbHVkR1Z5Y0hKbGRHRjBhVzl1VUhKdlptbHNaU0k2ZXlKcFpHVnVkR2wwZVNJNkltTmhibVJwWkdGMFpTMTBaWE4wTFhCeWIyWnBiR1VpTENKemFHRXlOVFlpT2lJME5ERXpObVpoTXpVMVlqTTJOemhoTVRFME5tRmtNVFptTjJVNE5qUTVaVGswWm1JMFptTXlNV1psTnpkbE9ETXhNR013TmpCbU5qRmpZV0ZtWmpoaElpd2lkbVZ5YzJsdmJpSTZJakF1TVM0d0luMTkiLCJpZGVudGl0eSI6InNlbGVjdGVkLWxlYWYtYm9vbGVhbiIsInNoYTI1NiI6IjE3Yzg4MjJmZTI3NTdiNWY0OTZhYTEyZmU1NDc3MjM3N2YzZWY2OTY0NTk5ZTFmNTlkZjgyMTE1NGRmZmIyYzgifSwiY29kZWNQcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwibm9kZUlkIjoicm9vdCIsInNoYXBlIjp7ImZhbWlseSI6ImJvb2xlYW4iLCJraW5kIjoic2NhbGFyIiwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1ib29sZWFuIn19XSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJvb3ROb2RlSWQiOiJyb290In0="
+      },
+      "originalJson": "{\"absentOperands\":\"refuse\",\"castOutcome\":\"exact-or-error\",\"interfaceVersion\":\"truss-native-comparator/0.1.0\",\"nativeDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"nativeDomainProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"nullOperands\":\"refuse\",\"operatorInventory\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"qualification\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"sourceDomainDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6ImN1c3RvbWVyLWlkIiwia2luZCI6ImZpZWxkIiwibmFtZSI6ImlkIiwibnVsbGFiaWxpdHkiOiJyZXF1aXJlZCIsInNjYWxhclR5cGUiOiJib29sZWFuIn0=\",\"identity\":\"signed-field-boolean\",\"sha256\":\"771b6e9f4d7f9416e3a8473bfa5467598bb55827c8522eac19bef20eb6fd2305\"},\"strategy\":{\"kind\":\"native-boolean\",\"nativeType\":\"pg_catalog.bool\"},\"valueDefinition\":{\"bytesBase64\":\"eyJhY2NlcHRlZERlZmluaXRpb24iOnsiYnl0ZXNCYXNlNjQiOiJleUpqWVhKa2FXNWhiR2wwZVNJNkltOXVaU0lzSW1WNGRHVnVjMmx2Ym5NaU9udDlMQ0pwWkNJNkltTjFjM1J2YldWeUxXbGtJaXdpYTJsdVpDSTZJbVpwWld4a0lpd2libUZ0WlNJNkltbGtJaXdpYm5Wc2JHRmlhV3hwZEhraU9pSnlaWEYxYVhKbFpDSXNJbk5qWVd4aGNsUjVjR1VpT2lKaWIyOXNaV0Z1SW4wPSIsImlkZW50aXR5Ijoic2lnbmVkLWZpZWxkLWJvb2xlYW4iLCJzaGEyNTYiOiI3NzFiNmU5ZjRkN2Y5NDE2ZTNhODQ3M2JmYTU0Njc1OThiYjU1ODI3Yzg1MjJlYWMxOWJlZjIwZWI2ZmQyMzA1In0sImludGVyZmFjZVZlcnNpb24iOiJ0cnVzcy12YWx1ZS1kZWZpbml0aW9uLzAuMS4wIiwibm9kZXMiOlt7ImF1dGhvcmVkRGVmaW5pdGlvbiI6eyJieXRlc0Jhc2U2NCI6ImV5SmpZWEprYVc1aGJHbDBlU0k2SW05dVpTSXNJbVY0ZEdWdWMybHZibk1pT250OUxDSnBaQ0k2SW1OMWMzUnZiV1Z5TFdsa0lpd2lhMmx1WkNJNkltWnBaV3hrSWl3aWJtRnRaU0k2SW1sa0lpd2liblZzYkdGaWFXeHBkSGtpT2lKeVpYRjFhWEpsWkNJc0luTmpZV3hoY2xSNWNHVWlPaUppYjI5c1pXRnVJbjA9IiwiaWRlbnRpdHkiOiJzaWduZWQtZmllbGQtYm9vbGVhbiIsInNoYTI1NiI6Ijc3MWI2ZTlmNGQ3Zjk0MTZlM2E4NDczYmZhNTQ2NzU5OGJiNTU4MjdjODUyMmVhYzE5YmVmMjBlYjZmZDIzMDUifSwiYXV0aG9yZWRJZGVudGl0eSI6eyJkb2N1bWVudElkIjoic2FsZXMtZml4dHVyZSIsImVsZW1lbnQiOiJjdXN0b21lci1pZCIsIm1vZHVsZSI6InNhbGVzIiwicmV2aXNpb24iOiJhcHBsaWNhdGlvbi1maXh0dXJlLTEifSwiY29kZWNEZWZpbml0aW9uIjp7ImJ5dGVzQmFzZTY0IjoiZXlKaGRYUm9iM0psWkVSbFptbHVhWFJwYjI0aU9uc2lZbmwwWlhOQ1lYTmxOalFpT2lKbGVVcHFXVmhLYTJGWE5XaGlSMnd3WlZOSk5rbHRPWFZhVTBselNXMVdOR1JIVm5Wak1teDJZbTVOYVU5dWREbE1RMHB3V2tOSk5rbHRUakZqTTFKMllsZFdlVXhYYkd0SmFYZHBZVEpzZFZwRFNUWkpiVnB3V2xkNGEwbHBkMmxpYlVaMFdsTkpOa2x0Ykd0SmFYZHBZbTVXYzJKSFJtbGhWM2h3WkVocmFVOXBTbmxhV0VZeFlWaEtiRnBEU1hOSmJrNXFXVmQ0YUdOc1VqVmpSMVZwVDJsS2FXSXlPWE5hVjBaMVNXNHdQU0lzSW1sa1pXNTBhWFI1SWpvaWMybG5ibVZrTFdacFpXeGtMV0p2YjJ4bFlXNGlMQ0p6YUdFeU5UWWlPaUkzTnpGaU5tVTVaalJrTjJZNU5ERTJaVE5oT0RRM00ySm1ZVFUwTmpjMU9UaGlZalUxT0RJM1l6ZzFNakpsWVdNeE9XSmxaakl3WldJMlptUXlNekExSW4wc0ltTnZaWEpqYVc5dUlqb2libTl1WlNJc0ltbHVkR1Z5Wm1GalpWWmxjbk5wYjI0aU9pSjBjblZ6Y3kxcWMyOXVZaTFzWldGbUxXTnZaR1ZqTHpBdU1TNHdJaXdpYVc1MllXeHBaRk4wYjNKbFpGWmhiSFZsSWpvaVkyOXRjR3hsZEdVdGNtVnpkV3gwTFhKbFpuVnpZV3dpTENKdVlYUnBkbVZFYjIxaGFXNUVaV1pwYm1sMGFXOXVJanA3SW1KNWRHVnpRbUZ6WlRZMElqb2laVE13UFNJc0ltbGtaVzUwYVhSNUlqb2labWw0ZEhWeVpTSXNJbk5vWVRJMU5pSTZJalEwTVRNMlptRXpOVFZpTXpZM09HRXhNVFEyWVdReE5tWTNaVGcyTkRsbE9UUm1ZalJtWXpJeFptVTNOMlU0TXpFd1l6QTJNR1kyTVdOaFlXWm1PR0VpZlN3aWJtRjBhWFpsUkc5dFlXbHVVSEp2Wm1sc1pTSTZleUpwWkdWdWRHbDBlU0k2SW1OaGJtUnBaR0YwWlMxMFpYTjBMWEJ5YjJacGJHVWlMQ0p6YUdFeU5UWWlPaUkwTkRFek5tWmhNelUxWWpNMk56aGhNVEUwTm1Ga01UWm1OMlU0TmpRNVpUazBabUkwWm1NeU1XWmxOemRsT0RNeE1HTXdOakJtTmpGallXRm1aamhoSWl3aWRtVnljMmx2YmlJNklqQXVNUzR3SW4wc0luQnliMlpwYkdVaU9uc2lhV1JsYm5ScGRIa2lPaUpqWVc1a2FXUmhkR1V0ZEdWemRDMXdjbTltYVd4bElpd2ljMmhoTWpVMklqb2lORFF4TXpabVlUTTFOV0l6TmpjNFlURXhORFpoWkRFMlpqZGxPRFkwT1dVNU5HWmlOR1pqTWpGbVpUYzNaVGd6TVRCak1EWXdaall4WTJGaFptWTRZU0lzSW5abGNuTnBiMjRpT2lJd0xqRXVNQ0o5TENKeVpXRmtSR1ZtWVhWc2RDSTZJbTV2Ym1VaUxDSnlkV3hsSWpwN0ltUmxZMjlrWldSRFlYSnlhV1Z5UzJsdVpDSTZJbUp2YjJ4bFlXNGlMQ0psYm1OdlpHbHVaeUk2SW5CeVpYTmxjblpsTFdKdmIyeGxZVzRpTENKbVlXMXBiSGtpT2lKaWIyOXNaV0Z1SWl3aWMzUnZjbUZuWlZKbGNISmxjMlZ1ZEdGMGFXOXVJam9pYW5OdmJpMWliMjlzWldGdUluMHNJbk52ZFhKalpVbHVkR1Z5Y0hKbGRHRjBhVzl1UkdWbWFXNXBkR2x2YmlJNmV5SmllWFJsYzBKaGMyVTJOQ0k2SW1Vek1EMGlMQ0pwWkdWdWRHbDBlU0k2SW1acGVIUjFjbVVpTENKemFHRXlOVFlpT2lJME5ERXpObVpoTXpVMVlqTTJOemhoTVRFME5tRmtNVFptTjJVNE5qUTVaVGswWm1JMFptTXlNV1psTnpkbE9ETXhNR013TmpCbU5qRmpZV0ZtWmpoaEluMHNJbk52ZFhKalpVbHVkR1Z5Y0hKbGRHRjBhVzl1VUhKdlptbHNaU0k2ZXlKcFpHVnVkR2wwZVNJNkltTmhibVJwWkdGMFpTMTBaWE4wTFhCeWIyWnBiR1VpTENKemFHRXlOVFlpT2lJME5ERXpObVpoTXpVMVlqTTJOemhoTVRFME5tRmtNVFptTjJVNE5qUTVaVGswWm1JMFptTXlNV1psTnpkbE9ETXhNR013TmpCbU5qRmpZV0ZtWmpoaElpd2lkbVZ5YzJsdmJpSTZJakF1TVM0d0luMTkiLCJpZGVudGl0eSI6InNlbGVjdGVkLWxlYWYtYm9vbGVhbiIsInNoYTI1NiI6IjE3Yzg4MjJmZTI3NTdiNWY0OTZhYTEyZmU1NDc3MjM3N2YzZWY2OTY0NTk5ZTFmNTlkZjgyMTE1NGRmZmIyYzgifSwiY29kZWNQcm9maWxlIjp7ImlkZW50aXR5IjoiY2FuZGlkYXRlLXRlc3QtcHJvZmlsZSIsInNoYTI1NiI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJ2ZXJzaW9uIjoiMC4xLjAifSwibm9kZUlkIjoicm9vdCIsInNoYXBlIjp7ImZhbWlseSI6ImJvb2xlYW4iLCJraW5kIjoic2NhbGFyIiwic3RvcmFnZVJlcHJlc2VudGF0aW9uIjoianNvbi1ib29sZWFuIn19XSwicHJvZmlsZSI6eyJpZGVudGl0eSI6ImNhbmRpZGF0ZS10ZXN0LXByb2ZpbGUiLCJzaGEyNTYiOiI0NDEzNmZhMzU1YjM2NzhhMTE0NmFkMTZmN2U4NjQ5ZTk0ZmI0ZmMyMWZlNzdlODMxMGMwNjBmNjFjYWFmZjhhIiwidmVyc2lvbiI6IjAuMS4wIn0sInJvb3ROb2RlSWQiOiJyb290In0=\",\"identity\":\"original-value-graph-boolean\",\"sha256\":\"cafd841c6c519ff453f5964d31c8e1448e8a66b7e64965c1d7b5dc82eac3bfa8\"}}"
+    }
+  },
+  "interfaceVersion": "weft-original-conformance-composition/0.1.0",
+  "procedureScope": "Conformance data only; trusted Rust selects all native/operator/source interpretation, never executable metadata",
+  "properties": [
+    {
+      "columns": {
+        "relation:object:id": {
+          "name": "id",
+          "relationIdentity": "relation:object"
+        },
+        "relation:object:type_id": {
+          "name": "type_id",
+          "relationIdentity": "relation:object"
+        },
+        "relation:row_home_node:definition_bytes": {
+          "name": "definition_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:map_key": {
+          "name": "map_key",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:node_id": {
+          "name": "node_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:parent_node_id": {
+          "name": "parent_node_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:record_field_identity_bytes": {
+          "name": "record_field_identity_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:sequence_ordinal": {
+          "name": "sequence_ordinal",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:slot_kind": {
+          "name": "slot_kind",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:source_bytes": {
+          "name": "source_bytes",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_node:value_kind": {
+          "name": "value_kind",
+          "relationIdentity": "relation:row_home_node"
+        },
+        "relation:row_home_scalar:binary_value": {
+          "name": "binary_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:boolean_value": {
+          "name": "boolean_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:codec_definition_bytes": {
+          "name": "codec_definition_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:node_id": {
+          "name": "node_id",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:numeric_token": {
+          "name": "numeric_token",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:numeric_value": {
+          "name": "numeric_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:opaque_bytes": {
+          "name": "opaque_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:original_source_bytes": {
+          "name": "original_source_bytes",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:scalar_kind": {
+          "name": "scalar_kind",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:temporal_instant": {
+          "name": "temporal_instant",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:temporal_text": {
+          "name": "temporal_text",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_scalar:text_value": {
+          "name": "text_value",
+          "relationIdentity": "relation:row_home_scalar"
+        },
+        "relation:row_home_state:edge_id": {
+          "name": "edge_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:object_id": {
+          "name": "object_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:object_type_id": {
+          "name": "object_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:owner_kind": {
+          "name": "owner_kind",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:property_id": {
+          "name": "property_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:property_owner_type_id": {
+          "name": "property_owner_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:relationship_type_id": {
+          "name": "relationship_type_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:root_node_id": {
+          "name": "root_node_id",
+          "relationIdentity": "relation:row_home_state"
+        },
+        "relation:row_home_state:state_id": {
+          "name": "state_id",
+          "relationIdentity": "relation:row_home_state"
+        }
+      },
+      "index": 0,
+      "inventory": {
+        "bytesBase64": "e30=",
+        "identity": "candidate-test-artifact",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "leafCodecs": {
+        "root": {
+          "originalArtifacts": {
+            "authoredDefinition": "eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6ImN1c3RvbWVyLWlkIiwia2luZCI6ImZpZWxkIiwibmFtZSI6ImlkIiwibnVsbGFiaWxpdHkiOiJyZXF1aXJlZCIsInNjYWxhclR5cGUiOiJib29sZWFuIn0=",
+            "nativeDomainDefinition": "e30=",
+            "sourceInterpretationDefinition": "e30="
+          },
+          "originalJson": "{\"authoredDefinition\":{\"bytesBase64\":\"eyJjYXJkaW5hbGl0eSI6Im9uZSIsImV4dGVuc2lvbnMiOnt9LCJpZCI6ImN1c3RvbWVyLWlkIiwia2luZCI6ImZpZWxkIiwibmFtZSI6ImlkIiwibnVsbGFiaWxpdHkiOiJyZXF1aXJlZCIsInNjYWxhclR5cGUiOiJib29sZWFuIn0=\",\"identity\":\"signed-field-boolean\",\"sha256\":\"771b6e9f4d7f9416e3a8473bfa5467598bb55827c8522eac19bef20eb6fd2305\"},\"coercion\":\"none\",\"interfaceVersion\":\"truss-jsonb-leaf-codec/0.1.0\",\"invalidStoredValue\":\"complete-result-refusal\",\"nativeDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"nativeDomainProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"profile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"readDefault\":\"none\",\"rule\":{\"decodedCarrierKind\":\"boolean\",\"encoding\":\"preserve-boolean\",\"family\":\"boolean\",\"storageRepresentation\":\"json-boolean\"},\"sourceInterpretationDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"sourceInterpretationProfile\":{\"identity\":\"candidate-test-profile\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"}}"
+        }
+      },
+      "nativeTree": false,
+      "obligations": [
+        "candidate-stored-domain"
+      ],
+      "physicalProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      },
+      "presenceProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      },
+      "recordPresence": {},
+      "relations": {
+        "relation:object": "object",
+        "relation:row_home_node": "row_home_node",
+        "relation:row_home_scalar": "row_home_scalar",
+        "relation:row_home_state": "row_home_state"
+      },
+      "rowJoin": {
+        "originalArtifacts": {
+          "constraintEvidence/0": "e30=",
+          "layoutInventory": "e30=",
+          "storedDomainDefinition": "e30="
+        },
+        "originalJson": "{\"authorityView\":\"same-original-admitted-catalog-authority-and-snapshot\",\"constraintEvidence\":[{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}],\"containerRoot\":\"complete-value-tree-only\",\"integrityAdmission\":\"qualified-stored-domain-before-publication-independent-of-predicate-order\",\"interfaceVersion\":\"truss-row-join-definition/0.1.0\",\"invalidObservation\":\"whole-result-integrity-refusal\",\"layoutInventory\":{\"bytesBase64\":\"e30=\",\"identity\":\"candidate-test-artifact\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"},\"node\":{\"columns\":{\"definition_bytes\":\"relation:row_home_node:definition_bytes\",\"map_key\":\"relation:row_home_node:map_key\",\"node_id\":\"relation:row_home_node:node_id\",\"parent_node_id\":\"relation:row_home_node:parent_node_id\",\"record_field_identity_bytes\":\"relation:row_home_node:record_field_identity_bytes\",\"sequence_ordinal\":\"relation:row_home_node:sequence_ordinal\",\"slot_kind\":\"relation:row_home_node:slot_kind\",\"source_bytes\":\"relation:row_home_node:source_bytes\",\"state_id\":\"relation:row_home_node:state_id\",\"value_kind\":\"relation:row_home_node:value_kind\"},\"relationName\":\"row_home_node\",\"relationPhysicalIdentity\":\"relation:row_home_node\"},\"nullRoot\":\"present-null-with-zero-scalar-payloads\",\"optionalAbsence\":\"complete-authorized-state-absence\",\"owner\":{\"discriminatorColumnPhysicalIdentity\":\"relation:object:type_id\",\"idColumnPhysicalIdentity\":\"relation:object:id\",\"relationName\":\"object\",\"relationPhysicalIdentity\":\"relation:object\"},\"ownerJoin\":\"object-id-and-type\",\"ownerMultiplicity\":\"preserve-each-admitted-owner-occurrence\",\"payloadJoin\":\"root-state-id-and-node-id-to-scalar-state-id-and-node-id\",\"profile\":{\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\",\"version\":\"0.1.0\"},\"recordKind\":\"object\",\"requiredAbsence\":\"integrity-refusal\",\"rootJoin\":\"state-id-and-root-node-id-to-node-state-id-and-node-id\",\"scalar\":{\"columns\":{\"binary_value\":\"relation:row_home_scalar:binary_value\",\"boolean_value\":\"relation:row_home_scalar:boolean_value\",\"codec_definition_bytes\":\"relation:row_home_scalar:codec_definition_bytes\",\"node_id\":\"relation:row_home_scalar:node_id\",\"numeric_token\":\"relation:row_home_scalar:numeric_token\",\"numeric_value\":\"relation:row_home_scalar:numeric_value\",\"opaque_bytes\":\"relation:row_home_scalar:opaque_bytes\",\"original_source_bytes\":\"relation:row_home_scalar:original_source_bytes\",\"scalar_kind\":\"relation:row_home_scalar:scalar_kind\",\"state_id\":\"relation:row_home_scalar:state_id\",\"temporal_instant\":\"relation:row_home_scalar:temporal_instant\",\"temporal_text\":\"relation:row_home_scalar:temporal_text\",\"text_value\":\"relation:row_home_scalar:text_value\"},\"relationName\":\"row_home_scalar\",\"relationPhysicalIdentity\":\"relation:row_home_scalar\"},\"scalarRoot\":\"present-scalar-with-exactly-one-qualified-payload\",\"state\":{\"columns\":{\"edge_id\":\"relation:row_home_state:edge_id\",\"object_id\":\"relation:row_home_state:object_id\",\"object_type_id\":\"relation:row_home_state:object_type_id\",\"owner_kind\":\"relation:row_home_state:owner_kind\",\"property_id\":\"relation:row_home_state:property_id\",\"property_owner_type_id\":\"relation:row_home_state:property_owner_type_id\",\"relationship_type_id\":\"relation:row_home_state:relationship_type_id\",\"root_node_id\":\"relation:row_home_state:root_node_id\",\"state_id\":\"relation:row_home_state:state_id\"},\"relationName\":\"row_home_state\",\"relationPhysicalIdentity\":\"relation:row_home_state\"},\"stateSelection\":\"owner-kind-and-independent-property-owner-and-property\",\"storedDomainDefinition\":{\"bytesBase64\":\"e30=\",\"identity\":\"fixture\",\"sha256\":\"44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a\"}}"
+      },
+      "valueProfile": {
+        "identity": "candidate-test-profile",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "version": "0.1.0"
+      }
+    }
+  ],
+  "records": [
+    {
+      "columns": {
+        "object-props": {
+          "name": "props",
+          "relationIdentity": "object-table"
+        },
+        "object-type": {
+          "name": "type_id",
+          "relationIdentity": "object-table"
+        }
+      },
+      "discriminatorIdentity": "object-type",
+      "index": 0,
+      "inventory": {
+        "bytesBase64": "e30=",
+        "identity": "candidate-test-artifact",
+        "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+      },
+      "relationIdentity": "object-table",
+      "relations": {
+        "object-table": "object"
+      }
+    }
+  ],
+  "relationships": []
+}

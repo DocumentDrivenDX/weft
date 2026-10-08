@@ -340,6 +340,20 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
         ("508d3a00a8bc7e505746cc528569d4f8404cab2dbb21eee825fa4e95bdc90490", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-row-composition.json")),
         ("a93a3cb75a6bc79a9131a9327dc64831e9f5ccc6bc53acce7f52acbed07e68cc", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-props-composition.json")),
     ];
+    let boolean_presets = [
+        (
+            "b39fb625b813e9fa7e1192aba8610bb024ed99a782bfac5cd933b5ea834eef77",
+            include_str!(
+                "../../../tests/truss-postgresql/fixtures/original-boolean-row-composition.json"
+            ),
+        ),
+        (
+            "d67b0ae1446c6ad4238ef82707bf8d91ac28d9e11a7e1c465b4db09c04a10a77",
+            include_str!(
+                "../../../tests/truss-postgresql/fixtures/original-boolean-props-composition.json"
+            ),
+        ),
+    ];
     let raw = if target.binding_sha256
         == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
     {
@@ -352,6 +366,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
             .chain(optional_presets.iter())
             .chain(entity_presets.iter())
             .chain(signed_presets.iter())
+            .chain(boolean_presets.iter())
             .find(|(pin, _)| *pin == target.binding_sha256)
             .map(|(_, raw)| *raw)
             .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?

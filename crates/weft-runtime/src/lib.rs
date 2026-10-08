@@ -154,3 +154,28 @@ mod signed_property_tests {
         }
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod boolean_property_tests {
+    #[test]
+    fn original_boolean_properties_match_full_public_responses_and_refuse_sum() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-boolean-public-transport.json"
+        ))
+        .unwrap();
+        for case in cases.as_array().unwrap() {
+            let request = case["request"].to_string();
+            let raw = super::compile_json(&request);
+            let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
+            assert_eq!(response, case["response"]);
+            assert_eq!(super::compile_json(&request), raw);
+            let mut invalid = case["request"].clone();
+            invalid["sql"] = serde_json::json!("SELECT SUM(c.id) AS total FROM Customer c");
+            invalid.as_object_mut().unwrap().remove("readProfile");
+            let refused: serde_json::Value =
+                serde_json::from_str(&super::compile_json(&invalid.to_string())).unwrap();
+            assert_eq!(refused["status"], "blocked");
+            assert!(refused.get("sql").is_none());
+        }
+    }
+}

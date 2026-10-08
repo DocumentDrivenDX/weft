@@ -1,0 +1,27 @@
+{
+  "scope": "test-original only; thirty-six exact configurations including two required Boolean property cuts; no released generic plugin or production claim",
+  "rustTests": 149,
+  "embeddingCorpusCases": 330,
+  "fullResponseCases": 81,
+  "booleanSumRefusals": 6,
+  "pythonDeterministicRepeats": 81,
+  "pythonCompileCalls": 411,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "0c4a8baaa21d0a38a824648b94f38096cdde08e6fb1b149dc423913ec1f7c78e",
+    "crates/weft-runtime/src/lib.rs": "523b28e4c1c92cfdccce632922bfd11d659911d7c9b7698b7d4fd51dada4db30",
+    "tests/truss-postgresql/check-composition-custody.py": "8ea0d5f53623648528a62729a37b7aa9b80646092d7c93b6d996f822674523d9",
+    "tests/truss-postgresql/original-embedding-check.py": "97685617862874df40c8f594eee6d88f86e1fed4b5d8aff73a81a03edcdb77a8",
+    "tests/truss-postgresql/fixtures/original-boolean-props-composition.json": "78345f294a2df69b0cd1210338a45e639e959cfdfdf04bd37b69ae769b754685",
+    "tests/truss-postgresql/fixtures/original-boolean-row-composition.json": "63ef9b53977d742339be1d9f2fa6db53d3064066b7111790299397c9e25e5de2",
+    "tests/truss-postgresql/evidence/boolean-embedding/python-summary.json": "3795c2a8adc8c8f11d4e4c1671ddd8284ee2c8ce74523c9212524abbef5df7b6",
+    "tests/truss-postgresql/evidence/boolean-embedding/browser-summary.json": "2a78bc1ac56a828a72f8efe4782fa46a6ad16b6f137906628e9f26a616053874"
+  },
+  "logs": {
+    "/private/tmp/weft-boolean-runtime.log": "cccd3027afe1df5e09ad3beafb1819d0e1f6c751238254d4069f9d100969e305",
+    "/private/tmp/weft-boolean-python-build.log": "a6a77114760974d8223a688183e70361c54da256380237d5a5c2786a02755096",
+    "/private/tmp/weft-boolean-python-install.log": "d00b90a42c0471fefc5e322592278be20043f8fb7ab8ee922d7601728ff37d02",
+    "/private/tmp/weft-boolean-wasm-build.log": "3eb3c3874889069a60beecf5e08f5e2e382d0527c17b7fe57b8e89802ce265a6"
+  },
+  "wheelSha256": "aefe334641b2f859cf8ecfe5565190275e5777794ee9ccf729bd60b000e8dba3",
+  "wasmSha256": "634f16f825cb0ae14853e3dd51c874e90a7fd23776b9589376428bf2debfea50"
+}
