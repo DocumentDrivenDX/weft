@@ -3741,3 +3741,36 @@ roots only. Signed/decimal map, structured and whole-entity native paths, broade
 original relational composition and final US-003 acceptance still require their
 own evidence. No installed/production Truss or released generic host-registration
 support is claimed.
+
+### Original signed/decimal native maps and structures (2026-10-08)
+
+Four original-authored configurations now qualify selected signed64 and
+Decimal(28,2) native map and structured roots. The builder changes numeric leaves
+by authored identity, repins their model/codec/presence bytes, and preserves the
+structured street member and map string keys. All four full Rust artifacts are
+deterministic; 158 Rust regression tests pass. The unchanged exhaustive scalar
+decimal composition test retains its separately recorded evidence.
+
+Sixty-eight independent PostgreSQL 17.9 cases pass. Exact map keys include empty
+and dotted strings; structured values retain Unicode/trailing-space street text
+and a typed numeric member presence envelope. Empty maps, minimal structured
+values, repeated zero tokens and absent optional structured roots remain distinct.
+Missing/malformed tokens, null payloads, extra carriers, kind/codec/source drift,
+payload mismatch, signed/decimal domain overflow, fraction/excess scale, NaN and
+duplicate map-key/record-member slots block execution. The duplicate-slot cases
+add otherwise valid nodes with unique native node IDs, retaining the original
+members, so they test semantic duplicate slots rather than primary-key failure.
+
+Actual Python ABI and Chromium WASM each pass twenty cases: four complete
+responses plus sixteen configuration/version/candidate/digest refusals, with
+Python deterministic repeats/subprocess disabled and browser byte parity without
+Node globals or compile-time network IO. This uses the binaries from the signed/
+decimal sequence proof; runtime code is unchanged, with new fixture/test data.
+Existing custody and specification checks pass. Receipts:
+[B-005-numeric-container.json](B-005-numeric-container.json) and
+[B-005-numeric-container-native.json](B-005-numeric-container-native.json).
+
+This extends selected numeric recursive evidence from sequences to maps and
+structured roots. Whole-entity numeric composition, wider original relational
+query audit and final US-003 acceptance remain open. No production or installed
+Truss support is claimed.

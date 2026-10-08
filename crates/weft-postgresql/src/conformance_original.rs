@@ -1388,3 +1388,29 @@ mod numeric_sequence_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod numeric_container_tests {
+    use super::*;
+    #[test]
+    fn original_signed_and_decimal_maps_and_structures_retain_declared_shapes() {
+        for (label,raw) in [
+            ("signed-map",include_str!("../../../tests/truss-postgresql/fixtures/original-signed-map-inputs.json")),
+            ("decimal-map",include_str!("../../../tests/truss-postgresql/fixtures/original-decimal-map-inputs.json")),
+            ("signed-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-signed-structured-inputs.json")),
+            ("decimal-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-decimal-structured-inputs.json")),
+        ] {
+            let cut:Value=serde_json::from_str(raw).unwrap();
+            let request=&cut["request"];
+            let catalog=Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+            let config=configuration(&cut["composition"].to_string(),&catalog).unwrap();
+            let compiled=config.compile_json(&request.to_string());
+            let response:Value=serde_json::from_str(&compiled).unwrap();
+            assert_eq!(response["status"],"compiled","{label}: {response}");
+            assert_eq!(compiled,config.compile_json(&request.to_string()));
+            if let Ok(directory)=std::env::var("WEFT_NUMERIC_CONTAINER_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-{label}-public.json")),serde_json::to_vec_pretty(&serde_json::json!({"request":request,"response":response})).unwrap()).unwrap();
+            }
+        }
+    }
+}
