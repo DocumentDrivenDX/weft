@@ -1,0 +1,13 @@
+{
+  "scope": "Fresh scalar join/SUM, exact Decimal and unsigned-key corpus with current warehouse annotations; separate probe for empty grouped result.",
+  "inputHashes": {
+    "summary.json": "bd5810b0add90ebc4b18fa1cad14882c0c15f0015454780630524b7cb8c5c3e4",
+    "scalar-native.py": "cf3b3f674d00e21579a64e8978d6afdc21c10612d5a31d1b48c7733b2ab88ad5",
+    "run.log": "d17789f35b99426f76ae8eeae52d178aa5e8f0b01dd7322929bf3511236139bf",
+    "statements.jsonl": "5ccb0e8eb9721a07978c62ea2390fdb0837fdc52f3277ebe8252627da55ac3e8",
+    "compile-artifacts.jsonl": "c0c33de7bc8e6f6ec253ed4bfec540ba94fc567dbf4e00f953f4f5bd31f53757",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+    "warehouse_observer.py": "f6735ce2c016af792eac798dbdbe15feec3aca7dc452c2e9c5c76d98a2a2672c",
+    "fixture-state.json": "2a00d0840bbe85216e2e0c18a79640a9acad16f72e52680938da73cc8de7d474"
+  }
+}

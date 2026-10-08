@@ -44,3 +44,12 @@ empty queries. Older receipts remain historical; no retroactive version pinning
 is used. Remaining native work is the broader scalar domain/settings evidence
 and its registered support qualification, alongside the broader semantic branch
 audit. The standard retained replay now includes these fresh scopes.
+
+The original scalar join/SUM corpus and full recursive/scalar/presence value
+corpus now also have fresh current-build native evidence and independent
+reconciliation: ten scalar outcomes and 133 value outcomes. The read-only
+ANSI probe observes true between matching warehouse builds, without an inferred
+setting for earlier sessions. The standard replay passes 29 components and
+106 hashed references. Registered supported-profile qualification, remaining
+numeric/home domain accounting and the broader semantic branch audit remain
+open; this is not blanket native support or completed acceptance.

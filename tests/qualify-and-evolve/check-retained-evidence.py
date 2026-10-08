@@ -20,6 +20,8 @@ components=[
  ('reconcile-ashlar-warehouse-compounds.py','status','cases',48),
  ('reconcile-ashlar-warehouse-relationships.py','status','cases',52),
  ('reconcile-warehouse-settings.py','status','nativeStatements',3),
+ ('reconcile-ashlar-warehouse-scalars.py','status','cases',10),
+ ('reconcile-ashlar-warehouse-values.py','status','cases',133),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -47,6 +49,10 @@ for name,status,count,expected in components:
   assert report['independentDecodedComparisons']==48 and report['sameStatementWarehouseCases']==24 and report['separateEmptyPageProbes']==24
  if name=='reconcile-ashlar-warehouse-relationships.py':
   assert report['positive']==28 and report['refusals']==24 and report['uniqueNativeGuards']==272 and report['sameStatementWarehouseResults']==296 and report['separateEmptyQueryProbes']==4
+ if name=='reconcile-ashlar-warehouse-scalars.py':
+  assert report['positive']==2 and report['refusals']==8 and report['integrityStatements']==40 and report['sameStatementWarehouseResults']==41 and report['separateEmptyQueryProbes']==1
+ if name=='reconcile-ashlar-warehouse-values.py':
+  assert report['positive']==56 and report['refusals']==77 and report['independentDecodedComparisons']==56 and report['integrityStatements']==288 and report['sameStatementWarehouseResults']==343 and report['separateEmptyQueryProbes']==1
  if name=='audit-truss-support-reports.py':
   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
  if name=='audit-ashlar-support-reports.py':

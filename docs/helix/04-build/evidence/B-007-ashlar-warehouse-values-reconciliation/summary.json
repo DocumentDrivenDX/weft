@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "cases": 133,
+  "positive": 56,
+  "refusals": 77,
+  "independentDecodedComparisons": 56,
+  "integrityStatements": 288,
+  "sameStatementWarehouseResults": 343,
+  "separateEmptyQueryProbes": 1,
+  "terminalStatements": 348,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "scope": "Independent exact scalar/list/map/nested/structured/recursive values, optional root/item states, empty owners and hidden corrupt leaves across all eleven authored value shapes. No fresh execution or candidate promotion."
+}

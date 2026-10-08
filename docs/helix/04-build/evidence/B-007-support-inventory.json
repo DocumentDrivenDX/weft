@@ -30,7 +30,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "1c4880c7a9b04a39632ecbe820c172528add85ffbd1bba62300772a5093fb2d0"
+          "sha256": "d1b13d7257cfbe2eaa3fa358422a258f37b3558bd2c42810eb4db99986c352b5"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
@@ -66,7 +66,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "1c4880c7a9b04a39632ecbe820c172528add85ffbd1bba62300772a5093fb2d0"
+          "sha256": "d1b13d7257cfbe2eaa3fa358422a258f37b3558bd2c42810eb4db99986c352b5"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
@@ -139,6 +139,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-warehouse-settings-native/custody.json",
           "sha256": "9ac26e5e9502a1dde4dc05d9610be249159b95dfd2d95ab6607422783df1574d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-native/custody.json",
+          "sha256": "fcd14baceddaf959f1458907779a4ed7fabee1bce46ee563f0a7ec4416fc06a2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-reconciliation/summary.json",
+          "sha256": "34555bed40a3675f9f1c161a5abaeb0eebc32ad8ff5f3dd36de0a4273115ae9c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-native/custody.json",
+          "sha256": "2cf39d07a46167699eb62ed299e2d9b66d1625e47fc09473885239fb33176453"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-reconciliation/summary.json",
+          "sha256": "0149fa2c6bea90f5c9b1f440bb16f58eee5ca01d15ca01617819f08730994b6f"
         }
       ],
       "excludedClaims": [
@@ -168,7 +184,15 @@
         "sameStatementRelationshipResultsAndGuards": 296,
         "separateEmptyRelationshipProbes": 4,
         "observedAnsiMode": true,
-        "ansiObservationScope": "Separate read-only setting probe between matching warehouse builds; no retroactive query-session claim."
+        "ansiObservationScope": "Separate read-only setting probe between matching warehouse builds; no retroactive query-session claim.",
+        "scalarOutcomes": 10,
+        "scalarPositiveCases": 2,
+        "scalarRefusals": 8,
+        "sameStatementScalarResultsAndGuards": 41,
+        "valueOutcomes": 133,
+        "valuePositiveCases": 56,
+        "valueRefusals": 77,
+        "sameStatementValueResultsAndGuards": 343
       }
     }
   ],

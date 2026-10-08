@@ -85,6 +85,31 @@ reads the setting without changing configuration, per the retained official
 Databricks SET reference. All three terminal receipts and producer source hashes
 are retained and independently reconciled. This identifies the observed setting
 for that probe; it does not retroactively pin earlier query sessions or establish
-settings for arbitrary executing hosts. The complete 133-case recursive/scalar/
-presence corpus is now running with warehouse capture on the same existing
-pinned fixture publication; its final result remains unproved while running.
+settings for arbitrary executing hosts. The complete 133-case recursive/scalar/presence corpus has since passed
+with warehouse capture on the same existing pinned fixture publication; its
+independent reconciliation is recorded below.
+
+## Current warehouse scalar and full value corpora
+
+Fresh scalar execution passes ten outcomes: two query results and eight
+pre-query integrity refusals. Independent exact expectations retain the
+200000000000000000000000000.02 SUM from duplicated unsigned-max customer
+keys, Unicode-distinct groups and empty grouped output. Forty integrity checks
+and 41 nonempty query/guard observations capture the current warehouse in their
+statements; the empty result uses a separate probe (46 terminal statements).
+
+The full value corpus passes all 133 outcomes: 56 results and 77 integrity
+refusals. Independent expectations cover eleven scalar/sequence/map/nested/
+structured/recursive shapes, optional roots/items, absent and empty values,
+signed integer boundaries, exact decimal text and escaped strings. Hidden bad
+leaves are refused even when a query filter would exclude them. All 288 native
+integrity checks and 55 nonempty result queries capture warehouse identity;
+the empty owner uses a separate probe (348 terminal statements).
+
+Both fresh corpora observe Databricks SQL 2026.39 with the previously retained
+u/r build hashes. Original compiler artifacts, producer/helper source snapshots,
+statements and logs are hashed. Independent row/state and SQL/parameter/pin/
+metadata reconciliation passes. These add exact current-build domains; they
+do not themselves promote the registered candidate or qualify every numeric
+parameter/home combination. The effective ANSI setting observation is separate
+and does not retroactively identify arbitrary query sessions.
