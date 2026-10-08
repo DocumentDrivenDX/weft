@@ -1,10 +1,10 @@
 """@covers US-007-AC1 @covers US-007-AC2 @covers US-007-AC3
 Saved native receipt custody reconciliation, not a new execution or result oracle.
 """
-import hashlib,json
+import hashlib,json,os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/'docs/helix/04-build/evidence/B-006-application-native'
+BASE=Path(os.environ.get('WEFT_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-006-application-native')))
 def lines(name):return [json.loads(x) for x in (BASE/name).read_text().splitlines() if x.strip()]
 def unique(rows,key):
  result={}
@@ -41,6 +41,6 @@ for identifier,artifact in artifacts.items():
    assert guard['sql']==check['sql'] and guard['parameters']==parameters
    assert rows(guard)==[['0']];checks+=1
  records.append({'id':identifier,'sqlSha256':hashlib.sha256(query['sql'].encode()).hexdigest(),'statementId':query['response']['statement_id'],'query':artifact['request']['sql']})
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-ashlar-application-reconciliation';OUT.mkdir(exist_ok=True)
-report={'status':'passed','cases':len(records),'integrityReceipts':checks,'scope':'Saved native SQL/parameter/terminal-result/metadata custody only. Independent expectations remain authored in the native harness; no fresh execution or production qualification.','sources':[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in [BASE/'compile-artifacts.jsonl',BASE/'statements.jsonl',BASE/'summary.json',ROOT/'tests/ashlar-databricks/application-native.py']],'casesReconciled':records}
+OUT=Path(os.environ.get('WEFT_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-ashlar-application-reconciliation')));OUT.mkdir(exist_ok=True)
+report={'status':'passed','reconcilerSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'cases':len(records),'integrityReceipts':checks,'scope':'Saved native SQL/parameter/terminal-result/metadata custody only. Independent expectations remain authored in the native harness; no fresh execution or production qualification.','sources':[{'path':str(p.relative_to(ROOT)) if p.is_relative_to(ROOT) else str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in [BASE/'compile-artifacts.jsonl',BASE/'statements.jsonl',BASE/'summary.json',ROOT/'tests/ashlar-databricks/application-native.py']],'casesReconciled':records}
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'status':report['status'],'cases':len(records),'integrityReceipts':checks}))

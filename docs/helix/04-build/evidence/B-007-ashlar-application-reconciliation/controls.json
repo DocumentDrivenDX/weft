@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "controls": [
+    {
+      "control": "baseline",
+      "exitCode": 0,
+      "expectedOutcome": "accepted"
+    },
+    {
+      "control": "sql",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "parameter",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "terminal",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "truncation",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "row-loss",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "row-count",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "guard-value",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "missing-guard",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "duplicate-artifact",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "duplicate-outcome",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    }
+  ],
+  "scope": "Verifier corruption controls; not native execution."
+}

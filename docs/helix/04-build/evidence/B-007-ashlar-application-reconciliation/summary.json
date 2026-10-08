@@ -1,5 +1,6 @@
 {
   "status": "passed",
+  "reconcilerSha256": "f2abc40e9b2b0400f627477da8c9bb75f40cd7785fa042965d08a28c8be1cfcf",
   "cases": 112,
   "integrityReceipts": 360,
   "scope": "Saved native SQL/parameter/terminal-result/metadata custody only. Independent expectations remain authored in the native harness; no fresh execution or production qualification.",
