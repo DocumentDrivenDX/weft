@@ -413,3 +413,11 @@ versioned-envelope failures and correctly hashed malformed/duplicate-key binding
 JSON all refuse at their intended phase. B-007-request-branches/ retains the
 executed named test and test/implementation hashes. Other request-resource/hash/
 model/lowering paths remain separately accounted; no all-function claim follows.
+
+Trusted host registry factory branches pass eight explicit cases across both
+compile interfaces. A returned error and an empty registry refuse without falling
+back to the compiler's deliberately working default registry. A successful factory
+receives pinned catalog/typed plan/binding context and supplies the emitted backend.
+A stale binding digest refuses before the factory is called. The named test passes
+once; exact hashes/log are in B-007-factory-branches/. Arbitrary trusted host callback
+panic containment is not claimed by these error-return tests.
