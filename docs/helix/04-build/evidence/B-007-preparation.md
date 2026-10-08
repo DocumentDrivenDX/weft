@@ -161,3 +161,17 @@ mutant must fail its selected test at the intended semantic assertion; a generic
 nonzero exit, build failure or unrelated panic cannot count as detection.
 The summary now retains those signatures alongside substitutions/source hashes.
 All seven pass this stricter detection audit.
+
+The full workspace all-features/offline/locked run completes with 191 passing
+tests and zero ignored. B-007-workspace/ retains its entire log and count summary.
+Its source-at-launch scope excludes later public-plugin and parser additions,
+which have separate receipts. The exhaustive original decimal property test
+covers all 434 precision/scale pairs in both homes and passes.
+
+A new deterministic Proptest SQL-text parser component passes 5000 cases:
+1216 accepted, 3784 refused, with repeatable outcomes and in-range UTF-8
+diagnostic spans. B-007-parser/ records the fixed seed, generator/library version,
+source hash and log. The first command used a shared mutation target and executed
+zero tests; that run is explicitly rejected and retained. A fresh target build
+executes the named test and all 5000 cases. This is bounded generated parser
+text testing, not coverage-guided fuzzing or proof of every syntax branch.

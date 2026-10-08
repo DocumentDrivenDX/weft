@@ -104,3 +104,34 @@ fn generated_hostile_json_and_multi_statement_inputs() {
         count.fetch_add(1,Ordering::SeqCst);Ok(())
     }).unwrap();assert_eq!(count.load(Ordering::SeqCst),1000);report("hostile-json-multi-statement",1000,seed,unique.lock().unwrap().len());
 }
+
+#[test]
+fn generated_sql_parser_text_and_spans() {
+    let seed=0x574546540706;
+    let successes=AtomicUsize::new(0);let refusals=AtomicUsize::new(0);
+    TestRunner::new(config(5000,seed)).run(&(text(),0u8..4,any::<u64>()),|(text,mode,nonce)| {
+        let sql=match mode {
+            0=>format!("{text} {nonce}"),
+            1=>format!("SELECT c.name FROM Customer c WHERE c.name = '{}'",text.replace('\'',"''")),
+            2=>format!("SELECT c.name FROM Customer c WHERE c.name = '{text}{nonce}"),
+            _=>format!("SELECT c.name FROM Customer c; {nonce} {text}"),
+        };
+        let first=weft_core::syntax::parse(&sql);
+        let second=weft_core::syntax::parse(&sql);
+        prop_assert_eq!(format!("{first:?}"),format!("{second:?}"));
+        match first {
+            Ok(_)=>{successes.fetch_add(1,Ordering::SeqCst);},
+            Err(d)=>{
+                if let Some(span)=d.source_span {
+                    prop_assert!(span.start<=span.end&&span.end<=sql.len());
+                    prop_assert!(sql.is_char_boundary(span.start)&&sql.is_char_boundary(span.end));
+                }
+                refusals.fetch_add(1,Ordering::SeqCst);
+            }
+        }
+        Ok(())
+    }).unwrap();
+    assert_eq!(successes.load(Ordering::SeqCst)+refusals.load(Ordering::SeqCst),5000);
+    assert!(successes.load(Ordering::SeqCst)>0&&refusals.load(Ordering::SeqCst)>0);
+    println!("PARSER_REPORT {}",json!({"generator":"weft-parser-text/0.1.0","proptest":"1.11.0","seed":seed,"cases":5000,"accepted":successes.load(Ordering::SeqCst),"refused":refusals.load(Ordering::SeqCst),"scope":"syntax parse determinism, no panic and UTF-8 diagnostic spans; no resolution or backend qualification"}));
+}
