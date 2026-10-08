@@ -494,3 +494,9 @@ B-007-cross-phase-obligations/ records six passing cases across both plans.
 Conflicting declaration/assessment requirements refuse before lowering;
 conflicting emitted requirements refuse before artifact return. Identical
 requirements from all three phases survive once in each compiled artifact.
+
+B-007-emission-branches/ retains sixteen passing emission guard refusals
+across both plans: SQL content/size, parameter count/origin/nullability, and
+column position/source provenance. Exact WFT-EMIT messages identify each
+guard family. Remaining representation and numeric-domain branches are not
+claimed by this checkpoint.

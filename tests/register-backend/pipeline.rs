@@ -408,3 +408,38 @@ fn obligations_merge_across_declaration_assessment_and_emission() {
         }
     }
 }
+
+// @covers US-002-AC4 @covers US-006-AC4
+#[test]
+fn emission_bounds_slots_and_column_provenance_refuse() {
+    struct Corrupt {mode:u8,inner:Third}
+    impl Backend for Corrupt {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{self.inner.describe()}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{self.inner.validate_binding(c)}
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{self.inner.assess(c,m)}
+        fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{self.inner.lower(c,m)}
+        fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{
+            let mut e=self.inner.emit(c,p)?;
+            let slot=ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false},value:"safe".into(),origin:json!({"kind":"fixture"})};
+            match self.mode {
+                0=>e.sql=" \n\t".into(),1=>e.sql="x".repeat(1024*1024+1),2=>e.sql.push('\0'),
+                3=>e.parameters=vec![slot;1025],
+                4=>{let mut s=slot;s.origin=json!([]);e.parameters.push(s);},
+                5=>{let mut s=slot;s.logical_type.nullable=true;e.parameters.push(s);},
+                6=>e.columns[0].position=2,7=>e.columns[0].source_identities.clear(),_=>unreachable!()
+            }
+            Ok(e)
+        }
+    }
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for plan in [Plan::V01(&p01),Plan::V02(&p02)] {
+        for mode in 0..8 {
+            let mut r=Registry::default();r.register(Corrupt{mode,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+            let e=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap_err();
+            assert_eq!(e.code,"WFT-EMIT","mode {mode}");
+            assert_eq!(e.message,match mode {0..=3=>"Emission SQL or parameter bounds are invalid",4|5=>"Parameter slots require contiguous positions, typed origins and non-null values",_=>"Result columns must retain output order, names and selected source identities"},"mode {mode}");
+        }
+    }
+}
