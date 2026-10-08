@@ -224,6 +224,14 @@ pub fn lower(
     records: &BTreeMap<String, RecordAdmission>,
     parameters: &mut Parameters,
 ) -> Result<BTreeMap<String, OwnerSource>> {
+    lower_scoped(context, records, parameters, "weft_scan")
+}
+pub(crate) fn lower_scoped(
+    context: &Context<'_>,
+    records: &BTreeMap<String, RecordAdmission>,
+    parameters: &mut Parameters,
+    alias_prefix: &str,
+) -> Result<BTreeMap<String, OwnerSource>> {
     if context.binding_value["bindingProfileId"] != context.binding.profile
         || sha256(context.binding.json.as_bytes()) != context.binding.sha256
         || checked_json(&context.binding.json).map_err(|_| fail("Context binding JSON refused"))?
@@ -301,7 +309,7 @@ pub fn lower(
             occurrence,
             record.mapping.source(
                 &namespace,
-                &Identifier::new(&format!("weft_scan_{index}"))?,
+                &Identifier::new(&format!("{alias_prefix}_{index}"))?,
                 &record.catalog_id,
                 &mut staged,
             )?,

@@ -197,7 +197,16 @@ pub fn lower<'a>(
     requests: &[Request],
     parameters: &mut Parameters,
 ) -> Result<Vec<Access<'a>>> {
-    lower_with_owners(context, properties, comparators, requests, None, parameters)
+    lower_with_owners(
+        context,
+        properties,
+        comparators,
+        requests,
+        None,
+        parameters,
+        "weft_scan",
+        0,
+    )
 }
 fn lower_with_owners<'a>(
     context: &Context<'_>,
@@ -206,6 +215,8 @@ fn lower_with_owners<'a>(
     requests: &[Request],
     owners: Option<&BTreeMap<String, std::sync::Arc<crate::property_definition::OwnerSource>>>,
     parameters: &mut Parameters,
+    alias_prefix: &str,
+    row_index_start: usize,
 ) -> Result<Vec<Access<'a>>> {
     admit_context(context, properties, comparators)?;
     let reads = self::requests(context.plan)?;
@@ -242,7 +253,7 @@ fn lower_with_owners<'a>(
         .map(|(index, scan)| {
             Ok((
                 scan.clone(),
-                Identifier::new(&format!("weft_scan_{index}"))?,
+                Identifier::new(&format!("{alias_prefix}_{index}"))?,
             ))
         })
         .collect::<Result<_>>()?;
@@ -318,9 +329,12 @@ fn lower_with_owners<'a>(
             HomeAdmission::Props { .. } => {
                 Location::Props(property.home.props_location(alias, &mut staged)?)
             }
-            HomeAdmission::Row { .. } => {
-                Location::Row(property.row_root_location(&namespace, alias, index, &mut staged)?)
-            }
+            HomeAdmission::Row { .. } => Location::Row(property.row_root_location(
+                &namespace,
+                alias,
+                row_index_start + index,
+                &mut staged,
+            )?),
         };
         let scalar_storage = match &location {
             Location::Props(location) => property.value.props_scalar_storage(location)?,
@@ -396,11 +410,60 @@ pub fn prepare<'a>(
     comparators: &BTreeMap<String, Definition>,
     parameters: &mut Parameters,
 ) -> Result<Prepared<'a>> {
+    prepare_scoped(context, records, properties, comparators, parameters, None)
+}
+/// A trusted compiler-assigned subquery scope; no SQL or alias names enter from
+/// model content. Each scope has a disjoint owner and row-home alias inventory.
+pub fn prepare_relationship_target<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
+    comparators: &BTreeMap<String, Definition>,
+    parameters: &mut Parameters,
+    scope: u16,
+) -> Result<Prepared<'a>> {
+    if scope >= 1024 {
+        return Err(Diagnostic::new(
+            "WFT-LIMIT",
+            "lower",
+            "Relationship target scope limit exceeded",
+        ));
+    }
+    prepare_scoped(
+        context,
+        records,
+        properties,
+        comparators,
+        parameters,
+        Some(scope),
+    )
+}
+fn prepare_scoped<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, PropertyAdmission>,
+    comparators: &BTreeMap<String, Definition>,
+    parameters: &mut Parameters,
+    scope: Option<u16>,
+) -> Result<Prepared<'a>> {
+    let alias_prefix = scope.map_or_else(
+        || "weft_scan".to_owned(),
+        |scope| format!("weft_related_{scope}_scan"),
+    );
+    let row_index_start = scope.map_or(0, |scope| (usize::from(scope) + 1) * 1024);
+    if requests(context.plan)?.len() > 1024 {
+        return Err(Diagnostic::new(
+            "WFT-LIMIT",
+            "lower",
+            "Scoped access inventory exceeds alias allocation",
+        ));
+    }
     let mut staged = parameters.clone();
-    let owners: BTreeMap<_, _> = crate::record_definition::lower(context, records, &mut staged)?
-        .into_iter()
-        .map(|(scan, source)| (scan, std::sync::Arc::new(source)))
-        .collect();
+    let owners: BTreeMap<_, _> =
+        crate::record_definition::lower_scoped(context, records, &mut staged, &alias_prefix)?
+            .into_iter()
+            .map(|(scan, source)| (scan, std::sync::Arc::new(source)))
+            .collect();
     for (owner, identity) in crate::comparator_requirements::collect_reads(context.plan)? {
         let record_key =
             serde_json::to_string(&owner).map_err(|_| fail("Record identity encoding refused"))?;
@@ -420,6 +483,8 @@ pub fn prepare<'a>(
         &selected,
         Some(&owners),
         &mut staged,
+        &alias_prefix,
+        row_index_start,
     )?;
     let scans = owners
         .into_iter()

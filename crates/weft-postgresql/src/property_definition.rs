@@ -1353,6 +1353,170 @@ mod tests {
             serde_json::to_value(&row_sum.select.columns).unwrap(),
             serde_json::to_value(&application_compiled.select.columns).unwrap()
         );
+        for scope in [0, 1] {
+            let mut scoped_parameters = crate::Parameters::default();
+            let target = crate::registered_access::prepare_relationship_target(
+                &row_context,
+                &row_records,
+                &row_properties,
+                &comparisons,
+                &mut scoped_parameters,
+                scope,
+            )
+            .unwrap();
+            let access = &target.accesses[0];
+            assert_eq!(
+                access.owner_alias.sql(),
+                format!("\"weft_related_{scope}_scan_0\"")
+            );
+            let crate::registered_access::Location::Row(location) = &access.location else {
+                unreachable!()
+            };
+            let physical = &target.scans[&application.source.occurrence];
+            assert!(!physical.source.sql.contains("\"weft_scan_0\""));
+            assert!(physical.source.sql.contains(&format!(
+                "\"weft_state_{}\"",
+                (usize::from(scope) + 1) * 1024
+            )));
+            target
+                .verify_context(&row_context, &scoped_parameters)
+                .unwrap();
+            if let Ok(path) = std::env::var(format!("{capture}_SCOPED_{scope}")) {
+                let alias = access.owner_alias.sql();
+                let sql=format!("SELECT o.id::pg_catalog.text AS owner, {} AS value FROM pg_temp.object o JOIN {} ON {alias}.id=o.id AND {alias}.type_id=o.type_id WHERE {} ORDER BY o.id",location.scalar_observation().native_numeric_text,physical.source.sql,physical.source.filters.join(" AND "));
+                std::fs::write(path,serde_json::to_vec_pretty(&json!({"sql":sql,"checks":physical.structural_check_sql,"parameters":scoped_parameters.into_slots(),"codecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()})).unwrap()).unwrap();
+            }
+        }
+        if family == "integer" {
+            let name = Name {
+                value: "Orders".into(),
+                quoted: true,
+                span: Span { start: 0, end: 0 },
+            };
+            let from = catalog.record(None, &name).unwrap();
+            let read = catalog
+                .relationship_read(
+                    &from,
+                    &Name {
+                        value: "customer".into(),
+                        quoted: true,
+                        span: Span { start: 0, end: 0 },
+                    },
+                )
+                .unwrap();
+            let endpoint_records: BTreeMap<_, _> = (0..2)
+                .map(|i| {
+                    let r = crate::record_definition::RecordAdmission::admit(
+                        &row_admission,
+                        i,
+                        &catalog,
+                        crate::record_definition::Selection {
+                            inventory: &inventory,
+                            relation_identity: "object-table",
+                            discriminator_identity: "object-type",
+                            relations: &relations,
+                            columns: &columns,
+                        },
+                    )
+                    .unwrap();
+                    (serde_json::to_string(r.identity()).unwrap(), r)
+                })
+                .collect();
+            let edge_relations = BTreeMap::from([("edge".into(), "edge".into())]);
+            let edge_columns: BTreeMap<_, _> = [
+                "rel_type_id",
+                "source_id",
+                "source_type",
+                "target_id",
+                "target_type",
+            ]
+            .into_iter()
+            .map(|n| {
+                (
+                    n.into(),
+                    crate::row_join_definition::Column {
+                        relation_identity: "edge".into(),
+                        name: n.into(),
+                    },
+                )
+            })
+            .collect();
+            let relationship = crate::relationship_definition::RelationshipAdmission::admit(
+                &row_admission,
+                0,
+                &catalog,
+                &read,
+                &endpoint_records,
+                crate::relationship_definition::Selection {
+                    profile: &row_binding["relationships"][0]["relationshipProfile"],
+                    inventory: &inventory,
+                    relation_identity: "edge",
+                    relations: &edge_relations,
+                    columns: &edge_columns,
+                    relationship_type: "rel_type_id",
+                    source_id: "source_id",
+                    source_type: "source_type",
+                    target_id: "target_id",
+                    target_type: "target_type",
+                },
+            )
+            .unwrap();
+            let mut parameters = crate::Parameters::default();
+            let target = relationship
+                .prepare_target(
+                    &row_context,
+                    &read,
+                    &endpoint_records,
+                    &row_properties,
+                    &comparisons,
+                    &mut parameters,
+                    2,
+                )
+                .unwrap();
+            assert_eq!(target.plan.source.record, read.to);
+            assert_eq!(target.plan.outputs.len(), read.target_key.fields.len());
+            assert_eq!(
+                target.prepared.accesses[0].owner_alias.sql(),
+                "\"weft_related_2_scan_0\""
+            );
+            let target_context = weft_core::backend::Context {
+                plan: weft_core::backend::Plan::V02(&target.plan),
+                ..row_context
+            };
+            target
+                .prepared
+                .verify_context(&target_context, &parameters)
+                .unwrap();
+            let mut wrong = read.clone();
+            wrong.target_key.id = "wrong".into();
+            let before = serde_json::to_value(parameters.clone().into_slots()).unwrap();
+            assert!(relationship
+                .prepare_target(
+                    &row_context,
+                    &wrong,
+                    &endpoint_records,
+                    &row_properties,
+                    &comparisons,
+                    &mut parameters,
+                    3
+                )
+                .is_err());
+            assert_eq!(
+                serde_json::to_value(parameters.into_slots()).unwrap(),
+                before
+            );
+        }
+        let mut scope_parameters = crate::Parameters::default();
+        assert!(crate::registered_access::prepare_relationship_target(
+            &row_context,
+            &row_records,
+            &row_properties,
+            &comparisons,
+            &mut scope_parameters,
+            1024
+        )
+        .is_err());
+        assert!(scope_parameters.into_slots().is_empty());
         let row_backend = crate::original_backend::OriginalBackend::new(
             &row_input,
             row_records,

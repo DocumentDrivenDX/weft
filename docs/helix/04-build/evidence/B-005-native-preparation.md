@@ -2557,3 +2557,38 @@ storage compatibility is claimed by these access tests.
 All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
 (`/private/tmp/weft-original-relationship-full-tests.log`); formatting and HELIX
 artifact checks pass. This run makes no new relationship embedding claim.
+
+## Scoped original relationship target preparation (2026-10-07)
+
+Original source preparation now has a trusted compiler-assigned target scope.
+Ordinary owner aliases stay unchanged; target owner aliases use
+`weft_related_{scope}_scan_{index}` and row-home state/node/scalar aliases use
+disjoint 1,024-index ranges. Scope and access-count bounds refuse before parameter
+mutation. This prevents target subqueries from shadowing outer native owner or
+row aliases during correlation; model metadata cannot supply aliases or SQL.
+
+`RelationshipAdmission::prepare_target` checks its private original traversal
+and binding cut, independently verifies the target Record's authored key
+mapping, and constructs a key-reading target plan from exact original field
+descriptors. The plan and its prepared access custody travel together for
+subsequent lowering. Source and target keys are not zipped to each other.
+Numeric row tests prepare two distinct scopes, verify context/parameter custody,
+check all physical alias inventories and refuse an out-of-range scope atomically.
+An original inverse Orders-to-Customer read prepares its admitted uint64 target
+key through the new method; a substituted target key refuses without changing
+existing parameters.
+
+[Four fresh PostgreSQL cases](B-005-scoped-target-native.json), executed by
+`tests/truss-postgresql/scoped-target-native.py`, check empty and populated
+native-row target access in two scopes. Each exact captured query correlates
+outer object ID and type and returns unchanged `9007199254740993` and uint64
+maximum text carriers. A reused native ID in an unrelated object type does not
+multiply results. Capture regeneration uses absolute
+`WEFT_ORIGINAL_INTEGER_CAPTURE_SCOPED_0` / `_1` paths with the original unsigned
+property test. These captures exercise scoped access, not final relationship
+publication.
+
+All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-scoped-target-full-tests.log`). Full `HAS_RELATED` /
+`RELATED_KEYS` result and preflight assembly remains required B-005 work; no
+new public relationship or embedding support is claimed by target preparation.

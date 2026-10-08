@@ -232,6 +232,113 @@ impl RelationshipAdmission {
             to_type_column: column(to_type_column)?,
         })
     }
+    /// Prepare a separate key-reading target scan using the original target
+    /// Record and every authored key component. Target fields retain independent
+    /// admissions even when source and target keys have different arities.
+    pub fn prepare_target<'a>(
+        &self,
+        context: &weft_core::backend::Context<'_>,
+        read: &RelationshipRead,
+        records: &BTreeMap<String, RecordAdmission>,
+        properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
+        comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+        parameters: &mut Parameters,
+        scope: u16,
+    ) -> Result<PreparedTarget<'a>> {
+        if context.binding.sha256 != self.binding_sha256
+            || serde_json::to_value(read).map_err(|_| fail("Relationship encoding refused"))?
+                != self.read_json
+        {
+            return Err(fail(
+                "Target preparation substitutes admitted relationship cut",
+            ));
+        }
+        let record = context.catalog.record_by_identity(&read.to)?;
+        let binding = Admission::parse(&context.binding.json, &context.binding.profile)?;
+        records
+            .get(
+                &serde_json::to_string(&read.to)
+                    .map_err(|_| fail("Target identity encoding refused"))?,
+            )
+            .ok_or_else(|| fail("Target Record admission missing"))?
+            .verify_key_mapping(&binding, context.catalog, &read.target_key)?;
+        let occurrence = format!("relationship-target-{scope}");
+        let mut graph = BTreeMap::new();
+        for identity in &read.target_key.fields {
+            let (_, descriptors) = context
+                .catalog
+                .member_descriptor_by_identity(&record, identity)?;
+            for descriptor in descriptors {
+                graph.insert(
+                    serde_json::to_string(&descriptor.identity)
+                        .map_err(|_| fail("Target descriptor encoding refused"))?,
+                    descriptor,
+                );
+            }
+        }
+        let fields: Vec<_> = read
+            .target_key
+            .fields
+            .iter()
+            .zip(&read.target_key.types)
+            .map(
+                |(identity, logical_type)| weft_core::application_ir::Field {
+                    scan: occurrence.clone(),
+                    identity: identity.clone(),
+                    logical_type: logical_type.clone(),
+                    span: Span { start: 0, end: 0 },
+                },
+            )
+            .collect();
+        let plan = weft_core::application_ir::Plan {
+            ir_version: "weft-ir/0.2.0".into(),
+            module_pins: vec![record.pin.clone()],
+            read_profile: None,
+            required_capabilities: vec![
+                "scan".into(),
+                "project".into(),
+                "key.uniqueStable".into(),
+                "order.asc".into(),
+            ],
+            type_graph: graph.into_values().collect(),
+            source: weft_core::application_ir::Scan {
+                occurrence: occurrence.clone(),
+                record: read.to.clone(),
+                pin: record.pin,
+            },
+            page_key: Some(read.target_key.clone()),
+            joins: vec![],
+            filters: vec![],
+            groups: vec![],
+            aggregate: false,
+            outputs: fields
+                .iter()
+                .enumerate()
+                .map(|(i, f)| weft_core::application_ir::Output {
+                    name: format!("key_{i}"),
+                    expression: weft_core::application_ir::Expression::Field {
+                        scan: occurrence.clone(),
+                        identity: f.identity.clone(),
+                    },
+                })
+                .collect(),
+            order: fields,
+            limit: None,
+        };
+        let target_context = weft_core::backend::Context {
+            plan: weft_core::backend::Plan::V02(&plan),
+            ..*context
+        };
+        let prepared = crate::registered_access::prepare_relationship_target(
+            &target_context,
+            records,
+            properties,
+            comparators,
+            parameters,
+            scope,
+        )?;
+        Ok(PreparedTarget { plan, prepared })
+    }
     /// Direction and binding cut must match the admitted original traversal.
     /// Correlation uses native object IDs, never logical key tokens.
     pub fn correlate(
@@ -530,4 +637,11 @@ mod tests {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
         }
     }
+}
+
+/// Target key preparation carries its exact synthetic plan for downstream
+/// custody checks. It is not a detached target result query or publication gate.
+pub struct PreparedTarget<'a> {
+    pub plan: weft_core::application_ir::Plan,
+    pub prepared: crate::registered_access::Prepared<'a>,
 }
