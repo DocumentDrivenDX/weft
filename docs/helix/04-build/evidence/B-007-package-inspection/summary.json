@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "inspectionScope": "Local test artifacts only; ABI tags do not prove every Python/OS release. No registry or distribution action.",
+  "wheels": [
+    {
+      "buildFeature": "test-third",
+      "wheelSha256": "ef98a61213548c96f67031f3c853b2bd946699902d7ae5d89a53caa99e2cc030",
+      "files": [
+        "weft_sql-0.1.0.dist-info/METADATA",
+        "weft_sql-0.1.0.dist-info/WHEEL",
+        "weft/__init__.py",
+        "weft/weft.abi3.so",
+        "weft_sql-0.1.0.dist-info/RECORD"
+      ],
+      "nativeExtensionSha256": "1002ae0d4dedc7f7a4ba1c54706196d1bef906d62add932caa03949f9de4c7cf",
+      "recordVerified": true,
+      "tag": "cp39-abi3-macosx_11_0_arm64",
+      "licenseMetadataPresent": false
+    },
+    {
+      "buildFeature": "truss-postgresql-candidate",
+      "wheelSha256": "933949a95d55477a2ec70a93c336738a58811f9b72487c5fb2d2d8d15e990d98",
+      "files": [
+        "weft_sql-0.1.0.dist-info/METADATA",
+        "weft_sql-0.1.0.dist-info/WHEEL",
+        "weft/__init__.py",
+        "weft/weft.abi3.so",
+        "weft_sql-0.1.0.dist-info/RECORD"
+      ],
+      "nativeExtensionSha256": "e203a68aec6f9041d235882552540a5a3be681f58aad2bd760172681f0c1f798",
+      "recordVerified": true,
+      "tag": "cp39-abi3-macosx_11_0_arm64",
+      "licenseMetadataPresent": false
+    }
+  ],
+  "browser": {
+    "manifestSha256": "fd2c03dc5b9af4f91c45e9d2f140414f4b9c73cd7d44807286fb2708bd3bf95d",
+    "manifest": {
+      "name": "@documentdrivendx/weft",
+      "version": "0.1.0",
+      "private": true,
+      "type": "module",
+      "exports": "./src/index.ts",
+      "description": "Browser transport for the pure Weft WASM compiler; unpublished foundation"
+    },
+    "files": [
+      "packages/weft-browser/package.json",
+      "packages/weft-browser/src/index.ts"
+    ]
+  },
+  "sourceSha256": "1aee01de4a5fcc95c9830681d40b83841aebad8987997cd6db0edb37a8be09ee"
+}

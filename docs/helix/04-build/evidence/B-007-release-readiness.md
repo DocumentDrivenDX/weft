@@ -44,3 +44,15 @@ Do not alter original UMF modules, migrate a database, or reinterpret stored
 values to make a failed support claim pass. An already published version would
 require the relevant registry's documented withdrawal/deprecation process and
 an explicit owner instruction; no registry action is taken here.
+
+Local package inspection now verifies both B-007 test wheels (test-third and
+truss-postgresql-candidate) against their executed extension hashes. Every RECORD
+entry matches its SHA-256 and byte size; paths are relative and unique. Each wheel
+contains one Mach-O native extension, a non-purelib cp39-abi3 macOS ARM64 tag and
+matching name/version/Python metadata, with no JavaScript or WASM payload. These
+are development test builds, not release binaries. Neither wheel contains license
+metadata. The browser manifest still exports `./src/index.ts` and is private;
+its two checked-in files do not constitute a built installable distribution.
+`B-007-package-inspection/summary.json` retains the file lists and hashes. This
+closes local content inspection for those artifacts, not licensing, platform
+qualification, registry ownership or final release-artifact inspection.

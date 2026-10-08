@@ -315,3 +315,10 @@ wrong overflow terminal state/error, truncation, row count, carrier, duplicate
 labels/statement IDs, module/binding pins and an accepted UInt64 response. Each
 refusal must be an assertion failure rather than an unrelated execution error.
 The eight-component retained replay includes these controls; originals are unchanged.
+
+Local package inspection verifies two tested Python wheels' RECORD hashes, sizes,
+unique safe paths, Mach-O extension hashes and native ABI/platform tags. Both
+match the actual extensions used by their B-007 parity runs. Neither includes
+license metadata. The browser package remains private and exports TypeScript
+source rather than built distribution files. Exact findings are retained under
+B-007-package-inspection/; release closure remains unproven.
