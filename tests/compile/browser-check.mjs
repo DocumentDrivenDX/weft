@@ -19,7 +19,7 @@ try {
  await page.route('**/*',async route=> {
   const path=new URL(route.request().url()).pathname;
   if(path==='/') return route.fulfill({contentType:'text/html',body:'<!doctype html><title>Weft B-002</title>'});
-  const files={'/spike.js':process.env.WEFT_PROBE_JS || 'target/b002/web/weft_frontend_probe.js','/spike.wasm':process.env.WEFT_PROBE_WASM || 'target/b002/web/weft_frontend_probe_bg.wasm','/wrapper.js':'target/b004/wrapper/index.js'};
+  const files={'/spike.js':process.env.WEFT_PROBE_JS || 'target/b002/web/weft_frontend_probe.js','/spike.wasm':process.env.WEFT_PROBE_WASM || 'target/b002/web/weft_frontend_probe_bg.wasm','/wrapper.js':process.env.WEFT_BROWSER_WRAPPER || 'target/b004/wrapper/index.js'};
   if(!files[path]) return route.abort();
   return route.fulfill({contentType:path.endsWith('.wasm')?'application/wasm':'text/javascript',body:await readFile(resolve(root,files[path]))});
  });

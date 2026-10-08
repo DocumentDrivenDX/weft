@@ -322,3 +322,10 @@ match the actual extensions used by their B-007 parity runs. Neither includes
 license metadata. The browser package remains private and exports TypeScript
 source rather than built distribution files. Exact findings are retained under
 B-007-package-inspection/; release closure remains unproven.
+
+The browser transport now builds with pinned TypeScript 5.9.3, emitting JavaScript
+and declarations; package exports target those built files. A fresh Chromium run
+using the newly emitted transport passes all 1,273 public test-third corpus cases
+with exact native-response parity. The retained WASM compiler is unchanged.
+B-007-built-browser/ pins generated output, configuration, manifest and lockfile
+hashes. This is the transport package build, not a bundled compiler/backend release.

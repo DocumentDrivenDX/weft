@@ -56,3 +56,10 @@ its two checked-in files do not constitute a built installable distribution.
 `B-007-package-inspection/summary.json` retains the file lists and hashes. This
 closes local content inspection for those artifacts, not licensing, platform
 qualification, registry ownership or final release-artifact inspection.
+
+Subsequent browser build work replaces the source-only export with built ESM and
+TypeScript declaration exports. `bun run browser:build` uses pinned TypeScript
+5.9.3. The new transport passes real Chromium parity on all 1,273 public corpus
+cases against the retained test-third WASM. The earlier package inspection remains
+an accurate historical receipt. Compiler WASM remains explicitly supplied by the
+host; no bundled backend artifact, licensing or registry qualification is implied.

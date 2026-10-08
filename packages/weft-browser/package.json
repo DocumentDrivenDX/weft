@@ -1,1 +1,19 @@
-{"name":"@documentdrivendx/weft","version":"0.1.0","private":true,"type":"module","exports":"./src/index.ts","description":"Browser transport for the pure Weft WASM compiler; unpublished foundation"}
+{
+  "name": "@documentdrivendx/weft",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "description": "Browser transport for the pure Weft WASM compiler; unpublished foundation",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}
