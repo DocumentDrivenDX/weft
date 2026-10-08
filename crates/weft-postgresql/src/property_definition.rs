@@ -1963,8 +1963,9 @@ mod tests {
                 .get_mut("layoutInventory")
                 .unwrap()
                 .identity = inventory.identity.clone();
-            let row_join =
-                crate::row_join_definition::tests::parse(&row_fixture.value, &row_fixture).unwrap();
+            let row_join = std::sync::Arc::new(
+                crate::row_join_definition::tests::parse(&row_fixture.value, &row_fixture).unwrap(),
+            );
             let template: Value = serde_json::from_str(include_str!(
                 "../../../tests/truss-postgresql/fixtures/binding-row.json"
             ))
@@ -2566,6 +2567,38 @@ mod tests {
             );
 
             let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs,"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
+            let owned_configuration = crate::original_admission::Configuration {
+                binding_profile: row_input.profile.clone(),
+                native: compound_native,
+                comparators: BTreeMap::new(),
+                records: vec![crate::original_admission::OwnedRecordSelection {
+                    index: row_record_index,
+                    inventory: inventory.clone(),
+                    relation_identity: "object-table".into(),
+                    discriminator_identity: "object-type".into(),
+                    relations: relations.clone(),
+                    columns: columns.clone(),
+                }],
+                properties: vec![crate::original_admission::OwnedPropertySelection {
+                    index,
+                    value_profile: pin.clone(),
+                    presence_profile: pin.clone(),
+                    leaf_codecs: leaves.clone(),
+                    record_presence: records.clone(),
+                    physical_profile: pin.clone(),
+                    inventory: inventory.clone(),
+                    relations: row_fixture.relations.clone(),
+                    columns: row_fixture.columns.clone(),
+                    row_join: Some(row_join.clone()),
+                    obligations: row_obligations.clone(),
+                    edge_association: None,
+                    native_tree: Some(crate::row_tree_mapping::Procedures {
+                        field_identity: |identity| Ok(serde_json::to_vec(identity).unwrap()),
+                        scalar: fixture_native_leaf,
+                        node_source: fixture_native_source,
+                    }),
+                }],
+            };
             let mut calls = 0;
             let mut factory =
                 |resolved_catalog: &Catalog,
@@ -2684,6 +2717,22 @@ mod tests {
             );
             assert_eq!(transported["bindingSha256"], row_input.sha256);
             assert_eq!(transported["qualification"]["status"], "candidate");
+            let owned_response: Value = serde_json::from_str(
+                &owned_configuration.compile_json(&serialized_request.to_string()),
+            )
+            .unwrap();
+            assert_eq!(owned_response, transported);
+            assert_eq!(
+                owned_configuration.compile_json(&serialized_request.to_string()),
+                owned_configuration.compile_json(&serialized_request.to_string())
+            );
+            let mut other_backend = serialized_request.clone();
+            other_backend["target"]["backendId"] = json!("other.backend");
+            let refusal: Value =
+                serde_json::from_str(&owned_configuration.compile_json(&other_backend.to_string()))
+                    .unwrap();
+            assert_eq!(refusal["status"], "blocked");
+            assert!(refusal.get("sql").is_none());
 
             if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_PUBLIC_CAPTURE") {
                 let checks: Vec<_> = row_public

@@ -101,3 +101,117 @@ pub fn backend(
         native,
     )
 }
+
+/// Owned, statically selected meanings usable by native and browser hosts.
+/// No serde implementation intentionally: procedure selection stays Rust code.
+pub struct Configuration {
+    pub binding_profile: String,
+    pub records: Vec<OwnedRecordSelection>,
+    pub properties: Vec<OwnedPropertySelection>,
+    pub comparators: BTreeMap<String, crate::native_comparator_definition::Definition>,
+    pub native: Native,
+}
+pub struct OwnedRecordSelection {
+    pub index: usize,
+    pub inventory: crate::leaf_codec_definition::OriginalArtifact,
+    pub relation_identity: String,
+    pub discriminator_identity: String,
+    pub relations: BTreeMap<String, String>,
+    pub columns: BTreeMap<String, crate::row_join_definition::Column>,
+}
+pub struct OwnedPropertySelection {
+    pub index: usize,
+    pub value_profile: serde_json::Value,
+    pub presence_profile: serde_json::Value,
+    pub leaf_codecs: BTreeMap<String, crate::leaf_codec_definition::Definition>,
+    pub record_presence: BTreeMap<String, crate::presence_definition::Definition>,
+    pub physical_profile: serde_json::Value,
+    pub inventory: crate::leaf_codec_definition::OriginalArtifact,
+    pub relations: BTreeMap<String, String>,
+    pub columns: BTreeMap<String, crate::row_join_definition::Column>,
+    pub row_join: Option<std::sync::Arc<crate::row_join_definition::Definition>>,
+    pub obligations: std::collections::BTreeSet<String>,
+    pub edge_association: Option<(
+        serde_json::Value,
+        crate::leaf_codec_definition::OriginalArtifact,
+    )>,
+    pub native_tree: Option<crate::row_tree_mapping::Procedures>,
+}
+impl Configuration {
+    /// Re-admit a request's original bytes; no admitted backend is cached.
+    pub fn backend(&self, catalog: &Catalog, binding: &BindingInput) -> Result<OriginalBackend> {
+        if binding.profile != self.binding_profile {
+            return Err(fail("Original configuration binding profile differs"));
+        }
+        let records = self
+            .records
+            .iter()
+            .map(|r| RecordSelection {
+                index: r.index,
+                physical: record_definition::Selection {
+                    inventory: &r.inventory,
+                    relation_identity: &r.relation_identity,
+                    discriminator_identity: &r.discriminator_identity,
+                    relations: &r.relations,
+                    columns: &r.columns,
+                },
+            })
+            .collect();
+        let properties = self
+            .properties
+            .iter()
+            .map(|p| PropertySelection {
+                index: p.index,
+                value: property_definition::Selection {
+                    value_profile: &p.value_profile,
+                    presence_profile: &p.presence_profile,
+                    leaf_codecs: &p.leaf_codecs,
+                    record_presence: &p.record_presence,
+                },
+                physical: property_definition::PhysicalSelection {
+                    profile: &p.physical_profile,
+                    inventory: &p.inventory,
+                    relations: &p.relations,
+                    columns: &p.columns,
+                    row_join: p.row_join.as_deref(),
+                    obligations: &p.obligations,
+                    edge_association: p
+                        .edge_association
+                        .as_ref()
+                        .map(|(profile, artifact)| (profile, artifact)),
+                },
+                native_tree: p.native_tree,
+            })
+            .collect();
+        backend(
+            catalog,
+            binding,
+            records,
+            properties,
+            self.comparators.clone(),
+            self.native,
+        )
+    }
+    /// Shared serialized compiler transport for an explicitly selected host.
+    pub fn compile_json(&self, request: &str) -> String {
+        let mut factory =
+            |catalog: &Catalog,
+             _: weft_core::backend::Plan<'_>,
+             target: weft_core::compile::CompositionInput<'_>| {
+                if target.backend_id != "truss.postgresql.original" {
+                    return Err(fail(
+                        "Original configuration cannot substitute selected backend",
+                    ));
+                }
+                let binding = BindingInput {
+                    profile: self.binding_profile.clone(),
+                    json: target.binding_json.into(),
+                    sha256: target.binding_sha256.into(),
+                };
+                let mut registry = weft_core::backend::Registry::default();
+                registry.register(self.backend(catalog, &binding)?)?;
+                Ok(registry)
+            };
+        weft_core::compile::Compiler::default().compile_json_with_factory(request, &mut factory)
+    }
+}
