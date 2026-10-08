@@ -1,0 +1,107 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:243:19
+    |
+206 | impl Parser {
+    | ----------- method in this implementation
+...
+243 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-core` (lib) generated 1 warning
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-build/crates/weft-postgresql)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.08s
+     Running ../../tests/truss-postgresql/binding.rs (/private/tmp/weft-b007-target/debug/deps/candidate_binding-51fc6d340d335973)
+
+running 4 tests
+test home_correspondence_refuses_silent_location_fallback ... ok
+test both_home_locations_admit_original_bytes_without_claiming_qualification ... ok
+test shape_hash_profile_and_native_mapping_errors_refuse ... ok
+test rehashed_physical_homes_cannot_redirect_fixed_candidate_templates ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running ../../tests/truss-postgresql/compiler.rs (/private/tmp/weft-b007-target/debug/deps/candidate_compiler-9a4c8820a3933b2f)
+
+running 18 tests
+test default_candidate_and_altered_bundle_refuse_without_sql ... ok
+test unknown_binding_home_and_execution_meanings_refuse_atomically ... ok
+test unknown_row_obligation_cannot_be_silently_replaced_by_candidate_context ... ok
+test unknown_native_join_profile_cannot_select_fixed_row_joins ... ok
+test sequence_cannot_fall_back_to_scalar_root_row_storage ... ok
+test rehashed_selected_definitions_do_not_override_the_original_umf ... ok
+test structured_result_keeps_nested_identity_presence_and_exact_numeric_type ... ok
+test candidate_context_cannot_delegate_hidden_state_to_presence_decoding ... ok
+test composite_key_order_is_not_an_unordered_property_set ... ok
+test relationship_profile_cannot_change_fixed_traversal_meaning ... ok
+test unknown_selected_codec_cannot_reuse_candidate_type_directed_decoding ... ok
+test unknown_execution_basis_profiles_refuse_before_sql ... ok
+test relational_emission_keeps_owner_selection_and_bag_projection ... ok
+test candidate_registry_compiles_both_homes_and_retains_exact_contracts ... ok
+test authored_page_key_missing_wrong_owner_and_wrong_component_refuse_atomically ... ok
+test selected_page_and_relationship_keys_cannot_replace_registered_meaning ... ok
+test relationship_roles_and_original_definitions_cannot_be_substituted ... ok
+test application_relational_stages_compile_with_typed_result_contracts ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.41s
+
