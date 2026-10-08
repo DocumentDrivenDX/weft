@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "command": "cargo test --workspace --all-features --locked",
+  "rustSourceRevision": "e9ea3a8",
+  "testsExecuted": 218,
+  "suites": 35,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "logSha256": "d076b5a093cf4ee2b6062bf4e3ec682e736101ef4369796393a68a3690785c63",
+  "sourceInputsSha256": "b2dd63ab6195ecab54e986bd88fa91e2a50157858a97eebd774f134618decb0f",
+  "scope": "Actual local full workspace run. Subsequent test-only three-gap addition is verified separately by the eight-test registry receipt; it is not included in this 218-test count. No native engine or browser execution by this command."
+}

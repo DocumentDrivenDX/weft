@@ -198,3 +198,19 @@ fn manifest_identity_evidence_and_language_guards_are_independent() {
     let error=validate(&m).unwrap_err();
     assert_eq!(error.message,"Capabilities must bind distinct IDs to declared target and language profiles");
 }
+
+#[test]
+fn malformed_json_known_members_and_repeated_capability_languages_refuse() {
+    let error=validate_manifest_json("{\"backendId\":").unwrap_err();
+    assert_eq!(error.code,"WFT-BACKEND-VERSION");
+    assert_eq!(error.message,"Malformed or duplicate-key backend manifest JSON");
+    let mut m=manifest();m["backendVersion"]=json!(42);
+    let error=validate(&m).unwrap_err();
+    assert_eq!(error.code,"WFT-BACKEND-VERSION");
+    assert_eq!(error.message,"Backend manifest has unknown or malformed members");
+    let mut m=manifest();let language=m["capabilities"][0]["languageProfiles"][0].clone();
+    m["capabilities"][0]["languageProfiles"]=json!([language.clone(),language]);
+    let error=validate(&m).unwrap_err();
+    assert_eq!(error.code,"WFT-BACKEND-VERSION");
+    assert_eq!(error.message,"Capabilities must bind distinct IDs to declared target and language profiles");
+}

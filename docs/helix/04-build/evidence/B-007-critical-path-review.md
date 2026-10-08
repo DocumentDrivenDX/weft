@@ -87,5 +87,5 @@ historical evidence and are not replaced by this unit checkpoint.
 
 The [manifest admission accounting](B-007-manifest-branch-accounting.md) reviews
 each declaration guard family against the seven executed registry tests and
-identifies three remaining isolated admission assertions. Passing counts do not
-close those gaps or the broader critical semantic branch gate.
+records their three isolated admission gaps closed by exact assertions in the
+eight-test registry receipt. This does not close the broader semantic branch gate.

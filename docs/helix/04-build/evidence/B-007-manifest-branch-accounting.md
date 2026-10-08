@@ -1,8 +1,8 @@
 # B-007 manifest admission branch accounting
 
 Scope: `validate_manifest_json`, `validate_manifest` and their admission helpers
-in `crates/weft-core/src/backend.rs`. This is a source review against the seven
-executed registration tests retained in B-007-manifest-admission-boundaries.
+in `crates/weft-core/src/backend.rs`. This is a source review against the eight
+executed registration tests retained in B-007-manifest-final-gaps.
 It does not account for frontend resolution, backend lowering or native support.
 
 | Guard family | Positive and refusal assertions |
@@ -17,14 +17,15 @@ It does not account for frontend resolution, backend lowering or native support.
 | Object session settings and duplicate target IDs | Five non-object settings in target test; duplicate target in declaration-shape test. |
 | Capability ID validity and uniqueness | Empty/NUL IDs in capability test; duplicate capability in declaration-shape test. |
 | Target references nonempty/unique/declared | Empty, empty ID, repeated ID and undeclared target in capability test. |
-| Capability language valid and declared | Empty and mismatched pair in capability test; valid pair excluded from manifest in independent-language test. **Repeated valid capability language pairs lack an isolated assertion.** |
+| Capability language valid and declared | Empty and mismatched pair in capability test; valid pair excluded from manifest in independent-language test. Repeated valid pairs refuse in `malformed_json_known_members_and_repeated_capability_languages_refuse`. |
 | Logical/result domains object and nonempty | Both fields independently tested as empty object, array, boolean and null. Baseline has explicit domains. |
 | Constraints and evidence ID validity/uniqueness | Both collections tested with empty/NUL/repeated IDs. Evidence additionally tests undeclared references and supported-without-evidence refusal; candidate without evidence remains distinct. |
 | Obligation ID/parameters/failure code/uniqueness | Valid object baseline; empty/NUL ID, array/null parameters, absent prefix, empty suffix, lowercase/non-ASCII suffix, duplicate IDs each refuse in capability test. |
 
-Remaining isolated admission assertions: malformed JSON syntax versus duplicate
-members; malformed known-member deserialization versus unknown members; repeated
-valid capability language pairs. These cases cannot be inferred from the passing
-seven-test count. The broader critical semantic branch gate remains open.
+The three isolated gaps identified by the first review now have exact phase/code
+assertions in `malformed_json_known_members_and_repeated_capability_languages_refuse`:
+malformed JSON syntax, malformed known-member deserialization, and repeated valid
+capability language pairs. This completes the named manifest admission review;
+it does not close the broader critical semantic branch gate.
 
-Registration test source SHA-256: 4c2cfeec0b518fb8f68b5d9407e50e91788c959af62f891931883eb8d13a46ef.
+Registration test source SHA-256: c8b0ee9c059ed60bec3ae8ba39e64fbde940ee5f4416ab6b8131435b046fa1d3.
