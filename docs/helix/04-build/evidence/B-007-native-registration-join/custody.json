@@ -1,0 +1,17 @@
+{
+  "checkpointBase": "2f6a0ca",
+  "files": {
+    "audit-summary.json": "d7b07ba6176bf719628023639f7894f73453bce187009a570a98dc7e5b3dfddf",
+    "summary.json": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c",
+    "manifests.json": "4a535555460845ad05dfc10f8f5dca0b7026cbb6b6dd4356315e71a83c6a971e",
+    "joined-artifacts.jsonl.gz": "4943d890e794098411abb82e5b3cf1ae44cea0badc0facf6da95549141437065",
+    "build.log": "5b42d5c399d777bb9bbff6079a066b3da13b585848051a43228fb7d7d56ba73d"
+  },
+  "sources": {
+    "crates/weft-runtime/Cargo.toml": "1a540c0e1a69637312e2b48cf184ed131e5b9c328b91c37a14b75c6731c35f09",
+    "crates/weft-runtime/examples/compile_native_review.rs": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d",
+    "tests/qualify-and-evolve/join-native-registrations.py": "8a6b82fe820bd5f53fed99da193ef0f38eb94047585a6c263b839b0cc20e390e",
+    "tests/qualify-and-evolve/audit-native-registration-join.py": "c06588ce46091eb33b66767a9f774d15db5762739f9a3008afe87972c90da1a8"
+  },
+  "scope": "Exact current engine-registration compiler artifact correspondence; retained native executions remain separately reconciled. No supported-status promotion."
+}

@@ -131,3 +131,17 @@ checks own that guarantee. No typed decimal home is invented for Ashlar's layout
 The exact/parser semantic-family review is now recorded separately; backend
 lowering and final graph accounting, supported native registrations and the
 final acceptance audit remain required.
+
+## Current registration qualification checkpoint
+
+B-007-final-branch-audit records graph (18 tests) and backend lowering
+(22 integration tests per backend) semantic-family accounting. These finite
+ledgers replace the remaining generic graph/lowering review task.
+B-007-native-registration-join now proves exact registration correspondence on
+1,025 native-tested artifacts (1,024 compiled, one identical refusal), preserving
+query/integrity SQL and all meaning-bearing outputs. Ten semantic controls refuse.
+The registration manifest comparison exposes a concrete uncovered capability:
+`and` has no required-operation native case in either joined corpus. Next execute
+conjunction truth tables, then finish selected domain/home qualification, supported
+manifest/assessment declarations, final Python/browser composition and the
+30-criterion acceptance audit. Candidate correspondence is not support promotion.

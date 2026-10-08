@@ -16,3 +16,7 @@ weft-postgresql={path="../weft-postgresql",optional=true}
 
 [dev-dependencies]
 serde_json.workspace=true
+
+[[example]]
+name="compile_native_review"
+required-features=["truss-postgresql-candidate","ashlar-databricks-candidate"]

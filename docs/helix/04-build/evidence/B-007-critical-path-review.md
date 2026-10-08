@@ -181,3 +181,17 @@ home scope while remaining Candidate. Its focused registration test preserves SQ
 parameters, columns, plans and pins for scalar and application fixtures. Native
 supported-profile evidence joins, final composition/embedding and acceptance remain
 open; these checks do not promote support.
+
+## Current registration qualification checkpoint
+
+B-007-final-branch-audit records graph (18 tests) and backend lowering
+(22 integration tests per backend) semantic-family accounting. These finite
+ledgers replace the remaining generic graph/lowering review task.
+B-007-native-registration-join now proves exact registration correspondence on
+1,025 native-tested artifacts (1,024 compiled, one identical refusal), preserving
+query/integrity SQL and all meaning-bearing outputs. Ten semantic controls refuse.
+The registration manifest comparison exposes a concrete uncovered capability:
+`and` has no required-operation native case in either joined corpus. Next execute
+conjunction truth tables, then finish selected domain/home qualification, supported
+manifest/assessment declarations, final Python/browser composition and the
+30-criterion acceptance audit. Candidate correspondence is not support promotion.

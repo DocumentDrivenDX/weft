@@ -2,6 +2,30 @@
   "status": "passed",
   "components": [
     {
+      "component": "audit-native-registration-join.py",
+      "result": {
+        "status": "passed",
+        "cases": 1025,
+        "compiled": 1024,
+        "blocked": 1,
+        "corruptionsRejected": 10,
+        "controls": [
+          "SQL body",
+          "parameters",
+          "result decoder",
+          "model pins",
+          "binding digest",
+          "old host obligations",
+          "native host obligation",
+          "silent support promotion",
+          "engine settings",
+          "profile drift"
+        ],
+        "scope": "Retained engine-registration artifact/pin equivalence; controls corrupt checked semantics rather than a file hash. No new native SQL executions or support promotion."
+      },
+      "sourceSha256": "c06588ce46091eb33b66767a9f774d15db5762739f9a3008afe87972c90da1a8"
+    },
+    {
       "component": "unsigned-reconcile-controls.py",
       "result": {
         "status": "passed",
@@ -2190,6 +2214,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 124,
+  "verifiedEvidenceReferences": 125,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

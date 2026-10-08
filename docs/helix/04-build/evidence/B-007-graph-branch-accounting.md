@@ -23,7 +23,7 @@ condition/line coverage.
 | Endpoint shape, lifecycle and multiplicity | Existing directed/association/lifecycle/target-multiplicity controls; new polymorphic source/target, non-Record target/source and source multiplicity refusals. |
 | Source/target key selection | Existing target authored key and unkeyed inverse refusal; new single-key fallback, primary-key precedence, multiple-primary and no-primary ambiguity. No storage key is invented. |
 
-B-007-graph-final-audit records all 18 model integration tests passing, none ignored
+B-007-final-branch-audit records all 18 model integration tests passing, none ignored
 or filtered. B-007-typegraph-audit remains the earlier 15-test checkpoint. These
 families are accounted at the catalog/descriptor boundary; native value integrity
 and storage correspondence belong to the backend/native scopes. This review does
