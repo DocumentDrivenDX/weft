@@ -296,6 +296,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
           "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-target-profile-guards/summary.json",
+          "sha256": "2d0a437b0a8a797f3de569f3c32c4ad0910521843065fc91a4243da3e1d72643"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-capability-declaration-guards/summary.json",
+          "sha256": "38d03a062722a056a396a014f59ee26543ae0bb5705fd4e611f9069950b60e3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-manifest-admission-boundaries/summary.json",
+          "sha256": "e05c8f87afa6a0e9e8737c9e122e66b567c1567c5acaf8c0b38dc43bd87925dc"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -381,6 +393,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
           "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-null-assessments/summary.json",
+          "sha256": "67a419052edd982c3e42994f815ec4e575368efa61c5685718f17857046a6a54"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -1111,6 +1127,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
           "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-session-native/summary.json",
+          "sha256": "8b903d3e87afa91173e16be3cb600258d8453a438485cbd763c7f79d4c6e71fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/session-joined-summary.json",
+          "sha256": "133aa70fd93ac5eaf3ede3b850bc03deec9e93afa9f1424f4ef6f05a28421e62"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-native/custody.json",
+          "sha256": "bf7909c8214a65ed8a9a112e44d2dc23aa26dbfe8b2b9467362aaebc7bdaa236"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
+          "sha256": "c6b70e585d872a5c78f9542b3fd02130d1977e6fb566be69f3868feb50bdb122"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

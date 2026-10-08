@@ -35,6 +35,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
           "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-session-native/summary.json",
+          "sha256": "8b903d3e87afa91173e16be3cb600258d8453a438485cbd763c7f79d4c6e71fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/session-joined-summary.json",
+          "sha256": "133aa70fd93ac5eaf3ede3b850bc03deec9e93afa9f1424f4ef6f05a28421e62"
         }
       ],
       "excludedClaims": [
@@ -67,6 +75,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
           "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-native/custody.json",
+          "sha256": "bf7909c8214a65ed8a9a112e44d2dc23aa26dbfe8b2b9467362aaebc7bdaa236"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
+          "sha256": "c6b70e585d872a5c78f9542b3fd02130d1977e6fb566be69f3868feb50bdb122"
         }
       ],
       "excludedClaims": [
