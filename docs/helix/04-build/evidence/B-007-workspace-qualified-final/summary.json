@@ -1,5 +1,5 @@
 {
-  "status": "candidate-passed; qualified-running",
+  "status": "passed",
   "sourceCheckpoint": "f81565a1addaa6d2c83561f62d3805d1167233ee",
   "candidate": {
     "status": "passed",
@@ -12,5 +12,16 @@
     "logSha256": "dcde73fde0de8f66415b68081aa7907d9cf117d4ae9c7ff4a1549feba8b17edc"
   },
   "sourceManifestSha256": "5ea7ed12913b9e12def63411e80793a6327257b8621986bcc82ad280af5edfda",
-  "scope": "Current Rust source and full candidate workspace. Qualified composition is still running; no native database or actual host execution is inferred from cargo test."
+  "scope": "Both valid current-source Rust workspace compositions pass with no ignored or filtered tests. Source hashes verified unchanged. Native engine and actual Python/browser execution remain separately retained evidence.",
+  "qualified": {
+    "status": "passed",
+    "exitCode": 0,
+    "testsExecuted": 242,
+    "terminalSuites": 35,
+    "ignored": 0,
+    "filtered": 0,
+    "command": "cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked",
+    "logSha256": "95d508e0f4e2946296d5683517bfee78b30b84b8971b21008294bc4b2eef08a5"
+  },
+  "rust": "1.90.0"
 }
