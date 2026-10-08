@@ -1,15 +1,16 @@
 """Public original composite-key SQL against independent exact tuple expectations."""
-import csv,hashlib,io,json,subprocess
+import csv,hashlib,io,json,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures'
-path=F/'original-composite-relationship-public.json';raw=path.read_bytes();captures=json.loads(raw)
+mixed='--mixed' in sys.argv
+path=F/('original-composite-mixed-public.json' if mixed else 'original-composite-relationship-public.json');raw=path.read_bytes();captures=json.loads(raw)
 inputs=json.loads((F/'original-composite-relationship-inputs.json').read_text());binding=json.loads(inputs['requests'][0]['request']['target']['bindingJson']);composition=inputs['composition'];results=[]
 codec={int(binding['properties'][p['index']]['propertyId']):p['leafCodecs']['root']['originalJson'].encode().hex() for p in composition['properties']}
 for e in captures:
  for case in ['empty','ordered-partial-duplicates','duplicate-customer-tuple','duplicate-order-tuple','hidden-third-overflow','missing-part','wrong-third-codec','dangling-endpoint']:
   corrupt=case not in ['empty','ordered-partial-duplicates']
   sql='''BEGIN;
-CREATE TEMP TABLE object(id bigint,type_id int);
+CREATE TEMP TABLE object(id bigint,type_id int,props jsonb);
 CREATE TEMP TABLE edge(rel_type_id int,source_id bigint,source_type int,target_id bigint,target_type int);
 CREATE TEMP TABLE row_home_state(state_id bigint,owner_kind text,object_id bigint,object_type_id int,edge_id bigint,relationship_type_id int,property_owner_type_id int,property_id int,root_node_id bigint);
 CREATE TEMP TABLE row_home_node(state_id bigint,node_id bigint,parent_node_id bigint);
@@ -21,11 +22,13 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
   if case=='duplicate-order-tuple':orders[-1]=(13,['8','100','9'])
   if case=='hidden-third-overflow':orders[-1]=(13,['8','100','18446744073709551616'])
   if case=='empty':customers=[]
+  props_pids=e.get('propsPropertyIds',[])
   for type_id,owners,pids in [(-1,customers,[20,0]),(-2,orders,[21,6,22])]:
    for owner,values in owners:
-    sql+=f'INSERT INTO object VALUES ({owner},{type_id});\n'
+    props={str(pid):(True if case=='wrong-third-codec' and owner==13 and pid==22 else value) for pid,value in zip(pids,values) if pid in props_pids and not (case=='missing-part' and owner==5 and pid==20)}
+    sql+=f"INSERT INTO object VALUES ({owner},{type_id},'{json.dumps(props)}'::jsonb);\n"
     for pid,value in zip(pids,values):
-     if case=='missing-part' and owner==5 and pid==20:continue
+     if pid in props_pids or (case=='missing-part' and owner==5 and pid==20):continue
      state=owner*100+pid;node=state+10000;code='00' if case=='wrong-third-codec' and owner==13 and pid==22 else codec[pid]
      sql+=f"INSERT INTO row_home_state VALUES ({state},'object',{owner},{type_id},NULL,NULL,{type_id},{pid},{node}); INSERT INTO row_home_node VALUES ({state},{node},NULL); INSERT INTO row_home_scalar(state_id,node_id,scalar_kind,numeric_value,numeric_token,codec_definition_bytes,original_source_bytes) VALUES ({state},{node},'integer',{value},'{value}',decode('{code}','hex'),decode('fe00','hex'));\n"
   if case!='empty':
@@ -50,8 +53,8 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
     else:expected=[(['7','999','0'],empty),(['8','100','9'],empty if case=='empty' else dict(items=[['6','18446744073709551615'],['7','0']],truncated=True)),(['8','100','10'],empty),(['8','101','8'],empty if case=='empty' else dict(items=[['7','9007199254740993'],['7','9007199254740993']],truncated=False))]
     assert parsed==expected,parsed
   else:assert not remaining
-  results.append(dict(direction=e['direction'],kind=e['kind'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
+  results.append(dict(propsPropertyIds=props_pids,direction=e['direction'],kind=e['kind'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))
 server=subprocess.check_output(['docker','exec','weft-b005-pg17','psql','-U','postgres','-X','-Atc','SELECT version()']).decode().strip()
-receipt=dict(scope='Public original owned composite uint64 relationship keys, source arity 2 and target arity 3, native-row synthetic PostgreSQL fixtures; not embedding or production qualification',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
-(ROOT/'docs/helix/04-build/evidence/B-005-composite-relationship-native.json').write_text(json.dumps(receipt,indent=2)+'\n')
+receipt=dict(scope='Public original owned composite uint64 relationship keys, source arity 2 and target arity 3, independently selected native-row/JSONB synthetic PostgreSQL fixtures; not embedding or production qualification',server=server,captureSha256=hashlib.sha256(raw).hexdigest(),harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),results=results)
+(ROOT/'docs/helix/04-build/evidence'/('B-005-composite-mixed-native.json' if mixed else 'B-005-composite-relationship-native.json')).write_text(json.dumps(receipt,indent=2)+'\n')
 print(f'{len(results)} original composite relationship native cases passed')

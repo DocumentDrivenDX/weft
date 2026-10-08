@@ -1,10 +1,11 @@
 {
-  "scope": "Public original owned composite uint64 relationship keys, source arity 2 and target arity 3, native-row synthetic PostgreSQL fixtures; not embedding or production qualification",
+  "scope": "Public original owned composite uint64 relationship keys, source arity 2 and target arity 3, independently selected native-row/JSONB synthetic PostgreSQL fixtures; not embedding or production qualification",
   "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
   "captureSha256": "7b3aaa5d9439ccec8d76b6888ccd620efa801d3d802ff2adb1261528be7b371e",
-  "harnessSha256": "3950b468fece647623c815df44f655e9ff40c91e1d035e22075f1ace9c7e89d9",
+  "harnessSha256": "4bd7fba8976ae09b34826cc53f2600e3a5be82b5951b655e3a0acd2506606020",
   "results": [
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "empty",
@@ -30,9 +31,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "afe21d10fc2e1c12d6a25f8e4304af144f3b60550f7665dcfbbd2b83489c4653"
+      "executedSqlSha256": "5a1b2ea33538065cd69f5bc90c5c3a91ef2dafcdbc972067e92101bfbb2ab64f"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "ordered-partial-duplicates",
@@ -58,9 +60,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "693e1e67f69126f22e1e847269d760814749309f11e00be75970ea46441a7421"
+      "executedSqlSha256": "2e566edfa55821d655b5542e70f4a2aecbae5671b9ad9385e67b870d27760e12"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "duplicate-customer-tuple",
@@ -86,9 +89,10 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "0fa9087029264bebd3a88d3418deb571d8e02c9ecc8fb384922d1ae3f38c8490"
+      "executedSqlSha256": "29451939377c2c7eaf28f6408cfd5bdac0bd1566fa6467b7b6f7e510c1dd1814"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "duplicate-order-tuple",
@@ -114,9 +118,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "d24f4390b5365e73f502a8b862281406c669ae08031d7d78a9c69def51c38559"
+      "executedSqlSha256": "3442a80e0609793885a23cc353d430fdbfe2cd1665e6b2abd75fbe2e72f22eba"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "hidden-third-overflow",
@@ -142,9 +147,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "c965f5ab32b2e5830fcc242ca22714ca68fcd9b746a7d0dcdc7d4877dc6f3e3a"
+      "executedSqlSha256": "8856483fa5a1b793cacf21aef2725266e0624ac42487e85b42dfeba44f9ccbb3"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "missing-part",
@@ -170,9 +176,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "d2a168a530aa121d547c6e37c1355f34bcb6ea9993937d2ef535d6318ec2b65e"
+      "executedSqlSha256": "d048b54d9c052cb7d3511d8878d8dd945605f2d7b56a1374e5c5b0ce291d97f4"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "wrong-third-codec",
@@ -198,9 +205,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "2f7ebe951615175aff2421eb6278201bbba4616b3f5268978f4f0884ce7bd1c6"
+      "executedSqlSha256": "82fa1ab304bc3d0373b1530df503ea3e9d612069aa880b905c7d04ceb461b37e"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "has",
       "case": "dangling-endpoint",
@@ -226,9 +234,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "4fa77c1e5d826ddbfd1ab2e881f610be2888e3d47dde81fafd5672b7450d2c45"
+      "executedSqlSha256": "df5b7c7def361e425028ffd7a518ee43a5cc8da638dc1c5822cbfaa9652fbd91"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "empty",
@@ -254,9 +263,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "a6678a8f9f925fe849c5b1ae2305572770fc7fbe166e5ede1edf60639d0e20fc"
+      "executedSqlSha256": "3b3a6f0558fad41c9efaef8dd9ec356e3abe35471b0d9850aa3339c5a30007bb"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "ordered-partial-duplicates",
@@ -282,9 +292,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "e8138dd4cc963a4b59f4fa8c049be23440834da2043c3f250dc29c5cca376c2a"
+      "executedSqlSha256": "bfa4e68735d9fedc5d51d6644ad5fcb57fb259fe85e79cd4139095471b92da46"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "duplicate-customer-tuple",
@@ -310,9 +321,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "c84a85200184531078275f4b17fb01f6c137bc24a940c6f4ef78e55f47792455"
+      "executedSqlSha256": "f45587309efa845e34bcb646e76597a52dd9a204af3ebf35a8e65407cea66e85"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "duplicate-order-tuple",
@@ -338,9 +350,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "6a49863eb279e72f674831c9cb90b5d28541876591fa0c4a7bffa53888a82ae6"
+      "executedSqlSha256": "3a1a0b4ec13c3feac406ecd4878af199fe69184f85862e3af6432d2cb64f2582"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "hidden-third-overflow",
@@ -366,9 +379,10 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "cdeeb53ed62af5d4c47e755b51698c2d76efacf05a370c7ba7827218c4f67fce"
+      "executedSqlSha256": "f427766f903bb4286c535222e4a1286614570c3db84bda3785d04070696f9dfa"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "missing-part",
@@ -394,9 +408,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "91b25a25013079964a9455e3877031f78c4b0f5e0ee8819556de468c9d06f4b6"
+      "executedSqlSha256": "3442387c76272325394272f57af1ff6f35ede689ef9cabd49be5151b97420317"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "wrong-third-codec",
@@ -422,9 +437,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "6f6856cf52abc0578c96333df3e8618a9588782cce33d73f6d01d8683a7412f3"
+      "executedSqlSha256": "9d7cb11eab6771505a8b6c3f24a2f5c747c25bb7a8d4b478dfec8ed9450eacc3"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "has",
       "case": "dangling-endpoint",
@@ -450,9 +466,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "78915a34f0600fa1a3e2ce77286a0ac24a4d3e089e4741562a00e0ee25f51659"
+      "executedSqlSha256": "2971fa8c1ee6739011d4edc488826ca2a4d6e010d3c9b8908b56efd30feb78d5"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "empty",
@@ -478,9 +495,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "281029ac50685f5e43b4f2555e738dffded59ed39c2902d51bdf1ed938722b96"
+      "executedSqlSha256": "059896e13e674a9aea6ecb0f623d4b23949442af859e6073016b2abc9b7044e2"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "ordered-partial-duplicates",
@@ -506,9 +524,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "4702bb6910a4bba55e0b23c20bd9d82126297b807144f2dcc1bcc712cd6d64b8"
+      "executedSqlSha256": "fa1217b3e1221db225261d8d567de050851c626746c206f3ca00d88c98d97c1f"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "duplicate-customer-tuple",
@@ -534,9 +553,10 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "b9f1e62842dacea8bd49efcbfbee6ee66c98ea67409aae9c24249abae7c37698"
+      "executedSqlSha256": "f853bc19a2d336ca2f015eded076961f554c9eb268ad7c61b0a0ac9713e02d83"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "duplicate-order-tuple",
@@ -562,9 +582,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "1d142a2abad46818ac2c9cd76407da67e1d57cf0f3c4e00cfd42d1a253afda06"
+      "executedSqlSha256": "89184a9d258b56dee57b1e7037e04c4e402bc17025eecfcb539966e82ce39f4e"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "hidden-third-overflow",
@@ -590,9 +611,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "bd28fd87174977ee86a6eb6491cf68bb01766bc0916f8584b11400758ab1a876"
+      "executedSqlSha256": "749f4c0bd7c1e1dc4afc206d938ab3fae5aad549eee4e5d6f2ce1335fdfb8a17"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "missing-part",
@@ -618,9 +640,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "e001f76861a826824e4d62b0f4ef8988e7eec3b9ba6822ec09293a936e91d04f"
+      "executedSqlSha256": "92ad8a19a4ceec57e7a474fcfaa2dea7394f13413333ed5929d1e6372d671a8d"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "wrong-third-codec",
@@ -646,9 +669,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "8d6f934680679737b2557d0aba6d080f62efecaf67e2b423f14dcb92894fd3b5"
+      "executedSqlSha256": "f08aece9333e4615f506e5005ffb5d9e30ece74e71010702f1300c35cfb9cf3f"
     },
     {
+      "propsPropertyIds": [],
       "direction": "inverse",
       "kind": "keys",
       "case": "dangling-endpoint",
@@ -674,9 +698,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "e021af2139d967d81256d985915272d7a4770db83c509608e130a2382ef8678c"
+      "executedSqlSha256": "a1638eaed8a4193e81a170e4f7a8ef9776bee1d41d50dbf0bb68e66721307033"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "empty",
@@ -702,9 +727,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "0b4cd87d6baa0643a6e84e62de5b24e0cd9ef167451181358faac25679e847a2"
+      "executedSqlSha256": "6be7752ec5bc3ea16f1f6e7671acbd7d936c5026b117d20b7c9eb56f953bc365"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "ordered-partial-duplicates",
@@ -730,9 +756,10 @@
         0
       ],
       "queryExecuted": true,
-      "executedSqlSha256": "aecf053de4db586018c68d14edd50ec46d83616b3b7458e4640773408aef80e6"
+      "executedSqlSha256": "80fa060284162ebe0425f0586c301925395bdbb741f62133225b1968b7b7a191"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "duplicate-customer-tuple",
@@ -758,9 +785,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "80bb338e52bb1ca92849e14a4a97d2053a1a95d3280521249ba353e9b86663b5"
+      "executedSqlSha256": "b3c2e3d6b16cb8b124d263c68b1803158a5547a27e493254297c7059c6c02885"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "duplicate-order-tuple",
@@ -786,9 +814,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "358a97ef5bc76d27298a0348c16ad9b954c1d2ed1846b46966029520d28dab6c"
+      "executedSqlSha256": "1dda2dcee89341b7bcd66bc6e1d4dd4d1b57d66c6169773f3613992a30dcf496"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "hidden-third-overflow",
@@ -814,9 +843,10 @@
         1
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "44fb0f885b3777b3331e50e0630eed62e1c856d5a29c3809b9bf8e5f34766884"
+      "executedSqlSha256": "9fed7557739f6e489ae366d67d70432c3249ae43589fa6dae904cd78fa3392f4"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "missing-part",
@@ -842,9 +872,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "27aa5391be86fa3e11faab4c71dbed167790e0eb20be104d2d41ebe544c79082"
+      "executedSqlSha256": "56677e58dfd82e555586b2c70ff0a3cfdb27ef17b2c48932318a1314be0f611c"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "wrong-third-codec",
@@ -870,9 +901,10 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "1579b9fcdc2452fff5136f4e46899ed4798022d0450d7ad38142c64d2d5c41e1"
+      "executedSqlSha256": "391f9e53f2dc037198e39d04cbddb698492e19b8e472b4315dd05a42b76830ab"
     },
     {
+      "propsPropertyIds": [],
       "direction": "forward",
       "kind": "keys",
       "case": "dangling-endpoint",
@@ -898,7 +930,7 @@
         0
       ],
       "queryExecuted": false,
-      "executedSqlSha256": "319fe87625fd3caf34d15e6f45c68ba53440a97f60f4073870441c6dda926d1a"
+      "executedSqlSha256": "2258706b13d95ec06af63a71d541d211a26821fa581d3b73249e6141efde6051"
     }
   ]
 }

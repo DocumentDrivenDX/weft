@@ -377,16 +377,19 @@ fn numeric_expression(
     }
     match node {
         Expression::Field { .. } => {
-            let crate::registered_access::Location::Row(location) = &access
-                .ok_or_else(|| fail("Numeric field access missing"))?
-                .location
-            else {
-                return Err(fail("Conformance numeric operand requires row home"));
+            let access = access.ok_or_else(|| fail("Numeric field access missing"))?;
+            let carrier = match &access.location {
+                crate::registered_access::Location::Row(location) => {
+                    location.scalar_observation().native_numeric_text
+                }
+                crate::registered_access::Location::Props(_) => access
+                    .scalar_storage
+                    .as_ref()
+                    .ok_or_else(|| fail("Numeric props carrier missing"))?
+                    .carrier
+                    .clone(),
             };
-            Ok(format!(
-                "({})::pg_catalog.numeric",
-                location.scalar_observation().native_numeric_text
-            ))
+            Ok(format!("({carrier})::pg_catalog.numeric"))
         }
         Expression::Literal {
             value,
@@ -414,41 +417,115 @@ mod composite_tests {
         ))
         .unwrap();
         let mut captures = Vec::new();
-        for case in inputs["requests"].as_array().unwrap() {
-            let request = &case["request"];
-            let catalog =
-                Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap())
-                    .unwrap();
-            let mut config = configuration(&inputs["composition"].to_string(), &catalog).unwrap();
-            let response: Value =
-                serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
-            assert_eq!(response["status"], "compiled", "{response}");
-            assert_eq!(
-                response,
-                serde_json::from_str::<Value>(&config.compile_json(&request.to_string())).unwrap()
-            );
-            let keys: Vec<_> = config.comparators.keys().cloned().collect();
-            assert_eq!(keys.len(), 5);
-            for key in keys {
-                let removed = config.comparators.remove(&key).unwrap();
-                let refused: Value =
+        let mut mixed_captures = Vec::new();
+        let baseline: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let base_binding: Value = serde_json::from_str(
+            baseline[0]["request"]["target"]["bindingJson"]
+                .as_str()
+                .unwrap(),
+        )
+        .unwrap();
+        for props_pids in [vec![], vec![0, 20], vec![6, 21, 22], vec![0, 21]] {
+            for case in inputs["requests"].as_array().unwrap() {
+                let mut request = case["request"].clone();
+                let mut binding: Value =
+                    serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap())
+                        .unwrap();
+                let mut config_json = inputs["composition"].clone();
+                for selected in config_json["properties"].as_array_mut().unwrap() {
+                    let index = selected["index"].as_u64().unwrap() as usize;
+                    let prop = &mut binding["properties"][index];
+                    let pid = prop["propertyId"].as_str().unwrap().parse::<i32>().unwrap();
+                    if props_pids.contains(&pid) {
+                        let template = &base_binding["properties"]
+                            [if prop["ownerTypeId"] == "-1" { 0 } else { 6 }];
+                        let mut home: Value = serde_json::from_slice(
+                            &bytes(&template["homeDefinition"]["bytesBase64"]).unwrap(),
+                        )
+                        .unwrap();
+                        home["propertyCatalogId"] = prop["propertyId"].clone();
+                        home["memberName"] = prop["propertyId"].clone();
+                        let raw = home.to_string();
+                        prop["home"] = serde_json::json!("props");
+                        prop["homeDefinition"] = serde_json::json!({"identity":format!("composite-props-{pid}"),"bytesBase64":STANDARD.encode(raw.as_bytes()),"sha256":weft_core::json::sha256(raw.as_bytes())});
+                    }
+                }
+                let raw = binding.to_string();
+                request["target"]["bindingJson"] = serde_json::json!(raw);
+                request["target"]["bindingSha256"] =
+                    serde_json::json!(weft_core::json::sha256(raw.as_bytes()));
+                let catalog =
+                    Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap())
+                        .unwrap();
+                let mut config = configuration(&config_json.to_string(), &catalog).unwrap();
+                for selected in &mut config.properties {
+                    let prop = &binding["properties"][selected.index];
+                    if prop["home"] == "props" {
+                        selected.relations =
+                            BTreeMap::from([("object-table".into(), "object".into())]);
+                        selected.columns = BTreeMap::from([
+                            (
+                                "object-type".into(),
+                                row_join_definition::Column {
+                                    relation_identity: "object-table".into(),
+                                    name: "type_id".into(),
+                                },
+                            ),
+                            (
+                                "object-props".into(),
+                                row_join_definition::Column {
+                                    relation_identity: "object-table".into(),
+                                    name: "props".into(),
+                                },
+                            ),
+                        ]);
+                        selected.row_join = None;
+                        selected.obligations.clear();
+                    }
+                }
+                let response: Value =
                     serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
-                assert_eq!(refused["status"], "blocked", "{key}: {refused}");
-                assert!(refused.get("sql").is_none());
-                assert!(refused.get("parameters").is_none());
-                config.comparators.insert(key, removed);
+                assert_eq!(response["status"], "compiled", "{response}");
+                assert_eq!(
+                    response,
+                    serde_json::from_str::<Value>(&config.compile_json(&request.to_string()))
+                        .unwrap()
+                );
+                let keys: Vec<_> = config.comparators.keys().cloned().collect();
+                assert_eq!(keys.len(), 5);
+                for key in keys {
+                    let removed = config.comparators.remove(&key).unwrap();
+                    let refused: Value =
+                        serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                    assert_eq!(refused["status"], "blocked", "{key}: {refused}");
+                    assert!(refused.get("sql").is_none());
+                    assert!(refused.get("parameters").is_none());
+                    config.comparators.insert(key, removed);
+                }
+                assert_eq!(
+                    response,
+                    serde_json::from_str::<Value>(&config.compile_json(&request.to_string()))
+                        .unwrap()
+                );
+                let checks: Vec<_> = response["obligations"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .filter_map(|o| o["parameters"].get("sql").and_then(|s| s.as_str()))
+                    .collect();
+                let capture = serde_json::json!({"direction":case["direction"],"kind":case["kind"],"sql":response["sql"],"parameters":response["parameters"],"columns":response["columns"],"checks":checks,"propsPropertyIds":props_pids});
+                if props_pids.is_empty() {
+                    captures.push(capture);
+                } else {
+                    mixed_captures.push(capture);
+                }
             }
-            assert_eq!(
-                response,
-                serde_json::from_str::<Value>(&config.compile_json(&request.to_string())).unwrap()
-            );
-            let checks: Vec<_> = response["obligations"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .filter_map(|o| o["parameters"].get("sql").and_then(|s| s.as_str()))
-                .collect();
-            captures.push(serde_json::json!({"direction":case["direction"],"kind":case["kind"],"sql":response["sql"],"parameters":response["parameters"],"columns":response["columns"],"checks":checks}));
+        }
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_COMPOSITE_MIXED_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&mixed_captures).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ORIGINAL_COMPOSITE_RELATIONSHIP_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();

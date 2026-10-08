@@ -2945,3 +2945,33 @@ This establishes composite native-row key behavior for the selected unsigned
 numeric 2/3 subset. Composite mixed homes, heterogeneous key types, more original
 scalar domains and full host transport qualification remain separate evidence
 requirements. Synthetic fixtures do not establish installed Truss compatibility.
+
+### Composite component home independence (2026-10-07)
+
+The original composite relationship test now compiles four home arrangements:
+all native rows, Customer's two components in props, Orders' three components in
+props, and individual components split across homes (Customer.id and Orders.part
+in props, with the remaining key components in rows). Each selected property is
+re-admitted against its exact home definition. The conformance-only numeric
+renderer reads the admitted per-field carrier for either location; its required
+nonnullable uint64 domain is unchanged. Existing pinned runtime compositions and
+allowlist remain unchanged.
+
+All 16 public requests compile deterministically. Removing each of the five
+required component comparators yields 80 blocked responses without SQL or
+parameter artifacts; restoration returns the original response. The three new
+arrangements emit twelve captured SQL artifacts.
+
+`tests/truss-postgresql/composite-relationship-native.py --mixed` passes 96
+PostgreSQL 17.9 cases using the same independent complete-tuple expectations as
+the native-row baseline. The baseline's 32 cases also pass after the harness adds
+per-component props storage. Wrong third-component codec tests retain native-row
+codec corruption where applicable and use the wrong JSON kind when that
+component resides in props. Missing/overflow/duplicate tuple/endpoint guards are
+observed independently of query filters; corrupt cases do not execute result SQL.
+Receipt: [B-005-composite-mixed-native.json](B-005-composite-mixed-native.json).
+
+This is original Rust compiler and synthetic native PostgreSQL evidence for the
+selected required uint64 composite subset, including within-key mixed homes.
+Heterogeneous scalar key types, additional original scalar semantics, fresh
+Python/browser transport and installed production compatibility are not claimed.
