@@ -23,7 +23,7 @@ fn sales_compiles_with_pins_exact_carriers_and_prequery_integrity() {
     assert!(sql.contains("VERSION AS OF 0"));
     assert!(sql.contains("SUM("));
     assert!(sql.contains("raise_error('WFT-NUMERIC-DOMAIN')"));
-    assert!(sql.contains("COUNT("));
+    assert!(sql.contains("MAX(1)"));
     assert!(!sql.contains("DISTINCT"));
     assert!(!sql.contains("weft-synthetic"));
     assert!(!sql.contains("fixture-schema-1"));
@@ -99,4 +99,70 @@ fn global_sum_retains_nullable_exact_type_and_empty_input_branch() {
     );
     assert_eq!(response["columns"][0]["decoder"], "exact-decimal");
     assert!(!response["sql"].as_str().unwrap().contains("GROUP BY"));
+}
+
+fn application(sql: &str) -> Value {
+    let mut request = common::request(sql);
+    request["interfaceVersion"] = json!("weft-compile/0.2.0");
+    request["dialect"] = json!("weft-sql/0.2.0");
+    request
+}
+#[test]
+fn application_entity_and_count_keep_logical_metadata() {
+    for sql in [
+        "SELECT c.* FROM Customer c",
+        "SELECT COUNT(*) AS total FROM Customer c",
+        "SELECT c.name, COUNT(*) AS total FROM Customer c GROUP BY c.name",
+        common::SALES_SQL,
+    ] {
+        let response = run(&application(sql));
+        assert_eq!(response["status"], "compiled", "{response}");
+        assert!(response["obligations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|o| o["id"] == "ashlar.candidate.scalarIntegrity"));
+        if sql.contains("COUNT") {
+            let representation =
+                &response["columns"].as_array().unwrap().last().unwrap()["representation"];
+            assert_eq!(representation["decoder"], "exact-integer");
+            assert_eq!(representation["logicalType"]["nullable"], false);
+        }
+        if sql == "SELECT c.* FROM Customer c" {
+            assert_eq!(response["columns"].as_array().unwrap().len(), 3);
+            assert_eq!(response["columns"][0]["outputName"], "id");
+            assert_eq!(response["columns"][1]["outputName"], "name");
+            assert_eq!(response["columns"][2]["outputName"], "active");
+        }
+    }
+}
+#[test]
+fn application_page_retains_authored_key_and_named_cursor() {
+    let mut request =
+        application("SELECT c.* FROM Customer c WHERE c.id > :after ORDER BY c.id ASC LIMIT 2");
+    let mut document: Value =
+        serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    document["modules"][0]["elements"][0]["keys"] = json!([{"id":"primary","name":"primary","primary":true,"fields":[{"module":"sales","element":"customer-id"}]}]);
+    let raw = document.to_string();
+    let digest = sha256(raw.as_bytes());
+    request["modules"][0]["documentJson"] = json!(raw);
+    request["modules"][0]["pin"]["sha256"] = json!(digest);
+    let mut binding: Value =
+        serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["modelPins"][0]["sha256"] = json!(digest);
+    let raw = binding.to_string();
+    request["target"]["bindingJson"] = json!(raw);
+    request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
+    request["parameters"] = json!({"after":{"family":"integer","value":"7"}});
+    request["readProfile"] =
+        json!({"version":"weft-application-read/0.2.0","subset":"entity-page"});
+    let response = run(&request);
+    assert_eq!(response["status"], "compiled", "{response}");
+    assert!(response["sql"].as_str().unwrap().contains("ORDER BY"));
+    assert!(response["sql"].as_str().unwrap().contains("LIMIT 2"));
+    assert!(response["obligations"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|o| o["id"] == "ashlar.candidate.keyIntegrity"));
 }

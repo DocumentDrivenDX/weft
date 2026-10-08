@@ -1,0 +1,939 @@
+{
+  "state": "passed",
+  "cases": 48,
+  "positive": 16,
+  "refusals": 32,
+  "outcomes": [
+    {
+      "id": "8-exact-props-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "8-exact-props-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "8-exact-column-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "8-exact-column-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "8-empty-props-props",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "8-empty-props-column",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "8-empty-column-props",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "8-empty-column-column",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "8-hidden-rank-domain-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-domain-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-domain-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-domain-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-missing-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-missing-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-missing-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-missing-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-type-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-type-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-type-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-rank-type-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-nul-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-nul-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-nul-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "8-hidden-name-nul-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-exact-props-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "64-exact-props-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "64-exact-column-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "64-exact-column-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "same",
+          "0"
+        ],
+        [
+          "é",
+          "4"
+        ],
+        [
+          "x",
+          "5"
+        ],
+        [
+          "x ",
+          "6"
+        ],
+        [
+          "é",
+          "3"
+        ]
+      ]
+    },
+    {
+      "id": "64-empty-props-props",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "64-empty-props-column",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "64-empty-column-props",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "64-empty-column-column",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "64-hidden-rank-domain-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-domain-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-domain-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-domain-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-missing-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-missing-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-missing-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-missing-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-type-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-type-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-type-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-rank-type-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-nul-props-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-nul-props-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-nul-column-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "64-hidden-name-nul-column-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    }
+  ],
+  "fixture": {
+    "phase": "ready",
+    "payloadSha256": "d8d72c7e7d98d3d4f0556e9f1a6f9d6a3219319e207d888bd200946ec19c492d",
+    "tableUuid": "9a81f3a6-32d2-4d6c-afc6-28f90774a6b8",
+    "version": 1,
+    "manifestUuid": "c70e3478-e8c2-46ee-a954-26a836f15bec",
+    "publicationId": "weft-column-fixtures"
+  },
+  "harnessSha256": "8270125808ffb4f371fe686e97b37990c27ca79d79295b5fdf5b6b81fc2ceca7",
+  "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+  "qualification": "Actual registered compiler and native node_type_a STRING/BIGINT column and JSON-text home permutations, signed8/64. Synthetic admin projections, intentional residual/corrupt controls. No accepted projection correspondence, delegated policy, embedding, application-read or production admission."
+}

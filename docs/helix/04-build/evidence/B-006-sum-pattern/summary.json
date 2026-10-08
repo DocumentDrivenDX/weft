@@ -2,6 +2,6 @@
   "state": "passed",
   "statements": 3,
   "qualification": "Read-only native aggregate pattern; DECIMAL38 overflow explicitly errors, empty input remains NULL, large finite sum exact. No claim of enumerating unbounded source group multiplicities.",
-  "harnessSha256": "67768dad9ce34d4ada78cd11e1b68c60b53c431809907dc37ea225bb5173e6d3",
+  "harnessSha256": "34de92a4f9a4b2211ea09184d9287fb775d34f0a15a500ab20f58b5907c3890f",
   "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
 }

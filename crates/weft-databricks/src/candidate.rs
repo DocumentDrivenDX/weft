@@ -1,4 +1,5 @@
 //! Candidate registered SQL lowering. Native execution/custody stays in hosts.
+mod application;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
 use std::collections::BTreeMap;
@@ -37,13 +38,16 @@ impl Backend for Candidate {
     type Mapping = Binding;
     type TargetPlan = TargetPlan;
     fn describe(&self) -> Result<Manifest> {
-        let languages = vec![LanguageProfile {
-            dialect_profile: "weft-sql/0.1.0".into(),
-            ir_version: "weft-ir/0.1.0".into(),
-        }];
+        let languages = ["0.1.0", "0.2.0"]
+            .into_iter()
+            .map(|v| LanguageProfile {
+                dialect_profile: format!("weft-sql/{v}"),
+                ir_version: format!("weft-ir/{v}"),
+            })
+            .collect::<Vec<_>>();
         Ok(Manifest{backend_id:"ashlar.databricks".into(),backend_version:"0.1.0-candidate".into(),interface_version:"weft-backend/0.2.0".into(),language_profiles:languages.clone(),binding_profile:binding::PROFILE.into(),
             target_profiles:vec![TargetProfile{id:"dbsql-candidate".into(),engine:"databricks-sql".into(),engine_version:"unqualified-warehouse-release".into(),session_settings:json!({"comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error","variantCarrier":"fixed-base-ten-exact-only"}),storage_layout_revision:"ashlar-delta/0.3".into(),publication_revision:"ashlar-resolver/0.1-candidate".into()}],
-            capabilities:["scan","project","filter","innerJoin","equal","and","sum","group","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:json!({"subset":"0.1 required scalar relational operations with admitted exact homes"}),result_domain:json!({"carrier":"exact text","sum":"finite DECIMAL38 or error; never null on overflow"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:json!({"subset":"required scalar relational/application operations with admitted exact homes"}),result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
         let binding = binding::admit(c.catalog, c.binding_value)?;
@@ -87,6 +91,9 @@ impl Backend for Candidate {
             .collect())
     }
     fn lower(&self, c: &Context<'_>, binding: &Binding) -> Result<TargetPlan> {
+        if let Plan::V02(plan) = c.plan {
+            return application::lower(c, binding, plan);
+        }
         let Plan::V01(plan) = c.plan else {
             return Err(fail(
                 "WFT-CAPABILITY",
@@ -361,13 +368,13 @@ impl<'a> Lower<'a> {
                     (scan.clone(), key),
                     format!("{}.{}", binding::quote(&scan), binding::quote(&field_alias)),
                 );
-                self.checks.push(json!({"field":identity,"record":id,"sql":format!("SELECT CAST(count(*) AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"}));
+                let count = count_sql();
+                self.checks.push(json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"}));
             }
             if projections.is_empty() {
-                return Err(fail(
-                    "WFT-CAPABILITY",
-                    "A scalar scan must select at least one mapped field",
-                ));
+                projections.push("1 AS __row".into());
+                let count = count_sql();
+                self.checks.push(json!({"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-BINDING"}));
             }
             self.ctes.push(format!(
                 "{} AS (SELECT {} FROM {table} r WHERE {owner})",
@@ -420,7 +427,7 @@ impl<'a> Lower<'a> {
                 let value = self.expression(argument)?;
                 // TRY_SUM makes finite aggregate overflow observable regardless
                 // of ANSI settings. Empty global aggregates retain SQL NULL.
-                format!("CASE WHEN COUNT({value}) > 0 AND TRY_SUM({value}) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM({value}) END")
+                format!("CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM({value}) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM({value}) END")
             }
         })
     }
@@ -456,6 +463,9 @@ impl<'a> Lower<'a> {
             )),
         }
     }
+}
+fn count_sql() -> String {
+    "CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END".into()
 }
 fn typed(value: &str, ty: &LogicalType) -> String {
     match ty.family {

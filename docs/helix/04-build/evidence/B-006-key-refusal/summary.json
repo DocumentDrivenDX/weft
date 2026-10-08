@@ -1,0 +1,48 @@
+{
+  "state": "passed",
+  "cases": 8,
+  "outcomes": [
+    {
+      "id": "8-props-props",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "8-props-column",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "8-column-props",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "8-column-column",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "64-props-props",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "64-props-column",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "64-column-props",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    },
+    {
+      "id": "64-column-column",
+      "outcome": "refused-before-user-query",
+      "duplicateKeyGroups": 1
+    }
+  ],
+  "harnessSha256": "51bceff7d694d584075398ee25b12795144f1f8b9235855e9c3dde9f15fa6e90",
+  "qualification": "Native authored-key uniqueness refusal across explicit JSON/column homes and signed8/64. Only integrity SELECTs run; user page query is never submitted. No live delegated authorization, producer schema acceptance or production policy qualification."
+}

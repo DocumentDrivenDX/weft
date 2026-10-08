@@ -10,7 +10,7 @@ from native_transport import Client, NativeFailure
 
 output = Path(os.environ["WEFT_ASHLAR_EVIDENCE_OUTPUT"])
 client = Client(output)
-expression = "CASE WHEN COUNT(v)>0 AND TRY_SUM(v) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(v) END"
+expression = "CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM(v) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(v) END"
 sql = "SELECT " + expression + " FROM (SELECT cast(:v AS DECIMAL(38,0)) v FROM VALUES (1),(2) t(n))"
 try:
     client.sql("nonempty-overflow-raises", sql, parameters=[dict(name="v", type="STRING", value="9" * 38)])

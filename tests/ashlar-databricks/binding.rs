@@ -125,6 +125,27 @@ fn unmapped_unknown_model_content_is_retained() {
     admit(&c, &fixture()).unwrap();
     assert!(c.inputs[0].document_json.contains("opaque"));
 }
+
+#[test]
+fn bigint_admits_unsigned_subdomains_and_refuses_uint64() {
+    for bits in [1, 8, 32, 63, 64] {
+        let original = catalog();
+        let mut input = original.inputs[0].clone();
+        let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
+        document["modules"][0]["elements"][2]["facets"]["integerWidth"]["bits"] = json!(bits);
+        input.document_json = document.to_string();
+        input.pin.sha256 = sha256(input.document_json.as_bytes());
+        let c = Catalog::prepare(vec![input]).unwrap();
+        let mut binding = fixture();
+        binding["modelPins"] = json!(c.pins());
+        binding["records"][0]["properties"][0]["home"] = json!({"kind":"column","value":"rank_value","present":"rank_present","nativeType":"BIGINT"});
+        assert_eq!(
+            admit(&c, &binding).is_ok(),
+            bits < 64,
+            "unsigned width {bits}"
+        );
+    }
+}
 #[test]
 fn physical_identifiers_are_quoted_and_values_never_become_code() {
     let mut v = fixture();

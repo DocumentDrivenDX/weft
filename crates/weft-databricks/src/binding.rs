@@ -265,12 +265,15 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                     }
                     let agrees = match (&ty.family, native_type.as_str()) {
                         (Family::String, "STRING") => true,
-                        (Family::Integer, "BIGINT") => {
-                            ty.facets["integerWidth"]["signed"] == true
-                                && ty.facets["integerWidth"]["bits"]
-                                    .as_u64()
-                                    .is_some_and(|bits| bits <= 64)
-                        }
+                        (Family::Integer, "BIGINT") => ty.facets["integerWidth"]["bits"]
+                            .as_u64()
+                            .is_some_and(|bits| {
+                                bits <= if ty.facets["integerWidth"]["signed"] == true {
+                                    64
+                                } else {
+                                    63
+                                }
+                            }),
                         _ => false,
                     };
                     if !agrees {

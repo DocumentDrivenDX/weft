@@ -1,0 +1,59 @@
+{
+  "state": "passed",
+  "cases": 7,
+  "outcomes": [
+    {
+      "id": "unsigned-1",
+      "outcome": "refused-before-user-query",
+      "violations": 6
+    },
+    {
+      "id": "unsigned-2",
+      "outcome": "refused-before-user-query",
+      "violations": 4
+    },
+    {
+      "id": "unsigned-3",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "28"
+        ]
+      ]
+    },
+    {
+      "id": "unsigned-8",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "28"
+        ]
+      ]
+    },
+    {
+      "id": "unsigned-32",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "28"
+        ]
+      ]
+    },
+    {
+      "id": "unsigned-63",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "28"
+        ]
+      ]
+    },
+    {
+      "id": "unsigned-64",
+      "outcome": "compiler-refusal-no-sql"
+    }
+  ],
+  "harnessSha256": "c04ea809d25d5f7261e9a8091da9ced87499a47763f149a765366a86d1e866c8",
+  "compilerBinarySha256": "1b6578d14115f34b973c196d6d9b8c531679a527ba68afab7643c246760f2777",
+  "qualification": "Explicit synthetic physical-ID scalar view, native BIGINT unsigned subdomains. Unsigned1/2 data violations refuse, widths3/8/32/63 have exact finite sums; UInt64/BIGINT mapping refuses before SQL. Values1..7 do not qualify every boundary in these widths. No implicit business-key inference or production binding claim."
+}

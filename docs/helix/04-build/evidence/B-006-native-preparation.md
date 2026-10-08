@@ -145,3 +145,62 @@ extension, actual host obligation/policy/publication refusal execution and real
 Python/browser composition parity. All capabilities remain candidate; the engine
 version report does not qualify a Databricks warehouse release/channel. This
 checkpoint does not close the four US-004 criteria or start B-007.
+
+## Native typed homes and required-scalar application checkpoint
+
+The [checkpoint custody](B-006-application-compiler.json) records eleven passing
+Rust tests and the actual native work below. The 0.2 registered lowering shares
+scalar access, exact slots, integrity and result decoding with 0.1. It adds
+required-scalar whole entities in authored member order, exact bag COUNT,
+aggregation, named parameters, ordering, limits and single/composite keyset
+comparisons. Composite continuation expands lexicographically, preserving the
+complete ordered key rather than comparing components independently.
+
+[Typed-home native results](B-006-columns-native/summary.json) cover 48 cases:
+16 valid/empty results and 32 refusals. Both STRING and BIGINT values use the
+owner's node_type_a column/presence pairs, every JSON/column home combination,
+and signed8/64 logical domains. Filters hide the deliberately corrupt rows;
+owner-wide guards still reject range/type/presence/NUL failures before user SQL.
+Native sums and metadata agree with independently authored Python integer groups.
+The missing vocabulary declaration in the first synthetic model was corrected;
+only reads resumed after validating existing fixture UUIDs/version custody.
+
+[Required-scalar application results](B-006-application-native/summary.json)
+cover 112 native cases across the same four homes and two widths. Bag self-join
+counts retain every match; grouped/global/empty counts remain exact. Entity
+pages retain field order and BOOLEAN text metadata. Single and composite cursors
+exhaust the seven independent rows at LIMIT2, including repeated string prefixes,
+Unicode/trailing-space differences and exact signed extremes. Every page checks
+its complete authored key against the same pinned source before query submission.
+
+[Key refusals](B-006-key-refusal/summary.json) cover eight false unique-name
+assertions. Independent fixture names have one duplicated group; native key
+checks return exactly one violation. No page query is submitted. This proves
+native integrity refusal, not a live authorization or publisher authority.
+
+[Unsigned column evidence](B-006-unsigned-columns/summary.json) covers seven
+explicit synthetic scalar views of positive native BIGINT IDs. Logical
+unsigned1/2 ranges reject the offending rows; widths3/8/32/63 return the exact
+sum of values1..7; UInt64/BIGINT refuses at mapping admission before SQL. The
+native column supports complete narrower unsigned domains with stored-data
+checks; it cannot establish a full UInt64 carrier. These finite rows do not
+qualify all boundaries in the admitted widths or infer business-key meaning.
+
+COUNT and integrity counts now use guarded DECIMAL38 sums of one. MAX(1) detects
+empty input without relying on signed64 COUNT overflow. SUM uses the same MAX
+presence test; an overflowing nonempty aggregate raises while empty SUM remains
+NULL. Scalar/global SUM and overflow-pattern native regressions were refreshed
+against unchanged fixtures after this shared change.
+
+The unsigned-subdomain enhancement changes admission only. Current compilation
+reproduces all 180 retained native-tested request/SQL/parameter/result/obligation
+responses exactly; [custody comparison](B-006-current-artifact-custody.json) pins
+the current binary. New unsigned cases execute that binary natively. Native logs
+retain earlier baselines; latest summaries and captured artifacts describe the
+current semantic paths. New complete compile captures are compact JSONL files
+beside the corresponding summaries; expected results stay in independent oracles.
+
+These are owner-authorized candidate components. Optional/compound/related values,
+actual host authorization/pin/publication refusal execution and native Python /
+real browser composition remain required. No live delegation, accepted producer
+binding, arbitrary native type or production/release qualification follows.

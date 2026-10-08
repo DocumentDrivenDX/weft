@@ -49,3 +49,14 @@ Add runnable Rust/host/native commands with pinned versions before implementatio
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## Execution checkpoint, 2026-10-08
+
+B-006 is in progress. [Native preparation and execution evidence](../../04-build/evidence/B-006-native-preparation.md)
+records explicit binding admission and registered 0.1/0.2 required-scalar lowering,
+eleven Rust tests, native scalar/typed-home results, 112 entity/count/keyset cases,
+key/domain refusals and aggregate controls. AC1–AC3 have partial native component
+evidence; key integrity covers part of AC4. Full story acceptance remains open:
+optional/compound/related values, actual host authorization/publication/pin
+refusals and Python/browser integration remain unfinished. Synthetic admin
+fixtures and candidate capabilities do not establish production compatibility.

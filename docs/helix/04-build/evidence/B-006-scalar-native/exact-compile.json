@@ -415,7 +415,7 @@
                 "module": "sales",
                 "revision": "1"
               },
-              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p4)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p4)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p4)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p4)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
             },
             {
               "failureCode": "WFT-NUMERIC-DOMAIN",
@@ -431,7 +431,7 @@
                 "module": "sales",
                 "revision": "1"
               },
-              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND (schema_of_variant(variant_get(parse_json(r.props_json), :p5)) = 'STRING' AND instr(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING), char(0)) = 0) THEN FALSE ELSE TRUE END"
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p3 COLLATE UTF8_BINARY)) AND (schema_of_variant(variant_get(parse_json(r.props_json), :p5)) = 'STRING' AND instr(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING), char(0)) = 0) THEN FALSE ELSE TRUE END"
             },
             {
               "failureCode": "WFT-NUMERIC-DOMAIN",
@@ -447,7 +447,7 @@
                 "module": "sales",
                 "revision": "1"
               },
-              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p9)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p9)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p9)) = 'BIGINT' OR schema_of_variant(variant_get(parse_json(r.props_json), :p9)) RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND try_cast(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) BETWEEN 0 AND 18446744073709551615) THEN FALSE ELSE TRUE END"
             },
             {
               "failureCode": "WFT-NUMERIC-DOMAIN",
@@ -463,7 +463,7 @@
                 "module": "sales",
                 "revision": "1"
               },
-              "sql": "SELECT CAST(count(*) AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p10)) = 'BIGINT' OR (schema_of_variant(variant_get(parse_json(r.props_json), :p10)) RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract(schema_of_variant(variant_get(parse_json(r.props_json), :p10)), ',([0-9]+)\\\\)$', 1) AS INT), 0) <= 2)) AND try_cast(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(28,2)) IS NOT NULL) THEN FALSE ELSE TRUE END"
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT) AND CASE WHEN ((r.schema_revision COLLATE UTF8_BINARY) = (:p8 COLLATE UTF8_BINARY)) AND ((schema_of_variant(variant_get(parse_json(r.props_json), :p10)) = 'BIGINT' OR (schema_of_variant(variant_get(parse_json(r.props_json), :p10)) RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract(schema_of_variant(variant_get(parse_json(r.props_json), :p10)), ',([0-9]+)\\\\)$', 1) AS INT), 0) <= 2)) AND try_cast(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(28,2)) IS NOT NULL) THEN FALSE ELSE TRUE END"
             }
           ],
           "noPartialPublication": true,
@@ -688,15 +688,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -722,15 +726,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -756,15 +764,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -790,15 +802,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -824,15 +840,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -858,15 +878,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -892,15 +916,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -926,15 +954,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -960,15 +992,19 @@
               {
                 "dialectProfile": "weft-sql/0.1.0",
                 "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
               }
             ],
             "logicalDomain": {
-              "subset": "0.1 required scalar relational operations with admitted exact homes"
+              "subset": "required scalar relational/application operations with admitted exact homes"
             },
             "obligations": [],
             "resultDomain": {
               "carrier": "exact text",
-              "sum": "finite DECIMAL38 or error; never null on overflow"
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
             },
             "status": "candidate",
             "targetProfiles": [
@@ -979,7 +1015,7 @@
       ],
       "status": "candidate"
     },
-    "sql": "WITH `s0` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) AS `f0`, (CAST(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING) AS STRING) COLLATE UTF8_BINARY) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT)), `s1` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) AS `f0`, CAST(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(38,2)) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT)) SELECT CAST((`s0`.`f1` COLLATE UTF8_BINARY) AS STRING) AS `name`, CAST(CASE WHEN COUNT(`s1`.`f1`) > 0 AND TRY_SUM(`s1`.`f1`) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(`s1`.`f1`) END AS STRING) AS `total` FROM (`s0` INNER JOIN `s1` ON (`s1`.`f0` = `s0`.`f0`)) GROUP BY (`s0`.`f1` COLLATE UTF8_BINARY)",
+    "sql": "WITH `s0` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p4) AS STRING) AS DECIMAL(38,0)) AS `f0`, (CAST(CAST(variant_get(parse_json(r.props_json), :p5) AS STRING) AS STRING) COLLATE UTF8_BINARY) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT)), `s1` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p9) AS STRING) AS DECIMAL(38,0)) AS `f0`, CAST(CAST(variant_get(parse_json(r.props_json), :p10) AS STRING) AS DECIMAL(38,2)) AS `f1` FROM `client_dev`.`weft_b006_20261008_scalar`.`object_current` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p6 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p7 AS BIGINT)) SELECT CAST((`s0`.`f1` COLLATE UTF8_BINARY) AS STRING) AS `name`, CAST(CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM(`s1`.`f1`) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(`s1`.`f1`) END AS STRING) AS `total` FROM (`s0` INNER JOIN `s1` ON (`s1`.`f0` = `s0`.`f0`)) GROUP BY (`s0`.`f1` COLLATE UTF8_BINARY)",
     "status": "compiled",
     "targetContext": {
       "engine": "databricks-sql",

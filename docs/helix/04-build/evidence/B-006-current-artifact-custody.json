@@ -1,0 +1,6 @@
+{
+  "state": "passed",
+  "responses": 180,
+  "compilerBinarySha256": "1b6578d14115f34b973c196d6d9b8c531679a527ba68afab7643c246760f2777",
+  "qualification": "All retained native-tested request/SQL/parameter/result/obligation artifacts remain byte-semantically identical with the unsigned-subdomain admission enhancement. New unsigned paths have separate native evidence."
+}
