@@ -5,6 +5,8 @@ import hashlib,json,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
+ ('reconcile-conjunction-native.py','status','cases',32),
+ ('conjunction-reconcile-controls.py','status','corruptionsRejected',8),
  ('audit-native-registration-join.py','status','cases',1025),
  ('unsigned-reconcile-controls.py','status','controls',15),
  ('reconcile-unsigned-boundaries.py','status','cases',8),

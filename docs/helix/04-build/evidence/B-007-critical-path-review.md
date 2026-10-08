@@ -195,3 +195,14 @@ The registration manifest comparison exposes a concrete uncovered capability:
 conjunction truth tables, then finish selected domain/home qualification, supported
 manifest/assessment declarations, final Python/browser composition and the
 30-criterion acceptance audit. Candidate correspondence is not support promotion.
+
+## Conjunction native gap closed
+
+B-007-conjunction-native passes 32 truth-table/bag cases, both dialects and
+admitted props/typed homes, with 16 PostgreSQL rollback transactions and 51
+terminal Databricks statements. Independent reconciliation and eight semantic
+controls pass. Every declared capability ID is now native-observed for each
+review registration when joined with the prior corpus. Domain qualification
+remains separate: broad Truss numeric evidence used its original-definition
+backend, so verify those scalar domains through this exact registration before
+promoting it. No owner-layout dependency or distribution license gate is added.

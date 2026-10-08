@@ -1,0 +1,1 @@
+{"status": "passed", "cases": 32, "postgresqlTransactions": 16, "ashlarStatements": 51, "scope": "Independent truth-table expectations and exact emitted SQL/parameters/guards/pins matched to terminal native receipts. Truss typed Boolean/string rows; Ashlar admitted typed string plus props Boolean. Same-query/transaction engine context; no support promotion."}

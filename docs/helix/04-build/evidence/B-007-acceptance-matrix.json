@@ -623,6 +623,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+          "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -891,6 +895,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
           "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+          "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -1611,6 +1619,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-registration-join/summary.json",
           "sha256": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+          "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1651,7 +1663,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "dcf9bd73dd8f32484d17505e753a5f82a50b73068a1ad6dd9cbb8277247a247d"
+          "sha256": "d048e116edc7e9209eceafd114903483fa5c427e97839947877c3cc8b9617a0d"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1853,7 +1865,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "dcf9bd73dd8f32484d17505e753a5f82a50b73068a1ad6dd9cbb8277247a247d"
+          "sha256": "d048e116edc7e9209eceafd114903483fa5c427e97839947877c3cc8b9617a0d"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
