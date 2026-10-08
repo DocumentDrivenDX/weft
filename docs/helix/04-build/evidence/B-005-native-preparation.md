@@ -2975,3 +2975,36 @@ This is original Rust compiler and synthetic native PostgreSQL evidence for the
 selected required uint64 composite subset, including within-key mixed homes.
 Heterogeneous scalar key types, additional original scalar semantics, fresh
 Python/browser transport and installed production compatibility are not claimed.
+
+### Heterogeneous exact numeric relationship keys (2026-10-07)
+
+`tests/truss-postgresql/build-heterogeneous-relationship-fixture.py` authors an
+original model/composition variant whose Customer key is `(decimal(28,2),uint64)`
+and Orders key is `(decimal(28,2),uint64,uint64)`. Changed source documents, leaf
+codecs, value graphs, presence/home definitions and comparators are pinned from
+their actual bytes. The exact decimal comparator uses finite numeric semantics,
+forbids scale coercion and refuses nonfinite values. Expected SQL results are
+independent of the fixture builder.
+
+A separate Rust regression uses the same original owned configuration path for
+all-native, Customer-props, Orders-props and within-key mixed homes. All sixteen
+requests compile deterministically; each of the five required comparator removal
+cases refuses each request without SQL/parameters, and restored registration
+restores the full response. The test-only numeric renderer explicitly admits
+required uint64 and decimal(28,2) operand domains. No broader decimal or runtime
+binding allowlist claim is introduced.
+
+`tests/truss-postgresql/composite-relationship-native.py --heterogeneous` passes
+40 PostgreSQL 17.9 cases; adding `--mixed` passes 120 cases. The harness checks
+exact decimal text, numeric lexicographic tuple ordering, repeated individual
+components with unique complete tuples, edge bags, bound lookahead, empty results
+and existing corruption guards. New controls put excess scale and precision
+overflow into an unconnected decimal key component; emitted prerequisites reject
+both and result SQL is suppressed. Receipts:
+[B-005-heterogeneous-relationship-native.json](B-005-heterogeneous-relationship-native.json)
+and [B-005-heterogeneous-mixed-native.json](B-005-heterogeneous-mixed-native.json).
+
+This is original compiler and synthetic PostgreSQL evidence for the named exact
+numeric heterogeneous subset. UTF-8/C-collation string components, other scalar
+domains, broader source-token grammars and fresh Python/browser transports remain
+unqualified. No installed Truss or production compatibility claim follows.

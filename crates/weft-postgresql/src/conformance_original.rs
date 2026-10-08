@@ -367,12 +367,13 @@ fn numeric_expression(
 ) -> Result<String> {
     use weft_core::ir::{Expression, Family};
     let logical = node.logical_type();
-    if logical.family != Family::Integer
-        || logical.nullable
-        || logical.facets != serde_json::json!({"integerWidth":{"bits":64,"signed":false}})
-    {
+    let selected_domain = (logical.family == Family::Integer
+        && logical.facets == serde_json::json!({"integerWidth":{"bits":64,"signed":false}}))
+        || (logical.family == Family::Decimal
+            && logical.facets == serde_json::json!({"precision":28,"scale":2}));
+    if logical.nullable || !selected_domain {
         return Err(fail(
-            "Conformance numeric procedure only selects nonnullable uint64 operands",
+            "Conformance numeric procedure only selects required uint64 or decimal(28,2) operands",
         ));
     }
     match node {
@@ -416,6 +417,22 @@ mod composite_tests {
             "../../../tests/truss-postgresql/fixtures/original-composite-relationship-inputs.json"
         ))
         .unwrap();
+        exercise(
+            inputs,
+            "WEFT_ORIGINAL_COMPOSITE_RELATIONSHIP_CAPTURE",
+            "WEFT_ORIGINAL_COMPOSITE_MIXED_CAPTURE",
+        );
+    }
+    #[test]
+    fn heterogeneous_composite_relationships_compile_through_original_owned_configuration() {
+        let inputs:Value=serde_json::from_str(include_str!("../../../tests/truss-postgresql/fixtures/original-heterogeneous-relationship-inputs.json")).unwrap();
+        exercise(
+            inputs,
+            "WEFT_ORIGINAL_HETEROGENEOUS_CAPTURE",
+            "WEFT_ORIGINAL_HETEROGENEOUS_MIXED_CAPTURE",
+        );
+    }
+    fn exercise(inputs: Value, native_variable: &str, mixed_variable: &str) {
         let mut captures = Vec::new();
         let mut mixed_captures = Vec::new();
         let baseline: Vec<Value> = serde_json::from_str(include_str!(
@@ -524,10 +541,10 @@ mod composite_tests {
                 }
             }
         }
-        if let Ok(path) = std::env::var("WEFT_ORIGINAL_COMPOSITE_MIXED_CAPTURE") {
+        if let Ok(path) = std::env::var(mixed_variable) {
             std::fs::write(path, serde_json::to_vec_pretty(&mixed_captures).unwrap()).unwrap();
         }
-        if let Ok(path) = std::env::var("WEFT_ORIGINAL_COMPOSITE_RELATIONSHIP_CAPTURE") {
+        if let Ok(path) = std::env::var(native_variable) {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
         }
     }
