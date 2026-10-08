@@ -12,6 +12,8 @@ components=[
  ('reconcile-ashlar-warehouse-boundaries.py','status','sameStatementEngineResults',7),
  ('ashlar-warehouse-controls.py','status','corruptionsRejected',6),
  ('audit-ashlar-support-reports.py','status','casesAudited',22),
+ ('reconcile-ashlar-warehouse-counts.py','status','cases',32),
+ ('warehouse-capture-controls.py','status','controls',9),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),

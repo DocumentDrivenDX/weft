@@ -1,0 +1,21 @@
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+{
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "warehouseLinkedCountCases": 32,
+  "state": "passed",
+  "cases": 32,
+  "compilerBinarySha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "harnessSha256": "42295c2b0f4f3e4f8be1d2164e4653f0a6c0798dae513b8d0135df8b9277a7b5",
+  "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+  "qualification": "Warehouse/build-linked count-only corpus; keyset/entity pages excluded from this run. Registered 0.2 compiler and native required-scalar entity projection, exact bag/group/global counts and single/composite authored-key pages across four native/JSON homes and signed8/64. Same retained synthetic snapshots; no live policy/pin authority, optional/compound/related values, embedding or production qualification."
+}

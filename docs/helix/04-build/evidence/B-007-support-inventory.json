@@ -99,6 +99,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-ashlar-report-audit/summary.json",
           "sha256": "b43573fbb1bdbeb1f4236db6ab330902f19d2be1b6c70557a0e4e5bbb9beb21b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/custody.json",
+          "sha256": "0cb9739d7d355150827e235141767638a2500c9d2a4ac1e9bd2b6ffaa1064dc9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-reconciliation/summary.json",
+          "sha256": "2cd87d81af75076ce2bf7651a1231491a073b3fc100a004cdcda2ff4ac94c4c1"
         }
       ],
       "excludedClaims": [
@@ -114,7 +122,8 @@
         "uBuildHash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
         "rBuildHash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
         "scope": "Actual read-only current warehouse identity. Does not retroactively pin earlier corpus receipts, capture their settings, or qualify support.",
-        "sameStatementUnsignedSumCases": 7
+        "sameStatementUnsignedSumCases": 7,
+        "sameQueryApplicationCountCases": 32
       }
     }
   ],
