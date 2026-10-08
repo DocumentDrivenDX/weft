@@ -1,0 +1,11 @@
+{
+  "state": "passed",
+  "rustTests": 12,
+  "nativeCases": 1,
+  "sources": {
+    "crates/weft-databricks/src/binding.rs": "363a985bda263988cc116e934e3f47dd8d215504dd045221b73c8e92715ed425",
+    "tests/ashlar-databricks/binding.rs": "706b618fd82de02155d74ed8ae012e78ea264f48519a7d2c63b096c4fedeb8d8",
+    "tests/ashlar-databricks/cross-module-native.py": "16858cca883073aeb15d3eaec0c7c41d61164085f8d53a041031ece2b39b98ab"
+  },
+  "qualification": "Original local-module membership correction. Native typed STRING identity and values match independent oracle; source document/revision and declared membership checks remain mandatory."
+}

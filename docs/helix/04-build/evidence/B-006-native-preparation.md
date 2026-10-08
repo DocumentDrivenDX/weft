@@ -204,3 +204,14 @@ These are owner-authorized candidate components. Optional/compound/related value
 actual host authorization/pin/publication refusal execution and native Python /
 real browser composition remain required. No live delegation, accepted producer
 binding, arbitrary native type or production/release qualification follows.
+
+### Original local-module membership correction
+
+A failing test exposed an extra same-module restriction in binding admission.
+CONTRACT-001 permits declared references across supplied modules within one
+owning document. Admission now follows the exact original member identity;
+document/revision pin and declared membership checks remain. Twelve Rust tests
+pass, and [actual native typed-column execution](B-006-cross-module-native/summary.json)
+retains the field's `types` module identity and exact grouped values. The
+[custody record](B-006-cross-module.json) pins the changed source and harness.
+This does not fetch modules or infer cross-document dependencies.

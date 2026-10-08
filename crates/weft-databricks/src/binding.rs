@@ -209,7 +209,6 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
             if !fields.insert(identity_key(&property.logical))
                 || property.logical.document_id != record.logical.document_id
                 || property.logical.revision != record.logical.revision
-                || property.logical.module != record.logical.module
             {
                 return Err(fail("Duplicate or foreign property mapping"));
             }

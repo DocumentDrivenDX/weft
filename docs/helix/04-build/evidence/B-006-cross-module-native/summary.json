@@ -1,0 +1,28 @@
+{
+  "state": "passed",
+  "rows": [
+    [
+      "same",
+      "0"
+    ],
+    [
+      "é",
+      "4"
+    ],
+    [
+      "x",
+      "5"
+    ],
+    [
+      "x ",
+      "6"
+    ],
+    [
+      "é",
+      "3"
+    ]
+  ],
+  "harnessSha256": "16858cca883073aeb15d3eaec0c7c41d61164085f8d53a041031ece2b39b98ab",
+  "compilerBinarySha256": "72c063c2c562f85d2365e3131848e60a48bb48ddc4a6eb4109f927744846c4a4",
+  "qualification": "Actual compiler/native typed projection with a declared field member in another supplied module of the same original UMF document. Exact field identity and namespace retained. Synthetic fixtures; no cross-document implicit fetching or production schema claim."
+}

@@ -146,6 +146,28 @@ fn bigint_admits_unsigned_subdomains_and_refuses_uint64() {
         );
     }
 }
+
+#[test]
+fn original_members_can_reference_another_supplied_local_module() {
+    let mut input = catalog().inputs[0].clone();
+    let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
+    let field = document["modules"][0]["elements"]
+        .as_array_mut()
+        .unwrap()
+        .remove(3);
+    document["modules"][0]["elements"][0]["members"][1]["module"] = json!("types");
+    document["modules"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"id":"types","namespace":"types","elements":[field]}));
+    input.document_json = document.to_string();
+    input.pin.sha256 = sha256(input.document_json.as_bytes());
+    let c = Catalog::prepare(vec![input]).unwrap();
+    let mut binding = fixture();
+    binding["modelPins"] = json!(c.pins());
+    binding["records"][0]["properties"][1]["logical"]["module"] = json!("types");
+    admit(&c, &binding).unwrap();
+}
 #[test]
 fn physical_identifiers_are_quoted_and_values_never_become_code() {
     let mut v = fixture();
