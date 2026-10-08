@@ -52,3 +52,27 @@ integrity receipt. Raw artifacts, producer/helper source snapshots and log hashe
 are retained. This closes the missing current-build observation for this corpus;
 it does not retroactively identify older compound/relationship receipts or
 promote the candidate backend to a qualified production profile.
+
+## Current warehouse compounds and relationships
+
+Fresh compound entity/page execution passes all 48 cases, 192 integrity checks
+and 24 empty-page warehouse probes (264 terminal statements). Independent
+expectations retain nested sequence order, exact signed integers, structured and
+recursive values, maps, optional absent states and complete page exhaustion across
+props/native BIGINT key homes. Nonempty results have 24 same-statement warehouse
+captures; empty pages have separately labeled probes.
+
+Fresh relationship execution passes 52 outcomes: 28 result cases and 24
+integrity refusals before any user query. Independent bags retain parallel edges,
+forward/inverse key tuples, bound/truncation behavior and composite-key EXISTS.
+The 272 unique native guards and 24 nonempty result queries capture warehouse
+identity in their statements; four empty EXISTS queries use separate probes.
+There are 309 terminal statements including five fixture UUID/manifest checks.
+Both canonical/serving edge tables and props/typed key homes are exercised.
+
+These are new executions, not versions inferred for the old corpus. All captures
+observe Databricks SQL 2026.39 with the same u/r build hashes as the current
+application corpus. Retained producer/helper source snapshots, original compile
+artifacts, native statements and custody hashes support replay. Broader scalar
+input/result domain qualification and the registered supported profile remain
+open; these successful corpora alone do not promote candidate declarations.

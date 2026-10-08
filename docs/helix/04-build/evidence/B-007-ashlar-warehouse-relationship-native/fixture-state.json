@@ -1,0 +1,16 @@
+{
+  "phase": "ready",
+  "payloadSha256": "060d868302c6f5a52e4f2c1939d610280221ae27de8a61425f7c797937148e29",
+  "uuids": {
+    "node_type_a": "65233fb8-04ea-474b-b9a0-89c39b2f722b",
+    "edge_current": "a9af7d3a-5c29-4595-ac9f-906594a42191",
+    "edge_ab": "f35d01dd-fd8b-4cf5-a8d3-1c821571b507",
+    "publication_manifest": "24f4165b-8f6b-413a-9e8d-2d3a83195ae7"
+  },
+  "versions": {
+    "node_type_a": 1,
+    "edge_current": 1,
+    "edge_ab": 1
+  },
+  "publicationId": "weft-relationship-fixtures"
+}

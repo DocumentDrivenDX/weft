@@ -1,0 +1,13 @@
+{
+  "scope": "Fresh read-only compound entity/page corpus with separately labeled empty-page warehouse probes.",
+  "inputHashes": {
+    "summary.json": "54befd79458ffd2ccf4af50c6ef401d071bac4f7240043d65624c175b6c916f5",
+    "run.log": "7e202d82da2b9c7a9d2e9bf4574229b8b36a80c60c2050862d9e00f6583be05a",
+    "compound-native.py": "66d99df0c399bea5fdbe7e9b81ad1e81c1c45af07cefe5537e01ca83535789d3",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "statements.jsonl": "552230b6944e673ccdcfcc2e723573f04da975bebcebb7733df0e02009707644",
+    "compile-artifacts.jsonl": "18ac63b6cb43a9e29c8708fc2d629155b5187c628dba038bdadbc9558bf11988",
+    "compound-application-native.py": "3eb32463f8ca22a0e0bcfaee8e3076259183da2a689aaceb01bc51bf9a87524a",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de"
+  }
+}

@@ -423,6 +423,47 @@
       "sourceSha256": "f777d3132de180160b2880e3ac3f6f3ecbc15f681f81e66eb8165f3d92f457f9"
     },
     {
+      "component": "reconcile-ashlar-warehouse-compounds.py",
+      "result": {
+        "status": "passed",
+        "cases": 48,
+        "independentDecodedComparisons": 48,
+        "integrityStatements": 192,
+        "terminalStatements": 264,
+        "sameStatementWarehouseCases": 24,
+        "separateEmptyPageProbes": 24,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent nested sequence, structured/recursive/map, exact integer and optional absent expectations with full page exhaustion across props/native ID homes. Empty pages use separate probes. No fresh execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "8a0d7f202f205cae1932f7c32a6cbf3e2aa4f9c1ad30b651b4714949a77b79e2"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-relationships.py",
+      "result": {
+        "status": "passed",
+        "cases": 52,
+        "positive": 28,
+        "refusals": 24,
+        "uniqueNativeGuards": 272,
+        "sameStatementWarehouseResults": 296,
+        "separateEmptyQueryProbes": 4,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "terminalStatements": 309,
+        "scope": "Independent forward/inverse duplicate bags, bound lookahead, composite-key EXISTS and pre-query integrity refusals across canonical/serving edges and props/typed homes. Empty EXISTS uses separate probes. No fresh SQL execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "29b166f34dd2a7d34eb35f29c55761f6e0ea11f7be54790ed8547ad173336bc0"
+    },
+    {
       "component": "reconcile-truss-archive.py",
       "result": {
         "status": "passed",
@@ -1904,6 +1945,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 97,
+  "verifiedEvidenceReferences": 101,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

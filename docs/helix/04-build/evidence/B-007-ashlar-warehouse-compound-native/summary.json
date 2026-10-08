@@ -1,0 +1,1206 @@
+{
+  "state": "passed",
+  "cases": 48,
+  "outcomes": [
+    {
+      "id": "nested-list-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    }
+  ],
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "warehouseIdentityCaptures": [
+    {
+      "id": "nested-list-False-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-False-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-False-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-False-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-absent-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-absent-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-absent-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "nested-list-True-absent-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-False-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-False-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-False-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-False-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-absent-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-absent-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-absent-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "structured-True-absent-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-False-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-False-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-False-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-False-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-absent-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-absent-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-absent-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "cyclic-True-absent-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-False-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-False-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-False-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-False-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-exact-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-exact-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-exact-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-exact-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-absent-props-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-absent-props-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-absent-column-page-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "id": "map-structured-True-absent-column-page-1",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    }
+  ],
+  "compilerBinarySha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "harnessSha256": "3eb32463f8ca22a0e0bcfaee8e3076259183da2a689aaceb01bc51bf9a87524a",
+  "builderSha256": "66d99df0c399bea5fdbe7e9b81ad1e81c1c45af07cefe5537e01ca83535789d3",
+  "qualification": "Nonempty compounds capture warehouse identity in their query; empty pages use a separate probe, not same-statement identity evidence. Whole entity/ordered keyset combinations of compound values and props/native BIGINT ID homes; same independently pinned synthetic fixture publication, no production policy qualification."
+}

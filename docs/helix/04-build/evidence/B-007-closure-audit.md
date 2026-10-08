@@ -35,3 +35,12 @@ of 16 empty pages. All observations are Databricks SQL 2026.39 with the same
 retained build hashes. This advances native profile qualification for this
 corpus; older compound and relationship scopes are not retroactively pinned.
 The standard replay now passes 24 components and 97 hashed references.
+
+Current-build compound entity/page and relationship scopes now have fresh
+native executions and independent reconciliation: 48 compound cases and 52
+relationship outcomes (28 results, 24 pre-query refusals). The current warehouse
+identity is captured with nonempty queries/guards and separately probed after
+empty queries. Older receipts remain historical; no retroactive version pinning
+is used. Remaining native work is the broader scalar domain/settings evidence
+and its registered support qualification, alongside the broader semantic branch
+audit. The standard retained replay now includes these fresh scopes.

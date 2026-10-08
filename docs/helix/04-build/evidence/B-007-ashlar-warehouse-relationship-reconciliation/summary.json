@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "cases": 52,
+  "positive": 28,
+  "refusals": 24,
+  "uniqueNativeGuards": 272,
+  "sameStatementWarehouseResults": 296,
+  "separateEmptyQueryProbes": 4,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "terminalStatements": 309,
+  "scope": "Independent forward/inverse duplicate bags, bound lookahead, composite-key EXISTS and pre-query integrity refusals across canonical/serving edges and props/typed homes. Empty EXISTS uses separate probes. No fresh SQL execution, host DB execution or candidate promotion."
+}

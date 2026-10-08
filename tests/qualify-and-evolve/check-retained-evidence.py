@@ -17,6 +17,8 @@ components=[
  ('ashlar-count-controls.py','status','corruptionsRejected',15),
  ('audit-ashlar-count-hosts.py','status','hostArtifactJoins',64),
  ('reconcile-ashlar-warehouse-application.py','status','cases',112),
+ ('reconcile-ashlar-warehouse-compounds.py','status','cases',48),
+ ('reconcile-ashlar-warehouse-relationships.py','status','cases',52),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -40,6 +42,10 @@ for name,status,count,expected in components:
   assert report['logicalMetadataCases']==32
  if name=='reconcile-ashlar-warehouse-application.py':
   assert report['independentRowComparisons']==112 and report['sameStatementWarehouseCases']==96 and report['separateEmptyQueryProbes']==16
+ if name=='reconcile-ashlar-warehouse-compounds.py':
+  assert report['independentDecodedComparisons']==48 and report['sameStatementWarehouseCases']==24 and report['separateEmptyPageProbes']==24
+ if name=='reconcile-ashlar-warehouse-relationships.py':
+  assert report['positive']==28 and report['refusals']==24 and report['uniqueNativeGuards']==272 and report['sameStatementWarehouseResults']==296 and report['separateEmptyQueryProbes']==4
  if name=='audit-truss-support-reports.py':
   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
  if name=='audit-ashlar-support-reports.py':
