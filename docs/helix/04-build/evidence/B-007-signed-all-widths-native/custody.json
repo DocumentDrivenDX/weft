@@ -1,0 +1,11 @@
+{
+  "scope": "Actual read-only signed-width native guard/SUM evidence; synthetic owner substitutions only.",
+  "inputHashes": {
+    "summary.json": "1410d4a56a306f7530a5ac01256a17ad725089b7685103263084157b708c807e",
+    "compile-artifacts.jsonl": "0d4fe2a74a9ccea03faf4eb497c3b15d3a66ac336d9cb17993d713049a35263d",
+    "statements.jsonl": "88538994e524f289317ef0540ba02bde3aa015b0e05c4ffa64590a19c6d2dd69",
+    "run.log": "f1a4b69ba2512e96343697271259129078b61ac38b0451b1f58ba9832a19ace9",
+    "harness.py": "47777cb0ad09b76e153197659d493ed5be75be0286a64fbb4008771cb9520ad2",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
+  }
+}

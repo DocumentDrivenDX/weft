@@ -24,6 +24,9 @@ components=[
  ('reconcile-ashlar-warehouse-values.py','status','cases',133),
  ('../ashlar-databricks/host-obligation-check.py','state','cases',53),
  ('reconcile-unsigned-all-widths.py','status','cases',64),
+ ('reconcile-signed-boundaries.py','status','cases',64),
+ ('signed-reconcile-controls.py','status','corruptionsRejected',7),
+ ('audit-current-hosts.py','status','hostArtifactJoins',1182),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -55,6 +58,10 @@ for name,status,count,expected in components:
   assert report['positive']==2 and report['refusals']==8 and report['integrityStatements']==40 and report['sameStatementWarehouseResults']==41 and report['separateEmptyQueryProbes']==1
  if name=='reconcile-unsigned-all-widths.py':
   assert report['nativeReceipts']==190 and report['sameStatementEngineResults']==63 and report['successfulReceipts']==189 and report['expectedFailedReceipts']==1
+ if name=='reconcile-signed-boundaries.py':
+  assert report['nativeReceipts']==194 and report['successfulReceipts']==192 and report['expectedFailedReceipts']==2 and report['sameStatementWarehouseCases']==64
+ if name=='audit-current-hosts.py':
+  assert report['cases']==591 and report['ashlarCases']==515 and report['trussCases']==76
  if name=='reconcile-ashlar-warehouse-values.py':
   assert report['positive']==56 and report['refusals']==77 and report['independentDecodedComparisons']==56 and report['integrityStatements']==288 and report['sameStatementWarehouseResults']==343 and report['separateEmptyQueryProbes']==1
  if name=='audit-truss-support-reports.py':

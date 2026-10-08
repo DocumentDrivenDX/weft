@@ -53,3 +53,24 @@ setting for earlier sessions. The standard replay passes 29 components and
 106 hashed references. Registered supported-profile qualification, remaining
 numeric/home domain accounting and the broader semantic branch audit remain
 open; this is not blanket native support or completed acceptance.
+
+A subsequent numeric-domain checkpoint executes every signed BIGINT width 1–64
+on the same identified warehouse. Its 194 terminal statements include 192
+successes and two expected CAST_OVERFLOW refusals. Repeated min/max bags sum to
+-2, preserving duplicates; guards detect both out-of-range directions and
+native null. Independent reconciliation and seven semantic corruption controls
+pass. These synthetic owner substitutions prove emitted numeric operations and
+guards, without claiming publication/table custody.
+
+Fresh two-adapter Python ABI and browser WASM builds now have actual host byte
+parity on 591 retained native-tested requests: 515 Ashlar and 76 Truss, including
+the unsigned-width-64 compile refusal. The fresh CLI compares complete artifacts
+to original native receipts; only the explicitly obsolete Spark field is removed
+from 387 historical Ashlar artifacts. Both actual host receipts join all 591
+artifacts (1,182 joins). Source inputs, binary/wheel hashes, package RECORD checks,
+compressed original requests/responses, build logs and runtime identities are
+retained in B-007-current-initial-hosts. This closes the current-source host
+comparison after the metadata correction; it does not claim each host executed
+SQL. Registered supported-profile qualification and remaining critical semantic
+branch accounting still need completion. The standard replay now passes 34
+components and verifies 116 hashed references.

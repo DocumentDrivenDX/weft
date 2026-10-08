@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "cases": 591,
+  "hostArtifactJoins": 1182,
+  "ashlarCases": 515,
+  "trussCases": 76,
+  "scope": "Fresh native Python and actual Chromium byte parity for 591 original native-tested requests, including the UInt64 compile refusal. Exact artifact equivalence after the specified obsolete Spark-field removal. No separate host database executions, supported registration promotion or platform-wide distribution claim.",
+  "harnessSha256": "4aa3f25bcdcbc114dd8d5da83a22f280fc8a13b1a6e5baa904649b99341ea265"
+}

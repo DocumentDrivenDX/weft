@@ -43,6 +43,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/session-joined-summary.json",
           "sha256": "133aa70fd93ac5eaf3ede3b850bc03deec9e93afa9f1424f4ef6f05a28421e62"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "excludedClaims": [
@@ -167,6 +175,22 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-reconciliation/summary.json",
           "sha256": "1243d76240053eca9a8a2ff52f7bc124493beaf1505f6ba77f42decd9ae1f493"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
         }
       ],
       "excludedClaims": [

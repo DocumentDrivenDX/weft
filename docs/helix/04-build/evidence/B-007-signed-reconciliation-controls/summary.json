@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "corruptionsRejected": 7,
+  "controls": [
+    "sum-bag",
+    "range-count",
+    "native-null",
+    "overflow-code",
+    "parameters",
+    "warehouse-build",
+    "extra-receipt"
+  ],
+  "scope": "Semantic native receipt corruptions refused with recomputed custody hashes. No native execution.",
+  "harnessSha256": "6525ecea1d61563d0a8dd8d305031962e620c7f27f72cdcac12f900700ffa384"
+}

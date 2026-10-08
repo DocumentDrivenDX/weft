@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "cases": 64,
+  "nativeReceipts": 194,
+  "successfulReceipts": 192,
+  "expectedFailedReceipts": 2,
+  "sameStatementWarehouseCases": 64,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+  },
+  "sourceSha256": "5371d8409077bb77c187f660e2642611451ba85aa9c8559bdd14a682a1b31ad5",
+  "inputHashes": {
+    "custody.json": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463",
+    "summary.json": "1410d4a56a306f7530a5ac01256a17ad725089b7685103263084157b708c807e",
+    "compile-artifacts.jsonl": "0d4fe2a74a9ccea03faf4eb497c3b15d3a66ac336d9cb17993d713049a35263d",
+    "statements.jsonl": "88538994e524f289317ef0540ba02bde3aa015b0e05c4ffa64590a19c6d2dd69"
+  },
+  "scope": "Exact signed widths 1..64, repeated signed boundary bags, range/null guards and both carrier overflow refusals. Original emitted SQL, parameters, module/binding pins and warehouse capture reconciled. Synthetic owner substitutions; no publication custody or supported registration claim."
+}

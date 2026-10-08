@@ -859,6 +859,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-reconciliation/summary.json",
           "sha256": "1243d76240053eca9a8a2ff52f7bc124493beaf1505f6ba77f42decd9ae1f493"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
+          "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -1021,6 +1033,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-reconciliation/summary.json",
           "sha256": "1243d76240053eca9a8a2ff52f7bc124493beaf1505f6ba77f42decd9ae1f493"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
+          "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -1050,6 +1074,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-warehouse-metadata-correction/summary.json",
           "sha256": "c5ca8caed543fb3d6c1c7bb880b40f6654a2fb7395ead03d4067de0bfa574593"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -1131,6 +1163,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1212,6 +1252,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1285,6 +1333,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1479,6 +1535,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
           "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
+          "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1580,6 +1656,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-derived-capabilities/summary.json",
           "sha256": "47b01aef388f430edc78cfbed1a64214ebf4282bac7e32f3ec8da62b45c8ad85"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-reconciliation-controls/summary.json",
+          "sha256": "467b8961b75152dc36426afb5eca8262bd489708ddec075841f60ee9fc6fda3e"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
