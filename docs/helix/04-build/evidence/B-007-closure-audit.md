@@ -93,3 +93,14 @@ SQL. Both declarations stay candidate, with no qualification evidence claims.
 This establishes the versioned engine-profile registration seam needed for the
 remaining native-support audit; it does not close that audit or qualify a new
 Python/browser composition. Scope and rollback are documented in TD-006.
+
+The workspace rerun at source checkpoint 748ecf8 now passes all 224 Rust tests
+across 35 terminal suites, with no ignored or filtered tests. The preserved
+failure is resolved; it remains historical failure evidence rather than being
+rewritten. B-007-workspace-224 records the terminal passing run. The subsequent
+application resolver audit adds four test functions and accounts for its
+semantic families: nine tests pass without filtering, preserving the 620-case
+application corpus and 303 initial positive queries in IR 0.2. These two source
+scopes are recorded separately. Remaining critical parser/exact/type-graph and
+backend lowering accounting and supported native-profile qualification remain
+required; the candidate inventory is not silently promoted.

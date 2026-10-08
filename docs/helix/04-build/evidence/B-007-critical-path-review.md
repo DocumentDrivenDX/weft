@@ -105,3 +105,11 @@ Two internal guards bypassed by the parsed-SQL corpus have direct assertions: th
 1,024/1,025 literal boundary and empty JOIN predicates. Nine library tests pass,
 none filtered or ignored. Application resolution, catalog/exact/parser and native
 lowering remain separate scopes in the broader critical branch gate.
+
+The application resolver now has its own semantic-family assertion map in
+[B-007-application-resolver-branch-accounting.md](B-007-application-resolver-branch-accounting.md).
+Nine tests pass without filtering, including the unchanged 620-case application
+corpus and the 303 initial positive queries in explicit IR 0.2. Added assertions
+cover named-parameter, expanded-entity, scan-sensitive grouping and read-profile
+recognizer gaps. Parser/exact/type-graph and backend lowering accounting remain
+separate; this scoped completion does not itself qualify native support.
