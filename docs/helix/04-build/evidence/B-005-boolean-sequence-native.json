@@ -1,0 +1,90 @@
+{
+  "scope": "Original native Boolean sequence over synthetic pinned fixture codec/source procedures; no runtime embedding or production claim",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "cases": 9,
+  "harnessSha256": "b43d8a74760fa86dfbc63047636f60d2b06ac8ef2c82217b78db435478ba4305",
+  "captureSha256": "0fd3b2bde5d23639e9cf33dfcbb2496232914cb9893912f9465af6bb0b5ba3b0",
+  "results": [
+    {
+      "case": "exact",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6e4d37bb4c2c553321a3659a30b9d0b6ae9bc9783c3fad890328f92a54eb38ab"
+    },
+    {
+      "case": "empty",
+      "violations": [
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0f150ca181971882282661f4e0d40dca5d82ab04532d89d38f0770b604bb753f"
+    },
+    {
+      "case": "null-boolean",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "883cf43e7baae9a0d302c1b8b0eaefe32dcb5030f6ab411431641c466cf7073a"
+    },
+    {
+      "case": "extra-text",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "efed86081709d74468108ce259b91ff4caadcddcf8d61cd603e740802c28a677"
+    },
+    {
+      "case": "wrong-kind",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "75ff115fce546e901f847af3f562bf6d5364e067af028839c6f01c9ac4a3e218"
+    },
+    {
+      "case": "wrong-codec",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "85a899909da4692ba00e1f918b135bd44bc94fc0fea957ca1667b6598a4547f7"
+    },
+    {
+      "case": "wrong-source",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d3f5ba9b1cd6ec70baa9d18c1feccddbaa443b44adb81004bff52268e4dc5230"
+    },
+    {
+      "case": "absent-root",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4509e4c1c113fff1eaf30839d08e5148bb0ccef4ee4b2beda1a1c4299dd9f823"
+    },
+    {
+      "case": "duplicate-ordinal",
+      "violations": [
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "759961e33b23fb09f7da32d96728bdf27ca0085b2c45203957c95731aee01710"
+    }
+  ]
+}

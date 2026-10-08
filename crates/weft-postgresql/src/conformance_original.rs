@@ -392,6 +392,13 @@ fn fixture_native_leaf(
         crate::value_definition::LayoutShape::Scalar {
             family: "string", ..
         } => ("to_jsonb(w.r->>13)", "text", vec![13]),
+        crate::value_definition::LayoutShape::Scalar {
+            family: "boolean", ..
+        } => (
+            "CASE WHEN w.r->>14 IN ('true','false') THEN to_jsonb((w.r->>14)::bool) ELSE NULL END",
+            "boolean",
+            vec![14],
+        ),
         _ => {
             return Err(fail(
                 "Native leaf family or shape has no qualified conformance procedure",
@@ -410,6 +417,8 @@ fn fixture_native_leaf(
         .join(" AND ");
     let numeric = if kind == "integer" {
         " AND CASE WHEN w.r->>16 ~ '^(0|[1-9][0-9]*)$' AND pg_input_is_valid(w.r->>16,'numeric') THEN (w.r->>15)::numeric=(w.r->>16)::numeric ELSE FALSE END"
+    } else if kind == "boolean" {
+        " AND w.r->>14 IN ('true','false')"
     } else {
         ""
     };
@@ -976,7 +985,7 @@ mod native_leaf_refusal_tests {
 
     #[test]
     fn unqualified_native_leaf_shapes_return_diagnostics_without_panicking() {
-        for family in ["boolean", "decimal", "timestamp", "binary", "unknown"] {
+        for family in ["decimal", "timestamp", "binary", "unknown"] {
             let node = LayoutNode {
                 codec_bytes: b"{}",
                 shape: LayoutShape::Scalar {
@@ -1127,6 +1136,35 @@ mod boolean_property_tests {
         }
         if let Ok(path) = std::env::var("WEFT_BOOLEAN_TRANSPORT_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
+        }
+    }
+}
+
+#[cfg(test)]
+mod boolean_sequence_tests {
+    use super::*;
+    #[test]
+    fn original_boolean_sequence_compiles_without_string_coercion() {
+        let cut: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-boolean-sequence-inputs.json"
+        ))
+        .unwrap();
+        let request = &cut["request"];
+        let catalog =
+            Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+        let config = configuration(&cut["composition"].to_string(), &catalog).unwrap();
+        let response: Value =
+            serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+        assert_eq!(response["status"], "compiled", "{response}");
+        if let Ok(path) = std::env::var("WEFT_BOOLEAN_SEQUENCE_CAPTURE") {
+            std::fs::write(
+                path,
+                serde_json::to_vec_pretty(
+                    &serde_json::json!({"request":request,"response":response}),
+                )
+                .unwrap(),
+            )
+            .unwrap();
         }
     }
 }

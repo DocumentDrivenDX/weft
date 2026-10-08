@@ -3432,3 +3432,29 @@ the public Rust/native Python/browser core. Optional and recursive Boolean paths
 broader query/domain coverage and full host/story qualification remain required
 work; exact conformance allowlisting does not imply generic released runtime or
 production compatibility.
+
+### Original recursive Boolean sequence native lowering (2026-10-07)
+
+The independent Boolean sequence builder authors original tag-item Field,
+codec/graph and source-document bytes, re-pins them and supplies separately
+specified native rows for [false,true,false]. The new tests-before-code sequence
+regression first refused because no trusted Boolean leaf procedure existed.
+That procedure now uses the native Boolean payload slot and returns JSON Boolean
+values, retaining duplicate false values and order. It checks exact codec/source
+bytes, scalar kind, the Boolean token and absence of competing payload columns.
+Its value expression guards the Boolean cast; unsupported other native leaf
+families and shapes still return diagnostics.
+
+`original-boolean-sequence-native.py` passes nine PostgreSQL 17.9 cases. Exact
+values and an empty sequence are independently expected. Null Boolean payload,
+extra text, wrong scalar kind, wrong codec/source bytes, missing required root and
+duplicate ordinals refuse before result SQL. JSON results are asserted to contain
+actual Boolean values. All 150 Rust tests and the prior custody/specification
+checks pass. Receipts:
+[B-005-boolean-sequence.json](B-005-boolean-sequence.json) and
+[B-005-boolean-sequence-native.json](B-005-boolean-sequence-native.json).
+
+This qualifies the selected native sequence procedure through owned original
+Configuration. It has no new exact runtime allowlist entry or fresh Python/browser
+proof yet. Optional Boolean roots, other recursive arrangements and broader
+host/story qualification remain open; no production compatibility is claimed.
