@@ -1,9 +1,11 @@
 """Independent small bag/Decimal interpreter. Does not emit SQL or call Rust semantics."""
 from collections import Counter
 from decimal import Decimal, localcontext
-import copy,json,pathlib,subprocess
+import copy,json,pathlib,subprocess,os,hashlib
 ROOT=pathlib.Path(__file__).resolve().parents[2]
-OUT=ROOT/'target/b002';OUT.mkdir(parents=True,exist_ok=True)
+OUT=pathlib.Path(os.environ.get('WEFT_ORACLE_OUTPUT',str(ROOT/'target/b002')));OUT.mkdir(parents=True,exist_ok=True)
+BINARY=pathlib.Path(os.environ.get('WEFT_FRONTEND_BINARY',str(ROOT/'target/debug/frontend')))
+BINARY_SHA=hashlib.sha256(BINARY.read_bytes()).hexdigest()
 corpus=json.loads((ROOT/'docs/helix/03-test/fixtures/cases.json').read_text())
 seed=json.loads((ROOT/'docs/helix/03-test/fixtures/sales.rows.json').read_text())
 field_to_name={'customer-id':'id','customer-name':'name','customer-active':'active','order-customer':'customer_id','order-total':'total'}
@@ -46,7 +48,7 @@ reports=[];compared=0
 with localcontext() as context:
  context.prec=100
  for case in corpus:
-  raw=subprocess.run([str(ROOT/'target/debug/frontend')],input=json.dumps(case['request'],ensure_ascii=False),capture_output=True,text=True,check=True).stdout.strip()
+  raw=subprocess.run([str(BINARY)],input=json.dumps(case['request'],ensure_ascii=False),capture_output=True,text=True,check=True).stdout.strip()
   report=json.loads(raw)
   expected=case['expected'];want='resolved' if expected['status']=='compiled' else 'blocked'
   assert report['status']==want,(case['id'],report,expected)
@@ -60,4 +62,7 @@ with localcontext() as context:
     compared+=1
   reports.append({'id':case['id'],'response':report,'raw':raw})
 (OUT/'reports.json').write_text(json.dumps(reports,ensure_ascii=False))
-print(json.dumps({'corpusCases':len(reports),'independentRelationalBags':compared,'arithmetic':'Python int and Decimal precision 100','targetExecution':False}))
+assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==BINARY_SHA,'frontend binary changed during oracle execution'
+summary={'corpusCases':len(reports),'independentRelationalBags':compared,'refusedCases':sum(r['response']['status']=='blocked' for r in reports),'arithmetic':'Python int and Decimal precision 100','targetExecution':False,'frontendBinarySha256':BINARY_SHA,'corpusSha256':hashlib.sha256((ROOT/'docs/helix/03-test/fixtures/cases.json').read_bytes()).hexdigest(),'oracleSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest()}
+(OUT/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+print(json.dumps(summary))

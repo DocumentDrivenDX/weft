@@ -53,3 +53,13 @@ and do not stand in for the distinct expanded-assertion gate.
 This closes the generated frontend-case count component only. Relational/bag
 semantics, mutation/fuzz, full fixture and runtime matrices, support inventory
 and release gates remain open. These receipts do not qualify a native engine.
+
+The initial 636-case corpus now has a fresh frontend/oracle run. All cases
+match their authored resolution/refusal expectations, including 333 refusals;
+13 cases also compare independently interpreted relational bags using Python
+integers and Decimal precision 100. Original modules and capability-set order
+are checked for successful cases. B-007-initial-oracle/summary.json records
+corpus, interpreter and freshly built frontend binary hashes, with a binary
+custody check across the run. The oracle accepts explicit binary/output paths
+for repeatable qualification runs while preserving its default B-002 command.
+This is frontend evidence; the full backend/runtime matrix remains open.
