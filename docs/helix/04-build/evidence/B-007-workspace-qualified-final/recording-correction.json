@@ -1,0 +1,7 @@
+{
+  "status": "historical-record-restored; replay-rerun-required",
+  "mistake": "New candidate summary replaced an existing 195-test historical workspace summary at B-007-final-workspace; saved reference SHA check refused.",
+  "correction": "Restore exact historical summary from 9bba28c; retain new 241-test candidate and subsequent qualified runs separately under B-007-workspace-qualified-final.",
+  "failureLogSha256": "12b9c68779415ccbab93f1528daa1e921591d742087173325dd15d2985eb8f15",
+  "scope": "Evidence path correction; no compiler source or fixture expectations changed."
+}
