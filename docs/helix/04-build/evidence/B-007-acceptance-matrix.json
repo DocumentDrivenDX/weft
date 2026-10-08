@@ -442,6 +442,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
           "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-related-representation/summary.json",
+          "sha256": "4e0397180838c9df9692fbbe16b14bde7fe4fb550d1614eb607ebe2a9a4670bb"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
+          "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -842,6 +850,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-embedding-audit/review.md",
           "sha256": "0308d3a7ea65d716d157a229c2e9bf44ade4195aab315d64e0ed1eb553e1e0a3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-related-representation/summary.json",
+          "sha256": "4e0397180838c9df9692fbbe16b14bde7fe4fb550d1614eb607ebe2a9a4670bb"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
+          "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1258,6 +1274,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-related-representation/summary.json",
+          "sha256": "4e0397180838c9df9692fbbe16b14bde7fe4fb550d1614eb607ebe2a9a4670bb"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
+          "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."

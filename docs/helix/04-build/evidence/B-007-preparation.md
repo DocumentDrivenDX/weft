@@ -515,3 +515,9 @@ B-007-field-representation/ records the expanded passing presence/native-null
 test with three new descriptor/nullability/scalar-type refusals. The fixture
 correction removes an invalid paging-key assumption. Metadata validation
 evidence is scoped to this resolved fixture, not target execution.
+
+PR #9 remains open/draft at the current pushed source. Its description now
+reports the 195-test historical workspace checkpoint and later individually
+scoped guard/representation evidence, real native counts, local packaging,
+and unresolved native/support/release gates. The acceptance matrix links the
+new relationship and field representation receipts without promoting status.
