@@ -393,6 +393,16 @@
       "sourceSha256": "3bfc521cc13d7cba23bba8b5dbbdb85f7f93a0aba961a7732c477813bd7031d1"
     },
     {
+      "component": "audit-ashlar-count-hosts.py",
+      "result": {
+        "status": "passed",
+        "hostArtifactJoins": 64,
+        "cases": 32,
+        "scope": "Retained actual Python/browser compiler-artifact and runtime identity joins. No host database execution or support promotion."
+      },
+      "sourceSha256": "b1f62b27eaeb11bd2e013d236250bd10aecd7ebc22fb4876163abe9e1c559083"
+    },
+    {
       "component": "reconcile-truss-archive.py",
       "result": {
         "status": "passed",
@@ -1874,6 +1884,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 93,
+  "verifiedEvidenceReferences": 94,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "cases": 32,
+  "compilerSha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "nativeArtifactsSha256": "ce36f694d9ee12382f36f7210c1c031b6930ee2f590d902a6d6088dc05b8130b",
+  "inputHashes": {
+    "cli-reports.json": "337787cfae148e828306010f4ca2fb69bcbd09a60659ace6f9318495f52c0cbd",
+    "python-receipts.json": "d8d8daa052b65fd767f5e257c546db222a266f1893eed269ad04eb0fcf40c7ad",
+    "browser-receipts.json": "f17c14b8bb3e563e7a453a2b040b819e58942e03eb746224b819b4e88ec3d6cd"
+  },
+  "harnessHashes": {
+    "tests/truss-postgresql/python-check.py": "3fe04879cd446e07b01f4347107568899212dee060b119c1e25edd566acdc399",
+    "tests/compile/browser-check.mjs": "147ef519bb36a52ebe2803362dd3bfde9a7ed99185cda5e872d6550154fe59c3"
+  },
+  "scope": "Fresh actual Python/Chromium compiler byte parity with regenerated frozen-CLI responses equal to all 32 native-tested COUNT artifacts. Reused retained Ashlar binaries; no package rebuild or separate database execution by each host."
+}

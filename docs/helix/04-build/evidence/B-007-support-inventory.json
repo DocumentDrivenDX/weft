@@ -107,6 +107,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-reconciliation/summary.json",
           "sha256": "e2d7b5c6f3e1c93c8750122ad2dce033c352ea3ce974e313228b932dee19be20"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "excludedClaims": [

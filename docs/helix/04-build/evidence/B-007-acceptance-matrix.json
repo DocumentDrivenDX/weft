@@ -955,6 +955,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1032,6 +1036,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1101,6 +1109,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1182,6 +1194,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-workspace-218/summary.json",
           "sha256": "7871ed7a56c1a25d5b078fea66b12a8cfa7955b5720ab3c916be282a41a63450"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1287,6 +1303,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-count-controls/summary.json",
           "sha256": "0e47de1eeb775ce379868fe24d534f38c50a5cf9b0cebc42e165cb16f1cfcc83"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
