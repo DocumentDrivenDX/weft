@@ -95,6 +95,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-reconciliation/summary.json",
           "sha256": "47d25960bc0a552f8291e68fb77a178e3debc8a207878d142baf58f93e6307e5"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-ashlar-report-audit/summary.json",
+          "sha256": "b43573fbb1bdbeb1f4236db6ab330902f19d2be1b6c70557a0e4e5bbb9beb21b"
         }
       ],
       "excludedClaims": [

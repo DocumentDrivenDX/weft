@@ -1,0 +1,232 @@
+{
+  "status": "passed",
+  "scopesAudited": 7,
+  "casesAudited": 22,
+  "successfulNativeStatements": 21,
+  "expectedNativeFailures": 1,
+  "results": [
+    {
+      "bits": 1,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "7065adb60a45d415724fa3bc78ae59e85838d2e3a8d49c88b7447608efe3c2e0",
+        "bindingSha256": "00fee103a964054884a18029a093ddafc5c2b796980110cb30c429e487fe1f76",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "d48fee1decc5c1ac0badbf6b379909d93ef9d6c5f9b7fcbf2b4598ac51ed94a3"
+    },
+    {
+      "bits": 2,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "b19b556c2880f7043ec30adf5fbbad87f7ffe01e4dc27d7fd81774dea0779ff4",
+        "bindingSha256": "24765a480d2354b45b1ad69bf873c4e2708c70bb78a118de8b2cee8c2c63221b",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "8adaa4eec50304da20a99de99bdd20d835d251ef0b26d851e35a3f8d580cfe13"
+    },
+    {
+      "bits": 3,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "72b96d149e8761b1f60d777b7b1bdaeb0604b3a07ad6485cfa16882332745931",
+        "bindingSha256": "03687b9dbe468910a9fa33df52725eab6f1f967dd8fec1778c0c69f83dab5fa5",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "299528f619d1bdceedb82d8a577ce2ae32b557be985b575fa27b4ed9e886cb7e"
+    },
+    {
+      "bits": 8,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "711308a8814890be485c15edf3d5948e3179315ffb7b4ac4ab08d158e60b5e7c",
+        "bindingSha256": "7e554354412af4d9e98f458e7f3d2fef9a592c2def2cddf401093d6651e7c2c9",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "c144091d79783aced115c5be36d64da0184b935b1e58150e0e00cbb949fd7315"
+    },
+    {
+      "bits": 16,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "a0ac35d99111b14700f6c487d5ce330ac402d1426550acd7b3c3bc368d666e3d",
+        "bindingSha256": "499f3c4f21f883855680be9d384c419c865e0fef1a23830a65c228420fffaa28",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "602d87ebc57a691ec1e1e12f7a155d85391ca036ce232e1fecc3896906122837"
+    },
+    {
+      "bits": 32,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "287b619df8df45174a07a3d524ca253bce1c4958fa12c063ed7d8c08e3d7d0f0",
+        "bindingSha256": "97d1bf5b13ea057dfcb36ada54faf816ae98e72b5e333dd57c18832307bb9ec5",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 3,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "4a27f8c662945deca1ed233c3456eb7d3201da4dc66e79e14728bd3cc77d556d"
+    },
+    {
+      "bits": 63,
+      "profile": {
+        "compilerVersion": "weft/0.1.0",
+        "dialect": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0",
+        "backendVersion": "0.1.0-candidate",
+        "targetProfile": "dbsql-candidate",
+        "engineVersion": "Databricks SQL 2026.39",
+        "layoutRevision": "ashlar-delta/0.3",
+        "modelSha256": "6aba3cdc6de281dc8e68f4398e510db66917c1fb62c1f6e8fe8f9860dc512635",
+        "bindingSha256": "2852401c4d32808673f33312f6419b54c22ad56b05fe1f5ee169d074494299e7",
+        "settings": {
+          "comparison": "explicit UTF8_BINARY in emitted SQL",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+            "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+          },
+          "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+        }
+      },
+      "audit": {
+        "status": "verified",
+        "cases": 4,
+        "layers": [
+          "native"
+        ]
+      },
+      "reportSha256": "3f84fabba368d6e7a05575131d570e4797d64f21d07dc94b953a1b8cbc1b7d06"
+    }
+  ],
+  "sourceHashes": {
+    "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+    "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37",
+    "custody.json": "8f50489b939e53bfbe588da3fc743eba5bd42024aaec8126d30323d2b68f8df2"
+  },
+  "qualification": "Real retained report consistency with independent exact unsigned expectations and warehouse builds. Supported-claim inputs exercise the verifier only. Candidate inventory unchanged; no complete backend domain, publication, host execution or production qualification."
+}

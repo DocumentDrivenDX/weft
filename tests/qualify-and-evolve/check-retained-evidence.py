@@ -11,6 +11,7 @@ components=[
  ('ashlar-engine-controls.py','status','corruptionsRejected',6),
  ('reconcile-ashlar-warehouse-boundaries.py','status','sameStatementEngineResults',7),
  ('ashlar-warehouse-controls.py','status','corruptionsRejected',6),
+ ('audit-ashlar-support-reports.py','status','casesAudited',22),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),
@@ -32,6 +33,8 @@ for name,status,count,expected in components:
  assert report[status]=='passed' and report[count]==expected,(name,report)
  if name=='audit-truss-support-reports.py':
   assert report['scopesAudited']==21 and report['nativeSessionProvenance']['sameTransactionCases']==76
+ if name=='audit-ashlar-support-reports.py':
+  assert report['scopesAudited']==7 and report['successfulNativeStatements']==21 and report['expectedNativeFailures']==1
  if name=='audit-native-profile-scopes.py':
   assert report['distinctArtifactScopes']==21 and report['orderedComparisons']==65
  results.append({'component':name,'result':report,'sourceSha256':hashlib.sha256((HERE/name).read_bytes()).hexdigest()})
