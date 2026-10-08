@@ -1,0 +1,297 @@
+{
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "transportSha256": "81ea944bb9d58637c3c3ab0873fac302549c59f72bb708149b9945c8337fa1d9",
+  "scope": "Synthetic original complete entity combining independently admitted native Boolean sequence and numeric structured roots plus scalars; no fresh embedding or production claim",
+  "cases": 16,
+  "harnessSha256": "a1b97aed43ecddb98efc6b75b5e4397875c99ff612b56930aeaccfbbab952192",
+  "results": [
+    {
+      "bound": 10,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6671a65bccb4be8a4cf26d1f02d602211f7c17c201204c908c88341d8699a512"
+    },
+    {
+      "bound": 10,
+      "case": "empty-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "30bbb4161921705d1401df0b84b62cdf094414f89bc1d06d964406303058c3d7"
+    },
+    {
+      "bound": 10,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "73683c7cdb7ea02c046f6b1aac8d5fba59314de7b1fa010c62194a785c6f98a3"
+    },
+    {
+      "bound": 10,
+      "case": "missing-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fe39ac8d81362923e97f5c93e5ca6f35ac34072aacf02b402c1b4044eff70376"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-sequence-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d4f6949b2569c711167515070eb9bfb82f0f7178693c9090a397c82e31ccfa41"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9a28343e8c260da8322e48a840961df26689b9c246d4671c34a338a364a80ea4"
+    },
+    {
+      "bound": 10,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c3757fa77be5d645a00ecf224d831bfcc5d50a0c2b5beab9c7327a726afc6509"
+    },
+    {
+      "bound": 10,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9738905770f4a3f6ec3c62b7659b8c5b80fa0e99a2f24aecc64af591a91e8d1b"
+    },
+    {
+      "bound": 1,
+      "case": "exact",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4a0b9d8d3752ae2f72fae4d23b18de6a400218d112ee0ba69352a99deeda20eb"
+    },
+    {
+      "bound": 1,
+      "case": "empty-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "8990a26f36eed38e5c9710f312c441822da953637b22a874cb995fddc3d582f9"
+    },
+    {
+      "bound": 1,
+      "case": "absent-address",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0c476c038b8ad9a5b1b392c92f5043f1543148db35fa418049978fb936241545"
+    },
+    {
+      "bound": 1,
+      "case": "missing-sequence",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fe39ac8d81362923e97f5c93e5ca6f35ac34072aacf02b402c1b4044eff70376"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-sequence-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d4f6949b2569c711167515070eb9bfb82f0f7178693c9090a397c82e31ccfa41"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-address-codec",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9a28343e8c260da8322e48a840961df26689b9c246d4671c34a338a364a80ea4"
+    },
+    {
+      "bound": 1,
+      "case": "hidden-key-codec",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c3757fa77be5d645a00ecf224d831bfcc5d50a0c2b5beab9c7327a726afc6509"
+    },
+    {
+      "bound": 1,
+      "case": "absent-note",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "37a767c42139440d6e194b83da75d61899e358a1da8d3d72253a67180e0d45ee"
+    }
+  ]
+}

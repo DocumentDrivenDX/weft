@@ -1169,3 +1169,58 @@ mod boolean_sequence_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod multi_recursive_entity_tests {
+    use super::*;
+    #[test]
+    fn complete_entity_retains_multiple_independent_recursive_roots() {
+        let cut: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-multi-recursive-entity-inputs.json"
+        ))
+        .unwrap();
+        let mut transports = Vec::new();
+        for case in cut["requests"].as_array().unwrap() {
+            let request = &case["request"];
+            let catalog =
+                Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap())
+                    .unwrap();
+            let mut config = configuration(&cut["composition"].to_string(), &catalog).unwrap();
+            let response: Value =
+                serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+            assert_eq!(response["status"], "compiled", "{response}");
+            assert_eq!(
+                response["columns"]
+                    .as_array()
+                    .unwrap()
+                    .iter()
+                    .map(|c| c["outputName"].as_str().unwrap())
+                    .collect::<Vec<_>>(),
+                ["tags", "address", "note", "id", "part"]
+            );
+            for index in [4, 5] {
+                let position = config
+                    .properties
+                    .iter()
+                    .position(|p| p.index == index)
+                    .unwrap();
+                let removed = config.properties.remove(position);
+                let refused: Value =
+                    serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                assert_eq!(refused["status"], "blocked");
+                assert!(refused.get("sql").is_none());
+                config.properties.insert(position, removed);
+                assert_eq!(
+                    config.compile_json(&request.to_string()),
+                    response.to_string()
+                );
+            }
+            transports.push(
+                serde_json::json!({"bound":case["bound"],"request":request,"response":response}),
+            );
+        }
+        if let Ok(path) = std::env::var("WEFT_MULTI_RECURSIVE_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
+        }
+    }
+}

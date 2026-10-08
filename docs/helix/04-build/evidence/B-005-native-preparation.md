@@ -3480,3 +3480,31 @@ Boolean sequence. Other recursive arrangements, optional Boolean roots, multiple
 recursive entity members and full host/story qualification remain required work.
 Exact conformance presets do not claim general released plugin or production
 storage compatibility.
+
+### Complete entity with multiple recursive roots (2026-10-07)
+
+The new independent model cut combines native Boolean sequence tags and numeric
+structured address, optional Unicode note and required exact uint64/string keys.
+Declared Record member order is (tags,address,note,id,part). Each recursive
+closure retains its independently selected original Field/graph/presence/codec
+artifacts and physical home. The owning Record and source-document artifacts are
+explicitly re-authored and re-pinned. Whole-entity requests at limits ten and one
+compile through owned Configuration without a new compiler special case.
+Removing either root admission refuses the query without dropping a member;
+restoring it restores the complete deterministic response.
+
+`multi-recursive-entity-native.py` passes sixteen PostgreSQL 17.9 cases using
+independent Boolean sequence, numeric address and scalar expectations. Results
+retain actual Boolean values, numeric strings, optional presence and member
+order. Empty sequence, absent optional address and absent note remain distinct.
+Corrupt second-owner sequence/address codec, key codec or missing required
+sequence blocks the result even beyond the one-row page. Each root uses its own
+property discriminator, state and payload path. Unrelated object types stay out
+of the result. All 152 Rust tests and existing custody/specification checks pass.
+Receipts: [B-005-multi-recursive-entity.json](B-005-multi-recursive-entity.json) and
+[B-005-multi-recursive-entity-native.json](B-005-multi-recursive-entity-native.json).
+
+This establishes original compiler/native evidence for the selected multi-root
+entity cut. Public runtime allowlisting and fresh Python/browser verification for
+it remain pending. Broader domains and complete host/story qualification remain
+B-005 work; no production storage compatibility is claimed.
