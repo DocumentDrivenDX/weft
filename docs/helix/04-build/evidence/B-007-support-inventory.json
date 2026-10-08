@@ -30,7 +30,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "983a5fb7441edc8ee046e8813bc4f9bb746ee458b2097a0539b08034b0ab1996"
+          "sha256": "1c4880c7a9b04a39632ecbe820c172528add85ffbd1bba62300772a5093fb2d0"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
@@ -66,7 +66,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "983a5fb7441edc8ee046e8813bc4f9bb746ee458b2097a0539b08034b0ab1996"
+          "sha256": "1c4880c7a9b04a39632ecbe820c172528add85ffbd1bba62300772a5093fb2d0"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
@@ -135,6 +135,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-reconciliation/summary.json",
           "sha256": "5a520c850d57210b0ca0d0a6928d11c2d7384f517f970f9e2b773e4603f0b928"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-warehouse-settings-native/custody.json",
+          "sha256": "9ac26e5e9502a1dde4dc05d9610be249159b95dfd2d95ab6607422783df1574d"
         }
       ],
       "excludedClaims": [
@@ -162,7 +166,9 @@
         "relationshipPositiveCases": 28,
         "relationshipRefusals": 24,
         "sameStatementRelationshipResultsAndGuards": 296,
-        "separateEmptyRelationshipProbes": 4
+        "separateEmptyRelationshipProbes": 4,
+        "observedAnsiMode": true,
+        "ansiObservationScope": "Separate read-only setting probe between matching warehouse builds; no retroactive query-session claim."
       }
     }
   ],

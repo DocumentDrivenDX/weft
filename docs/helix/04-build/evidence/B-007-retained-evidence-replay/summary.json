@@ -464,6 +464,22 @@
       "sourceSha256": "29b166f34dd2a7d34eb35f29c55761f6e0ea11f7be54790ed8547ad173336bc0"
     },
     {
+      "component": "reconcile-warehouse-settings.py",
+      "result": {
+        "status": "passed",
+        "nativeStatements": 3,
+        "observedAnsiMode": true,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "scope": "Saved separate-statement setting observation between matching warehouse builds; not retroactive settings evidence for corpus queries or arbitrary host sessions."
+      },
+      "sourceSha256": "cf414edd1dfdfbae227b8fb195a89e2e3b3b77a2df3a23f5122bdab9987de485"
+    },
+    {
       "component": "reconcile-truss-archive.py",
       "result": {
         "status": "passed",
@@ -1945,6 +1961,6 @@
       "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
     }
   ],
-  "verifiedEvidenceReferences": 101,
+  "verifiedEvidenceReferences": 102,
   "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
 }

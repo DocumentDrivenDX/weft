@@ -86,6 +86,12 @@ placeholder=dict(publicationId='synthetic',manifestUuid='synthetic',tableUuid='s
 for case in cases:assert compile(request(case,placeholder))['status']=='compiled',case['id']
 if '--compile-only' in sys.argv:print('All '+str(len(cases))+' authored compound requests compile');sys.exit(0)
 c=Client(OUT)
+warehouse_capture=os.environ.get('WEFT_ASHLAR_WAREHOUSE_VALUES')=='1'
+assert not warehouse_capture or '--resume-pinned' in sys.argv,'Warehouse qualification must reuse pinned fixtures'
+warehouse_state=dict(identities=set(),captures=[])
+from warehouse_observer import observe
+def observed_sql(label,statement,parameters):
+ return observe(c,label,statement,parameters,warehouse_state)[0] if warehouse_capture else c.sql(label,statement,parameters)
 def p(name,value):return dict(name=name,type='STRING',value=value)
 def detail(table):
  data=c.sql('identity-'+table.rsplit('.',1)[-1],'DESCRIBE DETAIL '+table);assert len(data)==1
@@ -110,11 +116,11 @@ for case in cases:
  with (OUT/'compile-artifacts.jsonl').open('a') as stream:stream.write(json.dumps(dict(id=case['id'],request=req,response=artifact),ensure_ascii=False)+'\n')
  params=[p('p'+str(s['position']),s['value']) for s in artifact['parameters']]
  checks=[check for o in artifact['obligations'] if o['id'] in ['ashlar.candidate.scalarIntegrity','ashlar.candidate.compoundIntegrity'] for check in o['parameters']['checks']]
- counts=[c.sql(case['id']+'-guard-'+str(i),check['sql'],params)[0][0] for i,check in enumerate(checks)]
+ counts=[observed_sql(case['id']+'-guard-'+str(i),check['sql'],params)[0][0] for i,check in enumerate(checks)]
  if case['corrupt']:
   assert any(int(v)>0 for v in counts),(case['id'],counts);outcome=dict(id=case['id'],outcome='refused-before-user-query',counts=counts)
  else:
-  assert all(v=='0' for v in counts),(case['id'],counts);actual=c.sql(case['id']+'-user-query',artifact['sql'],params)
+  assert all(v=='0' for v in counts),(case['id'],counts);actual=observed_sql(case['id']+'-user-query',artifact['sql'],params)
   expected=[] if case['expected'] is None else [case['expected']]
   assert [json.loads(row[0]) for row in actual]==expected,(case['id'],actual,expected)
   assert artifact['columns'][0]['representation']['kind']=='value' and artifact['columns'][0]['representation']['nativeNull'] is False
@@ -122,5 +128,7 @@ for case in cases:
   outcome=dict(id=case['id'],outcome='published-fixture-result',rows=actual,expected=expected)
  outcomes.append(outcome)
 assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha
+if warehouse_capture:assert len(outcomes)==133 and len(warehouse_state['identities'])==1
 summary=dict(state='passed',cases=len(outcomes),positive=sum(o['outcome']=='published-fixture-result' for o in outcomes),refusals=sum(o['outcome']=='refused-before-user-query' for o in outcomes),outcomes=outcomes,fixture=state,compilerBinarySha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),qualification='Synthetic pinned projection, exact recursive JSON profile; independent scalar/list/map/structured/cyclic and presence oracles. No host/production publication qualification; limit boundaries not included in this receipt.')
+summary.update(warehouseIdentity=json.loads(next(iter(warehouse_state['identities']))) if warehouse_capture else None,warehouseIdentityCaptures=warehouse_state['captures'])
 (OUT/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in summary.items() if k!='outcomes'}))

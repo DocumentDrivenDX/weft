@@ -76,3 +76,15 @@ application corpus. Retained producer/helper source snapshots, original compile
 artifacts, native statements and custody hashes support replay. Broader scalar
 input/result domain qualification and the registered supported profile remain
 open; these successful corpora alone do not promote candidate declarations.
+
+## Observed warehouse ANSI setting
+
+The read-only B-007-warehouse-settings-native probe returns ANSI_MODE=true
+between two identical current_version() build observations. Bare SET ansi_mode
+reads the setting without changing configuration, per the retained official
+Databricks SET reference. All three terminal receipts and producer source hashes
+are retained and independently reconciled. This identifies the observed setting
+for that probe; it does not retroactively pin earlier query sessions or establish
+settings for arbitrary executing hosts. The complete 133-case recursive/scalar/
+presence corpus is now running with warehouse capture on the same existing
+pinned fixture publication; its final result remains unproved while running.

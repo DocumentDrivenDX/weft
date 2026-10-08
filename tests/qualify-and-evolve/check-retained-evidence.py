@@ -19,6 +19,7 @@ components=[
  ('reconcile-ashlar-warehouse-application.py','status','cases',112),
  ('reconcile-ashlar-warehouse-compounds.py','status','cases',48),
  ('reconcile-ashlar-warehouse-relationships.py','status','cases',52),
+ ('reconcile-warehouse-settings.py','status','nativeStatements',3),
  ('reconcile-truss-archive.py','status','cases',76),
  ('audit-truss-sessions.py','status','cases',76),
  ('truss-session-controls.py','status','corruptionsRejected',6),

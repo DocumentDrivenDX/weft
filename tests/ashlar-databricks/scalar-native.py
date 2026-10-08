@@ -13,6 +13,7 @@ import subprocess
 import sys
 import time
 from databricks.sdk import WorkspaceClient
+from warehouse_observer import observe
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ["WEFT_ASHLAR_EVIDENCE_OUTPUT"])
@@ -24,6 +25,11 @@ WAREHOUSE = "2439e1f2e37ac563"
 SQL = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name"
 client = WorkspaceClient(profile="aidev-cus")
 statements = []
+warehouse_capture=os.environ.get('WEFT_ASHLAR_WAREHOUSE_SCALARS')=='1'
+assert not warehouse_capture or '--resume-pinned' in sys.argv,'Warehouse qualification must reuse pinned fixtures'
+warehouse_state=dict(identities=set(),captures=[])
+last_observed_columns=[]
+binary=Path(os.environ['WEFT_ASHLAR_COMPILER']);binary_sha=hashlib.sha256(binary.read_bytes()).hexdigest()
 
 
 def sql(label, statement, parameters=None):
@@ -57,6 +63,16 @@ def describe(table):
     columns = [c["name"] for c in statements[-1]["response"]["manifest"]["schema"]["columns"]]
     assert len(rows) == 1
     return dict(zip(columns, rows[0]))
+
+class Transport:
+    records=statements
+    def sql(self,label,statement,parameters=None):return sql(label,statement,parameters)
+
+def observed_sql(label,statement,parameters):
+    global last_observed_columns
+    if not warehouse_capture:return sql(label,statement,parameters)
+    rows,last_observed_columns=observe(Transport(),label,statement,parameters,warehouse_state)
+    return rows
 
 
 def string_parameter(name, value):
@@ -177,7 +193,7 @@ for case in cases:
     assert artifact["status"] == "compiled", artifact
     parameters = [string_parameter("p" + str(p["position"]), p["value"]) for p in artifact["parameters"]]
     obligation = next(o for o in artifact["obligations"] if o["id"] == "ashlar.candidate.scalarIntegrity")
-    counts = [sql(case["id"] + "-integrity-" + str(i), check["sql"], parameters)
+    counts = [observed_sql(case["id"] + "-integrity-" + str(i), check["sql"], parameters)
               for i, check in enumerate(obligation["parameters"]["checks"])]
     corrupt = "badOrder" in case or "badCustomer" in case
     assert all(len(c) == 1 and len(c[0]) == 1 and type(c[0][0]) is str for c in counts)
@@ -186,15 +202,18 @@ for case in cases:
         outcome = dict(id=case["id"], outcome="refused-before-user-query", counts=counts)
     else:
         assert all(c == [["0"]] for c in counts), (case["id"], counts)
-        actual = sql(case["id"] + "-user-query", artifact["sql"], parameters)
+        actual = observed_sql(case["id"] + "-user-query", artifact["sql"], parameters)
         assert sorted(actual) == oracle(case), (actual, oracle(case))
-        columns = statements[-1]["response"]["manifest"]["schema"]["columns"]
+        columns = last_observed_columns if warehouse_capture else statements[-1]["response"]["manifest"]["schema"]["columns"]
         assert [(c["name"], c["type_name"]) for c in columns] == [("name", "STRING"), ("total", "STRING")]
         outcome = dict(id=case["id"], outcome="published-fixture-result", rows=actual)
     outcomes.append(outcome)
 
-summary = dict(state="passed", cases=len(cases), outcomes=outcomes, fixture=state, warehouseId=WAREHOUSE,
+assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha
+if warehouse_capture:assert len(outcomes)==10 and len(warehouse_state['identities'])==1
+summary = dict(state="passed", cases=len(cases), outcomes=outcomes, fixture=state, warehouseId=WAREHOUSE,compilerBinarySha256=binary_sha,
                harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), ownerLayoutSha256=layout_sha,
                qualification="Actual registered Rust compiler and native Delta scalar SQL. Synthetic admin fixtures, fixed immutable vector. No accepted source binding, live delegation/pin custody, application-read, Python/browser or production qualification.")
+summary.update(warehouseIdentity=json.loads(next(iter(warehouse_state['identities']))) if warehouse_capture else None,warehouseIdentityCaptures=warehouse_state['captures'])
 (OUT / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
 print(json.dumps(summary, indent=2, ensure_ascii=False))
