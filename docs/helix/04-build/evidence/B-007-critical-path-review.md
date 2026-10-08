@@ -44,8 +44,17 @@ individual refusal guards; they supplement the earlier broad US-002 review.
 
 Coverage selection is asserted nonempty in each tested identity class; the
 panicking downstream fixtures establish the intended refusal phase. This does
-not establish every profile combination. Still to account individually: missing
-capability declarations for a selected target/language, declaration-side
-unsupported status, and obligation conflicts crossing declaration, assessment,
-and emission phases. Emission validation has its own guards and remains a
-separate accounting task. Native support and release ownership are unchanged.
+not establish every profile combination. Declaration scope/status and cross-phase obligation conflicts now have
+individual assertions (B-007-declaration-branches and
+B-007-cross-phase-obligations). Emission bounds, slot metadata, provenance,
+and exact parameter-domain guards have explicit assertions in
+B-007-emission-branches and B-007-parameter-domain-branches. Remaining
+representation guards require separate accounting; this is not a blanket
+all-branches claim. Native support and release ownership are unchanged.
+
+
+The latest consolidated checkpoint passes 15 pipeline integration tests and
+four emission unit tests, none ignored; one unrelated library unit test is
+filtered by the emission group selector. B-007-adapter-emission-consolidated/
+retains both logs and current source hashes. Historical receipts are retained
+as observations at their source revisions rather than relabeled as current.

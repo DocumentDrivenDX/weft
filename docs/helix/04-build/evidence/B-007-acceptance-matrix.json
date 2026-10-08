@@ -167,6 +167,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-pipeline-consolidated/summary.json",
           "sha256": "3d26f57770dedf6ba6724050afd8441e759bd7c2885ee854dc38dc3664c893a0"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-declaration-branches/summary.json",
+          "sha256": "649c23de3c3524bc7563eceb51fdc105be22bff6e027959532e5517ab27aa5b6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-cross-phase-obligations/summary.json",
+          "sha256": "b3269d1e5dc4a4f9dcd6e536772e0f3ac0c9826dc872e420beb97d7b37ead2b4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-emission-branches/summary.json",
+          "sha256": "5dcfdf92ca223fc49bf69e3e41d268a1966372cf3677583af015a08042652b7c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parameter-domain-branches/summary.json",
+          "sha256": "d13544df88e2360899ad713d66f91a6a4086f6052d904b72d587ce50a442e8e1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
+          "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -232,6 +252,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-pipeline-consolidated/summary.json",
           "sha256": "3d26f57770dedf6ba6724050afd8441e759bd7c2885ee854dc38dc3664c893a0"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-declaration-branches/summary.json",
+          "sha256": "649c23de3c3524bc7563eceb51fdc105be22bff6e027959532e5517ab27aa5b6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-cross-phase-obligations/summary.json",
+          "sha256": "b3269d1e5dc4a4f9dcd6e536772e0f3ac0c9826dc872e420beb97d7b37ead2b4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-emission-branches/summary.json",
+          "sha256": "5dcfdf92ca223fc49bf69e3e41d268a1966372cf3677583af015a08042652b7c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parameter-domain-branches/summary.json",
+          "sha256": "d13544df88e2360899ad713d66f91a6a4086f6052d904b72d587ce50a442e8e1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
+          "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -293,6 +333,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-pipeline-consolidated/summary.json",
           "sha256": "3d26f57770dedf6ba6724050afd8441e759bd7c2885ee854dc38dc3664c893a0"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-declaration-branches/summary.json",
+          "sha256": "649c23de3c3524bc7563eceb51fdc105be22bff6e027959532e5517ab27aa5b6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-cross-phase-obligations/summary.json",
+          "sha256": "b3269d1e5dc4a4f9dcd6e536772e0f3ac0c9826dc872e420beb97d7b37ead2b4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-emission-branches/summary.json",
+          "sha256": "5dcfdf92ca223fc49bf69e3e41d268a1966372cf3677583af015a08042652b7c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parameter-domain-branches/summary.json",
+          "sha256": "d13544df88e2360899ad713d66f91a6a4086f6052d904b72d587ce50a442e8e1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
+          "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -362,6 +422,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-pipeline-consolidated/summary.json",
           "sha256": "3d26f57770dedf6ba6724050afd8441e759bd7c2885ee854dc38dc3664c893a0"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-declaration-branches/summary.json",
+          "sha256": "649c23de3c3524bc7563eceb51fdc105be22bff6e027959532e5517ab27aa5b6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-cross-phase-obligations/summary.json",
+          "sha256": "b3269d1e5dc4a4f9dcd6e536772e0f3ac0c9826dc872e420beb97d7b37ead2b4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-emission-branches/summary.json",
+          "sha256": "5dcfdf92ca223fc49bf69e3e41d268a1966372cf3677583af015a08042652b7c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parameter-domain-branches/summary.json",
+          "sha256": "d13544df88e2360899ad713d66f91a6a4086f6052d904b72d587ce50a442e8e1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
+          "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -831,7 +911,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "32e6bf11896ceb9027b409e6303afc2e4bf81ceb93543af59c4bcb830fbbb79f"
+          "sha256": "03b9c7281c856816b86b31dc326078f3a76e9cb0f38c31ba46be18bef6f33f08"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -949,7 +1029,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "32e6bf11896ceb9027b409e6303afc2e4bf81ceb93543af59c4bcb830fbbb79f"
+          "sha256": "03b9c7281c856816b86b31dc326078f3a76e9cb0f38c31ba46be18bef6f33f08"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -966,6 +1046,26 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
           "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-declaration-branches/summary.json",
+          "sha256": "649c23de3c3524bc7563eceb51fdc105be22bff6e027959532e5517ab27aa5b6"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-cross-phase-obligations/summary.json",
+          "sha256": "b3269d1e5dc4a4f9dcd6e536772e0f3ac0c9826dc872e420beb97d7b37ead2b4"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-emission-branches/summary.json",
+          "sha256": "5dcfdf92ca223fc49bf69e3e41d268a1966372cf3677583af015a08042652b7c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-parameter-domain-branches/summary.json",
+          "sha256": "d13544df88e2360899ad713d66f91a6a4086f6052d904b72d587ce50a442e8e1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
+          "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
