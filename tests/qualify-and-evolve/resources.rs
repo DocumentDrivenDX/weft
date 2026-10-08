@@ -41,3 +41,26 @@ fn sql_and_binding_byte_limits(){
  let mut r=cases[0]["request"].clone();r["target"]["bindingJson"]=json!(" ".repeat(4*1024*1024+1));refused(&r.to_string(),"WFT-LIMIT");
  println!("RESOURCE_REPORT sqlOver=65537 bindingOver=4194305");
 }
+
+#[test]
+fn parser_limits_have_explicit_boundary_branches() {
+    for application in [false,true] {
+        let parse=|sql:&str|if application {weft_core::application_syntax::parse(sql).map(|_|())} else {weft_core::syntax::parse(sql).map(|_|())};
+        let projection=|n|format!("SELECT {} FROM Customer c",vec!["c.id";n].join(","));
+        assert!(parse(&projection(256)).is_ok());
+        assert_eq!(parse(&projection(257)).unwrap_err().code,"WFT-LIMIT");
+        let joins=|n|format!("SELECT c.id FROM Customer c{}",(0..n).map(|i|format!(" JOIN Customer j{i} ON j{i}.id = c.id")).collect::<String>());
+        assert!(parse(&joins(16)).is_ok());
+        assert_eq!(parse(&joins(17)).unwrap_err().code,"WFT-LIMIT");
+        let prefix="SELECT c.id FROM Customer c";
+        assert!(parse(&format!("{prefix}{}"," ".repeat(65536-prefix.len()))).is_ok());
+        assert_eq!(parse(&format!("{prefix}{}"," ".repeat(65537-prefix.len()))).unwrap_err().code,"WFT-LIMIT");
+        assert_ne!(parse(&"x ".repeat(4096)).unwrap_err().code,"WFT-LIMIT");
+        assert_eq!(parse(&"x ".repeat(4097)).unwrap_err().code,"WFT-LIMIT");
+    }
+    for bound in [1,1000] {assert!(weft_core::application_syntax::parse(&format!("SELECT c.id FROM Customer c LIMIT {bound}")).is_ok());}
+    for bound in ["0","1001","-1","1.0","'1'","65536"] {
+        assert_eq!(weft_core::application_syntax::parse(&format!("SELECT c.id FROM Customer c LIMIT {bound}")).unwrap_err().code,"WFT-LIMIT");
+    }
+    println!("PARSER_BOUNDARY_REPORT dialects=2 outputs=256/257 joins=16/17 bytes=65536/65537 tokens=4096/4097 applicationBounds=1,1000 refusedBounds=6");
+}

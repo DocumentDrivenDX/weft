@@ -260,3 +260,12 @@ validates compressed/uncompressed hashes and byte count, all 76 unique corpus
 IDs, raw/parsed artifact equality, original module/binding pins, lexical parameter
 carriers, native result row arity and matching Python/browser parity counts.
 This is archive consistency, not an additional native run or independent oracle.
+
+Explicit parser-limit boundary review now has 24 passing assertions across both
+dialects: output 256/257, joins 16/17, SQL byte 65536/65537 and token 4096/4097.
+Application bounds accept 1/1000 and reject zero, above-limit, negative, decimal,
+string and u16-overflow forms. Token-at-limit malformed syntax reaches ordinary
+syntax refusal; token-over-limit reaches WFT-LIMIT. B-007-parser-boundaries/
+records the named test execution, source hash and branch values. These parser
+checks do not imply successful model resolution or backend qualification for
+every maximum-sized query. Broader critical model/backend branches remain open.
