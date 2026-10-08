@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "acceptedAssertions": 10,
+  "refusalAssertions": 28,
+  "sourceSha256": "1c890c7f39c7582580bf4071b2d90d13d692b8db9755bb24b5e2ce1c87b936ef",
+  "scope": "Scalar representation validation across string/boolean/integer/decimal families and nullable variants; rejects changed facets, nullability and incompatible decoders. Unit evidence, not native execution."
+}

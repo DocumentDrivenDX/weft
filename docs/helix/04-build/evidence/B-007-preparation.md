@@ -606,3 +606,8 @@ archive digests and byte count before parsing. Three exact custody controls
 and eight semantic corruptions all refuse. Semantic corruption fixtures use
 correct temporary custody hashes to reach their intended guards. The
 twelve-component retained replay passes at the current source.
+
+B-007-scalar-representation/ retains ten accepted and twenty-eight refused
+carrier/type combinations across all four scalar families and both nullable
+states. Exact facets, nullability and decoder semantics are checked by the
+passed named unit test. This does not expand qualified native support.

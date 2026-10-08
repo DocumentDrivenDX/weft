@@ -347,6 +347,30 @@ mod tests {
         assert_eq!(error.message,"Resolved 0.1 plan needs a projection root");
     }
     #[test]
+    fn scalar_carriers_preserve_family_nullability_and_facets() {
+        for (family,facets,carriers,decoder) in [
+            (Family::String,json!({}),vec![ScalarCarrier::Text],ScalarDecoder::Text),
+            (Family::Boolean,json!({}),vec![ScalarCarrier::Text,ScalarCarrier::Boolean],ScalarDecoder::Boolean),
+            (Family::Integer,json!({"integerWidth":{"bits":64,"signed":false}}),vec![ScalarCarrier::Text],ScalarDecoder::ExactInteger),
+            (Family::Decimal,json!({"precision":28,"scale":2}),vec![ScalarCarrier::Text],ScalarDecoder::ExactDecimal),
+        ] {
+            for nullable in [false,true] {
+                let t=LogicalType{family:family.clone(),facets:facets.clone(),nullable};
+                for carrier in &carriers {
+                    let column=Column{position:1,output_name:"value".into(),representation:Representation::Scalar{logical_type:t.clone(),carrier:carrier.clone(),decoder:decoder.clone()},source_identities:vec![],nullable};
+                    assert!(scalar(&column,&t));
+                    let mut wrong=column.clone();wrong.nullable=!nullable;assert!(!scalar(&wrong,&t));
+                    let mut wrong=column.clone();
+                    if let Representation::Scalar{logical_type,..}=&mut wrong.representation {logical_type.facets=json!({"changed":true});}
+                    assert!(!scalar(&wrong,&t));
+                    let mut wrong=column.clone();
+                    if let Representation::Scalar{decoder,..}=&mut wrong.representation {*decoder=ScalarDecoder::ExactDecimal;}
+                    if family!=Family::Decimal {assert!(!scalar(&wrong,&t));}
+                }
+            }
+        }
+    }
+    #[test]
     fn numeric_results_require_exact_text_decoders() {
         let t = LogicalType {
             family: Family::Integer,
