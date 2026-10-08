@@ -200,3 +200,15 @@ their own versioned response schemas. B-007-public-browser/ retains build/run/
 schema logs, actual runtime/import/memory reports and hashes for WASM, glue and
 the reused unchanged B-004 wrapper. This completes the fresh public fixture
 corpus CLI/Python/browser component; it is not target-engine qualification.
+
+Case-level Ashlar application reconciliation passes all 112 historical native
+application cases and 360 integrity receipts. Every emitted query/parameter
+vector matches its native statement; terminal successful untruncated single-
+chunk results match the recorded outcome and STRING column names/types. Each
+emitted scalar/key guard has its own matching successful zero-violation receipt.
+Empty native results legitimately have zero chunks and are handled explicitly.
+B-007-ashlar-application-reconciliation/ pins input reports and authored native
+harness source and lists case/query/statement identities. This establishes saved
+receipt consistency/custody, not fresh native execution or a new independent
+result oracle. Application story reconciliation remains incomplete across
+relationships, compounds, Truss and host/publication boundaries.

@@ -1,0 +1,698 @@
+{
+  "status": "passed",
+  "cases": 112,
+  "integrityReceipts": 360,
+  "scope": "Saved native SQL/parameter/terminal-result/metadata custody only. Independent expectations remain authored in the native harness; no fresh execution or production qualification.",
+  "sources": [
+    {
+      "path": "docs/helix/04-build/evidence/B-006-application-native/compile-artifacts.jsonl",
+      "sha256": "1890b061d48626fc8b253b64f320643bdf78036ccc3c076e991588274a083759"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-006-application-native/statements.jsonl",
+      "sha256": "201936c57e05473e3190ca74ac3f9c3e97de703eb77c1392d3e492d6228adea3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-006-application-native/summary.json",
+      "sha256": "4768ba1eb2769946902ca634cabaa3a9931d2c9e7e0ea9485d91f45fbbb76b7a"
+    },
+    {
+      "path": "tests/ashlar-databricks/application-native.py",
+      "sha256": "c16e89f109f3d35ee69abf9bdf652ec55967a1af78cddee4949c7236245e68d3"
+    }
+  ],
+  "casesReconciled": [
+    {
+      "id": "64-column-column-composite-page-0",
+      "sqlSha256": "89f831eca7ca80a06c1302e174cd03a8a52f9abee2066d14c275b5d88062d26b",
+      "statementId": "01f1c2e0-543e-1678-9ef8-9cad0096a5fe",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-composite-page-1",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-559f-1821-9d4f-ca1c3e0804fb",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-composite-page-2",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-5717-14f9-bd1c-6b0afcf81e12",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-composite-page-3",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-587d-1b0c-9308-15d2f2ca1d4c",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-composite-page-4",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-59db-1386-b613-6ef0c56c3a86",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-49b4-1d57-b298-8c23e804fc79",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-column-column-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-4b97-126e-a4a3-7d416a4f9208",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-column-column-group-count",
+      "sqlSha256": "7b8349699890fb2149335735c342c0b1e2908ef4ab42e25df5f000917077c97e",
+      "statementId": "01f1c2e0-4b12-15e9-b821-99be2d18c66b",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "64-column-column-join-count",
+      "sqlSha256": "ddb346db22d15c3db9bfa8c34c4fcbf4ed977012659f07b5732530f0edba228c",
+      "statementId": "01f1c2e0-4a88-1870-82cc-7814856b66b8",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "64-column-column-single-page-0",
+      "sqlSha256": "ea0a00918dccdab89677001b2d52e1d5f7726939d4fbb886016584307dae1c38",
+      "statementId": "01f1c2e0-4d0e-1b25-b691-13ec2d933ffa",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-single-page-1",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-4e83-1a54-aa6c-4c56d759fb89",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-single-page-2",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-5000-1c3f-95bc-f54abf73b8dc",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-single-page-3",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-5164-1774-addb-e483a1942ee5",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-column-single-page-4",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-52d5-1880-aef1-16aeeb8f8046",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-composite-page-0",
+      "sqlSha256": "916a329b5454bb87111cff256c24622a884c6d7c50edf3aaf86e53b62ee002c7",
+      "statementId": "01f1c2e0-4357-14f2-890b-0ef902af632e",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-composite-page-1",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-44e6-1bef-9c26-224fd014c921",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-composite-page-2",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-4643-142b-9071-b81c9fddd21d",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-composite-page-3",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-47b8-1183-b53c-4a9fabb29afc",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-composite-page-4",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-4910-1b33-903d-dd8217669841",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-3882-1bb1-a798-d9b2a5909926",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-column-props-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-3ac3-1757-9225-b82d695488ee",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-column-props-group-count",
+      "sqlSha256": "7b8349699890fb2149335735c342c0b1e2908ef4ab42e25df5f000917077c97e",
+      "statementId": "01f1c2e0-3a1b-19f4-9c72-85df6113c8c0",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "64-column-props-join-count",
+      "sqlSha256": "ddb346db22d15c3db9bfa8c34c4fcbf4ed977012659f07b5732530f0edba228c",
+      "statementId": "01f1c2e0-3950-12bf-879c-96abf307f80e",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "64-column-props-single-page-0",
+      "sqlSha256": "ce27956c999515540918660659f5fe797f317208b3673d68496ed19925aaee6a",
+      "statementId": "01f1c2e0-3c34-1876-ab47-c5affed38481",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-single-page-1",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2e0-3da3-1b99-9349-8e4c6d0adc0a",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-single-page-2",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2e0-3f0e-1bbe-af6f-ab01cc60271e",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-single-page-3",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2e0-406d-1ff5-8c32-c70204d84a26",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-column-props-single-page-4",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2e0-41d6-1b8d-956e-f46acad4f4d2",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-composite-page-0",
+      "sqlSha256": "81ad088e1eea1ca0f29fcb8b248a3c8ab5743df85cbccf427de0847fe4a4270c",
+      "statementId": "01f1c2e0-3217-17aa-941e-1744eae268b0",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-composite-page-1",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2e0-3385-1c92-8013-7f2448927843",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-composite-page-2",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2e0-3502-1222-af3d-d42681d4a6c6",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-composite-page-3",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2e0-3673-1afa-b0a4-51930da615b7",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-composite-page-4",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2e0-37e9-1e60-85d3-df609dc6fbc9",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-2775-1f87-9f15-251a53c687da",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-props-column-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-295e-1d4f-a7e3-4378c00214a3",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-props-column-group-count",
+      "sqlSha256": "ba2d94477a4d5674122fd1b9ae2f18bb671d25006980b91cdc88f046ebbb108e",
+      "statementId": "01f1c2e0-28d3-1100-8d62-348e99b84cea",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "64-props-column-join-count",
+      "sqlSha256": "f9054fd77a0846e39a02df57c4e7c8937a400f400b8c891d7a1e161f84e0f71f",
+      "statementId": "01f1c2e0-284a-1eb1-8601-be54ae322809",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "64-props-column-single-page-0",
+      "sqlSha256": "606c2932e00bf017bbea58acd1d4558a3ed39b32f79705e8f022cf01443bd4ec",
+      "statementId": "01f1c2e0-2aca-148b-b890-3d078e945de2",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-single-page-1",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2e0-2c3a-1843-889b-ccef5a08e977",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-single-page-2",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2e0-2dba-1093-af4f-cd56a6d45eca",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-single-page-3",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2e0-2f24-1461-864c-7efda3bc0df8",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-column-single-page-4",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2e0-309b-13f1-aa4f-b3837547296c",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-composite-page-0",
+      "sqlSha256": "fbdd59887242a87e35cee05a176746d07677fea629ee63fc6a0abf60cabf39c6",
+      "statementId": "01f1c2e0-2109-110e-9e00-fbeecdd06ab5",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-composite-page-1",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2e0-2276-1a5e-a969-ebc0603111c2",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-composite-page-2",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2e0-23ef-1cf0-b87e-b860bbbaa112",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-composite-page-3",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2e0-256e-1ad5-98c7-4af215476805",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-composite-page-4",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2e0-26da-1c08-8987-a45d9789e242",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-1584-19a9-85d1-a99f6cf6c456",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-props-props-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-1835-1589-873e-4fce45cc84d9",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "64-props-props-group-count",
+      "sqlSha256": "ba2d94477a4d5674122fd1b9ae2f18bb671d25006980b91cdc88f046ebbb108e",
+      "statementId": "01f1c2e0-1755-15fb-bf54-db10065a7fd0",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "64-props-props-join-count",
+      "sqlSha256": "f9054fd77a0846e39a02df57c4e7c8937a400f400b8c891d7a1e161f84e0f71f",
+      "statementId": "01f1c2e0-1673-1bdd-b8e9-5c44adbb5a52",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "64-props-props-single-page-0",
+      "sqlSha256": "b4b2e4a5f28623364eb29e6638c07ca5bcaa011fa6d250e45b95ce4124f11b01",
+      "statementId": "01f1c2e0-19c3-1820-bff1-77c8e31801c3",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-single-page-1",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2e0-1b38-1e9c-9d6e-ca6ca7320654",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-single-page-2",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2e0-1ca8-19a2-adb0-a880bb181779",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-single-page-3",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2e0-1e2b-1a83-90c0-1d9fe84eba7b",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "64-props-props-single-page-4",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2e0-1f98-17bf-ad40-607cd3da2fe8",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-composite-page-0",
+      "sqlSha256": "89f831eca7ca80a06c1302e174cd03a8a52f9abee2066d14c275b5d88062d26b",
+      "statementId": "01f1c2e0-0f2f-197c-b761-2f867f81cac3",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-composite-page-1",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-108a-1641-98e9-1ab38e8d62bf",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-composite-page-2",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-1204-1163-aac5-46340981cbbd",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-composite-page-3",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-1367-189f-acd9-69a0748ec6b1",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-composite-page-4",
+      "sqlSha256": "3eef0ba3733e3986f68cae11601efb2dd870a0df0ca034bdb549194d567693a3",
+      "statementId": "01f1c2e0-14d6-119b-9416-8c328f7ed7f2",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-04d9-1032-b8c1-2d30cb840a2a",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-column-column-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2e0-069e-190c-bb13-cf1c9e66a640",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-column-column-group-count",
+      "sqlSha256": "7b8349699890fb2149335735c342c0b1e2908ef4ab42e25df5f000917077c97e",
+      "statementId": "01f1c2e0-0620-1fd7-b0cd-7fa65f9f6193",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "8-column-column-join-count",
+      "sqlSha256": "ddb346db22d15c3db9bfa8c34c4fcbf4ed977012659f07b5732530f0edba228c",
+      "statementId": "01f1c2e0-05a4-19af-b375-91e59b29a672",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "8-column-column-single-page-0",
+      "sqlSha256": "ea0a00918dccdab89677001b2d52e1d5f7726939d4fbb886016584307dae1c38",
+      "statementId": "01f1c2e0-081d-1610-87b1-82266402ea82",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-single-page-1",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-0976-14f0-ad83-39c4f04b83b9",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-single-page-2",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-0add-1493-9b7e-567799c941e1",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-single-page-3",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-0c49-18d5-a78c-7318f6cf57de",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-column-single-page-4",
+      "sqlSha256": "7fd8e1185bb84728d63592f2914388e0c72e604ad068937c5e265f4ddd608fba",
+      "statementId": "01f1c2e0-0db4-132d-b9b2-7d65bd7670a4",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-composite-page-0",
+      "sqlSha256": "916a329b5454bb87111cff256c24622a884c6d7c50edf3aaf86e53b62ee002c7",
+      "statementId": "01f1c2df-fe91-10d9-b60b-51b250f38822",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-composite-page-1",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2df-fff3-1a87-9932-9fac0a69242e",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-composite-page-2",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-016d-15e2-b04c-b943256788f9",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-composite-page-3",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-02dd-1fa8-b0e8-2b9ec1dd272c",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-composite-page-4",
+      "sqlSha256": "51d3767e5f9bf178f587146e702d83e093629b87214cde4546dc1baba0b1eee0",
+      "statementId": "01f1c2e0-0441-11e1-b915-9355230bf16a",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-f3b7-13d2-a203-519e211f6f0c",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-column-props-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-f603-1844-9ab8-e39884064b3e",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-column-props-group-count",
+      "sqlSha256": "7b8349699890fb2149335735c342c0b1e2908ef4ab42e25df5f000917077c97e",
+      "statementId": "01f1c2df-f55b-13f6-b381-8570ce1e6998",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "8-column-props-join-count",
+      "sqlSha256": "ddb346db22d15c3db9bfa8c34c4fcbf4ed977012659f07b5732530f0edba228c",
+      "statementId": "01f1c2df-f480-1be8-9427-a3f9ce6f82c7",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "8-column-props-single-page-0",
+      "sqlSha256": "ce27956c999515540918660659f5fe797f317208b3673d68496ed19925aaee6a",
+      "statementId": "01f1c2df-f776-1285-bcb6-f68c0d218e2b",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-single-page-1",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2df-f8dd-1bc3-825c-a4286c5807fd",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-single-page-2",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2df-fa4b-1662-a58c-71a58e6a9cb7",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-single-page-3",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2df-fbb0-18cf-b933-136885277aca",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-column-props-single-page-4",
+      "sqlSha256": "258e9093e08f87e90542a1b027710d9981218bc0e48aa45df078c12cf37257d8",
+      "statementId": "01f1c2df-fd1d-14e4-bc67-95fda8d01483",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-composite-page-0",
+      "sqlSha256": "81ad088e1eea1ca0f29fcb8b248a3c8ab5743df85cbccf427de0847fe4a4270c",
+      "statementId": "01f1c2df-ed41-1c7b-b3a5-e2e84064a58a",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-composite-page-1",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2df-eeaf-1238-ad3c-48bee770e38a",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-composite-page-2",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2df-f031-18ed-a589-6e4300eded15",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-composite-page-3",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2df-f1a8-19b5-8e99-28a234c179d4",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-composite-page-4",
+      "sqlSha256": "1ecfb372b40160c8b5c64999e38dafaf217ecace39c833336444827fc955391a",
+      "statementId": "01f1c2df-f320-18d6-95d0-c24605f6f201",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-e1fd-11bf-994a-ab10e10b3d86",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-props-column-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-e3e5-187a-88ce-beee16272c51",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-props-column-group-count",
+      "sqlSha256": "ba2d94477a4d5674122fd1b9ae2f18bb671d25006980b91cdc88f046ebbb108e",
+      "statementId": "01f1c2df-e35b-1cee-9018-0d9ffdca4cbb",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "8-props-column-join-count",
+      "sqlSha256": "f9054fd77a0846e39a02df57c4e7c8937a400f400b8c891d7a1e161f84e0f71f",
+      "statementId": "01f1c2df-e2c6-1d14-9cef-f221bb78db24",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "8-props-column-single-page-0",
+      "sqlSha256": "606c2932e00bf017bbea58acd1d4558a3ed39b32f79705e8f022cf01443bd4ec",
+      "statementId": "01f1c2df-e565-1646-a023-ee781f615559",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-single-page-1",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2df-e6d6-10f1-a2dc-b38a04438c25",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-single-page-2",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2df-e85d-1e60-b44e-46a39c2478f1",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-single-page-3",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2df-e9f7-115e-8fbb-d4d4c8f9d8ca",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-column-single-page-4",
+      "sqlSha256": "b7ed620531e3fe4017d45201705f70e4594be96a96e3b884f455df5e9a94cc55",
+      "statementId": "01f1c2df-eb83-1791-b6ff-52aff027ecad",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-composite-page-0",
+      "sqlSha256": "fbdd59887242a87e35cee05a176746d07677fea629ee63fc6a0abf60cabf39c6",
+      "statementId": "01f1c2df-db63-1cdc-9655-699f085ad096",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-composite-page-1",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2df-dcee-1761-85f2-d02bd3b613c1",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-composite-page-2",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2df-de86-16bf-8ba4-ea4d43dbe0bf",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-composite-page-3",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2df-dff1-11e6-ac05-2b4b7129ba81",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-composite-page-4",
+      "sqlSha256": "1783691bce953d7890748b3b8b0012e87ad45f4f5544df48ba40e5875ef394c2",
+      "statementId": "01f1c2df-e15e-1a2b-8d6e-f74f66ffa54c",
+      "query": "SELECT t.* FROM Thing t WHERE (t.name, t.rank) > (:name, :rank) ORDER BY t.name ASC, t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-cf22-17fc-bd55-3fc33cfc395c",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-props-props-empty-count",
+      "sqlSha256": "82237710f72307b928bfbb5ad82295cdefb60bf96128e97b4e6c892d768d4f06",
+      "statementId": "01f1c2df-d24c-1a43-8ac2-8985ba17cb99",
+      "query": "SELECT COUNT(*) AS total FROM Thing t"
+    },
+    {
+      "id": "8-props-props-group-count",
+      "sqlSha256": "ba2d94477a4d5674122fd1b9ae2f18bb671d25006980b91cdc88f046ebbb108e",
+      "statementId": "01f1c2df-d178-1d4a-adb9-d6fe38a21c7a",
+      "query": "SELECT t.name, COUNT(*) AS total FROM Thing t GROUP BY t.name ORDER BY t.name ASC"
+    },
+    {
+      "id": "8-props-props-join-count",
+      "sqlSha256": "f9054fd77a0846e39a02df57c4e7c8937a400f400b8c891d7a1e161f84e0f71f",
+      "statementId": "01f1c2df-d09f-1762-b7eb-95a6d222c4cb",
+      "query": "SELECT COUNT(*) AS total FROM Thing t JOIN Thing u ON t.name = u.name"
+    },
+    {
+      "id": "8-props-props-single-page-0",
+      "sqlSha256": "b4b2e4a5f28623364eb29e6638c07ca5bcaa011fa6d250e45b95ce4124f11b01",
+      "statementId": "01f1c2df-d3e9-1c9b-b7c1-878b7f9c7517",
+      "query": "SELECT t.* FROM Thing t ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-single-page-1",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2df-d55a-1340-bc91-4bd0282eb098",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-single-page-2",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2df-d6ce-1e55-aa62-971a3343f1a7",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-single-page-3",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2df-d849-10df-897c-b4f6a3fb8c07",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    },
+    {
+      "id": "8-props-props-single-page-4",
+      "sqlSha256": "2f9f3ed6edace6754117882107f300a546599de17c6b4b63d22aa08d73a5efe0",
+      "statementId": "01f1c2df-d9c7-17ec-b697-eb74b98b513f",
+      "query": "SELECT t.* FROM Thing t WHERE t.rank > :rank ORDER BY t.rank ASC LIMIT 2"
+    }
+  ]
+}
