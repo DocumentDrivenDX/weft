@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalCases": 11,
+  "branches": [
+    "missing interface",
+    "non-string interface",
+    "missing dialect",
+    "non-string dialect",
+    "0.1 interface with 0.2 dialect",
+    "0.2 interface with 0.1 dialect",
+    "unknown interface",
+    "0.1 envelope",
+    "0.2 envelope",
+    "malformed binding JSON",
+    "duplicate binding key"
+  ],
+  "sources": {
+    "tests/compile/envelope.rs": "c011a79a96d5f808eb6fccd5881b3c38aed6e4cb5bc783a289ac1b904e8ba717",
+    "crates/weft-core/src/compile.rs": "e69168d9223f474ded1173df04a8fc33e3cf39dd93bcdf267ecfcb74216660a8"
+  },
+  "scope": "Named public admission conditions and exact diagnostic/atomic artifact assertions; resource/hash/model/resolution/lowering checks remain separately evidenced."
+}

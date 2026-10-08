@@ -405,3 +405,11 @@ the seven document/selection/byte boundaries. All 17 explicit refusal conditions
 filtered test executes exactly once and passes; B-007-catalog-branches/ pins test
 and implementation sources. This is one function's branch accounting, not a
 blanket claim about every compiler/schema/JSON function. No compiler behavior changed.
+
+Public request admission adds 11 explicit branch assertions with exact diagnostic
+messages, response interface versions and absence of SQL/parameters/plan/columns/
+obligations. Missing/non-string versions, mismatched/unknown version pairs, both
+versioned-envelope failures and correctly hashed malformed/duplicate-key binding
+JSON all refuse at their intended phase. B-007-request-branches/ retains the
+executed named test and test/implementation hashes. Other request-resource/hash/
+model/lowering paths remain separately accounted; no all-function claim follows.

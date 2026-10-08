@@ -135,3 +135,41 @@ fn plugin_failures_are_atomic_at_the_public_boundary() {
         }
     }
 }
+
+// @covers US-006-AC2 @covers US-006-AC4
+#[test]
+fn request_admission_branches_refuse_atomically() {
+    fn check(raw: &str, code: &str, message: &str, version: &str) {
+        let out: Value = serde_json::from_str(&Compiler::default().compile_json(raw)).unwrap();
+        assert_eq!(out["status"], "blocked");
+        assert_eq!(out["interfaceVersion"],version);
+        assert_eq!(out["diagnostics"][0]["code"],code);
+        assert_eq!(out["diagnostics"][0]["message"],message);
+        for key in ["sql","parameters","logicalPlan","columns","obligations"] { assert!(out.get(key).is_none(),"{key}"); }
+    }
+    for key in ["interfaceVersion","dialect"] {
+        let mut r = base();r.as_object_mut().unwrap().remove(key);
+        check(&r.to_string(),"WFT-INPUT","Compile and dialect versions must be supplied strings","weft-compile/0.1.0");
+        let mut r = base();r[key]=json!(1);
+        check(&r.to_string(),"WFT-INPUT","Compile and dialect versions must be supplied strings","weft-compile/0.1.0");
+    }
+    for (interface,dialect,output) in [
+        ("weft-compile/0.1.0","weft-sql/0.2.0","weft-compile/0.1.0"),
+        ("weft-compile/0.2.0","weft-sql/0.1.0","weft-compile/0.2.0"),
+        ("weft-compile/99","weft-sql/0.1.0","weft-compile/0.1.0"),
+    ] {
+        let mut r=base();r["interfaceVersion"]=json!(interface);r["dialect"]=json!(dialect);
+        check(&r.to_string(),"WFT-VERSION","Unsupported or mismatched compile/dialect versions",output);
+    }
+    for app in [false,true] {
+        let mut r=base();
+        if app {r["interfaceVersion"]=json!("weft-compile/0.2.0");r["dialect"]=json!("weft-sql/0.2.0");}
+        let output=if app {"weft-compile/0.2.0"} else {"weft-compile/0.1.0"};
+        r["extra"]=json!(true);
+        check(&r.to_string(),"WFT-INPUT","Request violates its versioned envelope",output);
+    }
+    for (raw,code) in [("{","WFT-INPUT"),("{\"x\":1,\"x\":2}","WFT-JSON-DUPLICATE")] {
+        let mut r=base();r["target"]["bindingJson"]=json!(raw);r["target"]["bindingSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));
+        check(&r.to_string(),code,"Invalid supplied binding JSON","weft-compile/0.1.0");
+    }
+}
