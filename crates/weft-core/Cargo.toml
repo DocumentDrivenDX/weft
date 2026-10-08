@@ -27,3 +27,12 @@ path = "../../tests/register-backend/pipeline.rs"
 [[test]]
 name="compile-envelope"
 path="../../tests/compile/envelope.rs"
+
+[dev-dependencies]
+proptest = { version = "=1.11.0", default-features = false, features = ["std"] }
+[[test]]
+name = "qualification-properties"
+path = "../../tests/qualify-and-evolve/properties.rs"
+[[test]]
+name = "qualification-resources"
+path = "../../tests/qualify-and-evolve/resources.rs"

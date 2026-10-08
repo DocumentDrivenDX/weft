@@ -1,0 +1,12 @@
+{
+  "scope": "Manifest admission collection/byte limits and identity/evidence/language guards only",
+  "command": "cargo test -p weft-core --test backend-registry --locked",
+  "passed": 7,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "newRefusalAssertions": 17,
+  "newPositiveBoundaryAssertions": 3,
+  "sourceSha256": "4c2cfeec0b518fb8f68b5d9407e50e91788c959af62f891931883eb8d13a46ef",
+  "logSha256": "4d7c02a12296aa339314c5e50747d466acffce24dee3eb2352f5a00a207bd1a4"
+}

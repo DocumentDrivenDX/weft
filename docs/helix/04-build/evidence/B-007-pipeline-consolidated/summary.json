@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "testsExecuted": 12,
+  "ignored": 0,
+  "filtered": 0,
+  "testNames": [
+    "registration_description_errors_are_atomic",
+    "selected_type_and_relationship_coverage_refuse_before_assessment",
+    "candidate_qualification_and_no_upgrade",
+    "adapter_dispatch_guards_refuse_before_lowering",
+    "binding_digest_revision_injection_and_selected_unknown_refuse",
+    "atomic_refusals_and_no_implicit_selection",
+    "obligation_merge_refuses_conflicts_and_preserves_requirements",
+    "emitter_cannot_change_outputs_or_parameter_domains",
+    "capability_assessment_guards_prevent_lowering",
+    "selected_identity_coverage_is_revision_exact",
+    "third_backend_registration_for_both_plan_versions",
+    "language_and_binding_root_guards_precede_backend_validation"
+  ],
+  "sourceSha256": "044bf95b343ebf9b6961f0247783bfb81b733d5dea104e7344fbff5cf55a4319",
+  "scope": "Full backend-pipeline integration suite at current source. Not a full workspace or native qualification run."
+}

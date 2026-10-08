@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "cases": 8,
+  "conditions": [
+    "duplicate binding capability",
+    "over4096 binding capabilities",
+    "duplicate assessment",
+    "unrequested assessment",
+    "unsupported assessment",
+    "duplicate evidence",
+    "undeclared evidence",
+    "missing supported evidence"
+  ],
+  "sources": {
+    "tests/register-backend/pipeline.rs": "ad09751765266d6291ab0849a81b3ee7e4c03ff03f8398a0f9a21bcd9b649ac3",
+    "crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb"
+  },
+  "scope": "Pre-lowering assessment guards; fixture panics if lowering/emission reached. Initial fixture borrow error corrected before successful execution; no compiler implementation change."
+}

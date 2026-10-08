@@ -1,0 +1,82 @@
+{
+  "status": "passed",
+  "controls": [
+    {
+      "control": "baseline",
+      "exitCode": 0,
+      "expectedOutcome": "accepted"
+    },
+    {
+      "control": "sql",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "parameter",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "sum-rounded",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "guard-zeroed",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "overflow-succeeded",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "overflow-wrong-error",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "truncation",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "row-count",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "carrier",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "duplicate-label",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "duplicate-statement-id",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "module-pin",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "binding-pin",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    },
+    {
+      "control": "uint64-accepted",
+      "exitCode": 1,
+      "expectedOutcome": "refused"
+    }
+  ],
+  "sourceSha256": "c27740d45f8e579b7dc62fb264b8868b6471e1e77c0c8bf1a3c8ce47b169b0c3",
+  "scope": "Baseline plus 14 temporary evidence corruptions; no native database execution."
+}

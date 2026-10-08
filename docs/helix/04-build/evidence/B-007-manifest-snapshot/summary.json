@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "command": "cargo test -p weft-core --test backend-pipeline --locked",
+  "passed": 16,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "scope": "Registered manifest snapshot, describe-once, immutable target metadata and changed-version refusal for both IR versions; synthetic backend only.",
+  "sourceSha256": "174dd0847049a80959cccd4efea602bb3070cce41d06bfc6e978cb3fc8d31f88",
+  "logSha256": "cc3d42980a93c5c87f33733b80f9aa0419291cb83f29616ea46856163d7e287d"
+}

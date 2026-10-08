@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "assertions": 7,
+  "boundaries": {
+    "documents": [
+      0,
+      32,
+      33
+    ],
+    "selectedModules": [
+      256,
+      257
+    ],
+    "documentBytes": [
+      4194304,
+      4194305
+    ]
+  },
+  "sourceSha256": "71debd9b553b90ad20507a783cc5e6c948563b24bdd83eccd93fb2f99f32aec9",
+  "scope": "Catalog preparation resource boundaries, with exact admitted documents and adjacent atomic refusals; not native engine or all-host qualification."
+}

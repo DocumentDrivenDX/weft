@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "runId": 37771049078,
+  "url": "https://github.com/DocumentDrivenDX/weft/actions/runs/37771049078",
+  "headSha": "f9101d95495f303ab7e511f7cc030d56eb3648bf",
+  "runner": "ubuntu-24.04",
+  "testsExecuted": 214,
+  "suites": 35,
+  "ignored": 0,
+  "filtered": 0,
+  "logSha256": "9829854c7a9f886fb76b65bfac8186cd89325024b4bd141a10f401eee2571aaf",
+  "retainedEvidenceComponents": 12,
+  "verifiedEvidenceReferences": 73,
+  "scope": "Fresh Linux full Rust workspace all-features run, spec checks, browser ESM/declaration build, retained evidence replay. No live native database or actual-browser execution in CI. No final release qualification."
+}

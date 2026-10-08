@@ -1,0 +1,22 @@
+{
+  "inputHashes": {
+    "compile-artifacts.jsonl.gz": "34f4d57e0a804aa0d3196c2b87cc5368fd9fba542927f93db6f9b7dd2270f488",
+    "compiler-build.log": "0fda36692fe5fdc7b49e3b38c31fbb6a99d000f9ee9608c924cc2ded88582c73",
+    "harness.py": "596f0044c56b0ed4eea818a1c2584dbc97a6113a9feab52a36c66af8cbd846ac",
+    "run.log": "7d20a06d9727e3d04447fec7c03730495a14fa583adfb054ac18dd1754db4001",
+    "source-inputs.json": "74b7c00c87e4c4c3d38a10c91931ef67cfc8721a0bb5e8f623e14186b6ac8aa9",
+    "statements.jsonl.gz": "d02043abfa374844043cc72bb501442ebe7a61860f83569cbb0bbf78a0bd651a",
+    "summary.json": "f8bbad1fba44657bcde0cf1388498ab0ba3b4f194a62f94b0d023666ff3ac3a1",
+    "transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
+  },
+  "archives": {
+    "compile-artifacts.jsonl": {
+      "uncompressedSha256": "288d4d2ceb156717c4ca81dae54f98033469494ca7353040e3cdc1bea8dcaaf0",
+      "bytes": 9090528
+    },
+    "statements.jsonl": {
+      "uncompressedSha256": "0daf01550e5cd046fa892552c70e69d22a2b2bfed0128c0d4b415c5bfc4fd5fa",
+      "bytes": 2478463
+    }
+  }
+}

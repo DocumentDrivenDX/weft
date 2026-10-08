@@ -1,0 +1,76 @@
+{
+  "status": "passed",
+  "backends": [
+    {
+      "backend": "ashlar",
+      "testsPassed": 18,
+      "executedTests": [
+        "explicit_property_homes_and_snapshot_zero_are_admitted",
+        "physical_identifiers_are_quoted_and_values_never_become_code",
+        "unmapped_unknown_model_content_is_retained",
+        "original_members_can_reference_another_supplied_local_module",
+        "bigint_admits_unsigned_subdomains_and_refuses_uint64",
+        "unsafe_and_ambiguous_mapping_content_refuses",
+        "candidate_presence_declaration_includes_compound_availability",
+        "unicode_quotes_literal_and_boolean_are_bound_in_typed_slots",
+        "global_sum_retains_nullable_exact_type_and_empty_input_branch",
+        "application_page_retains_authored_key_and_named_cursor",
+        "optional_scalar_preserves_presence_envelope_in_both_owner_homes",
+        "missing_mapping_and_candidate_optout_return_no_sql",
+        "sales_compiles_with_pins_exact_carriers_and_prequery_integrity",
+        "compound_encoding_is_explicit_and_selected_dependency_meaning_refuses",
+        "application_entity_and_count_keep_logical_metadata",
+        "relationship_binding_refuses_missing_changed_or_unknown_authored_meaning",
+        "authored_relationships_compile_forward_inverse_and_existential_without_deduplication",
+        "recursive_compounds_have_explicit_encoding_and_value_metadata"
+      ]
+    },
+    {
+      "backend": "truss",
+      "testsPassed": 22,
+      "executedTests": [
+        "home_correspondence_refuses_silent_location_fallback",
+        "both_home_locations_admit_original_bytes_without_claiming_qualification",
+        "shape_hash_profile_and_native_mapping_errors_refuse",
+        "rehashed_physical_homes_cannot_redirect_fixed_candidate_templates",
+        "default_candidate_and_altered_bundle_refuse_without_sql",
+        "unknown_binding_home_and_execution_meanings_refuse_atomically",
+        "unknown_row_obligation_cannot_be_silently_replaced_by_candidate_context",
+        "unknown_native_join_profile_cannot_select_fixed_row_joins",
+        "sequence_cannot_fall_back_to_scalar_root_row_storage",
+        "rehashed_selected_definitions_do_not_override_the_original_umf",
+        "structured_result_keeps_nested_identity_presence_and_exact_numeric_type",
+        "candidate_context_cannot_delegate_hidden_state_to_presence_decoding",
+        "composite_key_order_is_not_an_unordered_property_set",
+        "relationship_profile_cannot_change_fixed_traversal_meaning",
+        "unknown_selected_codec_cannot_reuse_candidate_type_directed_decoding",
+        "unknown_execution_basis_profiles_refuse_before_sql",
+        "relational_emission_keeps_owner_selection_and_bag_projection",
+        "candidate_registry_compiles_both_homes_and_retains_exact_contracts",
+        "authored_page_key_missing_wrong_owner_and_wrong_component_refuse_atomically",
+        "selected_page_and_relationship_keys_cannot_replace_registered_meaning",
+        "relationship_roles_and_original_definitions_cannot_be_substituted",
+        "application_relational_stages_compile_with_typed_result_contracts"
+      ]
+    }
+  ],
+  "testSources": [
+    {
+      "path": "tests/ashlar-databricks/binding.rs",
+      "sha256": "706b618fd82de02155d74ed8ae012e78ea264f48519a7d2c63b096c4fedeb8d8"
+    },
+    {
+      "path": "tests/ashlar-databricks/compiler.rs",
+      "sha256": "4842335c313921f20e142b1f869a9187c81f83a0e3b51882490c903086f42668"
+    },
+    {
+      "path": "tests/truss-postgresql/binding.rs",
+      "sha256": "bc7beec8da966fa684877446b78b4c11f3e2609915fd888f60f28ed2fc3bd6b2"
+    },
+    {
+      "path": "tests/truss-postgresql/compiler.rs",
+      "sha256": "7f4962ffcdf2bd16161c8c81e6c43c448f440bea081d14ff000ba1342f000e1a"
+    }
+  ],
+  "scope": "Named candidate admission/compiler paths only; not every native domain or production branch."
+}

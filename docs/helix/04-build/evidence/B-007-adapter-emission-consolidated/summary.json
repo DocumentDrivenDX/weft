@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "testsExecuted": 19,
+  "pipelineTests": 15,
+  "emissionUnitTests": 4,
+  "ignored": 0,
+  "filteredUnrelatedUnitTests": 1,
+  "testNames": [
+    "registration_description_errors_are_atomic",
+    "selected_type_and_relationship_coverage_refuse_before_assessment",
+    "atomic_refusals_and_no_implicit_selection",
+    "candidate_qualification_and_no_upgrade",
+    "obligation_merge_refuses_conflicts_and_preserves_requirements",
+    "binding_digest_revision_injection_and_selected_unknown_refuse",
+    "emitter_cannot_change_outputs_or_parameter_domains",
+    "adapter_dispatch_guards_refuse_before_lowering",
+    "capability_assessment_guards_prevent_lowering",
+    "third_backend_registration_for_both_plan_versions",
+    "language_and_binding_root_guards_precede_backend_validation",
+    "obligations_merge_across_declaration_assessment_and_emission",
+    "capability_declarations_bind_selected_target_language_and_status",
+    "selected_identity_coverage_is_revision_exact",
+    "emission_bounds_slots_and_column_provenance_refuse",
+    "backend_emission::tests::numeric_results_require_exact_text_decoders",
+    "backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes",
+    "backend_emission::tests::parameter_domain_guards_have_exact_diagnostics",
+    "backend_emission::tests::presence_and_native_null_require_qualified_descriptors"
+  ],
+  "sources": {
+    "tests/register-backend/pipeline.rs": "c4e2a702ae8cbbbbfeb221b4dff22ca8d9c697be313e15beb6fb54386c5e97bf",
+    "crates/weft-core/src/backend_emission.rs": "9d1bfe63d1c1bf2c52cd36e43cbfd1d3f43cbfeec2606d00e5521ee7ad838196"
+  },
+  "scope": "Current-source full backend pipeline and emission unit test groups. Not full workspace or native qualification."
+}

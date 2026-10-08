@@ -46,6 +46,11 @@ fn sales_compiles_with_pins_exact_carriers_and_prequery_integrity() {
         .unwrap()
         .iter()
         .any(|o| o["id"] == "ashlar.candidate.publication"));
+    let publication=response["obligations"].as_array().unwrap().iter()
+        .find(|o| o["id"]=="ashlar.candidate.publication").unwrap();
+    assert_eq!(publication["parameters"]["nativeProfile"],json!({
+        "warehouseRelease":"unqualified","comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error"
+    }));
     assert_eq!(run(&request), response);
 }
 #[test]
@@ -136,8 +141,7 @@ fn application_entity_and_count_keep_logical_metadata() {
         }
     }
 }
-#[test]
-fn application_page_retains_authored_key_and_named_cursor() {
+fn page_request() -> Value {
     let mut request =
         application("SELECT c.* FROM Customer c WHERE c.id > :after ORDER BY c.id ASC LIMIT 2");
     let mut document: Value =
@@ -156,6 +160,11 @@ fn application_page_retains_authored_key_and_named_cursor() {
     request["parameters"] = json!({"after":{"family":"integer","value":"7"}});
     request["readProfile"] =
         json!({"version":"weft-application-read/0.2.0","subset":"entity-page"});
+    request
+}
+#[test]
+fn application_page_retains_authored_key_and_named_cursor() {
+    let request=page_request();
     let response = run(&request);
     assert_eq!(response["status"], "compiled", "{response}");
     assert!(response["sql"].as_str().unwrap().contains("ORDER BY"));
@@ -342,4 +351,78 @@ fn candidate_presence_declaration_includes_compound_availability() {
     let manifest = Candidate.describe().unwrap();
     let capability = manifest.capabilities.iter().find(|c| c.id == "value.presence").unwrap();
     assert_eq!(capability.logical_domain, json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}));
+}
+
+// @covers US-004-AC1 @covers US-004-AC3 @covers US-006-AC4
+#[test]
+fn compound_generated_cte_names_do_not_collide_with_logical_scan_aliases() {
+    for suffix in ["graph","walk","value"] {
+        for uppercase in [false,true] {
+            let alias=format!("__weft_codec_0_{suffix}");
+            let alias=if uppercase {alias.to_ascii_uppercase()} else {alias};
+            let mut request=common::compound_request("sequence",false);
+            request["sql"]=json!(format!("SELECT \"{alias}\".payload FROM Customer \"{alias}\""));
+            let response=run(&request);assert_eq!(response["status"],"compiled","{response}");
+            let sql=response["sql"].as_str().unwrap().to_ascii_lowercase();
+            let name=format!("`{}`",alias.to_ascii_lowercase());
+            let declarations=sql.matches(&format!("{name} AS (" ).to_ascii_lowercase()).count()+sql.matches(&format!("{name}(owner_id,")).count();
+            assert_eq!(declarations,1,"native CTE alias collision: {alias}\n{sql}");
+            assert_eq!(response["logicalPlan"]["source"]["occurrence"],"s0");
+            assert_eq!(sql.matches("`s0` as (").count(),1);
+        }
+    }
+}
+
+// @covers US-004-AC1 @covers US-004-AC2 @covers US-006-AC4
+#[test]
+fn native_scan_names_preserve_distinct_case_and_unicode_logical_occurrences() {
+    for (first,second) in [("C","c"),("K","k")] {
+        for app_version in [false,true] {
+            let sql=format!("SELECT \"{first}\".id AS first, \"{second}\".id AS second FROM Customer \"{first}\" JOIN Customer \"{second}\" ON \"{first}\".id = \"{second}\".id");
+            let request=if app_version {application(&sql)} else {common::request(&sql)};
+            let response=run(&request);assert_eq!(response["status"],"compiled","{response}");
+            let sql=response["sql"].as_str().unwrap();
+            for alias in ["s0","s1"] {
+                assert_eq!(sql.matches(&format!("`{alias}` AS (")).count(),1,"{sql}");
+            }
+            assert_eq!(response["columns"][0]["outputName"],"first");
+            assert_eq!(response["columns"][1]["outputName"],"second");
+        }
+    }
+}
+
+// @covers US-004-AC3 @covers US-006-AC3
+#[test]
+fn structured_json_member_names_require_unique_non_nul_meaning() {
+    for duplicate in [false,true] {
+        let mut request=common::compound_request("structured",false);
+        let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        let note=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="note").unwrap();
+        note["name"]=json!(if duplicate {"leaf"} else {"note\0"});
+        let raw=doc.to_string();let digest=sha256(raw.as_bytes());
+        request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(digest);
+        let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(digest);
+        let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+        let response=run(&request);
+        assert_eq!(response["diagnostics"][0]["code"],"WFT-CAPABILITY","{response}");
+        assert_eq!(response["diagnostics"][0]["message"],"JSON record encoding needs unique non-NUL authored member names");
+        assert!(response.get("sql").is_none());assert!(response.get("columns").is_none());
+    }
+}
+
+// @covers US-004-AC3 @covers US-006-AC3
+#[test]
+fn selected_page_key_extension_meaning_is_not_silently_ignored() {
+    let mut request=page_request();
+    assert_eq!(run(&request)["status"],"compiled");
+    let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    doc["modules"][0]["elements"][0]["keys"][0]["futureMeaning"]=json!(true);
+    let raw=doc.to_string();let digest=sha256(raw.as_bytes());
+    request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(digest);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(digest);
+    let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+    let response=run(&request);
+    assert_eq!(response["diagnostics"][0]["code"],"WFT-BINDING","{response}");
+    assert_eq!(response["diagnostics"][0]["message"],"Selected authored key meaning is not registered");
+    assert!(response.get("sql").is_none());assert!(response.get("columns").is_none());
 }

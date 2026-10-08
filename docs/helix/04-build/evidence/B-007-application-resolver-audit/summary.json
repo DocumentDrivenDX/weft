@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "testsExecuted": 9,
+  "ignored": 0,
+  "filtered": 0,
+  "retainedApplicationCases": 620,
+  "originalPositiveQueriesIn02": 303,
+  "sourceHashes": {
+    "crates/weft-core/src/application_resolve.rs": "df48e51b8d08b881ee9ab3d3cdc9ea04a7ce7ddd52d3aff436c1b2396e22b6fa",
+    "tests/application/resolve.rs": "3d6ac65caf6628d731b50c405e2f34aa9c4928b51c98fde349471de69af17778",
+    "tests/application/fixtures/cases.json": "e74e260e19e0ded02463002b2cdd6ccf99936951a6e90432ff20482cbbaf1626",
+    "docs/helix/04-build/evidence/B-007-application-resolver-branch-accounting.md": "78b8361093467731358bb94dc45bc833532d4b2600470f8682cc01f92892fafc"
+  },
+  "logSha256": "a77b17a82377fc27b666e910647749fec506a37ce0be84be90f912dd6d25fd2d",
+  "scope": "All application resolver integration tests; new boundary/recognizer/predicate checks plus unchanged corpus. No new native domain or complete critical-path qualification."
+}

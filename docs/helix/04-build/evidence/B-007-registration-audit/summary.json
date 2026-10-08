@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "testsExecuted": 12,
+  "testNames": [
+    "candidate_qualification_and_no_upgrade",
+    "binding_digest_revision_injection_and_selected_unknown_refuse",
+    "atomic_refusals_and_no_implicit_selection",
+    "emitter_cannot_change_outputs_or_parameter_domains",
+    "third_backend_registration_for_both_plan_versions",
+    "supported_requires_declared_evidence_candidate_remains_distinct",
+    "duplicate_declarations_and_unknown_shapes_refuse",
+    "manifest_versions_and_profile_capability_binding",
+    "exact_limits_and_binding_digest_precede_resolution",
+    "compiled_artifacts_keep_versions_types_pins_and_qualifications",
+    "plugin_failures_are_atomic_at_the_public_boundary",
+    "strict_envelope_and_atomic_refusals"
+  ],
+  "sources": {
+    "tests/register-backend/pipeline.rs": "6056a8bcb6bf275242a431b23b7326ff77950528370a52a1d965bb6cd5ac0c6c",
+    "tests/register-backend/registry.rs": "6fa1431fb32d2a94d3395c52dfb435faf2dca6ada75c4339a024793a96b24635",
+    "tests/compile/envelope.rs": "8918d5c39fc86842c74ab546c3edb25f99b4c0505594635af236622b2a9a174b",
+    "tests/register-backend/fixture.rs": "957ad219b7b3580edd7758bbf4057b51aebd78e9dcdd8672911c993b93f075cd",
+    "crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb"
+  },
+  "criterionReview": {
+    "US-002-AC1": "third_backend_registration_for_both_plan_versions plus explicit Registry keyed lookup and trait lowering review",
+    "US-002-AC2": "manifest versions/profile validation, missing assessment/capability/backend and binding guards refuse before artifact",
+    "US-002-AC3": "candidate opt-in and upgrade refusal; public artifact qualification metadata retained",
+    "US-002-AC4": "hostile selected mapping/profile fields, plugin panic/refusal and invalid emission are atomic; public test covers both interface versions"
+  },
+  "scope": "Synthetic trusted library registration and public boundary, not proof of native backend semantics or producer evidence authenticity."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 7,
+  "binarySha256": "07b9c7c2d7c1a924d8df73df7e3fb9b583e57bd8fd47aa0564f3ecbcdc87ae24",
+  "extensionSha256": "1002ae0d4dedc7f7a4ba1c54706196d1bef906d62add932caa03949f9de4c7cf",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "casesAndResponsesSha256": "b774277e87b8c54d732b14dd973dec911b71721105eade16374fd50983f55db1",
+  "subprocessDisabled": true,
+  "scope": "Raw malicious/resource requests; early boundary checks shared across backend feature builds. No native database execution."
+}

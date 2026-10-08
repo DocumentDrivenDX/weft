@@ -1,0 +1,2332 @@
+{
+  "status": "passed",
+  "components": [
+    {
+      "component": "audit-qualified-hosts.py",
+      "result": {
+        "status": "passed",
+        "cases": 2181,
+        "hostArtifactJoins": 4362,
+        "resourceCasesPerHost": 7,
+        "scope": "Complete actual Python and Chromium artifact/pin/runtime joins to native-qualified requests, with exact loaded binaries and package custody. No separate host SQL executions or broader platform/distribution claims."
+      },
+      "sourceSha256": "b74b518eef66d38e51937a2dfda13311e36037f345304a373a583b7744cbe0b1"
+    },
+    {
+      "component": "qualified-host-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 8,
+        "controls": [
+          "Python actual hash changed",
+          "browser request identity changed",
+          "duplicate Python case identity",
+          "qualified request reverted to candidate",
+          "emitted SQL changed",
+          "package native payload changed",
+          "resource refusal input identity changed",
+          "browser runtime drift"
+        ],
+        "scope": "Eight semantic host receipt corruptions rejected after custody rehashing; no rebuilding or database execution."
+      },
+      "sourceSha256": "773454e7ac418351a3a3292456f2b4aa27cb3b6e332ff96494359a979bbbdf21"
+    },
+    {
+      "component": "audit-qualified-registration-receipts.py",
+      "result": {
+        "status": "passed",
+        "cases": 2181,
+        "compiled": 2180,
+        "blocked": 1,
+        "capabilitiesPerBackend": 27,
+        "scope": "Saved supported-registration receipts, exact pins/profile/evidence and manifest disposition checks. Producer differential execution separately preserves native-tested SQL. No rebuilding or new native/host execution."
+      },
+      "sourceSha256": "68b64f55400a8898e7861f59a631f3a4ab3094815abd8cf3e6ea8a4d422b1568"
+    },
+    {
+      "component": "reconcile-truss-review-numerics.py",
+      "result": {
+        "status": "passed",
+        "cases": 1124,
+        "nativeAssertions": 4496,
+        "postgresqlTransactions": 1,
+        "scope": "Exact Truss registration, all 434 decimal and 128 integer domains per props/typed home, independent integer coefficient expectations, complete executed SQL/parameter/fixture/guard/pin correspondence. No support promotion."
+      },
+      "sourceSha256": "84160353539b3a5fb22ccbb12ba9e8112468aa0a0d8b0babeaa944eeb132e87c"
+    },
+    {
+      "component": "truss-review-numeric-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 8,
+        "controls": [
+          "exact sum changed",
+          "valid guard rejects value",
+          "invalid domain silently lost",
+          "empty sum coerced to zero",
+          "PostgreSQL release drift",
+          "independent expectation weakened",
+          "decimal result scale changed",
+          "integrity AND became OR"
+        ],
+        "scope": "Eight semantic corruptions rejected after recomputing archive custody hashes; no new native SQL."
+      },
+      "sourceSha256": "8dd3cfcafaf6d21855bcbaae760930b661340ce3b604df92b4ec58ee1e63424d"
+    },
+    {
+      "component": "reconcile-conjunction-native.py",
+      "result": {
+        "status": "passed",
+        "cases": 32,
+        "postgresqlTransactions": 16,
+        "ashlarStatements": 51,
+        "scope": "Independent truth-table expectations and exact emitted SQL/parameters/guards/pins matched to terminal native receipts. Truss typed Boolean/string rows; Ashlar admitted typed string plus props Boolean. Same-query/transaction engine context; no support promotion."
+      },
+      "sourceSha256": "1c081153048a7f04097333ec508bf67cf088542c1880c33ccd0c0fe81b06bd0a"
+    },
+    {
+      "component": "conjunction-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 8,
+        "controls": [
+          "duplicate bag collapsed",
+          "AND became OR",
+          "query parameter changed",
+          "integrity count nonzero",
+          "warehouse identity drift",
+          "PostgreSQL transaction settings drift",
+          "expected result weakened",
+          "duplicate terminal receipt"
+        ],
+        "scope": "Eight semantic receipt corruptions rejected by exact native conjunction reconciliation; no new SQL executions."
+      },
+      "sourceSha256": "73af5d26968395955b59b75d48519a17cd82d7d7c21da3ba8cc6ab0d08bff264"
+    },
+    {
+      "component": "audit-native-registration-join.py",
+      "result": {
+        "status": "passed",
+        "cases": 1025,
+        "compiled": 1024,
+        "blocked": 1,
+        "corruptionsRejected": 10,
+        "controls": [
+          "SQL body",
+          "parameters",
+          "result decoder",
+          "model pins",
+          "binding digest",
+          "old host obligations",
+          "native host obligation",
+          "silent support promotion",
+          "engine settings",
+          "profile drift"
+        ],
+        "scope": "Retained engine-registration artifact/pin equivalence; controls corrupt checked semantics rather than a file hash. No new native SQL executions or support promotion."
+      },
+      "sourceSha256": "c06588ce46091eb33b66767a9f774d15db5762739f9a3008afe87972c90da1a8"
+    },
+    {
+      "component": "unsigned-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "controls": 15
+      },
+      "sourceSha256": "c27740d45f8e579b7dc62fb264b8868b6471e1e77c0c8bf1a3c8ce47b169b0c3"
+    },
+    {
+      "component": "reconcile-unsigned-boundaries.py",
+      "result": {
+        "status": "passed",
+        "cases": 8,
+        "nativeReceipts": 22,
+        "sameStatementEngineResults": 0,
+        "warehouseIdentity": null,
+        "successfulReceipts": 21,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee"
+    },
+    {
+      "component": "reconcile-ashlar-engines.py",
+      "result": {
+        "status": "passed",
+        "cases": 8,
+        "nativeReceipts": 22,
+        "sameStatementEngineResults": 7,
+        "warehouseIdentity": null,
+        "successfulReceipts": 21,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "40d99d671129cd65b4af5fe4c2a3b3c1d58d19ee7bed74301ce29bd5c4092c98"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "c0b2b0e5393a2a3badebb2a97af150a346447b00aadac911b2188db922d41df3"
+    },
+    {
+      "component": "ashlar-engine-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "engine",
+          "sum",
+          "sql",
+          "parameter",
+          "statement-id",
+          "custody"
+        ]
+      },
+      "sourceSha256": "9b12b76c32eeb9aa9b024a7231eb374bfaf935ee9cf6392128c7e223447adf12"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-boundaries.py",
+      "result": {
+        "status": "passed",
+        "cases": 8,
+        "nativeReceipts": 22,
+        "sameStatementEngineResults": 7,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "successfulReceipts": 21,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "cc3db47d835bd53c4a57a2b30294d0760b83c1fc7aaf8c33334e0e0edef44aad"
+    },
+    {
+      "component": "ashlar-warehouse-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "engine",
+          "sum",
+          "sql",
+          "parameter",
+          "statement-id",
+          "custody"
+        ]
+      },
+      "sourceSha256": "03dcc6405fc33574628e8af26372e4154e7e7da81dff879dc32917b64d717972"
+    },
+    {
+      "component": "audit-ashlar-support-reports.py",
+      "result": {
+        "status": "passed",
+        "scopesAudited": 7,
+        "casesAudited": 22,
+        "successfulNativeStatements": 21,
+        "expectedNativeFailures": 1,
+        "results": [
+          {
+            "bits": 1,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "7065adb60a45d415724fa3bc78ae59e85838d2e3a8d49c88b7447608efe3c2e0",
+              "bindingSha256": "00fee103a964054884a18029a093ddafc5c2b796980110cb30c429e487fe1f76",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "d48fee1decc5c1ac0badbf6b379909d93ef9d6c5f9b7fcbf2b4598ac51ed94a3"
+          },
+          {
+            "bits": 2,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "b19b556c2880f7043ec30adf5fbbad87f7ffe01e4dc27d7fd81774dea0779ff4",
+              "bindingSha256": "24765a480d2354b45b1ad69bf873c4e2708c70bb78a118de8b2cee8c2c63221b",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "8adaa4eec50304da20a99de99bdd20d835d251ef0b26d851e35a3f8d580cfe13"
+          },
+          {
+            "bits": 3,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "72b96d149e8761b1f60d777b7b1bdaeb0604b3a07ad6485cfa16882332745931",
+              "bindingSha256": "03687b9dbe468910a9fa33df52725eab6f1f967dd8fec1778c0c69f83dab5fa5",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "299528f619d1bdceedb82d8a577ce2ae32b557be985b575fa27b4ed9e886cb7e"
+          },
+          {
+            "bits": 8,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "711308a8814890be485c15edf3d5948e3179315ffb7b4ac4ab08d158e60b5e7c",
+              "bindingSha256": "7e554354412af4d9e98f458e7f3d2fef9a592c2def2cddf401093d6651e7c2c9",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "c144091d79783aced115c5be36d64da0184b935b1e58150e0e00cbb949fd7315"
+          },
+          {
+            "bits": 16,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "a0ac35d99111b14700f6c487d5ce330ac402d1426550acd7b3c3bc368d666e3d",
+              "bindingSha256": "499f3c4f21f883855680be9d384c419c865e0fef1a23830a65c228420fffaa28",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "602d87ebc57a691ec1e1e12f7a155d85391ca036ce232e1fecc3896906122837"
+          },
+          {
+            "bits": 32,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "287b619df8df45174a07a3d524ca253bce1c4958fa12c063ed7d8c08e3d7d0f0",
+              "bindingSha256": "97d1bf5b13ea057dfcb36ada54faf816ae98e72b5e333dd57c18832307bb9ec5",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "4a27f8c662945deca1ed233c3456eb7d3201da4dc66e79e14728bd3cc77d556d"
+          },
+          {
+            "bits": 63,
+            "profile": {
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.1.0",
+              "irVersion": "weft-ir/0.1.0",
+              "backendVersion": "0.1.0-candidate",
+              "targetProfile": "dbsql-candidate",
+              "engineVersion": "Databricks SQL 2026.39",
+              "layoutRevision": "ashlar-delta/0.3",
+              "modelSha256": "6aba3cdc6de281dc8e68f4398e510db66917c1fb62c1f6e8fe8f9860dc512635",
+              "bindingSha256": "2852401c4d32808673f33312f6419b54c22ad56b05fe1f5ee169d074494299e7",
+              "settings": {
+                "comparison": "explicit UTF8_BINARY in emitted SQL",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "u": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+                  "r": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+                },
+                "scope": "Synthetic unsigned owner substitutions; session ANSI setting not inferred."
+              }
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 4,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "3f84fabba368d6e7a05575131d570e4797d64f21d07dc94b953a1b8cbc1b7d06"
+          }
+        ],
+        "sourceHashes": {
+          "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+          "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37",
+          "custody.json": "8f50489b939e53bfbe588da3fc743eba5bd42024aaec8126d30323d2b68f8df2"
+        },
+        "qualification": "Real retained report consistency with independent exact unsigned expectations and warehouse builds. Supported-claim inputs exercise the verifier only. Candidate inventory unchanged; no complete backend domain, publication, host execution or production qualification."
+      },
+      "sourceSha256": "4842fbcd4b0aaad282258fd97405bb98740c51703feefab3d0cc0cce69062acb"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-counts.py",
+      "result": {
+        "status": "passed",
+        "cases": 32,
+        "integrityReceipts": 40,
+        "logicalMetadataCases": 32,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Saved native exact COUNT, duplicate join/group, Unicode comparison and empty-count results over four homes and signed8/64 with same-query warehouse builds. No fresh execution, entity/keyset, host or production qualification."
+      },
+      "sourceSha256": "f0c5c9798662c10072cb0ca53f0c3a9a66c1aae60e59710ebc6e6c538d73e3c3"
+    },
+    {
+      "component": "warehouse-capture-controls.py",
+      "result": {
+        "status": "passed",
+        "controls": 9,
+        "positive": 4,
+        "refused": 5,
+        "scope": "Harness annotation controls only; no native or backend support claim."
+      },
+      "sourceSha256": "f8b0a6798818dacdc1107918e6b52f3e46214105e63524238967a1467c3fd855"
+    },
+    {
+      "component": "ashlar-count-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 15,
+        "controls": [
+          "count",
+          "group-multiplicity",
+          "group-order",
+          "warehouse",
+          "parameters",
+          "sql",
+          "statement-id",
+          "extra-receipt",
+          "model-pin",
+          "decoder",
+          "logical-family",
+          "nullability",
+          "position",
+          "source-identity",
+          "custody"
+        ]
+      },
+      "sourceSha256": "3bfc521cc13d7cba23bba8b5dbbdb85f7f93a0aba961a7732c477813bd7031d1"
+    },
+    {
+      "component": "audit-ashlar-count-hosts.py",
+      "result": {
+        "status": "passed",
+        "hostArtifactJoins": 64,
+        "cases": 32,
+        "scope": "Retained actual Python/browser compiler-artifact and runtime identity joins. No host database execution or support promotion."
+      },
+      "sourceSha256": "b1f62b27eaeb11bd2e013d236250bd10aecd7ebc22fb4876163abe9e1c559083"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-application.py",
+      "result": {
+        "status": "passed",
+        "cases": 112,
+        "independentRowComparisons": 112,
+        "sameStatementWarehouseCases": 96,
+        "separateEmptyQueryProbes": 16,
+        "integrityStatements": 360,
+        "terminalStatements": 488,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent COUNT bags/group order and full single/composite keyset page sequences across four typed/props homes and signed8/64. Empty pages have separately labeled warehouse probes; no same-statement identity claim for them, no fresh execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "f777d3132de180160b2880e3ac3f6f3ecbc15f681f81e66eb8165f3d92f457f9"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-compounds.py",
+      "result": {
+        "status": "passed",
+        "cases": 48,
+        "independentDecodedComparisons": 48,
+        "integrityStatements": 192,
+        "terminalStatements": 264,
+        "sameStatementWarehouseCases": 24,
+        "separateEmptyPageProbes": 24,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent nested sequence, structured/recursive/map, exact integer and optional absent expectations with full page exhaustion across props/native ID homes. Empty pages use separate probes. No fresh execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "8a0d7f202f205cae1932f7c32a6cbf3e2aa4f9c1ad30b651b4714949a77b79e2"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-relationships.py",
+      "result": {
+        "status": "passed",
+        "cases": 52,
+        "positive": 28,
+        "refusals": 24,
+        "uniqueNativeGuards": 272,
+        "sameStatementWarehouseResults": 296,
+        "separateEmptyQueryProbes": 4,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "terminalStatements": 309,
+        "scope": "Independent forward/inverse duplicate bags, bound lookahead, composite-key EXISTS and pre-query integrity refusals across canonical/serving edges and props/typed homes. Empty EXISTS uses separate probes. No fresh SQL execution, host DB execution or candidate promotion."
+      },
+      "sourceSha256": "29b166f34dd2a7d34eb35f29c55761f6e0ea11f7be54790ed8547ad173336bc0"
+    },
+    {
+      "component": "reconcile-warehouse-settings.py",
+      "result": {
+        "status": "passed",
+        "nativeStatements": 3,
+        "observedAnsiMode": true,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "scope": "Saved separate-statement setting observation between matching warehouse builds; not retroactive settings evidence for corpus queries or arbitrary host sessions."
+      },
+      "sourceSha256": "cf414edd1dfdfbae227b8fb195a89e2e3b3b77a2df3a23f5122bdab9987de485"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-scalars.py",
+      "result": {
+        "status": "passed",
+        "cases": 10,
+        "positive": 2,
+        "refusals": 8,
+        "integrityStatements": 40,
+        "sameStatementWarehouseResults": 41,
+        "separateEmptyQueryProbes": 1,
+        "terminalStatements": 46,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent exact Decimal totals and unsigned-max duplicate joins, empty grouped result and eight hidden scalar integrity refusals. Empty result has separate warehouse probe; no fresh execution or candidate promotion."
+      },
+      "sourceSha256": "3d72993e3c64292931b5b94227e1dd55ed2b93c890c6778bc4abb4f5ade5a386"
+    },
+    {
+      "component": "reconcile-ashlar-warehouse-values.py",
+      "result": {
+        "status": "passed",
+        "cases": 133,
+        "positive": 56,
+        "refusals": 77,
+        "independentDecodedComparisons": 56,
+        "integrityStatements": 288,
+        "sameStatementWarehouseResults": 343,
+        "separateEmptyQueryProbes": 1,
+        "terminalStatements": 348,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+        },
+        "scope": "Independent exact scalar/list/map/nested/structured/recursive values, optional root/item states, empty owners and hidden corrupt leaves across all eleven authored value shapes. No fresh execution or candidate promotion."
+      },
+      "sourceSha256": "61ed369a129f6cbf7cf5a528de8eec604761b5d8a585db8e8bec6adcbe57d2a9"
+    },
+    {
+      "component": "../ashlar-databricks/host-obligation-check.py",
+      "result": {
+        "state": "passed",
+        "cases": 53,
+        "names": [
+          "success",
+          "current-profile-without-spark-release",
+          "unknown-legacy-version",
+          "unqualified-profile-cannot-claim-warehouse-release",
+          "unknown-arithmetic-profile",
+          "completeVisibility-before",
+          "completeVisibility-after",
+          "manifestVerified-before",
+          "manifestVerified-after",
+          "schemasVerified-before",
+          "schemasVerified-after",
+          "retainedDataFiles-before",
+          "retainedDataFiles-after",
+          "sourceIdentityVerified-before",
+          "sourceIdentityVerified-after",
+          "endpointIntegrityVerified-before",
+          "endpointIntegrityVerified-after",
+          "projectionCoverageVerified-before",
+          "projectionCoverageVerified-after",
+          "payloadValidated-before",
+          "payloadValidated-after",
+          "mappingVerified-before",
+          "mappingVerified-after",
+          "lifecycleVerified-before",
+          "lifecycleVerified-after",
+          "effectiveCaller-before",
+          "effectiveCaller-after",
+          "authenticatedCaller-before",
+          "authenticatedCaller-after",
+          "policyRevision-before",
+          "policyRevision-after",
+          "bindingSha256-before",
+          "bindingSha256-after",
+          "layoutRevision-before",
+          "layoutRevision-after",
+          "layoutSha256-before",
+          "layoutSha256-after",
+          "publication-before",
+          "publication-after",
+          "modelPins-before",
+          "modelPins-after",
+          "targetContext-before",
+          "targetContext-after",
+          "unknown-obligation",
+          "unknown-publication-meaning",
+          "unknown-guard-meaning",
+          "guard-violation",
+          "numeric-zero-is-not-exact-text",
+          "partial-transport",
+          "truncated-transport",
+          "native-type-change",
+          "native-null-value",
+          "duplicate-json-member"
+        ],
+        "qualification": "Host fixture phase/control evidence; synthetic callback trust, native execution tested separately."
+      },
+      "sourceSha256": "5bbceb2d6ede57ae3c41db12b24f8790443d398e77f0826f4f72dcad9f459958"
+    },
+    {
+      "component": "reconcile-unsigned-all-widths.py",
+      "result": {
+        "status": "passed",
+        "cases": 64,
+        "nativeReceipts": 190,
+        "sameStatementEngineResults": 63,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "successfulReceipts": 189,
+        "expectedFailedReceipts": 1,
+        "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+        "inputHashes": {
+          "compile-artifacts.jsonl": "15def268e32ad360d4423c9f798eb558cffbb764d6a4b70fe59094dee540ccea",
+          "statements.jsonl": "f525ccaf207060b93146f104d7e4d2a666a0f2a14438d12f1140a24c4f0e46b1"
+        },
+        "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+      },
+      "sourceSha256": "ca82dfd08b2662a438c9011f9ca8700c96253f3df48fe8580f22577b31ba9d26"
+    },
+    {
+      "component": "reconcile-signed-boundaries.py",
+      "result": {
+        "status": "passed",
+        "cases": 64,
+        "nativeReceipts": 194,
+        "successfulReceipts": 192,
+        "expectedFailedReceipts": 2,
+        "sameStatementWarehouseCases": 64,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "sourceSha256": "5371d8409077bb77c187f660e2642611451ba85aa9c8559bdd14a682a1b31ad5",
+        "inputHashes": {
+          "custody.json": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463",
+          "summary.json": "1410d4a56a306f7530a5ac01256a17ad725089b7685103263084157b708c807e",
+          "compile-artifacts.jsonl": "0d4fe2a74a9ccea03faf4eb497c3b15d3a66ac336d9cb17993d713049a35263d",
+          "statements.jsonl": "88538994e524f289317ef0540ba02bde3aa015b0e05c4ffa64590a19c6d2dd69"
+        },
+        "scope": "Exact signed widths 1..64, repeated signed boundary bags, range/null guards and both carrier overflow refusals. Original emitted SQL, parameters, module/binding pins and warehouse capture reconciled. Synthetic owner substitutions; no publication custody or supported registration claim."
+      },
+      "sourceSha256": "5371d8409077bb77c187f660e2642611451ba85aa9c8559bdd14a682a1b31ad5"
+    },
+    {
+      "component": "reconcile-decimal-domains.py",
+      "result": {
+        "status": "passed",
+        "cases": 434,
+        "nativeAssertions": 1302,
+        "nativeReceipts": 58,
+        "warehouseIdentity": {
+          "dbr_version": null,
+          "dbsql_version": "2026.39",
+          "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+          "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+        },
+        "sourceSha256": "c1431f5ff2e38fd3fcbc8580e5ddce7cc5f105e0bcfe6a33f488619a8eb68ea1",
+        "inputHashes": {
+          "custody.json": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd",
+          "summary.json": "f8bbad1fba44657bcde0cf1388498ab0ba3b4f194a62f94b0d023666ff3ac3a1",
+          "compile-artifacts.jsonl.gz": "34f4d57e0a804aa0d3196c2b87cc5368fd9fba542927f93db6f9b7dd2270f488",
+          "statements.jsonl.gz": "d02043abfa374844043cc72bb501442ebe7a61860f83569cbb0bbf78a0bd651a"
+        },
+        "scope": "All decimal precision 1..28 and valid scales; exact emitted SQL/params/pins, duplicate extrema and least-positive coefficient, five invalid values per domain, and same-statement warehouse build. Separate read-only ANSI observation. Synthetic owners, no production custody/support promotion."
+      },
+      "sourceSha256": "c1431f5ff2e38fd3fcbc8580e5ddce7cc5f105e0bcfe6a33f488619a8eb68ea1"
+    },
+    {
+      "component": "decimal-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 7,
+        "controls": [
+          "rounded-sum",
+          "lost-invalid-value",
+          "wrong-warehouse",
+          "changed-slot",
+          "stale-module",
+          "changed-result-scale",
+          "duplicate-native-receipt"
+        ],
+        "scope": "Semantically corrupted archived native receipts with recomputed custody digests refuse. No native execution or support promotion."
+      },
+      "sourceSha256": "d0b070ad3c7bb3f467c0fa22e069f1f165ffe9085d6bacd0dadd8b053f71709c"
+    },
+    {
+      "component": "signed-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 7,
+        "controls": [
+          "sum-bag",
+          "range-count",
+          "native-null",
+          "overflow-code",
+          "parameters",
+          "warehouse-build",
+          "extra-receipt"
+        ],
+        "scope": "Semantic native receipt corruptions refused with recomputed custody hashes. No native execution."
+      },
+      "sourceSha256": "6525ecea1d61563d0a8dd8d305031962e620c7f27f72cdcac12f900700ffa384"
+    },
+    {
+      "component": "audit-current-hosts.py",
+      "result": {
+        "status": "passed",
+        "cases": 591,
+        "hostArtifactJoins": 1182,
+        "ashlarCases": 515,
+        "trussCases": 76,
+        "scope": "Fresh native Python and actual Chromium byte parity for 591 original native-tested requests, including the UInt64 compile refusal. Exact artifact equivalence after the specified obsolete Spark-field removal. No separate host database executions, supported registration promotion or platform-wide distribution claim."
+      },
+      "sourceSha256": "4aa3f25bcdcbc114dd8d5da83a22f280fc8a13b1a6e5baa904649b99341ea265"
+    },
+    {
+      "component": "reconcile-truss-archive.py",
+      "result": {
+        "status": "passed",
+        "cases": 76,
+        "archiveBytes": 6201567,
+        "scope": "Retained archive/pin/artifact consistency and recorded embedding parity; no new native execution or independent row oracle."
+      },
+      "sourceSha256": "386ef5eb81b401689e029b3ff38db5d806326f99903c15106724e51d1da1cc88"
+    },
+    {
+      "component": "audit-truss-sessions.py",
+      "result": {
+        "status": "passed",
+        "cases": 76,
+        "scope": "Retained native session/result reconciliation; no new engine execution or support promotion."
+      },
+      "sourceSha256": "6aeb638996975597c02497a1e023798e12bac997c2b325456971f8e909aaae1e"
+    },
+    {
+      "component": "truss-session-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "missing",
+          "duplicate",
+          "rows",
+          "session",
+          "sql",
+          "archive"
+        ]
+      },
+      "sourceSha256": "98ff76b58b112dafbfb1463eeedf197577392537280c21283963251c91306296"
+    },
+    {
+      "component": "audit-native-profile-scopes.py",
+      "result": {
+        "status": "passed",
+        "sourceSha256": "c8e06878b1eec0b86d34f2fae7ba1224009f0a6cff90f2947e5769138b44b220",
+        "cases": 76,
+        "artifactStates": {
+          "compiled": 76
+        },
+        "distinctArtifactScopes": 21,
+        "independentRowComparisons": 76,
+        "orderedComparisons": 65,
+        "harnessSha256": "63c484a6203e78fcce9820cfa7243024ea16dafbbdbd169895d404b8c9f0c41d",
+        "scopes": [
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "11f4a800897431d37a0d677dc97a1af99c3e05ab6a9c32acbded1f1a70fb5b8e",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "800d6a8269c9ec034fcff55fa21ac0f47e805713d9cbef740515add51b40fc02",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-sequence-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "14973fe303c4561c5b855949ae62fb532bb6be3f90754f5a158676876a5bb006",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "7349e19d5b20d21c0227cba74c25f92e78013dcbff93c174540075501e6fbc4e",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "map-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "1c3dab1554b7f32adf0d2f0a37074c260100a8936e11385b7fc2d0f82fb72367",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "63bf376ae853522d01b71585557b33f30f05615b521b4a8b0dbb7fe023fe0412",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "composite-cursor-props",
+              "unicode-key-order-props",
+              "unicode-key-cursor-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "1ed3af82f8eac5a6b403bcbe5ddd57fa35da29e0b0ebd7d58299345849c21039",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "7349e19d5b20d21c0227cba74c25f92e78013dcbff93c174540075501e6fbc4e",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "map-page-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "24869d2ce8bfb50931e469dffaee8ff425b425238e4f6adb3bb4a38649b9ab40",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "whole-entity-row",
+              "scalar-page-row",
+              "single-cursor-row",
+              "injection-text-row",
+              "global-count-row",
+              "grouped-count-row",
+              "join-count-row",
+              "global-sum-row",
+              "related-page-row",
+              "related-filter-row",
+              "inverse-page-row",
+              "case-folded-param-row",
+              "exact-large-key-order-row",
+              "optional-scalar-row",
+              "has-related-scalar-row",
+              "inverse-has-related-row",
+              "related-alias-collision-row",
+              "exists-alias-collision-row",
+              "row-alias-collision-row",
+              "related-numeric-order-row",
+              "sequence-page-row",
+              "structured-page-row",
+              "whole-cursor-one-row",
+              "empty-global-count-row",
+              "empty-grouped-count-row",
+              "empty-global-sum-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "4fb086a33b215c8cd5417b4bf00071c355e0f5ea607cfb5eaec982fea044eb76",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "3061fce5a4c5b13e3989dd7f73d6641e720e0b8405bf6b68d914e3259c25c4a2",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "optional-sequence-page-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "65e91b19df8ed480e2aa6f8448d739e456355af6f0cdcb56f80e401185adaaa7",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "8207d209ce2c476a3ff108812f59d79597a4fc764c2d0a501e2ae65578eaebb4",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "cyclic-structured-props-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "6d4f0abdcffa07d422abc329075d592a6984cf5e64c7074f2993f97cbe873f73",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "3061fce5a4c5b13e3989dd7f73d6641e720e0b8405bf6b68d914e3259c25c4a2",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "optional-sequence-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "76539e2d3737c8e4e3540b0cfbbed0fd6c8e98f98f10213903beb2bc7627a229",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "global-sum-complete-tree-row",
+              "whole-entity-complete-tree-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "821892d3a67da7c6607cf9c0711abc4dd98c30dedeee157b3a0a35d58ef0a300",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "c9e329a4d4feb30528ecfbd10272ef68f3ac8939e72b09d456b700a3db0f38f8",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-structured-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "9535fa47843b1efbc78e391640772492675ea14c689a6f47c79da47d51515ff9",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "8207d209ce2c476a3ff108812f59d79597a4fc764c2d0a501e2ae65578eaebb4",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "cyclic-structured-props-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "a3c53cee28e75a9f73d3aa9d84d09b03c90be0ac2f52c217eca5093e3eff3b87",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "ee492c194aefbd72439b9d9547bfc7806f6c2ad8bd65db23ac9b15bfaaf31602",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "nested-sequence-props-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "b7a031e460015a9169b671bed40f4826102a7476abf35e8ddaf137c4fb099667",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "ee492c194aefbd72439b9d9547bfc7806f6c2ad8bd65db23ac9b15bfaaf31602",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "nested-sequence-props-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "b9ecc8d891445e3c935dcdb32f5e649480bbb73df07f6829618f8c973bb3ab7e",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "c9e329a4d4feb30528ecfbd10272ef68f3ac8939e72b09d456b700a3db0f38f8",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-structured-page-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "c635b5426147a27d37dccc2415ce5954aedec901ca3a0fedc637a5931bae206a",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "72774dcc525e3b864897697e5c2342feec40e7f2f17ac8b9ed7745ad6fe6cfbc",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "optional-map-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "c95ddfef5955e15269e8e9b6dacc9913641c3d1e42795351b71a0fd53a3e6995",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "62589344460a81bc1969ade87248ff83f00d81f94c662e4966998ed3be5afb62",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-map-page-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "d6c4da909621eb8a707589caf159d4bb19c8ece404b7922ccf6f4011ba1bec59",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "whole-entity-props",
+              "scalar-page-props",
+              "single-cursor-props",
+              "injection-text-props",
+              "global-count-props",
+              "grouped-count-props",
+              "join-count-props",
+              "global-sum-props",
+              "related-page-props",
+              "related-filter-props",
+              "inverse-page-props",
+              "case-folded-param-props",
+              "exact-large-key-order-props",
+              "optional-scalar-props",
+              "has-related-scalar-props",
+              "inverse-has-related-props",
+              "related-alias-collision-props",
+              "exists-alias-collision-props",
+              "row-alias-collision-props",
+              "related-numeric-order-props",
+              "sequence-page-props",
+              "structured-page-props",
+              "whole-cursor-one-props",
+              "empty-global-count-props",
+              "empty-grouped-count-props",
+              "empty-global-sum-props"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "db48ab0dd4a867a8c7350b47186f964392253cb3958973a504312ad9e3f33778",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "62589344460a81bc1969ade87248ff83f00d81f94c662e4966998ed3be5afb62",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-map-page-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "e37185d1760f3b49c240e0bc1f85e8ced33a9527c5a53c433e485899acd8009b",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "72774dcc525e3b864897697e5c2342feec40e7f2f17ac8b9ed7745ad6fe6cfbc",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "optional-map-page-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "e9d884f7870eed45beeebd9dbdc81a3cdba46e807734059e6e48142cebafa4b5",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "63bf376ae853522d01b71585557b33f30f05615b521b4a8b0dbb7fe023fe0412",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "composite-cursor-row",
+              "unicode-key-order-row",
+              "unicode-key-cursor-row"
+            ]
+          },
+          {
+            "profile": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "fbf925fcc66e6dd02b45e2767ceb75cda8d2a4fd4d24babd88f6f1c99c480eb1",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "800d6a8269c9ec034fcff55fa21ac0f47e805713d9cbef740515add51b40fc02",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "cases": [
+              "numeric-sequence-page-row"
+            ]
+          }
+        ],
+        "qualification": "Artifact pins and independent authored row expectations reconciled. Engine/session provenance and required host layers must be joined separately; no support promotion."
+      },
+      "sourceSha256": "1da789ac9f48f454a8b510b3969d28431c0ea1dbe2327b337c31bc17a0b93323"
+    },
+    {
+      "component": "native-scope-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 11,
+        "names": [
+          "lost-row",
+          "duplicate-row",
+          "rounded-integer",
+          "wrong-binding-pin",
+          "wrong-model-pin",
+          "changed-raw-only",
+          "duplicate-case-id",
+          "changed-order",
+          "custody-gzipSha256",
+          "custody-uncompressedSha256",
+          "custody-bytes"
+        ],
+        "scope": "Saved native row/pin audit negative controls; no engine rerun."
+      },
+      "sourceSha256": "53afe08105bd6276d2c0ff05526d1544dccdf1682e353ee611d67a0c7057810f"
+    },
+    {
+      "component": "audit-truss-support-reports.py",
+      "result": {
+        "status": "passed",
+        "scopesAudited": 21,
+        "casesAudited": 76,
+        "hostArtifactJoins": {
+          "python": {
+            "casesJoined": 76,
+            "receiptSha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909",
+            "runtime": {
+              "cases": 76,
+              "byteParity": true,
+              "subprocessDisabled": true,
+              "nativeModule": "/private/tmp/weft-b007-truss-python-package/weft/weft.abi3.so",
+              "version": "0.1.0",
+              "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+              "extensionSha256": "e203a68aec6f9041d235882552540a5a3be681f58aad2bd760172681f0c1f798"
+            }
+          },
+          "browser": {
+            "casesJoined": 76,
+            "receiptSha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561",
+            "runtime": {
+              "cases": 76,
+              "batchSize": 64,
+              "streamingCorpus": false,
+              "browser": "148.0.7778.96",
+              "playwrightVersion": "1.62.1",
+              "wasmBytes": 10401358,
+              "wasmSha256": "8fed42e77d5c8f641e73f22ab9f3a021b59ccd3d866e2325cc59a1f131707c92",
+              "jsGlueBytes": 6559,
+              "imports": [
+                {
+                  "module": "wbg",
+                  "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+                  "kind": "function"
+                },
+                {
+                  "module": "wbg",
+                  "name": "__wbindgen_init_externref_table",
+                  "kind": "function"
+                }
+              ],
+              "initialMemoryBytes": 1835008,
+              "finalMemoryBytes": 3473408,
+              "networkRequests": [
+                "http://weft.spike.test/",
+                "http://weft.spike.test/spike.wasm",
+                "http://weft.spike.test/spike.js",
+                "http://weft.spike.test/wrapper.js"
+              ],
+              "nodeGlobals": false,
+              "byteParity": true
+            }
+          }
+        },
+        "nativeSessionProvenance": {
+          "sameTransactionCases": 76,
+          "archiveSha256": "9a9233e4e628241bda27468504e963c84fb4f49f9e3ab77074e9e361620c2153",
+          "summarySha256": "8b903d3e87afa91173e16be3cb600258d8453a438485cbd763c7f79d4c6e71fd",
+          "session": {
+            "clientEncoding": "UTF8",
+            "engine": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+            "lcCollate": "C",
+            "lcCtype": "C",
+            "serverEncoding": "UTF8",
+            "serverVersion": "17.9 (Debian 17.9-1.pgdg13+1)",
+            "standardConformingStrings": "on",
+            "transactionIsolation": "repeatable read"
+          }
+        },
+        "results": [
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "11f4a800897431d37a0d677dc97a1af99c3e05ab6a9c32acbded1f1a70fb5b8e",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "800d6a8269c9ec034fcff55fa21ac0f47e805713d9cbef740515add51b40fc02",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "f6a8af80ed865774ca00c1e797727aca00263ddf2fdd586cb1682b8c51e4b8e2"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "14973fe303c4561c5b855949ae62fb532bb6be3f90754f5a158676876a5bb006",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "7349e19d5b20d21c0227cba74c25f92e78013dcbff93c174540075501e6fbc4e",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "6f2f10525e371d12092b41f4988e8ce57e5f60e3f8c02d17830c94801df3d903"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "1c3dab1554b7f32adf0d2f0a37074c260100a8936e11385b7fc2d0f82fb72367",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "63bf376ae853522d01b71585557b33f30f05615b521b4a8b0dbb7fe023fe0412",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "dac28c6d2b68c8786deb4daac6daaf62a3c6e980a5c7fe769283c9bfefc0a3fa"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "1ed3af82f8eac5a6b403bcbe5ddd57fa35da29e0b0ebd7d58299345849c21039",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "7349e19d5b20d21c0227cba74c25f92e78013dcbff93c174540075501e6fbc4e",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "a41eea51d432a9a65a47b7d197e92c1ed2c36751577cf76be3f5a601af9c6675"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "24869d2ce8bfb50931e469dffaee8ff425b425238e4f6adb3bb4a38649b9ab40",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 26,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "b230f967c6f17c84a95c73c56ea08d6f6640ac3a737c2df21a826dae7ac263d2"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "4fb086a33b215c8cd5417b4bf00071c355e0f5ea607cfb5eaec982fea044eb76",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "3061fce5a4c5b13e3989dd7f73d6641e720e0b8405bf6b68d914e3259c25c4a2",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "5ee81abdab8fc1ea536b760c6658374d14555b9b534af08680f6b284b4abf4a9"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "65e91b19df8ed480e2aa6f8448d739e456355af6f0cdcb56f80e401185adaaa7",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "8207d209ce2c476a3ff108812f59d79597a4fc764c2d0a501e2ae65578eaebb4",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "f589db165d1135fc0615063ca7a1701adc1408936bf74bf3c489c9becf0e2f69"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "6d4f0abdcffa07d422abc329075d592a6984cf5e64c7074f2993f97cbe873f73",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "3061fce5a4c5b13e3989dd7f73d6641e720e0b8405bf6b68d914e3259c25c4a2",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "555fe710d3030be405ac12ab9d6c722b15cfa69c9f04be679f6ff5636289a6ea"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "76539e2d3737c8e4e3540b0cfbbed0fd6c8e98f98f10213903beb2bc7627a229",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 2,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "16898885e190d1fb526ea3e89a2ea4029c490f7cc40d5a4b66dc0c0988cc77ba"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "821892d3a67da7c6607cf9c0711abc4dd98c30dedeee157b3a0a35d58ef0a300",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "c9e329a4d4feb30528ecfbd10272ef68f3ac8939e72b09d456b700a3db0f38f8",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "269d7f129716c1371f5a6af902715507d4491becdd4094d71a86347a62b369dc"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "9535fa47843b1efbc78e391640772492675ea14c689a6f47c79da47d51515ff9",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "8207d209ce2c476a3ff108812f59d79597a4fc764c2d0a501e2ae65578eaebb4",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "aad17c183c22917337ac7ea088c3546daef710143621e17668e1931352dbca4d"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "a3c53cee28e75a9f73d3aa9d84d09b03c90be0ac2f52c217eca5093e3eff3b87",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "ee492c194aefbd72439b9d9547bfc7806f6c2ad8bd65db23ac9b15bfaaf31602",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "dae76ec6b0128025133d8c7760e116af59a9ba4b684dc4123461651c7936de9a"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "b7a031e460015a9169b671bed40f4826102a7476abf35e8ddaf137c4fb099667",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "ee492c194aefbd72439b9d9547bfc7806f6c2ad8bd65db23ac9b15bfaaf31602",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "cb67ddcf183d6b021eb10f1b436e00bd111817aa90dc18453441f7e5bdcfa8e3"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "b9ecc8d891445e3c935dcdb32f5e649480bbb73df07f6829618f8c973bb3ab7e",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "c9e329a4d4feb30528ecfbd10272ef68f3ac8939e72b09d456b700a3db0f38f8",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "79641e520b996376558818d35984234a17b88bf27f56fd5240be05fa72a46dda"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "c635b5426147a27d37dccc2415ce5954aedec901ca3a0fedc637a5931bae206a",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "72774dcc525e3b864897697e5c2342feec40e7f2f17ac8b9ed7745ad6fe6cfbc",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "c835542f68484b1317f623bc381bbc52e5310e7ca8acf4ae768dcc1ea1d8e4b0"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "c95ddfef5955e15269e8e9b6dacc9913641c3d1e42795351b71a0fd53a3e6995",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "62589344460a81bc1969ade87248ff83f00d81f94c662e4966998ed3be5afb62",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "821c2945f4fe4ea6c4af4d664622fccc74c58b948afb8d301c705411377fbffa"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "d6c4da909621eb8a707589caf159d4bb19c8ece404b7922ccf6f4011ba1bec59",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "516d43bb8b1d6568bcad110e19df01cf19c472e7f1c7c174ba924d4c64cfa1fe",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 26,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "483c4ec16090794cde7a1db1dc6204dbcb5b341d8e6bf1220557db85ac8ecd7d"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "db48ab0dd4a867a8c7350b47186f964392253cb3958973a504312ad9e3f33778",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "62589344460a81bc1969ade87248ff83f00d81f94c662e4966998ed3be5afb62",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "17af43c646e4bf62efdada6a25a380608c1ce75eb6103eab8eea96ed33e90330"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "e37185d1760f3b49c240e0bc1f85e8ced33a9527c5a53c433e485899acd8009b",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "72774dcc525e3b864897697e5c2342feec40e7f2f17ac8b9ed7745ad6fe6cfbc",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "c79508263e8d21c5d4f720cce05a20e67ae0fe5e08d3f765f9fbf9bcbbed13ef"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "e9d884f7870eed45beeebd9dbdc81a3cdba46e807734059e6e48142cebafa4b5",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "63bf376ae853522d01b71585557b33f30f05615b521b4a8b0dbb7fe023fe0412",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 3,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "21f8edec60687086f70cfed2306a437c0ad22b6d51e74e80a98c1cc656e0746c"
+          },
+          {
+            "scope": {
+              "backend": {
+                "backendId": "truss.postgresql",
+                "backendVersion": "0.1.0-candidate",
+                "interfaceVersion": "weft-backend/0.2.0",
+                "targetProfile": "pg17.9-candidate"
+              },
+              "bindingSha256": "fbf925fcc66e6dd02b45e2767ceb75cda8d2a4fd4d24babd88f6f1c99c480eb1",
+              "compilerVersion": "weft/0.1.0",
+              "dialect": "weft-sql/0.2.0",
+              "irVersion": "weft-ir/0.2.0",
+              "modelPins": [
+                {
+                  "documentId": "sales-fixture",
+                  "revision": "application-fixture-1",
+                  "sha256": "800d6a8269c9ec034fcff55fa21ac0f47e805713d9cbef740515add51b40fc02",
+                  "umfVersion": "0.7.0"
+                }
+              ]
+            },
+            "audit": {
+              "status": "verified",
+              "cases": 1,
+              "layers": [
+                "native"
+              ]
+            },
+            "reportSha256": "f46a993a107fde634ce8b4bbcd66439a1cf8134daf00d073986a002be8d67871"
+          }
+        ],
+        "qualification": "Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution."
+      },
+      "sourceSha256": "6cb994c7eea61869c108fa561c3632f4db2d02893265c26f1185fcaa5c0e376b"
+    },
+    {
+      "component": "host-receipt-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 16,
+        "names": [
+          "python-missing-case",
+          "python-duplicate-id",
+          "python-changed-actual",
+          "python-changed-request",
+          "python-false-parity",
+          "python-changed-runtime-hash",
+          "python-changed-runtime-version",
+          "python-duplicate-json-member",
+          "browser-missing-case",
+          "browser-duplicate-id",
+          "browser-changed-actual",
+          "browser-changed-request",
+          "browser-false-parity",
+          "browser-changed-runtime-hash",
+          "browser-changed-runtime-version",
+          "browser-duplicate-json-member"
+        ],
+        "scope": "Host/native artifact receipt joins only; no native engine or host execution rerun."
+      },
+      "sourceSha256": "c8788b36123f543707bb08fed1fee4f713c65933c35b9c9fd256f66b2bb8883c"
+    },
+    {
+      "component": "evidence-check.py",
+      "result": {
+        "state": "passed",
+        "cases": 41,
+        "names": [
+          "complete-exact-bag",
+          "report-failed",
+          "report-skipped",
+          "report-pending",
+          "case-failed",
+          "case-skipped",
+          "case-pending",
+          "profile-compilerVersion",
+          "profile-dialect",
+          "profile-irVersion",
+          "profile-backendVersion",
+          "profile-targetProfile",
+          "profile-engineVersion",
+          "profile-layoutRevision",
+          "profile-modelSha256",
+          "profile-bindingSha256",
+          "profile-settings",
+          "sha256-mismatch",
+          "library-is-not-native",
+          "missing-case",
+          "duplicate-case",
+          "lost-bag-copy",
+          "rounded-integer",
+          "rounded-decimal",
+          "normalized-unicode",
+          "absent-is-not-null",
+          "unknown-report-meaning",
+          "unknown-case-meaning",
+          "unqualified-engine",
+          "candidate-is-not-supported",
+          "missing-layer-declaration",
+          "boolean-is-not-integer",
+          "ordered-row-loss",
+          "ordered-exact",
+          "unknown-comparison",
+          "missing-evidence-file",
+          "missing-python-layer",
+          "duplicate-json-members",
+          "matched-unqualified-profile",
+          "matched-invalid-modelSha256",
+          "matched-invalid-bindingSha256"
+        ],
+        "qualification": "Synthetic audit-algorithm controls only; no native support claim is made."
+      },
+      "sourceSha256": "7954a2fb1f354b0b8a11eb1aa31667d4267771720581eee10f0dc56635baa994"
+    },
+    {
+      "component": "reconcile-ashlar-application.py",
+      "result": {
+        "status": "passed",
+        "cases": 112,
+        "integrityReceipts": 360
+      },
+      "sourceSha256": "f2abc40e9b2b0400f627477da8c9bb75f40cd7785fa042965d08a28c8be1cfcf"
+    },
+    {
+      "component": "reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "controls": 11
+      },
+      "sourceSha256": "e9019e9b8d67ec2a9a069d89e80ae60914e35c8487d167e43bb3bbca40c859e9"
+    },
+    {
+      "component": "reconcile-ashlar-compound-pages.py",
+      "result": {
+        "status": "passed",
+        "cases": 48,
+        "integrityReceipts": 192,
+        "acceptedReceipts": 240
+      },
+      "sourceSha256": "8ad4f9dd8235fc8ced91848ff30655f2b53a66438d070a0fd1b17f49a472d69a"
+    },
+    {
+      "component": "reconcile-ashlar-relationships.py",
+      "result": {
+        "status": "passed",
+        "cases": 52,
+        "positive": 28,
+        "refusals": 24,
+        "uniqueNativeGuards": 272
+      },
+      "sourceSha256": "22fae24cb8847f3aecf993b299fe46e47f39f009245c4d9e47c955265e16bd17"
+    },
+    {
+      "component": "final-workspace-and-criterion-records",
+      "result": {
+        "status": "passed",
+        "candidateTests": 241,
+        "qualifiedTests": 242,
+        "criteria": 30,
+        "sourceHashesVerified": 111
+      },
+      "scope": "Saved logs/source/acceptance custody only; fresh CI remains required at the final PR head."
+    }
+  ],
+  "verifiedEvidenceReferences": 136,
+  "scope": "Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates."
+}

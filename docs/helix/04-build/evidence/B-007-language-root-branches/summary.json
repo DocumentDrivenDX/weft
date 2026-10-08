@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 14,
+  "planVersions": [
+    "weft-ir/0.1.0",
+    "weft-ir/0.2.0"
+  ],
+  "sourceSha256": "e74fa181c45f3359c0dbb0508a723043453e2a8d7abb1963310f936d423fe2cf",
+  "scope": "Unaccepted dialect/IR pair and six non-object binding roots per plan version. Panicking fixture backend detects accidental dispatch. No native-engine or full-workspace execution."
+}

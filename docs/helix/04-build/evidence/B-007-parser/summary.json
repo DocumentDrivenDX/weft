@@ -1,0 +1,11 @@
+{
+  "accepted": 1216,
+  "cases": 5000,
+  "generator": "weft-parser-text/0.1.0",
+  "proptest": "1.11.0",
+  "refused": 3784,
+  "scope": "syntax parse determinism, no panic and UTF-8 diagnostic spans; no resolution or backend qualification",
+  "seed": 95955044271878,
+  "sourceSha256": "a1dc9ea563f0b377165b770d05f04246505f8f596ee89a1f9c2c6b95f2105a6d",
+  "status": "passed"
+}

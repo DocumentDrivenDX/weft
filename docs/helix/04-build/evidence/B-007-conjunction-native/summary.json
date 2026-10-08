@@ -1,0 +1,520 @@
+{
+  "status": "passed",
+  "cases": 32,
+  "postgresqlCases": 16,
+  "ashlarCases": 16,
+  "ashlarStatements": 51,
+  "results": [
+    {
+      "id": "truss-props-0.1-True-hit",
+      "actual": [
+        [
+          "hit"
+        ],
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.1-False-hit",
+      "actual": [
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.1-True-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.1-False-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.2-True-hit",
+      "actual": [
+        [
+          "2"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.2-False-hit",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.2-True-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-props-0.2-False-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.1-True-hit",
+      "actual": [
+        [
+          "hit"
+        ],
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.1-False-hit",
+      "actual": [
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.1-True-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.1-False-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.2-True-hit",
+      "actual": [
+        [
+          "2"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.2-False-hit",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.2-True-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "truss-typed-0.2-False-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "version": "17.9 (Debian 17.9-1.pgdg13+1)",
+        "server_encoding": "UTF8",
+        "client_encoding": "UTF8",
+        "standard_conforming_strings": "on",
+        "transaction_isolation": "repeatable read",
+        "lc_collate": "C",
+        "lc_ctype": "C"
+      }
+    },
+    {
+      "id": "ashlar-props-0.1-True-hit",
+      "actual": [
+        [
+          "hit"
+        ],
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.1-False-hit",
+      "actual": [
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.1-True-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.1-False-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.2-True-hit",
+      "actual": [
+        [
+          "2"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.2-False-hit",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.2-True-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-props-0.2-False-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.1-True-hit",
+      "actual": [
+        [
+          "hit"
+        ],
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.1-False-hit",
+      "actual": [
+        [
+          "hit"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.1-True-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.1-False-miss",
+      "actual": [
+        [
+          "miss"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.2-True-hit",
+      "actual": [
+        [
+          "2"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.2-False-hit",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.2-True-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    },
+    {
+      "id": "ashlar-typed-0.2-False-miss",
+      "actual": [
+        [
+          "1"
+        ]
+      ],
+      "profile": {
+        "dbsql_version": "2026.39",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "dbr_version": null
+      }
+    }
+  ],
+  "compilerSha256": "cbe78ca4c77ac86bfe431bb8b3ff7686959bfed9f565601231f914fbdddd3968",
+  "harnessSha256": "414a26976b990c5c40a46b2acb5eb3f85dd2e90765a1dfb8d69097dc07475b02",
+  "scope": "Native required AND capability in both dialects, props and typed scalar homes. Four Boolean/string conjunction cells with duplicate true/hit rows; actual query and integrity SQL, PostgreSQL same transaction settings and same-statement Databricks warehouse captures. Separate ANSI probes do not attest arbitrary sessions. No stored publication custody or supported promotion."
+}

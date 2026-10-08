@@ -59,3 +59,62 @@ fn explicit_version_does_not_expand_original_parser() {
         assert!(parse(sql).is_ok());
     }
 }
+
+// @covers US-006-AC3 @covers US-006-AC4
+#[test]
+fn shared_lexer_retains_quoted_names_literals_and_source_forms() {
+    for sql in [
+        "SELECT c.id FROM sales.Customer c",
+        "SELECT c.id FROM sales.Customer AS c",
+        "SELECT Customer.id FROM sales.Customer",
+        "SELECT \"c\".\"a\"\"b\" AS \"select\" FROM \"sales\".\"Customer\" \"c\"",
+    ] {
+        let old = weft_core::syntax::parse(sql).unwrap();
+        let app = parse(sql).unwrap();
+        assert_eq!(format!("{:?}", old.source), format!("{:?}", app.source));
+        assert_eq!(old.source.namespace.as_ref().unwrap().value, "sales");
+        if sql.contains("\"a") {
+            assert_eq!(old.outputs[0].column.field.value, "a\"b");
+            assert!(old.outputs[0].column.field.quoted);
+            assert_eq!(old.outputs[0].alias.as_ref().unwrap().value, "select");
+            assert!(old.outputs[0].alias.as_ref().unwrap().quoted);
+            assert!(matches!(&app.outputs[0].output, Output::Field(c) if c.field.value == "a\"b" && c.field.quoted));
+        }
+    }
+    for (token, expected) in [("-12.3400", "-12.3400"), ("FALSE", "false"), ("''", ""), ("'O''Brien 😀'", "O'Brien 😀")] {
+        let sql = format!("SELECT c.id FROM Customer c WHERE c.id = {token};");
+        let old = weft_core::syntax::parse(&sql).unwrap();
+        let app = parse(&sql).unwrap();
+        assert!(matches!(&old.predicates[0].right, weft_core::syntax::Operand::Literal(l) if l.value == expected));
+        assert!(matches!(&app.predicates[0], Predicate::Compare {values,..} if matches!(&values[0],Value::Literal(l) if l.value == expected)));
+    }
+}
+
+// @covers US-006-AC4
+#[test]
+fn shared_lexer_and_parser_refusals_preserve_utf8_spans() {
+    for (sql, code, message) in [
+        ("", "WFT-SYNTAX", "Expected dialect keyword"),
+        ("SELECT", "WFT-SYNTAX", "Unexpected end of query"),
+        ("SELECT c.id FROM Customer c --comment", "WFT-UNSUPPORTED", "Comments are outside this dialect"),
+        ("SELECT c.id FROM Customer c /*comment*/", "WFT-UNSUPPORTED", "Comments are outside this dialect"),
+        ("SELECT c.id FROM Customer c WHERE c.id = '😀", "WFT-SYNTAX", "Unclosed quoted token"),
+        ("SELECT c.id FROM Customer c WHERE c.id = '😀\0'", "WFT-SYNTAX", "NUL is outside the initial text profile"),
+        ("SELECT c.\"\" FROM Customer c", "WFT-UNSUPPORTED", "Expected logical identifier"),
+        ("SELECT c.id FROM Customer c WHERE c.id = -TRUE", "WFT-UNSUPPORTED", "Unsupported predicate operand"),
+        ("SELECT c.id FROM Customer c WHERE c.id = +1", "WFT-UNSUPPORTED", "Unsupported predicate operand"),
+    ] {
+        for error in [weft_core::syntax::parse(sql).unwrap_err(), parse(sql).unwrap_err()] {
+            assert_eq!(error.code, code, "{sql:?}");
+            assert_eq!(error.message, message, "{sql:?}");
+            let span = error.source_span.unwrap();
+            assert!(span.start <= span.end && span.end <= sql.len());
+            assert!(sql.is_char_boundary(span.start) && sql.is_char_boundary(span.end));
+        }
+    }
+    for suffix in ["OR c.id = 2", "> 2", "*", "!", "; SELECT c.id FROM Customer c", "e2", "."] {
+        let sql=format!("SELECT c.id FROM Customer c WHERE c.id = 1 {suffix}");
+        assert_eq!(weft_core::syntax::parse(&sql).unwrap_err().code,"WFT-UNSUPPORTED");
+        assert_eq!(parse(&sql).unwrap_err().code,"WFT-UNSUPPORTED");
+    }
+}

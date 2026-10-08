@@ -1,0 +1,14 @@
+{
+  "scope": "Fresh full 133-case recursive/scalar/presence corpus on existing pinned fixture publication; no provisioning or data writes.",
+  "inputHashes": {
+    "summary.json": "04926a7e0774ae3e56782c64a66bf5650d39b63dd9e188292bbb13ba7b37d53b",
+    "run.log": "1c9fd5e607461448c5d68a265200288d9a998e7e42abb0eaf53cb340edc6a7d1",
+    "compound-native.py": "6271d906bed92314cd4d773c70b700f3f4788ec07fe7b3dfc8eb53019fd8de06",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "statements.jsonl": "dcbf1257fde4c982987865e5865bfa03485ba83b738ba7da78d3908a4f0eb77a",
+    "compile-artifacts.jsonl": "30a1cf09de49ab40082ad1f9ef1a2a7e24b99ac4e4ef58075614b0e95b70ac60",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+    "warehouse_observer.py": "f6735ce2c016af792eac798dbdbe15feec3aca7dc452c2e9c5c76d98a2a2672c",
+    "fixture-state.json": "2147f5ea4182d431aa0a0f3662ee3c8f7bcd5b4386aa0d96678fa724a78bc4de"
+  }
+}

@@ -1,0 +1,1 @@
+{"status": "passed", "cases": 1124, "nativeAssertions": 4496, "postgresqlTransactions": 1, "scope": "Exact Truss registration, all 434 decimal and 128 integer domains per props/typed home, independent integer coefficient expectations, complete executed SQL/parameter/fixture/guard/pin correspondence. No support promotion."}

@@ -1,0 +1,4321 @@
+[
+  {
+    "backendId": "truss.postgresql",
+    "backendVersion": "0.1.0-qualified",
+    "bindingProfile": "truss-postgresql-candidate/0.1.0",
+    "capabilities": [
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "scan",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "project",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "filter",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "innerJoin",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "equal",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "and",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "sum",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "group",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "type.string",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "type.boolean",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "type.integer",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "type.decimal",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "aggregate",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "aggregate.count",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "parameter.named",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "compare.lexicographicGreater",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "order.asc",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "limit",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "key.uniqueStable",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "value.presence",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "value.sequence",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "value.map",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "value.structured",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "project.entity",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "relationship.exists",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "relationship.inverse",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+        ],
+        "id": "relationship.boundedKeys",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "meaning": "only binding-admitted type, presence, key, relationship and comparison semantics",
+          "nativeNull": "refused for selected non-nullable values",
+          "storageHomes": [
+            "JSONB properties",
+            "typed scalar rows",
+            "complete compound row trees"
+          ],
+          "subset": "admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.candidate.context",
+            "owner": "host",
+            "parameters": {
+              "execution": {
+                "pinsRecheckedPerExecution": true,
+                "sameAffineTransactionForIntegrityAndData": true,
+                "separatePagesDoNotImplySnapshotContinuity": true,
+                "unknownObligationMeaning": "refuse-before-sql"
+              },
+              "requirements": [
+                "same admitted catalog/layout/model/role view",
+                "exact native transport",
+                "exact numeric domain and finite SUM or runtime error",
+                "integrity checks before predicates/casts; no partial publication",
+                "complete authorized visibility before interpreting missing state or children",
+                "current authority and disclosure rechecked before publication"
+              ],
+              "visibility": {
+                "absenceRequiresCompleteStateView": true,
+                "authorityOwner": "host",
+                "compoundRequiresCompleteChildView": true,
+                "hiddenRowsAreNotAbsent": true
+              }
+            }
+          },
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "truss.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "17.9",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "arithmetic": "exact-or-error",
+                "client_encoding": "UTF8",
+                "comparison": "explicit C",
+                "lc_collate": "C",
+                "lc_ctype": "C",
+                "server_encoding": "UTF8",
+                "standard_conforming_strings": "on",
+                "transaction_isolation": "repeatable read"
+              },
+              "targetProfile": "pg17.9-qualified-fixtures"
+            }
+          }
+        ],
+        "resultDomain": {
+          "arithmetic": "PostgreSQL exact NUMERIC or error",
+          "emptyAggregates": {
+            "count": "non-null integer",
+            "sum": "nullable"
+          },
+          "qualification": "supported native compiler semantics under host obligations",
+          "transport": "exact text; compound numeric values are base-ten strings"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "pg17.9-qualified-fixtures"
+        ]
+      }
+    ],
+    "evidence": [
+      "weft-native-qualification/truss/0.1.0#sha256:3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+    ],
+    "interfaceVersion": "weft-backend/0.2.0",
+    "languageProfiles": [
+      {
+        "dialectProfile": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0"
+      },
+      {
+        "dialectProfile": "weft-sql/0.2.0",
+        "irVersion": "weft-ir/0.2.0"
+      }
+    ],
+    "targetProfiles": [
+      {
+        "engine": "postgresql",
+        "engineVersion": "17.9",
+        "id": "pg17.9-qualified-fixtures",
+        "publicationRevision": "host-verified-native-qualified/0.1",
+        "sessionSettings": {
+          "arithmetic": "exact-or-error",
+          "client_encoding": "UTF8",
+          "comparison": "explicit C",
+          "lc_collate": "C",
+          "lc_ctype": "C",
+          "server_encoding": "UTF8",
+          "standard_conforming_strings": "on",
+          "transaction_isolation": "repeatable read"
+        },
+        "storageLayoutRevision": "weft-truss-fixtures/0.1"
+      }
+    ]
+  },
+  {
+    "backendId": "ashlar.databricks",
+    "backendVersion": "0.1.0-qualified",
+    "bindingProfile": "ashlar-databricks-candidate/0.1.0",
+    "capabilities": [
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "scan",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "project",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "project.entity",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "filter",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "innerJoin",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "equal",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "and",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "sum",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "group",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "aggregate",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "aggregate.count",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "parameter.named",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "compare.lexicographicGreater",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "order.asc",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "limit",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "key.uniqueStable",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "value.presence",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "optional scalar or compound envelopes; absent or exact value; explicit native null refuses"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "value.sequence",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "value.map",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "value.structured",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "relationship.exists",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "relationship.boundedKeys",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "relationship.inverse",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "type.string",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "type.boolean",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "type.integer",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      },
+      {
+        "constraints": [
+          "Only binding-admitted versioned logical/storage domains in the hashed qualification record",
+          "Host must verify native profile, integrity, authorization and one admitted read context before buffered publication; no engine fallback",
+          "Native-tested compiler semantics do not attest existing application data or installed storage runtime adoption"
+        ],
+        "evidence": [
+          "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+        ],
+        "id": "type.decimal",
+        "languageProfiles": [
+          {
+            "dialectProfile": "weft-sql/0.1.0",
+            "irVersion": "weft-ir/0.1.0"
+          },
+          {
+            "dialectProfile": "weft-sql/0.2.0",
+            "irVersion": "weft-ir/0.2.0"
+          }
+        ],
+        "logicalDomain": {
+          "subset": "required scalar relational/application operations with admitted exact homes"
+        },
+        "obligations": [
+          {
+            "failureCode": "WFT-OBLIGATION",
+            "id": "ashlar.nativeProfile",
+            "owner": "host",
+            "parameters": {
+              "engineVersion": "2026.39",
+              "qualification": "evidence-qualified compiler semantics; host execution and publication remain conditional",
+              "requirements": [
+                "verify the exact executing native engine and relevant settings before any integrity or user SQL",
+                "retain the same admitted catalog/publication context across checks and buffered result publication",
+                "refuse mismatched or unavailable profile evidence; never silently choose a newer engine or another profile"
+              ],
+              "settings": {
+                "ansi_mode": true,
+                "arithmetic": "ANSI exact-or-error",
+                "comparison": "explicit UTF8_BINARY",
+                "resultTransport": "JSON_ARRAY exact STRING",
+                "warehouseBuild": {
+                  "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+                  "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+                }
+              },
+              "targetProfile": "dbsql2026.39-qualified"
+            }
+          }
+        ],
+        "resultDomain": {
+          "carrier": "exact text",
+          "sumCount": "finite DECIMAL38 or error; empty count zero"
+        },
+        "status": "supported",
+        "targetProfiles": [
+          "dbsql2026.39-qualified"
+        ]
+      }
+    ],
+    "evidence": [
+      "weft-native-qualification/ashlar/0.1.0#sha256:b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+    ],
+    "interfaceVersion": "weft-backend/0.2.0",
+    "languageProfiles": [
+      {
+        "dialectProfile": "weft-sql/0.1.0",
+        "irVersion": "weft-ir/0.1.0"
+      },
+      {
+        "dialectProfile": "weft-sql/0.2.0",
+        "irVersion": "weft-ir/0.2.0"
+      }
+    ],
+    "targetProfiles": [
+      {
+        "engine": "databricks-sql",
+        "engineVersion": "2026.39",
+        "id": "dbsql2026.39-qualified",
+        "publicationRevision": "host-verified-native-qualified/0.1",
+        "sessionSettings": {
+          "ansi_mode": true,
+          "arithmetic": "ANSI exact-or-error",
+          "comparison": "explicit UTF8_BINARY",
+          "resultTransport": "JSON_ARRAY exact STRING",
+          "warehouseBuild": {
+            "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+            "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+          }
+        },
+        "storageLayoutRevision": "ashlar-delta/0.3"
+      }
+    ]
+  }
+]

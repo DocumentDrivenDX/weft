@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "testsExecuted": 9,
+  "testNames": [
+    "parameters_intersect_all_use_domains",
+    "plans_keep_domains_presence_join_bags_and_cursors",
+    "explicit_profile_version_and_parameter_map_bounds",
+    "original_valid_queries_remain_valid_in_explicit_02",
+    "application_acceptance_and_refusals",
+    "count_and_literal_values",
+    "application_constructs_preserve_structure",
+    "explicit_version_does_not_expand_original_parser",
+    "excluded_and_malformed_constructs_refuse"
+  ],
+  "sources": {
+    "tests/application/resolve.rs": "29809cc8e67da118af040cf89f6733eb53c8bade50c120a9a32ce6c1aa5e8ac8",
+    "tests/application/syntax.rs": "11c934e07ae3d0181d82119012bf8964f0bddb6edb5b3bd7bce321c9674654b8"
+  },
+  "scope": "Fresh application frontend tests; criterion review separately maps native evidence. No full release qualification."
+}

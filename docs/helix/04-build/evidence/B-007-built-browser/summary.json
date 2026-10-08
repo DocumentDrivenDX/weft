@@ -1,0 +1,41 @@
+{
+  "cases": 1273,
+  "batchSize": 64,
+  "streamingCorpus": false,
+  "browser": "148.0.7778.96",
+  "playwrightVersion": "1.62.1",
+  "wasmBytes": 9096722,
+  "wasmSha256": "5299eee35f807699ecbd42230ea91df197c3fe73946caaa7f3f97766edf50cdf",
+  "jsGlueBytes": 7077,
+  "imports": [
+    {
+      "module": "wbg",
+      "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+      "kind": "function"
+    },
+    {
+      "module": "wbg",
+      "name": "__wbindgen_init_externref_table",
+      "kind": "function"
+    }
+  ],
+  "initialMemoryBytes": 1769472,
+  "finalMemoryBytes": 1966080,
+  "networkRequests": [
+    "http://weft.spike.test/",
+    "http://weft.spike.test/spike.wasm",
+    "http://weft.spike.test/spike.js",
+    "http://weft.spike.test/wrapper.js"
+  ],
+  "nodeGlobals": false,
+  "byteParity": true,
+  "typescript": "5.9.3",
+  "artifacts": {
+    "packages/weft-browser/dist/index.js": "7017218e7d504ed73fc81dcb36c0a0afe14e9711f14fc5edf87c4df6641e990a",
+    "packages/weft-browser/dist/index.d.ts": "2cf085c9d8d7c8ef98fee1b2c842b80d153462cec75fdedf0c829ed4c540ad0f",
+    "packages/weft-browser/tsconfig.json": "c6560b415ab4714c721a6019116ed62349bb95f80255108381b332cc12479f80",
+    "packages/weft-browser/package.json": "ebaf2330f50817489f3c1810c8f70f6a0c5650ff276184a4ca3d970b27a5e8fc",
+    "bun.lock": "28b740f61429640ea5c005837d37b5bf7abf67b414c8139659cccc0daee6071a"
+  },
+  "scope": "Fresh built transport with retained test-third WASM compiler; no package publication or bundled backend distribution."
+}

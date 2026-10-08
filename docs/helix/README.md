@@ -27,5 +27,4 @@ B-006 completes its owner-authorized candidate compiler scope; its
 optional/recursive/relationship values, numeric/collation/resource boundaries and
 actual buffered host custody checks. Fresh Python/browser/CLI builds match 463
 artifacts with a documented declaration-only correction. Synthetic fixture bindings do not select either
-production profile or qualify an engine version. The complete 30-criterion release matrix remains unfinished; component/story
-evidence is scoped and does not constitute release qualification.
+production profile or qualify an engine version. B-007 now records [passing acceptance for all 30 P0 criteria](04-build/evidence/B-007-acceptance-matrix.json), [exact supported native/compiler and host profiles](04-build/evidence/B-007-support-inventory.json), and both terminal current-source workspace compositions. PR review/CI/merge remain pending. The [closure audit](04-build/evidence/B-007-closure-audit.md) separates those gates from distribution and production execution.

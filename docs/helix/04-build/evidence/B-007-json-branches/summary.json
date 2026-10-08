@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "cases": 25,
+  "accepted": 10,
+  "malformedRefusals": 11,
+  "duplicateRefusals": 4,
+  "sources": {
+    "tests/qualify-and-evolve/resources.rs": "93ff49259ffe1d87dadacde6e3d77aeb459f79751a450af4a49efd87ce2d72bb",
+    "crates/weft-core/src/json.rs": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4"
+  },
+  "scope": "Object/array/primitive traversal, arbitrary-precision integer retention, malformed/trailing JSON and decoded-key/nested duplicate branches. Node/request bounds are separately evidenced; this does not claim every recursion-depth boundary."
+}

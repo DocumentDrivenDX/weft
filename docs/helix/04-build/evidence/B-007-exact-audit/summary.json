@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "testsExecuted": 2,
+  "ignored": 0,
+  "filtered": 5,
+  "sourceHashes": {
+    "crates/weft-core/src/exact.rs": "97934f708fec6281ffd48b185fdd921c9a2ce4a9a0182ffb09755114922a68f1",
+    "tests/qualify-and-evolve/properties.rs": "9f0e94f488cb06ce66870b8991408fee90fff0495a6d53ba194e8ce0e2f3f839"
+  },
+  "logSha256": "f845617187ab1acc9818e899eec384a3ad2f50ccbda489b8539fb22f9bd0494a",
+  "scope": "Public frontend exact-value guards",
+  "nativeExecution": false,
+  "supportPromotion": false
+}

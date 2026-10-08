@@ -1,0 +1,11 @@
+{
+  "scope": "Fresh count-only application fixture corpus; thirty-two same-query warehouse observations and forty native integrity checks.",
+  "queryCases": 32,
+  "integrityStatements": 40,
+  "inputHashes": {
+    "summary.json": "e885864f077595f4235a029d26d576577c061e536934653a1bf582c2ac130c7c",
+    "compile-artifacts.jsonl": "ce36f694d9ee12382f36f7210c1c031b6930ee2f590d902a6d6088dc05b8130b",
+    "statements.jsonl": "3f6cd9977f1d56ebcc3961a995acc9e46da3eb3a3e64a9657a4dd7c80e075dc1",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de"
+  }
+}

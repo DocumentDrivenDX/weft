@@ -1,0 +1,111 @@
+{
+  "status": "passed",
+  "initialCases": 636,
+  "resolvedWithExactRetainedModules": 303,
+  "refusedWithoutPlan": 333,
+  "retainedDocumentInstances": 304,
+  "instancesWithOpaqueRootExtension": 304,
+  "publicResponseDistribution": [
+    {
+      "status": "blocked",
+      "code": "WFT-BACKEND-MISSING",
+      "cases": 608
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-BACKEND-VERSION",
+      "cases": 2
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-BINDING",
+      "cases": 3
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-CAPABILITY",
+      "cases": 3
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-GROUP",
+      "cases": 1
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-GROUPING",
+      "cases": 5
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-INPUT",
+      "cases": 1
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-LIMIT",
+      "cases": 1
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-NAME-AMBIGUOUS",
+      "cases": 3
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-NAME-MISSING",
+      "cases": 5
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-NUMERIC-DOMAIN",
+      "cases": 576
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-OUTPUT-NAME",
+      "cases": 1
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-PARAMETER",
+      "cases": 7
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-PIN",
+      "cases": 3
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-PROFILE",
+      "cases": 8
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-SYNTAX",
+      "cases": 1
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-TYPE",
+      "cases": 8
+    },
+    {
+      "status": "blocked",
+      "code": "WFT-UNSUPPORTED",
+      "cases": 30
+    },
+    {
+      "status": "compiled",
+      "code": "",
+      "cases": 7
+    }
+  ],
+  "inputs": {
+    "/private/tmp/weft-build/docs/helix/03-test/fixtures/cases.json": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
+    "/private/tmp/weft-b007-initial-oracle/reports.json": "1d42855a47bcd7a7aa54616ff54ba1e9921c31ee4ba88a22f0d7a9ed29329d2c",
+    "/private/tmp/weft-b007-public/reports.json": "7c7105f66d28d3f62fe3c0b58ca6973d2d3be435a9f5e36ed6c8e60ddee2ba8a"
+  },
+  "scope": "Audit of retained preparation receipts: exact source strings and pins. Public fixture corpus has seven compiled successes and 1266 authored refusals; transport parity does not imply native backend coverage."
+}

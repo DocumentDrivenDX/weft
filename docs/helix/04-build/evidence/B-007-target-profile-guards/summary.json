@@ -1,0 +1,12 @@
+{
+  "scope": "Manifest declaration guard coverage, not native profile qualification",
+  "command": "cargo test -p weft-core --test backend-registry --locked",
+  "passed": 4,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "negativeAssertions": 15,
+  "positiveAssertions": 2,
+  "sourceSha256": "ddf9a6560817c3387b1ddecccc8d6422c6f3deeea43705bfce8adcb3bb9e810a",
+  "logSha256": "771b2cbaf0a5bed9e2eab5004b0b7c2d23691169b8ce9e453d2a933bbd6bd0df"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "replayComponents": 45,
+  "verifiedEvidenceReferences": 136,
+  "governedArtifacts": 43,
+  "schemas": 10,
+  "plannedCriteria": 30,
+  "initialFixtureScenarios": 636,
+  "logs": {
+    "replay": {
+      "uncompressedSha256": "cf49c83b108c5d94dc0682dc1bfe99f8ac1ec8534190850a81c5f815ecb11d6d",
+      "exitCode": 0
+    },
+    "specifications": {
+      "uncompressedSha256": "82925ebb4d9409ebd9400b4ba5e8525f59f10f51a186c33cd149a010d55b7466",
+      "exitCode": 0
+    }
+  },
+  "checkerSha256": "2f8974ddaa28b6a8fd8e41b17833e3a45ab9fb7c6beb1b7516817332818d93a1",
+  "scope": "Final local saved-evidence/source/criterion custody and specification integrity. Actual native/Python/browser/workspace executions remain separate records. Final remote CI and PR merge remain required."
+}

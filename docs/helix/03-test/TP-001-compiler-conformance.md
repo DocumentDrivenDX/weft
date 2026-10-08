@@ -24,7 +24,7 @@ ddx:
 ## Testing Strategy
 
 Goal: establish that Weft SQL + supplied UMF modules produces target SQL with the defined logical meaning, or a precise refusal. SQL snapshots alone are insufficient. Every support claim names compiler, model, backend, storage profile, engine version, settings and evidence revision. B-001 through B-006 now have scoped compiler, native and embedding evidence;
-the full B-007 release matrix remains unfinished.
+the B-007 acceptance matrix records passing evidence for all 30 P0 compiler criteria at the exact profiles and observed hosts in the support inventory. Distribution remains separately gated.
 
 ### Test Levels
 

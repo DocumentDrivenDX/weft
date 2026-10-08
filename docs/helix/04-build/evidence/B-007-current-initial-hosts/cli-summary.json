@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "cases": 591,
+  "sourceNativeArtifactHashes": {
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-native/compile-artifacts.jsonl": "c0c33de7bc8e6f6ec253ed4bfec540ba94fc567dbf4e00f953f4f5bd31f53757",
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/compile-artifacts.jsonl": "7b086133f8ad7f5288b9d140cbbcb06325944da2de7528bed0b9b96249892457",
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-native/compile-artifacts.jsonl": "18ac63b6cb43a9e29c8708fc2d629155b5187c628dba038bdadbc9558bf11988",
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-native/compile-artifacts.jsonl": "2116aca797fc0257bd0d01dfdf5258751a37d26c73f24a48914bb5a26ba1a5c1",
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-native/compile-artifacts.jsonl": "30a1cf09de49ab40082ad1f9ef1a2a7e24b99ac4e4ef58075614b0e95b70ac60",
+    "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/compile-artifacts.jsonl": "ce36f694d9ee12382f36f7210c1c031b6930ee2f590d902a6d6088dc05b8130b",
+    "docs/helix/04-build/evidence/B-007-unsigned-all-widths-native/compile-artifacts.jsonl": "15def268e32ad360d4423c9f798eb558cffbb764d6a4b70fe59094dee540ccea",
+    "docs/helix/04-build/evidence/B-007-signed-all-widths-native/compile-artifacts.jsonl": "0d4fe2a74a9ccea03faf4eb497c3b15d3a66ac336d9cb17993d713049a35263d",
+    "docs/helix/04-build/evidence/B-007-truss-application-native/reports.json.gz": "c8e06878b1eec0b86d34f2fae7ba1224009f0a6cff90f2947e5769138b44b220"
+  },
+  "compilerSha256": "64c7e0eb999c3ed7d6928a92844fa7d1162e3826ab29cd36744683222fdf40a5",
+  "harnessSha256": "bb65bc927bb9b047cd7addd856b8b0e1f798136fe44704f21b6afd53b410a9bd",
+  "scope": "Fresh CLI byte expectations; full artifact equivalence to 591 retained native-tested requests. Exactly the obsolete Spark metadata field is removed from the 387 historical Ashlar artifacts; unchanged 128 current numeric artifacts and 76 Truss artifacts. No new host database execution."
+}

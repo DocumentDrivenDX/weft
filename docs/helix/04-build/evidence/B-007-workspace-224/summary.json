@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "exitCode": 0,
+  "command": "cargo test --workspace --all-features --locked",
+  "testsExecuted": 224,
+  "terminalSuites": 35,
+  "ignored": 0,
+  "filtered": 0,
+  "sourceCheckpoint": "748ecf8",
+  "logGzipSha256": "3e628b8fc413dd38e5896b5a82caea337c6fb94c174ce80c11a6cb26dae900f5",
+  "scope": "Terminal full Rust workspace run after the engine-profile review registration and runtime Spark-field expectation correction. This source checkpoint precedes the subsequent four application-resolver test additions. No native database or actual embedding execution is claimed by cargo test."
+}

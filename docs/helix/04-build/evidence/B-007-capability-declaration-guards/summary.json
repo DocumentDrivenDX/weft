@@ -1,0 +1,13 @@
+{
+  "scope": "Manifest capability and obligation declaration guards; no native qualification or complete branch-coverage claim",
+  "command": "cargo test -p weft-core --test backend-registry --locked",
+  "passed": 5,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "capabilityRefusalAssertions": 24,
+  "obligationRefusalAssertions": 9,
+  "positiveObligationAssertions": 1,
+  "sourceSha256": "28bf7ea0fbcc14d9d61719376c10f772049737166d02b6503398766a3cb5bb5e",
+  "logSha256": "d5ae75e7a6dea6041d02632976f49a2a172c60014845b56fc7eb6e65c69c7dda"
+}

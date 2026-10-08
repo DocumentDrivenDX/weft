@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 76,
+  "binarySha256": "07b9c7c2d7c1a924d8df73df7e3fb9b583e57bd8fd47aa0564f3ecbcdc87ae24",
+  "harnessSha256": "cb8264bd4e2be7864b74e62efcee883974d8ef28f7fbacd0bad36502d2265a46",
+  "corpusSha256": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1",
+  "scope": "Actual isolated PostgreSQL application fixture execution; candidate profile only."
+}

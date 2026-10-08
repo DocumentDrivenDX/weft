@@ -1,0 +1,103 @@
+{
+  "model": "UMF 0.7.0",
+  "languages": [
+    "weft-sql/0.1.0",
+    "weft-sql/0.2.0"
+  ],
+  "interface": "weft-backend/0.2.0",
+  "meaning": "Native compiler semantics for binding-admitted domains. Supported is conditional on host obligations; it is not execution, authorization or stored-publication attestation.",
+  "excluded": [
+    "native null as a logical value",
+    "unknown selected semantic extensions or storage homes",
+    "unregistered engine builds/settings",
+    "production authorization or installed storage runtime adoption",
+    "released Python/platform distributions"
+  ],
+  "hostRequirements": [
+    "Verify exact native engine/build, encoding/collation/arithmetic and transport settings before any integrity or query SQL.",
+    "Keep integrity checks and query evaluation in one admitted catalog/publication context.",
+    "Buffer results; refuse integrity, engine, policy, transport or arithmetic failures before publication. No fallback or newer engine selection."
+  ],
+  "qualificationBoundary": "Operation/type/home families qualified by native executions, independently authored expectations and critical semantic branch accounting. Composition across those admitted families does not claim every possible query/model/home cross-product has been executed.",
+  "qualificationVersion": "weft-native-qualification/0.1.0",
+  "status": "native-semantics-qualified",
+  "backend": "truss.postgresql",
+  "engine": "PostgreSQL 17.9",
+  "registrationVersion": "0.1.0-qualified",
+  "storageHomes": [
+    "JSONB properties",
+    "typed scalar rows",
+    "complete compound row trees"
+  ],
+  "domains": {
+    "scalar": "string/boolean, signed or unsigned integer widths 1..64, decimal precision 1..28 and scale 0..precision",
+    "sum": "unbounded exact PostgreSQL NUMERIC; empty nullable",
+    "compound": "admitted sequence/map/structured graph, exact numeric text leaves, explicit absence, complete row trees",
+    "relationships": "authored monomorphic directed/inverse edges and exact bounded key bags",
+    "paging": "complete stable authored keys, exact C comparison; no storage-ID substitution"
+  },
+  "evidence": [
+    {
+      "path": "docs/helix/04-build/evidence/B-007-native-registration-join/summary.json",
+      "sha256": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-native-registration-join/audit-summary.json",
+      "sha256": "d7b07ba6176bf719628023639f7894f73453bce187009a570a98dc7e5b3dfddf"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+      "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-conjunction-native/reconciliation.json",
+      "sha256": "83a085d373459859168ddc43dae9674041305342eb121254fc92577fc7fff2c4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
+      "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/reconciliation.json",
+      "sha256": "0e5fa90b389db97fd1f5807fba7e50387dd50363fc0106a12afa83111f5e4672"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-session-native/summary.json",
+      "sha256": "8b903d3e87afa91173e16be3cb600258d8453a438485cbd763c7f79d4c6e71fd"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+      "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-critical-path-review.md",
+      "sha256": "e1fddb4a05ec3c915022d16d587bb92494b6256909bfc27248a1a3bf8c7b48e5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-graph-branch-accounting.md",
+      "sha256": "c96418504badd3da2504e210f66a2028e2165c3d6ba8f683c1e2b5cfbadddc5d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-backend-lowering-branch-accounting.md",
+      "sha256": "2583a12c278f88f44745af4821bb75fea764ce2e13754fd4d781384fa3437be0"
+    }
+  ],
+  "remaining": "Actual supported-registration preservation and final Python/browser composition must be verified before B-007 acceptance/merge.",
+  "engineProfile": {
+    "engine": "postgresql",
+    "engineVersion": "17.9",
+    "id": "pg17.9-native-review",
+    "publicationRevision": "host-verified-native-review/0.1",
+    "sessionSettings": {
+      "arithmetic": "exact-or-error",
+      "client_encoding": "UTF8",
+      "comparison": "explicit C",
+      "lc_collate": "C",
+      "lc_ctype": "C",
+      "server_encoding": "UTF8",
+      "standard_conforming_strings": "on",
+      "transaction_isolation": "repeatable read"
+    },
+    "storageLayoutRevision": "weft-truss-fixtures/0.1"
+  }
+}

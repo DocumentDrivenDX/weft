@@ -1,0 +1,7 @@
+{
+  "filename": "weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl",
+  "sha256": "933949a95d55477a2ec70a93c336738a58811f9b72487c5fb2d2d8d15e990d98",
+  "features": [
+    "truss-postgresql-candidate"
+  ]
+}

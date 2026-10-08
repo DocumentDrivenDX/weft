@@ -1,0 +1,25 @@
+{
+  "checkpointBase": "293fe94",
+  "files": {
+    "summary.json": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "controls.json": "de7298681cfa27ba11d6d30f13eda45593011e063d681abdf73cae29e4dc4ef2",
+    "harness.py": "908e39fd5f51b611d3c78ba38c7d2650d1fc18d8279a89e2f66a32fb1c8fbf13",
+    "reconciliation.json": "0e5fa90b389db97fd1f5807fba7e50387dd50363fc0106a12afa83111f5e4672",
+    "run.log.gz": "10a1d6e00c2f7c83b0eb1434d2300d9d048cd5c550f585b3da3798829326b779",
+    "compile-artifacts.jsonl.gz": "143ad1d36f7deb6725c38258dda5a6db937ee5323e6c81dfc114cfc1a7a5c4db",
+    "executed.sql.gz": "ab15209ee4f811ff16ff44a73adda73889491801e42a1cf40d463f0bb68d9c5e",
+    "stdout.csv": "34aabb5591f5cb4f1a1b2b8ef87e143fe622924f06b4e330ba456c14a1d4ca95"
+  },
+  "sourceHashes": {
+    "tests/truss-postgresql/native-review-numeric-domains.py": "908e39fd5f51b611d3c78ba38c7d2650d1fc18d8279a89e2f66a32fb1c8fbf13",
+    "tests/truss-postgresql/fixtures/compiler-cases.json": "5e7cd906dc0fc81b0714dc82d8df66492e3b6fde39e3f2e74038472f3dc38e37",
+    "crates/weft-runtime/examples/compile_native_review.rs": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d",
+    "crates/weft-postgresql/src/native_profile.rs": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff",
+    "crates/weft-postgresql/src/candidate.rs": "636794ae472ecad13d9957a9a30b32c624951c83ebeda6806afee8739dc35c17",
+    "crates/weft-postgresql/src/access.rs": "99824efbaf7e0878f8a38f7df673560edf281d603f4ddb17fb02ef1c28a1f822",
+    "tests/qualify-and-evolve/reconcile-truss-review-numerics.py": "84160353539b3a5fb22ccbb12ba9e8112468aa0a0d8b0babeaa944eeb132e87c",
+    "tests/qualify-and-evolve/truss-review-numeric-controls.py": "8dd3cfcafaf6d21855bcbaae760930b661340ce3b604df92b4ec58ee1e63424d"
+  },
+  "scope": "Exact native producer artifacts and one terminal PostgreSQL rollback transaction, unchanged compiler hash verified before/after execution."
+}

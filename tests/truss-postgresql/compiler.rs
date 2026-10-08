@@ -660,3 +660,19 @@ fn relationship_profile_cannot_change_fixed_traversal_meaning() {
         assert!(response.get("sql").is_none());
     }
 }
+
+// @covers US-006-AC1
+#[test]
+fn relational_emission_keeps_owner_selection_and_bag_projection() {
+    let c=compiler();
+    for case in cases() {
+        let mut request=case["request"].clone();
+        request["sql"]=json!("SELECT c.name FROM Customer c");
+        let response=run(&c,&request);
+        assert_eq!(response["status"],"compiled");
+        let sql=response["sql"].as_str().unwrap();
+        assert!(sql.starts_with("SELECT "));
+        assert!(!sql.starts_with("SELECT DISTINCT "),"projection must retain duplicate names");
+        assert!(sql.contains("WHERE type_id="),"owner type selection must survive lowering");
+    }
+}

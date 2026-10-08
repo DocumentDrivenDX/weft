@@ -1,0 +1,13 @@
+{
+  "scope": "Fresh read-only relationship corpus on the verified pinned fixture publication. Empty EXISTS uses separately labeled probes; corrupt contexts refuse before user-query execution.",
+  "inputHashes": {
+    "summary.json": "d0cb33cd284d905c2aa407e1aacaff326d5e3dfef3b0bc2495a80898f726872e",
+    "run.log": "53796e76d33d8fd8a4d517de1cdfcd035c578fb0e4f763b42437944eedcd5722",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "statements.jsonl": "da362d9a5f5e5901c9f2c454d81a357459510f5fa76379574982e8c97f2d511a",
+    "compile-artifacts.jsonl": "2116aca797fc0257bd0d01dfdf5258751a37d26c73f24a48914bb5a26ba1a5c1",
+    "warehouse_capture.py": "ad47cc282f910b130f0ab2f0f6931b1942f6998d6712d2421ffaefaeb7be23de",
+    "fixture-state.json": "6bf716db0832e35071d88c6180815db5d9ac280ba97ee0b7ffaa013d6b8061fa",
+    "relationship-native.py": "a5269d5d2824c58618b412811ae0ad07ac6074d8412b5898e92cc472b615d361"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "command": "cargo test -p weft-core --test backend-registry --locked",
+  "passed": 8,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "newRefusalAssertions": 3,
+  "sourceSha256": "c8b0ee9c059ed60bec3ae8ba39e64fbde940ee5f4416ab6b8131435b046fa1d3",
+  "logSha256": "d6cc96967c083f8e3a481eb73a2e7edc93e3fe2d8cfad1f240d3eee3f8ed1974",
+  "scope": "Three isolated manifest admission gaps, all eight registry tests; not the earlier full workspace checkpoint."
+}

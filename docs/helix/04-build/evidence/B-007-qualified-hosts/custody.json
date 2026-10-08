@@ -1,0 +1,61 @@
+{
+  "checkpointBase": "395ad94",
+  "files": {
+    "wrapper-build.log.gz": "b61eba9485288db15cd21a69be98b21a81bae4ad790eeaba4a452436f2eeebae",
+    "public-build.log.gz": "81e35d1e5e097296e7e5d44bcc9815657338c58a48909d4f6bb02c40a3f79485",
+    "audit.json": "7a1a9bd53ec7152e9a089cee1d1f81e14197ae5940bdb47e7015872c93e9cd84",
+    "controls.json": "7ab2ab2beeae4d33bf91a4d7725bcaedd4d55763629c5da32af3e9eef02c0f2c",
+    "cases.jsonl.gz": "56af1a6abecdd1713a81ee826051938c4130fc43e40bab7138b86b0f1eb9a932",
+    "resource-python.log.gz": "c99a1924873381b85df30610b9c3dae1adca2f48530da0cc1a9d8733eea6baf9",
+    "package-initializer-expectation-failure.log.gz": "19ddcde26f748e32cccc3bf11b05c2d95c27106a874bae7b5b8787c46c319012",
+    "python-install.log.gz": "f8a41f4bef689e3ec19ca82d0e01cfc663e78f94d7df31fedaba4cc1d020b9ad",
+    "resource-browser.log.gz": "3f27f6fa623361d2a4f0b65828c2f47f14de1528df2a182815d22c0f80dd9f37",
+    "browser-run.log.gz": "d1b942d93e1045492415e73293deb95655c51b01d5cbfd93890685c96e62e537",
+    "package-summary.json": "38678cbfc485a31eb2c01869f1eecd36153c7d42f9aa951e456b1de931a5486a",
+    "resource-cases.json.gz": "f163118a28ce7a9ded918fd3f9902841fa7fc9a3169b3a6f2fe77282259432e4",
+    "wasm-bindgen.log.gz": "37e3dee4763016058bd9408be1c1762116d6c00e3f05161856f79a8a4a4322c9",
+    "package-audit.log.gz": "39753681bfa60e499c5ec3d72637b5b69e6fdb61efc48af0ba5b217eea7c1dbd",
+    "python-summary.json": "d22349fa786c53a3a0dd5c710933d84ac8694fd52c3c673824eb6738a7cabcac",
+    "wasm-build.log.gz": "9f48082e2cc1774d6a55c4140e866140c5a2d12124aa5c3c71e7c8e0274bfdb0",
+    "python-build.log.gz": "e41fe0b5cb4d2a8bec78a0f55c164e95b388e66f6eeaac0d99b4609b34ca2ce4",
+    "resource-browser-summary.json": "871af4a9a3495c2fec6891cfec9bae70623854961c605229f3e099d9662f54e6",
+    "python-run.log.gz": "70716def4a636665cee4ebafa8627972249337156409a1ccd2c69bdc2fa7afbd",
+    "python-receipts.json": "77b0e57aea1a627726b442b0eca262899f476dd18567338675a1bdea3c687951",
+    "cli-summary.json": "47ab654e474e49f2278ce5e697bad93889719dd28318ef1988d1c7eb0a714756",
+    "browser-receipts.json": "3f625da0b0f61d202ca3d6844abc42015b1c869173ba81c45e764e0a93fc8774",
+    "browser-summary.json": "c98144b8c8d5f1d742b51ad75306630c69f7091a095d8c4ff294273520c211af",
+    "resource-python-summary.json": "960c91fcacfdd00fbb8dd16dcf3a4674407a7dd291f276e8cf362f366b01756d",
+    "cli-reports.json.gz": "3c809dd82ae45893ce416ffe237c03080a60a90c3e0df4aaed86f009d7bb5271",
+    "summary.json": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+  },
+  "sourceHashes": {
+    "crates/weft-runtime/examples/compile_public_batch.rs": "3a824696d4ce43c29b0ce12c9d60d22824e5b9af83d195a26b8a17730e4a1280",
+    "crates/weft-runtime/src/lib.rs": "0b750db5a8c13867745d05c7214f2d40cae7a6fd94a32f318ff15bb83c903114",
+    "crates/weft-runtime/Cargo.toml": "1d1fbfeefc847555c317bc0a9b522b9924ebedb0663e9550c39efecf6c105ef0",
+    "crates/weft-python/Cargo.toml": "d5d5286827fd19c3980f6b1028aaff9e4dbb25cf448b8d6d325a287122c42edc",
+    "crates/weft-wasm/Cargo.toml": "c2c589b755a22870ae6769996a9f93a5ec9cbbb3d89a6db3a38693c784f5babf",
+    "tests/compile/browser-check.mjs": "147ef519bb36a52ebe2803362dd3bfde9a7ed99185cda5e872d6550154fe59c3",
+    "tests/qualify-and-evolve/prepare-qualified-host-corpus.py": "9af09150993538de67a7503ffc40e034c86d83b15f539af57c2f80f682bf33f7",
+    "tests/qualify-and-evolve/qualified-host-python.py": "444e332de327b5f6114a7ca1b26969359d0f52937fda9ba46f182690d203975d",
+    "tests/qualify-and-evolve/qualified-package-audit.py": "a46d0913eb9c17a983c1f1e455333fdb7d776b7764313e1241d1656735facab5",
+    "tests/qualify-and-evolve/audit-qualified-hosts.py": "b74b518eef66d38e51937a2dfda13311e36037f345304a373a583b7744cbe0b1",
+    "tests/qualify-and-evolve/qualified-host-controls.py": "773454e7ac418351a3a3292456f2b4aa27cb3b6e332ff96494359a979bbbdf21",
+    "tests/qualify-and-evolve/host-resources.py": "ab3fd9050d08ff915fd3183ad868ca0760132382905dc3733e0c3b3e3a81442e",
+    "tests/qualify-and-evolve/host-resources-browser.mjs": "758d7f45ea2a2aedc31c02c3d28517dcd96e0ef9c98804c9e43d671b01fdbb8d"
+  },
+  "uncompressedInputs": {
+    "cases.jsonl": {
+      "sha256": "93edb8cca1c19ee65037a59835e0153abf8cfbf5ce136c69e5e0765f7f5779ce",
+      "bytes": 59268682
+    },
+    "cli-reports.json": {
+      "sha256": "152d94a9d302ca17172075967f33f3cf8f8f3a1dbb2c4f0f495a3eca02097243",
+      "bytes": 59116765
+    },
+    "resource-cases.json": {
+      "sha256": "b774277e87b8c54d732b14dd973dec911b71721105eade16374fd50983f55db1",
+      "bytes": 38022522
+    }
+  },
+  "scope": "Actual qualified native Python/Chromium and package/resource checks. The retained package-check failure was an incomplete expectation for the generated Maturin initializer; payload did not change. No distribution or host database execution."
+}

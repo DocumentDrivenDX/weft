@@ -1,0 +1,398 @@
+{
+  "inventoryVersion": "weft-support-inventory/0.1.0",
+  "status": "compiler-conformance-qualified",
+  "releasedPackages": false,
+  "supportedNativeProfiles": [
+    {
+      "backend": "truss.postgresql",
+      "backendVersion": "0.1.0-qualified",
+      "targetProfile": "pg17.9-qualified-fixtures",
+      "surface": "Trusted Rust registration, native CPython 3.12.14 macOS ARM64 ABI3 and actual Chromium 148.0.7778.96 WASM; exact qualified features",
+      "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
+      "qualification": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-truss.json",
+        "sha256": "3fd7596bc0ab8da092bedd6dc8f12c4973a166fd5c01d11118413cddb4166dbe"
+      },
+      "registrationEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+        "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+      },
+      "implementation": {
+        "path": "crates/weft-postgresql/src/qualified_profile.rs",
+        "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+      },
+      "hostEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+        "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+      }
+    },
+    {
+      "backend": "ashlar.databricks",
+      "backendVersion": "0.1.0-qualified",
+      "targetProfile": "dbsql2026.39-qualified",
+      "surface": "Trusted Rust registration, native CPython 3.12.14 macOS ARM64 ABI3 and actual Chromium 148.0.7778.96 WASM; exact qualified features",
+      "execution": "Conditional on exact native profile, integrity, authorization and one admitted read/publication context",
+      "qualification": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-ashlar.json",
+        "sha256": "b5a3675c3bf0b10301ce1411368b80491446d8bbfb128f089fd431ea1eff3d6b"
+      },
+      "registrationEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-registration/summary.json",
+        "sha256": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46"
+      },
+      "implementation": {
+        "path": "crates/weft-databricks/src/qualified_profile.rs",
+        "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+      },
+      "hostEvidence": {
+        "path": "docs/helix/04-build/evidence/B-007-qualified-hosts/summary.json",
+        "sha256": "dc3c02f0b50e70e969326e9f932d78cd04606b406cb884ae389022e577740d48"
+      }
+    }
+  ],
+  "candidateProfiles": [
+    {
+      "backend": "truss.postgresql",
+      "registrationVersion": "0.1.0",
+      "model": "UMF 0.7.0",
+      "dialects": [
+        "weft-sql/0.1.0",
+        "weft-sql/0.2.0"
+      ],
+      "engine": "PostgreSQL 17.9",
+      "settings": {
+        "encoding": "UTF8",
+        "comparison": "explicit C"
+      },
+      "realization": "pinned Truss owner draft; independent synthetic fixtures",
+      "domainAndOperationScope": "Only exact subsets and cases enumerated in the hashed acceptance and execution records; not every allowed combination.",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "tests/truss-postgresql/upstream/storage-realization-pins.json",
+          "sha256": "c50973fd2e4d06987c5c4776fc806eed32c6327ab46fd26175359fa8e6196c6a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "e005b54014f5840686e0209f46ae87c8e783314658664f59514272104260d1c3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
+          "sha256": "f9b32c7bf68a37ed5ca8ab858d59421584e22f2d38ad38a2308108b1942bc73a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-session-native/summary.json",
+          "sha256": "8b903d3e87afa91173e16be3cb600258d8453a438485cbd763c7f79d4c6e71fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/session-joined-summary.json",
+          "sha256": "133aa70fd93ac5eaf3ede3b850bc03deec9e93afa9f1424f4ef6f05a28421e62"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        }
+      ],
+      "excludedClaims": [
+        "installed Truss runtime adoption",
+        "production authorization procedures",
+        "every possible numeric domain or graph",
+        "released cross-platform packages"
+      ]
+    },
+    {
+      "backend": "ashlar.databricks",
+      "registrationVersion": "0.1.0-candidate",
+      "model": "UMF 0.7.0",
+      "layout": "ashlar-delta/0.3",
+      "engineRelease": "unqualified-warehouse-release",
+      "domainAndOperationScope": "Only exact subsets and cases enumerated in the hashed acceptance record; compound encoding ashlar-weft-json-value/0.1-candidate.",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
+          "sha256": "e005b54014f5840686e0209f46ae87c8e783314658664f59514272104260d1c3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
+          "sha256": "c0cb759746838affcaedbbbff6de1e436176fa153a47d8812c4b65bf7ec175e2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
+          "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-native/custody.json",
+          "sha256": "bf7909c8214a65ed8a9a112e44d2dc23aa26dbfe8b2b9467362aaebc7bdaa236"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
+          "sha256": "0c7645dfc6c18b676a8eaf81f3647d9e35ac9bda843e7e5d1696a74b53eef4b3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-dbsql-version-native/summary.json",
+          "sha256": "e47bf15ed37e8f349bec3a1cd73e896db88f918733e749bbbb75f04f8c7b899b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-native/custody.json",
+          "sha256": "8f50489b939e53bfbe588da3fc743eba5bd42024aaec8126d30323d2b68f8df2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-boundaries-reconciliation/summary.json",
+          "sha256": "07874a409643d2c57ae4c3a4d62da134a1fea12632c4a68fd6783a755982c3df"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-real-ashlar-report-audit/summary.json",
+          "sha256": "b43573fbb1bdbeb1f4236db6ab330902f19d2be1b6c70557a0e4e5bbb9beb21b"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/custody.json",
+          "sha256": "0cb9739d7d355150827e235141767638a2500c9d2a4ac1e9bd2b6ffaa1064dc9"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-reconciliation/summary.json",
+          "sha256": "e2d7b5c6f3e1c93c8750122ad2dce033c352ea3ce974e313228b932dee19be20"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-count-host-parity/summary.json",
+          "sha256": "27362e2a84015ecfbab70237196c17dffb9529df0da83d4573a3f256ce7bb76e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/custody.json",
+          "sha256": "d595968b4cda377d9536f9902bc6c2e33565743434fc4ba3c667f08dcf0d88d2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-reconciliation/summary.json",
+          "sha256": "8b70387a7a6a154635b0f73d6f9fcef8d33eb9aed59594e2a85699aa9d51c422"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-native/custody.json",
+          "sha256": "4a3125434429f63907fa8cf48e7c4230f7d08fbab0e60f5fbffc28a00dcb4c76"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-reconciliation/summary.json",
+          "sha256": "12216d9e60f6623040e8a23a3f3a8f36adc75e82b4c6cb6c839e9998f2ce662f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-native/custody.json",
+          "sha256": "60f5f0eb0f87116b7b965ba0744753e728511331fd862f5870c0568e651f9666"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-reconciliation/summary.json",
+          "sha256": "5a520c850d57210b0ca0d0a6928d11c2d7384f517f970f9e2b773e4603f0b928"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-warehouse-settings-native/custody.json",
+          "sha256": "9ac26e5e9502a1dde4dc05d9610be249159b95dfd2d95ab6607422783df1574d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-native/custody.json",
+          "sha256": "fcd14baceddaf959f1458907779a4ed7fabee1bce46ee563f0a7ec4416fc06a2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-reconciliation/summary.json",
+          "sha256": "34555bed40a3675f9f1c161a5abaeb0eebc32ad8ff5f3dd36de0a4273115ae9c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-native/custody.json",
+          "sha256": "2cf39d07a46167699eb62ed299e2d9b66d1625e47fc09473885239fb33176453"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-reconciliation/summary.json",
+          "sha256": "0149fa2c6bea90f5c9b1f440bb16f58eee5ca01d15ca01617819f08730994b6f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-warehouse-metadata-correction/summary.json",
+          "sha256": "c5ca8caed543fb3d6c1c7bb880b40f6654a2fb7395ead03d4067de0bfa574593"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-native/custody.json",
+          "sha256": "cd4e72a1896d8ea76866ec0cc1204d6ef0a9fd049e544abc9030380aaacf3112"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-reconciliation/summary.json",
+          "sha256": "1243d76240053eca9a8a2ff52f7bc124493beaf1505f6ba77f42decd9ae1f493"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/summary.json",
+          "sha256": "f014367f8700e6197607ef3d6cfbdd652200321b9cf21ad604267aee0c25b5ab"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-current-initial-hosts/custody.json",
+          "sha256": "e2e2021452461ebb266b9c082450fff9fa7ce5f52ca1b21da001833b4671bb9a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/custody.json",
+          "sha256": "3845d113311715acd277ac23d4f089c75668dcc481c2b4544b845c7111d0f463"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-reconciliation/summary.json",
+          "sha256": "7bdbce7e5702d936610c0a65cd7187fa2880953dcb5a9cf5cb994f92f0c22436"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/custody.json",
+          "sha256": "5cba15e31515d9ea690c493a8ad750984e5e6c6a0b75c2c6ff16e028095ce6fd"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+          "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-decimal-reconciliation-controls/summary.json",
+          "sha256": "74273ca063de9585162a71c129e073800487e4b7ae112373a3114afcce471764"
+        }
+      ],
+      "excludedClaims": [
+        "qualified production warehouse release",
+        "production policy service",
+        "storage adoption",
+        "typed-column compound values",
+        "unsigned 64-bit BIGINT values"
+      ],
+      "currentWarehouseObservation": {
+        "dbsqlVersion": "2026.39",
+        "sparkVersion": "4.2.0 0000000000000000000000000000000000000000",
+        "uBuildHash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "rBuildHash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "scope": "Actual read-only current warehouse identity. Does not retroactively pin earlier corpus receipts, capture their settings, or qualify support.",
+        "sameStatementUnsignedSumCases": 7,
+        "sameQueryApplicationCountCases": 32,
+        "applicationCases": 112,
+        "sameStatementApplicationCases": 96,
+        "separateEmptyPageProbes": 16,
+        "compoundApplicationCases": 48,
+        "sameStatementCompoundCases": 24,
+        "separateEmptyCompoundProbes": 24,
+        "relationshipOutcomes": 52,
+        "relationshipPositiveCases": 28,
+        "relationshipRefusals": 24,
+        "sameStatementRelationshipResultsAndGuards": 296,
+        "separateEmptyRelationshipProbes": 4,
+        "observedAnsiMode": true,
+        "ansiObservationScope": "Separate read-only setting probe between matching warehouse builds; no retroactive query-session claim.",
+        "scalarOutcomes": 10,
+        "scalarPositiveCases": 2,
+        "scalarRefusals": 8,
+        "sameStatementScalarResultsAndGuards": 41,
+        "valueOutcomes": 133,
+        "valuePositiveCases": 56,
+        "valueRefusals": 77,
+        "sameStatementValueResultsAndGuards": 343,
+        "sameStatementEveryUnsignedBigintWidthSumCases": 63
+      }
+    }
+  ],
+  "freshHostEvidence": [
+    {
+      "path": "docs/helix/04-build/evidence/B-007-python/summary.json",
+      "sha256": "c778807685e495fa5cca0ca697d29195e4e642a2c86fb6ea661426cc4557fc08"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-browser/summary.json",
+      "sha256": "d037b868af541f4a17c1d756cf966a25cd3e0c8fd11f804b234664b77acbb41e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-public-python/summary.json",
+      "sha256": "2e7a535404521cdecc217d7974b00487386574b6924a9dc3e4c6f063b84a967f"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-public-browser/summary.json",
+      "sha256": "96068a069113d60bec33432729024198b6e9a28356ff5d589d6e3ee553fcc505"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/python-summary.json",
+      "sha256": "48e95100d1d14c78fae3d7ceffcb900f3f563ca381d25b542d05369ec06b6d44"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
+      "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-host-resources/python-summary.json",
+      "sha256": "d6f24c5c68beb8e49e937ec98697a9568dea6361a22ca53ff18335c0e5e9e401"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-host-resources/browser-summary.json",
+      "sha256": "d87ba07fc17822dd7ba14e97adcda6c17a99e8297145bce17b1c0bcb2497e931"
+    }
+  ],
+  "pending": [
+    "owner license and release maintainer/registry ownership decisions",
+    "final release-artifact qualification before distribution"
+  ],
+  "meaning": "Exact native compiler semantics and observed Python/browser artifacts are qualified; historical candidates remain separate. Host execution/publication obligations remain conditional. Distribution ownership/license and final release artifacts are pending.",
+  "nativeReviewRegistrations": [
+    {
+      "backend": "truss.postgresql",
+      "registrationVersion": "0.1.0-native-review",
+      "status": "candidate",
+      "surface": "Explicit trusted Rust Backend registration only; default Python/browser builds keep the historical candidates.",
+      "implementation": {
+        "path": "crates/weft-postgresql/src/native_profile.rs",
+        "sha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
+      },
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-registration-join/summary.json",
+          "sha256": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+          "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-truss-review-numerics/summary.json",
+          "sha256": "bcaa49f17cd41b2e6ec3010f6edeb63049268129ef3e448199f30ae984825285"
+        }
+      ],
+      "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."
+    },
+    {
+      "backend": "ashlar.databricks",
+      "registrationVersion": "0.1.0-native-review",
+      "status": "candidate",
+      "surface": "Explicit trusted Rust Backend registration only; default Python/browser builds keep the historical candidates.",
+      "implementation": {
+        "path": "crates/weft-databricks/src/native_profile.rs",
+        "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+      },
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-profile-registration/summary.json",
+          "sha256": "bb0fd1d2a67fe62bf351ae1ebe715d477954c6a17cd0a1aa693a684a202cf0fa"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-native-registration-join/summary.json",
+          "sha256": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+          "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+        }
+      ],
+      "limits": "Engine-pinned review identity and additional host verification obligations. No supported capability, production adoption, new database execution or new cross-runtime registration qualification."
+    }
+  ],
+  "acceptanceEvidence": {
+    "path": "docs/helix/04-build/evidence/B-007-acceptance-matrix.json",
+    "sha256": "9a0574ec05df7ef8db3846e5daed783678bed1463b84fb45cb65bf881d4cbe80"
+  },
+  "finalWorkspace": {
+    "path": "docs/helix/04-build/evidence/B-007-workspace-qualified-final/summary.json",
+    "sha256": "0894eed4dd885faec6796633cf49495d23f7f77b4d6bf9c92d82e5cbaf20ff93"
+  }
+}

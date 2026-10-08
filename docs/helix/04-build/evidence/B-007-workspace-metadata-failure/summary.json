@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "command": "cargo test --workspace --all-features --locked",
+  "exitCode": 101,
+  "terminalSuites": 22,
+  "testsPassed": 218,
+  "testsFailed": 1,
+  "ignored": 0,
+  "filtered": 0,
+  "failingTest": "ashlar_tests::ashlar_feature_controls_registration_and_retains_public_artifact",
+  "failure": "Runtime golden assertion retained the explicitly obsolete Spark versionReported field. The original native receipt is preserved; the corrected assertion permits removal of that exact historical field only.",
+  "rustSourceCheckpoint": "134b002",
+  "logGzipSha256": "eae5948fbc890d06a77f9006e43f76597e1d897b51ded192e80ad760d95e28d0",
+  "scope": "Terminal incomplete workspace run, not a passing full-workspace qualification. The failure triggers a focused correction and a subsequent workspace rerun."
+}

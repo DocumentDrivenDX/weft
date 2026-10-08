@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "command": "cargo test --workspace --all-features --locked --offline",
+  "testsPassed": 191,
+  "ignored": 0,
+  "completedSuitesIncludingEmptyDocTests": 35,
+  "rust": "1.90.0",
+  "scope": "Source at launch; later plugin-boundary and parser additions require separate receipts. Not native engine or Python/browser execution."
+}

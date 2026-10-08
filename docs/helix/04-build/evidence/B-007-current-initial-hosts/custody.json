@@ -1,0 +1,19 @@
+{
+  "scope": "Fresh compiler host parity, not host-owned database execution or supported-profile registration.",
+  "inputHashes": {
+    "browser-receipts.json": "8bc9959d0ef8a6e83c695371d57ecec690b7293608b2fb0314cb649c89464ddd",
+    "browser-summary.json": "4e7355f5e14c851fcc988476b7ab02277e2458d1c37a092213f11d027b6d849e",
+    "browser.log": "4e7355f5e14c851fcc988476b7ab02277e2458d1c37a092213f11d027b6d849e",
+    "cases.json.gz": "8c9dfd6f91d6fa6eda2f5af51cf21ae44b57e6337fe72443e71201df8f0813f0",
+    "cli-build.log": "74930aac1d4ec733ee4d20e4af0fa5c319e826f1e33937e2ec31d2c0a88f5a61",
+    "cli-reports.json.gz": "7f1763d77a8e5e1fe948367fb965a8f2df57af22a5831cf5b46ad76269b08eec",
+    "cli-summary.json": "6be332d809fd35bb0d11d92603876cbb3a15f0ba11d66c7d616fd33bc9a61edf",
+    "package-summary.json": "36c8abdeb6fb92286973e6cf5166720bfc0b3863b9918d9aa3fccded6877ef76",
+    "python-build.log": "f50b393b98f1c8e372b0de085e64a6609b38da967994a1a85fc753afb55f06cb",
+    "python-receipts.json": "a1819f12b04704cd63eadd5b6286f0bef6a174d319b944ea4d3afaa7597c561e",
+    "python-summary.json": "53e03754659b531a4ae69f65cd7ebcfcf5a3e5d4963c262749f1c6fc30d7595d",
+    "python.log": "10648cde7d11534f9a32589ef93cc6338c3a4e815b74859c366bb5b6df798f85",
+    "source-inputs.json": "a19c04489369d55a7a39e7dc322327f9aea54ab9c523753cd1b2f19dc02cf88b",
+    "wasm-build.log": "23d5ca31caf0f2173a505086c5780a5e900cf28f01b5d36faf3a5511cbd38f7e"
+  }
+}

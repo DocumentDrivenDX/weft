@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "cases": 10,
+  "planVersion": "weft-ir/0.1.0",
+  "sources": {
+    "tests/register-backend/pipeline.rs": "ada426ad6b55412610e847484ff2d22f41b19888c528edfcdf931e970c694011",
+    "crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb"
+  },
+  "scope": "Explicit adapter dispatch guards checked by exact code/message. Both-plan positive registration is separate; no claim that all later capability/mapping/emission branches are accounted."
+}

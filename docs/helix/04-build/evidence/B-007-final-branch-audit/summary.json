@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "checkpointBase": "bc7d5da",
+  "tests": {
+    "applicationModel": 18,
+    "ashlarIntegration": 22,
+    "trussIntegration": 22,
+    "nativeReviewRegistration": 1
+  },
+  "filtered": {
+    "nativeReviewRegistration": 76
+  },
+  "sourceHashes": {
+    "tests/application/model.rs": "a6545a188485dbc77f163416fa020e45983bfa199201cac2a2624f10c9a45706",
+    "tests/ashlar-databricks/compiler.rs": "bc7eb18e7b678ebc11292337d42b47c3cefaba6d7a377b98dae76d1eb8ef7cd1",
+    "crates/weft-core/src/application_model.rs": "240a65d6d8f4aacfea6c6e8aadb6d35c8af32602eb3ad3d1c72fef14b769ab5f",
+    "crates/weft-core/src/resolve.rs": "f9569ca7451a9b85957d3f852fdfee2cff22929ddde48591303df952b074b70e",
+    "crates/weft-core/src/application_resolve.rs": "df48e51b8d08b881ee9ab3d3cdc9ea04a7ce7ddd52d3aff436c1b2396e22b6fa",
+    "crates/weft-postgresql/src/native_profile.rs": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
+  },
+  "logHashes": {
+    "native-alias-baseline.log.gz": "fe4772a24aa9ed5fce84ee5e516ed4dbdf76f680607ad647b24fdd7f55bb6ac2",
+    "alias-baseline.log.gz": "3a05a04cfae40754ce8d924169545afde786177e9f44d295492946a6147a12e2",
+    "incorrect-expectations.log.gz": "78e4601a01f89c99f216e370ff442b6ab3969ef15abdef8184a910eb8fabf7ba",
+    "retained-replay.log": "0572e035d0e62259e39527006447f21dc3ed29d85d0687e6f8ee5e2d38c671f4",
+    "specs.log": "82925ebb4d9409ebd9400b4ba5e8525f59f10f51a186c33cd149a010d55b7466",
+    "ashlar.log.gz": "755d94be80eaa35229aee637a737a322dd20fac872a16648927e55b4f68a42cb",
+    "model.log.gz": "567576bf2b4716f7256583433e5ccfb614e4015a1e578b96c453f8c84b937aa9",
+    "native-review.log.gz": "786d2d09c09da153903343f92cec6bfedaa77904792f22348b9ba21c6b635935",
+    "truss.log.gz": "ee60611fc43d393cf191e258400a585d58d96e2210952b8b736a7bca70bc83d5"
+  },
+  "scope": "Graph and backend semantic-family review; exact registration preservation for scalar and application requests. Failed alias logs are incorrect test expectations, not compiler defects. No native execution or supported-profile promotion in this run.",
+  "retainedReplay": {
+    "status": "passed",
+    "components": 36,
+    "verifiedEvidenceReferences": 124,
+    "releaseQualified": false
+  },
+  "uncompressedLogHashes": {
+    "ashlar.log": "45b5a54d4b25e1f131a48c586d4e073c84a568fe82b32bdc03e8b98b1d9d9865",
+    "model.log": "50d6be673c2e358a78b199429ed4ea2cce0836aaf44dd4c6c644aa634ae034b1",
+    "native-review.log": "61aaf628ba06fa020f5607a84fb7deaec668573a095e9318d331b7f6b5dca90d",
+    "truss.log": "f697b16d28fd499e63ef80fd7113f725766297ac405a4b67be0cfbe59121d881"
+  }
+}

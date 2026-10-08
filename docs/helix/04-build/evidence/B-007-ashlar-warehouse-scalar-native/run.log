@@ -1,0 +1,684 @@
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/private/tmp/ashlar-db-client/lib/python3.9/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+{
+  "state": "passed",
+  "cases": 10,
+  "outcomes": [
+    {
+      "id": "exact",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "x ",
+          "2.00"
+        ],
+        [
+          "é",
+          "-1.25"
+        ],
+        [
+          "é",
+          "200000000000000000000000000.02"
+        ]
+      ]
+    },
+    {
+      "id": "empty",
+      "outcome": "published-fixture-result",
+      "rows": []
+    },
+    {
+      "id": "hidden-foreign-domain",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-decimal-scale",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-decimal-domain",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-number-string",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-exponent-carrier",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-null",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-absent",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "hidden-wrong-name",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "0"
+          ]
+        ]
+      ]
+    }
+  ],
+  "fixture": {
+    "phase": "ready",
+    "payloadSha256": "48a99c5644e4ebc5bb823b02103a6044bf4016ba973ecbd9a1d504bade77fba5",
+    "tableUuid": "944ddafe-d88e-408a-9944-c6b490fc4bad",
+    "version": 1,
+    "manifestUuid": "ac33a712-f484-4f99-8248-c6614dbc4bb4",
+    "publicationId": "weft-b006-scalar-fixtures"
+  },
+  "warehouseId": "2439e1f2e37ac563",
+  "compilerBinarySha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "harnessSha256": "cf3b3f674d00e21579a64e8978d6afdc21c10612d5a31d1b48c7733b2ab88ad5",
+  "ownerLayoutSha256": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e",
+  "qualification": "Actual registered Rust compiler and native Delta scalar SQL. Synthetic admin fixtures, fixed immutable vector. No accepted source binding, live delegation/pin custody, application-read, Python/browser or production qualification.",
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "warehouseIdentityCaptures": [
+    {
+      "label": "exact-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "exact-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "exact-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "exact-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "exact-user-query",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "empty-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "empty-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "empty-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "empty-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "empty-user-query",
+      "method": "separate-probe-after-empty-query",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-foreign-domain-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-foreign-domain-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-foreign-domain-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-foreign-domain-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-scale-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-scale-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-scale-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-scale-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-domain-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-domain-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-domain-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-decimal-domain-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-number-string-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-number-string-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-number-string-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-number-string-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-exponent-carrier-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-exponent-carrier-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-exponent-carrier-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-exponent-carrier-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-null-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-null-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-null-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-null-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-absent-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-absent-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-absent-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-absent-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-wrong-name-integrity-0",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-wrong-name-integrity-1",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-wrong-name-integrity-2",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    {
+      "label": "hidden-wrong-name-integrity-3",
+      "method": "same-statement",
+      "warehouse": {
+        "dbr_version": null,
+        "dbsql_version": "2026.39",
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    }
+  ]
+}

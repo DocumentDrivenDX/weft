@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 16,
+  "sourceSha256": "c4e2a702ae8cbbbbfeb221b4dff22ca8d9c697be313e15beb6fb54386c5e97bf",
+  "scope": "Both plan versions reject whitespace-only/oversized/NUL SQL, excess parameters, nonobject origins, nullable parameter types, wrong column positions, and empty source provenance. Exact diagnostics checked. Not all representation/domain branches or native execution."
+}

@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "cases": 2181,
+  "sourceNativeArtifactSha256": "39039daf794bac5ff2bfd4761e72a605ed0f6f8be776e31673d661377f431763",
+  "compilerSha256": "8e093eb23166f997e82bf64b5a0cdb5305ebc84e950d56ee3a97e674b9322986",
+  "harnessSha256": "9af09150993538de67a7503ffc40e034c86d83b15f539af57c2f80f682bf33f7",
+  "scope": "Fresh public qualified runtime composition matches all complete native-qualified registration artifacts; no candidate opt-in, SQL execution or metadata normalization."
+}

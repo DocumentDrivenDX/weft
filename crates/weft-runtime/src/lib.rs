@@ -1,4 +1,15 @@
-//! Pure build-time composition. Hosts opt into trusted candidate adapters.
+//! Pure build-time composition. Hosts explicitly select trusted adapter versions.
+#[cfg(any(
+    all(
+        feature = "truss-postgresql-candidate",
+        feature = "truss-postgresql-qualified"
+    ),
+    all(
+        feature = "ashlar-databricks-candidate",
+        feature = "ashlar-databricks-qualified"
+    )
+))]
+compile_error!("Choose either candidate or qualified registration for each backend; versions never silently override or fall back");
 pub fn compile_json(request: &str) -> String {
     #[cfg(feature = "test-third")]
     let registry = weft_backend_probe::compile_fixture_registry();
@@ -18,6 +29,22 @@ pub fn compile_json(request: &str) -> String {
         registry
             .register(weft_databricks::candidate::Candidate)
             .expect("build-time candidate backend registration must be unique");
+        registry
+    };
+    #[cfg(feature = "truss-postgresql-qualified")]
+    let registry = {
+        let mut registry = registry;
+        registry
+            .register(weft_postgresql::qualified_profile::Qualified)
+            .expect("build-time qualified registration must be unique");
+        registry
+    };
+    #[cfg(feature = "ashlar-databricks-qualified")]
+    let registry = {
+        let mut registry = registry;
+        registry
+            .register(weft_databricks::qualified_profile::Qualified)
+            .expect("build-time qualified registration must be unique");
         registry
     };
     #[cfg(feature = "test-original")]
@@ -297,12 +324,31 @@ mod ashlar_tests {
     fn ashlar_feature_controls_registration_and_retains_public_artifact() {
         let case: serde_json::Value = serde_json::from_str(include_str!(
             "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
-        )).unwrap();
+        ))
+        .unwrap();
         let request = case["request"].to_string();
         let raw = super::compile_json(&request);
         let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
         #[cfg(feature = "ashlar-databricks-candidate")]
-        assert_eq!(response, case["response"]);
+        {
+            // Retain the original native receipt. Only the explicitly obsolete
+            // Spark observation may differ from the current compiler artifact.
+            let mut expected = case["response"].clone();
+            let publication = expected["obligations"]
+                .as_array_mut()
+                .unwrap()
+                .iter_mut()
+                .find(|o| o["id"] == "ashlar.candidate.publication")
+                .unwrap();
+            assert_eq!(
+                publication["parameters"]["nativeProfile"]
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("versionReported"),
+                Some(serde_json::json!("4.2.0 zero build hash"))
+            );
+            assert_eq!(response, expected);
+        }
         #[cfg(not(feature = "ashlar-databricks-candidate"))]
         {
             assert_eq!(response["status"], "blocked");
@@ -311,10 +357,58 @@ mod ashlar_tests {
         assert_eq!(raw, super::compile_json(&request));
         let mut disabled = case["request"].clone();
         disabled["options"]["allowCandidate"] = serde_json::json!(false);
-        let refused: serde_json::Value = serde_json::from_str(
-            &super::compile_json(&disabled.to_string())
-        ).unwrap();
+        let refused: serde_json::Value =
+            serde_json::from_str(&super::compile_json(&disabled.to_string())).unwrap();
         assert_eq!(refused["status"], "blocked");
         assert!(refused.get("sql").is_none());
+    }
+}
+
+#[cfg(all(
+    test,
+    feature = "truss-postgresql-qualified",
+    feature = "ashlar-databricks-qualified"
+))]
+mod qualified_tests {
+    #[test]
+    fn public_composition_requires_exact_versions_and_supports_without_candidate_opt_in() {
+        let inputs = [
+            (
+                include_str!("../../../tests/truss-postgresql/fixtures/compiler-cases.json"),
+                "pg17.9-qualified-fixtures",
+            ),
+            (
+                include_str!(
+                    "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
+                ),
+                "dbsql2026.39-qualified",
+            ),
+        ];
+        for (raw, profile) in inputs {
+            let cases: serde_json::Value = serde_json::from_str(raw).unwrap();
+            let mut request = if cases.is_array() {
+                cases[0]["request"].clone()
+            } else {
+                cases["request"].clone()
+            };
+            request["target"]["backendVersion"] = serde_json::json!("0.1.0-qualified");
+            request["target"]["targetProfile"] = serde_json::json!(profile);
+            request["options"]["allowCandidate"] = serde_json::json!(false);
+            let response: serde_json::Value =
+                serde_json::from_str(&super::compile_json(&request.to_string())).unwrap();
+            assert_eq!(response["status"], "compiled", "{response}");
+            assert_eq!(response["qualification"]["status"], "conformance-verified");
+            assert!(response["qualification"]["operations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .all(|op| op["assessment"]["status"] == "supported"));
+            request["target"]["backendVersion"] = serde_json::json!("0.1.0-candidate");
+            let refused: serde_json::Value =
+                serde_json::from_str(&super::compile_json(&request.to_string())).unwrap();
+            assert_eq!(refused["status"], "blocked");
+            assert_eq!(refused["diagnostics"][0]["code"], "WFT-BACKEND-VERSION");
+            assert!(refused.get("sql").is_none());
+        }
     }
 }

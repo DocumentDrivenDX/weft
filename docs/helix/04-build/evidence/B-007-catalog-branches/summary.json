@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "test": "catalog_admission_refusal_branches_are_explicit",
+  "testsExecuted": 1,
+  "assertions": 14,
+  "refusalConditions": [
+    "digest mismatch",
+    "malformed JSON",
+    "document identity mismatch",
+    "document UMF version",
+    "pin UMF version",
+    "empty revision",
+    "duplicate owning document",
+    "invalid envelope",
+    "duplicate module identity",
+    "duplicate element identity",
+    "no selected module",
+    "repeated selected module",
+    "missing selected module"
+  ],
+  "additionalBoundaryConditions": {
+    "receipt": "B-007-model-input-boundaries/summary.json",
+    "conditions": [
+      "empty bundle",
+      "over 32 documents",
+      "document byte limit",
+      "over 256 selected modules"
+    ]
+  },
+  "sources": {
+    "tests/application/model.rs": "8c4aeae810a2dda2181ae8ab22e67d84e47d9369c11cea5913e702c564b619c9",
+    "crates/weft-core/src/model.rs": "82ca7345b1a5826e7e3960a8ce4f70deb59dfb99c191efaacb297da44393ebee"
+  },
+  "scope": "Complete explicit Catalog::prepare guard accounting, including diagnostic-path assertions. Does not establish branch accounting for other compiler functions or all malformed JSON/schema subconditions."
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "testsExecuted": 8,
+  "ignored": 0,
+  "filtered": 0,
+  "testNames": [
+    "backend_emission::tests::numeric_results_require_exact_text_decoders",
+    "backend_emission::tests::scalar_carriers_preserve_family_nullability_and_facets",
+    "backend::tests::obligations_are_retained_sorted_and_conflicts_refuse",
+    "backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes",
+    "backend_emission::tests::parameter_domain_guards_have_exact_diagnostics",
+    "backend_emission::tests::initial_plan_requires_projection_root_before_output_validation",
+    "backend_emission::tests::related_result_metadata_preserves_authored_key_and_bound",
+    "backend_emission::tests::presence_and_native_null_require_qualified_descriptors"
+  ],
+  "sourceSha256": "1c890c7f39c7582580bf4071b2d90d13d692b8db9755bb24b5e2ce1c87b936ef",
+  "scope": "All current core library unit tests. No integration workspace or native execution claim."
+}

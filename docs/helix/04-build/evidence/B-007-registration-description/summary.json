@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalModes": [
+    "describe panic",
+    "describe returned error",
+    "invalid manifest interface"
+  ],
+  "recoveryForEachMode": [
+    "identity absent after failure",
+    "valid registration succeeds",
+    "duplicate rejects and preserves original"
+  ],
+  "sources": {
+    "tests/register-backend/pipeline.rs": "2f5dbbf173dda8c4cb8ca04aa5fbc8edce2b07e0948a524b7d4914f3d7a9f482",
+    "crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb"
+  },
+  "scope": "Registry::register success and explicit refusal guards; lowering/assessment/emission are forbidden in this fixture and separately tested."
+}

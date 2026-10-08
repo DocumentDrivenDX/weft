@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "assertions": 24,
+  "dialects": [
+    "weft-sql/0.1.0",
+    "weft-sql/0.2.0"
+  ],
+  "boundaries": {
+    "outputs": [
+      256,
+      257
+    ],
+    "joins": [
+      16,
+      17
+    ],
+    "sqlBytes": [
+      65536,
+      65537
+    ],
+    "tokens": [
+      4096,
+      4097
+    ],
+    "applicationBoundsAccepted": [
+      1,
+      1000
+    ],
+    "applicationBoundsRefused": [
+      "0",
+      "1001",
+      "-1",
+      "1.0",
+      "'1'",
+      "65536"
+    ]
+  },
+  "sourceSha256": "b22d9e63d49b44de167ef87a6cbbe69ba5a584819ec1095d0a44226b0728eaf4",
+  "scope": "Syntax/parser limit branches; no resolution, lowering or native qualification."
+}

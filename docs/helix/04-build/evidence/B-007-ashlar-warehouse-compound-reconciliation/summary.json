@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "cases": 48,
+  "independentDecodedComparisons": 48,
+  "integrityStatements": 192,
+  "terminalStatements": 264,
+  "sameStatementWarehouseCases": 24,
+  "separateEmptyPageProbes": 24,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+  },
+  "scope": "Independent nested sequence, structured/recursive/map, exact integer and optional absent expectations with full page exhaustion across props/native ID homes. Empty pages use separate probes. No fresh execution, host DB execution or candidate promotion."
+}

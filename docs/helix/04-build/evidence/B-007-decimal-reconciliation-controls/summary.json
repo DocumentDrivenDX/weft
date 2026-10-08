@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "corruptionsRejected": 7,
+  "controls": [
+    "rounded-sum",
+    "lost-invalid-value",
+    "wrong-warehouse",
+    "changed-slot",
+    "stale-module",
+    "changed-result-scale",
+    "duplicate-native-receipt"
+  ],
+  "scope": "Semantically corrupted archived native receipts with recomputed custody digests refuse. No native execution or support promotion.",
+  "sourceSha256": "d0b070ad3c7bb3f467c0fa22e069f1f165ffe9085d6bacd0dadd8b053f71709c"
+}

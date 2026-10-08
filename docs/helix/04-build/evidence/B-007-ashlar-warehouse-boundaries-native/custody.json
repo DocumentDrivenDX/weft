@@ -1,0 +1,11 @@
+{
+  "scope": "Fresh read-only boundary corpus, warehouse identity and builds in seven exact SUM statements; not production publication qualification.",
+  "sameStatementEngineResults": 7,
+  "nativeStatements": 22,
+  "inputHashes": {
+    "summary.json": "21d8ba8c13d25af1d2e2feea6ba4a4f551ea29467a9f3ad19c543382860746f0",
+    "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
+    "statements.jsonl": "d7623416dd885e2354ac85c28ec996e5f2683049b637bd752a68b23e7607bc37"
+  },
+  "transportSha256": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
+}

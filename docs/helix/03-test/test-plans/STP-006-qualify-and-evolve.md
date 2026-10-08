@@ -24,24 +24,58 @@ ddx:
 ## Scope and Objective
 
 Prove this P0 journey under its selected dialect/model/backend/host versions.
-Every covering test must cite its AC as `@covers US-006-ACm`. All tests below are
-planned; no compiler implementation or executed coverage exists at bootstrap.
+Every covering test must cite its AC as `@covers US-006-ACm`. B-007 now has
+executed component evidence below. Component passes do not close the complete
+release corpus or qualify untested platforms/native domains.
 
 ## Acceptance Criteria Test Mapping
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-006-AC1 | `support_evidence_audit` | Missing/failed/skipped evidence cannot count as supported. | Rust + host/contract | planned |
-| US-006-AC2 | `pin_and_version_guards` | SHA-256 bytes and identity guards; no implicit migrations. | Rust + host/contract | planned |
-| US-006-AC3 | `unknown_content_retention` | Original bytes/content recoverable; no opaque-to-known inference. | Rust + host/contract | planned |
-| US-006-AC4 | `resource_and_fuzz_guards` | Duplicate keys, bounds, nesting, malformed text and plugin failures. | Rust + host/contract | planned |
+| US-006-AC1 | `support_evidence_audit` | Missing/failed/skipped evidence cannot count as supported. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC2 | `pin_and_version_guards` | SHA-256 bytes and identity guards; no implicit migrations. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC3 | `unknown_content_retention` | Original bytes/content recoverable; no opaque-to-known inference. | Rust + host/contract | passed in qualified compiler scope |
+| US-006-AC4 | `resource_and_fuzz_guards` | Duplicate keys, bounds, nesting, malformed text and plugin failures. | Rust + host/contract | passed in qualified compiler scope |
 
 ## Executable Proof and Data
 
-Planned implementation tests: `tests/qualify-and-evolve/`; shared language-neutral fixtures
-in `docs/helix/03-test/fixtures/`. The existing `bun run specs:check` validates
-spec/fixture integrity only; it does not execute this story or certify coverage.
-Add runnable Rust/host/native commands with pinned versions before implementation.
+Implementation tests live in `tests/qualify-and-evolve/`; shared language-neutral
+fixtures remain in `docs/helix/03-test/fixtures/`. Commands and environment
+requirements are in `tests/qualify-and-evolve/README.md`. `bun run specs:check`
+validates spec/fixture integrity only; it does not execute this story or certify
+coverage.
+
+| Criterion | Inspected component evidence | Remaining proof |
+| --- | --- | --- |
+| AC1 | B-007-support-audit: 41 synthetic controls; retained replay: twenty-three components, including 76 independent Truss row comparisons across 21 artifact scopes, 65 ordered comparisons, eleven native receipt/custody controls and sixteen host receipt controls | Every applicable case on each advertised native profile must have exact version/domain evidence. Candidate inventory remains unqualified. |
+| AC2 | B-007-properties: stale module SHA refusals; B-007-backend-branches: original-byte/binding/profile guards; public corpus native Python/Chromium byte parity | Final release matrix must identify applicable pin/interface cases and exact feature builds. |
+| AC3 | B-007-properties: Unicode/opaque retention and selected unknown refusal; model/backend branch receipts preserve unselected content and refuse selected meaning | Reconcile original-source retention assertions to the final shared host corpus; no opaque-to-known promotion. |
+| AC4 | B-007-resources and parser receipts: generated malformed/duplicate text and exact limits; B-007-plugin-boundary: 26 atomic failure combinations; B-007-host-resources: seven raw cases through CLI/Python/Chromium | Review the complete critical-path boundary matrix. Seven host cases do not prove every resource or plugin path. |
+
+Receipts are under `docs/helix/04-build/evidence/`. The 30-criterion acceptance
+matrix now records passing criterion determinations, exact hashes and qualified scope.
+The following component details are historical checkpoints; the current acceptance
+section supersedes their remaining-work statements.
+The real Truss support-report audit joins all 76 retained compiler artifacts to
+actual Python and Chromium receipts (152 joins), with request/response hashes and
+retained runtime identities. These joins establish compiler transport parity;
+they do not establish database execution by each host or promote a candidate
+profile. The terminal Linux CI checkpoint executes 214 Rust tests across 35
+suites with no ignored or filtered tests. Its retained replay checks twelve
+components at that revision; the current local replay adds session reconciliation
+and six session-custody corruption controls, plus Ashlar same-statement engine
+reconciliation and six corruption controls, plus warehouse/build-linked unsigned
+SUM reconciliation and six further controls, plus seven-scope real Ashlar report
+consistency across 22 native outcomes, plus 32 warehouse-linked native COUNT
+cases, nine projection-annotation controls and fifteen count-custody/result-metadata corruption
+controls, plus 64 actual Python/browser artifact joins for the 32 COUNT cases,
+for twenty-three components; it does not execute native engines or Chromium.
+
+Actual backend engine checks are separate from Python/browser compiler transport
+checks. The latest raw host resource run uses CPython 3.12.14, Chromium
+148.0.7778.96, the recorded candidate CLI and test-third Python/WASM artifacts.
+Their early common-boundary parity does not assert identical backend features.
+
 
 ## Edge Cases and Build Handoff
 
@@ -49,3 +83,7 @@ Add runnable Rust/host/native commands with pinned versions before implementatio
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## Current acceptance determination
+
+The [30-criterion matrix](../../04-build/evidence/B-007-acceptance-matrix.json) records this story's passing P0 assertions, covering evidence and exact limits. Both current-source workspace compositions pass; qualified native compiler and actual Python/browser correspondence are separately retained. Historical component observations remain scoped to their recorded revisions. Distribution and production execution are separately qualified; the final CI/review/merge gates remain open.

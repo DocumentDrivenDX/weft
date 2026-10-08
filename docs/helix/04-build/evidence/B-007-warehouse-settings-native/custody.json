@@ -1,0 +1,10 @@
+{
+  "scope": "Read-only separate-statement warehouse ANSI observation; no retroactive session settings claim.",
+  "inputHashes": {
+    "warehouse-settings-native.py": "9527f5af84783d116d874378f911625fcf1d0698ecc7509077c393dc5834053b",
+    "summary.json": "3aa6281684412c3473c03fbb3b561c2b440868c13bf8297e2e75bc0e5d8a6d61",
+    "run.log": "c727667b0765b4dd970e210be3387b9eff1050408618440be714184ece18b94a",
+    "native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "statements.jsonl": "d061a72a918f8c11941a40a68205d7de79cab4f200578787f0d6b68f94aabf91"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "corpusCases": 636,
+  "independentRelationalBags": 13,
+  "refusedCases": 333,
+  "arithmetic": "Python int and Decimal precision 100",
+  "targetExecution": false,
+  "frontendBinarySha256": "4c7a3f0ff39680f853a441719c70d0e1600812d52012572f167bc328f801b176",
+  "corpusSha256": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
+  "oracleSha256": "01c4ab6a7ec991a484aa99839b0810a36be46764c9ac7d772db6deb1b3c4f3b5"
+}

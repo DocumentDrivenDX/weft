@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "corruptionsRejected": 15,
+  "controls": [
+    "count",
+    "group-multiplicity",
+    "group-order",
+    "warehouse",
+    "parameters",
+    "sql",
+    "statement-id",
+    "extra-receipt",
+    "model-pin",
+    "decoder",
+    "logical-family",
+    "nullability",
+    "position",
+    "source-identity",
+    "custody"
+  ],
+  "sourceSha256": "3bfc521cc13d7cba23bba8b5dbbdb85f7f93a0aba961a7732c477813bd7031d1"
+}

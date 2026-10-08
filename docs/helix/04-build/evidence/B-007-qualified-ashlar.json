@@ -1,0 +1,127 @@
+{
+  "model": "UMF 0.7.0",
+  "languages": [
+    "weft-sql/0.1.0",
+    "weft-sql/0.2.0"
+  ],
+  "interface": "weft-backend/0.2.0",
+  "meaning": "Native compiler semantics for binding-admitted domains. Supported is conditional on host obligations; it is not execution, authorization or stored-publication attestation.",
+  "excluded": [
+    "native null as a logical value",
+    "unknown selected semantic extensions or storage homes",
+    "unregistered engine builds/settings",
+    "production authorization or installed storage runtime adoption",
+    "released Python/platform distributions"
+  ],
+  "hostRequirements": [
+    "Verify exact native engine/build, encoding/collation/arithmetic and transport settings before any integrity or query SQL.",
+    "Keep integrity checks and query evaluation in one admitted catalog/publication context.",
+    "Buffer results; refuse integrity, engine, policy, transport or arithmetic failures before publication. No fallback or newer engine selection."
+  ],
+  "qualificationBoundary": "Operation/type/home families qualified by native executions, independently authored expectations and critical semantic branch accounting. Composition across those admitted families does not claim every possible query/model/home cross-product has been executed.",
+  "qualificationVersion": "weft-native-qualification/0.1.0",
+  "status": "native-semantics-qualified",
+  "backend": "ashlar.databricks",
+  "engine": "Databricks SQL 2026.39",
+  "registrationVersion": "0.1.0-qualified",
+  "storageHomes": [
+    "admitted props_json members",
+    "owner-declared typed STRING/BIGINT columns with presence columns",
+    "ashlar-weft-json-value/0.1-candidate compound encoding"
+  ],
+  "domains": {
+    "scalar": "exact string/boolean props, signed integer widths 1..64; unsigned BIGINT widths 1..63, unsigned64 typed BIGINT refuses; admitted JSON scalar exact decimal/UInt64 carriers",
+    "decimal": "precision 1..28, scale 0..precision; finite DECIMAL38 SUM or ANSI error, never rounding/wrapping/null overflow",
+    "compound": "recursive exact JSON text values; depth below128 and at most100000 nodes per value or refusal",
+    "relationships": "authored monomorphic directed edges, exact key tuples, parallel bags; finite signed64 ordinal domain or refusal",
+    "paging": "complete stable authored keys and explicit UTF8_BINARY comparison"
+  },
+  "evidence": [
+    {
+      "path": "docs/helix/04-build/evidence/B-007-native-registration-join/summary.json",
+      "sha256": "04d3c8eb063d3f3fbd34a66550c60616c627fb7daab6c22c5fca26b9f1966e0c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-native-registration-join/audit-summary.json",
+      "sha256": "d7b07ba6176bf719628023639f7894f73453bce187009a570a98dc7e5b3dfddf"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-conjunction-native/summary.json",
+      "sha256": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-conjunction-native/reconciliation.json",
+      "sha256": "83a085d373459859168ddc43dae9674041305342eb121254fc92577fc7fff2c4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-decimal-domains-native/summary.json",
+      "sha256": "f8bbad1fba44657bcde0cf1388498ab0ba3b4f194a62f94b0d023666ff3ac3a1"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-decimal-domains-reconciliation/summary.json",
+      "sha256": "7252455537d747b3973282ea6aef89d3e3f18a3eca927b47616e7cfd01585de3"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-signed-all-widths-native/summary.json",
+      "sha256": "1410d4a56a306f7530a5ac01256a17ad725089b7685103263084157b708c807e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-unsigned-all-widths-native/summary.json",
+      "sha256": "f918ac38653ed8e73e3d77ff57012e0629e2557b12396935cc5c6cbf004d7d3d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-application-native/summary.json",
+      "sha256": "773b4cfc72ba54f6c39c78b909795ec34c4f3982d31450df89854528e5422810"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-compound-native/summary.json",
+      "sha256": "54befd79458ffd2ccf4af50c6ef401d071bac4f7240043d65624c175b6c916f5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-relationship-native/summary.json",
+      "sha256": "d0cb33cd284d905c2aa407e1aacaff326d5e3dfef3b0bc2495a80898f726872e"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-values-native/summary.json",
+      "sha256": "04926a7e0774ae3e56782c64a66bf5650d39b63dd9e188292bbb13ba7b37d53b"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-scalar-native/summary.json",
+      "sha256": "bd5810b0add90ebc4b18fa1cad14882c0c15f0015454780630524b7cb8c5c3e4"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/summary.json",
+      "sha256": "e885864f077595f4235a029d26d576577c061e536934653a1bf582c2ac130c7c"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-critical-path-review.md",
+      "sha256": "e1fddb4a05ec3c915022d16d587bb92494b6256909bfc27248a1a3bf8c7b48e5"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-graph-branch-accounting.md",
+      "sha256": "c96418504badd3da2504e210f66a2028e2165c3d6ba8f683c1e2b5cfbadddc5d"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-qualified-source-review/B-007-backend-lowering-branch-accounting.md",
+      "sha256": "2583a12c278f88f44745af4821bb75fea764ce2e13754fd4d781384fa3437be0"
+    }
+  ],
+  "remaining": "Actual supported-registration preservation and final Python/browser composition must be verified before B-007 acceptance/merge.",
+  "engineProfile": {
+    "engine": "databricks-sql",
+    "engineVersion": "2026.39",
+    "id": "dbsql2026.39-native-review",
+    "publicationRevision": "host-verified-native-review/0.1",
+    "sessionSettings": {
+      "ansi_mode": true,
+      "arithmetic": "ANSI exact-or-error",
+      "comparison": "explicit UTF8_BINARY",
+      "resultTransport": "JSON_ARRAY exact STRING",
+      "warehouseBuild": {
+        "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904"
+      }
+    },
+    "storageLayoutRevision": "ashlar-delta/0.3"
+  }
+}

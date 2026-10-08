@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "acceptedAssertions": 1,
+  "refusalAssertions": 7,
+  "sources": {
+    "crates/weft-core/src/backend_emission.rs": "33ac76ca9cc8c515c359e7197c6845fa5fedd57cb7873b68ca3317585dc48b90",
+    "tests/application/fixtures/cases.json": "e74e260e19e0ded02463002b2cdd6ccf99936951a6e90432ff20482cbbaf1626"
+  },
+  "scope": "Relationship result representation from resolved related-page fixture: baseline accepted; wrong revision, bound, key ID, fields, types, nullability, and representation kind refuse with exact diagnostic. Isolated metadata validation, not engine execution."
+}

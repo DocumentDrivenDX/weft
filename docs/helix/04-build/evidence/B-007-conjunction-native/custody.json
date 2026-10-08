@@ -1,0 +1,31 @@
+{
+  "checkpointBase": "feeeac6",
+  "files": {
+    "summary.json": "25b0159771aa3a77b389182d7488a7ae26356312c48591cba73ea98509338535",
+    "failed-harness-2-terminal-probes.jsonl.gz": "32e6472b7310bd4e01aeb9d0bb0ed5be82787be8f4988724aa5c2703f6f39b47",
+    "controls.json": "f9b278ffa09dfef490944fa179fcb9680309962a9802db6ac3f9febdf1e878d3",
+    "harness.py": "414a26976b990c5c40a46b2acb5eb3f85dd2e90765a1dfb8d69097dc07475b02",
+    "reconciliation.json": "83a085d373459859168ddc43dae9674041305342eb121254fc92577fc7fff2c4",
+    "run.log.gz": "b451c7ea9a8b9da77e300696c4495c7e481f839a16526435c798c41b12e5b548",
+    "guard-assumption.log.gz": "5c31bc3d7a05f6f0094bbf304ba968e0346abad45f9fc4396744210843a7456e",
+    "version-suffix-assumption.log.gz": "40ee8f99140a68f43579b9e9953c36b478143faef729d74334433c3609eee116",
+    "failed-harness-3-terminal-probes.jsonl.gz": "c475c60a99d0d875ff6cfd26f27ccd7c4736cdf34a31e4262f71450c5bbad8cd",
+    "failed-harness-1-terminal-probes.jsonl.gz": "03c603fcada83e9658acdc4dce9df7a233e1db75a8cf3bd627ed8f2aa0f92b94",
+    "compile-artifacts.jsonl": "e1cd4ba19f0971b382e365c91ba73ec06338e9907601bce6767edf85cf524661",
+    "postgresql-receipts.json": "f75211a41d55cfaf5a31d29febf8d8e6c711c3584972b69438acbbf95b15263a",
+    "fixture-boolean-assumption.log.gz": "c0e933c2587c4cfff5b9510036b292dbff2dee43e455c3c7a9192a508c061edd",
+    "ashlar/statements.jsonl": "1cebac534d704ca153333919206256265bde53aaed82dce39296c7ec1b8d7b32"
+  },
+  "sourceHashes": {
+    "tests/qualify-and-evolve/conjunction-native.py": "414a26976b990c5c40a46b2acb5eb3f85dd2e90765a1dfb8d69097dc07475b02",
+    "tests/qualify-and-evolve/reconcile-conjunction-native.py": "1c081153048a7f04097333ec508bf67cf088542c1880c33ccd0c0fe81b06bd0a",
+    "tests/qualify-and-evolve/conjunction-reconcile-controls.py": "73af5d26968395955b59b75d48519a17cd82d7d7c21da3ba8cc6ab0d08bff264",
+    "tests/ashlar-databricks/native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95",
+    "tests/truss-postgresql/application-native.py": "63c484a6203e78fcce9820cfa7243024ea16dafbbdbd169895d404b8c9f0c41d",
+    "tests/truss-postgresql/fixture-tree.py": "c48db20646570b6d777e39dd5fb4663419c96276a2c7605f7d922ab188716174",
+    "tests/truss-postgresql/fixtures/application-cases.json": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1",
+    "tests/application/fixtures/data.json": "c32eb580336ca15c47c7a9d48edf72d3e8f120e2a8809fda0a0667d9a345f4b0",
+    "crates/weft-runtime/examples/compile_native_review.rs": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d"
+  },
+  "scope": "Successful 32-case native conjunction run. Failed harness logs retain incorrect guard count, lexical Boolean and PostgreSQL package-version assumptions. Failed attempts retained three engine/settings probes each; the last also ran one unretained PostgreSQL query before its assertion. They are not compiler/native-semantic failures or passing evidence. Earlier failed harness source bytes were not saved."
+}

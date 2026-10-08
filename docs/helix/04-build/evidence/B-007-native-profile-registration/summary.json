@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "registrationTests": 2,
+  "runtimeMetadataRegressionTests": 1,
+  "sourceHashes": {
+    "crates/weft-databricks/src/native_profile.rs": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a",
+    "crates/weft-postgresql/src/native_profile.rs": "c2b8dfbdd7390961df8ae52b3e970737aa34cbbe4ab6a0de566c1cc5e16f5d4c",
+    "crates/weft-runtime/src/lib.rs": "b0023c0bb3af0ff848881fd5cfb4c5432f6cb4b579e4e8cdf29abccb0ed924bf"
+  },
+  "logHashes": {
+    "truss-final.log": "7b9c8be2066cf6513e61fd0417aae43836282c7ca20cfe1bb3cbecc67a299d58",
+    "registration.log": "00524a98b528086b88b84e263c5e6228c1016728140e0e0f39822b33f9bc3075",
+    "runtime-metadata.log": "1edb1b87ecc42a539dfcec701958a21eee77065d84298cf2487206ec630a4f87"
+  },
+  "scope": "Direct trusted Rust engine-pinned registrations remain candidate. New profile identities/settings and obligations preserve SQL/parameters/columns/plans/pins and require opt-in; stale version/profile refuse without SQL. The separate focused runtime regression preserves the original native receipt and allows only exact removal of the obsolete Spark metadata field. Scoped runs include filtered tests; no full-workspace, new database execution, supported status or Python/browser registration claim."
+}

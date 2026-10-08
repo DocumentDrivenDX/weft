@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 8,
+  "sourceSha256": "866c2021bbb8ed21056852024295f016805265dbc15f6e425b896b038a1fa576",
+  "scope": "Both plan versions refuse missing declarations, declarations scoped to another target/language, and Unsupported declarations despite Supported assessments. Lower/emitter panic fixtures prove these guards precede lowering. No native qualification claim."
+}

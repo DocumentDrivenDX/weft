@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "archiveSha256": "8dd7e1c7a7a3ed9195e345eadc46d139bc46bd259a1db632ec7f008777dbc2bc",
+  "files": [
+    {
+      "path": "package/dist/index.js",
+      "bytes": 1537,
+      "sha256": "7017218e7d504ed73fc81dcb36c0a0afe14e9711f14fc5edf87c4df6641e990a"
+    },
+    {
+      "path": "package/package.json",
+      "bytes": 386,
+      "sha256": "ebaf2330f50817489f3c1810c8f70f6a0c5650ff276184a4ca3d970b27a5e8fc"
+    },
+    {
+      "path": "package/README.md",
+      "bytes": 807,
+      "sha256": "498b53d7aa2ecd271fd1aaffb9f26ef282e30d7496aac4343a82e5ae35d7a8d3"
+    },
+    {
+      "path": "package/dist/index.d.ts",
+      "bytes": 501,
+      "sha256": "2cf085c9d8d7c8ef98fee1b2c842b80d153462cec75fdedf0c829ed4c540ad0f"
+    }
+  ],
+  "checks": [
+    "isolated package-name ESM import",
+    "Unicode scalar round trip",
+    "unpaired surrogate refusal",
+    "WASM trap blocked response",
+    "strict NodeNext declaration consumer with expected invalid number argument"
+  ],
+  "typescript": "5.9.3",
+  "scope": "Local packed transport consumer only; no bundled compiler, registry upload or license qualification. Initial nonexistent npm path and default-cache permission failures were not counted as passing checks."
+}

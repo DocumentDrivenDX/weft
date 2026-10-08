@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "corruptionsRejected": 10,
+  "names": [
+    "python-missing-case",
+    "python-duplicate-id",
+    "python-changed-actual",
+    "python-changed-request",
+    "python-false-parity",
+    "browser-missing-case",
+    "browser-duplicate-id",
+    "browser-changed-actual",
+    "browser-changed-request",
+    "browser-false-parity"
+  ],
+  "scope": "Host/native artifact receipt joins only; no native engine or host execution rerun.",
+  "sourceSha256": "379218c75822246ec763878fc239b15a57e390917cf407f9d4eef3704900e254"
+}

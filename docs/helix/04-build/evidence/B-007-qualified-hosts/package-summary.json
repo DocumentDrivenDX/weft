@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "wheelSha256": "4bc48501e08f5c1944f5bdd96ae8f814aaf8fd4c6a94365583da51c46f0d8299",
+  "members": [
+    "weft_sql-0.1.0.dist-info/METADATA",
+    "weft_sql-0.1.0.dist-info/WHEEL",
+    "weft/__init__.py",
+    "weft/weft.abi3.so",
+    "weft_sql-0.1.0.dist-info/RECORD"
+  ],
+  "recordEntriesVerified": 5,
+  "nativeExtensionSha256": "cccd20855662d4d2ed08574f213a94b1681d1f1546bf290d5940066fe1525a2c",
+  "wasmSha256": "4adbd90328ad0f2978893f5ba9bf0ebaee4fb1052ab90dc12d9c5c31aa7dbcf6",
+  "jsGlueSha256": "48f2597d68d0045818b5d7bc5d0d65cf8b3f365599d05932f62864ac23e3ea66",
+  "wrapperSha256": "a1ab5c00b11d7b615330b29c567f05ce5a2666ec2c542935cce0b08cba48a6db",
+  "features": [
+    "truss-postgresql-qualified",
+    "ashlar-databricks-qualified"
+  ],
+  "rust": "1.90.0",
+  "maturin": "1.9.6",
+  "wasmBindgen": "0.2.105",
+  "scope": "Actual local ABI3 CPython package and qualified web build content verified against loaded native payloads. No JavaScript/WASM wheel sidecar, distribution, signing or platform-wide qualification."
+}

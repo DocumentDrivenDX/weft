@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 7,
+  "browser": "148.0.7778.96",
+  "byteParity": true,
+  "wasmSha256": "5299eee35f807699ecbd42230ea91df197c3fe73946caaa7f3f97766edf50cdf",
+  "wrapperSha256": "7017218e7d504ed73fc81dcb36c0a0afe14e9711f14fc5edf87c4df6641e990a",
+  "casesAndResponsesSha256": "b774277e87b8c54d732b14dd973dec911b71721105eade16374fd50983f55db1",
+  "scope": "Raw resource/malicious-input host checks; retained test-third WASM, built transport, no database execution."
+}

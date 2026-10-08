@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "cases": 8,
+  "nativeStatements": 16,
+  "outcomes": [
+    {
+      "id": "8-empty-props-props",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "8-empty-props-column",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "8-empty-column-props",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "8-empty-column-column",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "64-empty-props-props",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "64-empty-props-column",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "64-empty-column-props",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    },
+    {
+      "id": "64-empty-column-column",
+      "rows": [],
+      "expected": [],
+      "guards": 1
+    }
+  ],
+  "compilerSha256": "3b1ab2973c2323f34d827698c8bfee28ecbf67c3e74086184f880b11149140c5",
+  "harnessSha256": "7fa9d017ac3e6db6246cfd1daa7f8e01cccb39e26a5be2a1bff493b048e3d851",
+  "scope": "Actual read-only retained synthetic Databricks snapshots: empty grouped COUNT across signed8/64 and four explicit home combinations; no production publication qualification."
+}

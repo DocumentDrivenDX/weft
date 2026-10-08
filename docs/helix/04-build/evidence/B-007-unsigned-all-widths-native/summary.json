@@ -1,0 +1,961 @@
+{
+  "engineProbe": "current_version",
+  "allWidths": true,
+  "status": "passed",
+  "cases": 64,
+  "nativeStatements": 190,
+  "outcomes": [
+    {
+      "bits": 1,
+      "validValues": [
+        "0",
+        "1",
+        "1"
+      ],
+      "expectedSum": "2",
+      "invalidValues": [
+        "-1",
+        "2"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 2,
+      "validValues": [
+        "0",
+        "1",
+        "3"
+      ],
+      "expectedSum": "4",
+      "invalidValues": [
+        "-1",
+        "4"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 3,
+      "validValues": [
+        "0",
+        "1",
+        "7"
+      ],
+      "expectedSum": "8",
+      "invalidValues": [
+        "-1",
+        "8"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 4,
+      "validValues": [
+        "0",
+        "1",
+        "15"
+      ],
+      "expectedSum": "16",
+      "invalidValues": [
+        "-1",
+        "16"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 5,
+      "validValues": [
+        "0",
+        "1",
+        "31"
+      ],
+      "expectedSum": "32",
+      "invalidValues": [
+        "-1",
+        "32"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 6,
+      "validValues": [
+        "0",
+        "1",
+        "63"
+      ],
+      "expectedSum": "64",
+      "invalidValues": [
+        "-1",
+        "64"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 7,
+      "validValues": [
+        "0",
+        "1",
+        "127"
+      ],
+      "expectedSum": "128",
+      "invalidValues": [
+        "-1",
+        "128"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 8,
+      "validValues": [
+        "0",
+        "1",
+        "255"
+      ],
+      "expectedSum": "256",
+      "invalidValues": [
+        "-1",
+        "256"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 9,
+      "validValues": [
+        "0",
+        "1",
+        "511"
+      ],
+      "expectedSum": "512",
+      "invalidValues": [
+        "-1",
+        "512"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 10,
+      "validValues": [
+        "0",
+        "1",
+        "1023"
+      ],
+      "expectedSum": "1024",
+      "invalidValues": [
+        "-1",
+        "1024"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 11,
+      "validValues": [
+        "0",
+        "1",
+        "2047"
+      ],
+      "expectedSum": "2048",
+      "invalidValues": [
+        "-1",
+        "2048"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 12,
+      "validValues": [
+        "0",
+        "1",
+        "4095"
+      ],
+      "expectedSum": "4096",
+      "invalidValues": [
+        "-1",
+        "4096"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 13,
+      "validValues": [
+        "0",
+        "1",
+        "8191"
+      ],
+      "expectedSum": "8192",
+      "invalidValues": [
+        "-1",
+        "8192"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 14,
+      "validValues": [
+        "0",
+        "1",
+        "16383"
+      ],
+      "expectedSum": "16384",
+      "invalidValues": [
+        "-1",
+        "16384"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 15,
+      "validValues": [
+        "0",
+        "1",
+        "32767"
+      ],
+      "expectedSum": "32768",
+      "invalidValues": [
+        "-1",
+        "32768"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 16,
+      "validValues": [
+        "0",
+        "1",
+        "65535"
+      ],
+      "expectedSum": "65536",
+      "invalidValues": [
+        "-1",
+        "65536"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 17,
+      "validValues": [
+        "0",
+        "1",
+        "131071"
+      ],
+      "expectedSum": "131072",
+      "invalidValues": [
+        "-1",
+        "131072"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 18,
+      "validValues": [
+        "0",
+        "1",
+        "262143"
+      ],
+      "expectedSum": "262144",
+      "invalidValues": [
+        "-1",
+        "262144"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 19,
+      "validValues": [
+        "0",
+        "1",
+        "524287"
+      ],
+      "expectedSum": "524288",
+      "invalidValues": [
+        "-1",
+        "524288"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 20,
+      "validValues": [
+        "0",
+        "1",
+        "1048575"
+      ],
+      "expectedSum": "1048576",
+      "invalidValues": [
+        "-1",
+        "1048576"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 21,
+      "validValues": [
+        "0",
+        "1",
+        "2097151"
+      ],
+      "expectedSum": "2097152",
+      "invalidValues": [
+        "-1",
+        "2097152"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 22,
+      "validValues": [
+        "0",
+        "1",
+        "4194303"
+      ],
+      "expectedSum": "4194304",
+      "invalidValues": [
+        "-1",
+        "4194304"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 23,
+      "validValues": [
+        "0",
+        "1",
+        "8388607"
+      ],
+      "expectedSum": "8388608",
+      "invalidValues": [
+        "-1",
+        "8388608"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 24,
+      "validValues": [
+        "0",
+        "1",
+        "16777215"
+      ],
+      "expectedSum": "16777216",
+      "invalidValues": [
+        "-1",
+        "16777216"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 25,
+      "validValues": [
+        "0",
+        "1",
+        "33554431"
+      ],
+      "expectedSum": "33554432",
+      "invalidValues": [
+        "-1",
+        "33554432"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 26,
+      "validValues": [
+        "0",
+        "1",
+        "67108863"
+      ],
+      "expectedSum": "67108864",
+      "invalidValues": [
+        "-1",
+        "67108864"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 27,
+      "validValues": [
+        "0",
+        "1",
+        "134217727"
+      ],
+      "expectedSum": "134217728",
+      "invalidValues": [
+        "-1",
+        "134217728"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 28,
+      "validValues": [
+        "0",
+        "1",
+        "268435455"
+      ],
+      "expectedSum": "268435456",
+      "invalidValues": [
+        "-1",
+        "268435456"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 29,
+      "validValues": [
+        "0",
+        "1",
+        "536870911"
+      ],
+      "expectedSum": "536870912",
+      "invalidValues": [
+        "-1",
+        "536870912"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 30,
+      "validValues": [
+        "0",
+        "1",
+        "1073741823"
+      ],
+      "expectedSum": "1073741824",
+      "invalidValues": [
+        "-1",
+        "1073741824"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 31,
+      "validValues": [
+        "0",
+        "1",
+        "2147483647"
+      ],
+      "expectedSum": "2147483648",
+      "invalidValues": [
+        "-1",
+        "2147483648"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 32,
+      "validValues": [
+        "0",
+        "1",
+        "4294967295"
+      ],
+      "expectedSum": "4294967296",
+      "invalidValues": [
+        "-1",
+        "4294967296"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 33,
+      "validValues": [
+        "0",
+        "1",
+        "8589934591"
+      ],
+      "expectedSum": "8589934592",
+      "invalidValues": [
+        "-1",
+        "8589934592"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 34,
+      "validValues": [
+        "0",
+        "1",
+        "17179869183"
+      ],
+      "expectedSum": "17179869184",
+      "invalidValues": [
+        "-1",
+        "17179869184"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 35,
+      "validValues": [
+        "0",
+        "1",
+        "34359738367"
+      ],
+      "expectedSum": "34359738368",
+      "invalidValues": [
+        "-1",
+        "34359738368"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 36,
+      "validValues": [
+        "0",
+        "1",
+        "68719476735"
+      ],
+      "expectedSum": "68719476736",
+      "invalidValues": [
+        "-1",
+        "68719476736"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 37,
+      "validValues": [
+        "0",
+        "1",
+        "137438953471"
+      ],
+      "expectedSum": "137438953472",
+      "invalidValues": [
+        "-1",
+        "137438953472"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 38,
+      "validValues": [
+        "0",
+        "1",
+        "274877906943"
+      ],
+      "expectedSum": "274877906944",
+      "invalidValues": [
+        "-1",
+        "274877906944"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 39,
+      "validValues": [
+        "0",
+        "1",
+        "549755813887"
+      ],
+      "expectedSum": "549755813888",
+      "invalidValues": [
+        "-1",
+        "549755813888"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 40,
+      "validValues": [
+        "0",
+        "1",
+        "1099511627775"
+      ],
+      "expectedSum": "1099511627776",
+      "invalidValues": [
+        "-1",
+        "1099511627776"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 41,
+      "validValues": [
+        "0",
+        "1",
+        "2199023255551"
+      ],
+      "expectedSum": "2199023255552",
+      "invalidValues": [
+        "-1",
+        "2199023255552"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 42,
+      "validValues": [
+        "0",
+        "1",
+        "4398046511103"
+      ],
+      "expectedSum": "4398046511104",
+      "invalidValues": [
+        "-1",
+        "4398046511104"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 43,
+      "validValues": [
+        "0",
+        "1",
+        "8796093022207"
+      ],
+      "expectedSum": "8796093022208",
+      "invalidValues": [
+        "-1",
+        "8796093022208"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 44,
+      "validValues": [
+        "0",
+        "1",
+        "17592186044415"
+      ],
+      "expectedSum": "17592186044416",
+      "invalidValues": [
+        "-1",
+        "17592186044416"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 45,
+      "validValues": [
+        "0",
+        "1",
+        "35184372088831"
+      ],
+      "expectedSum": "35184372088832",
+      "invalidValues": [
+        "-1",
+        "35184372088832"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 46,
+      "validValues": [
+        "0",
+        "1",
+        "70368744177663"
+      ],
+      "expectedSum": "70368744177664",
+      "invalidValues": [
+        "-1",
+        "70368744177664"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 47,
+      "validValues": [
+        "0",
+        "1",
+        "140737488355327"
+      ],
+      "expectedSum": "140737488355328",
+      "invalidValues": [
+        "-1",
+        "140737488355328"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 48,
+      "validValues": [
+        "0",
+        "1",
+        "281474976710655"
+      ],
+      "expectedSum": "281474976710656",
+      "invalidValues": [
+        "-1",
+        "281474976710656"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 49,
+      "validValues": [
+        "0",
+        "1",
+        "562949953421311"
+      ],
+      "expectedSum": "562949953421312",
+      "invalidValues": [
+        "-1",
+        "562949953421312"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 50,
+      "validValues": [
+        "0",
+        "1",
+        "1125899906842623"
+      ],
+      "expectedSum": "1125899906842624",
+      "invalidValues": [
+        "-1",
+        "1125899906842624"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 51,
+      "validValues": [
+        "0",
+        "1",
+        "2251799813685247"
+      ],
+      "expectedSum": "2251799813685248",
+      "invalidValues": [
+        "-1",
+        "2251799813685248"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 52,
+      "validValues": [
+        "0",
+        "1",
+        "4503599627370495"
+      ],
+      "expectedSum": "4503599627370496",
+      "invalidValues": [
+        "-1",
+        "4503599627370496"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 53,
+      "validValues": [
+        "0",
+        "1",
+        "9007199254740991"
+      ],
+      "expectedSum": "9007199254740992",
+      "invalidValues": [
+        "-1",
+        "9007199254740992"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 54,
+      "validValues": [
+        "0",
+        "1",
+        "18014398509481983"
+      ],
+      "expectedSum": "18014398509481984",
+      "invalidValues": [
+        "-1",
+        "18014398509481984"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 55,
+      "validValues": [
+        "0",
+        "1",
+        "36028797018963967"
+      ],
+      "expectedSum": "36028797018963968",
+      "invalidValues": [
+        "-1",
+        "36028797018963968"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 56,
+      "validValues": [
+        "0",
+        "1",
+        "72057594037927935"
+      ],
+      "expectedSum": "72057594037927936",
+      "invalidValues": [
+        "-1",
+        "72057594037927936"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 57,
+      "validValues": [
+        "0",
+        "1",
+        "144115188075855871"
+      ],
+      "expectedSum": "144115188075855872",
+      "invalidValues": [
+        "-1",
+        "144115188075855872"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 58,
+      "validValues": [
+        "0",
+        "1",
+        "288230376151711743"
+      ],
+      "expectedSum": "288230376151711744",
+      "invalidValues": [
+        "-1",
+        "288230376151711744"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 59,
+      "validValues": [
+        "0",
+        "1",
+        "576460752303423487"
+      ],
+      "expectedSum": "576460752303423488",
+      "invalidValues": [
+        "-1",
+        "576460752303423488"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 60,
+      "validValues": [
+        "0",
+        "1",
+        "1152921504606846975"
+      ],
+      "expectedSum": "1152921504606846976",
+      "invalidValues": [
+        "-1",
+        "1152921504606846976"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 61,
+      "validValues": [
+        "0",
+        "1",
+        "2305843009213693951"
+      ],
+      "expectedSum": "2305843009213693952",
+      "invalidValues": [
+        "-1",
+        "2305843009213693952"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 62,
+      "validValues": [
+        "0",
+        "1",
+        "4611686018427387903"
+      ],
+      "expectedSum": "4611686018427387904",
+      "invalidValues": [
+        "-1",
+        "4611686018427387904"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}"
+    },
+    {
+      "bits": 63,
+      "validValues": [
+        "0",
+        "1",
+        "9223372036854775807"
+      ],
+      "expectedSum": "9223372036854775808",
+      "invalidValues": [
+        "-1"
+      ],
+      "outcome": "exact-boundaries-and-domain-refusal",
+      "sameStatementEngine": "{\"dbr_version\":null,\"dbsql_version\":\"2026.39\",\"u_build_hash\":\"15b447529a1f55ca1ad8c73a89b8d196f6ed4904\",\"r_build_hash\":\"3909d148af5cb6b560624c9255f5a727f7a17a4c\"}",
+      "carrierOverflow": "native CAST_OVERFLOW"
+    },
+    {
+      "bits": 64,
+      "outcome": "compile-refusal"
+    }
+  ],
+  "compilerSha256": "a372f4f7fca7535026e69ffe94fda23c114a264640a3e2e9964c4949d4ae21d7",
+  "harnessSha256": "384237f4a142398c406481481f014c2f489f12e12151494527913c6b0226d0b0",
+  "scope": "Read-only synthetic owner SQL substitutions retain current_version() and warehouse build hashes in the same statement as each admitted SUM and exercise emitted unsigned domain guards and exact aggregate at every width 1 through 63. No actual table/publication custody qualification; UInt64 BIGINT compile-refuses."
+}

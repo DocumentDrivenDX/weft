@@ -246,3 +246,33 @@ pub fn resolve(catalog: &Catalog, query: Query) -> Result<LogicalPlan> {
     }
     .query(query)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    // @covers US-001-AC3 @covers US-001-AC4 @covers US-006-AC3
+    #[test]
+    fn typed_ast_resolver_literal_boundary_and_empty_join_refusal() {
+        let corpus:serde_json::Value=serde_json::from_str(include_str!("../../../docs/helix/03-test/fixtures/cases.json")).unwrap();
+        let modules=serde_json::from_value(corpus[0]["request"]["modules"].clone()).unwrap();
+        let catalog=Catalog::prepare(modules).unwrap();
+        let original=crate::syntax::parse("SELECT c.name FROM Customer c WHERE c.active = TRUE").unwrap();
+        let mut boundary=original.clone();
+        boundary.predicates=vec![original.predicates[0].clone();1024];
+        let plan=resolve(&catalog,boundary).unwrap();
+        assert!(plan.required_capabilities.contains(&"and".to_string()));
+        let mut excess=original.clone();
+        excess.predicates=vec![original.predicates[0].clone();1025];
+        let error=resolve(&catalog,excess).unwrap_err();
+        assert_eq!(error.code,"WFT-LIMIT");
+        assert_eq!(error.phase,"type");
+        assert_eq!(error.message,"Literal parameter count exceeds bound");
+        let mut empty_join=original;
+        let other=crate::syntax::parse("SELECT d.name FROM Customer d").unwrap().source;
+        empty_join.joins.push((other,vec![]));
+        let error=resolve(&catalog,empty_join).unwrap_err();
+        assert_eq!(error.code,"WFT-SYNTAX");
+        assert_eq!(error.phase,"parse");
+        assert_eq!(error.message,"Predicate list is empty");
+    }
+}

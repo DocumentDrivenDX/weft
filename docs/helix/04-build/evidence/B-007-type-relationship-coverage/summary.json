@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 4,
+  "sources": {
+    "tests/register-backend/pipeline.rs": "044bf95b343ebf9b6961f0247783bfb81b733d5dea104e7344fbff5cf55a4319",
+    "tests/application/fixtures/cases.json": "e74e260e19e0ded02463002b2cdd6ccf99936951a6e90432ff20482cbbaf1626"
+  },
+  "scope": "Resolved whole-entity and related-page application plans select nonempty type and relationship identities. Missing coverage and wrong revisions refuse before assessment; later-phase panics detect accidental dispatch. No native or complete backend qualification claim."
+}

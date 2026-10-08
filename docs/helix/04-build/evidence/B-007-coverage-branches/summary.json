@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 8,
+  "sourceSha256": "1027b95a97c0b39663501ffb2fe6b740c8039858c669792806efb04aa1fb65f4",
+  "scope": "Missing record/field coverage and wrong record/field revisions in both plan versions, before assessment. Named type and relationship coverage not exercised by this fixture.",
+  "fixtureCorrection": "Initial assertion failed because scalar projection selects no named type; narrowed this fixture to its actual selected record and field classes."
+}

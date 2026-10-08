@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "command": "cargo test -p weft-core --lib --locked",
+  "passed": 9,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "scope": "Internal 0.1 typed-AST resolver defenses: 1024 literals admit, 1025 and an empty JOIN predicate list refuse with exact diagnostic phase/code/message. No public API, parser-bound or native support expansion.",
+  "sourceSha256": "f9569ca7451a9b85957d3f852fdfee2cff22929ddde48591303df952b074b70e",
+  "logSha256": "369c1b8cab24ccbf53885b701778c2655d7ef15f79f76f189f22b78ded8feaca"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "cases": 64,
+  "nativeReceipts": 190,
+  "sameStatementEngineResults": 63,
+  "warehouseIdentity": {
+    "dbr_version": null,
+    "dbsql_version": "2026.39",
+    "u_build_hash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+    "r_build_hash": "3909d148af5cb6b560624c9255f5a727f7a17a4c"
+  },
+  "successfulReceipts": 189,
+  "expectedFailedReceipts": 1,
+  "sourceSha256": "678e24b52ee3106f38326277afe9bb01baf1072730741273cd609f7391fee1ee",
+  "inputHashes": {
+    "compile-artifacts.jsonl": "15def268e32ad360d4423c9f798eb558cffbb764d6a4b70fe59094dee540ccea",
+    "statements.jsonl": "f525ccaf207060b93146f104d7e4d2a666a0f2a14438d12f1140a24c4f0e46b1"
+  },
+  "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
+}

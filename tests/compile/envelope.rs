@@ -100,3 +100,113 @@ fn exact_limits_and_binding_digest_precede_resolution() {
         serde_json::from_str(&c.compile_json(&" ".repeat(16 * 1024 * 1024 + 1))).unwrap();
     assert_eq!(out["diagnostics"][0]["code"], "WFT-LIMIT");
 }
+
+// @covers US-006-AC4 @covers US-002-AC4
+#[test]
+fn plugin_failures_are_atomic_at_the_public_boundary() {
+    use fixture::Behavior;
+    let (catalog,_)=weft_core::prepare_and_resolve("SELECT c.name AS label FROM Customer c",fixture::modules()).unwrap();
+    let binding=fixture::binding(&catalog);
+    for app in [false,true] {
+        let mut request=base();
+        request["sql"]=json!("SELECT c.name AS label FROM Customer c");
+        request["interfaceVersion"]=json!(if app {"weft-compile/0.2.0"} else {"weft-compile/0.1.0"});
+        request["dialect"]=json!(if app {"weft-sql/0.2.0"} else {"weft-sql/0.1.0"});
+        request["target"]=json!({"backendId":"test.third","backendVersion":"0.1.0","targetProfile":"fixture-only","bindingJson":binding.json,"bindingSha256":binding.sha256});
+        for (behavior,code) in [
+            (Behavior::Panics,"WFT-BACKEND-FAILURE"),
+            (Behavior::MissingCoverage,"WFT-BINDING"),
+            (Behavior::MissingAssessment,"WFT-CAPABILITY"),
+            (Behavior::LowerFailure,"WFT-CAPABILITY"),
+            (Behavior::EmptySql,"WFT-EMIT"),
+            (Behavior::WrongLabel,"WFT-EMIT"),
+            (Behavior::MissingColumns,"WFT-EMIT"),
+            (Behavior::WrongCarrier,"WFT-EMIT"),
+            (Behavior::WrongType,"WFT-EMIT"),
+            (Behavior::WrongNullable,"WFT-EMIT"),
+            (Behavior::UnknownSource,"WFT-EMIT"),
+            (Behavior::BadSlots,"WFT-EMIT"),
+            (Behavior::ParameterLexical,"WFT-EMIT"),
+        ] {
+            let c=Compiler{registry:fixture::registry(weft_core::backend::Status::Supported,behavior)};
+            let response=run(&c,&request);
+            assert_eq!(response["status"],"blocked");assert_eq!(response["diagnostics"][0]["code"],code);
+            for key in ["sql","parameters","logicalPlan","columns","obligations"] {assert!(response.get(key).is_none(),"{key}: {response}");}
+        }
+    }
+}
+
+// @covers US-006-AC2 @covers US-006-AC4
+#[test]
+fn request_admission_branches_refuse_atomically() {
+    fn check(raw: &str, code: &str, message: &str, version: &str) {
+        let out: Value = serde_json::from_str(&Compiler::default().compile_json(raw)).unwrap();
+        assert_eq!(out["status"], "blocked");
+        assert_eq!(out["interfaceVersion"],version);
+        assert_eq!(out["diagnostics"][0]["code"],code);
+        assert_eq!(out["diagnostics"][0]["message"],message);
+        for key in ["sql","parameters","logicalPlan","columns","obligations"] { assert!(out.get(key).is_none(),"{key}"); }
+    }
+    for key in ["interfaceVersion","dialect"] {
+        let mut r = base();r.as_object_mut().unwrap().remove(key);
+        check(&r.to_string(),"WFT-INPUT","Compile and dialect versions must be supplied strings","weft-compile/0.1.0");
+        let mut r = base();r[key]=json!(1);
+        check(&r.to_string(),"WFT-INPUT","Compile and dialect versions must be supplied strings","weft-compile/0.1.0");
+    }
+    for (interface,dialect,output) in [
+        ("weft-compile/0.1.0","weft-sql/0.2.0","weft-compile/0.1.0"),
+        ("weft-compile/0.2.0","weft-sql/0.1.0","weft-compile/0.2.0"),
+        ("weft-compile/99","weft-sql/0.1.0","weft-compile/0.1.0"),
+    ] {
+        let mut r=base();r["interfaceVersion"]=json!(interface);r["dialect"]=json!(dialect);
+        check(&r.to_string(),"WFT-VERSION","Unsupported or mismatched compile/dialect versions",output);
+    }
+    for app in [false,true] {
+        let mut r=base();
+        if app {r["interfaceVersion"]=json!("weft-compile/0.2.0");r["dialect"]=json!("weft-sql/0.2.0");}
+        let output=if app {"weft-compile/0.2.0"} else {"weft-compile/0.1.0"};
+        r["extra"]=json!(true);
+        check(&r.to_string(),"WFT-INPUT","Request violates its versioned envelope",output);
+    }
+    for (raw,code) in [("{","WFT-INPUT"),("{\"x\":1,\"x\":2}","WFT-JSON-DUPLICATE")] {
+        let mut r=base();r["target"]["bindingJson"]=json!(raw);r["target"]["bindingSha256"]=json!(weft_core::json::sha256(raw.as_bytes()));
+        check(&r.to_string(),code,"Invalid supplied binding JSON","weft-compile/0.1.0");
+    }
+}
+
+// @covers US-002-AC1 @covers US-002-AC4 @covers US-006-AC2
+#[test]
+fn supplied_factory_selection_and_failure_do_not_fall_back() {
+    use weft_core::{backend::{Plan,Registry,Status},error::Diagnostic};
+    for app in [false,true] {
+        let (catalog,_) = weft_core::prepare_and_resolve("SELECT c.name AS label FROM Customer c",fixture::modules()).unwrap();
+        let binding=fixture::binding(&catalog);
+        let mut r=base();r["sql"]=json!("SELECT c.name AS label FROM Customer c");
+        if app {r["interfaceVersion"]=json!("weft-compile/0.2.0");r["dialect"]=json!("weft-sql/0.2.0");}
+        r["target"]=json!({"backendId":"test.third","backendVersion":"0.1.0","targetProfile":"fixture-only","bindingJson":binding.json,"bindingSha256":binding.sha256});
+        let host=compiler(); // Deliberately has a working registry: failure must not use it.
+        for mode in [0,1,2] {
+            let mut calls=0;
+            let mut factory=|catalog: &weft_core::model::Catalog, plan: Plan<'_>, input: weft_core::compile::CompositionInput<'_>| {
+                calls+=1;
+                assert_eq!(catalog.pins()[0],fixture::modules()[0].pin);
+                assert_eq!(matches!(plan,Plan::V02(_)),app);
+                assert_eq!(input.backend_id,"test.third");assert_eq!(input.binding_sha256,binding.sha256);
+                match mode {0=>Err(Diagnostic::new("WFT-BINDING","binding","Host composition refused")),1=>Ok(Registry::default()),_=>Ok(fixture::registry(Status::Supported,fixture::Behavior::Normal))}
+            };
+            let out:Value=serde_json::from_str(&host.compile_json_with_factory(&r.to_string(),&mut factory)).unwrap();
+            assert_eq!(calls,1);
+            if mode==2 {assert_eq!(out["status"],"compiled");assert_eq!(out["columns"][0]["outputName"],"label");}
+            else {
+                assert_eq!(out["status"],"blocked");
+                assert_eq!(out["diagnostics"][0]["code"],if mode==0 {"WFT-BINDING"} else {"WFT-BACKEND-MISSING"});
+                for key in ["sql","parameters","logicalPlan","columns","obligations"] {assert!(out.get(key).is_none(),"{key}");}
+            }
+        }
+        let mut calls=0;
+        let mut factory=|_: &weft_core::model::Catalog, _: Plan<'_>, _: weft_core::compile::CompositionInput<'_>| {calls+=1;Ok(Registry::default())};
+        r["target"]["bindingSha256"]=json!("0".repeat(64));
+        let out:Value=serde_json::from_str(&host.compile_json_with_factory(&r.to_string(),&mut factory)).unwrap();
+        assert_eq!(out["diagnostics"][0]["code"],"WFT-PIN");assert_eq!(calls,0);
+    }
+}

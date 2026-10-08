@@ -1,0 +1,28 @@
+{
+  "checkpointBase": "c0d6ed6",
+  "files": {
+    "test-fixture-path-failure.log.gz": "abdfe5ae4e44eda9a948575b9a8e83662206427ae0dc3a4b9aa3d26be20f048b",
+    "summary.json": "5c5c18d3254b918d7ab6ddb363b1c60d8e14361473ff0c6c11c302f8c5eddf46",
+    "build.log.gz": "b8df3c7af708c6871bd80a8ecb00b374f395b6f392024a2c2389c5c404115d60",
+    "truss-feature-conflict.log.gz": "85e22dd1ab7e28850436980c25aaa64178e5ac03c2790a9a1c6c96177400c7e4",
+    "runtime.log.gz": "8df0ec932f40912fa7f8eb1eb747c74767e19807363e316672ca9481db30f858",
+    "candidate-regression.log.gz": "ff93f5f1607697542f5ccd28e382cbe3118deff38d14261616ca2ff6e37a9b2b",
+    "cache-build-failure.log.gz": "f6012ebad1f05bc3f8bbda11404dfcdb077461e75f29ace23eca68d9b681a1e8",
+    "manifests.json": "b0adecb31631fad0f269ea610eef76ca75bf629483a48115c3183b3ded1f3cb5",
+    "receipt-audit.json": "8cb437410e2511f0cfd0dae6773fe7f2dda7ad64fc28ecb2973b09204585072b",
+    "ashlar-feature-conflict.log.gz": "8c6ec4f4277fe05a4d7bfa05446fd61992596b51ab5e933172fc5732a1cca119",
+    "compiled-artifacts.jsonl.gz": "39039daf794bac5ff2bfd4761e72a605ed0f6f8be776e31673d661377f431763"
+  },
+  "sourceHashes": {
+    "crates/weft-postgresql/src/qualified_profile.rs": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993",
+    "crates/weft-databricks/src/qualified_profile.rs": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84",
+    "crates/weft-runtime/src/lib.rs": "0b750db5a8c13867745d05c7214f2d40cae7a6fd94a32f318ff15bb83c903114",
+    "crates/weft-runtime/Cargo.toml": "1d1fbfeefc847555c317bc0a9b522b9924ebedb0663e9550c39efecf6c105ef0",
+    "crates/weft-python/Cargo.toml": "d5d5286827fd19c3980f6b1028aaff9e4dbb25cf448b8d6d325a287122c42edc",
+    "crates/weft-wasm/Cargo.toml": "c2c589b755a22870ae6769996a9f93a5ec9cbbb3d89a6db3a38693c784f5babf",
+    "crates/weft-runtime/examples/compile_qualified.rs": "5fe9736c413ed246e17b7516fadb87046cd7b1d9bd535a64b306cedf22c4ea49",
+    "tests/qualify-and-evolve/verify-qualified-registrations.py": "1b6b9bde854df5b39f20133231856532d7471e12179b06dc8d0d456bf3581bba",
+    "tests/qualify-and-evolve/audit-qualified-registration-receipts.py": "68b64f55400a8898e7861f59a631f3a4ab3094815abd8cf3e6ea8a4d422b1568"
+  },
+  "scope": "Qualified direct registration and runtime feature composition; no final Python/browser binaries. Initial runtime compile failure was an incorrect test fixture path, corrected before passing execution."
+}
