@@ -376,3 +376,13 @@ branch in the frontend. Candidate opt-in/upgrade, version/capability failures,
 hostile mappings and atomic plugin/emission failures have positive/refusal cases.
 These prove the trusted registration boundary, not native backend semantics or
 independent provenance for a plugin's declared evidence strings.
+
+Application acceptance review found missing explicit Databricks empty grouped
+COUNT evidence. A fresh native component now executes all eight signed8/64 ×
+props/column home combinations on the retained synthetic snapshots. All eight
+prequery scalar-integrity guards return zero and all grouped COUNT queries return
+no rows: 16 successful native terminal statements. B-007-empty-grouped-count-native/
+retains exact compile inputs/artifacts, native SQL/parameters/terminal responses,
+outcomes, frozen compiler and harness hashes. The initial wrong artifact-file
+lookup failed before statement submission; the corrected run uses the retained
+JSONL corpus. No data write or production qualification is performed.

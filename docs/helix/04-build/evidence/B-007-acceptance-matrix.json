@@ -327,6 +327,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
           "sha256": "c0cb759746838affcaedbbbff6de1e436176fa153a47d8812c4b65bf7ec175e2"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
+          "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -817,6 +821,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-embeddings/browser-summary.json",
           "sha256": "a1ea64ecb6a38d0a43a47dd1453c61478c8b546a47cbb429cbe4d90b8fd98b50"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-empty-grouped-count-native/summary.json",
+          "sha256": "f2b5603f4c310f309832050c42d3d68e7544b87f7fa147466aa6959b8595213c"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
