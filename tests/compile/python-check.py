@@ -2,6 +2,7 @@
 import json,os,subprocess,hashlib,sys
 from pathlib import Path
 import weft
+import weft.weft as native_extension
 ROOT=Path(__file__).resolve().parents[2]
 cases=json.loads((ROOT/'tests/compile/fixtures/cases.json').read_text())
 reports=json.loads((Path(os.environ.get('WEFT_COMPILE_REPORTS',str(ROOT/'target/b004/reports.json')))).read_text())
@@ -17,6 +18,6 @@ for wrong in [None,{},b'{}',1]:
 try:weft.compile_json('\ud800')
 except UnicodeError:pass
 else:raise AssertionError('Lone surrogate accepted')
-summary=dict(cases=len(cases),byteParity=True,subprocessDisabled=True,nativeModule=weft.__file__,version=weft.__version__,python=sys.version,extensionSha256=hashlib.sha256(Path(weft.__file__).read_bytes()).hexdigest())
+summary=dict(cases=len(cases),byteParity=True,subprocessDisabled=True,nativeModule=native_extension.__file__,version=weft.__version__,python=sys.version,extensionSha256=hashlib.sha256(Path(native_extension.__file__).read_bytes()).hexdigest())
 Path(os.environ.get('WEFT_COMPILE_PYTHON_SUMMARY',str(ROOT/'target/b004/python-summary.json'))).write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary))
