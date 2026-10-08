@@ -148,3 +148,53 @@ fn capability_declaration_guards_refuse_at_their_exact_phase() {
     assert_eq!(error.code, "WFT-OBLIGATION");
     assert_eq!(error.message, "Capability obligations are malformed or ambiguous");
 }
+
+#[test]
+fn manifest_collection_and_byte_limits_admit_the_boundary() {
+    use weft_core::backend::validate_manifest;
+    let baseline = validate(&manifest()).unwrap();
+    let mut m = baseline.clone();
+    m.target_profiles = (0..256).map(|i| { let mut p=baseline.target_profiles[0].clone();p.id=format!("target-{i}");p }).collect();
+    m.capabilities[0].target_profiles = vec!["target-0".into()];
+    assert!(validate_manifest(&m).is_ok());
+    let mut extra=m.target_profiles[0].clone();extra.id="target-256".into();m.target_profiles.push(extra);
+    let error=validate_manifest(&m).unwrap_err();
+    assert_eq!(error.code,"WFT-BACKEND-VERSION");
+    assert_eq!(error.message,"Backend manifest identity, collection bounds or evidence IDs are invalid");
+    let mut m=baseline.clone();
+    m.capabilities=(0..4096).map(|i|{let mut c=baseline.capabilities[0].clone();c.id=format!("cap-{i}");c}).collect();
+    assert!(validate_manifest(&m).is_ok());
+    let mut extra=m.capabilities[0].clone();extra.id="cap-4096".into();m.capabilities.push(extra);
+    let error=validate_manifest(&m).unwrap_err();
+    assert_eq!(error.message,"Backend manifest identity, collection bounds or evidence IDs are invalid");
+    let mut raw=manifest().to_string();raw.extend(std::iter::repeat_n(' ',1024*1024-raw.len()));
+    assert_eq!(raw.len(),1024*1024);
+    assert!(validate_manifest_json(&raw).is_ok());
+    raw.push(' ');
+    let error=validate_manifest_json(&raw).unwrap_err();
+    assert_eq!(error.code,"WFT-LIMIT");assert_eq!(error.message,"Backend manifest exceeds one MiB");
+}
+
+#[test]
+fn manifest_identity_evidence_and_language_guards_are_independent() {
+    for field in ["backendId","backendVersion","bindingProfile"] {
+        for value in [json!(""),json!("invalid\u{0}identity")] {
+            let mut m=manifest();m[field]=value;let error=validate(&m).unwrap_err();
+            assert_eq!(error.code,"WFT-BACKEND-VERSION");
+            assert_eq!(error.message,"Backend manifest identity, collection bounds or evidence IDs are invalid");
+        }
+    }
+    for (field,value) in [("targetProfiles",json!([])),("capabilities",json!([])),("evidence",json!([""])),("evidence",json!(["bad\u{0}id"])),("evidence",json!(["fixture-scan-1","fixture-scan-1"]))] {
+        let mut m=manifest();m[field]=value;let error=validate(&m).unwrap_err();
+        assert_eq!(error.message,"Backend manifest identity, collection bounds or evidence IDs are invalid");
+    }
+    for duplicate in [false,true] {
+        let mut m=manifest();
+        m["languageProfiles"]=if duplicate {json!([m["languageProfiles"][0].clone(),m["languageProfiles"][0].clone()])} else {json!([])};
+        let error=validate(&m).unwrap_err();assert_eq!(error.code,"WFT-BACKEND-VERSION");
+        assert_eq!(error.message,"Unsupported backend interface or language/IR pair");
+    }
+    let mut m=manifest();m["languageProfiles"]=json!([m["languageProfiles"][0].clone()]);
+    let error=validate(&m).unwrap_err();
+    assert_eq!(error.message,"Capabilities must bind distinct IDs to declared target and language profiles");
+}
