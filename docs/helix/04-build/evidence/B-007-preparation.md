@@ -484,3 +484,8 @@ using resolved whole-entity and related-page corpus fixtures. Missing type or
 relationship coverage and revision mismatches refuse before assessment. With
 B-007-coverage-branches, all four coverage identity classes have explicit
 missing-identity and revision-mismatch assertions; release closure remains open.
+
+B-007-declaration-branches/ retains eight exact refusals across both plans:
+missing operation declaration, excluded selected target, excluded selected
+language, and declaration-side Unsupported status despite supported assessment.
+The named test passes and downstream panic fixtures detect guard bypass.

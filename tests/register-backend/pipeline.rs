@@ -344,3 +344,34 @@ fn selected_type_and_relationship_coverage_refuse_before_assessment() {
         }
     }
 }
+
+// @covers US-002-AC2 @covers US-002-AC3 @covers US-002-AC4
+#[test]
+fn capability_declarations_bind_selected_target_language_and_status() {
+    struct Declaration { manifest:Manifest,inner:Third }
+    impl Backend for Declaration {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{Ok(self.manifest.clone())}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{self.inner.validate_binding(c)}
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{self.inner.assess(c,m)}
+        fn lower(&self,_:&Context<'_>,_:&Mapping)->weft_core::error::Result<Select>{panic!("invalid declaration must not lower")}
+        fn emit(&self,_:&Context<'_>,_:&Select)->weft_core::error::Result<Emission>{panic!("invalid declaration must not emit")}
+    }
+    let (catalog,p01)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let (_,p02)=weft_core::prepare_and_resolve_application("SELECT c.name FROM Customer c",modules(),Default::default(),None).unwrap();
+    for (index,plan) in [Plan::V01(&p01),Plan::V02(&p02)].into_iter().enumerate() {
+        for mode in 0..4 {
+            let mut m=manifest(Status::Supported);
+            match mode {
+                0=>{m.capabilities.remove(0);},
+                1=>{let mut other=m.target_profiles[0].clone();other.id="other-target".into();m.target_profiles.push(other);m.capabilities[0].target_profiles=vec!["other-target".into()];},
+                2=>{m.capabilities[0].language_profiles.remove(index);},
+                _=>m.capabilities[0].status=Status::Unsupported,
+            }
+            let mut r=Registry::default();r.register(Declaration{manifest:m,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+            let e=r.compile(&catalog,plan,&target(false),&binding(&catalog)).unwrap_err();
+            assert_eq!(e.code,"WFT-CAPABILITY","mode {mode}");
+            assert_eq!(e.message,if mode==3 {"Selected operation is unsupported"} else {"Operation is not declared for the selected target/language profile"},"mode {mode}");
+        }
+    }
+}
