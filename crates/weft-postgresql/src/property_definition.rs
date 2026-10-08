@@ -2483,6 +2483,107 @@ mod tests {
                 serde_json::to_value(&row_public.emission.parameters).unwrap(),
                 serde_json::to_value(&row_compiled.parameters).unwrap()
             );
+
+            let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs,"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
+            let mut registry_once = Some(row_registry);
+            let mut calls = 0;
+            let mut factory =
+                |resolved_catalog: &Catalog,
+                 resolved_plan: weft_core::backend::Plan<'_>,
+                 selected: weft_core::compile::CompositionInput<'_>| {
+                    calls += 1;
+                    assert_eq!(selected.binding_json, row_input.json);
+                    assert_eq!(selected.binding_sha256, row_input.sha256);
+                    assert_eq!(selected.backend_id, "truss.postgresql.original");
+                    assert!(selected.allow_candidate);
+                    assert_eq!(resolved_catalog.inputs.len(), catalog.inputs.len());
+                    assert!(matches!(resolved_plan, weft_core::backend::Plan::V02(_)));
+                    Ok(registry_once.take().unwrap())
+                };
+            for invalid in [
+                {
+                    let mut v = serialized_request.clone();
+                    v["target"]["bindingSha256"] = json!("0".repeat(64));
+                    v
+                },
+                {
+                    let mut v = serialized_request.clone();
+                    v["sql"] = json!("SELECT c.missing FROM Customer c");
+                    v
+                },
+                {
+                    let mut v = serialized_request.clone();
+                    v["sql"] = json!("SELECT FROM");
+                    v
+                },
+            ] {
+                let response: Value = serde_json::from_str(
+                    &weft_core::compile::Compiler::default()
+                        .compile_json_with_factory(&invalid.to_string(), &mut factory),
+                )
+                .unwrap();
+                assert_eq!(response["status"], "blocked");
+                assert!(
+                    response.get("sql").is_none()
+                        && response.get("parameters").is_none()
+                        && response.get("columns").is_none()
+                );
+            }
+            let transported: Value = serde_json::from_str(
+                &weft_core::compile::Compiler::default()
+                    .compile_json_with_factory(&serialized_request.to_string(), &mut factory),
+            )
+            .unwrap();
+            drop(factory);
+            assert_eq!(calls, 1);
+            assert_eq!(transported["status"], "compiled");
+            let mut refused_calls = 0;
+            let mut refused_factory =
+                |_: &Catalog,
+                 _: weft_core::backend::Plan<'_>,
+                 _: weft_core::compile::CompositionInput<'_>| {
+                    refused_calls += 1;
+                    Err(weft_core::error::Diagnostic::new(
+                        "WFT-BACKEND-FAILURE",
+                        "admit",
+                        "fixture composition refused",
+                    ))
+                };
+            let refused: Value = serde_json::from_str(
+                &weft_core::compile::Compiler::default().compile_json_with_factory(
+                    &serialized_request.to_string(),
+                    &mut refused_factory,
+                ),
+            )
+            .unwrap();
+            drop(refused_factory);
+            assert_eq!(refused_calls, 1);
+            assert_eq!(refused["status"], "blocked");
+            assert_eq!(refused["diagnostics"][0]["code"], "WFT-BACKEND-FAILURE");
+            for member in ["sql", "parameters", "columns", "obligations", "logicalPlan"] {
+                assert!(refused.get(member).is_none());
+            }
+
+            assert_eq!(transported["sql"], json!(row_public.emission.sql));
+            assert_eq!(
+                transported["parameters"],
+                serde_json::to_value(&row_public.emission.parameters).unwrap()
+            );
+            assert_eq!(
+                transported["columns"],
+                serde_json::to_value(&row_public.emission.columns).unwrap()
+            );
+            assert_eq!(
+                transported["obligations"],
+                serde_json::to_value(&row_public.emission.obligations).unwrap()
+            );
+            assert_eq!(
+                transported["logicalPlan"],
+                serde_json::to_value(&plan).unwrap()
+            );
+            assert_eq!(transported["bindingSha256"], row_input.sha256);
+            assert_eq!(transported["qualification"]["status"], "candidate");
+
             if let Ok(directory) = std::env::var("WEFT_NATIVE_TREE_PUBLIC_CAPTURE") {
                 let checks: Vec<_> = row_public
                     .emission

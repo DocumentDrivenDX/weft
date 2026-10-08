@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-07",
+  "scope": "Shared pure Rust request-local trusted registry composition hook",
+  "tests": {
+    "command": "cargo test -p weft-core -p weft-postgresql",
+    "passed": 130,
+    "failed": 0,
+    "logSha256": "c1b7a97573a29d98a86a4382640538fc918333cd8a3e4a5e7147069e19448853"
+  },
+  "sources": {
+    "crates/weft-core/src/compile.rs": "e69168d9223f474ded1173df04a8fc33e3cf39dd93bcdf267ecfcb74216660a8",
+    "crates/weft-postgresql/src/property_definition.rs": "ace20ac5daf39f13338c4076503eb07cc29f9e9c16ea6b98753c6a8a4a0cfe12"
+  },
+  "evidence": [
+    "Seven original native compound serialized requests match direct registry SQL/parameters/columns/obligations/logical plan/binding pin and remain candidate-qualified",
+    "Invalid binding digest, unresolved field and malformed SQL each refuse before factory invocation in all seven fixtures",
+    "Seven selected factory failures invoke once and expose only blocked diagnostics, no partial SQL/parameters/columns/obligations/plan"
+  ],
+  "limits": [
+    "Factory receives validated transport/model/plan, while original backend binding meaning remains factory/backend admission responsibility",
+    "Fixtures supply an already-admitted owned registry; built-in serialized original-admission adapter is still unfinished",
+    "No fresh native SQL or Python/browser execution claim"
+  ]
+}
