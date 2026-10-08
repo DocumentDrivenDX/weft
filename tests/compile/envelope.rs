@@ -100,3 +100,38 @@ fn exact_limits_and_binding_digest_precede_resolution() {
         serde_json::from_str(&c.compile_json(&" ".repeat(16 * 1024 * 1024 + 1))).unwrap();
     assert_eq!(out["diagnostics"][0]["code"], "WFT-LIMIT");
 }
+
+// @covers US-006-AC4 @covers US-002-AC4
+#[test]
+fn plugin_failures_are_atomic_at_the_public_boundary() {
+    use fixture::Behavior;
+    let (catalog,_)=weft_core::prepare_and_resolve("SELECT c.name AS label FROM Customer c",fixture::modules()).unwrap();
+    let binding=fixture::binding(&catalog);
+    for app in [false,true] {
+        let mut request=base();
+        request["sql"]=json!("SELECT c.name AS label FROM Customer c");
+        request["interfaceVersion"]=json!(if app {"weft-compile/0.2.0"} else {"weft-compile/0.1.0"});
+        request["dialect"]=json!(if app {"weft-sql/0.2.0"} else {"weft-sql/0.1.0"});
+        request["target"]=json!({"backendId":"test.third","backendVersion":"0.1.0","targetProfile":"fixture-only","bindingJson":binding.json,"bindingSha256":binding.sha256});
+        for (behavior,code) in [
+            (Behavior::Panics,"WFT-BACKEND-FAILURE"),
+            (Behavior::MissingCoverage,"WFT-BINDING"),
+            (Behavior::MissingAssessment,"WFT-CAPABILITY"),
+            (Behavior::LowerFailure,"WFT-CAPABILITY"),
+            (Behavior::EmptySql,"WFT-EMIT"),
+            (Behavior::WrongLabel,"WFT-EMIT"),
+            (Behavior::MissingColumns,"WFT-EMIT"),
+            (Behavior::WrongCarrier,"WFT-EMIT"),
+            (Behavior::WrongType,"WFT-EMIT"),
+            (Behavior::WrongNullable,"WFT-EMIT"),
+            (Behavior::UnknownSource,"WFT-EMIT"),
+            (Behavior::BadSlots,"WFT-EMIT"),
+            (Behavior::ParameterLexical,"WFT-EMIT"),
+        ] {
+            let c=Compiler{registry:fixture::registry(weft_core::backend::Status::Supported,behavior)};
+            let response=run(&c,&request);
+            assert_eq!(response["status"],"blocked");assert_eq!(response["diagnostics"][0]["code"],code);
+            for key in ["sql","parameters","logicalPlan","columns","obligations"] {assert!(response.get(key).is_none(),"{key}: {response}");}
+        }
+    }
+}

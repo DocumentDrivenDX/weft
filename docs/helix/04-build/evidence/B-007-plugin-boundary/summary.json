@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "interfaces": [
+    "weft-compile/0.1.0",
+    "weft-compile/0.2.0"
+  ],
+  "combinations": 26,
+  "behaviors": [
+    "lower panic",
+    "missing coverage",
+    "missing assessment",
+    "lower refusal",
+    "empty SQL",
+    "wrong label",
+    "missing columns",
+    "wrong carrier",
+    "wrong type",
+    "wrong nullability",
+    "unknown source",
+    "bad parameter slots",
+    "invalid lexical parameter"
+  ],
+  "atomicAbsentFields": [
+    "sql",
+    "parameters",
+    "logicalPlan",
+    "columns",
+    "obligations"
+  ],
+  "sourceSha256": "8918d5c39fc86842c74ab546c3edb25f99b4c0505594635af236622b2a9a174b",
+  "scope": "Named trusted synthetic plugin failures at Rust public boundary; not every phase or runtime plugin failure."
+}

@@ -146,3 +146,12 @@ and wrapper behavior. B-007-browser/ retains hashes, runtime versions, full
 summary and log. The first sandbox browser launch terminated with SIGTRAP/EPERM;
 the authorized host launch succeeded. No unavailable run is counted as passing.
 This is fresh browser execution, not a new build or native database rerun.
+
+Public plugin-failure boundaries now pass 26 combinations (13 fixture behaviors
+across both compile/dialect versions). Lowering panic, missing mapping/capability
+coverage, explicit lowering refusal and malformed output labels/types/carriers/
+parameters/source/nullability all yield their expected diagnostic and no SQL,
+parameters, logical plan, columns or obligations. B-007-plugin-boundary/ records
+the passing log, source hash and named branches. Trusted synthetic plugins
+exercise the actual Rust public envelope; this does not claim all plugin phases
+or cross-runtime panic equivalence.
