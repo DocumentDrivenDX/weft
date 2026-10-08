@@ -48,6 +48,7 @@ impl OriginalBackend {
                 capability.id.as_str(),
                 "scan"
                     | "project"
+                    | "project.entity"
                     | "filter"
                     | "innerJoin"
                     | "equal"

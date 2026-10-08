@@ -3076,3 +3076,40 @@ partial candidate execution evidence instead of leaving every criterion purely
 planned; no story is closed by this checkpoint. Original optional/native-null
 scalar roots, complete whole-entity composition and broader query/domain/host
 qualification remain required B-005 work.
+
+### Optional original scalar and complete entity projection (2026-10-07)
+
+`tests/truss-postgresql/build-optional-scalar-fixture.py` authors a required
+string/uint64 key plus an absent-allowed Unicode `note` Field. The Customer
+Record.members order is deliberately `(note,id,part)`, while the key is
+`(part,id)`. Source documents and every changed nested original definition are
+re-pinned from actual bytes. All three selected members have independent original
+property admissions; no field is inferred from a result alias or storage ID.
+
+The failing whole-entity request found that OriginalBackend removed the
+`project.entity` language capability even though its shared assembler already
+consumes fully resolved ordered member projections. This capability is now
+retained for original V02 composition. The new original Configuration regression
+compiles whole-entity, explicit scalar and bounded whole-entity requests across
+native-row and props homes for the optional member. It checks exact member/output
+order, a `value` presence representation with `nativeNull:false`, deterministic
+full responses and refusal without SQL when the optional property's original
+admission is removed. Restoration restores the exact response.
+
+`tests/truss-postgresql/optional-scalar-native.py` passes 48 PostgreSQL 17.9 cases.
+Independent expectations distinguish an absent member, an empty Unicode string,
+a Unicode value with trailing spaces and ordinary present values. The two-row
+entity page still observes invalid data in later, non-returned owners. Corruption
+controls cover explicit JSON null/null nodes, wrong value kind, SQL-null carrier,
+missing root, duplicate state, orphan scalar, wrong codec, null-node payload and
+non-object props roots as applicable to each home. Every emitted prerequisite is
+executed before results; invalid cases suppress result SQL. Receipt:
+[B-005-optional-scalar-native.json](B-005-optional-scalar-native.json).
+
+The pinned presence definition expressly says native null is unsupported without
+its separately selected profile. This checkpoint preserves that refusal and does
+not invent null permission from optional availability or ideal scalar type.
+Positive null-profile support, additional optional scalar domains, entities mixing
+recursive roots and fresh Python/browser transports remain separate requirements.
+This is original compiler/synthetic PostgreSQL evidence, not installed Truss
+compatibility or a full B-005 acceptance claim.
