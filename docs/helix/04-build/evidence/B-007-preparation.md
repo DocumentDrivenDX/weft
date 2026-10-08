@@ -436,3 +436,11 @@ identity; recovery by valid registration succeeds; duplicate registration refuse
 without replacing the original manifest. The fixture forbids binding/assessment/
 lowering/emission during registration. B-007-registration-description/ retains
 source hashes and the executed single-test log. Compiler production code is unchanged.
+
+Ten explicit v0.1 adapter dispatch refusals pass with exact diagnostic messages:
+backend version, IR version, duplicate operation identities, unknown target profile,
+binding profile, stale plan/catalog pins, oversized binding, stale digest and
+correctly hashed malformed/duplicate-key binding JSON. They reach the intended
+pre-lowering guards. B-007-dispatch-branches/ retains the fresh named test and
+source hashes. V0.2 positive composition remains separately tested; later
+capability/mapping/emission branches are not declared complete by this component.

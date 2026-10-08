@@ -167,3 +167,26 @@ fn registration_description_errors_are_atomic() {
         assert_eq!(r.manifest("test.third").unwrap().backend_version,"0.1.0");
     }
 }
+
+// @covers US-002-AC2 @covers US-006-AC2 @covers US-006-AC4
+#[test]
+fn adapter_dispatch_guards_refuse_before_lowering() {
+    let (catalog,plan)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    let registry=registry(Status::Supported,Behavior::Normal);
+    for mode in 0..10 {
+        let mut p=plan.clone();let mut t=target(false);let mut b=binding(&catalog);
+        let (code,message)=match mode {
+            0=>{t.backend_version="99".into();("WFT-BACKEND-VERSION","Selected backend version is not registered")},
+            1=>{p.ir_version="99".into();("WFT-BACKEND-VERSION","Typed plan version or operation identities are invalid")},
+            2=>{p.required_capabilities.push(p.required_capabilities[0].clone());("WFT-BACKEND-VERSION","Typed plan version or operation identities are invalid")},
+            3=>{t.profile_id="missing".into();("WFT-BACKEND-VERSION","Selected target profile is not registered")},
+            4=>{b.profile="missing".into();("WFT-BINDING","Binding profile does not match the selected registered backend")},
+            5=>{p.module_pins[0].revision="stale".into();("WFT-PIN","Plan model pins do not match the supplied catalog")},
+            6=>{b.json=" ".repeat(4*1024*1024+1);("WFT-LIMIT","Binding exceeds four MiB")},
+            7=>{b.sha256="0".repeat(64);("WFT-PIN","Binding byte digest mismatch")},
+            8=>{b.json="{".into();b.sha256=weft_core::json::sha256(b.json.as_bytes());("WFT-BINDING","Binding JSON is malformed or repeats members")},
+            _=>{b.json="{\"x\":1,\"x\":2}".into();b.sha256=weft_core::json::sha256(b.json.as_bytes());("WFT-BINDING","Binding JSON is malformed or repeats members")},
+        };
+        let error=registry.compile(&catalog,Plan::V01(&p),&t,&b).unwrap_err();assert_eq!(error.code,code,"mode {mode}");assert_eq!(error.message,message,"mode {mode}");
+    }
+}
