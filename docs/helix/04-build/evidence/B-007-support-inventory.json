@@ -30,7 +30,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-truss-application-native/summary.json",
@@ -66,7 +66,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
-          "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+          "sha256": "9def975b0e56e717c51fcc9f492f69bb96a15fe4abaa014b02bdf91864717cf9"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-unsigned-boundaries-native/summary.json",
@@ -83,6 +83,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-ashlar-engine-reconciliation/summary.json",
           "sha256": "c6b70e585d872a5c78f9542b3fd02130d1977e6fb566be69f3868feb50bdb122"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-dbsql-version-native/summary.json",
+          "sha256": "e47bf15ed37e8f349bec3a1cd73e896db88f918733e749bbbb75f04f8c7b899b"
         }
       ],
       "excludedClaims": [
@@ -91,7 +95,14 @@
         "storage adoption",
         "typed-column compound values",
         "unsigned 64-bit BIGINT values"
-      ]
+      ],
+      "currentWarehouseObservation": {
+        "dbsqlVersion": "2026.39",
+        "sparkVersion": "4.2.0 0000000000000000000000000000000000000000",
+        "uBuildHash": "15b447529a1f55ca1ad8c73a89b8d196f6ed4904",
+        "rBuildHash": "3909d148af5cb6b560624c9255f5a727f7a17a4c",
+        "scope": "Actual read-only current warehouse identity. Does not retroactively pin earlier corpus receipts, capture their settings, or qualify support."
+      }
     }
   ],
   "freshHostEvidence": [

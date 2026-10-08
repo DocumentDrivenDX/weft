@@ -16,9 +16,12 @@ profiles; the implementation plan's distinct qualification exit remains open.
 | US-004-AC3 | Exact DECIMAL38 overflow, UTF8_BINARY distinctions, compound node/depth guards; B-007 unsigned boundaries with expected CAST_OVERFLOW | Exact-or-error outcomes on the observed warehouse; UInt64/BIGINT and typed compound columns remain excluded. |
 | US-004-AC4 | B-006 actual host driver: six buffered reads, 24 discarded buffers after custody changes; 49 host fixture controls | Actual transport/pin rechecks proved; complete-admin/delegation/policy attestations remain synthetic and do not certify a production service. |
 
-PostgreSQL native evidence names 17.9, UTF8 and explicit C comparisons. Databricks
-reports a 4.2.0 zero-build value; it does not identify a qualified warehouse
-release. Exact module/binding hashes, original source revisions, frozen binaries,
+PostgreSQL native evidence names 17.9, UTF8 and explicit C comparisons. The earlier Databricks `version()` receipt reports Spark 4.2.0 with a zero
+build hash, rather than the Databricks SQL release. The fresh
+B-007-dbsql-version-native receipt uses `current_version()` and identifies
+Databricks SQL 2026.39 with concrete u/r build hashes. This resolves current
+warehouse identification; it does not retroactively version earlier cases.
+[Databricks documents the two functions separately](https://docs.databricks.com/aws/en/sql/language-manual/functions/current_version). Exact module/binding hashes, original source revisions, frozen binaries,
 layout DDL and per-case native terminal statements remain in their component
 receipts. No smaller engine is substituted for either target.
 
