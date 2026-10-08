@@ -1,0 +1,79 @@
+{
+  "inventoryVersion": "weft-support-inventory/0.1.0",
+  "status": "candidate-preparation",
+  "releasedPackages": false,
+  "supportedNativeProfiles": [],
+  "candidateProfiles": [
+    {
+      "backend": "truss.postgresql",
+      "registrationVersion": "0.1.0",
+      "model": "UMF 0.7.0",
+      "dialects": [
+        "weft-sql/0.1.0",
+        "weft-sql/0.2.0"
+      ],
+      "engine": "PostgreSQL 17.9",
+      "settings": {
+        "encoding": "UTF8",
+        "comparison": "explicit C"
+      },
+      "realization": "pinned Truss owner draft; independent synthetic fixtures",
+      "domainAndOperationScope": "Only exact subsets and cases enumerated in the hashed acceptance and execution records; not every allowed combination.",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-005-acceptance.md",
+          "sha256": "aac967a81b295865c96f5946d32f452e92eeea463ce9feca42b847a67c26e689"
+        },
+        {
+          "path": "tests/truss-postgresql/upstream/storage-realization-pins.json",
+          "sha256": "c50973fd2e4d06987c5c4776fc806eed32c6327ab46fd26175359fa8e6196c6a"
+        }
+      ],
+      "excludedClaims": [
+        "installed Truss runtime adoption",
+        "production authorization procedures",
+        "every possible numeric domain or graph",
+        "released cross-platform packages"
+      ]
+    },
+    {
+      "backend": "ashlar.databricks",
+      "registrationVersion": "0.1.0-candidate",
+      "model": "UMF 0.7.0",
+      "layout": "ashlar-delta/0.3",
+      "engineRelease": "unqualified-warehouse-release",
+      "domainAndOperationScope": "Only exact subsets and cases enumerated in the hashed acceptance record; compound encoding ashlar-weft-json-value/0.1-candidate.",
+      "evidence": [
+        {
+          "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
+          "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        }
+      ],
+      "excludedClaims": [
+        "qualified production warehouse release",
+        "production policy service",
+        "storage adoption",
+        "typed-column compound values",
+        "unsigned 64-bit BIGINT values"
+      ]
+    }
+  ],
+  "freshHostEvidence": [
+    {
+      "path": "docs/helix/04-build/evidence/B-007-python/summary.json",
+      "sha256": "c778807685e495fa5cca0ca697d29195e4e642a2c86fb6ea661426cc4557fc08"
+    },
+    {
+      "path": "docs/helix/04-build/evidence/B-007-browser/summary.json",
+      "sha256": "d037b868af541f4a17c1d756cf966a25cd3e0c8fd11f804b234664b77acbb41e"
+    }
+  ],
+  "pending": [
+    "full 30-criterion acceptance audit",
+    "critical supported/refused branch review and parser fuzz",
+    "exact native support profiles for any supported claim",
+    "registry ownership and release maintainer verification",
+    "license decision"
+  ],
+  "meaning": "Evidence index, not compiler manifest or qualification certificate. Candidate statuses remain candidate; references do not prove every explicit release gate."
+}
