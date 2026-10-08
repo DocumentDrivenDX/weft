@@ -25,3 +25,27 @@ no failure occurred to minimize. Unsupported grammar/profile/domain remains a
 whole-operation refusal. The named module-boundary
 check passes separately after a terminal 195-test, 35-suite workspace checkpoint. Final native-profile
 qualification and owner release decisions remain independent gates.
+
+
+## Registered adapter guard accounting
+
+The current backend-pipeline integration suite passes all 12 tests, with none
+ignored or filtered (B-007-pipeline-consolidated/). The following receipts cover
+individual refusal guards; they supplement the earlier broad US-002 review.
+
+| Guard | Exact assertion evidence |
+| --- | --- |
+| Backend version, actual IR, duplicate operation IDs, target profile, binding profile, model pins, binding size/digest/JSON | B-007-dispatch-branches |
+| Manifest dialect/IR acceptance and non-object JSON roots, both plans | B-007-language-root-branches |
+| Missing or wrong-revision record and field coverage, both plans | B-007-coverage-branches |
+| Missing or wrong-revision type and relationship coverage, resolved application plans | B-007-type-relationship-coverage |
+| Duplicate/oversize additional capabilities; duplicate/unrequested/unsupported assessments; duplicate/undeclared/missing evidence | B-007-assessment-branches |
+| Malformed obligations, same-ID conflicting parameters/owner, identical deduplication and sorted distinct retention | B-007-obligation-branches |
+
+Coverage selection is asserted nonempty in each tested identity class; the
+panicking downstream fixtures establish the intended refusal phase. This does
+not establish every profile combination. Still to account individually: missing
+capability declarations for a selected target/language, declaration-side
+unsupported status, and obligation conflicts crossing declaration, assessment,
+and emission phases. Emission validation has its own guards and remains a
+separate accounting task. Native support and release ownership are unchanged.
