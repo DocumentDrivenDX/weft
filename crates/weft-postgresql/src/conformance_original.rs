@@ -1414,3 +1414,32 @@ mod numeric_container_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod numeric_entity_tests {
+    use super::*;
+    #[test]
+    fn complete_entities_retain_independent_signed_and_decimal_native_roots() {
+        for (label,raw) in [
+            ("signed-sequence-decimal-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-signed-sequence-decimal-structured-inputs.json")),
+            ("decimal-sequence-signed-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-decimal-sequence-signed-structured-inputs.json")),
+            ("signed-map-decimal-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-signed-map-decimal-structured-inputs.json")),
+            ("decimal-map-signed-structured",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-decimal-map-signed-structured-inputs.json")),
+        ] {
+            let cut:Value=serde_json::from_str(raw).unwrap();let mut transports=Vec::new();
+            for case in cut["requests"].as_array().unwrap() {
+                let request=&case["request"];
+                let catalog=Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+                let config=configuration(&cut["composition"].to_string(),&catalog).unwrap();
+                let compiled=config.compile_json(&request.to_string());let response:Value=serde_json::from_str(&compiled).unwrap();
+                assert_eq!(response["status"],"compiled","{label}: {response}");
+                assert_eq!(compiled,config.compile_json(&request.to_string()));
+                assert_eq!(response["columns"].as_array().unwrap().iter().map(|c|c["outputName"].as_str().unwrap()).collect::<Vec<_>>(),vec!["tags","address","note","id","part"]);
+                transports.push(serde_json::json!({"bound":case["bound"],"request":request,"response":response}));
+            }
+            if let Ok(directory)=std::env::var("WEFT_NUMERIC_ENTITY_CAPTURE") {
+                std::fs::write(std::path::Path::new(&directory).join(format!("original-entity-{label}-public.json")),serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
+            }
+        }
+    }
+}

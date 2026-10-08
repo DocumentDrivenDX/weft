@@ -3774,3 +3774,37 @@ This extends selected numeric recursive evidence from sequences to maps and
 structured roots. Whole-entity numeric composition, wider original relational
 query audit and final US-003 acceptance remain open. No production or installed
 Truss support is claimed.
+
+### Complete entities combining native signed/decimal roots (2026-10-08)
+
+Four original-authored entity configurations now combine signed64 sequence or
+map roots with Decimal(28,2) structured roots, and the opposite numeric families.
+Each independently replaces its root's original property/value/codec/presence
+selection, merges the complete Field/Record closure into the source document,
+repins source/owning Record bytes, and retains exact key/note scalar selections.
+Eight complete artifacts (LIMIT 10 and 1 per configuration) are deterministic and
+preserve declared tags/address/note/id/part order. All 159 Rust regressions pass;
+the unchanged exhaustive scalar decimal composition test retains prior evidence.
+
+Eighty independent PostgreSQL 17.9 cases pass. Exact numeric token strings and
+large uint64 key text survive together with optional note/root states and empty
+sequence/map values. Hidden second-owner numeric domain/codec corruption and key
+codec corruption block execution even at LIMIT 1. Required container absence
+refuses; optional structured-root absence retains its explicit envelope. An
+unrelated object type is excluded. Each root has separate native state ownership
+and independently admitted original definitions; none is silently omitted.
+
+Actual Python ABI and Chromium WASM each pass forty cases: eight complete
+responses and thirty-two configuration/version/candidate/digest refusals, with
+Python deterministic repeats/subprocess disabled and browser exact byte parity
+without Node globals or compile-time network IO. Runtime code is unchanged from
+the preceding fresh numeric-sequence binaries; these are new fixture/test cuts.
+Existing custody and specification checks pass. Receipts:
+[B-005-numeric-entity.json](B-005-numeric-entity.json) and
+[B-005-numeric-entity-native.json](B-005-numeric-entity-native.json).
+
+This closes the selected whole-entity numeric composition gap recorded in the
+preceding checkpoints. It does not infer support for every numeric/container
+combination. Wider original relational query composition and final US-003
+acceptance still need their requirement/evidence audit. Production qualification
+and released host registration remain separate.
