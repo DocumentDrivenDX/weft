@@ -4,6 +4,10 @@
 import hashlib,json,os,re,subprocess,sys
 from pathlib import Path
 from native_transport import Client
+from warehouse_capture import capture
+warehouse_capture=os.environ.get('WEFT_ASHLAR_WAREHOUSE_RELATIONSHIPS')=='1'
+assert not warehouse_capture or '--resume-pinned' in sys.argv,'Warehouse qualification reuses pinned fixtures without provisioning'
+warehouse_identities=set();identity_captures=[]
 ROOT=Path(__file__).resolve().parents[2];OUT=Path(os.environ['WEFT_ASHLAR_EVIDENCE_OUTPUT']);c=Client(OUT)
 SCHEMA='client_dev.weft_b006_20261008_relationships_v2';MANIFEST=SCHEMA+'.publication_manifest'
 layout=(ROOT/'spec/upstream/ashlar-delta-v03.sql').read_text();layout_sha=hashlib.sha256(layout.encode()).hexdigest()
@@ -55,6 +59,26 @@ else:
 for t,uuid in state['uuids'].items():assert detail(SCHEMA+'.'+t)['id']==uuid
 assert c.sql('resolve-fixture-vector','SELECT table_versions_json FROM '+MANIFEST+' WHERE publication_id=:id',[p('id',state['publicationId'])])==[[json.dumps({SCHEMA+'.'+t:v for t,v in state['versions'].items()})]]
 binary=Path(os.environ['WEFT_ASHLAR_COMPILER']);binary_sha=hashlib.sha256(binary.read_bytes()).hexdigest();outcomes=[];guard_cache={};(OUT/'compile-artifacts.jsonl').write_text('')
+def observed_sql(label,statement,parameters):
+ if not warehouse_capture:return c.sql(label,statement,parameters)
+ actual=c.sql(label,capture(statement),parameters)
+ columns=c.records[-1]['response']['manifest']['schema']['columns']
+ assert (columns[0]['name'],columns[0]['type_name'])==('__weft_warehouse','STRING')
+ if actual:
+  identities=[row[0] for row in actual];method='same-statement'
+ else:
+  probe=c.sql(label+'-empty-warehouse-probe',"SELECT to_json(current_version(), map('ignoreNullFields','false')) AS __weft_warehouse")
+  assert len(probe)==1 and len(probe[0])==1
+  identities=[probe[0][0]];method='separate-probe-after-empty-query'
+ observed=set()
+ for encoded in identities:
+  identity=json.loads(encoded)
+  assert set(identity)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and identity['dbr_version'] is None
+  assert all(isinstance(identity[k],str) and identity[k] for k in ['dbsql_version','u_build_hash','r_build_hash'])
+  observed.add(json.dumps(identity,sort_keys=True));warehouse_identities.add(json.dumps(identity,sort_keys=True))
+ assert len(observed)==1
+ identity_captures.append(dict(label=label,method=method,warehouse=json.loads(next(iter(observed)))))
+ return [row[1:] for row in actual]
 def request(sql,label,edge,homes,multiplicity=None,params=None):
  def logical(element):return dict(documentId='relationship-fixture',revision='1',module='main',element=element)
  def scalar(id,family,facets=None):
@@ -94,7 +118,7 @@ for edge in ['edge_current','edge_ab']:
     cache_key=hashlib.sha256(json.dumps(dict(sql=check['sql'],parameters=bound_params,fixture=state),sort_keys=True).encode()).hexdigest()
     if cache_key not in guard_cache:
      guard_label=identifier+'-guard-'+str(i)
-     value=c.sql(guard_label,check['sql'],bound_params)
+     value=observed_sql(guard_label,check['sql'],bound_params)
      assert len(value)==1 and len(value[0])==1,(guard_label,value)
      guard_cache[cache_key]=dict(value=value[0][0],label=guard_label)
     counts.append(guard_cache[cache_key]['value']);guard_receipts.append(guard_cache[cache_key]['label'])
@@ -105,7 +129,7 @@ for edge in ['edge_current','edge_ab']:
     outcome=dict(id=identifier,outcome='refused-before-user-query',counts=counts,guardReceipts=guard_receipts)
    else:
     assert all(v=='0' for v in counts),(identifier,counts)
-    actual=c.sql(identifier+'-user-query',artifact['sql'],params)
+    actual=observed_sql(identifier+'-user-query',artifact['sql'],params)
     if 'exists' in query:
      wanted=query['exists'];ids={src for _,src,dst in base_edges if next((code,str(rank)) for id,code,rank in orders if id==dst)==wanted}
      expected=sorted([[str(key)] for id,key in customers if id in ids]);assert sorted(actual)==expected,(identifier,actual,expected)
@@ -126,5 +150,7 @@ for edge in ['edge_current','edge_ab']:
     outcome=dict(id=identifier,outcome='published-fixture-result',rows=actual,expected=expected,guardReceipts=guard_receipts)
    outcomes.append(outcome)
 assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha
+if warehouse_capture:assert len(outcomes)==52 and len(warehouse_identities)==1
 summary=dict(uniqueNativeGuards=len(guard_cache),guardReuse='Only identical SQL, used parameter values and immutable fixture publication; each outcome links the actual guard statement',state='passed',cases=len(outcomes),positive=sum(o['outcome']=='published-fixture-result' for o in outcomes),refusals=sum(o['outcome']=='refused-before-user-query' for o in outcomes),outcomes=outcomes,fixture=state,compilerBinarySha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),qualification='Actual canonical/serving edge SQL and props/typed key homes; independent forward/inverse parallel bags, bounded lookahead, EXISTS, orphan/type/key/edge/multiplicity refusals. Synthetic admin fixtures; no production policy/publication qualification.')
+summary.update(warehouseIdentity=json.loads(next(iter(warehouse_identities))) if warehouse_capture else None,warehouseIdentityCaptures=identity_captures)
 (OUT/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in summary.items() if k!='outcomes'}))

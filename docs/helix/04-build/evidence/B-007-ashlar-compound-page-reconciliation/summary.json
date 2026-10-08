@@ -23,7 +23,7 @@
     },
     {
       "path": "tests/ashlar-databricks/compound-application-native.py",
-      "sha256": "e8e796190c2b15eb858cdae42e5682314ef5e5b98617ef2e36c94d2a2857918b"
+      "sha256": "3eb32463f8ca22a0e0bcfaee8e3076259183da2a689aaceb01bc51bf9a87524a"
     }
   ],
   "scope": "Saved accepted native receipts; strict decoded expected-value comparison. Not a fresh native execution or production profile.",

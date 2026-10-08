@@ -20,7 +20,7 @@
     },
     {
       "path": "tests/ashlar-databricks/relationship-native.py",
-      "sha256": "2ecce51c4d9cae7badb2397348ea687b883a92c680d888c87ae479b73bca9059"
+      "sha256": "a5269d5d2824c58618b412811ae0ad07ac6074d8412b5898e92cc472b615d361"
     }
   ],
   "scope": "Saved native receipt reconciliation with exact duplicate-preserving expected bags and guard-linked refusal. Not fresh execution or production qualification.",
