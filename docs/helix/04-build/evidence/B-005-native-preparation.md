@@ -3113,3 +3113,57 @@ Positive null-profile support, additional optional scalar domains, entities mixi
 recursive roots and fresh Python/browser transports remain separate requirements.
 This is original compiler/synthetic PostgreSQL evidence, not installed Truss
 compatibility or a full B-005 acceptance claim.
+
+### Original optional/entity native Python and browser boundary (2026-10-07)
+
+The conformance-only runtime now selects two additional exact original binding
+cuts: optional `note` in native rows and in JSONB props. The owned compositions
+retain original codec/profile/inventory/selector bytes; props selection explicitly
+has no row join. The loader preserves this distinction and re-admits each
+configuration against the current Catalog and binding on every request. Captures
+contain data only, never executable model procedures. The runtime remains a
+static ten-cut conformance allowlist, not a released generic plugin protocol.
+
+Six full public request/response pairs cover complete scalar entities, explicit
+scalar projection and bounded entity pages in both homes. The runtime regression
+matches their entire responses and deterministic repeats. All 140 core,
+PostgreSQL and runtime tests pass with `weft-runtime/test-original`. Independent
+custody checks now cover ten compositions and seventeen complete responses.
+
+A fresh maturin 1.9.6 / Python 3.12.14 native wheel built with `test-original`
+passes seventeen complete response cases, seventeen deterministic repeats and
+fifty-one candidate-disabled/unsupported-cut/wrong-digest refusals. This is 68
+corpus cases plus 17 repeat calls (85 native compile calls). Subprocess entry
+points are disabled during compilation. The wheel is local macOS 11 ARM64 abi3
+cp39; no other native platforms are newly qualified.
+
+A fresh wasm32 build and wasm-bindgen 0.2.105 web glue pass the same 68 corpus
+cases byte-for-byte against Python in Chromium 153.0.8010.12 / Playwright 1.62.1.
+Network APIs are disabled after initialization, Node globals are absent, and
+imports remain string/error/memory glue only. Existing compile wrapper transport
+and trap-retirement checks also pass. WASM size is 14,147,313 bytes; observed
+memory grows from 2,293,760 to 5,636,096 bytes. Browser execution requires macOS
+process-services escalation, not compiler IO permission.
+
+[Receipt](B-005-optional-embedding.json) pins source, full transport/composition
+captures, logs, summaries and binaries. Wheel SHA256:
+`8498c8c4ed89cf559da127ffd9ab1ca89a4f02269844c1b3e5a03bdefb636c0a`.
+WASM SHA256:
+`139cfc87a8bf7bf03c821937676d37a411045a0b6e573d755d6ce3b51a114b2e`.
+Summaries are in `tests/truss-postgresql/evidence/optional-embedding/`.
+
+Reproduction uses the existing isolated toolchain and `test-original` feature:
+`cargo test -p weft-core -p weft-postgresql -p weft-runtime --features weft-runtime/test-original`,
+`maturin build --manifest-path crates/weft-python/Cargo.toml --features test-original --interpreter /private/tmp/weft-toolchain/venv/bin/python`,
+and `cargo build -p weft-wasm --features test-original --target wasm32-unknown-unknown`.
+Install the fresh wheel into a new target directory, set PYTHONPATH to it and run
+`tests/truss-postgresql/original-embedding-check.py`. Generate web glue with
+wasm-bindgen and run `tests/compile/browser-check.mjs` using its WEFT_PROBE_JS,
+WEFT_PROBE_WASM, WEFT_PROBE_API=compile_json and generated
+`target/b005/original-embedding/{cases,reports}.json` inputs.
+
+This adds actual embedding evidence for the selected original optional-scalar
+and complete three-scalar entity subset; it does not add native database or
+production compatibility claims. Native null remains unsupported by the pinned
+presence profile. Entities mixing recursive roots, broader scalar/query domains
+and complete host/story qualification remain B-005 work.

@@ -140,18 +140,22 @@ fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
         let relations = serde_json::from_value(p["relations"].clone())
             .map_err(|_| fail("Relations invalid"))?;
         let columns = columns(&p["columns"])?;
-        let raw = text(&p["rowJoin"]["originalJson"])?;
-        let d = weft_core::json::checked_json(raw).map_err(|_| fail("Join JSON invalid"))?;
-        let artifacts = originals(&p["rowJoin"]["originalArtifacts"], &d)?;
-        let join = row_join_definition::Definition::parse(
-            raw,
-            row_join_definition::Selection {
-                profile: &d["profile"],
-                original_artifacts: &artifacts,
-                relations: &relations,
-                columns: &columns,
-            },
-        )?;
+        let row_join = if p["rowJoin"].is_null() {
+            None
+        } else {
+            let raw = text(&p["rowJoin"]["originalJson"])?;
+            let d = weft_core::json::checked_json(raw).map_err(|_| fail("Join JSON invalid"))?;
+            let artifacts = originals(&p["rowJoin"]["originalArtifacts"], &d)?;
+            Some(Arc::new(row_join_definition::Definition::parse(
+                raw,
+                row_join_definition::Selection {
+                    profile: &d["profile"],
+                    original_artifacts: &artifacts,
+                    relations: &relations,
+                    columns: &columns,
+                },
+            )?))
+        };
         properties.push(OwnedPropertySelection {
             index: p["index"]
                 .as_u64()
@@ -164,7 +168,7 @@ fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
             inventory: artifact(&p["inventory"])?,
             relations,
             columns,
-            row_join: Some(Arc::new(join)),
+            row_join,
             obligations: serde_json::from_value(p["obligations"].clone())
                 .map_err(|_| fail("Obligations invalid"))?,
             edge_association: None,
@@ -294,6 +298,20 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
  ("45c68c4b4ef0067e636c504b0f32dc4e4ae72121732fda00bc82ad1094ea0600",include_str!("../../../tests/truss-postgresql/fixtures/original-numeric-map-composition.json")),
  ("3f87a9cf0298f6b8a9e0cdabf3be8e7d10b71ed52aafdbdf7339a1d5516a2300",include_str!("../../../tests/truss-postgresql/fixtures/original-tags-composition.json")),
  ];
+    let optional_presets = [
+        (
+            "7a1d2b62fc16aa20ebe14dd31b2b957cde4301671bedb66d959328539b033944",
+            include_str!(
+                "../../../tests/truss-postgresql/fixtures/original-optional-row-composition.json"
+            ),
+        ),
+        (
+            "1817b74ad295a9ae1d24b817a53d597e752bc60f954417fa23258e98244995f4",
+            include_str!(
+                "../../../tests/truss-postgresql/fixtures/original-optional-props-composition.json"
+            ),
+        ),
+    ];
     let raw = if target.binding_sha256
         == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
     {
@@ -303,6 +321,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
     } else {
         presets
             .iter()
+            .chain(optional_presets.iter())
             .find(|(pin, _)| *pin == target.binding_sha256)
             .map(|(_, raw)| *raw)
             .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?
@@ -595,6 +614,7 @@ mod optional_tests {
         )
         .unwrap();
         let mut captures = Vec::new();
+        let mut transports = Vec::new();
         for home in ["row", "props"] {
             for case in inputs["requests"].as_array().unwrap() {
                 let mut request = case["request"].clone();
@@ -695,6 +715,16 @@ mod optional_tests {
                     serde_json::from_str::<Value>(&config.compile_json(&request.to_string()))
                         .unwrap()
                 );
+                if let Ok(directory) = std::env::var("WEFT_ORIGINAL_OPTIONAL_COMPOSITION_CAPTURE") {
+                    let path = std::path::Path::new(&directory)
+                        .join(format!("original-optional-{home}-composition.json"));
+                    std::fs::write(
+                        path,
+                        serde_json::to_vec_pretty(&config.conformance_capture()).unwrap(),
+                    )
+                    .unwrap();
+                }
+                transports.push(serde_json::json!({"request":request,"response":response}));
                 let checks: Vec<_> = response["obligations"]
                     .as_array()
                     .unwrap()
@@ -703,6 +733,9 @@ mod optional_tests {
                     .collect();
                 captures.push(serde_json::json!({"home":home,"kind":case["kind"],"sql":response["sql"],"columns":response["columns"],"parameters":response["parameters"],"checks":checks}));
             }
+        }
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_OPTIONAL_TRANSPORT_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ORIGINAL_OPTIONAL_SCALAR_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();

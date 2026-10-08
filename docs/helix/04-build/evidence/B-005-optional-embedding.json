@@ -1,0 +1,27 @@
+{
+  "scope": "test-original only; seven compound presets, one native uint64 relationship preset and two optional scalar/entity homes; no production or generic released plugin qualification",
+  "rustTests": 140,
+  "embeddingCorpusCases": 68,
+  "fullResponseCases": 17,
+  "pythonDeterministicRepeats": 17,
+  "pythonCompileCalls": 85,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "7819e68c42ed2633d13d6e9b5bc9c1a889296f4f5ff236fa66b0ce596c94c1e9",
+    "crates/weft-runtime/src/lib.rs": "f6fc5e691e74904aeb232131e7328ae312bb85c77e22c2094b1e600c243fb251",
+    "tests/truss-postgresql/original-embedding-check.py": "e480949a32cd433ad48405c95c6f77a4d6774dc71c69dbdd9a852d441d74907e",
+    "tests/truss-postgresql/check-composition-custody.py": "fc243501bdd182d082b53f0e1d0d11d4d93216c7ae7d3f358cf37d24affd3199",
+    "tests/truss-postgresql/fixtures/original-optional-row-composition.json": "784550498c1594b6fc24231fc93744d9dd2c35eee0085ecfc1037b57bff36318",
+    "tests/truss-postgresql/fixtures/original-optional-props-composition.json": "cf876a3505488d49bd082c9758e4a99aa2959923740396c8fa099fda1c39117e",
+    "tests/truss-postgresql/fixtures/original-optional-public-transport.json": "f3941f635a113227ec0de85eefdb9e2f033d3bcb4a8e014e79fa1df68a3eda7f",
+    "tests/truss-postgresql/evidence/optional-embedding/python-summary.json": "5c598c14530084a19a317be03d0d54fd1cf9e1d7a42b931d197d7c227a565643",
+    "tests/truss-postgresql/evidence/optional-embedding/browser-summary.json": "7699a7e569c4c91895f665ee88cdae6308889d05d70a3c8444e56e244907297d"
+  },
+  "logs": {
+    "/private/tmp/weft-optional-runtime.log": "738ada009027e9ead2d468619f0fff677696d67a86893e0005440f7890c29322",
+    "/private/tmp/weft-optional-python-build.log": "e2d058c349f2b63c87f177490da44ad9a0e657d7710eb1d0852e6e7666b698bd",
+    "/private/tmp/weft-optional-python-install.log": "d5435f944fd4b7640fa9e55749489276d00eb3918fe9588a04685e5127512a0c",
+    "/private/tmp/weft-optional-wasm-build.log": "0c47cf7074b46223a428e938178bb2858c6f549aae5376c2a9b949b627fcd47d"
+  },
+  "wheelSha256": "8498c8c4ed89cf559da127ffd9ab1ca89a4f02269844c1b3e5a03bdefb636c0a",
+  "wasmSha256": "139cfc87a8bf7bf03c821937676d37a411045a0b6e573d755d6ce3b51a114b2e"
+}

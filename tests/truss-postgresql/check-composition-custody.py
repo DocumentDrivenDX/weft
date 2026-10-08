@@ -13,7 +13,7 @@ def artifact(value):
     return data
 
 pairs = sorted(Path('tests/truss-postgresql/fixtures').glob('original-*-composition.json'))
-assert len(pairs) == 8
+assert len(pairs) == 10
 for path in pairs:
     composition = json.loads(path.read_text())
     assert composition['interfaceVersion'] == 'weft-original-conformance-composition/0.1.0'
@@ -21,7 +21,7 @@ for path in pairs:
     for selected in composition['records'] + composition['properties'] + composition.get('relationships', []):
         artifact(selected['inventory'])
     for prop in composition['properties']:
-        for definition in list(prop['leafCodecs'].values()) + [prop['rowJoin']]:
+        for definition in list(prop['leafCodecs'].values()) + ([prop['rowJoin']] if prop['rowJoin'] is not None else []):
             document = json.loads(definition['originalJson'])
             for pointer, encoded in definition['originalArtifacts'].items():
                 selected = document
@@ -47,6 +47,10 @@ for path in pairs:
             names = [relation[k] for k in ['relationshipType','sourceId','sourceType','targetId','targetType']]
             assert len(set(names)) == 5
             assert all(relation['columns'][n]['relationIdentity'] == relation['relationIdentity'] for n in names)
+    elif path.name.startswith('original-optional-'):
+        home=path.name.split('-')[2]
+        transports=[t for t in json.loads(path.with_name('original-optional-public-transport.json').read_text()) if json.loads(t['request']['target']['bindingJson'])['properties'][-1]['home']==home]
+        assert len(transports)==3
     else:
         transports = [json.loads(path.with_name(path.name.replace('-composition.json', '-compile-transport.json')).read_text())]
     for transport in transports:
@@ -63,4 +67,4 @@ for path in pairs:
             definition = json.loads(comparator['originalJson'])
             assert artifact(definition['valueDefinition']) == artifact(prop['valueDefinition'])
             assert artifact(definition['sourceDomainDefinition']) == artifact(prop['acceptedDefinition'])
-print('8 compositions / 11 compiler responses preserve original byte custody.')
+print('10 compositions / 17 compiler responses preserve original byte custody.')
