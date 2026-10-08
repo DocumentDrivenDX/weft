@@ -565,3 +565,9 @@ verifies 66 evidence references, including real Truss report consistency
 for 21 scopes/76 cases. The closure audit distinguishes this executed
 consistency proof from still-unproved final provenance, required host layers,
 and candidate-to-supported qualification.
+
+B-007-truss-python-case-receipts/ retains a fresh 76-case native Python
+embedding replay with subprocess entry points disabled. Every case records
+request, actual-response and expected-response hashes tied to the loaded
+abi3 extension hash. The existing wheel executes; PostgreSQL is not rerun.
+This closes the per-case Python receipt-index gap, not browser provenance.
