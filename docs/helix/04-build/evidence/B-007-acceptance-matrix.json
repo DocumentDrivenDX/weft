@@ -131,6 +131,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
           "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -156,6 +160,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
           "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-description/summary.json",
+          "sha256": "efdc74eb10ebe7eaf1d8ab8b2992d96a0dd229d3505f3e394827665205353e05"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -181,6 +193,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-registration-audit/summary.json",
           "sha256": "308293066d9f0a4ae2085fdde809fbd91f1991c1864860329f24e48abd877d11"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -210,6 +226,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
           "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-registration-description/summary.json",
+          "sha256": "efdc74eb10ebe7eaf1d8ab8b2992d96a0dd229d3505f3e394827665205353e05"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -692,6 +716,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-factory-branches/summary.json",
           "sha256": "f84dd062c4f7802d026a0dfd45f558b8e3d142bfb3c7828fcb484870c494ffb5"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -725,6 +753,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
           "sha256": "c7ab0802aedf587b9c3c8bb87663442a0588ac22c2103185905f499a1b98233a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-json-branches/summary.json",
+          "sha256": "5156e8a50aca21088360d0e9832732d1634212665533de0be4a8837d541eb906"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -794,6 +830,14 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-request-branches/summary.json",
           "sha256": "c6fe6d5a8536a2a04f3d60ee0199f1227899e25c994e5e0cc5c8b27299148a3e"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-json-branches/summary.json",
+          "sha256": "5156e8a50aca21088360d0e9832732d1634212665533de0be4a8837d541eb906"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
+          "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
