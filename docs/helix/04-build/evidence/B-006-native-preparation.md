@@ -240,3 +240,41 @@ service registration was denied; the authorized unsandboxed launch passed.
 `scripts/run-b006-embeddings.sh` rebuilds both embeddings and repeats the checks.
 Optional/compound/relationship coverage and host enforcement remain unfinished;
 this checkpoint does not complete B-006 or qualify a production backend.
+
+### Optional scalar checkpoint — 2026-10-08
+
+Binding admission now uses UMF's identity-based member descriptors for scalar
+fields, admitting both `required` and `absent-allowed` availability. The latter
+adds the candidate `value.presence` capability and tagged result metadata. JSON
+properties distinguish a missing key from a present JSON null; optional absent
+values require an object root. Typed STRING/BIGINT homes admit absence only when
+the owner presence flag is false and the value column is null. A present null,
+wrong scalar type/domain, malformed root or stale value behind a false flag
+fails the owner-wide integrity check before user predicates. Explicit native
+null remains unsupported; exact numeric values inside envelopes use strings.
+
+The new compiler test failed at binding admission before implementation, then
+passed for both homes. The regression checkpoint passes 13 Ashlar Rust tests
+and the shared runtime's combined-backend test. All 188 earlier full compiler
+artifacts remain unchanged. `tests/ashlar-databricks/optional-native.py` passes
+36 actual Databricks cases against the private pinned `node_type_a` layout:
+12 independently expected present/absent results and 24 refusals, including
+hidden corruption rejected before WHERE. STRING/BIGINT are tested in JSON and
+typed columns; boolean and precision-28/scale-2 decimal are tested in JSON.
+Unicode, escaping, false booleans, signed minimum and exact large decimals
+survive their declared carriers. Native statement captures, fixture custody,
+compiler artifacts, hashes and outcomes are in B-006-optional-native/.
+
+The initial insert attempted null presence flags and received the owner's
+NOT NULL constraint error. Both owned tables were then verified empty; only
+the revised payload was inserted. A later harness member-duplication error
+was corrected and assertions resumed read-only against the same publication.
+The retained statement log includes those observations; none is a passing
+query claim. The final run completed all 36 assertions without fixture writes.
+
+Fresh native Python and actual Chromium builds match all 224 saved full
+artifacts byte-for-byte, including the optional envelopes and metadata; see
+B-006-optional-python-summary.json and B-006-optional-browser-summary.json.
+Subprocess/network/transport/trap guards remain exercised. This checkpoint is
+candidate component evidence, not production custody/delegation qualification.
+Compound/related application values and actual host enforcement remain open.

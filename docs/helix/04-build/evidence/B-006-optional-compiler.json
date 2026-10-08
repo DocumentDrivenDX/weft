@@ -1,0 +1,37 @@
+{
+  "state": "passed",
+  "scope": "B006 optional scalar candidate component; acceptance remains open",
+  "rust": {
+    "ashlarTests": 13,
+    "combinedRuntimeTests": 1,
+    "beforeImplementation": "B-006-optional-before.log",
+    "afterImplementation": "B-006-optional-regression-final.log"
+  },
+  "native": {
+    "cases": 36,
+    "positive": 12,
+    "refusals": 24,
+    "receipt": "B-006-optional-native/summary.json"
+  },
+  "embeddings": {
+    "cases": 224,
+    "python": "B-006-optional-python-summary.json",
+    "chromium": "B-006-optional-browser-summary.json"
+  },
+  "priorArtifactsUnchanged": 188,
+  "sourceSha256": {
+    "crates/weft-databricks/src/binding.rs": "a607683512b519646b50569eb87cd663b216fd8f77c23fa58d77c26a8be23aa7",
+    "crates/weft-databricks/src/candidate.rs": "b7de7f16175f7bd743ae66df8663465ec848f30f5405d42969823d652ca794ad",
+    "crates/weft-databricks/src/candidate/application.rs": "e976189f336efd5611c6adc1549d7d3218e9ae7668f59c4740e441afa8445543",
+    "tests/ashlar-databricks/compiler.rs": "24b794db8a468f0f061221864e7f439a529b8e32d0b44a74ccc651bffd94bfbf",
+    "tests/ashlar-databricks/optional-native.py": "7bdff10794ce71672d065ff73452e140284af46657b001c60ee29c553d93b516",
+    "tests/ashlar-databricks/python-check.py": "ae43d312ebd40e4a6b3601e794547287ef95333a74ffb6a4e90943b31abf8e9b"
+  },
+  "remaining": [
+    "compound values",
+    "relationship traversal",
+    "actual host enforcement",
+    "B006 acceptance audit",
+    "B007 release qualification"
+  ]
+}

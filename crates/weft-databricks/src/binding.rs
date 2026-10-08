@@ -3,10 +3,10 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::BTreeSet;
 use weft_core::{
+    application_model::Shape,
     error::{Diagnostic, Result},
-    ir::{Family, Identity, ModelPin, Span},
+    ir::{Family, Identity, ModelPin},
     model::Catalog,
-    syntax::Name,
 };
 
 pub const PROFILE: &str = "ashlar-databricks-candidate/0.1.0";
@@ -226,23 +226,19 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                 .and_then(|m| m["elements"].as_array())
                 .and_then(|es| es.iter().find(|e| e["id"] == property.logical.element))
                 .ok_or_else(|| fail("Original field is missing"))?;
-            let name = field["name"]
-                .as_str()
-                .ok_or_else(|| fail("Mapped field has no original name"))?;
-            let (identity, ty, _) = catalog
-                .field(
-                    &authored,
-                    &Name {
-                        value: name.into(),
-                        quoted: true,
-                        span: Span { start: 0, end: 0 },
-                    },
-                )
-                .map_err(|_| fail("Property is not an admitted scalar member of this record"))?;
-            if identity != property.logical
-                || field["extensions"]
-                    .as_object()
-                    .is_none_or(|e| !e.is_empty())
+            let (_, graph) = catalog
+                .member_descriptor_by_identity(&authored, &property.logical)
+                .map_err(|_| fail("Property is not an admitted member of this record"))?;
+            let descriptor = graph
+                .iter()
+                .find(|d| d.identity == property.logical)
+                .unwrap();
+            let Shape::Scalar { logical_type: ty } = &descriptor.shape else {
+                return Err(fail("Property needs an admitted recursive carrier"));
+            };
+            if field["extensions"]
+                .as_object()
+                .is_none_or(|e| !e.is_empty())
             {
                 return Err(fail("Selected field extension semantics require separately registered interpretation"));
             }

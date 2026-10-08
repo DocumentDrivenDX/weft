@@ -154,11 +154,10 @@ pub(super) fn lower(
                         "Compound application values need an admitted recursive carrier",
                     ));
                 };
-                if d.availability.as_deref() != Some("required") {
-                    return Err(fail(
-                        "WFT-CAPABILITY",
-                        "Optional application values need explicit presence lowering",
-                    ));
+                if d.availability.as_deref() == Some("absent-allowed") {
+                    lower
+                        .optional
+                        .insert((scan.clone(), serde_json::to_string(identity).unwrap()));
                 }
                 field(
                     &mut lower,
@@ -252,16 +251,35 @@ pub(super) fn lower(
             ),
             app::Expression::RelatedKeys { .. } => unreachable!(),
         };
-        outputs.push(format!(
-            "CAST({sql} AS STRING) AS {}",
-            binding::quote(&output.name)
-        ));
+        let optional = match &output.expression {
+            app::Expression::Field { scan, identity } => lower
+                .presence
+                .get(&(scan.clone(), serde_json::to_string(identity).unwrap()))
+                .map(|p| (p.clone(), identity.clone())),
+            _ => None,
+        };
+        let (sql, repr, nullable) = if let Some((present, identity)) = optional {
+            let scalar = if ty.family == Family::Boolean {
+                sql
+            } else {
+                format!("CAST({sql} AS STRING)")
+            };
+            (format!("CASE WHEN NOT ({present}) THEN to_json(named_struct('state', 'absent')) ELSE to_json(named_struct('state', 'value', 'value', {scalar})) END"),
+             Representation::Value { descriptor: identity, native_null: false }, false)
+        } else {
+            (
+                format!("CAST({sql} AS STRING)"),
+                representation(&ty),
+                ty.nullable,
+            )
+        };
+        outputs.push(format!("{sql} AS {}", binding::quote(&output.name)));
         columns.push(Column {
             position: index + 1,
             output_name: output.name.clone(),
-            representation: representation(&ty),
+            representation: repr,
             source_identities: ids,
-            nullable: ty.nullable,
+            nullable,
         });
     }
     let mut sql = format!(

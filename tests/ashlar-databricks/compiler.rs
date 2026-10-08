@@ -166,3 +166,63 @@ fn application_page_retains_authored_key_and_named_cursor() {
         .iter()
         .any(|o| o["id"] == "ashlar.candidate.keyIntegrity"));
 }
+
+fn optional_request(column: bool) -> Value {
+    let mut request = application("SELECT c.name FROM Customer c");
+    let mut document: Value =
+        serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    let field = document["modules"][0]["elements"]
+        .as_array_mut()
+        .unwrap()
+        .iter_mut()
+        .find(|e| e["id"] == "customer-name")
+        .unwrap();
+    field["nullability"] = json!("absent-allowed");
+    let raw = document.to_string();
+    let digest = sha256(raw.as_bytes());
+    request["modules"][0]["documentJson"] = json!(raw);
+    request["modules"][0]["pin"]["sha256"] = json!(digest);
+    let mut binding: Value =
+        serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["modelPins"][0]["sha256"] = json!(digest);
+    if column {
+        binding["records"][0]["kind"] = json!("nodeProjection");
+        binding["records"][0]["properties"][1]["home"] = json!({"kind":"column","value":"group_value","present":"group_present","nativeType":"STRING"});
+    }
+    let raw = binding.to_string();
+    request["target"]["bindingJson"] = json!(raw);
+    request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
+    request
+}
+
+#[test]
+fn optional_scalar_preserves_presence_envelope_in_both_owner_homes() {
+    for column in [false, true] {
+        let response = run(&optional_request(column));
+        assert_eq!(response["status"], "compiled", "{response}");
+        assert_eq!(response["columns"][0]["representation"]["kind"], "value");
+        assert_eq!(
+            response["columns"][0]["representation"]["nativeNull"],
+            false
+        );
+        assert_eq!(response["columns"][0]["nullable"], false);
+        let sql = response["sql"].as_str().unwrap();
+        assert!(sql.contains("'absent'"));
+        assert!(sql.contains("to_json(named_struct"));
+        let check = response["obligations"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|o| o["id"] == "ashlar.candidate.scalarIntegrity")
+            .unwrap()["parameters"]["checks"][0]["sql"]
+            .as_str()
+            .unwrap();
+        if column {
+            assert!(check.contains("group_present` = FALSE"));
+            assert!(check.contains("group_value` IS NULL"));
+        } else {
+            assert!(check.contains("RLIKE '^OBJECT'"));
+            assert!(check.contains("IS NULL"));
+        }
+    }
+}

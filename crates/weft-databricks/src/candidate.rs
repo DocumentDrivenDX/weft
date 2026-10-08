@@ -2,7 +2,7 @@
 mod application;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use weft_core::{
     backend::*,
     error::{Diagnostic, Result},
@@ -47,7 +47,7 @@ impl Backend for Candidate {
             .collect::<Vec<_>>();
         Ok(Manifest{backend_id:"ashlar.databricks".into(),backend_version:"0.1.0-candidate".into(),interface_version:"weft-backend/0.2.0".into(),language_profiles:languages.clone(),binding_profile:binding::PROFILE.into(),
             target_profiles:vec![TargetProfile{id:"dbsql-candidate".into(),engine:"databricks-sql".into(),engine_version:"unqualified-warehouse-release".into(),session_settings:json!({"comparison":"UTF8_BINARY","arithmetic":"ANSI exact-or-error","variantCarrier":"fixed-base-ten-exact-only"}),storage_layout_revision:"ashlar-delta/0.3".into(),publication_revision:"ashlar-resolver/0.1-candidate".into()}],
-            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:json!({"subset":"required scalar relational/application operations with admitted exact homes"}),result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+            capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id == "value.presence" { json!({"subset":"optional scalar envelopes; absent or exact value; explicit native null refuses"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
         let binding = binding::admit(c.catalog, c.binding_value)?;
@@ -247,6 +247,8 @@ struct Lower<'a> {
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
     expressions: BTreeMap<(String, String), String>,
+    optional: BTreeSet<(String, String)>,
+    presence: BTreeMap<(String, String), String>,
     parameters: Vec<ParameterSlot>,
     ctes: Vec<String>,
     checks: Vec<Value>,
@@ -258,6 +260,8 @@ impl<'a> Lower<'a> {
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
+            optional: BTreeSet::new(),
+            presence: BTreeMap::new(),
             parameters: vec![],
             ctes: vec![],
             checks: vec![],
@@ -329,7 +333,8 @@ impl<'a> Lower<'a> {
                     .ok_or_else(|| {
                         fail("WFT-BINDING", "Mapped field does not belong to its scan")
                     })?;
-                let (value, valid) = match &property.home {
+                let optional = self.optional.contains(&(scan.clone(), key.clone()));
+                let (value, valid, present) = match &property.home {
                     Home::Props { property_id } => {
                         let path = self.slot(
                             string_type(),
@@ -345,7 +350,13 @@ impl<'a> Lower<'a> {
                             Family::Integer=>format!("({schema} = 'BIGINT' OR {schema} RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND {}",numeric_guard(&scalar,&ty)),
                             Family::Decimal=>format!("({schema} = 'BIGINT' OR ({schema} RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract({schema}, ',([0-9]+)\\\\)$', 1) AS INT), 0) <= {})) AND {}",ty.facets["scale"],numeric_guard(&scalar,&ty)),
                         };
-                        (typed(&scalar, &ty), valid)
+                        let present = format!("{variant} IS NOT NULL");
+                        let valid = if optional {
+                            format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND (({variant} IS NULL) OR ({valid}))")
+                        } else {
+                            valid
+                        };
+                        (typed(&scalar, &ty), valid, present)
                     }
                     Home::Column { value, present, .. } => {
                         let column = format!("r.{}", binding::quote(value));
@@ -359,11 +370,37 @@ impl<'a> Lower<'a> {
                         if ty.family == Family::String {
                             valid.push_str(&format!(" AND instr({column}, char(0)) = 0"));
                         }
-                        (typed(&column, &ty), valid)
+                        let presence = present.as_ref().map(|p| format!("r.{}", binding::quote(p)));
+                        let valid = if optional {
+                            if let Some(p) = &presence {
+                                format!("(({p} = FALSE AND {column} IS NULL) OR ({valid}))")
+                            } else {
+                                valid
+                            }
+                        } else {
+                            valid
+                        };
+                        (
+                            typed(&column, &ty),
+                            valid,
+                            presence.unwrap_or_else(|| "TRUE".into()),
+                        )
                     }
                 };
                 let field_alias = format!("f{}", projections.len());
                 projections.push(format!("{value} AS {}", binding::quote(&field_alias)));
+                if optional {
+                    let present_alias = format!("p{}", projections.len());
+                    projections.push(format!("({present}) AS {}", binding::quote(&present_alias)));
+                    self.presence.insert(
+                        (scan.clone(), key.clone()),
+                        format!(
+                            "{}.{}",
+                            binding::quote(&scan),
+                            binding::quote(&present_alias)
+                        ),
+                    );
+                }
                 self.expressions.insert(
                     (scan.clone(), key),
                     format!("{}.{}", binding::quote(&scan), binding::quote(&field_alias)),
