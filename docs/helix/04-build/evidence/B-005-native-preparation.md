@@ -2836,3 +2836,35 @@ This establishes actual embedding behavior for the selected forward/inverse
 native-key subset. Composite relationship keys, alternate homes, broader query
 coverage and generic released composition remain B-005 work; no fresh database
 or production compatibility claim is added by this embedding run.
+
+### Original relationship props-home qualification (2026-10-07)
+
+The original unsigned-key fixture now compiles both directed HAS_RELATED and
+RELATED_KEYS reads over JSONB props homes using the same original UMF key and
+comparator definitions as the native-row fixture. Full logical plans and result
+column contracts agree across homes. This is public Rust Configuration/Compiler
+composition; no additional native Python or browser qualification is claimed.
+
+`tests/truss-postgresql/props-relationship-native.py` executes all emitted SQL
+prerequisites on PostgreSQL 17.9 before permitting result queries. Its 44 cases
+cover both directions and operations, empty owners, exact unsigned 64-bit and
+above-JavaScript-safe keys, ordered bags with duplicate edges, bounded lookahead,
+hidden source/target overflow, duplicate keys, missing keys, wrong JSON kinds,
+invalid numeric text, fractional unsigned keys and invalid edge endpoints.
+Corrupt fixtures report violations; their result SQL is not executed. Receipt:
+[B-005-props-relationship-native.json](B-005-props-relationship-native.json).
+
+The invalid-text case found an unsafe cast in target-key uniqueness SQL. Numeric
+uniqueness expressions now use the independently admitted comparator domain
+predicate to guard their casts. This mirrors source-key uniqueness and makes
+this prerequisite safe even when the target numeric domain is invalid. Captures
+for the existing native relationship paths have been regenerated. Their 14
+component, 18 inverse and 18 forward PostgreSQL cases pass again. Previous
+embedding receipts retain their original source/binary scope; refreshed Rust
+runtime full-response parity covers the changed prerequisite, but fresh Python
+and browser builds for this change have not been claimed.
+
+These are synthetic fixtures over pinned draft realization contracts. Mixed
+homes, composite endpoint keys, broader original scalar semantics and released
+registration remain B-005 work. No Truss runtime or production adoption gate is
+introduced.

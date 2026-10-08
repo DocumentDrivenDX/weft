@@ -1,0 +1,844 @@
+{
+  "scope": "Original uint64 endpoint keys over JSONB props homes, both directions; synthetic PostgreSQL fixtures, not production or embedding qualification",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "7ac0125dca612d21fdc9054ec276a604f92a17881caff220b5443a6600e6cc33",
+  "harnessSha256": "23ca2324beecc178ce323bb8c0f398d27255c50653c1db324ce827e4a86aa3c9",
+  "results": [
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "755b46c9f2da6666c8b030f41ebf22fff3cc8c1dd75481f974df4297a0b7b357"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0a230156e63e277ac99ac33470a4b89314fea14c04702bd13919781f37c17733"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c69ab71c66520552431318444dee8a3df3c3c366c1b7018303ebad8d7cf316ae"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "hidden-source-overflow",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3b498bbf6b2c6295da86164362d31c3df30e25ae69f31d874a6ec5dd1a590ecb"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f56c4fba85b6b05d97d86dde9fbb5a79fa14a88af41fe5b31cdac1099862e91b"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "missing-key",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4389c9777924d66954b904c05d6c5bded75ca7e62bf6376bf055e85d79dced7f"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "wrong-json-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b88658c829df40ff3e193f73704930573d76572e7bec534d7540020e2d7fef73"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "invalid-number",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "da107a9724893a628d7a88c6233dbf2a3f925dc959b1b2751233c9e44d91a7d6"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "fractional-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a32b9025f6373ce65ff791e4efb3ef24d85642ada50cd913d5656b3ed802abde"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d295125e6b27202f26aec1f123b84f38f07cebbb76f096da9248644e115a597e"
+    },
+    {
+      "direction": "inverse",
+      "kind": "has",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0f9d6c50310d2db17e5b1caa4d5283be2fd8acfffee650c6d59dec3685658ae1"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "4f18d3e00ef5538cff822ebaa4c4f3899edf1c0430271c14f7e9cd773de12b1d"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9342bed28f9a786891e9089e3b5188ddfcffa744dbe20e187f637e7ae4f3517c"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "c8909db8fcd1191de6b89537494f768aa3da565bcb24dcdbcc32d16340491ed8"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "hidden-source-overflow",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a4d56c59fc13abcaa67631ef530ff5f661deb087b5ee7155098e68de3ea8bada"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "42f8f2a7fd32cc673f749065708dba3d0e33324b37296c523e2a71d32a34b551"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "missing-key",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3793d1605e3ee8eff0b7b0e85a0e9d231696a1b1a59812637d56c5a176837b43"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "wrong-json-kind",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "6c76a2035555e059018b2cda32ab50691cbbf6c882dec6e80a9e0b4baf01d610"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "invalid-number",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ee3ab3642d13ec10cece93698d8ade6385c25d5016aedc94217464ca5f96458a"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "fractional-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0d018e860f51baa61910b6e418c84fee2536bb18b6f5cf8fe683dac9f0322f65"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "09afd4e94b31fbeca7a8d23509e9ca7b7ab94e222f143510d42dbd655ea50dc1"
+    },
+    {
+      "direction": "inverse",
+      "kind": "keys",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "028ae2d0757eb97cf16d06492b85f1b0b9b852f4004a4c2150b3785bc49db5bf"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7ece1fa4a9f1e4c52d03014c5fd360710819ce282462fb69b30b81b06acdfa0d"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "66b564ec0d7c3c31eef1f05bc69b03316316090ca4a28a323aa3fccdb38ec8d5"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f8d8bd0aa3c34d50759a040c15e360e936f7e4263b8c42f8639011bdaa95d3c4"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "hidden-source-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "97b2c75820bad06d3d01d0fb2655fd551dc1d898402acfcaed9fd806a08e8876"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b29e726e20115c2976b8acc19cc967e88aeb7222e2e82bf614e606c42b13e128"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "missing-key",
+      "violations": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "45cfe6cf8b6aa7b91f37a72b123811579047fbb813c6097aa42b73972d0e838e"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "wrong-json-kind",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9cdca080559fabd609d0aca5bd298d59836709d6562bf8e973df288ea80cc8be"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "invalid-number",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "dd795861bf994e816fdd7b41ea1736523f00ba697c29b2ebf0dfbd81299b2984"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "fractional-key",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "d97b1c84aefcbbd2098af289339b33cbb153312c714b2256103bb3375512e3b1"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4adb472607e4d7ac71040527c6d97ea62bcac61cd43fbcfada54a60921139d45"
+    },
+    {
+      "direction": "forward",
+      "kind": "has",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3abf46e94ea2a3318be70ddb7d2c55bcbe514b2b99d047e3be014ba8b676339f"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "fcf45fddc15540dd7d16587d067bdef1493c92f454c686b42a457c5481a11b72"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "2fdc1f20c51d9ae698fc5b1f77602d66a1567b38ca8b69eab2a1c71cf80923da"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0ce3d6c81e82fe072a790a00064b9206022b5b58e6a384dcf627bd1356fe3574"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "hidden-source-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "05d5a5f0723d4772700b345047e7de30b3d486722f9b21e283b044b4162d89b4"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb5f1f4d6348cc9748d3494c743e398b6f840df0572400db9c057488130e31ed"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "missing-key",
+      "violations": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9baf3fe9134cbd4122e82b23d82ed10c7b560e1309275641b91d35e942405e3e"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "wrong-json-kind",
+      "violations": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb1c1ab62d51ea70fce18529af2e7cd2fc1bc127e75be0ef7151ef8e33aab7e1"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "invalid-number",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "05a9f3f40b4b388c984084339eb0e42bf416485f1c96cf1ec2bb52bba2968ca4"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "fractional-key",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "1d1b2d058c986f6d693fc58abd88fb693f185bcefb2d40b09c0b4bb5ab5fced9"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e0384f5279b9a3cfa002f320e75de97828ae9d88e451570b9974bd8eef4cedec"
+    },
+    {
+      "direction": "forward",
+      "kind": "keys",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "16ef08d756907ebfcb008ff308c694987d6f54881b3e664803b3f7cb001b3ffb"
+    }
+  ]
+}

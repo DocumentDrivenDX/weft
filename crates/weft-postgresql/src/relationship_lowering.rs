@@ -86,6 +86,7 @@ pub fn lower<'a>(
     let mut checks = physical.structural_check_sql.clone();
     checks.extend(admission.integrity_checks(&binding, relationship, &mut staged)?);
     let mut ordered = Vec::new();
+    let mut uniqueness = Vec::new();
     let mut values = Vec::new();
     for field in &target.plan.order {
         let access = target
@@ -128,14 +129,18 @@ pub fn lower<'a>(
                 Location::Row(l) => l.scalar_observation().native_numeric_text,
             };
             let integrity = comparator.numeric_domain_sql(&carrier)?;
+            uniqueness.push(format!(
+                "CASE WHEN ({integrity}) THEN ({sql}) ELSE NULL END"
+            ));
             checks.push(format!("SELECT count(*) AS violations FROM {} WHERE {} AND ({integrity}) IS DISTINCT FROM TRUE",physical.source.sql,physical.source.filters.join(" AND ")));
             values.push(format!("({sql})::pg_catalog.text"));
         } else {
             values.push(sql.clone());
+            uniqueness.push(sql.clone());
         }
         ordered.push(sql);
     }
-    checks.push(format!("SELECT count(*) AS violations FROM (SELECT {} FROM {} WHERE {} GROUP BY {} HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",ordered.join(", "),physical.source.sql,physical.source.filters.join(" AND "),ordered.join(", ")));
+    checks.push(format!("SELECT count(*) AS violations FROM (SELECT {} FROM {} WHERE {} GROUP BY {} HAVING pg_catalog.count(*)>1) AS weft_related_duplicate_keys",uniqueness.join(", "),physical.source.sql,physical.source.filters.join(" AND "),uniqueness.join(", ")));
     let from = format!(
         "{} JOIN {} ON {}.id={} AND {}.type_id={}",
         edge.source,
