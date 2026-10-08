@@ -25,8 +25,14 @@ incorrect explode struct reference; it was corrected and the native run resumed
 read-only against the same publication. The quoted/backslash member-path probe
 failed. Exact dictionary lookup with explicitly binary string keys passed
 both read-only native probes and now replaces member-path construction.
-General structured-name coverage still needs its separate native regression. Depth/node boundaries,
-compound embeddings and actual host enforcement remain unfinished.
+The separate read-only native controls now pass six cases: escaped/Unicode/case/
+trailing-space member names, unknown members, exactly 100000 nodes, 100001-node
+refusal, depth below 128 and depth-128 refusal. These use a synthetic owner relation;
+they do not claim publication qualification. Complete receipts are in
+B-006-compound-boundaries-native/. Compound embeddings and actual host enforcement
+remain unfinished. A test-only buffered host fixture passes 49 independent phase/
+transport/unknown-meaning controls; its actual native transport driver is prepared
+but has not completed. B-006-host-before.log retains the missing-helper baseline.
 
 Native recursive syntax and limits were checked against the official
 [Databricks CTE reference](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-syntax-qry-select-cte),
