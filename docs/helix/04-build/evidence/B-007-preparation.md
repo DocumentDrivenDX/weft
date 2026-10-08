@@ -136,3 +136,13 @@ B-007 changes thus far affect tests, development dependencies and evidence,
 not production compiler source. This is fresh host execution of saved artifacts,
 not a new build or fresh native database execution. Broader runtime/release
 qualification remains open.
+
+A fresh real Chromium 148.0.7778.96 / Playwright 1.62.1 run passes all 463
+Ashlar saved-artifact comparisons against native Python byte responses. It
+reuses the final B-006 WASM SHA-256
+73cf013ac6b14e07222f81201820cc049975c04fa93e3db8f37813e0712bc046.
+The harness checks browser imports, no Node globals, runtime network refusal
+and wrapper behavior. B-007-browser/ retains hashes, runtime versions, full
+summary and log. The first sandbox browser launch terminated with SIGTRAP/EPERM;
+the authorized host launch succeeded. No unavailable run is counted as passing.
+This is fresh browser execution, not a new build or native database rerun.
