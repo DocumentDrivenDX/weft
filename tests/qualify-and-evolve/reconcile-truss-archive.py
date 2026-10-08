@@ -14,7 +14,7 @@ reports=json.loads(raw);summary=json.loads((BASE/'summary.json').read_text())
 corpus=ROOT/'tests/truss-postgresql/fixtures/application-cases.json'
 assert summary['status']=='passed' and summary['cases']==len(reports)==76
 assert hashlib.sha256(corpus.read_bytes()).hexdigest()==summary['corpusSha256']
-assert hashlib.sha256((ROOT/'tests/truss-postgresql/application-native.py').read_bytes()).hexdigest()==summary['harnessSha256']
+assert hashlib.sha256((BASE/'harness.py').read_bytes()).hexdigest()==summary['harnessSha256']
 cases=json.loads(corpus.read_text());index={c['id']:c for c in cases}
 assert len(index)==len(cases)==len(reports) and len({r['id'] for r in reports})==len(reports)
 assert set(index)=={r['id'] for r in reports}

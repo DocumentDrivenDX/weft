@@ -34,7 +34,32 @@
         "archiveBytes": 6201567,
         "scope": "Retained archive/pin/artifact consistency and recorded embedding parity; no new native execution or independent row oracle."
       },
-      "sourceSha256": "b7e434e90f88118fec696ad3f1affff63a90865ad8998f9220d780237f3276b0"
+      "sourceSha256": "386ef5eb81b401689e029b3ff38db5d806326f99903c15106724e51d1da1cc88"
+    },
+    {
+      "component": "audit-truss-sessions.py",
+      "result": {
+        "status": "passed",
+        "cases": 76,
+        "scope": "Retained native session/result reconciliation; no new engine execution or support promotion."
+      },
+      "sourceSha256": "6aeb638996975597c02497a1e023798e12bac997c2b325456971f8e909aaae1e"
+    },
+    {
+      "component": "truss-session-controls.py",
+      "result": {
+        "status": "passed",
+        "corruptionsRejected": 6,
+        "controls": [
+          "missing",
+          "duplicate",
+          "rows",
+          "session",
+          "sql",
+          "archive"
+        ]
+      },
+      "sourceSha256": "98ff76b58b112dafbfb1463eeedf197577392537280c21283963251c91306296"
     },
     {
       "component": "audit-native-profile-scopes.py",
@@ -48,7 +73,7 @@
         "distinctArtifactScopes": 21,
         "independentRowComparisons": 76,
         "orderedComparisons": 65,
-        "harnessSha256": "cb8264bd4e2be7864b74e62efcee883974d8ef28f7fbacd0bad36502d2265a46",
+        "harnessSha256": "63c484a6203e78fcce9820cfa7243024ea16dafbbdbd169895d404b8c9f0c41d",
         "scopes": [
           {
             "profile": {

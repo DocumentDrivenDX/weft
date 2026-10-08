@@ -8,6 +8,8 @@ components=[
  ('unsigned-reconcile-controls.py','status','controls',15),
  ('reconcile-unsigned-boundaries.py','status','cases',8),
  ('reconcile-truss-archive.py','status','cases',76),
+ ('audit-truss-sessions.py','status','cases',76),
+ ('truss-session-controls.py','status','corruptionsRejected',6),
  ('audit-native-profile-scopes.py','status','independentRowComparisons',76),
  ('native-scope-controls.py','status','corruptionsRejected',11),
  ('audit-truss-support-reports.py','status','casesAudited',76),
