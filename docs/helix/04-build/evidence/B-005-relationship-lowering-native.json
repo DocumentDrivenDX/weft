@@ -1,0 +1,204 @@
+{
+  "scope": "Original inverse relationship subquery lowering over native uint64 target keys; not public compiler/embedding qualification or production compatibility",
+  "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+  "captureSha256": "3c18e516556b5456b2e618bfb84a5551c9e611723aa2c7da8b37d1f1172c5699",
+  "harnessSha256": "aa8d354a887e764adc5ae234aac644f6bb9399ce71562ea8dba4536316d88037",
+  "results": [
+    {
+      "kind": "has",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "9aa72773d5046f6c6636b13e42d8bd36bcd6cdd69fab390a4b6e6a63b1344e6f"
+    },
+    {
+      "kind": "has",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "75f28634de5ad0f39a9082ddc2cce209f457542511d5413e047ab9dcb8923cc1"
+    },
+    {
+      "kind": "has",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "684ff71e5fdbaaf4b0a75f57b8299dad7abb1192198d464eced11884ed3a98ac"
+    },
+    {
+      "kind": "has",
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e4789c4fc6336cc0239a9e66f508c99250983cc7876f1ea0a66f3c027e114173"
+    },
+    {
+      "kind": "has",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "94ae1d8c2a61603258dd16eb0273d11a4ab087369128dc8b7c1e5e21f0554979"
+    },
+    {
+      "kind": "has",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "cf39d6001381d98cdf839c8198be0c5e6bbcb2e0521825b36a248f1bdb1da0d1"
+    },
+    {
+      "kind": "has",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "b9d969bca466dc6d7a3b1dd30bc48233bc1073a03dab93a109377fa53fdb87fe"
+    },
+    {
+      "kind": "keys",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "0159989dc02a8588a8fa718a5a92dafd1a9ed85edb566762cc8c821586c1f310"
+    },
+    {
+      "kind": "keys",
+      "case": "exact-bag-lookahead",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "6fd815a4b1f7557a4c17543f2b4267cf444484b8c506809e15ac660937226308"
+    },
+    {
+      "kind": "keys",
+      "case": "hidden-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f064b36b3690756499fc4eaeb8b57527a9c344060b3e63c7005c0351fb1fac37"
+    },
+    {
+      "kind": "keys",
+      "case": "wrong-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "dacaa1b2964affba37a1c00db0d92f54127bced7b5da7c8f114960b5101bcf67"
+    },
+    {
+      "kind": "keys",
+      "case": "duplicate-key",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a909dcd90dcca82614fd003ae9df0fbee6821f4dccaf3de790865a36cea5b4d1"
+    },
+    {
+      "kind": "keys",
+      "case": "dangling-target",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "4679d9777672d810dddeeccb4f554d0e09aa261a28919c6d0230c54fbdd44438"
+    },
+    {
+      "kind": "keys",
+      "case": "wrong-endpoint-type",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3073837c0ee6a69e22dacf37c6263a22b77ce53d487009795c15d2943cad82dc"
+    }
+  ]
+}

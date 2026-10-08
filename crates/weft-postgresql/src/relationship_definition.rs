@@ -339,6 +339,84 @@ impl RelationshipAdmission {
         )?;
         Ok(PreparedTarget { plan, prepared })
     }
+    /// Observe all selected relationship edges and owners independently of
+    /// result filters/limits. Hosts must enforce zero violations before results.
+    pub fn integrity_checks(
+        &self,
+        binding: &Admission,
+        read: &RelationshipRead,
+        parameters: &mut Parameters,
+    ) -> Result<Vec<String>> {
+        if sha256(binding.original_json.as_bytes()) != self.binding_sha256
+            || serde_json::to_value(read).map_err(|_| fail("Relationship encoding refused"))?
+                != self.read_json
+        {
+            return Err(fail("Relationship integrity substitutes original cut"));
+        }
+        let mut staged = parameters.clone();
+        let rel = staged.catalog(
+            crate::CatalogDomain::Int,
+            &self.relationship_id,
+            json!({"relationshipGuard":"discriminator"}),
+        )?;
+        let from = staged.catalog(
+            crate::CatalogDomain::Int,
+            &self.from_type,
+            json!({"relationshipGuard":"from-type"}),
+        )?;
+        let to = staged.catalog(
+            crate::CatalogDomain::Int,
+            &self.to_type,
+            json!({"relationshipGuard":"to-type"}),
+        )?;
+        let object = crate::qualified(
+            &Identifier::new(binding.value["basis"]["namespace"].as_str().unwrap())?,
+            &Identifier::new("object")?,
+        );
+        let e = "weft_guard_edge";
+        let f = "weft_guard_from";
+        let t = "weft_guard_to";
+        let endpoint=format!("SELECT count(*) AS violations FROM {} {e} LEFT JOIN {object} {f} ON {f}.id={e}.{} AND {f}.type_id={e}.{} LEFT JOIN {object} {t} ON {t}.id={e}.{} AND {t}.type_id={e}.{} WHERE {e}.{}={rel}::pg_catalog.int4 AND ({e}.{} IS DISTINCT FROM {from}::pg_catalog.int4 OR {e}.{} IS DISTINCT FROM {to}::pg_catalog.int4 OR {f}.id IS NULL OR {t}.id IS NULL)",self.relation,self.from_id.sql(),self.from_type_column.sql(),self.to_id.sql(),self.to_type_column.sql(),self.relationship_type.sql(),self.from_type_column.sql(),self.to_type_column.sql());
+        let multiplicity = if read.inverse {
+            &read.source_multiplicity
+        } else {
+            &read.target_multiplicity
+        };
+        let count_type = LogicalType {
+            family: Family::Integer,
+            nullable: false,
+            facets: json!({"integerWidth":{"bits":64,"signed":false}}),
+        };
+        let minimum = staged.push(
+            count_type.clone(),
+            multiplicity["min"]
+                .as_u64()
+                .ok_or_else(|| fail("Original minimum multiplicity missing"))?
+                .to_string(),
+            json!({"relationshipGuard":"minimum"}),
+        )?;
+        let mut domain = format!(
+            "pg_catalog.count({e}.{}) < {minimum}::pg_catalog.numeric",
+            self.from_id.sql()
+        );
+        if multiplicity["max"] != "*" {
+            let maximum = staged.push(
+                count_type,
+                multiplicity["max"]
+                    .as_u64()
+                    .ok_or_else(|| fail("Original maximum multiplicity missing"))?
+                    .to_string(),
+                json!({"relationshipGuard":"maximum"}),
+            )?;
+            domain.push_str(&format!(
+                " OR pg_catalog.count({e}.{}) > {maximum}::pg_catalog.numeric",
+                self.from_id.sql()
+            ));
+        }
+        let cardinality=format!("SELECT count(*) AS violations FROM (SELECT {f}.id FROM {object} {f} LEFT JOIN {} {e} ON {e}.{}={f}.id AND {e}.{}={f}.type_id AND {e}.{}={rel}::pg_catalog.int4 AND {e}.{}={to}::pg_catalog.int4 WHERE {f}.type_id={from}::pg_catalog.int4 GROUP BY {f}.id,{f}.type_id HAVING {domain}) AS weft_guard_cardinality",self.relation,self.from_id.sql(),self.from_type_column.sql(),self.relationship_type.sql(),self.to_type_column.sql());
+        *parameters = staged;
+        Ok(vec![endpoint, cardinality])
+    }
     /// Direction and binding cut must match the admitted original traversal.
     /// Correlation uses native object IDs, never logical key tokens.
     pub fn correlate(

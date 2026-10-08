@@ -2592,3 +2592,50 @@ All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
 (`/private/tmp/weft-scoped-target-full-tests.log`). Full `HAS_RELATED` /
 `RELATED_KEYS` result and preflight assembly remains required B-005 work; no
 new public relationship or embedding support is claimed by target preparation.
+
+## Original relationship subquery lowering (2026-10-07)
+
+`relationship_lowering::lower` now composes the original admitted directed edge
+and separately scoped target-key access into existential lookup and bounded key
+list expressions. Each target key component requires its original selected
+comparator, exact type and key/equality operation; bounded lists also require
+ordering. Target numeric domain and key uniqueness checks observe complete
+selected target owners independently of the result filter or lookahead. Native
+key carriers remain exact text inside the tuple JSON arrays.
+
+`HAS_RELATED` compares every target key component against the exact typed
+literal/parameter tuple and produces EXISTS, preserving source cardinality.
+Named parameters retain one exact value/type slot and original name/span.
+`RELATED_KEYS` supports the frontend's 1..1000 bound, orders by the complete
+key, preserves duplicate-edge tuple multiplicity and probes bound+1 rows. Bound,
+probe and multiplicity values use typed parameter slots. Result lists contain
+`items` and an exact `truncated` marker; empty lists have false truncation.
+Failed key arity and invalid bounds leave caller parameters unchanged.
+
+Original relationship admission additionally emits full selected-edge endpoint
+checks and per-owner multiplicity checks independent of query filters/limits.
+The endpoint check refuses missing native owners and mismatched endpoint types
+for the selected relationship. Cardinality uses the authored target multiplicity
+for forward reads and source multiplicity for inverse reads. Numeric min/max
+limits retain unsigned text rather than passing through floating point.
+
+[14 PostgreSQL 17.9 cases](B-005-relationship-lowering-native.json), executed by
+`tests/truss-postgresql/relationship-lowering-native.py`, cover original inverse
+Orders-to-Customer lookup/list expressions with independently admitted native
+uint64 target properties. Exact cases retain uint64 maximum and
+`9007199254740993`, numeric ordering, duplicate-edge bag multiplicity, true
+lookahead truncation and empty results. Hidden unconnected target overflow,
+wrong codec, duplicate target logical keys, dangling targets and wrong endpoint
+types each fail at least one prerequisite before the harness executes the result
+query. The selected fixture multiplicities are 0..*; finite min/max branches
+still require separate native qualification. Capture regeneration sets absolute
+`WEFT_ORIGINAL_RELATIONSHIP_LOWERING_CAPTURE` when running the original unsigned
+property test.
+
+All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-relationship-lowering-full-tests.log`); formatting and HELIX
+artifact checks pass. This is reusable subquery lowering, not yet public original
+Backend SELECT integration. The outer compiler still needs to incorporate these
+expressions/checks and qualify both directions, composite keys, both storage
+homes and real embedding ports. Hosts remain responsible for complete read
+context and prerequisite enforcement. No production compatibility is claimed.

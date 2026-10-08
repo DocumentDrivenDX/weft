@@ -1322,8 +1322,23 @@ mod tests {
             node: &weft_core::ir::Expression,
             _: &[String],
             access: Option<&crate::registered_access::Access<'_>>,
-            _: &mut crate::Parameters,
+            parameters: &mut crate::Parameters,
         ) -> weft_core::error::Result<String> {
+            if let weft_core::ir::Expression::Literal {
+                value,
+                logical_type,
+                span,
+            } = node
+            {
+                return Ok(format!(
+                    "{}::pg_catalog.numeric",
+                    parameters.push(
+                        logical_type.clone(),
+                        value.clone(),
+                        json!({"literalSpan":span})
+                    )?
+                ));
+            }
             let weft_core::ir::Expression::Field { .. } = node else {
                 return Err(weft_core::error::Diagnostic::new(
                     "WFT-CAPABILITY",
@@ -1487,6 +1502,75 @@ mod tests {
                 .prepared
                 .verify_context(&target_context, &parameters)
                 .unwrap();
+            let key = vec![weft_core::application_ir::Value::Parameter {
+                name: "customer_id".into(),
+                value: "9007199254740993".into(),
+                logical_type: logical.clone(),
+                span: Span { start: 0, end: 0 },
+            }];
+            let mut captured = Vec::new();
+            for (kind, operation) in [
+                ("has", crate::relationship_lowering::Read::HasRelated(&key)),
+                ("keys", crate::relationship_lowering::Read::RelatedKeys(2)),
+            ] {
+                let mut params = crate::Parameters::default();
+                let lowered = crate::relationship_lowering::lower(
+                    &relationship,
+                    &row_context,
+                    &read,
+                    &crate::Identifier::new("o").unwrap(),
+                    operation,
+                    &endpoint_records,
+                    &row_properties,
+                    &comparisons,
+                    4,
+                    &mut params,
+                    row_numeric_native,
+                )
+                .unwrap();
+                assert!(!lowered.structural_checks.is_empty());
+                let checks: Vec<_> = lowered
+                    .structural_checks
+                    .iter()
+                    .cloned()
+                    .chain(lowered.payload_checks.iter().map(|c| c.sql.clone()))
+                    .collect();
+                captured.push(json!({"kind":kind,"sql":format!("SELECT o.id::pg_catalog.text AS owner, {} AS related FROM pg_temp.object o WHERE o.type_id=-2 ORDER BY o.id",lowered.expression),"checks":checks,"parameters":params.into_slots(),"codecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()}));
+            }
+            if let Ok(path) = std::env::var("WEFT_ORIGINAL_RELATIONSHIP_LOWERING_CAPTURE") {
+                std::fs::write(path, serde_json::to_vec_pretty(&captured).unwrap()).unwrap();
+            }
+            let mut failed = crate::Parameters::default();
+            assert!(crate::relationship_lowering::lower(
+                &relationship,
+                &row_context,
+                &read,
+                &crate::Identifier::new("o").unwrap(),
+                crate::relationship_lowering::Read::RelatedKeys(0),
+                &endpoint_records,
+                &row_properties,
+                &comparisons,
+                4,
+                &mut failed,
+                row_numeric_native
+            )
+            .is_err());
+            assert!(failed.clone().into_slots().is_empty());
+            assert!(crate::relationship_lowering::lower(
+                &relationship,
+                &row_context,
+                &read,
+                &crate::Identifier::new("o").unwrap(),
+                crate::relationship_lowering::Read::HasRelated(&[]),
+                &endpoint_records,
+                &row_properties,
+                &comparisons,
+                4,
+                &mut failed,
+                row_numeric_native
+            )
+            .is_err());
+            assert!(failed.into_slots().is_empty());
             let mut wrong = read.clone();
             wrong.target_key.id = "wrong".into();
             let before = serde_json::to_value(parameters.clone().into_slots()).unwrap();
