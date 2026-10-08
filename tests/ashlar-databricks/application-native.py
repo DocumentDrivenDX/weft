@@ -9,7 +9,10 @@ OUT=Path(os.environ['WEFT_ASHLAR_EVIDENCE_OUTPUT'])
 FIXTURE=Path(os.environ['WEFT_ASHLAR_COLUMNS_FIXTURE'])
 c=Client(OUT);outcomes=[]
 warehouse_counts=os.environ.get('WEFT_ASHLAR_WAREHOUSE_COUNTS')=='1'
+warehouse_application=os.environ.get('WEFT_ASHLAR_WAREHOUSE_APPLICATION')=='1'
+warehouse_capture=warehouse_counts or warehouse_application
 warehouse_identities=set()
+identity_captures=[]
 binary=Path(os.environ['WEFT_ASHLAR_COMPILER']);binary_sha=hashlib.sha256(binary.read_bytes()).hexdigest()
 def execute(identifier,request,expected,key_check=False):
     process=subprocess.run([str(binary)],input=json.dumps(request),text=True,capture_output=True,check=True)
@@ -20,16 +23,29 @@ def execute(identifier,request,expected,key_check=False):
     for obligation in integrity:
         for index,check in enumerate(obligation['parameters']['checks']):
             assert c.sql(identifier+'-'+obligation['id']+'-'+str(index),check['sql'],parameters)==[['0']]
-    statement=capture(artifact['sql']) if warehouse_counts else artifact['sql']
+    statement=capture(artifact['sql']) if warehouse_capture else artifact['sql']
     actual=c.sql(identifier+'-user-query',statement,parameters)
     metadata=c.records[-1]['response']['manifest']['schema']['columns']
-    if warehouse_counts:
-        assert actual and metadata[0]['name']=='__weft_warehouse' and metadata[0]['type_name']=='STRING'
-        for row in actual:
-            identity=json.loads(row[0])
+    if warehouse_capture:
+        assert metadata[0]['name']=='__weft_warehouse' and metadata[0]['type_name']=='STRING'
+        if actual:
+            identities=[row[0] for row in actual]
+            method='same-statement'
+        else:
+            assert warehouse_application,'Count-only queries must return their global zero row'
+            probe=c.sql(identifier+'-empty-warehouse-probe',"SELECT to_json(current_version(), map('ignoreNullFields','false')) AS __weft_warehouse")
+            assert len(probe)==1 and len(probe[0])==1
+            identities=[probe[0][0]]
+            method='separate-probe-after-empty-query'
+        case_identities=set()
+        for encoded in identities:
+            identity=json.loads(encoded)
             assert set(identity)=={'dbr_version','dbsql_version','u_build_hash','r_build_hash'} and identity['dbr_version'] is None
             assert all(isinstance(identity[k],str) and identity[k] for k in ['dbsql_version','u_build_hash','r_build_hash'])
             warehouse_identities.add(json.dumps(identity,sort_keys=True))
+            case_identities.add(json.dumps(identity,sort_keys=True))
+        assert len(case_identities)==1
+        identity_captures.append(dict(id=identifier,method=method,warehouse=json.loads(next(iter(case_identities)))))
         actual=[row[1:] for row in actual];metadata=metadata[1:]
     assert actual==expected,(identifier,actual,expected)
     assert [(x['name'],x['type_name']) for x in metadata]==[(x['outputName'],'STRING') for x in artifact['columns']]
@@ -86,6 +102,7 @@ for bits in [8,64]:
                 assert accumulated==[[name,str(rank),'true'] for name,rank in ordered]
 assert hashlib.sha256(binary.read_bytes()).hexdigest()==binary_sha,'Compiler changed during native execution'
 if warehouse_counts:assert len(outcomes)==32 and len(warehouse_identities)==1
-summary=dict(warehouseIdentity=json.loads(next(iter(warehouse_identities))) if warehouse_counts else None,warehouseLinkedCountCases=len(outcomes) if warehouse_counts else 0,state='passed',cases=len(outcomes),outcomes=outcomes,compilerBinarySha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),transportSha256=hashlib.sha256((Path(__file__).parent/'native_transport.py').read_bytes()).hexdigest(),qualification=('Warehouse/build-linked count-only corpus; keyset/entity pages excluded from this run. ' if warehouse_counts else '')+'Registered 0.2 compiler and native required-scalar entity projection, exact bag/group/global counts and single/composite authored-key pages across four native/JSON homes and signed8/64. Same retained synthetic snapshots; no live policy/pin authority, optional/compound/related values, embedding or production qualification.')
+if warehouse_application:assert len(outcomes)==112 and len(warehouse_identities)==1
+summary=dict(warehouseIdentity=json.loads(next(iter(warehouse_identities))) if warehouse_capture else None,warehouseIdentityCaptures=identity_captures,warehouseLinkedCountCases=len(outcomes) if warehouse_counts else 0,warehouseApplicationCases=len(outcomes) if warehouse_application else 0,state='passed',cases=len(outcomes),outcomes=outcomes,compilerBinarySha256=binary_sha,harnessSha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),transportSha256=hashlib.sha256((Path(__file__).parent/'native_transport.py').read_bytes()).hexdigest(),qualification=('Warehouse/build-linked count-only corpus; keyset/entity pages excluded from this run. ' if warehouse_counts else '')+('Nonempty application results capture warehouse identity in the query; empty pages use a separately labeled probe after execution, not same-statement identity evidence. ' if warehouse_application else '')+'Registered 0.2 compiler and native required-scalar entity projection, exact bag/group/global counts and single/composite authored-key pages across four native/JSON homes and signed8/64. Same retained synthetic snapshots; no live policy/pin authority, optional/compound/related values, embedding or production qualification.')
 (OUT/'summary.json').write_text(json.dumps(summary,indent=2,ensure_ascii=False)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k!='outcomes'},indent=2))

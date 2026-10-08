@@ -19,7 +19,7 @@
     },
     {
       "path": "tests/ashlar-databricks/application-native.py",
-      "sha256": "42295c2b0f4f3e4f8be1d2164e4653f0a6c0798dae513b8d0135df8b9277a7b5"
+      "sha256": "b85669581f6db7c0682bbe0e0c3845e9033a4228c369711bc7dabdad857d68b2"
     }
   ],
   "casesReconciled": [
