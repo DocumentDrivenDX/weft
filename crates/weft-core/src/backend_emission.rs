@@ -307,6 +307,31 @@ mod tests {
         }
     }
     #[test]
+    fn related_result_metadata_preserves_authored_key_and_bound() {
+        let cases:serde_json::Value=serde_json::from_str(include_str!("../../../tests/application/fixtures/cases.json")).unwrap();
+        let req=&cases.as_array().unwrap().iter().find(|c|c["id"]=="related-page").unwrap()["request"];
+        let modules=serde_json::from_value(req["modules"].clone()).unwrap();
+        let (_,mut p)=crate::prepare_and_resolve_application(req["sql"].as_str().unwrap(),modules,Default::default(),None).unwrap();
+        p.outputs.retain(|o|matches!(o.expression,crate::application_ir::Expression::RelatedKeys{..}));
+        assert_eq!(p.outputs.len(),1);
+        let crate::application_ir::Expression::RelatedKeys{relationship:r,bound,..}=&p.outputs[0].expression else {unreachable!()};
+        let selection=Selection{records:vec![r.from.clone(),r.to.clone()],..Default::default()};
+        let baseline=Emission{sql:"SELECT fixture".into(),parameters:vec![],obligations:vec![],columns:vec![Column{position:1,output_name:p.outputs[0].name.clone(),representation:Representation::RelatedKeys{relationship:r.identity.clone(),key:r.target_key.clone(),bound:*bound},source_identities:vec![r.from.clone()],nullable:false}]};
+        validate(Plan::V02(&p),&baseline,&selection,&[]).unwrap();
+        for mode in 0..7 {
+            let mut e=baseline.clone();
+            if mode==5 {e.columns[0].nullable=true;}
+            else if mode==6 {e.columns[0].representation=Representation::Value{descriptor:r.from.clone(),native_null:false};}
+            else {
+                let Representation::RelatedKeys{relationship,key,bound}=&mut e.columns[0].representation else {unreachable!()};
+                match mode {0=>relationship.revision="wrong".into(),1=>*bound+=1,2=>key.id="wrong".into(),3=>key.fields.clear(),4=>key.types.clear(),_=>unreachable!()}
+            }
+            let error=validate(Plan::V02(&p),&e,&selection,&[]).unwrap_err();
+            assert_eq!(error.code,"WFT-EMIT");
+            assert_eq!(error.message,"Result representation changes logical type, presence, relationship key or exact numeric decoding","mode {mode}");
+        }
+    }
+    #[test]
     fn numeric_results_require_exact_text_decoders() {
         let t = LogicalType {
             family: Family::Integer,

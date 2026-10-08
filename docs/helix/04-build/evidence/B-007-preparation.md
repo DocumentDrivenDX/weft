@@ -505,3 +505,8 @@ B-007-parameter-domain-branches/ retains twenty refusal and six accepted
 parameter validation assertions. Exact diagnostics cover lexical/domain
 guards; signed 8-bit endpoints, decimal upper bound, canonical booleans, and
 Unicode pass. This named unit test does not claim target execution.
+
+B-007-related-representation/ retains an accepted relationship metadata
+baseline and seven passing corruption refusals: revision, bound, key identity,
+fields, types, nullability, and representation kind. The test derives authored
+key metadata from the resolved application fixture; no native execution claim.
