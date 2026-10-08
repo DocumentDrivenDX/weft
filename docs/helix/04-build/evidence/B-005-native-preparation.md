@@ -2890,3 +2890,22 @@ fractional unsigned keys, dangling endpoints and wrong endpoint types. Receipt:
 [B-005-mixed-relationship-native.json](B-005-mixed-relationship-native.json).
 No native Python/browser or production claim is added. Composite endpoint keys
 and broader original scalar semantics remain open B-005 requirements.
+
+### Independent composite endpoint admission (2026-10-07)
+
+`relationship_definition::composite_tests::independent_composite_endpoint_keys_preserve_order_and_refuse_substitution`
+authors three original model/binding cuts: source/target key arities 2/1, 1/2
+and 2/3. Component order deliberately differs from record member order; the
+cases include string, exact unsigned integer and decimal types. Source documents,
+record definitions and key definitions are re-pinned from their actual authored
+bytes before original Record and Relationship admission.
+
+All six directed reads preserve the independently authored source and target key
+identity order. Each produces exactly three typed catalog slots for physical
+edge correlation, independent of logical key arity. For each read, substitutions
+of either relationship endpoint's ordered storage-property list and either
+resolved key are refused. Duplicate storage-property components refuse during
+binding parsing; reversed lists refuse during original admission. This adds a
+behavioral Rust regression, not native composite result or embedding evidence.
+Public SQL lowering and PostgreSQL execution of composite relationship keys
+remain open and must not be inferred from this admission result.

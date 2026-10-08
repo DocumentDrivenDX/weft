@@ -891,3 +891,250 @@ mod finite_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod composite_tests {
+    use super::*;
+    use base64::{engine::general_purpose::STANDARD, Engine};
+
+    #[test]
+    fn independent_composite_endpoint_keys_preserve_order_and_refuse_substitution() {
+        let cases: Vec<Value> = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        let fixture = cases
+            .iter()
+            .find(|c| c["id"] == "related-page-props")
+            .unwrap();
+        for (source_fields, target_fields) in [
+            (vec!["customer-name", "customer-id"], vec!["order-id"]),
+            (vec!["customer-id"], vec!["order-customer", "order-id"]),
+            (
+                vec!["customer-name", "customer-id"],
+                vec!["order-total", "order-id", "order-customer"],
+            ),
+        ] {
+            let mut inputs: Vec<weft_core::model::ModuleInput> =
+                serde_json::from_value(fixture["request"]["modules"].clone()).unwrap();
+            let mut document = checked_json(&inputs[0].document_json).unwrap();
+            for (record, fields) in [(0, &source_fields), (1, &target_fields)] {
+                document["modules"][0]["elements"][record]["keys"][0]["fields"] = json!(fields
+                    .iter()
+                    .map(|id| json!({"module":"sales","element":id}))
+                    .collect::<Vec<_>>());
+            }
+            inputs[0].document_json = document.to_string();
+            inputs[0].pin.sha256 = sha256(inputs[0].document_json.as_bytes());
+            let catalog = Catalog::prepare(inputs).unwrap();
+            let mut value = checked_json(
+                fixture["request"]["target"]["bindingJson"]
+                    .as_str()
+                    .unwrap(),
+            )
+            .unwrap();
+            let rewrite = |artifact: &mut Value, bytes: &[u8]| {
+                artifact["bytesBase64"] = json!(STANDARD.encode(bytes));
+                artifact["sha256"] = json!(sha256(bytes));
+            };
+            for group in ["entities", "properties", "relationships"] {
+                for mapped in value[group].as_array_mut().unwrap() {
+                    rewrite(&mut mapped["source"], document.to_string().as_bytes());
+                }
+            }
+            for (record, fields) in [(0, &source_fields), (1, &target_fields)] {
+                rewrite(
+                    &mut value["entities"][record]["acceptedDefinition"],
+                    document["modules"][0]["elements"][record]
+                        .to_string()
+                        .as_bytes(),
+                );
+                rewrite(
+                    &mut value["keys"][record]["acceptedDefinition"],
+                    document["modules"][0]["elements"][record]["keys"][0]
+                        .to_string()
+                        .as_bytes(),
+                );
+                let ordered: Vec<_> = fields
+                    .iter()
+                    .map(|id| {
+                        value["properties"]
+                            .as_array()
+                            .unwrap()
+                            .iter()
+                            .find(|p| p["logical"]["element"] == *id)
+                            .unwrap()["propertyId"]
+                            .clone()
+                    })
+                    .collect();
+                value["keys"][record]["orderedPropertyIds"] = json!(ordered);
+                value["relationships"][0][if record == 0 {
+                    "sourceOrderedPropertyIds"
+                } else {
+                    "targetOrderedPropertyIds"
+                }] = json!(ordered);
+            }
+            let profile = value["bindingProfileId"].as_str().unwrap().to_string();
+            let binding = Admission::parse(&value.to_string(), &profile).unwrap();
+            let inventory = OriginalArtifact {
+                identity: value["basis"]["layoutInventory"]["identity"]
+                    .as_str()
+                    .unwrap()
+                    .into(),
+                bytes: binding.artifacts["/basis/layoutInventory"].clone(),
+            };
+            let relations = BTreeMap::from([
+                ("objects".into(), "object".into()),
+                ("edges".into(), "edge".into()),
+            ]);
+            let columns: BTreeMap<_, _> = [
+                ("type", "objects", "type_id"),
+                ("rel", "edges", "rel_type_id"),
+                ("src-id", "edges", "source_id"),
+                ("src-type", "edges", "source_type"),
+                ("dst-id", "edges", "target_id"),
+                ("dst-type", "edges", "target_type"),
+            ]
+            .into_iter()
+            .map(|(id, relation, name)| {
+                (
+                    id.into(),
+                    Column {
+                        relation_identity: relation.into(),
+                        name: name.into(),
+                    },
+                )
+            })
+            .collect();
+            let records: BTreeMap<_, _> = (0..2)
+                .map(|index| {
+                    let r = RecordAdmission::admit(
+                        &binding,
+                        index,
+                        &catalog,
+                        crate::record_definition::Selection {
+                            inventory: &inventory,
+                            relation_identity: "objects",
+                            discriminator_identity: "type",
+                            relations: &relations,
+                            columns: &columns,
+                        },
+                    )
+                    .unwrap();
+                    (serde_json::to_string(r.identity()).unwrap(), r)
+                })
+                .collect();
+            let select = || Selection {
+                profile: &value["relationships"][0]["relationshipProfile"],
+                inventory: &inventory,
+                relation_identity: "edges",
+                relations: &relations,
+                columns: &columns,
+                relationship_type: "rel",
+                source_id: "src-id",
+                source_type: "src-type",
+                target_id: "dst-id",
+                target_type: "dst-type",
+            };
+            for (owner_name, read_name, inverse) in
+                [("Customer", "orders", false), ("Orders", "customer", true)]
+            {
+                let name = |s: &str| Name {
+                    value: s.into(),
+                    quoted: true,
+                    span: Span { start: 0, end: 0 },
+                };
+                let owner = catalog.record(None, &name(owner_name)).unwrap();
+                let read = catalog.relationship_read(&owner, &name(read_name)).unwrap();
+                let (expected_source, expected_target) = if inverse {
+                    (&target_fields, &source_fields)
+                } else {
+                    (&source_fields, &target_fields)
+                };
+                assert_eq!(
+                    read.source_key
+                        .fields
+                        .iter()
+                        .map(|i| i.element.as_str())
+                        .collect::<Vec<_>>(),
+                    *expected_source
+                );
+                assert_eq!(
+                    read.target_key
+                        .fields
+                        .iter()
+                        .map(|i| i.element.as_str())
+                        .collect::<Vec<_>>(),
+                    *expected_target
+                );
+                let admission =
+                    RelationshipAdmission::admit(&binding, 0, &catalog, &read, &records, select())
+                        .unwrap();
+                let mut slots = Parameters::default();
+                admission
+                    .correlate(
+                        &binding,
+                        &read,
+                        &Identifier::new("edge_alias").unwrap(),
+                        &Identifier::new("source_alias").unwrap(),
+                        &Identifier::new("id").unwrap(),
+                        &Identifier::new("type_id").unwrap(),
+                        &mut slots,
+                    )
+                    .unwrap();
+                assert_eq!(slots.into_slots().len(), 3);
+                for role in ["sourceOrderedPropertyIds", "targetOrderedPropertyIds"] {
+                    let mut changed = value.clone();
+                    let fields = changed["relationships"][0][role].as_array_mut().unwrap();
+                    if fields.len() > 1 {
+                        fields.reverse();
+                    } else {
+                        fields.push(fields[0].clone());
+                    }
+                    let wrong = match Admission::parse(&changed.to_string(), &profile) {
+                        Ok(wrong) => wrong,
+                        Err(error) => {
+                            assert_eq!(
+                                error.message,
+                                "Repeated relationship endpoint key component"
+                            );
+                            continue;
+                        }
+                    };
+                    assert!(RelationshipAdmission::admit(
+                        &wrong,
+                        0,
+                        &catalog,
+                        &read,
+                        &records,
+                        select()
+                    )
+                    .is_err());
+                }
+                for source in [true, false] {
+                    let mut wrong = read.clone();
+                    let key = if source {
+                        &mut wrong.source_key
+                    } else {
+                        &mut wrong.target_key
+                    };
+                    if key.fields.len() > 1 {
+                        key.fields.reverse();
+                        key.types.reverse();
+                    } else {
+                        key.id = "foreign-key".into();
+                    }
+                    assert!(RelationshipAdmission::admit(
+                        &binding,
+                        0,
+                        &catalog,
+                        &wrong,
+                        &records,
+                        select()
+                    )
+                    .is_err());
+                }
+            }
+        }
+    }
+}
