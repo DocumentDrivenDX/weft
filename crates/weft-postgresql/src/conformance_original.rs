@@ -341,6 +341,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
         ("a93a3cb75a6bc79a9131a9327dc64831e9f5ccc6bc53acce7f52acbed07e68cc", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-props-composition.json")),
     ];
     let boolean_presets = [
+        ("ee1287b66c62f77991d44c6ad62bf07c7205544858ac1f13150889ed0d4bb959",include_str!("../../../tests/truss-postgresql/fixtures/original-boolean-sequence-composition.json")),
         (
             "b39fb625b813e9fa7e1192aba8610bb024ed99a782bfac5cd933b5ea834eef77",
             include_str!(

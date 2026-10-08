@@ -13,7 +13,7 @@ def artifact(value):
     return data
 
 pairs = sorted(Path('tests/truss-postgresql/fixtures').glob('original-*-composition.json'))
-assert len(pairs) == 36
+assert len(pairs) == 37
 for path in pairs:
     composition = json.loads(path.read_text())
     assert composition['interfaceVersion'] == 'weft-original-conformance-composition/0.1.0'
@@ -47,6 +47,8 @@ for path in pairs:
             names = [relation[k] for k in ['relationshipType','sourceId','sourceType','targetId','targetType']]
             assert len(set(names)) == 5
             assert all(relation['columns'][n]['relationIdentity'] == relation['relationIdentity'] for n in names)
+    elif path.name == 'original-boolean-sequence-composition.json':
+        transports=[json.loads(path.with_name('original-boolean-sequence-compile-transport.json').read_text())]
     elif path.name.startswith('original-boolean-'):
         home=path.name.removeprefix('original-boolean-').removesuffix('-composition.json')
         transports=[t for t in json.loads(path.with_name('original-boolean-public-transport.json').read_text()) if t['home']==home]
@@ -79,4 +81,4 @@ for path in pairs:
             definition = json.loads(comparator['originalJson'])
             assert artifact(definition['valueDefinition']) == artifact(prop['valueDefinition'])
             assert artifact(definition['sourceDomainDefinition']) == artifact(prop['acceptedDefinition'])
-print('36 compositions / 81 compiler responses preserve original byte custody.')
+print('37 compositions / 82 compiler responses preserve original byte custody.')

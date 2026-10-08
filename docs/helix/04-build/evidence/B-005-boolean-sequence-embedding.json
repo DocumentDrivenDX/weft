@@ -1,0 +1,27 @@
+{
+  "scope": "test-original only; thirty-seven exact configurations including one native Boolean sequence; no generic released runtime/production qualification",
+  "rustTests": 151,
+  "embeddingCorpusCases": 334,
+  "fullResponseCases": 82,
+  "booleanSumRefusals": 6,
+  "pythonDeterministicRepeats": 82,
+  "pythonCompileCalls": 416,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "0cdb17e2c9399de6dbfb3dea40507a4b157cdb8d538c45e17f734aa715bbba58",
+    "crates/weft-runtime/src/lib.rs": "f9af171b0a269c9c3f22892c97ec5e34bc333a3f36660bce4c0cf621e8d8931c",
+    "tests/truss-postgresql/check-composition-custody.py": "71a7c26af0d3be720e8f567c288b729daafc2820493cb6ad4810422b1faf4f20",
+    "tests/truss-postgresql/original-embedding-check.py": "5a44cff7e50b0e5326b52298a40d0ec1a9c6a24ac9937110ebf99adb449a81ab",
+    "tests/truss-postgresql/fixtures/original-boolean-sequence-composition.json": "85b178c8f066f5ca43a36af7feed90dd11cdbf051773fc5c135801e4c4cb98a7",
+    "tests/truss-postgresql/fixtures/original-boolean-sequence-compile-transport.json": "0fd3b2bde5d23639e9cf33dfcbb2496232914cb9893912f9465af6bb0b5ba3b0",
+    "tests/truss-postgresql/evidence/boolean-sequence-embedding/python-summary.json": "5034d1e7db883610f396170860f61ad537714411cd02eff83685b8f35d1830b5",
+    "tests/truss-postgresql/evidence/boolean-sequence-embedding/browser-summary.json": "4f078d1aabc5fb0d21082559303495ed89a264b98a3cce23263ae2730cb98e21"
+  },
+  "logs": {
+    "/private/tmp/weft-boolean-sequence-runtime.log": "a886b950e27a674dee15288faf37b2ec2aa38edac52df3ed95e7bc5560be447d",
+    "/private/tmp/weft-boolseq-python-build.log": "f650cc10b91708fac9dc92a627cc7b1d763ca7f5e21c9116cd840607797a151e",
+    "/private/tmp/weft-boolseq-python-install.log": "da8d1ac7dab1629b0d246f598dfad8cec5183e3fad41ae3f9cc7d588aef9ffa2",
+    "/private/tmp/weft-boolseq-wasm-build.log": "9a0f5c952b3427822051f8192c73b0e675de8470a3992b52fbb319d778aac3f9"
+  },
+  "wheelSha256": "8dcc78201f1066ed1a64218dec261b8d00bbf07353ac8a9da86cdd99bf58913e",
+  "wasmSha256": "8bcc5b89e7264327691ff09224f6d452fdeeae4f82f97f661aaef79700e56019"
+}

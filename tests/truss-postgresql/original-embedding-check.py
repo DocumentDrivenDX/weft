@@ -20,7 +20,7 @@ signed_path=ROOT/'tests/truss-postgresql/fixtures/original-signed-public-transpo
 entries += [(signed_path.with_name(f'signed-{index}.json'),fixture) for index,fixture in enumerate(json.loads(signed_path.read_text()))]
 boolean_path=ROOT/'tests/truss-postgresql/fixtures/original-boolean-public-transport.json'
 entries += [(boolean_path.with_name(f'boolean-{index}.json'),fixture) for index,fixture in enumerate(json.loads(boolean_path.read_text()))]
-assert len(entries)==81
+assert len(entries)==82
 for path,fixture in entries:
     request = fixture['request']
     raw = weft.compile_json(json.dumps(request))
@@ -49,10 +49,10 @@ for path,fixture in entries:
         assert any(d['code'] == 'WFT-TYPE' for d in refused['diagnostics'])
         cases.append(dict(id=path.stem+'-boolean-sum', request=altered))
         reports.append(dict(raw=refused_raw))
-assert len(files) == 7
+assert len(files) == 8
 out = ROOT/'target/b005/original-embedding'; out.mkdir(parents=True, exist_ok=True)
 (out/'cases.json').write_text(json.dumps(cases)+'\n')
 (out/'reports.json').write_text(json.dumps(reports)+'\n')
-summary = dict(cases=len(cases), originalConfigurations=36, fullResponseParity=True, deterministicRepeats=81, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations and two Boolean scalar configurations')
+summary = dict(cases=len(cases), originalConfigurations=37, fullResponseParity=True, deterministicRepeats=82, subprocessDisabled=True, nativeModule=weft.__file__, version=weft.__version__, scope='test-original feature; seven pinned compounds, one native uint64 relationship and two optional scalar/entity home configurations and fourteen complete scalar/recursive entity cuts and ten signed scalar configurations and two Boolean scalar configurations and one native Boolean sequence configuration')
 (out/'python-summary.json').write_text(json.dumps(summary, indent=2)+'\n')
 print(json.dumps(summary))

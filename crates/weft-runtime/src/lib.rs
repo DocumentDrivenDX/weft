@@ -179,3 +179,16 @@ mod boolean_property_tests {
         }
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod boolean_sequence_tests {
+    #[test]
+    fn original_boolean_sequence_matches_complete_public_response() {
+        let case:serde_json::Value=serde_json::from_str(include_str!("../../../tests/truss-postgresql/fixtures/original-boolean-sequence-compile-transport.json")).unwrap();
+        let request = case["request"].to_string();
+        let raw = super::compile_json(&request);
+        let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
+        assert_eq!(response, case["response"]);
+        assert_eq!(super::compile_json(&request), raw);
+    }
+}

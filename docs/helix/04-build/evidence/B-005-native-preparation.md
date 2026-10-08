@@ -3458,3 +3458,25 @@ This qualifies the selected native sequence procedure through owned original
 Configuration. It has no new exact runtime allowlist entry or fresh Python/browser
 proof yet. Optional Boolean roots, other recursive arrangements and broader
 host/story qualification remain open; no production compatibility is claimed.
+
+### Native Boolean sequence public runtime and embedding (2026-10-07)
+
+The conformance registry admits the exact independently authored native Boolean
+sequence configuration. A new runtime test compares the entire response with
+owned original Configuration output and checks deterministic repetition. All
+151 Rust tests pass. Original-byte custody checks now cover thirty-seven exact
+configurations and eighty-two complete responses.
+
+Fresh native Python and browser WASM builds pass 334 embedding cases: eighty-two
+full responses, 246 candidate/digest/unsupported-binding refusals and six explicit
+Boolean SUM type refusals. Python repeats all successful calls for 416 native
+compile calls with subprocess execution disabled. Real Chromium 153.0.8010.12
+matches response bytes without Node globals or external network dependencies.
+Receipt and committed summaries:
+[B-005-boolean-sequence-embedding.json](B-005-boolean-sequence-embedding.json).
+
+This closes the public runtime/fresh embedding gap for the selected native
+Boolean sequence. Other recursive arrangements, optional Boolean roots, multiple
+recursive entity members and full host/story qualification remain required work.
+Exact conformance presets do not claim general released plugin or production
+storage compatibility.
