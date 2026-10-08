@@ -1,9 +1,11 @@
 """Execute actual candidate compiler SQL against independent two-home fixtures."""
-import json,subprocess,csv,io,importlib.util
+import json,subprocess,csv,io,importlib.util,os,hashlib
 from pathlib import Path
 from collections import Counter
 from decimal import Decimal
 ROOT=Path(__file__).resolve().parents[2]
+BINARY=Path(os.environ.get('WEFT_TRUSS_COMPILER',str(ROOT/'target/debug/examples/compile_probe')))
+BINARY_SHA=hashlib.sha256(BINARY.read_bytes()).hexdigest()
 cases=json.loads((ROOT/'tests/truss-postgresql/fixtures/application-cases.json').read_text())
 data=json.loads((ROOT/'tests/application/fixtures/data.json').read_text())
 seed={'Customer':[{'id':r['customer-id'],'name':r['customer-name'],'active':r['customer-active'],'tags':r['tags'], **({'address':r['address']['value']} if r['address']['state']=='value' else {}), **({'nickname':r['nickname']['value']} if r['nickname']['state']=='value' else {})} for r in data['customer']], 'Orders':[{'id':r['order-id'],'customer_id':r['order-customer'],'total':r['order-total']} for r in data['orders']]}
@@ -168,7 +170,7 @@ for c in cases:
     if c['id'].startswith('related-numeric-order'):
         for row,new in zip(case_seed['Orders'],['10','2','18446744073709551615']):row['id']=new
         case_edges=[['1','10'],['1','2'],['1','2'],['2','18446744073709551615']]
-    raw=subprocess.check_output([ROOT/'target/debug/examples/compile_probe'],input=json.dumps(c['request'],ensure_ascii=False).encode()).decode().strip()
+    raw=subprocess.check_output([BINARY],input=json.dumps(c['request'],ensure_ascii=False).encode()).decode().strip()
     r=json.loads(raw);assert r['status']=='compiled',(c['id'],r)
     assert r['qualification']['status']=='candidate',r['qualification']
     params=r['parameters'];types=','.join({'string':'text','boolean':'bool','integer':'numeric','decimal':'numeric'}[p['logicalType']['family']] for p in params)
@@ -323,6 +325,8 @@ for c in cases:
             assert list(csv.reader(io.StringIO(observed)))==[['count'],[violations]],(c['id'],variant,observed)
             topology.append(dict(variant=variant,violations=violations))
     reports.append(dict(id=c['id'],raw=raw,response=r,rows=rows[1:],topology=topology))
-OUT=ROOT/'target/b005';OUT.mkdir(exist_ok=True)
+assert hashlib.sha256(BINARY.read_bytes()).hexdigest()==BINARY_SHA
+OUT=Path(os.environ.get('WEFT_TRUSS_OUTPUT',str(ROOT/'target/b005')));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'application-native-reports.json').write_text(json.dumps(reports,ensure_ascii=False))
+(OUT/'summary.json').write_text(json.dumps({'status':'passed','cases':len(reports),'binarySha256':BINARY_SHA,'harnessSha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),'corpusSha256':hashlib.sha256((ROOT/'tests/truss-postgresql/fixtures/application-cases.json').read_bytes()).hexdigest(),'scope':'Actual isolated PostgreSQL application fixture execution; candidate profile only.'},indent=2)+'\n')
 print(f"{len(reports)} actual candidate compiler/native cases passed (props={sum(c['home']=='props' for c in cases)}, row={sum(c['home']=='row' for c in cases)}).")

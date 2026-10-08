@@ -233,3 +233,13 @@ only when every referenced receipt has identical SQL/parameters/terminal data;
 all corresponding native statement IDs are retained. No latest-attempt assumption
 or ambiguous label silently substitutes a different result. This is saved
 evidence reconciliation, not a fresh run or production relationship claim.
+
+A fresh candidate Truss application run passes all 76 actual PostgreSQL cases
+(37 props, 39 row homes) using the existing isolated PostgreSQL 17.9 aarch64
+fixture container with UTF8 encoding. The newly built compiler is copied outside
+Cargo targets and frozen; its digest is checked across execution. Independently
+authored expectations cover application bags/entities/counts/relationships/pages
+and corruption controls in the native harness. B-007-truss-application-native/
+retains build/run/summary records and losslessly compressed full compile/native
+reports with both compressed/uncompressed custody hashes. These are owned
+temporary-table fixtures, not installed Truss or production authority evidence.

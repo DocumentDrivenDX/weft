@@ -1,0 +1,7 @@
+{
+  "uncompressedSha256": "f14716680afeb3ae926e3c2ad8b0a66e1eade2020fa8c692b8dc9ce1a16264b5",
+  "gzipSha256": "c8e06878b1eec0b86d34f2fae7ba1224009f0a6cff90f2947e5769138b44b220",
+  "bytes": 6201567,
+  "engine": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1), aarch64, 64-bit",
+  "encoding": "UTF8"
+}
