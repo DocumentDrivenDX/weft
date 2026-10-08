@@ -247,3 +247,31 @@ fn selected_graph_depth_and_identity_boundaries_are_explicit() {
     }
     println!("MODEL_BOUNDARY_REPORT depth=128/129 identities=4096/4097");
 }
+
+// @covers US-006-AC4
+#[test]
+fn owning_document_and_selection_limits_are_explicit() {
+    fn input(id: &str, count: usize, bytes: Option<usize>) -> ModuleInput {
+        let mut doc = document();
+        doc["id"] = json!(id);
+        let original = doc["modules"][0].clone();
+        let mut selected = Vec::new();
+        doc["modules"] = json!((0..count).map(|i| {
+            let mut module = original.clone();
+            let name = format!("module-{i}");
+            module["id"] = json!(name);
+            selected.push(name);
+            module
+        }).collect::<Vec<_>>());
+        let mut raw = doc.to_string();
+        if let Some(size) = bytes { assert!(raw.len() <= size); raw.push_str(&" ".repeat(size - raw.len())); }
+        ModuleInput { pin: ModelPin { document_id: id.into(), revision: "boundary".into(), umf_version: "0.7.0".into(), sha256: sha256(raw.as_bytes()) }, document_json: raw, selected_module_ids: selected }
+    }
+    assert_eq!(Catalog::prepare(vec![]).unwrap_err().code,"WFT-LIMIT");
+    assert!(Catalog::prepare((0..32).map(|i| input(&format!("document-{i}"),1,None)).collect()).is_ok());
+    assert_eq!(Catalog::prepare((0..33).map(|i| input(&format!("document-{i}"),1,None)).collect()).unwrap_err().code,"WFT-LIMIT");
+    assert!(Catalog::prepare(vec![input("selected",256,None)]).is_ok());
+    assert_eq!(Catalog::prepare(vec![input("selected",257,None)]).unwrap_err().code,"WFT-LIMIT");
+    assert!(Catalog::prepare(vec![input("bytes",1,Some(4*1024*1024))]).is_ok());
+    assert_eq!(Catalog::prepare(vec![input("bytes",1,Some(4*1024*1024+1))]).unwrap_err().code,"WFT-LIMIT");
+}

@@ -660,6 +660,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-plugin-boundary/summary.json",
           "sha256": "778ebdadcce977af3531a02a8b75e9edab3c9f0b40c80d0ad0afd567c83c917a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-model-input-boundaries/summary.json",
+          "sha256": "0f34135a7b5a2407850cbd545c7add62ebef5f11b89e8e8705a3ab731fdf2711"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-workspace/summary.json",
+          "sha256": "0fdf7a7cf519216dfe83fb615f3c288cb8ad0c86d755dd5961287e10d2a2fa6a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
+          "sha256": "396962eb263d700beb6c874dbc3cb6c1d625138fc5d240cb017ade7f110fce58"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -738,6 +750,18 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-host-resources/case-index.json",
           "sha256": "5135046c795b15a8a0df93379d8843dd19bb8f2194d39a1a59f9a7e0430abc2c"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-model-input-boundaries/summary.json",
+          "sha256": "0f34135a7b5a2407850cbd545c7add62ebef5f11b89e8e8705a3ab731fdf2711"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-final-workspace/summary.json",
+          "sha256": "0fdf7a7cf519216dfe83fb615f3c288cb8ad0c86d755dd5961287e10d2a2fa6a"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
+          "sha256": "396962eb263d700beb6c874dbc3cb6c1d625138fc5d240cb017ade7f110fce58"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."

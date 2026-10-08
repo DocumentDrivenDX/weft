@@ -386,3 +386,14 @@ retains exact compile inputs/artifacts, native SQL/parameters/terminal responses
 outcomes, frozen compiler and harness hashes. The initial wrong artifact-file
 lookup failed before statement submission; the corrected run uses the retained
 JSONL corpus. No data write or production qualification is performed.
+
+The full locked offline all-features workspace run is terminal success: 195 tests
+across 35 suites, none failed/ignored. B-007-final-workspace/ records the exact
+pre-addition Rust source hashes and lockfile. After it finished, a separate new
+Catalog preparation test passed seven explicit assertions: empty/32/33 documents,
+256/257 selected modules and 4194304/4194305 document bytes. The at-boundary valid
+inputs are admitted; adjacent limits refuse. Its named-test log and source hash
+are in B-007-model-input-boundaries/. Do not combine these into a claimed fresh
+196-test workspace run. The named critical-path review now references the
+executed module limits and terminal checkpoint; native-profile and owner release
+qualification remain independent open gates.
