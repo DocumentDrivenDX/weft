@@ -222,3 +222,14 @@ authored values, distinguishing Boolean from numeric JSON values. Empty second
 pages match their explicit expectations. B-007-ashlar-compound-page-reconciliation/
 records all case/statement identities and source hashes. Earlier rejected mutable-
 binary attempts are not used. This audits saved evidence, not a new execution.
+
+Relationship reconciliation passes 52 saved native cases: 28 exact duplicate-
+preserving bags and 24 integrity refusals before the user query. All 272 unique
+reused guard labels match emitted SQL and only its used parameter values;
+recorded counts agree with actual successful untruncated receipts. Forward/inverse
+bounded key lists and EXISTS results match their authored expectations without
+collapsing duplicate tuples. Repeated labels from earlier attempts are accepted
+only when every referenced receipt has identical SQL/parameters/terminal data;
+all corresponding native statement IDs are retained. No latest-attempt assumption
+or ambiguous label silently substitutes a different result. This is saved
+evidence reconciliation, not a fresh run or production relationship claim.

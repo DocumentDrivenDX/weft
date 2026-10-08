@@ -562,6 +562,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-006-acceptance.md",
           "sha256": "1b3d887f9b7d2900749befba25c615333424da77723c2e01cd32ecca2ed4843d"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-ashlar-relationship-reconciliation/summary.json",
+          "sha256": "c4f3403f4a25e224d4dcc4e4e304ad656f8686d4bcfb18bdb19160363a5e7c90"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
