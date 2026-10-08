@@ -2,6 +2,14 @@
   "status": "passed",
   "components": [
     {
+      "component": "unsigned-reconcile-controls.py",
+      "result": {
+        "status": "passed",
+        "controls": 15
+      },
+      "sourceSha256": "c27740d45f8e579b7dc62fb264b8868b6471e1e77c0c8bf1a3c8ce47b169b0c3"
+    },
+    {
       "component": "reconcile-unsigned-boundaries.py",
       "result": {
         "status": "passed",
@@ -9,14 +17,14 @@
         "nativeReceipts": 22,
         "successfulReceipts": 21,
         "expectedFailedReceipts": 1,
-        "sourceSha256": "5504aa01d7bad0a71db459541fc35b0f7404c6459cb2fd79c783ac182dcd43cc",
+        "sourceSha256": "824533dc539e47b05b4ad6cddb1d0e58775a30356d0d3c36a554d263e8718430",
         "inputHashes": {
           "compile-artifacts.jsonl": "787ba228f2b146a9f0b9d40ed97305ef2bac6d267fdf3d6e0dc4816976094432",
           "statements.jsonl": "6b413160e75b200b3540160714a4fccecd0f6c5d37f808f981128073a3750d0e"
         },
         "scope": "Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification."
       },
-      "sourceSha256": "5504aa01d7bad0a71db459541fc35b0f7404c6459cb2fd79c783ac182dcd43cc"
+      "sourceSha256": "824533dc539e47b05b4ad6cddb1d0e58775a30356d0d3c36a554d263e8718430"
     },
     {
       "component": "reconcile-truss-archive.py",

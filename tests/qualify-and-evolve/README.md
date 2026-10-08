@@ -6,7 +6,7 @@ Run from the repository root. Python receipt checks require Python 3.10 or later
 python3 tests/qualify-and-evolve/check-retained-evidence.py
 ```
 
-This replays seven saved-evidence/control components and verifies hashes referenced
+This replays eight saved-evidence/control components and verifies hashes referenced
 by the 30-criterion matrix and candidate support inventory. It writes its own
 summary under `docs/helix/04-build/evidence/B-007-retained-evidence-replay/`.
 It does not run engines or prove release qualification.

@@ -2,9 +2,9 @@
 @covers US-004-AC1 @covers US-004-AC3
 No new native execution or table/publication qualification.
 """
-import hashlib,json,pathlib
+import hashlib,json,os,pathlib
 ROOT=pathlib.Path(__file__).resolve().parents[2]
-BASE=ROOT/'docs/helix/04-build/evidence/B-007-unsigned-boundaries-native'
+BASE=pathlib.Path(os.environ.get('WEFT_UNSIGNED_RECONCILE_INPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-boundaries-native')))
 artifacts=[json.loads(l) for l in (BASE/'compile-artifacts.jsonl').read_text().splitlines()]
 receipts=[json.loads(l) for l in (BASE/'statements.jsonl').read_text().splitlines()]
 assert len(artifacts)==8 and len(receipts)==22
@@ -51,6 +51,6 @@ for artifact,bits in zip(artifacts,[1,2,3,8,16,32,63,64],strict=True):
  if bits==63:check('63-carrier-overflow',checks[0]['sql'],[2**63])
 assert used==set(by_label)
 report={'status':'passed','cases':8,'nativeReceipts':22,'successfulReceipts':21,'expectedFailedReceipts':1,'sourceSha256':hashlib.sha256(pathlib.Path(__file__).read_bytes()).hexdigest(),'inputHashes':{n:hashlib.sha256((BASE/n).read_bytes()).hexdigest() for n in ['compile-artifacts.jsonl','statements.jsonl']},'scope':'Saved synthetic unsigned boundary receipts reconciled to emitted SQL, exact parameters and independent integer expectations; no new engine execution or publication qualification.'}
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation';OUT.mkdir(exist_ok=True)
+OUT=pathlib.Path(os.environ.get('WEFT_UNSIGNED_RECONCILE_OUTPUT',str(ROOT/'docs/helix/04-build/evidence/B-007-unsigned-reconciliation')));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report))

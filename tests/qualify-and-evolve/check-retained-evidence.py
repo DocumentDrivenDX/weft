@@ -5,6 +5,7 @@ import hashlib,json,pathlib,subprocess,sys
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 HERE=pathlib.Path(__file__).resolve().parent
 components=[
+ ('unsigned-reconcile-controls.py','status','controls',15),
  ('reconcile-unsigned-boundaries.py','status','cases',8),
  ('reconcile-truss-archive.py','status','cases',76),
  ('evidence-check.py','state','cases',41),

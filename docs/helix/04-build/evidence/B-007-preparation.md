@@ -308,3 +308,10 @@ statement IDs are consumed exactly once: 21 successful single-row STRING results
 and one expected terminal CAST_OVERFLOW failure. UInt64 remains a compile refusal.
 This checks saved synthetic receipts; it adds no database execution or production
 publication claim. The combined retained-evidence command now runs seven components.
+
+Unsigned receipt corruption controls accept the untouched baseline and reject
+14 temporary changes: SQL, parameters, rounded UInt63 sum, zeroed domain guard,
+wrong overflow terminal state/error, truncation, row count, carrier, duplicate
+labels/statement IDs, module/binding pins and an accepted UInt64 response. Each
+refusal must be an assertion failure rather than an unrelated execution error.
+The eight-component retained replay includes these controls; originals are unchanged.
