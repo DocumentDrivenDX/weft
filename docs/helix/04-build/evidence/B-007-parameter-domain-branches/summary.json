@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "refusalAssertions": 20,
+  "acceptedAssertions": 6,
+  "sourceSha256": "9d1bfe63d1c1bf2c52cd36e43cbfd1d3f43cbfeec2606d00e5521ee7ad838196",
+  "scope": "Emission parameter validation: NUL strings, noncanonical booleans, malformed base-ten text, bounded width/precision/scale guards, exact overflow and excess fractional precision. Accepted signed endpoints, decimal upper bound, canonical booleans and Unicode. Unit evidence, not native engine execution."
+}

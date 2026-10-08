@@ -275,6 +275,38 @@ mod tests {
         assert!(validate_parameter("1", &unbounded).is_err());
     }
     #[test]
+    fn parameter_domain_guards_have_exact_diagnostics() {
+        let ty = |family, facets| LogicalType {family, facets, nullable:false};
+        let integer=ty(Family::Integer,json!({"integerWidth":{"bits":8,"signed":true}}));
+        let decimal=ty(Family::Decimal,json!({"precision":3,"scale":1}));
+        let string=ty(Family::String,json!({}));
+        let boolean=ty(Family::Boolean,json!({}));
+        for (value,t,message) in [
+            ("a\0b",string,"String parameter contains NUL"),
+            ("TRUE",boolean,"Boolean parameter is not canonical exact text"),
+            ("",integer.clone(),"Numeric parameter is not exact base-ten text"),
+            (".1",decimal.clone(),"Numeric parameter is not exact base-ten text"),
+            ("1.",decimal.clone(),"Numeric parameter is not exact base-ten text"),
+            ("1.2.3",decimal.clone(),"Numeric parameter is not exact base-ten text"),
+            ("1e2",decimal.clone(),"Numeric parameter is not exact base-ten text"),
+            ("128",integer.clone(),"Backend parameter value exceeds its declared logical domain"),
+            ("-129",integer,"Backend parameter value exceeds its declared logical domain"),
+            ("100.0",decimal.clone(),"Backend parameter value exceeds its declared logical domain"),
+            ("1.01",decimal,"Backend parameter value exceeds its declared logical domain"),
+        ] {
+            let e=validate_parameter(value,&t).unwrap_err();assert_eq!(e.code,"WFT-EMIT");assert_eq!(e.message,message);
+        }
+        for facets in [json!({}),json!({"integerWidth":{"bits":0,"signed":true}}),json!({"integerWidth":{"bits":65,"signed":true}}),json!({"integerWidth":{"bits":8,"signed":"true"}})] {
+            assert_eq!(validate_parameter("1",&ty(Family::Integer,facets)).unwrap_err().message,"Integer parameter needs an explicit bounded width");
+        }
+        for facets in [json!({}),json!({"precision":0,"scale":0}),json!({"precision":29,"scale":0}),json!({"precision":3}),json!({"precision":3,"scale":4})] {
+            assert_eq!(validate_parameter("1",&ty(Family::Decimal,facets)).unwrap_err().message,"Decimal parameter needs an explicit exact domain");
+        }
+        for (value,t) in [("-128",ty(Family::Integer,json!({"integerWidth":{"bits":8,"signed":true}}))),("127",ty(Family::Integer,json!({"integerWidth":{"bits":8,"signed":true}}))),("99.9",ty(Family::Decimal,json!({"precision":3,"scale":1}))),("true",ty(Family::Boolean,json!({}))),("false",ty(Family::Boolean,json!({}))),("雪",ty(Family::String,json!({})))] {
+            validate_parameter(value,&t).unwrap();
+        }
+    }
+    #[test]
     fn numeric_results_require_exact_text_decoders() {
         let t = LogicalType {
             family: Family::Integer,

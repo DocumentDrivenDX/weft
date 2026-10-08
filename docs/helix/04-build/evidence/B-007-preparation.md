@@ -500,3 +500,8 @@ across both plans: SQL content/size, parameter count/origin/nullability, and
 column position/source provenance. Exact WFT-EMIT messages identify each
 guard family. Remaining representation and numeric-domain branches are not
 claimed by this checkpoint.
+
+B-007-parameter-domain-branches/ retains twenty refusal and six accepted
+parameter validation assertions. Exact diagnostics cover lexical/domain
+guards; signed 8-bit endpoints, decimal upper bound, canonical booleans, and
+Unicode pass. This named unit test does not claim target execution.
