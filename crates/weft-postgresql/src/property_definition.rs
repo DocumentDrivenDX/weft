@@ -2028,13 +2028,6 @@ mod tests {
                 },
             )
             .unwrap();
-            let row_property = row_property
-                .with_native_tree(crate::row_tree_mapping::Procedures {
-                    field_identity: |identity| Ok(serde_json::to_vec(identity).unwrap()),
-                    scalar: fixture_native_leaf,
-                    node_source: fixture_native_source,
-                })
-                .unwrap();
             let row_input = weft_core::backend::BindingInput {
                 profile: input.profile.clone(),
                 sha256: sha256(row_admission.original_json.as_bytes()),
@@ -2052,6 +2045,99 @@ mod tests {
                 ),
                 row_property,
             )]);
+
+            let row_record_index = row_admission.value["entities"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .position(|e| e["logical"] == json!(record.identity))
+                .unwrap();
+            let row_record = crate::record_definition::RecordAdmission::admit(
+                &row_admission,
+                row_record_index,
+                &catalog,
+                crate::record_definition::Selection {
+                    inventory: &inventory,
+                    relation_identity: "object-table",
+                    discriminator_identity: "object-type",
+                    relations: &relations,
+                    columns: &columns,
+                },
+            )
+            .unwrap();
+            let row_records = BTreeMap::from([(
+                serde_json::to_string(row_record.identity()).unwrap(),
+                row_record,
+            )]);
+            let mut unselected_parameters = crate::Parameters::default();
+            let unselected_accesses = crate::registered_access::lower_plan(
+                &row_context,
+                &row_properties,
+                &BTreeMap::new(),
+                &mut unselected_parameters,
+            )
+            .unwrap();
+            let unselected_before =
+                serde_json::to_value(unselected_parameters.clone().into_slots()).unwrap();
+            let unselected = crate::result_definition::property_projection_with_parameters(
+                row_properties.values().next().unwrap(),
+                &unselected_accesses[0],
+                1,
+                member_name,
+                &mut unselected_parameters,
+            )
+            .unwrap_err();
+            assert_eq!(unselected.code, "WFT-CAPABILITY");
+            assert_eq!(
+                serde_json::to_value(unselected_parameters.clone().into_slots()).unwrap(),
+                unselected_before
+            );
+            let mut observation_parameters = crate::Parameters::default();
+            let unselected_prepared = crate::registered_access::prepare(
+                &row_context,
+                &row_records,
+                &row_properties,
+                &BTreeMap::new(),
+                &mut observation_parameters,
+            )
+            .unwrap();
+            let observation_before =
+                serde_json::to_value(observation_parameters.clone().into_slots()).unwrap();
+            assert!(
+                crate::result_definition::read_payload_observations_with_parameters(
+                    &unselected_prepared,
+                    &row_properties,
+                    &mut observation_parameters
+                )
+                .is_err()
+            );
+            assert_eq!(
+                serde_json::to_value(observation_parameters.into_slots()).unwrap(),
+                observation_before
+            );
+            drop(unselected_prepared);
+            let missing_selection = crate::select_definition::compile_with_registry(
+                &row_context,
+                &row_records,
+                &row_properties,
+                &BTreeMap::new(),
+                |_, _, _, _| {
+                    panic!("Missing native procedures must refuse before operand rendering")
+                },
+            )
+            .err()
+            .unwrap();
+            assert_eq!(missing_selection.code, "WFT-CAPABILITY");
+            drop(unselected_accesses);
+            let row_properties = row_properties
+                .into_iter()
+                .map(|(key, property)| {
+                    (key,property.with_native_tree(crate::row_tree_mapping::Procedures {
+                    field_identity:|identity|Ok(serde_json::to_vec(identity).unwrap()),
+                    scalar:fixture_native_leaf,node_source:fixture_native_source,
+                }).unwrap())
+                })
+                .collect::<BTreeMap<_, _>>();
             let mut native_mapping_parameters = crate::Parameters::default();
             let row_accesses = crate::registered_access::lower_plan(
                 &row_context,
@@ -2359,29 +2445,6 @@ mod tests {
                     serde_json::to_vec_pretty(&json!({"fixture":fixture_name,"binding":row_binding,"cells":cells,"stored":stored,"logical":logical,"identityProcedure":"synthetic exact JSON bytes; not a Truss adopted encoding"})).unwrap()).unwrap();
             }
 
-            let row_record_index = row_admission.value["entities"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .position(|e| e["logical"] == json!(record.identity))
-                .unwrap();
-            let row_record = crate::record_definition::RecordAdmission::admit(
-                &row_admission,
-                row_record_index,
-                &catalog,
-                crate::record_definition::Selection {
-                    inventory: &inventory,
-                    relation_identity: "object-table",
-                    discriminator_identity: "object-type",
-                    relations: &relations,
-                    columns: &columns,
-                },
-            )
-            .unwrap();
-            let row_records = BTreeMap::from([(
-                serde_json::to_string(row_record.identity()).unwrap(),
-                row_record,
-            )]);
             let row_compiled = crate::select_definition::compile_with_registry(
                 &row_context,
                 &row_records,
