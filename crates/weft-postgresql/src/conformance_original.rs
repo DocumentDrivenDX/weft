@@ -403,3 +403,55 @@ fn numeric_expression(
         _ => Err(fail("Unselected conformance numeric operation")),
     }
 }
+
+#[cfg(test)]
+mod composite_tests {
+    use super::*;
+    #[test]
+    fn composite_relationships_compile_through_original_owned_configuration() {
+        let inputs: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-composite-relationship-inputs.json"
+        ))
+        .unwrap();
+        let mut captures = Vec::new();
+        for case in inputs["requests"].as_array().unwrap() {
+            let request = &case["request"];
+            let catalog =
+                Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap())
+                    .unwrap();
+            let mut config = configuration(&inputs["composition"].to_string(), &catalog).unwrap();
+            let response: Value =
+                serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+            assert_eq!(response["status"], "compiled", "{response}");
+            assert_eq!(
+                response,
+                serde_json::from_str::<Value>(&config.compile_json(&request.to_string())).unwrap()
+            );
+            let keys: Vec<_> = config.comparators.keys().cloned().collect();
+            assert_eq!(keys.len(), 5);
+            for key in keys {
+                let removed = config.comparators.remove(&key).unwrap();
+                let refused: Value =
+                    serde_json::from_str(&config.compile_json(&request.to_string())).unwrap();
+                assert_eq!(refused["status"], "blocked", "{key}: {refused}");
+                assert!(refused.get("sql").is_none());
+                assert!(refused.get("parameters").is_none());
+                config.comparators.insert(key, removed);
+            }
+            assert_eq!(
+                response,
+                serde_json::from_str::<Value>(&config.compile_json(&request.to_string())).unwrap()
+            );
+            let checks: Vec<_> = response["obligations"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .filter_map(|o| o["parameters"].get("sql").and_then(|s| s.as_str()))
+                .collect();
+            captures.push(serde_json::json!({"direction":case["direction"],"kind":case["kind"],"sql":response["sql"],"parameters":response["parameters"],"columns":response["columns"],"checks":checks}));
+        }
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_COMPOSITE_RELATIONSHIP_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();
+        }
+    }
+}

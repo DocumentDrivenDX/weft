@@ -2909,3 +2909,39 @@ binding parsing; reversed lists refuse during original admission. This adds a
 behavioral Rust regression, not native composite result or embedding evidence.
 Public SQL lowering and PostgreSQL execution of composite relationship keys
 remain open and must not be inferred from this admission result.
+
+### Public original composite relationship SQL (2026-10-07)
+
+`tests/truss-postgresql/build-composite-relationship-fixture.py` authors a new
+original UMF document and physical binding with a two-component Customer key
+`(part, id)` and three-component Orders key `(part, id, third)`. These keys use
+required exact uint64 fields and an order different from declared member order.
+The builder extends original owned composition metadata and re-pins every changed
+nested artifact from actual bytes; it does not generate SQL or expected results.
+Storage property IDs 20–22 avoid the existing layout's globally allocated IDs.
+
+The conformance-only original loader is exercised directly by a Rust test,
+`conformance_original::composite_tests::composite_relationships_compile_through_original_owned_configuration`.
+It reconstructs the selected original definitions, then compiles four full public
+requests through Configuration and Compiler: forward/inverse HAS_RELATED counts
+and bounded RELATED_KEYS pages. Deterministic complete responses agree. Removing
+any of the five endpoint component comparators refuses each request without SQL
+or parameter artifacts; restoring registration restores the complete response.
+The runtime's existing eight-cut allowlist is unchanged. No new Python/browser
+or released registration claim follows from this Rust test.
+
+`tests/truss-postgresql/composite-relationship-native.py` passes 32 PostgreSQL
+17.9 cases against independently authored logical tuple expectations. Valid
+fixtures include repeated individual key components with distinct complete keys,
+exact uint64 maximum and above-JavaScript-safe values, lexicographic related-key
+ordering, duplicate edge bags, truncation lookahead and empty results. Corrupt
+fixtures include duplicate complete tuples at either endpoint, overflow and wrong
+codec in an unconnected third component, missing key components and dangling
+endpoints. Every emitted prerequisite is executed; invalid fixtures suppress
+result SQL. Receipt:
+[B-005-composite-relationship-native.json](B-005-composite-relationship-native.json).
+
+This establishes composite native-row key behavior for the selected unsigned
+numeric 2/3 subset. Composite mixed homes, heterogeneous key types, more original
+scalar domains and full host transport qualification remain separate evidence
+requirements. Synthetic fixtures do not establish installed Truss compatibility.
