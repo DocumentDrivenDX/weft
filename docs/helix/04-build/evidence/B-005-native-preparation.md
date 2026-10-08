@@ -2639,3 +2639,54 @@ Backend SELECT integration. The outer compiler still needs to incorporate these
 expressions/checks and qualify both directions, composite keys, both storage
 homes and real embedding ports. Hosts remain responsible for complete read
 context and prerequisite enforcement. No production compatibility is claimed.
+
+## Public original Backend relationship integration (2026-10-07)
+
+`OriginalBackend::with_relationships` accepts independently admitted original
+relationship selections keyed by exact identity and traversal direction, and
+refuses substituted binding cuts or registration keys. Configured relationship
+capabilities retain candidate qualification. Missing selections refuse rather
+than falling back to the fixed test backend.
+
+The shared original SELECT assembler now invokes the relationship renderer for
+HAS_RELATED filters and RELATED_KEYS projections. It verifies the outer scan's
+original owner/key access, assigns target scopes independently and incorporates
+all target payload, numeric/key, edge endpoint and cardinality observations into
+the returned host SQL obligations. Existing relational/projection entry points
+retain their previous behavior and refuse relationship reads without their
+selected renderer. The same trusted native operand lowering handles ordinary
+and relationship target accesses.
+
+The unsigned fixture now independently admits both original endpoint Records
+and both native uint64 key properties at one final binding cut. Two queries are
+parsed/resolved from Weft SQL and compiled through public Backend registration:
+COUNT with an inverse HAS_RELATED named parameter, and a keyed Orders page with
+an inverse RELATED_KEYS projection. They also pass the serialized
+`Compiler::compile_json` envelope with full SQL, parameter, result-column and
+obligation equality against direct registry compilation. Captures are
+`original-relationship-public.json` and
+`original-relationship-public-transport.json`; regenerate with absolute
+`WEFT_PUBLIC_ORIGINAL_RELATIONSHIP_CAPTURE` and
+`WEFT_PUBLIC_ORIGINAL_RELATIONSHIP_TRANSPORT_CAPTURE` paths while running the
+original unsigned property test.
+
+[18 PostgreSQL 17.9 cases](B-005-relationship-public-native.json), executed by
+`tests/truss-postgresql/relationship-public-native.py`, execute each exact public
+emission and every emitted SQL prerequisite. Valid cases prove existential
+COUNT preserves two matching source rows despite multiple/duplicate edges, and
+keyed pages retain exact numeric source identities, ordered target key tuples,
+duplicate-edge multiplicity, lookahead truncation and empty lists. Hidden source
+and target overflow, wrong codecs on either endpoint, duplicate target logical
+keys, dangling targets and wrong endpoint types each refuse before result
+execution. Candidate/profile fixture evidence does not establish production
+codec or host transaction/policy implementation.
+
+All 132 core/PostgreSQL/runtime tests pass with `weft-runtime/test-original`
+(`/private/tmp/weft-public-relationship-full-tests.log`). This establishes the
+selected original inverse/native-key public Rust subset. Forward/composite-key
+and alternate-home coverage, finite multiplicity native cases, owned embedding
+composition and actual Python/browser relationship execution remain B-005 work.
+
+`cargo check -p weft-postgresql --target wasm32-unknown-unknown` also passes
+(`/private/tmp/weft-public-relationship-wasm-check.log`). This is target
+compilation evidence, not browser execution. Formatting and HELIX checks pass.

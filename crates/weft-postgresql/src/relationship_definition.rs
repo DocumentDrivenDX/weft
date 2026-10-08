@@ -602,6 +602,18 @@ mod tests {
             let admitted =
                 RelationshipAdmission::admit(&binding, 0, &catalog, &read, &records, select())
                     .unwrap();
+            admitted
+                .verify_registration(
+                    &sha256(binding.original_json.as_bytes()),
+                    &registration_key(&read),
+                )
+                .unwrap();
+            assert!(admitted
+                .verify_registration(&sha256(binding.original_json.as_bytes()), "wrong")
+                .is_err());
+            assert!(admitted
+                .verify_registration("wrong", &registration_key(&read))
+                .is_err());
             let mut parameters = Parameters::default();
             let access = admitted
                 .correlate(
@@ -722,4 +734,21 @@ mod tests {
 pub struct PreparedTarget<'a> {
     pub plan: weft_core::application_ir::Plan,
     pub prepared: crate::registered_access::Prepared<'a>,
+}
+
+pub fn registration_key(read: &RelationshipRead) -> String {
+    json!({"identity":read.identity,"inverse":read.inverse}).to_string()
+}
+impl RelationshipAdmission {
+    pub(crate) fn verify_registration(&self, binding_sha256: &str, key: &str) -> Result<()> {
+        let expected =
+            json!({"identity":self.read_json["identity"],"inverse":self.read_json["inverse"]})
+                .to_string();
+        if self.binding_sha256 != binding_sha256 || key != expected {
+            return Err(fail(
+                "Relationship registration substitutes original cut or direction",
+            ));
+        }
+        Ok(())
+    }
 }

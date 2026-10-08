@@ -15,6 +15,7 @@ pub struct OriginalBackend {
     properties: BTreeMap<String, crate::property_definition::PropertyAdmission>,
     comparators: BTreeMap<String, crate::native_comparator_definition::Definition>,
     native: Native,
+    relationships: BTreeMap<String, crate::relationship_definition::RelationshipAdmission>,
 }
 pub struct Mapping {
     binding_sha256: String,
@@ -82,7 +83,33 @@ impl OriginalBackend {
             properties,
             comparators,
             native,
+            relationships: BTreeMap::new(),
         })
+    }
+    pub fn with_relationships(
+        mut self,
+        relationships: BTreeMap<String, crate::relationship_definition::RelationshipAdmission>,
+    ) -> Result<Self> {
+        for (key, admission) in &relationships {
+            admission.verify_registration(&self.binding_sha256, key)?;
+        }
+        if !relationships.is_empty() {
+            let candidate = crate::candidate::Candidate.describe()?;
+            for capability in &mut self.manifest.capabilities {
+                if capability.id.starts_with("relationship.") {
+                    capability.language_profiles = candidate
+                        .capabilities
+                        .iter()
+                        .find(|c| c.id == capability.id)
+                        .unwrap()
+                        .language_profiles
+                        .clone();
+                    capability.logical_domain = serde_json::json!({"subset":"original admitted directed relationship subqueries; selected scalar authored target keys"});
+                }
+            }
+        }
+        self.relationships = relationships;
+        Ok(self)
     }
     fn verify(&self, context: &Context<'_>) -> Result<()> {
         if context.binding.sha256 != self.binding_sha256 {
@@ -138,11 +165,12 @@ impl Backend for OriginalBackend {
         if mapping.binding_sha256 != self.binding_sha256 {
             return Err(fail("Original mapping cut differs"));
         }
-        let compilation = crate::select_definition::compile_with_registry(
+        let compilation = crate::select_definition::compile_with_relationships(
             context,
             &self.records,
             &self.properties,
             &self.comparators,
+            &self.relationships,
             self.native,
         )?;
         let mut obligations = vec![Obligation {

@@ -41,7 +41,12 @@ pub fn lower<'a>(
     comparators: &BTreeMap<String, Definition>,
     scope: u16,
     parameters: &mut Parameters,
-    native: crate::original_backend::Native,
+    mut native: impl FnMut(
+        &Expression,
+        &[String],
+        Option<&crate::registered_access::Access<'a>>,
+        &mut Parameters,
+    ) -> Result<String>,
 ) -> Result<Lowered> {
     let mut staged = parameters.clone();
     let target = admission.prepare_target(
@@ -110,7 +115,7 @@ pub fn lower<'a>(
             &expression,
             &target.prepared.accesses,
             &mut staged,
-            native,
+            &mut native,
         )?;
         if matches!(field.logical_type.family, Family::Integer | Family::Decimal) {
             let carrier = match &access.location {

@@ -22,9 +22,137 @@ pub struct Compilation {
     pub select: Select,
     pub parameters: Vec<weft_core::backend::ParameterSlot>,
 }
+type NativeRenderer<'a, 'c> =
+    dyn FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String> + 'c;
+type RelationshipRenderer<'a, 'b> = dyn FnMut(
+        &str,
+        &weft_core::application_model::RelationshipRead,
+        crate::relationship_lowering::Read<'_>,
+        &mut Parameters,
+        &mut NativeRenderer<'a, '_>,
+    ) -> Result<crate::relationship_lowering::Lowered>
+    + 'b;
+
+pub fn compile_with_relationships<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+    relationships: &BTreeMap<String, crate::relationship_definition::RelationshipAdmission>,
+    native: impl FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>,
+) -> Result<Compilation> {
+    let mut scope = 0u16;
+    let mut renderer = |scan: &str,
+                        read: &weft_core::application_model::RelationshipRead,
+                        mode: crate::relationship_lowering::Read<'_>,
+                        parameters: &mut Parameters,
+                        native: &mut NativeRenderer<'a, '_>| {
+        let admission = relationships
+            .get(&crate::relationship_definition::registration_key(read))
+            .ok_or_else(|| {
+                Diagnostic::new(
+                    "WFT-BINDING",
+                    "lower",
+                    "Selected original relationship admission missing",
+                )
+            })?;
+        let accesses = crate::registered_access::requests(context.plan)?;
+        let first = accesses
+            .iter()
+            .find(|a| a.scan == scan && read.source_key.fields.contains(&a.field))
+            .ok_or_else(|| {
+                Diagnostic::new(
+                    "WFT-BINDING",
+                    "lower",
+                    "Relationship outer key access missing",
+                )
+            })?;
+        let property = properties
+            .get(&crate::comparator_requirements::registration_key(
+                &read.from,
+                &first.field,
+            ))
+            .ok_or_else(|| {
+                Diagnostic::new(
+                    "WFT-BINDING",
+                    "lower",
+                    "Relationship source property missing",
+                )
+            })?;
+        let plan_source = match context.plan {
+            Plan::V02(plan) => std::iter::once(&plan.source)
+                .chain(plan.joins.iter().map(|j| &j.right))
+                .find(|s| s.occurrence == scan && s.record == read.from),
+            _ => None,
+        }
+        .ok_or_else(|| {
+            Diagnostic::new(
+                "WFT-BINDING",
+                "lower",
+                "Relationship source occurrence/owner differs",
+            )
+        })?;
+        let owners: Vec<_> = match context.plan {
+            Plan::V02(plan) => std::iter::once(&plan.source)
+                .chain(plan.joins.iter().map(|j| &j.right))
+                .map(|s| s.occurrence.clone())
+                .collect(),
+            _ => vec![],
+        };
+        let mut owners = owners;
+        owners.sort();
+        let index = owners
+            .iter()
+            .position(|s| s == &plan_source.occurrence)
+            .unwrap();
+        if property.owner != read.from {
+            return Err(Diagnostic::new(
+                "WFT-BINDING",
+                "lower",
+                "Relationship source ownership differs",
+            ));
+        }
+        let alias = crate::Identifier::new(&format!("weft_scan_{index}"))?;
+        let current = scope;
+        scope = scope
+            .checked_add(1)
+            .ok_or_else(|| Diagnostic::new("WFT-LIMIT", "lower", "Relationship scope overflow"))?;
+        crate::relationship_lowering::lower(
+            admission,
+            context,
+            read,
+            &alias,
+            mode,
+            records,
+            properties,
+            comparators,
+            current,
+            parameters,
+            native,
+        )
+    };
+    compile_registry(
+        context,
+        records,
+        properties,
+        comparators,
+        native,
+        Some(&mut renderer),
+    )
+}
+
 /// Assemble from exact registered original definitions in one operation. No
 /// caller-owned parameter state or detached preparation can escape on failure.
 pub fn compile_with_registry<'a>(
+    context: &Context<'_>,
+    records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
+    properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+    native: impl FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>,
+) -> Result<Compilation> {
+    compile_registry(context, records, properties, comparators, native, None)
+}
+fn compile_registry<'a>(
     context: &Context<'_>,
     records: &BTreeMap<String, crate::record_definition::RecordAdmission>,
     properties: &'a BTreeMap<String, crate::property_definition::PropertyAdmission>,
@@ -35,6 +163,7 @@ pub fn compile_with_registry<'a>(
         Option<&Access<'a>>,
         &mut Parameters,
     ) -> Result<String>,
+    relationships: Option<&mut RelationshipRenderer<'a, '_>>,
 ) -> Result<Compilation> {
     if let Plan::V02(plan) = context.plan {
         verify_page_order(plan)?;
@@ -65,7 +194,7 @@ pub fn compile_with_registry<'a>(
             record.verify_key_mapping(&binding, context.catalog, key)?;
         }
     }
-    let mut select = assemble(
+    let mut select = assemble_internal(
         context,
         &prepared,
         properties,
@@ -129,6 +258,7 @@ pub fn compile_with_registry<'a>(
                 native(node, operands, access, parameters)
             }
         },
+        relationships,
     )?;
     for requirement in crate::comparator_requirements::collect(context.plan)? {
         if !matches!(
@@ -277,12 +407,31 @@ pub fn assemble<'a>(
     properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
     comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
     parameters: &mut Parameters,
+    native: impl FnMut(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>,
+) -> Result<Select> {
+    assemble_internal(
+        context,
+        prepared,
+        properties,
+        comparators,
+        parameters,
+        native,
+        None,
+    )
+}
+fn assemble_internal<'a>(
+    context: &Context<'_>,
+    prepared: &Prepared<'a>,
+    properties: &BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    comparators: &BTreeMap<String, crate::native_comparator_definition::Definition>,
+    parameters: &mut Parameters,
     mut native: impl FnMut(
         &Expression,
         &[String],
         Option<&Access<'a>>,
         &mut Parameters,
     ) -> Result<String>,
+    relationships: Option<&mut RelationshipRenderer<'a, '_>>,
 ) -> Result<Select> {
     prepared.verify_context(context, parameters)?;
     let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
@@ -294,6 +443,7 @@ pub fn assemble<'a>(
             comparators,
             parameters,
             &mut native,
+            relationships,
         );
     };
     let Node::Project { input, outputs, .. } = &plan.root else {
@@ -416,6 +566,7 @@ fn assemble_application<'a>(
         Option<&Access<'a>>,
         &mut Parameters,
     ) -> Result<String>,
+    mut relationships: Option<&mut RelationshipRenderer<'a, '_>>,
 ) -> Result<Select> {
     use weft_core::application_ir as app;
     let fail = |message: &str| Diagnostic::new("WFT-CAPABILITY", "emit", message);
@@ -446,11 +597,25 @@ fn assemble_application<'a>(
         return Err(fail("Application projection metadata arity differs"));
     }
     let mut staged = parameters.clone();
-    let payload_checks = crate::result_definition::read_payload_observations_with_parameters(
+    let mut payload_checks = crate::result_definition::read_payload_observations_with_parameters(
         prepared,
         properties,
         &mut staged,
     )?;
+    let mut relationship_checks = Vec::new();
+    let mut lower_related = |scan: &str,
+                             read: &weft_core::application_model::RelationshipRead,
+                             mode: crate::relationship_lowering::Read<'_>,
+                             parameters: &mut Parameters,
+                             native: &mut NativeRenderer<'a, '_>| {
+        let lowered =
+            relationships.as_mut().ok_or_else(|| {
+                fail("Relationship requires selected original admission/lowering")
+            })?(scan, read, mode, parameters, native)?;
+        relationship_checks.extend(lowered.structural_checks);
+        payload_checks.extend(lowered.payload_checks);
+        Ok::<_, Diagnostic>(lowered.expression)
+    };
     let mut filters = source.source.filters.clone();
     let mut from = source.source.sql.clone();
     let mut visible = std::collections::BTreeSet::from([plan.source.occurrence.clone()]);
@@ -498,6 +663,21 @@ fn assemble_application<'a>(
     }
 
     for predicate in &plan.filters {
+        if let app::Predicate::HasRelated {
+            scan,
+            relationship,
+            key,
+        } = predicate
+        {
+            filters.push(lower_related(
+                scan,
+                relationship,
+                crate::relationship_lowering::Read::HasRelated(key),
+                &mut staged,
+                native,
+            )?);
+            continue;
+        }
         filters.push(render_application_equality(
             predicate,
             &prepared.accesses,
@@ -539,6 +719,25 @@ fn assemble_application<'a>(
     }
     let mut projections = Vec::new();
     for (output, column) in plan.outputs.iter().zip(&columns) {
+        if let app::Expression::RelatedKeys {
+            scan,
+            relationship,
+            bound,
+        } = &output.expression
+        {
+            let sql = lower_related(
+                scan,
+                relationship,
+                crate::relationship_lowering::Read::RelatedKeys(*bound),
+                &mut staged,
+                native,
+            )?;
+            projections.push(format!(
+                "({sql}) AS {}",
+                crate::Identifier::new(&column.output_name)?.sql()
+            ));
+            continue;
+        }
         if let app::Expression::Sum {
             argument,
             logical_type,
@@ -675,6 +874,7 @@ fn assemble_application<'a>(
             .scans
             .values()
             .flat_map(|scan| scan.structural_check_sql.iter().cloned())
+            .chain(relationship_checks)
             .collect(),
     })
 }

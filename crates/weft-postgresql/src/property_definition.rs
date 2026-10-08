@@ -1571,6 +1571,258 @@ mod tests {
             )
             .is_err());
             assert!(failed.into_slots().is_empty());
+            // Admit both endpoint key properties at the final binding cut.
+            let source_identity = read.source_key.fields[0].clone();
+            let source_index = row_binding["properties"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .position(|p| p["logical"] == json!(source_identity))
+                .unwrap();
+            let source_authored =
+                row_binding["properties"][source_index]["acceptedDefinition"].clone();
+            let source_bytes = STANDARD
+                .decode(source_authored["bytesBase64"].as_str().unwrap())
+                .unwrap();
+            let mut source_leaf_json: Value =
+                serde_json::from_str(&leaves["root"].original_json).unwrap();
+            source_leaf_json["authoredDefinition"] = source_authored.clone();
+            let mut source_originals = originals.clone();
+            source_originals.insert(
+                "authoredDefinition".into(),
+                OriginalArtifact {
+                    identity: source_authored["identity"].as_str().unwrap().into(),
+                    bytes: source_bytes.clone(),
+                },
+            );
+            let source_leaf = Leaf::parse(
+                &source_leaf_json.to_string(),
+                LeafSelection {
+                    profile: &pin,
+                    source_profile: &pin,
+                    native_profile: &pin,
+                    original_artifacts: &source_originals,
+                },
+            )
+            .unwrap();
+            let mut source_graph = graph.clone();
+            source_graph["acceptedDefinition"] = source_authored.clone();
+            source_graph["nodes"][0]["authoredIdentity"] = json!(source_identity);
+            source_graph["nodes"][0]["authoredDefinition"] = source_authored.clone();
+            source_graph["nodes"][0]["codecDefinition"] =
+                artifact("selected-source-leaf", source_leaf.original_json.as_bytes());
+            let mut source_presence = presence.clone();
+            source_presence["acceptedDefinition"] = source_authored.clone();
+            let mut final_binding = row_binding.clone();
+            final_binding["properties"][source_index]["valueDefinition"] =
+                artifact("original-source-graph", source_graph.to_string().as_bytes());
+            final_binding["properties"][source_index]["presenceDefinition"] = artifact(
+                "original-source-presence",
+                source_presence.to_string().as_bytes(),
+            );
+            let mut source_home = row_home.clone();
+            source_home["ownerCatalogId"] =
+                final_binding["properties"][source_index]["ownerTypeId"].clone();
+            source_home["propertyCatalogId"] =
+                final_binding["properties"][source_index]["propertyId"].clone();
+            source_home["valueDefinition"] =
+                final_binding["properties"][source_index]["valueDefinition"].clone();
+            source_home["presenceDefinition"] =
+                final_binding["properties"][source_index]["presenceDefinition"].clone();
+            final_binding["properties"][source_index]["home"] = json!("row");
+            final_binding["properties"][source_index]["homeDefinition"] =
+                artifact("original-source-home", source_home.to_string().as_bytes());
+            let final_admission =
+                Admission::parse(&final_binding.to_string(), &row_input.profile).unwrap();
+            let final_records: BTreeMap<_, _> = (0..2)
+                .map(|i| {
+                    let r = crate::record_definition::RecordAdmission::admit(
+                        &final_admission,
+                        i,
+                        &catalog,
+                        crate::record_definition::Selection {
+                            inventory: &inventory,
+                            relation_identity: "object-table",
+                            discriminator_identity: "object-type",
+                            relations: &relations,
+                            columns: &columns,
+                        },
+                    )
+                    .unwrap();
+                    (serde_json::to_string(r.identity()).unwrap(), r)
+                })
+                .collect();
+            let target_property = admit_property(
+                &final_admission,
+                index,
+                &catalog,
+                &descriptors,
+                select(),
+                PhysicalSelection {
+                    profile: &pin,
+                    inventory: &inventory,
+                    relations: &row_fixture.relations,
+                    columns: &row_fixture.columns,
+                    row_join: Some(&row_join),
+                    obligations: &row_obligations,
+                    edge_association: None,
+                },
+            )
+            .unwrap();
+            let source_leaves = BTreeMap::from([("root".into(), source_leaf)]);
+            let (_, source_descriptors) = catalog
+                .member_descriptor_by_identity(&from, &source_identity)
+                .unwrap();
+            let source_property = admit_property(
+                &final_admission,
+                source_index,
+                &catalog,
+                &source_descriptors,
+                Selection {
+                    value_profile: &pin,
+                    presence_profile: &pin,
+                    leaf_codecs: &source_leaves,
+                    record_presence: &records,
+                },
+                PhysicalSelection {
+                    profile: &pin,
+                    inventory: &inventory,
+                    relations: &row_fixture.relations,
+                    columns: &row_fixture.columns,
+                    row_join: Some(&row_join),
+                    obligations: &row_obligations,
+                    edge_association: None,
+                },
+            )
+            .unwrap();
+            let source_registration = registration_key(&from.identity, &source_identity);
+            let mut source_cmp_json: Value =
+                serde_json::from_str(&comparisons[&registration].original_json).unwrap();
+            source_cmp_json["valueDefinition"] =
+                final_binding["properties"][source_index]["valueDefinition"].clone();
+            source_cmp_json["sourceDomainDefinition"] = source_authored.clone();
+            let source_cmp_originals: BTreeMap<_, _> = [
+                "valueDefinition",
+                "sourceDomainDefinition",
+                "nativeDomainDefinition",
+                "operatorInventory",
+                "qualification",
+            ]
+            .into_iter()
+            .map(|role| {
+                let bytes = STANDARD
+                    .decode(source_cmp_json[role]["bytesBase64"].as_str().unwrap())
+                    .unwrap();
+                (
+                    role.into(),
+                    OriginalArtifact {
+                        identity: source_cmp_json[role]["identity"].as_str().unwrap().into(),
+                        bytes,
+                    },
+                )
+            })
+            .collect();
+            let source_comparator = Comparator::parse(
+                &source_cmp_json.to_string(),
+                ComparatorSelection {
+                    profile: &pin,
+                    native_profile: &pin,
+                    original_artifacts: &source_cmp_originals,
+                    operations: &BTreeSet::from([
+                        Operation::Equality,
+                        Operation::Key,
+                        Operation::Ordering,
+                        Operation::Sum,
+                    ]),
+                },
+                &logical,
+            )
+            .unwrap();
+            let mut final_comparators = comparisons.clone();
+            final_comparators.insert(source_registration.clone(), source_comparator);
+            let final_properties = BTreeMap::from([
+                (registration.clone(), target_property),
+                (source_registration, source_property),
+            ]);
+            let final_relationship = crate::relationship_definition::RelationshipAdmission::admit(
+                &final_admission,
+                0,
+                &catalog,
+                &read,
+                &final_records,
+                crate::relationship_definition::Selection {
+                    profile: &final_binding["relationships"][0]["relationshipProfile"],
+                    inventory: &inventory,
+                    relation_identity: "edge",
+                    relations: &edge_relations,
+                    columns: &edge_columns,
+                    relationship_type: "rel_type_id",
+                    source_id: "source_id",
+                    source_type: "source_type",
+                    target_id: "target_id",
+                    target_type: "target_type",
+                },
+            )
+            .unwrap();
+            let final_input = weft_core::backend::BindingInput {
+                profile: row_input.profile.clone(),
+                json: final_admission.original_json.clone(),
+                sha256: sha256(final_admission.original_json.as_bytes()),
+            };
+            let backend = crate::original_backend::OriginalBackend::new(
+                &final_input,
+                final_records,
+                final_properties,
+                final_comparators,
+                row_numeric_native,
+            )
+            .unwrap()
+            .with_relationships(BTreeMap::from([(
+                crate::relationship_definition::registration_key(&read),
+                final_relationship,
+            )]))
+            .unwrap();
+            let mut registry = weft_core::backend::Registry::default();
+            registry.register(backend).unwrap();
+            let target = weft_core::backend::Target {
+                backend_id: "truss.postgresql.original".into(),
+                backend_version: "0.1.0-candidate".into(),
+                profile_id: "pg17.9-candidate".into(),
+                allow_candidate: true,
+            };
+            let compiler = weft_core::compile::Compiler { registry };
+            let mut transport_captures = Vec::new();
+            let mut public_captures = Vec::new();
+            for (kind,sql) in [("has","SELECT COUNT(*) AS n FROM Orders o WHERE HAS_RELATED(o.customer, KEY(:customer_id))"),("keys","SELECT o.id, RELATED_KEYS(o.customer,2) AS customers FROM Orders o ORDER BY o.id LIMIT 10")] {
+                let params=if kind=="has" {BTreeMap::from([("customer_id".into(),weft_core::application_resolve::Parameter {family:weft_core::ir::Family::Integer,value:"9007199254740993".into()})])} else {BTreeMap::new()};
+                let plan=weft_core::application_resolve::resolve(&catalog,weft_core::application_syntax::parse(sql).unwrap(),params,None).unwrap();
+                let compiled=compiler.registry.compile(&catalog,weft_core::backend::Plan::V02(&plan),&target,&final_input).unwrap();
+                let checks:Vec<_>=compiled.emission.obligations.iter().filter_map(|o|o.parameters.get("sql").and_then(|v|v.as_str())).collect();
+                assert!(checks.len()>=6);
+                let mut request=cases[0]["request"].clone();request.as_object_mut().unwrap().remove("readProfile");
+                request["sql"]=json!(sql);request["target"]["backendId"]=json!("truss.postgresql.original");request["target"]["backendVersion"]=json!("0.1.0-candidate");
+                request["target"]["bindingJson"]=json!(final_input.json);request["target"]["bindingSha256"]=json!(final_input.sha256);
+                if kind=="has" {request["parameters"]=json!({"customer_id":{"family":"integer","value":"9007199254740993"}});}
+                let response:Value=serde_json::from_str(&compiler.compile_json(&request.to_string())).unwrap();
+                assert_eq!(response["status"],"compiled", "{response}");
+                assert_eq!(response["sql"],compiled.emission.sql);
+                assert_eq!(response["parameters"],serde_json::to_value(&compiled.emission.parameters).unwrap());
+                assert_eq!(response["columns"],serde_json::to_value(&compiled.emission.columns).unwrap());
+                assert_eq!(response["obligations"],serde_json::to_value(&compiled.emission.obligations).unwrap());
+                transport_captures.push(json!({"request":request,"response":response}));
+
+                public_captures.push(json!({"kind":kind,"sql":compiled.emission.sql,"columns":compiled.emission.columns,"parameters":compiled.emission.parameters,"checks":checks,"targetCodecHex":leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>(),"sourceCodecHex":source_leaves["root"].original_json.as_bytes().iter().map(|b|format!("{b:02x}")).collect::<String>()}));
+            }
+            if let Ok(path) = std::env::var("WEFT_PUBLIC_ORIGINAL_RELATIONSHIP_CAPTURE") {
+                std::fs::write(path, serde_json::to_vec_pretty(&public_captures).unwrap()).unwrap();
+            }
+            if let Ok(path) = std::env::var("WEFT_PUBLIC_ORIGINAL_RELATIONSHIP_TRANSPORT_CAPTURE") {
+                std::fs::write(
+                    path,
+                    serde_json::to_vec_pretty(&transport_captures).unwrap(),
+                )
+                .unwrap();
+            }
             let mut wrong = read.clone();
             wrong.target_key.id = "wrong".into();
             let before = serde_json::to_value(parameters.clone().into_slots()).unwrap();
