@@ -84,3 +84,8 @@ possible composition, every subcondition of every type descriptor, or native
 backend lowering coverage. The broader P0 branch accounting and exact support
 profile qualification remain open. Older full-workspace source hashes remain
 historical evidence and are not replaced by this unit checkpoint.
+
+The [manifest admission accounting](B-007-manifest-branch-accounting.md) reviews
+each declaration guard family against the seven executed registry tests and
+identifies three remaining isolated admission assertions. Passing counts do not
+close those gaps or the broader critical semantic branch gate.

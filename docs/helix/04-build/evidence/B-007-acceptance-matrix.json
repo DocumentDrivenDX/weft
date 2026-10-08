@@ -308,6 +308,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-manifest-admission-boundaries/summary.json",
           "sha256": "e05c8f87afa6a0e9e8737c9e122e66b567c1567c5acaf8c0b38dc43bd87925dc"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-manifest-branch-accounting.md",
+          "sha256": "5b7785d003e6bc3619a9c00a6e7bae606fec7b47fde8f7a4e6e83999ad462a2c"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -1183,7 +1187,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "3f6a70ca2eb7ec8368c4c28a3f31603c4ab010e5a16b6f8f4a20589935b4352b"
+          "sha256": "cdf4f96950b34ff1e1a68bf037a88a6aca11203845a26a9df0cefd0c2888618c"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
@@ -1337,7 +1341,7 @@
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-critical-path-review.md",
-          "sha256": "3f6a70ca2eb7ec8368c4c28a3f31603c4ab010e5a16b6f8f4a20589935b4352b"
+          "sha256": "cdf4f96950b34ff1e1a68bf037a88a6aca11203845a26a9df0cefd0c2888618c"
         },
         {
           "path": "docs/helix/04-build/evidence/B-007-catalog-branches/summary.json",
