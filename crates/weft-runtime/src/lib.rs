@@ -115,3 +115,24 @@ mod optional_tests {
         }
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod recursive_entity_tests {
+    #[test]
+    fn original_complete_recursive_entities_match_all_public_responses() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-entity-public-transport.json"
+        ))
+        .unwrap();
+        assert_eq!(cases.as_array().unwrap().len(), 28);
+        for case in cases.as_array().unwrap() {
+            let request = case["request"].to_string();
+            let response = super::compile_json(&request);
+            assert_eq!(
+                serde_json::from_str::<serde_json::Value>(&response).unwrap(),
+                case["response"]
+            );
+            assert_eq!(super::compile_json(&request), response);
+        }
+    }
+}

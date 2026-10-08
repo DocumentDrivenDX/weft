@@ -1,0 +1,40 @@
+{
+  "scope": "test-original only; twenty-four pinned configurations including fourteen complete scalar/recursive entity cuts; no production or generic released plugin qualification",
+  "rustTests": 142,
+  "embeddingCorpusCases": 180,
+  "fullResponseCases": 45,
+  "pythonDeterministicRepeats": 45,
+  "pythonCompileCalls": 225,
+  "files": {
+    "crates/weft-postgresql/src/conformance_original.rs": "06c293f4b9f171d54229a53daa916f462ad5f74539bc680f02d275e8be2c52a4",
+    "crates/weft-runtime/src/lib.rs": "c97077d6ac48dcd75171db388df7d103b9783f88b7dc39a2a27eeee243b12803",
+    "tests/truss-postgresql/original-embedding-check.py": "4f499624570d75aa2d60ba104e91ee1660aa5563a5f8bc11f1c0cd7908cd1cea",
+    "tests/truss-postgresql/check-composition-custody.py": "5d78ab926659aa24b248820f728347e918e50044aef57d4ef9287227f02b8fdb",
+    "tests/truss-postgresql/fixtures/original-entity-public-transport.json": "de9c57a829f93838a5c5cf8f7d581cf729146ae59cf159ee670b81a2207b4d52",
+    "tests/truss-postgresql/fixtures/original-entity-address-props-composition.json": "5895e27a810cbd38f62e146cf1251c110265de7c602db99458ba4638d1e21e85",
+    "tests/truss-postgresql/fixtures/original-entity-address-row-composition.json": "ae4ab4a7504e17dc11f8e3c012cd1d7a5518e490a39cec2e7c4c3b9a9bfc9907",
+    "tests/truss-postgresql/fixtures/original-entity-cyclic-props-composition.json": "4a5c65f4ed140837b1c5bc465cef191a49a4129124ddd85b888f941c0bda9622",
+    "tests/truss-postgresql/fixtures/original-entity-cyclic-row-composition.json": "23c3dd61863e210cd71a5bff92df9f640500f17c45bce3f77f2e617925ef7428",
+    "tests/truss-postgresql/fixtures/original-entity-map-props-composition.json": "38e9fd3c0bc96b4aa90213a6f7aac53eb5fefdbd7b992d45e46956ab6489861e",
+    "tests/truss-postgresql/fixtures/original-entity-map-row-composition.json": "e3b17b66935ab6b0f8896f213dbac993cb1327881f0425e96a31080439e34719",
+    "tests/truss-postgresql/fixtures/original-entity-nested-sequence-props-composition.json": "a86efef4fcc38a604b197e9c461321b9f94b76e98f1b4a3cec4141031bfcb8e9",
+    "tests/truss-postgresql/fixtures/original-entity-nested-sequence-row-composition.json": "a2a5d24b030be661d2b87abd32fcc031a6687f34a0353cbefc18e6c1c908d9a2",
+    "tests/truss-postgresql/fixtures/original-entity-numeric-address-props-composition.json": "b2a135e98c94f80f6e068928a3fdce23229ea79938a1f62679355160303fd746",
+    "tests/truss-postgresql/fixtures/original-entity-numeric-address-row-composition.json": "291890b35c773a7b5ce77ba5b8e3f385f3bbf6993d4fe9f72c9d0d84249757b7",
+    "tests/truss-postgresql/fixtures/original-entity-numeric-map-props-composition.json": "856f62eeee7cacc50e5a562968156e38b4565ac82481653e423552d39ae9c9c5",
+    "tests/truss-postgresql/fixtures/original-entity-numeric-map-row-composition.json": "54c0715da3ac1dc622d107d75ee27d83379677ed95649812fcf203c76b0d9078",
+    "tests/truss-postgresql/fixtures/original-entity-tags-props-composition.json": "38e9fd3c0bc96b4aa90213a6f7aac53eb5fefdbd7b992d45e46956ab6489861e",
+    "tests/truss-postgresql/fixtures/original-entity-tags-row-composition.json": "e3b17b66935ab6b0f8896f213dbac993cb1327881f0425e96a31080439e34719",
+    "tests/truss-postgresql/evidence/entity-embedding/python-summary.json": "e55e0af1d407fefa3b25d104d937831d62f0276b622c14d5ca20e92e00783325",
+    "tests/truss-postgresql/evidence/entity-embedding/browser-summary.json": "37eb7b199a448ca983a767e377570c93a44cac9adc5bfb9e44fed6bc8fe8cf28"
+  },
+  "logs": {
+    "/private/tmp/weft-entity-capture.log": "324251c30148396f8747fc79659ba6e9d0f492267e989465ac129298e4a7aaeb",
+    "/private/tmp/weft-entity-runtime.log": "8edabfbbb3f6f47c9c69522990a542bb2adca2000c47b027b720b350089bca8e",
+    "/private/tmp/weft-entity-python-build.log": "d7f671af418b06945944ef47f12a61b9fa520498bd2d028877fecd29d5d833d2",
+    "/private/tmp/weft-entity-python-install.log": "018e9c2c84c70899e978ef8bf8dbde3bfa5b332f0dc5b4c43559f5dc506de104",
+    "/private/tmp/weft-entity-wasm-build.log": "b5f84d70f050be35af06dbecbd07cb6eff78f2b73484b4531ae593cf241a16d3"
+  },
+  "wheelSha256": "0965aafb1df77fc344116af22b64cf9823ae0ddc9e4be94e92ec1e68dd440fb9",
+  "wasmSha256": "0e7af3e4f138f2f88fa851745b4815d4838e7497754866eb0137b450a2c756d7"
+}

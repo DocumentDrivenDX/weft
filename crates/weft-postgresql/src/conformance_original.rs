@@ -312,6 +312,22 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
             ),
         ),
     ];
+    let entity_presets=[
+        ("42d91b22f16443e0dcfb62039326abbfae5510c49c96c68c1ca9eb600987468f",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-address-props-composition.json")),
+        ("cacc904f4ed069c3110276228148c7357e2508d9bb68cb9c97f21d1a66a69333",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-address-row-composition.json")),
+        ("eb9510b807adc239e3a01268ae3a5a84bdbef645e7dd31fe5d1fec2a751c6bde",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-cyclic-props-composition.json")),
+        ("6668ec46460f2f996cbedd95151b391d3623aceb5a290af6fbfe4bb81e3d40b7",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-cyclic-row-composition.json")),
+        ("6b1f260bc54b30082c32522e7ed273bfcfdaa1a90d0b5ada3f49b0417c0345b5",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-map-props-composition.json")),
+        ("85c53de7842427b0ef90ff0e88a207f4a4306fdeec724262de6dcfa9aa7e4b7a",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-map-row-composition.json")),
+        ("58497d001dfb10292ca3a3b94f8a85a20ca67425361fe966d8d602568e8c7442",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-nested-sequence-props-composition.json")),
+        ("68373a0a8c90507e35f0b235e52fa2c3f4b670e7c144f538acd10901f9c4e36e",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-nested-sequence-row-composition.json")),
+        ("cc3c742a0fe5c554e7e70d7a4d46f671ce3201a9e42211f2cd5b98b9bb3705a2",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-address-props-composition.json")),
+        ("4b7800afd3e882e439fdcf7ec072911cba1e1f8bfd665709755a246e2355fb77",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-address-row-composition.json")),
+        ("0066885175b70b6e5dd2c59e5ec43b7c239a9f687d4dbd08397735b94da1df08",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-map-props-composition.json")),
+        ("992165da9c2fa413f4908208a630861d02bfddcad58b26928af681a69f760239",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-numeric-map-row-composition.json")),
+        ("b083d73632cc6b178201b45bc9cdba9c95eb4789d83360534b664dd9f376a49d",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-props-composition.json")),
+        ("da21b0e6782a3724db44e3e5f55c8f46b1a02a6ccd24fcb78cd8d0a949f262d5",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-row-composition.json")),
+    ];
     let raw = if target.binding_sha256
         == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
     {
@@ -322,6 +338,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
         presets
             .iter()
             .chain(optional_presets.iter())
+            .chain(entity_presets.iter())
             .find(|(pin, _)| *pin == target.binding_sha256)
             .map(|(_, raw)| *raw)
             .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?
@@ -763,6 +780,7 @@ mod recursive_entity_tests {
         )
         .unwrap();
         let mut captures = Vec::new();
+        let mut transports = Vec::new();
         for input in inputs.as_array().unwrap() {
             for note_home in ["row", "props"] {
                 for case in input["requests"].as_array().unwrap() {
@@ -862,6 +880,19 @@ mod recursive_entity_tests {
                         serde_json::from_str::<Value>(&config.compile_json(&request.to_string()))
                             .unwrap()
                     );
+                    if let Ok(directory) = std::env::var("WEFT_ORIGINAL_ENTITY_COMPOSITION_CAPTURE")
+                    {
+                        let path = std::path::Path::new(&directory).join(format!(
+                            "original-entity-{}-{note_home}-composition.json",
+                            input["fixture"].as_str().unwrap()
+                        ));
+                        std::fs::write(
+                            path,
+                            serde_json::to_vec_pretty(&config.conformance_capture()).unwrap(),
+                        )
+                        .unwrap();
+                    }
+                    transports.push(serde_json::json!({"fixture":input["fixture"],"noteHome":note_home,"request":request,"response":response}));
                     let checks: Vec<_> = response["obligations"]
                         .as_array()
                         .unwrap()
@@ -871,6 +902,9 @@ mod recursive_entity_tests {
                     captures.push(serde_json::json!({"fixture":input["fixture"],"noteHome":note_home,"bound":case["bound"],"propertyId":binding["properties"][input["index"].as_u64().unwrap() as usize]["propertyId"],"sql":response["sql"],"parameters":response["parameters"],"columns":response["columns"],"checks":checks}));
                 }
             }
+        }
+        if let Ok(path) = std::env::var("WEFT_ORIGINAL_ENTITY_TRANSPORT_CAPTURE") {
+            std::fs::write(path, serde_json::to_vec_pretty(&transports).unwrap()).unwrap();
         }
         if let Ok(path) = std::env::var("WEFT_ORIGINAL_RECURSIVE_ENTITY_CAPTURE") {
             std::fs::write(path, serde_json::to_vec_pretty(&captures).unwrap()).unwrap();

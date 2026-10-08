@@ -3204,3 +3204,28 @@ composition evidence; it does not add these new whole-entity cuts to the runtime
 conformance allowlist or qualify fresh Python/browser execution for them. Native
 null remains unsupported by the pinned profile. Broader scalar/query domains,
 whole-entity embedding and full host/story qualification remain B-005 work.
+
+### Complete recursive entity Python and browser embedding (2026-10-07)
+
+The test-original registry now admits fourteen exact scalar/recursive entity
+configurations: seven recursive shapes with each optional-note storage home.
+Captured configurations retain original definition/source bytes and independent
+property selectors. The custody check verifies all twenty-four configurations
+against forty-five complete public responses, including the previous scalar,
+compound and relationship cuts. Runtime tests compare every new response exactly
+and repeat compilation deterministically. All 142 Rust tests pass.
+
+Fresh CPython abi3 and browser WASM builds pass the expanded 180-case corpus:
+forty-five full-response comparisons and 135 candidate/digest/binding refusals.
+Python additionally repeats all forty-five successful calls, for 225 native
+compiler calls with subprocess execution disabled. Real Chromium 153.0.8010.12
+matches response bytes using the fresh WASM binary, without Node globals or
+external network dependencies. Committed summaries and artifact hashes are in
+[B-005-entity-embedding.json](B-005-entity-embedding.json).
+
+This closes the embedding evidence gap for the selected complete recursive entity
+cuts. Existing synthetic PostgreSQL evidence remains separately scoped. Native
+null remains unsupported by the pinned profile; broader scalar/query domains,
+entities with multiple recursive roots and complete host/story qualification
+remain B-005 work. This allowlist is a conformance facility, not a released generic
+backend registration or production compatibility claim.

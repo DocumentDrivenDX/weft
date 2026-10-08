@@ -13,7 +13,7 @@ def artifact(value):
     return data
 
 pairs = sorted(Path('tests/truss-postgresql/fixtures').glob('original-*-composition.json'))
-assert len(pairs) == 10
+assert len(pairs) == 24
 for path in pairs:
     composition = json.loads(path.read_text())
     assert composition['interfaceVersion'] == 'weft-original-conformance-composition/0.1.0'
@@ -47,6 +47,10 @@ for path in pairs:
             names = [relation[k] for k in ['relationshipType','sourceId','sourceType','targetId','targetType']]
             assert len(set(names)) == 5
             assert all(relation['columns'][n]['relationIdentity'] == relation['relationIdentity'] for n in names)
+    elif path.name.startswith('original-entity-'):
+        fixture,_,home=path.name.removeprefix('original-entity-').removesuffix('-composition.json').rpartition('-')
+        transports=[t for t in json.loads(path.with_name('original-entity-public-transport.json').read_text()) if t['fixture']==fixture and t['noteHome']==home]
+        assert len(transports)==2
     elif path.name.startswith('original-optional-'):
         home=path.name.split('-')[2]
         transports=[t for t in json.loads(path.with_name('original-optional-public-transport.json').read_text()) if json.loads(t['request']['target']['bindingJson'])['properties'][-1]['home']==home]
@@ -67,4 +71,4 @@ for path in pairs:
             definition = json.loads(comparator['originalJson'])
             assert artifact(definition['valueDefinition']) == artifact(prop['valueDefinition'])
             assert artifact(definition['sourceDomainDefinition']) == artifact(prop['acceptedDefinition'])
-print('10 compositions / 17 compiler responses preserve original byte custody.')
+print('24 compositions / 45 compiler responses preserve original byte custody.')
