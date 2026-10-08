@@ -4,7 +4,13 @@ from collections import Counter
 from pathlib import Path
 root=Path(__file__).resolve().parents[2]
 source=Path(os.environ.get('WEFT_SCOPE_REPORTS',str(root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports.json.gz')))
-reports=json.loads(gzip.decompress(source.read_bytes()))
+compressed=source.read_bytes();raw=gzip.decompress(compressed)
+custody_path=Path(os.environ.get('WEFT_SCOPE_CUSTODY',str(root/'docs/helix/04-build/evidence/B-007-truss-application-native/reports-custody.json')))
+custody=json.loads(custody_path.read_text())
+assert hashlib.sha256(compressed).hexdigest()==custody['gzipSha256'],'archive digest mismatch'
+assert hashlib.sha256(raw).hexdigest()==custody['uncompressedSha256'],'payload digest mismatch'
+assert len(raw)==custody['bytes'],'payload byte count mismatch'
+reports=json.loads(raw)
 harness=root/'tests/truss-postgresql/application-native.py'
 # Evaluate trusted expectation definitions only; drop compiler-path/hash setup.
 # No compilation, database execution, or temporary binary is needed.

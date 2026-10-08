@@ -600,3 +600,9 @@ real native report joins, runtime-identity corruption controls, and current
 core unit evidence. Twelve replay components pass with 71 verified references.
 The closure audit records verified compiler artifact parity while retaining
 final profile provenance and host execution qualification as open.
+
+Standalone native scope auditing now verifies compressed/uncompressed
+archive digests and byte count before parsing. Three exact custody controls
+and eight semantic corruptions all refuse. Semantic corruption fixtures use
+correct temporary custody hashes to reach their intended guards. The
+twelve-component retained replay passes at the current source.

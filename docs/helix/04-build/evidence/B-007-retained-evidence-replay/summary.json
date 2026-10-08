@@ -633,13 +633,13 @@
         ],
         "qualification": "Artifact pins and independent authored row expectations reconciled. Engine/session provenance and required host layers must be joined separately; no support promotion."
       },
-      "sourceSha256": "87cc3599d643fe17a7cce522dc99572be41d51172c5d52c2c792bf0b42ecb796"
+      "sourceSha256": "1da789ac9f48f454a8b510b3969d28431c0ea1dbe2327b337c31bc17a0b93323"
     },
     {
       "component": "native-scope-controls.py",
       "result": {
         "status": "passed",
-        "corruptionsRejected": 8,
+        "corruptionsRejected": 11,
         "names": [
           "lost-row",
           "duplicate-row",
@@ -648,11 +648,14 @@
           "wrong-model-pin",
           "changed-raw-only",
           "duplicate-case-id",
-          "changed-order"
+          "changed-order",
+          "custody-gzipSha256",
+          "custody-uncompressedSha256",
+          "custody-bytes"
         ],
         "scope": "Saved native row/pin audit negative controls; no engine rerun."
       },
-      "sourceSha256": "0daca42e3548dd6e2b12226432488d08c01b681f6a93fb0e00143886434da5ea"
+      "sourceSha256": "53afe08105bd6276d2c0ff05526d1544dccdf1682e353ee611d67a0c7057810f"
     },
     {
       "component": "audit-truss-support-reports.py",
