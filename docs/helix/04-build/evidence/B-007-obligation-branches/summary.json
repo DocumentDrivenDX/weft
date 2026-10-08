@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "testsExecuted": 1,
+  "cases": 9,
+  "refusals": [
+    "empty ID",
+    "non-object parameters",
+    "wrong code prefix",
+    "empty code suffix",
+    "lowercase code",
+    "non-ASCII code",
+    "conflicting parameters",
+    "conflicting owner"
+  ],
+  "positive": "identical requirement deduplicates; distinct requirements remain sorted in emission",
+  "sources": {
+    "tests/register-backend/pipeline.rs": "730e5ded5a54ce41238b29105ae8922ddff584dd48a58caa8785f419a12819b7",
+    "crates/weft-core/src/backend.rs": "d638e0d8b4e85c41848a750b89db463578721746595aa0f2e704fb22628956eb"
+  },
+  "scope": "Obligation merge content guards/conflicts and exact successful emission; test fixture move error corrected before execution. No database/host-policy certification."
+}

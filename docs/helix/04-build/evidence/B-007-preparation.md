@@ -453,3 +453,11 @@ fixture borrow-check error was corrected before successful test execution and is
 not semantic evidence. B-007-assessment-branches/ retains the passed named-test
 log and source hashes. Existing candidate opt-in/upgrade and missing-assessment
 checks remain separate.
+
+Nine obligation merge cases pass: six malformed ID/parameter/code forms and two
+same-ID parameter/owner conflicts refuse with the intended obligation diagnostic.
+Identical requirements deduplicate and distinct requirements survive sorted in
+the emission. B-007-obligation-branches/ retains source hashes and executed test.
+An initial fixture move-check error was corrected before successful execution;
+compiler implementation remains unchanged. Actual host fulfillment is separately
+proved by native driver controls, not by these merge assertions.

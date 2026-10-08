@@ -223,3 +223,33 @@ fn capability_assessment_guards_prevent_lowering() {
         assert_eq!(error.message,match mode {0|1=>"Binding-derived capabilities must be distinct and bounded",2|3=>"Assessment has duplicate or unrequested operations",4=>"Selected operation is unsupported",_=>"Assessment has missing or undeclared qualification evidence"},"mode {mode}");
     }
 }
+
+// @covers US-002-AC4 @covers US-006-AC4
+#[test]
+fn obligation_merge_refuses_conflicts_and_preserves_requirements() {
+    fn obligation(id:&str)->Obligation {Obligation{id:id.into(),parameters:json!({}),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into()}}
+    struct Obligations {mode:u8,inner:Third}
+    impl Backend for Obligations {
+        type Mapping=Mapping;type TargetPlan=Select;
+        fn describe(&self)->weft_core::error::Result<Manifest>{self.inner.describe()}
+        fn validate_binding(&self,c:&Context<'_>)->weft_core::error::Result<Validated<Mapping>>{
+            let mut v=self.inner.validate_binding(c)?;let mut o=obligation("z");
+            match self.mode {0=>o.id.clear(),1=>o.parameters=json!([]),2=>o.failure_code="OTHER".into(),3=>o.failure_code="WFT-".into(),4=>o.failure_code="WFT-lower".into(),5=>o.failure_code="WFT-É".into(),_=>{}}
+            v.obligations.push(o.clone());
+            if self.mode==6 {o.parameters=json!({"changed":true});v.obligations.push(o.clone());}
+            if self.mode==7 {o.owner=ObligationOwner::Backend;v.obligations.push(o.clone());}
+            if self.mode==8 {v.obligations.extend([o,obligation("a")]);}
+            Ok(v)
+        }
+        fn assess(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Vec<Assessment>>{self.inner.assess(c,m)}
+        fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{self.inner.lower(c,m)}
+        fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{self.inner.emit(c,p)}
+    }
+    let (catalog,plan)=weft_core::prepare_and_resolve("SELECT c.name FROM Customer c",modules()).unwrap();
+    for mode in 0..9 {
+        let mut r=Registry::default();r.register(Obligations{mode,inner:Third{manifest:manifest(Status::Supported),behavior:Behavior::Normal}}).unwrap();
+        let out=r.compile(&catalog,Plan::V01(&plan),&target(false),&binding(&catalog));
+        if mode==8 {assert_eq!(out.unwrap().emission.obligations,vec![obligation("a"),obligation("z")]);}
+        else {let e=out.unwrap_err();assert_eq!(e.code,"WFT-OBLIGATION");assert_eq!(e.message,if mode<6 {"Backend returned a malformed obligation"} else {"Obligation ID has conflicting requirements"});}
+    }
+}
