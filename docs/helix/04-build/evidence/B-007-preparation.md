@@ -629,3 +629,9 @@ B-007-linux-ci/ retains terminal GitHub run 37771049078 at f9101d9:
 spec checks, browser package build, and twelve-component evidence replay
 verifying 73 references. Compressed full logs and remote job metadata pin
 the observation to its source revision. No live engine or browser CI claim.
+
+The terminal 214-test Linux CI checkpoint is now linked across the acceptance
+matrix as shared workspace regression evidence. Twelve replay components
+pass with 74 verified references. Git comparison confirms crates, tests and
+workflow files are unchanged from tested f9101d9 through this evidence update.
+Criterion-specific native/host/profile proof remains separately scoped.

@@ -23,6 +23,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
           "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -48,6 +52,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
           "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -77,6 +85,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
           "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -102,6 +114,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-resolution-audit/summary.json",
           "sha256": "18660b6207b1256282c86ac49a977515600160a6369f96a7cba7de5313d47f47"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Independent frontend resolution and relational bags; target execution is separately evidenced. Full latest application-specific matrix must be reconciled under US-007."
@@ -187,6 +203,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
           "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -272,6 +292,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
           "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -353,6 +377,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-adapter-emission-consolidated/summary.json",
           "sha256": "26a28a018358733dd9ee27b27c47156fe9a3018e0b7640cdf8a876ecfcef27b7"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -462,6 +490,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
           "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Library/fixture registry and named public plugin failures. Native profile correctness is owned by backend evidence, not manifest validity."
@@ -491,6 +523,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -524,6 +560,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -557,6 +597,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -614,6 +658,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Production runtime/adoption and authority service are unqualified; exact native fixture scopes remain in B-005."
@@ -639,6 +687,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -660,6 +712,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -681,6 +737,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -698,6 +758,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-native-backend-review.md",
           "sha256": "45eb1dba8825914766c717093af6a47960eed1c8a43879e1d75a76342b051ba3"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Owner-authorized candidate scope only. Warehouse release is unqualified; authority/lifecycle attestations are synthetic. Exact native fixture scopes remain in B-006."
@@ -767,6 +831,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -836,6 +904,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -897,6 +969,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -970,6 +1046,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
           "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Fresh test-third public corpus and saved Ashlar artifact parity on macOS ARM64 CPython 3.12.14 and Chromium 148.0.7778.96. No fleet-wide platform or every adapter/profile combination claim."
@@ -1027,6 +1107,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1112,6 +1196,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-real-native-report-audit/host-runtime-controls.json",
           "sha256": "68542b23fb4ad697641cf8ef69da62153149d18422ee82ee6060bf3935155778"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1153,6 +1241,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-guard-regression/summary.json",
           "sha256": "d74ea6b7fdd72331ef709c2dbda772eea58dae8181b64d6f5f073c66c874710f"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1258,6 +1350,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-scalar-representation/summary.json",
           "sha256": "3a8fc4b6047c00e7c27b57f2ff48d3f6407024719a4c16990adbdd4d2097da74"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Support audit uses synthetic trusted reports; property/resource/parser/public-plugin tests cover named branches. Complete critical-branch and real support-report audit remains open."
@@ -1307,6 +1403,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1356,6 +1456,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1401,6 +1505,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1458,6 +1566,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-field-representation/summary.json",
           "sha256": "233551eab797f2f8c514de04c518d70c328a77fbfac673ff44234335388b64c1"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1499,6 +1611,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
@@ -1548,6 +1664,10 @@
         {
           "path": "docs/helix/04-build/evidence/B-007-application-audit/review.md",
           "sha256": "e9d421291d781ef706b8b15c8d61d581c873ddbdb6b359a53bd4413bbf219eaf"
+        },
+        {
+          "path": "docs/helix/04-build/evidence/B-007-linux-ci/summary.json",
+          "sha256": "04bc14d4b208c7744f05289a633b926c1f458a6f1a744752cee61d17da441d48"
         }
       ],
       "limitsAndRemainingAudit": "Frontend plus candidate native application evidence exists. Each of six criterion scopes still needs a reconciled case-level backend/host evidence audit; blanket story closure is unproven."
