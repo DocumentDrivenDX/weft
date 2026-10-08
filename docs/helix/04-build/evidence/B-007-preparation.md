@@ -533,3 +533,10 @@ by exact compiler/dialect/IR/backend/model/binding pins: 21 distinct compiled
 scopes. The executable audit checks raw/decoded response agreement and unique
 case IDs. Engine/session provenance, expectations and host layers remain
 separate joins before a real support report; no inventory promotion occurs.
+
+The native profile audit now reconciles all 76 saved Truss row sets with
+independently authored harness expectations using exact Decimal/value
+canonicalization, including 65 ordered comparisons. Original request
+model and binding digests are verified per case. row-reconciliation.json
+retains this expanded observation separately from the original scope-only
+receipt. Only expectation definitions execute; no compiler or database rerun.
