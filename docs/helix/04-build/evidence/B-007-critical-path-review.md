@@ -166,3 +166,18 @@ checks own that guarantee. No typed decimal home is invented for Ashlar's layout
 The exact/parser semantic-family review is now recorded separately; backend
 lowering and final graph accounting, supported native registrations and the
 final acceptance audit remain required.
+
+## Final graph and backend family accounting
+
+The graph ledger now maps 14 semantic families to all 18 passing application-model
+tests. The backend ledger maps 15 lowering families to 22 passing integration tests
+per backend. B-007-final-branch-audit retains current source hashes and execution
+logs. Alias tests verify existing occurrence normalization; failed authoring logs
+retain incorrect expectations and do not establish a compiler defect. Duplicate
+and NUL structured member names and unknown selected page-key meaning refuse.
+
+Truss NativeReview now accurately declares scalar/application and admitted storage
+home scope while remaining Candidate. Its focused registration test preserves SQL,
+parameters, columns, plans and pins for scalar and application fixtures. Native
+supported-profile evidence joins, final composition/embedding and acceptance remain
+open; these checks do not promote support.

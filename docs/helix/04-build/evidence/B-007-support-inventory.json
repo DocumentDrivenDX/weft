@@ -296,7 +296,7 @@
       "surface": "Explicit trusted Rust Backend registration only; default Python/browser builds keep the historical candidates.",
       "implementation": {
         "path": "crates/weft-postgresql/src/native_profile.rs",
-        "sha256": "c2b8dfbdd7390961df8ae52b3e970737aa34cbbe4ab6a0de566c1cc5e16f5d4c"
+        "sha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
       },
       "evidence": [
         {

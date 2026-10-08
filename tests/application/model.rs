@@ -476,6 +476,11 @@ fn selected_member_and_compound_meaning_guards_have_exact_diagnostics() {
     );
     for (shape, envelope_refusal, message) in [
         (
+            json!({"cardinality":"array","itemType":{"module":"sales","element":"customer-name"},"references":[{"role":"future","module":"sales","element":"customer"}]}),
+            false,
+            "Container cannot imply scalar or structured meaning",
+        ),
+        (
             json!({"cardinality":"array","scalarType":"string","itemType":{"module":"sales","element":"customer-name"}}),
             true,
             "Container cannot imply scalar or structured meaning",
@@ -611,4 +616,161 @@ fn authored_key_and_relationship_endpoint_guards_are_explicit() {
             );
         }
     }
+}
+
+// @covers US-006-AC3 @covers US-007-AC1 @covers US-007-AC6
+#[test]
+fn graph_dependencies_maps_and_member_ambiguity_are_explicit() {
+    let mut d = document();
+    d["modules"].as_array_mut().unwrap().push(json!({
+        "id":"types","namespace":"types","elements":[
+            {"id":"map-item","name":"item","kind":"field","cardinality":"one","nullability":"required","scalarType":"string","extensions":{}}
+        ]
+    }));
+    d["modules"][0]["elements"].as_array_mut().unwrap().push(json!({
+        "id":"mapped","name":"mapped","kind":"field","cardinality":"map","nullability":"absent-allowed","itemType":{"module":"types","element":"map-item"},"extensions":{}
+    }));
+    d["modules"][0]["elements"][0]["members"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"module":"sales","element":"mapped"}));
+    let c = catalog(d.clone());
+    let (member, graph) = c.member_descriptor(&customer(&c), &name("mapped")).unwrap();
+    assert_eq!(member.identity.element, "mapped");
+    let graph = serde_json::to_value(graph).unwrap();
+    assert_eq!(graph[0]["kind"], "map");
+    assert_eq!(graph[0]["availability"], "absent-allowed");
+    assert_eq!(graph[1]["identity"]["module"], "types");
+    assert_eq!(graph[1]["type"]["family"], "string");
+    // Selected module discovery does not discard dependencies in its owning document.
+    d["modules"][0]["elements"]
+        .as_array_mut()
+        .unwrap()
+        .last_mut()
+        .unwrap()["itemType"]["module"] = json!("missing");
+    let c = catalog(d);
+    let error = c.entity_descriptor(&customer(&c)).unwrap_err();
+    assert_eq!(error.code, "WFT-TYPE");
+    assert_eq!(error.message, "Unresolved local type dependency");
+    let mut d = document();
+    d["modules"][0]["elements"][3]["name"] = json!("id");
+    let c = catalog(d);
+    assert_eq!(
+        c.member_descriptor(&customer(&c), &name("id"))
+            .unwrap_err()
+            .code,
+        "WFT-NAME-AMBIGUOUS"
+    );
+    for cardinality in ["unspecified", "future"] {
+        let mut d = document();
+        d["modules"][0]["elements"][3]["cardinality"] = json!(cardinality);
+        let c = catalog(d);
+        let error = c.entity_descriptor(&customer(&c)).unwrap_err();
+        assert_eq!(error.code, "WFT-TYPE");
+        assert_eq!(error.message, "Selected cardinality is unsupported");
+    }
+}
+
+// @covers US-006-AC3 @covers US-007-AC3
+#[test]
+fn relationship_selection_missing_duplicate_and_endpoint_roles_are_explicit() {
+    let c = catalog(relationship_document());
+    assert_eq!(
+        c.relationship_read(&customer(&c), &name("missing"))
+            .unwrap_err()
+            .code,
+        "WFT-NAME-MISSING"
+    );
+    let mut d = relationship_document();
+    let mut duplicate = d["modules"][0]["relationships"][0].clone();
+    duplicate["name"] = json!("other");
+    d["modules"][0]["relationships"]
+        .as_array_mut()
+        .unwrap()
+        .push(duplicate);
+    let c = catalog(d);
+    assert_eq!(
+        c.relationship_read(&customer(&c), &name("orders"))
+            .unwrap_err()
+            .message,
+        "Duplicate relationship identity"
+    );
+    let mut d = relationship_document();
+    let relations = d["modules"][0]
+        .as_object_mut()
+        .unwrap()
+        .remove("relationships")
+        .unwrap();
+    d["modules"].as_array_mut().unwrap().push(
+        json!({"id":"unselected","namespace":"unselected","elements":[],"relationships":relations}),
+    );
+    let c = catalog(d);
+    assert_eq!(
+        c.relationship_read(&customer(&c), &name("orders"))
+            .unwrap_err()
+            .code,
+        "WFT-NAME-MISSING"
+    );
+    let mut d = relationship_document();
+    d["modules"][0]["relationships"][0]["target"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"module":"sales","element":"customer","key":"customer-pk"}));
+    let c = catalog(d);
+    assert_eq!(c.relationship_read(&customer(&c),&name("orders")).unwrap_err().message,"Relationship requires a supported monomorphic directed traversal without an association Record");
+    // Inverse selection lets the original source endpoint's role be checked.
+    let mut d = relationship_document();
+    d["modules"][0]["relationships"][0]["source"][0]["element"] = json!("customer-name");
+    let c = catalog(d);
+    let order = c.record(None, &name("orders")).unwrap();
+    assert_eq!(
+        c.relationship_read(&order, &name("customer"))
+            .unwrap_err()
+            .message,
+        "Relationship source must be a Record"
+    );
+}
+
+// @covers US-006-AC3 @covers US-007-AC6
+#[test]
+fn duplicate_authored_key_identity_and_primary_precedence_are_explicit() {
+    let mut d = relationship_document();
+    let mut second = d["modules"][0]["elements"][0]["keys"][0].clone();
+    second["name"] = json!("other");
+    d["modules"][0]["elements"][0]["keys"]
+        .as_array_mut()
+        .unwrap()
+        .push(second);
+    let c = catalog(d);
+    assert_eq!(
+        c.authored_key(&customer(&c), "customer-pk")
+            .unwrap_err()
+            .message,
+        "Authored key identity is missing or ambiguous"
+    );
+    let mut d = relationship_document();
+    let mut alternative = d["modules"][0]["elements"][0]["keys"][0].clone();
+    alternative["id"] = json!("alternative");
+    alternative["name"] = json!("alternative");
+    alternative["primary"] = json!(false);
+    d["modules"][0]["elements"][0]["keys"]
+        .as_array_mut()
+        .unwrap()
+        .push(alternative);
+    let c = catalog(d.clone());
+    assert_eq!(
+        c.relationship_read(&customer(&c), &name("orders"))
+            .unwrap()
+            .source_key
+            .id,
+        "customer-pk"
+    );
+    d["modules"][0]["elements"][0]["keys"][1]["primary"] = json!(true);
+    let c = catalog(d);
+    assert_eq!(
+        c.relationship_read(&customer(&c), &name("orders"))
+            .unwrap_err()
+            .message,
+        "Relationship source endpoint key is ambiguous"
+    );
 }

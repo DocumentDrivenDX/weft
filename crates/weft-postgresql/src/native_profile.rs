@@ -40,6 +40,18 @@ impl Backend for NativeReview {
         profile.publication_revision = "host-verified-native-review/0.1".into();
         for capability in &mut manifest.capabilities {
             capability.target_profiles = vec![PROFILE.into()];
+            capability.logical_domain = json!({
+                "subset":"admitted weft-sql/0.1 scalar and weft-sql/0.2 application plans",
+                "storageHomes":["JSONB properties","typed scalar rows","complete compound row trees"],
+                "meaning":"only binding-admitted type, presence, key, relationship and comparison semantics",
+                "nativeNull":"refused for selected non-nullable values"
+            });
+            capability.result_domain = json!({
+                "transport":"exact text; compound numeric values are base-ten strings",
+                "arithmetic":"PostgreSQL exact NUMERIC or error",
+                "emptyAggregates":{"sum":"nullable","count":"non-null integer"},
+                "qualification":"candidate native review"
+            });
             capability.obligations.push(execution_profile());
             capability
                 .constraints
@@ -95,7 +107,20 @@ mod tests {
             "../../../tests/truss-postgresql/fixtures/compiler-cases.json"
         ))
         .unwrap();
-        let cases: Vec<Value> = fixture.as_array().unwrap().clone();
+        let mut cases: Vec<Value> = fixture.as_array().unwrap().clone();
+        let application: Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/application-cases.json"
+        ))
+        .unwrap();
+        cases.push(application[0].clone());
+        assert!(manifest
+            .capabilities
+            .iter()
+            .all(|cap| cap.logical_domain["subset"]
+                .as_str()
+                .unwrap()
+                .contains("weft-sql/0.2")
+                && cap.result_domain["qualification"] == "candidate native review"));
         for case in cases {
             let mut request = case["request"].clone();
             let before: Value =
