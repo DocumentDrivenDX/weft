@@ -1,0 +1,27 @@
+{
+  "scope": "Conformance-only original signed public SUM/page/cursor at widths 1/8/16/32/64 in two storage homes; no fresh Python/browser or production claim",
+  "rustTests": 147,
+  "fullSignedResponses": 30,
+  "configurations": 10,
+  "files": {
+    "crates/weft-postgresql/src/property_definition.rs": "aef88fb8ba82e34910c1b26dfd3c6e40b71a5dda361cb03813c2fdc4a8ae0bfc",
+    "crates/weft-postgresql/src/conformance_original.rs": "05c52778e867b610113a1858b912cfdfdf6035803526901da80f0284bfde94e9",
+    "crates/weft-runtime/src/lib.rs": "91728fa5200dcb45171abc8d14ff5cffe5f8f2e73e86f472bb60c664f2f28aa7",
+    "tests/truss-postgresql/check-composition-custody.py": "adeaf1b0c18aaba0bef7e22a12628ab97b8c7f255963989f7a4691068781294c",
+    "tests/truss-postgresql/original-signed-public-native.py": "c1106147a1c067a8845569513585d50b6d6ef7df24e448e6524ece2014a77106",
+    "tests/truss-postgresql/fixtures/original-signed-public-transport.json": "5357fed50d2cd0936b57b3b623217dd63f83feb32687c27a0ff23e31d972ad83",
+    "tests/truss-postgresql/fixtures/original-signed-1-props-composition.json": "33fe5976f4445ce7944ba3f6dfc53e5d0b28598aec56437a9a248ee3b934d8d3",
+    "tests/truss-postgresql/fixtures/original-signed-1-row-composition.json": "fe9acdbccd58538a63ce88bd340253b771e150a631156ffb1c0b3e61ffabb6b7",
+    "tests/truss-postgresql/fixtures/original-signed-16-props-composition.json": "e6ecf174c9798874f49adbdb00e305b3de2ee7a38a894adb7bd353321a4cd536",
+    "tests/truss-postgresql/fixtures/original-signed-16-row-composition.json": "446bcfec842e429426a417771971f4c2b6f6065245cd409c16f1a856da460770",
+    "tests/truss-postgresql/fixtures/original-signed-32-props-composition.json": "f24e5992163e9b3d5acea33527509d7fd41225090f2f3ad44cb7801ffb484a93",
+    "tests/truss-postgresql/fixtures/original-signed-32-row-composition.json": "e64276c22ba479b451f67d169c042d91344c6d250132c98129485cabb16194d0",
+    "tests/truss-postgresql/fixtures/original-signed-64-props-composition.json": "10e7f6228f6f64f7e54750b89f6bea3cd124f993dcecc2d5a5e44bb04772820f",
+    "tests/truss-postgresql/fixtures/original-signed-64-row-composition.json": "30fa85f6c0fec9aa0a60ad4c78dde2e67aae88d749045aa6df06a3f8e4525e59",
+    "tests/truss-postgresql/fixtures/original-signed-8-props-composition.json": "f4046d6ef19f982e1678b7772c412dcc7da30b3ff1afd485180d80585b81be77",
+    "tests/truss-postgresql/fixtures/original-signed-8-row-composition.json": "cf02bf9eb4c4adb90a59a216804a507de37d68a42d3c4a51bd407e858abeb482"
+  },
+  "logs": {
+    "/private/tmp/weft-signed-public-full.log": "deef18bb6568d2544289700bc7bb67f55d7a9387bed503376e45a32c4274f088"
+  }
+}

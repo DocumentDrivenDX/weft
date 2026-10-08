@@ -261,7 +261,7 @@ fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
             });
         }
     }
-    let numeric = !relationships.is_empty();
+    let numeric = !comparators.is_empty();
     Ok(Configuration {
         relationships,
         binding_profile: text(&v["bindingProfile"])?.into(),
@@ -328,6 +328,18 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
         ("b083d73632cc6b178201b45bc9cdba9c95eb4789d83360534b664dd9f376a49d",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-props-composition.json")),
         ("da21b0e6782a3724db44e3e5f55c8f46b1a02a6ccd24fcb78cd8d0a949f262d5",include_str!("../../../tests/truss-postgresql/fixtures/original-entity-tags-row-composition.json")),
     ];
+    let signed_presets = [
+        ("4157653f754453c15f3110c7f23b4b70d3b8e3ffbc2e44a0e8a7499ea93d38b7", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-1-row-composition.json")),
+        ("1125a4a9bc0f070a0212aad8044f1de8a79764b1396aab51ed576f41d6b17458", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-1-props-composition.json")),
+        ("108095f572c0e3b0985ba87cfd4578d1e22ceb83dea9543a5b07bc222308c45a", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-8-row-composition.json")),
+        ("9928c3fc53ede1b64cd24dce847fbadbd94a33d5ee714d0e8bd2beead4377b11", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-8-props-composition.json")),
+        ("988f5475e89270d43aafa9bc58e25cc6dd5100c0bf628d63d433a79036fa063c", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-16-row-composition.json")),
+        ("ed70b7ba935c8dc44ad346175dfa3ff143b106e70be32184fc7e16adb27bb626", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-16-props-composition.json")),
+        ("a0fbe78ffc14e0d15a9272f606b972653aa2394324bff00c6e2146b436849949", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-32-row-composition.json")),
+        ("0b3c8497e72c16c2427c6cc051a107f14626fd0fa792005153c04eda1adf5840", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-32-props-composition.json")),
+        ("508d3a00a8bc7e505746cc528569d4f8404cab2dbb21eee825fa4e95bdc90490", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-row-composition.json")),
+        ("a93a3cb75a6bc79a9131a9327dc64831e9f5ccc6bc53acce7f52acbed07e68cc", include_str!("../../../tests/truss-postgresql/fixtures/original-signed-64-props-composition.json")),
+    ];
     let raw = if target.binding_sha256
         == "f598a497fee406abd64999f3d60a4a2ba2eeb192926987c48656f40590f7b1ba"
     {
@@ -339,6 +351,7 @@ pub fn registry(catalog: &Catalog, _: Plan<'_>, target: CompositionInput<'_>) ->
             .iter()
             .chain(optional_presets.iter())
             .chain(entity_presets.iter())
+            .chain(signed_presets.iter())
             .find(|(pin, _)| *pin == target.binding_sha256)
             .map(|(_, raw)| *raw)
             .ok_or_else(|| fail("Binding has no explicitly compiled conformance composition"))?

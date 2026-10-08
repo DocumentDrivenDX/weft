@@ -2111,6 +2111,114 @@ mod tests {
         )
         .is_err());
         assert!(scope_parameters.into_slots().is_empty());
+        if let Some(bits) = signed_width {
+            let mut transports = Vec::new();
+            for (home, selected_binding) in [("row", &row_input), ("props", &input)] {
+                let owned = crate::original_admission::Configuration {
+                    binding_profile: selected_binding.profile.clone(),
+                    native: scalar_native,
+                    comparators: comparisons.clone(),
+                    relationships: vec![],
+                    records: vec![crate::original_admission::OwnedRecordSelection {
+                        index: record_index,
+                        inventory: inventory.clone(),
+                        relation_identity: "object-table".into(),
+                        discriminator_identity: "object-type".into(),
+                        relations: relations.clone(),
+                        columns: columns.clone(),
+                    }],
+                    properties: vec![crate::original_admission::OwnedPropertySelection {
+                        index,
+                        value_profile: pin.clone(),
+                        presence_profile: pin.clone(),
+                        leaf_codecs: leaves.clone(),
+                        record_presence: BTreeMap::new(),
+                        physical_profile: pin.clone(),
+                        inventory: inventory.clone(),
+                        relations: if home == "row" {
+                            row_fixture.relations.clone()
+                        } else {
+                            relations.clone()
+                        },
+                        columns: if home == "row" {
+                            row_fixture.columns.clone()
+                        } else {
+                            columns.clone()
+                        },
+                        row_join: if home == "row" {
+                            Some(std::sync::Arc::new(
+                                crate::row_join_definition::tests::parse(
+                                    &row_fixture.value,
+                                    &row_fixture,
+                                )
+                                .unwrap(),
+                            ))
+                        } else {
+                            None
+                        },
+                        obligations: if home == "row" {
+                            row_obligations.clone()
+                        } else {
+                            BTreeSet::new()
+                        },
+                        edge_association: None,
+                        native_tree: None,
+                    }],
+                };
+                for (kind, sql) in [
+                    ("sum", "SELECT SUM(c.id) AS total FROM Customer c"),
+                    ("page", "SELECT c.id FROM Customer c ORDER BY c.id LIMIT 2"),
+                    (
+                        "cursor",
+                        "SELECT c.id FROM Customer c WHERE c.id > :cursor ORDER BY c.id LIMIT 2",
+                    ),
+                ] {
+                    let mut request = cases[0]["request"].clone();
+                    request["sql"] = json!(sql);
+                    request["target"]["backendId"] = json!("truss.postgresql.original");
+                    request["target"]["backendVersion"] = json!("0.1.0-candidate");
+                    request["target"]["targetProfile"] = json!("pg17.9-candidate");
+                    request["options"]["allowCandidate"] = json!(true);
+                    request["target"]["bindingJson"] = json!(selected_binding.json);
+                    request["target"]["bindingSha256"] = json!(selected_binding.sha256);
+                    request["parameters"] = if kind == "cursor" {
+                        json!({"cursor":{"family":"integer","value":"-1"}})
+                    } else {
+                        json!({})
+                    };
+                    if kind == "sum" {
+                        request.as_object_mut().unwrap().remove("readProfile");
+                    } else {
+                        request["readProfile"] =
+                            json!({"version":"weft-application-read/0.2.0","subset":"entity-page"});
+                    }
+                    let response: Value =
+                        serde_json::from_str(&owned.compile_json(&request.to_string())).unwrap();
+                    assert_eq!(response["status"], "compiled", "{response}");
+                    assert_eq!(
+                        owned.compile_json(&request.to_string()),
+                        response.to_string()
+                    );
+                    transports.push(json!({"bits":bits,"home":home,"kind":kind,"request":request,"response":response}));
+                }
+                if let Ok(directory) = std::env::var("WEFT_ORIGINAL_SIGNED_COMPOSITION_CAPTURE") {
+                    std::fs::write(
+                        std::path::Path::new(&directory)
+                            .join(format!("original-signed-{bits}-{home}-composition.json")),
+                        serde_json::to_vec_pretty(&owned.conformance_capture()).unwrap(),
+                    )
+                    .unwrap();
+                }
+            }
+            if let Ok(directory) = std::env::var("WEFT_ORIGINAL_SIGNED_COMPOSITION_CAPTURE") {
+                std::fs::write(
+                    std::path::Path::new(&directory)
+                        .join(format!("original-signed-{bits}-transports.json")),
+                    serde_json::to_vec_pretty(&transports).unwrap(),
+                )
+                .unwrap();
+            }
+        }
         let row_backend = crate::original_backend::OriginalBackend::new(
             &row_input,
             row_records,

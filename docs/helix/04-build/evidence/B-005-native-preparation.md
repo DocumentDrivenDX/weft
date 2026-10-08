@@ -3333,3 +3333,32 @@ This extends original property and emitted-SQL evidence beyond uint64. Codec and
 source semantics are independently selected synthetic fixture procedures; this
 is not production profile qualification, a new runtime registry preset, native
 signed relationship qualification or fresh Python/browser execution evidence.
+
+### Signed owned composition and public SUM/page/cursor (2026-10-07)
+
+Ten owned original configurations now cover five signed widths in each storage
+home. They compile thirty complete public-envelope requests: SUM, ordered page
+and cursor continuation. Captured metadata retains independently selected original
+Field, source, graph, presence, leaf and comparator bytes. Deterministic repeated
+responses and a fresh original backend admission are exercised. The runtime
+conformance registry admits only these exact binding pins, with no model-loaded
+procedure or general serialized plugin facility.
+
+The new public runtime regression exposed an integration refusal: the conformance
+loader previously selected scalar expression procedures only when relationships
+were present. It now selects the already admitted comparator configuration, which
+still subjects each operand to exact domain validation. All 147 Rust tests pass,
+including exact complete-response parity for all thirty signed requests and all
+previous original paths. The independent custody checker verifies thirty-four
+configurations against seventy-five responses.
+
+`original-signed-public-native.py` passes 210 PostgreSQL 17.9 cases for these
+thirty emitted SUM/page/cursor artifacts. Exact signed minima/maxima, empty results,
+ordering and continuation use independent mathematical expectations. Width
+violations, fractions, missing required state and corrupt native codec/JSON
+carriers refuse before result SQL. Owner-wide checks remain independent of page
+and cursor filters. Receipts:
+[B-005-original-signed-public.json](B-005-original-signed-public.json) and
+[B-005-original-signed-public-native.json](B-005-original-signed-public-native.json).
+Fresh Python/browser builds for these new registry cuts remain pending; this is
+not an embedding or production compatibility claim.

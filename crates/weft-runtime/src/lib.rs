@@ -136,3 +136,21 @@ mod recursive_entity_tests {
         }
     }
 }
+
+#[cfg(all(test, feature = "test-original"))]
+mod signed_property_tests {
+    #[test]
+    fn original_signed_properties_match_complete_public_responses() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../tests/truss-postgresql/fixtures/original-signed-public-transport.json"
+        ))
+        .unwrap();
+        for case in cases.as_array().unwrap() {
+            let request = case["request"].to_string();
+            let raw = super::compile_json(&request);
+            let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
+            assert_eq!(response, case["response"]);
+            assert_eq!(super::compile_json(&request), raw);
+        }
+    }
+}
