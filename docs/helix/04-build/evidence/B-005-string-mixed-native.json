@@ -2,8 +2,8 @@
   "nativeTextColumnCollation": "ICU und-u-ks-level1 nondeterministic",
   "scope": "Public original owned composite UTF8 C-collation string/uint64 relationship keys, source arity 2 and target arity 3, independently selected native-row/JSONB synthetic PostgreSQL fixtures; not embedding or production qualification",
   "server": "PostgreSQL 17.9 (Debian 17.9-1.pgdg13+1) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
-  "captureSha256": "dc5a9530d1ba447e4104aefc6a7faba6e46b74156d34f80e08d434017e9b5205",
-  "harnessSha256": "3066343e3e7d4c40be72e1e0c97a2ef2db2772ac65be1deb2e1bfe6c9d29b151",
+  "captureSha256": "23a12f0da2c5c2c1b641b10bf890f2a03d8e73b65a9384f567709e74da351cbc",
+  "harnessSha256": "ed766c3aad4b6e7fce17d8b688bcb43dd16be926d4584990e888f916bf7ff81b",
   "results": [
     {
       "propsPropertyIds": [
@@ -935,6 +935,470 @@
     },
     {
       "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "e939276ee83ab607ab2a7ac590a19f45ea866e61167f466c84ac07a856d468ef"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "ad03cf61b9995dc08c6aa202cbd4ca09eb1e5c3c1c704ab6eca4c76ed18cd68d"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ed90f68ab7529a4040f0241762382adcc342edac8a14468e5f88b121b2a72f4c"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "40812254f944b2159252d40538ac59102d501ab6e8c7a13f06ef172102d08054"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e0069b78bc5e8f3203617dee3e3a397c9016e48776dacb5087a442f344c0818d"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ea49d3ca94adc6ade4dc520e9be6e9b7057c2c202b359b578694f9b05f0e3b34"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "e37dca6f704f817b136f14da998769cf25442d6d46a6d446b68aa1a84921788d"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fbed5b2edce7440ddb18b052239bbe55f0b77d398953f1875673f33b22be15a2"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7055f0fdb8fdd405d21fa0084d4bac49d43c518ca2473b15d71ef71081b2a7ce"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7b3472d605d9330fcea881183f7f8a69f0487c44779b0fefc674ad60ce2d441c"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "3fef6cc1c8ee06ff251164a5033c6b695b45b59dc52d5bf2d6be0f97ea0d5517"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "368d12dbd523d9bac9cf04e8d98b02d468adcc68c6a5dfddea74f7a84931e6e7"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0624c723743481214e0f51a69d2a38e21a37a6857263420b20f5fe1a549a3349"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "bb03f247fcdf00d08e71ef4a6c99fe1fb1a6ec2de3d2a6161359db48bc0a24e7"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "fbfbc7fa62232a91dbf9a1119e11c9f2a5429a904a0532065db51473c0f0ae7e"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        20
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f7b5146367c438e4ea73439af293090697b9c0931b13a52f00eca9ff0c5d0a04"
+    },
+    {
+      "propsPropertyIds": [
         6,
         21,
         22
@@ -1860,6 +2324,470 @@
       ],
       "queryExecuted": false,
       "executedSqlSha256": "3c346709099b55c48d701a1088f6c1995f06df91a3eec35b5aaa21a1e0b4f204"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "187938c816de42b709eee83f6bbb4ce354ab9a675a6e56e72d38757caa87b78c"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "cb5e6b77e75e6f8d8bb6c8f83c07e70a3f922f0ec2bbd74c42e28054f56eb60e"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "7523f538e9ce192a8c9d8e08bf08173bb7a1af3c0dfb2a567255e32d473572f2"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "cd5898e0c3600d9964e9ab372472e0d6e847ec77e6b377cbc1f5ada73e1f43d3"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "76b1549802f43968e517cff8d8006d6fba3794418ec6bc568372ca6783b832c7"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f8f0a67e7d0570488f76c5ba067f1e6e80e5502d37550be9af2c77eabc482d33"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "28870cb6e28a0de118d8d8578c625d34dd19b566db70d19dc2271cda849458ec"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "8d8a8f72e9d3f4c24075b252f19c26bafff2e8485ce40836dc11deea040d6bc0"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "7c76f07a0ae9a69d214fc3498c2b5e3adbb86a75cab957be8736ebe3cc7e985c"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "525b695c9ed0a404bd69951fad1f2e1c17593df40b5da6f622814a281938a433"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f04f28c1e22cee48c67fcb15585f0c46a498659dec95214ed9e6fe1f0469e196"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "f04b5e41e6616187d431ab6b06b2a32c1f70bec3bde985b7416182dc5cb01e67"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9a1d2ea8d1d9e545705419ed5991aba299bbeebeda921db0f1267e1bfebfc1fd"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9ff0a3b934e033353cd789868b3036ae13ec2312322d80e517b9786156240579"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9a37b848f5be5f2bf932aae567a81ffb4dd4da7ba643d4d80c52c0d99e4702c4"
+    },
+    {
+      "propsPropertyIds": [
+        6,
+        21,
+        22
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "689f25916be7d4f3beebc0d2da529f508c788354aeb71c3aaf02897356e4855f"
     },
     {
       "propsPropertyIds": [
@@ -2820,6 +3748,486 @@
       ],
       "queryExecuted": false,
       "executedSqlSha256": "d31449f2d70e0288bb649022cc61632822e8b2ae0446dfe9efc1623606048deb"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "db8724a828e2bf3fa45528cf99bccf547e845df5a899dfbd2e22a62fed6d8511"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "f2db0721ba94d153e7fab407badea1c52393d074e7de8cad9fff5bdfc42ac434"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "ca261e610a972c57b78a2c5759042a67b18e41670ed2d0d3b0c9fa2731ce86ff"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "912549926eea041847884e7c4693e8264e3df5ec794243035b9c8ce9079950f6"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "df3ed05b46ed47cb7e0202d20756deec2f8c8f0c860e68c1eacbe3342d6ff232"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "2700e2418ac7edb8a20db817da90a07384596b19f5fb24caeae284b1e520a9f5"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "67354ec664bb598b507acb5e0fe3152ae784d3f3e94fef7b9191a01cd7995457"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "inverse",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "06e3d78c9608e7c5c92618d4f73af96cb4eb871315119a6545015f9bc6d8e844"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "empty",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "a4baafce08e2773e9630dd374bb11c533436f5e87b29a7190aa6b7b90328b49a"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "ordered-partial-duplicates",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "executedSqlSha256": "50e79d8534d2e74714cd6ac2b684c277255c9ccadfab5cbfdeb30f1f6cd5e6ae"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-customer-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "59770b2c8fd16b44715ad737f4ab063a31c0a1c0f1dbdc3daeab515f01f3a702"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "duplicate-order-tuple",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "a11c5a830e9751b3de2ef148f637851487631df08179a3d62054b18a2fe4f9cf"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "hidden-third-overflow",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "54daebaff2f6f71802a4e5568146d7421fbff300fa15710bc4c3bd02468da666"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "missing-part",
+      "violations": [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "0ed832c767bf8bcacfa7ec4cc9a07e9e939d1eb174691dd4e58cd45ccafccbcf"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "wrong-third-codec",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "9328eb483a230cb32463cce68cb69cae6a327d6921c647c9bf08b1c47dbcec66"
+    },
+    {
+      "propsPropertyIds": [
+        0,
+        21
+      ],
+      "direction": "forward",
+      "kind": "cursor",
+      "case": "dangling-endpoint",
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "executedSqlSha256": "669a512c1c863adfe543fa26ef79a60c447dc17e07e9622d4f8f9d8eaf3e50b6"
     }
   ]
 }

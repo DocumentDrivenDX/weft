@@ -24,17 +24,18 @@ ddx:
 ## Scope and Objective
 
 Prove this P0 journey under its selected dialect/model/backend/host versions.
-Every covering test must cite its AC as `@covers US-003-ACm`. All tests below are
-planned; no compiler implementation or executed coverage exists at bootstrap.
+Every covering test must cite its AC as `@covers US-003-ACm`. At bootstrap these tests were planned. Candidate implementation and versioned
+execution evidence now exist; the matrix below distinguishes partial evidence
+from complete story acceptance.
 
 ## Acceptance Criteria Test Mapping
 
 | AC | Planned test | Observable assertion | Layer | State |
 | --- | --- | --- | --- | --- |
-| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | planned |
-| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | planned |
-| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | planned |
-| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | planned |
+| US-003-AC1 | `truss_native_corpus` | Native prepared SQL and independent exact result agreement. | Native/backend | partial candidate evidence |
+| US-003-AC2 | `truss_mapping_boundaries` | Stable property identities; storage ID is not logical key. | Native/backend | partial candidate evidence |
+| US-003-AC3 | `truss_semantic_refusals` | Selected unknown/native unsupported meanings remain explicit. | Native/backend | partial candidate evidence |
+| US-003-AC4 | `truss_host_obligations` | No default JSON/float decoding; context obligations observable. | Native/backend | partial candidate evidence |
 
 ## Executable Proof and Data
 
@@ -61,3 +62,24 @@ full generated-SQL corpus and role/catalog/decoder execution checks.
 Owner integration gates are documented in TD-003. Draft flat layout 0.2 cannot be
 confused with the earlier partitioned profile. Record approved binding/layout
 hashes and native server/session versions before backend support claims.
+
+## Candidate evidence status (2026-10-07)
+
+The [B-005 execution record](../../04-build/evidence/B-005-native-preparation.md)
+records original UMF Record/property/value/presence/comparator/relationship
+admission, typed native row and JSONB homes, recursive results, exact numeric
+operations and directed relationship queries. The latest composite native matrix
+contains 624 PostgreSQL 17.9 executions across uint64, decimal/uint64 and
+UTF8-C-string/uint64 key variants. It includes 208 complete-tuple cursor cases,
+within-key mixed homes, owner-wide corrupt-data prerequisites and independent
+result expectations. Its string controls positively verify adversarial ICU
+equivalence before requiring explicit C-collation distinctions. These are
+synthetic fixtures against pinned draft realization descriptions.
+
+This is partial evidence for US-003-AC1–AC3, not blanket acceptance. AC4 retains
+its own native host transport/policy/revision evidence requirements; the compiler
+reports obligations and cannot certify host enforcement or database state.
+Original optional/native-null scalar roots, whole-entity composition, broader
+query/domain coverage and fresh embedding of later original paths remain open
+compiler qualification work. Truss runtime implementation/adoption is not a
+compiler dependency. Production qualification remains separate.

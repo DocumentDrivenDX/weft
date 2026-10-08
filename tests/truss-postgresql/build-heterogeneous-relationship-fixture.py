@@ -43,6 +43,6 @@ for group in ['entities','properties','relationships']:
 for case in inputs['requests']:
  request=case['request'];request['modules'][0]['documentJson']=raw(document).decode();request['modules'][0]['pin']['sha256']=hashlib.sha256(raw(document)).hexdigest()
  request['target']['bindingJson']=raw(binding).decode();request['target']['bindingSha256']=hashlib.sha256(raw(binding)).hexdigest()
- if 'part' in request['parameters']:request['parameters']['part']=dict(family='decimal',value='8.50' if case['direction']=='forward' else '7.25')
+ if 'part' in request['parameters']:request['parameters']['part']=dict(family='decimal',value='8.50' if request['parameters']['part']['value']=='8' else '7.25')
 (F/'original-heterogeneous-relationship-inputs.json').write_text(json.dumps(inputs,indent=2)+'\n')
 print('Authored decimal/uint64 composite inputs.')

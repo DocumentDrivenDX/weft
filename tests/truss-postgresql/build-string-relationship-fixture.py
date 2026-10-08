@@ -46,6 +46,6 @@ for group in ['entities','properties','relationships']:
 for case in inputs['requests']:
  request=case['request'];request['modules'][0]['documentJson']=raw(document).decode();request['modules'][0]['pin']['sha256']=hashlib.sha256(raw(document)).hexdigest()
  request['target']['bindingJson']=raw(binding).decode();request['target']['bindingSha256']=hashlib.sha256(raw(binding)).hexdigest()
- if 'part' in request['parameters']:request['parameters']['part']=dict(family='string',value='e\u0301' if case['direction']=='forward' else '\u00e9')
+ if 'part' in request['parameters']:request['parameters']['part']=dict(family='string',value='e\u0301' if request['parameters']['part']['value']=='8' else '\u00e9')
 (F/'original-string-relationship-inputs.json').write_text(json.dumps(inputs,indent=2)+'\n')
 print('Authored string/uint64 composite inputs.')

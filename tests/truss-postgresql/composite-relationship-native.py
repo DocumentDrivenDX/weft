@@ -1,4 +1,10 @@
-"""Public original composite-key SQL against independent exact tuple expectations."""
+"""Public original composite-key SQL against independent exact tuple expectations.
+
+@covers US-003-AC1: exact native rows/types/multiplicity for the selected subset.
+@covers US-003-AC2: storage IDs and typed complete logical keys remain distinct.
+@covers US-003-AC3: emitted guards observe corrupt selected stored meanings.
+These subset claims do not close the full story or qualify host AC4.
+"""
 import csv,hashlib,io,json,subprocess,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];F=ROOT/'tests/truss-postgresql/fixtures'
@@ -81,6 +87,13 @@ CREATE TEMP TABLE row_home_scalar(state_id bigint,node_id bigint,scalar_kind tex
       if e['direction']=='forward':expected=[(key,dict(items=[['e\u0301','101','8']],truncated=False) if key==['e\u0301','0'] else related) for key,related in expected]
       else:expected=[(key,dict(items=[['e\u0301','0'],['é','9007199254740993']],truncated=True) if key==['e\u0301','101','8'] else related) for key,related in expected]
      expected.sort(key=lambda pair:(pair[0][0].encode('utf-8'),*[int(v) for v in pair[0][1:]]))
+    if e['kind']=='cursor':
+     boundary=['7','0'] if e['direction']=='forward' else ['8','100','9']
+     if heterogeneous:boundary[0]='7.25' if e['direction']=='forward' else '8.50'
+     if strings:boundary[0]='é' if e['direction']=='forward' else 'e\u0301'
+     from decimal import Decimal
+     def ordered(key):return (key[0].encode('utf-8') if strings else Decimal(key[0]),*[int(v) for v in key[1:]])
+     expected=[pair for pair in expected if ordered(pair[0])>ordered(boundary)]
     assert parsed==expected,parsed
   else:assert not remaining
   results.append(dict(propsPropertyIds=props_pids,direction=e['direction'],kind=e['kind'],case=case,violations=counts,queryExecuted=not corrupt,executedSqlSha256=hashlib.sha256(sql.encode()).hexdigest()))

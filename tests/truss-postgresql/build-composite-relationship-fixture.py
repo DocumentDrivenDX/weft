@@ -69,8 +69,10 @@ for direction,sql,parameters in [
  ('forward','SELECT COUNT(*) AS n FROM Customer c WHERE HAS_RELATED(c.orders, KEY(:part, :id, :third))',{'part':'8','id':'100','third':'9'}),
  ('inverse','SELECT o.part, o.id, o.third, RELATED_KEYS(o.customer, 2) AS customers FROM Orders o ORDER BY o.part, o.id, o.third LIMIT 10',{}),
  ('forward','SELECT c.part, c.id, RELATED_KEYS(c.orders, 2) AS orders FROM Customer c ORDER BY c.part, c.id LIMIT 10',{}),
+ ('inverse','SELECT o.part, o.id, o.third, RELATED_KEYS(o.customer, 2) AS customers FROM Orders o WHERE (o.part, o.id, o.third) > (:part, :id, :third) ORDER BY o.part, o.id, o.third LIMIT 10',{'part':'8','id':'100','third':'9'}),
+ ('forward','SELECT c.part, c.id, RELATED_KEYS(c.orders, 2) AS orders FROM Customer c WHERE (c.part, c.id) > (:part, :id) ORDER BY c.part, c.id LIMIT 10',{'part':'7','id':'0'}),
 ]:
  request=copy.deepcopy(base);request['sql']=sql;request['parameters']={name:dict(family='integer',value=value) for name,value in parameters.items()}
- requests.append(dict(direction=direction,kind='has' if 'COUNT' in sql else 'keys',request=request))
+ requests.append(dict(direction=direction,kind='has' if 'COUNT' in sql else ('cursor' if 'WHERE' in sql else 'keys'),request=request))
 (F/'original-composite-relationship-inputs.json').write_text(json.dumps(dict(composition=composition,requests=requests),indent=2)+'\n')
 print('Authored composite 2/3 endpoint key inputs (no emitted SQL expectations).')

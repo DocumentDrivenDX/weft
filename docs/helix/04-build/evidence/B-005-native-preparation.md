@@ -3046,3 +3046,33 @@ This qualifies the selected original required Unicode-string/uint64 composite
 subset over synthetic PostgreSQL fixtures. Other string facets/collations,
 additional scalar domains, fresh Python/browser transport and installed Truss
 compatibility remain outside this evidence.
+
+### Original composite keyset continuation (2026-10-07)
+
+The independent composite fixture builders now author two additional public
+related-page requests: Customer continuation after `(part,id)` and Orders
+continuation after `(part,id,third)`. Cursor values remain exact typed named
+parameters. The related projections retain all independently admitted endpoint
+keys; comparator-removal/refusal checks still cover all five required components.
+Each uint64, decimal/uint64 and string/uint64 variant compiles 24 deterministic
+requests over four home arrangements and 120 missing-comparator refusals.
+
+The native matrix now passes 624 PostgreSQL 17.9 cases: uint64 48 native/144
+mixed, decimal 60 native/180 mixed, and string 48 native/144 mixed. Of these,
+208 exercise the new cursor requests. Independent expectations compare complete
+logical tuples, rather than reusing emitted SQL. Controls include equal first
+and second components with a greater third component, a greater earlier
+component with a smaller later component, exact large integers, decimal text,
+C-ordered Unicode, empty results and owner-wide corrupt-data rejection even
+outside the cursor range. String cases retain the positive adversarial ICU
+normalization-equivalence control. All emitted prerequisites precede result SQL;
+corrupt cases suppress results.
+
+All 138 core/PostgreSQL/runtime tests pass. Custody and HELIX artifact checks pass.
+Existing composite/heterogeneous/string native receipts have been refreshed with
+the expanded captures, input SQL hashes and harness hash. The original runtime
+allowlist and production/embedding scope are unchanged. STP-003 now records
+partial candidate execution evidence instead of leaving every criterion purely
+planned; no story is closed by this checkpoint. Original optional/native-null
+scalar roots, complete whole-entity composition and broader query/domain/host
+qualification remain required B-005 work.
