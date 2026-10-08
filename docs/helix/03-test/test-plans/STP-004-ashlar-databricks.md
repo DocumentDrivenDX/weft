@@ -24,8 +24,9 @@ ddx:
 ## Scope and Objective
 
 Prove this P0 journey under its selected dialect/model/backend/host versions.
-Every covering test must cite its AC as `@covers US-004-ACm`. All tests below are
-planned; no compiler implementation or executed coverage exists at bootstrap.
+Every covering test must cite its AC as `@covers US-004-ACm`. The table preserves
+the bootstrap planning allocations; executed candidate evidence is audited in
+the checkpoint below.
 
 ## Acceptance Criteria Test Mapping
 
@@ -49,3 +50,17 @@ Add runnable Rust/host/native commands with pinned versions before implementatio
 skipped platform test as a pass; missing native/host access blocks qualification.
 Expected results are authored independently of emitted SQL/compiler code.
 Require tests-before-code, retained logs/input hashes, and zero phantom claims.
+
+## Execution checkpoint, 2026-10-08
+
+B-006 passes its owner-authorized candidate compiler gate. The
+[acceptance audit](../../04-build/evidence/B-006-acceptance.md) maps all four criteria
+to actual native/compiler/host observations with exact profile boundaries. Native
+evidence includes 36 optional, 52 relationship, 133 compound and 48 compound
+entity/keyset cases, six name/resource controls, 30 actual buffered host cases
+and 49 independent phase/transport controls. Final Ashlar Rust tests pass 18;
+fresh Python/Chromium/CLI builds match 463 artifacts with the documented
+presence-declaration correction. Bootstrap allocations above remain planned
+records; the audit is the executed component evidence. B-007 release qualification
+remains open. Synthetic authority attestations and the observed warehouse do not
+certify production policy or broader engine/platform compatibility.

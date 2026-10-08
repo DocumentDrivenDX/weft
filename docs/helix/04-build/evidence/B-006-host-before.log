@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-build/tests/ashlar-databricks/host-obligation-check.py", line 4, in <module>
+    from host_obligation_fixture import execute,Refused
+ModuleNotFoundError: No module named 'host_obligation_fixture'

@@ -1,0 +1,717 @@
+{
+  "state": "passed",
+  "cases": 48,
+  "outcomes": [
+    {
+      "id": "nested-list-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":[[\"1\",\"2\"],[],[\"-128\",\"127\"]]}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": [
+              [
+                "1",
+                "2"
+              ],
+              [],
+              [
+                "-128",
+                "127"
+              ]
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "nested-list-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "nested-list-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"9223372036854775807\",\"note\":{\"state\":\"value\",\"value\":\"é\"}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "9223372036854775807",
+              "note": {
+                "state": "value",
+                "value": "é"
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "structured-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "structured-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "leaf": "7",
+              "note": {
+                "state": "absent"
+              },
+              "next": {
+                "state": "value",
+                "value": {
+                  "leaf": "-128",
+                  "note": {
+                    "state": "value",
+                    "value": "é"
+                  },
+                  "next": {
+                    "state": "absent"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "cyclic-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "cyclic-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-False-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-False-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-exact-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"value\",\"value\":{\"x\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"}}}}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "value",
+            "value": {
+              "x": {
+                "leaf": "7",
+                "note": {
+                  "state": "absent"
+                }
+              }
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-exact-column-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-props-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-props-page-1",
+      "rows": [],
+      "expected": []
+    },
+    {
+      "id": "map-structured-True-absent-column-page-0",
+      "rows": [
+        [
+          "1",
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": [
+        [
+          "1",
+          {
+            "state": "absent"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "map-structured-True-absent-column-page-1",
+      "rows": [],
+      "expected": []
+    }
+  ],
+  "compilerBinarySha256": "02f6db7df59ce6c075995083a2ff4750545d89765df4a7af0d101864f74d562c",
+  "harnessSha256": "e8e796190c2b15eb858cdae42e5682314ef5e5b98617ef2e36c94d2a2857918b",
+  "qualification": "Whole entity/ordered keyset combinations of compound values and props/native BIGINT ID homes; same independently pinned synthetic fixture publication, no production policy qualification."
+}

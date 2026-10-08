@@ -1,0 +1,11 @@
+{
+  "cases": 224,
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "extensionSha256": "cf14b0c6e31c95f32f21d02f97129dd2da590174ff276dce040ae215c00790fe",
+  "nativeExtension": true,
+  "subprocessForbidden": true,
+  "pathEmpty": true,
+  "fullResponseParity": true,
+  "deterministic": true,
+  "scope": "saved native-tested compiler artifact parity; no database execution"
+}

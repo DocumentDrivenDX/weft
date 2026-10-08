@@ -12,6 +12,14 @@ pub fn compile_json(request: &str) -> String {
             .expect("build-time candidate backend registration must be unique");
         registry
     };
+    #[cfg(feature = "ashlar-databricks-candidate")]
+    let registry = {
+        let mut registry = registry;
+        registry
+            .register(weft_databricks::candidate::Candidate)
+            .expect("build-time candidate backend registration must be unique");
+        registry
+    };
     #[cfg(feature = "test-original")]
     {
         let mut fallback = Some(registry);
@@ -278,6 +286,34 @@ mod supplied_configuration_tests {
                 configuration,
             ))
             .unwrap();
+        assert_eq!(refused["status"], "blocked");
+        assert!(refused.get("sql").is_none());
+    }
+}
+
+#[cfg(test)]
+mod ashlar_tests {
+    #[test]
+    fn ashlar_feature_controls_registration_and_retains_public_artifact() {
+        let case: serde_json::Value = serde_json::from_str(include_str!(
+            "../../../docs/helix/04-build/evidence/B-006-cross-module-native/compile.json"
+        )).unwrap();
+        let request = case["request"].to_string();
+        let raw = super::compile_json(&request);
+        let response: serde_json::Value = serde_json::from_str(&raw).unwrap();
+        #[cfg(feature = "ashlar-databricks-candidate")]
+        assert_eq!(response, case["response"]);
+        #[cfg(not(feature = "ashlar-databricks-candidate"))]
+        {
+            assert_eq!(response["status"], "blocked");
+            assert!(response.get("sql").is_none());
+        }
+        assert_eq!(raw, super::compile_json(&request));
+        let mut disabled = case["request"].clone();
+        disabled["options"]["allowCandidate"] = serde_json::json!(false);
+        let refused: serde_json::Value = serde_json::from_str(
+            &super::compile_json(&disabled.to_string())
+        ).unwrap();
         assert_eq!(refused["status"], "blocked");
         assert!(refused.get("sql").is_none());
     }

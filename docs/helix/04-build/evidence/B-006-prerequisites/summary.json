@@ -1,0 +1,8 @@
+{
+  "state": "passed",
+  "warehouseId": "2439e1f2e37ac563",
+  "engine": "4.2.0 0000000000000000000000000000000000000000",
+  "statements": 5,
+  "harnessSha256": "8587fcc20880c9fe0f37c3ce754aaf56562a40ab600442df595592302e641e4a",
+  "qualification": "Read-only semantic prerequisites on one existing warehouse. No compiler, layout admission, publication, delegation, performance or release qualification. JSON extraction conflates absent/null and is insufficient alone."
+}

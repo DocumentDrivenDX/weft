@@ -1,0 +1,196 @@
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.26
+   Compiling version_check v0.9.5
+   Compiling serde_core v1.0.228
+   Compiling autocfg v1.5.1
+   Compiling memchr v2.8.3
+   Compiling cfg-if v1.0.5
+   Compiling libc v0.2.190
+   Compiling zerocopy v0.8.59
+   Compiling allocator-api2 v0.2.21
+   Compiling foldhash v0.2.0
+   Compiling ref-cast v1.0.27
+   Compiling equivalent v1.0.2
+   Compiling serde v1.0.228
+   Compiling itoa v1.0.18
+   Compiling once_cell v1.21.4
+   Compiling parking_lot_core v0.9.12
+   Compiling ryu v1.0.23
+   Compiling scopeguard v1.2.0
+   Compiling regex-syntax v0.8.11
+   Compiling borrow-or-share v0.2.4
+   Compiling smallvec v1.16.2
+   Compiling lock_api v0.4.14
+   Compiling serde_json v1.0.145
+   Compiling ahash v0.8.12 (/private/tmp/weft-build/vendor/ahash)
+   Compiling hashbrown v0.17.1
+   Compiling generic-array v0.14.7
+   Compiling winnow v1.0.4
+   Compiling num-traits v0.2.19
+   Compiling aho-corasick v1.1.5
+   Compiling typenum v1.20.1
+   Compiling micromap v0.3.0
+   Compiling bit-vec v0.8.0
+   Compiling percent-encoding v2.3.2
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling zmij v1.0.23
+   Compiling bit-set v0.8.0
+   Compiling heck v0.5.0
+   Compiling unicode-general-category v1.1.0
+   Compiling indexmap v2.14.2
+   Compiling bytecount v0.6.9
+   Compiling vsimd v0.8.0
+   Compiling num-cmp v0.1.0
+   Compiling outref v0.5.2
+   Compiling data-encoding v2.11.1
+   Compiling syn v2.0.119
+   Compiling syn v3.0.6
+   Compiling num-integer v0.1.47
+   Compiling toml_parser v1.1.3+spec-1.1.0
+   Compiling num-complex v0.4.6
+   Compiling crypto-common v0.1.7
+   Compiling regex-automata v0.4.18
+   Compiling num-bigint v0.4.8
+   Compiling num-iter v0.1.46
+   Compiling jsonschema-regex v0.56.0
+   Compiling block-buffer v0.10.4
+   Compiling toml_edit v0.25.15+spec-1.1.0
+   Compiling parking_lot v0.12.5
+   Compiling digest v0.10.7
+   Compiling cpufeatures v0.2.17
+   Compiling uuid-simd v0.8.0
+   Compiling sha2 v0.10.9
+   Compiling proc-macro-crate v3.5.0
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling fraction v0.17.0
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling ref-cast-impl v1.0.27
+   Compiling serde_derive v1.0.228
+   Compiling strum_macros v0.28.0
+warning: `ahash` (lib) generated 4 warnings
+   Compiling fluent-uri v0.4.1
+   Compiling regex v1.13.1
+   Compiling fancy-regex v0.19.2
+   Compiling referencing v0.56.0
+   Compiling strum v0.28.0
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling email_address v0.2.9
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema-macros v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/weft-build/crates/weft-core)
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:243:19
+    |
+206 | impl Parser {
+    | ----------- method in this implementation
+...
+243 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+   Compiling weft-databricks v0.1.0 (/private/tmp/weft-build/crates/weft-databricks)
+warning: `weft-core` (lib) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.01s
+     Running unittests src/lib.rs (/private/tmp/weft-b006-final-target/debug/deps/weft_databricks-90ca3c1923e800fa)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running ../../tests/ashlar-databricks/binding.rs (/private/tmp/weft-b006-final-target/debug/deps/ashlar_binding-47521b5dd3ca18ae)
+
+running 6 tests
+test explicit_property_homes_and_snapshot_zero_are_admitted ... ok
+test unmapped_unknown_model_content_is_retained ... ok
+test physical_identifiers_are_quoted_and_values_never_become_code ... ok
+test original_members_can_reference_another_supplied_local_module ... ok
+test bigint_admits_unsigned_subdomains_and_refuses_uint64 ... ok
+test unsafe_and_ambiguous_mapping_content_refuses ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+     Running ../../tests/ashlar-databricks/compiler.rs (/private/tmp/weft-b006-final-target/debug/deps/ashlar_compiler-8e05be2b440dacef)
+
+running 12 tests
+test candidate_presence_declaration_includes_compound_availability ... ok
+test global_sum_retains_nullable_exact_type_and_empty_input_branch ... ok
+test unicode_quotes_literal_and_boolean_are_bound_in_typed_slots ... ok
+test application_page_retains_authored_key_and_named_cursor ... ok
+test missing_mapping_and_candidate_optout_return_no_sql ... ok
+test optional_scalar_preserves_presence_envelope_in_both_owner_homes ... ok
+test sales_compiles_with_pins_exact_carriers_and_prequery_integrity ... ok
+test compound_encoding_is_explicit_and_selected_dependency_meaning_refuses ... ok
+test application_entity_and_count_keep_logical_metadata ... ok
+test relationship_binding_refuses_missing_changed_or_unknown_authored_meaning ... ok
+test authored_relationships_compile_forward_inverse_and_existential_without_deduplication ... ok
+test recursive_compounds_have_explicit_encoding_and_value_metadata ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+   Doc-tests weft_databricks
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

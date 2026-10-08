@@ -15,6 +15,8 @@ ddx:
       kind: informed_by
     - id: CONTRACT-003
       kind: informed_by
+    - id: CONTRACT-004
+      kind: informed_by
 ---
 
 # TD-004: ashlar-databricks
@@ -54,3 +56,25 @@ No database migrations. Add fixtures/refusal tests first, implement the smallest
 story components, execute the mapped evidence, then review conformance. A rejected
 new profile/version rolls back by unregistering it; retained models are untouched.
 Keep source-language/IR/backend versions separate and refuse stale caches.
+
+## Candidate application-read implementation
+
+CONTRACT-004 governs optional value envelopes, authored relationship resolution,
+complete key order and bounded related results. The candidate adapter uses
+Ashlar's pinned canonical edges or serving edges, with explicit original mapping
+admission in `crates/weft-databricks/src/binding.rs` and traversal lowering in
+`src/candidate/relationships.rs`. It derives logical keys from mapped UMF Fields
+and retains physical IDs only for endpoint access. No database layout is added
+to the compiler.
+
+For US-004-AC1–AC3, whole-input endpoint/key/edge/multiplicity checks precede
+user predicates; existential reads preserve source bags and ranked bound+1
+lookahead preserves parallel edge tuples with an exact truncation marker. The
+finite native ordinal domain is guarded explicitly. US-004-AC4 additionally
+requires actual host verification of complete caller authority, immutable
+publication, lifecycle and projection custody before execution and buffered
+publication. The current native synthetic-admin corpus does not fulfill that
+entire host gate. See the B-006 execution record for exact component evidence;
+the [B-006 acceptance audit](../../04-build/evidence/B-006-acceptance.md) records
+completed candidate recursive/presence lowering and buffered host fixture
+enforcement, with production policy and release qualification kept separate.

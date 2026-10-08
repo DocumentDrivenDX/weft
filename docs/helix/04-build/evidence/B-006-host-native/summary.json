@@ -1,0 +1,539 @@
+{
+  "state": "passed",
+  "cases": 30,
+  "outcomes": [
+    {
+      "id": "scalar",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "x ",
+          "2.00"
+        ],
+        [
+          "é",
+          "-1.25"
+        ],
+        [
+          "é",
+          "200000000000000000000000000.02"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "logical_key_json",
+            "string"
+          ],
+          [
+            "schema_revision",
+            "string"
+          ],
+          [
+            "entity_version",
+            "bigint"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ],
+          [
+            "root_id",
+            "bigint"
+          ],
+          [
+            "source_feed",
+            "string"
+          ],
+          [
+            "source_epoch",
+            "string"
+          ],
+          [
+            "source_position",
+            "bigint"
+          ],
+          [
+            "published_at",
+            "timestamp"
+          ],
+          [
+            "lookup_hash",
+            "string"
+          ],
+          [
+            "apply_batch_id",
+            "string"
+          ],
+          [
+            "source_cursor_json",
+            "string"
+          ],
+          [
+            "source_delivery_id",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 5
+    },
+    {
+      "id": "scalar-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "scalar-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "scalar-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "scalar-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "optional",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"é\\\"\\\\\\nx \"}"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "node_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "group_value",
+            "string"
+          ],
+          [
+            "group_present",
+            "boolean"
+          ],
+          [
+            "rank_value",
+            "bigint"
+          ],
+          [
+            "rank_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 2
+    },
+    {
+      "id": "optional-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "optional-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "optional-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "optional-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "relationship",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "30",
+          "{\"items\":[],\"truncated\":false}"
+        ],
+        [
+          "20",
+          "{\"items\":[[\"é\",\"2\"]],\"truncated\":false}"
+        ],
+        [
+          "10",
+          "{\"items\":[[\"x \",\"127\"],[\"é\",\"-128\"]],\"truncated\":true}"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "node_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "group_value",
+            "string"
+          ],
+          [
+            "group_present",
+            "boolean"
+          ],
+          [
+            "rank_value",
+            "bigint"
+          ],
+          [
+            "rank_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ],
+        [
+          [
+            "edge_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "rel_type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "src",
+            "string"
+          ],
+          [
+            "dst",
+            "string"
+          ],
+          [
+            "source_id",
+            "bigint"
+          ],
+          [
+            "target_id",
+            "bigint"
+          ],
+          [
+            "score",
+            "double"
+          ],
+          [
+            "score_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 13
+    },
+    {
+      "id": "relationship-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "relationship-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "relationship-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "relationship-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "entity",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "é",
+          "4",
+          "true"
+        ],
+        [
+          "same",
+          "-128",
+          "true"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "node_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "group_value",
+            "string"
+          ],
+          [
+            "group_present",
+            "boolean"
+          ],
+          [
+            "rank_value",
+            "bigint"
+          ],
+          [
+            "rank_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 5
+    },
+    {
+      "id": "entity-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "entity-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "entity-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "entity-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "page",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "same",
+          "1",
+          "true"
+        ],
+        [
+          "same",
+          "9223372036854775807",
+          "true"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "node_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "group_value",
+            "string"
+          ],
+          [
+            "group_present",
+            "boolean"
+          ],
+          [
+            "rank_value",
+            "bigint"
+          ],
+          [
+            "rank_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 5
+    },
+    {
+      "id": "page-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "page-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "page-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "page-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "compound",
+      "outcome": "buffered-exact-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":{\"leaf\":\"7\",\"note\":{\"state\":\"absent\"},\"next\":{\"state\":\"value\",\"value\":{\"leaf\":\"-128\",\"note\":{\"state\":\"value\",\"value\":\"é\"},\"next\":{\"state\":\"absent\"}}}}}"
+        ]
+      ],
+      "schema": [
+        [
+          [
+            "node_key",
+            "string"
+          ],
+          [
+            "source_system",
+            "string"
+          ],
+          [
+            "type_id",
+            "bigint"
+          ],
+          [
+            "id",
+            "bigint"
+          ],
+          [
+            "group_value",
+            "string"
+          ],
+          [
+            "group_present",
+            "boolean"
+          ],
+          [
+            "rank_value",
+            "bigint"
+          ],
+          [
+            "rank_present",
+            "boolean"
+          ],
+          [
+            "props_json",
+            "string"
+          ],
+          [
+            "retained_json",
+            "string"
+          ]
+        ]
+      ],
+      "queryCalls": 3
+    },
+    {
+      "id": "compound-changed-effectiveCaller",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "compound-changed-policyRevision",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "compound-changed-publication",
+      "outcome": "discarded-buffered-native-rows"
+    },
+    {
+      "id": "compound-changed-retainedDataFiles",
+      "outcome": "discarded-buffered-native-rows"
+    }
+  ],
+  "compilerBinarySha256": "02f6db7df59ce6c075995083a2ff4750545d89765df4a7af0d101864f74d562c",
+  "harnessSha256": "7b0bd5200bb8144e0b804e2ad42840dd8a0ac4606b5c50f558baf784a5b3fc73",
+  "qualification": "Actual Databricks metadata/version/guard/data transport; synthetic complete-admin policy, independently pinned fixture custody and injected before-publication faults. No production delegation/resolver/security-service qualification."
+}

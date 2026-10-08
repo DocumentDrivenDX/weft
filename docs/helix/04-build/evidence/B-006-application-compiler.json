@@ -1,0 +1,29 @@
+{
+  "state": "passed",
+  "rustTests": 11,
+  "nativeCoverage": {
+    "typedHomes": {
+      "cases": 48,
+      "positive": 16,
+      "refusals": 32
+    },
+    "application": 112,
+    "keyRefusals": 8,
+    "unsignedColumns": 7
+  },
+  "compilerBinarySha256": "1b6578d14115f34b973c196d6d9b8c531679a527ba68afab7643c246760f2777",
+  "nativeArtifactCustody": 180,
+  "sources": {
+    "crates/weft-databricks/src/binding.rs": "7adfaf45e84a3d0bc43831a3227d7a7f8a6a9cd9f5752f0d917d71cd848d178a",
+    "crates/weft-databricks/src/candidate.rs": "aa71c7022329cc4bb0387311dc5f746db19b6f4a9f3ead3bbf500bd05f86d3e6",
+    "crates/weft-databricks/src/candidate/application.rs": "11707cd8310d9178508eebb3047b1fa2212e855355f2c7caa940936e9972ed8e",
+    "tests/ashlar-databricks/binding.rs": "6e7c31e44f303f416f224a465d78d3e9ef97f9a35f88091d27ebfb823a9488a1",
+    "tests/ashlar-databricks/compiler.rs": "00fe09232d1a65e1486db0956791da65a3acdc6bdb3f6d7f0b7402a82c51c36e",
+    "tests/ashlar-databricks/columns-native.py": "8270125808ffb4f371fe686e97b37990c27ca79d79295b5fdf5b6b81fc2ceca7",
+    "tests/ashlar-databricks/application-native.py": "c16e89f109f3d35ee69abf9bdf652ec55967a1af78cddee4949c7236245e68d3",
+    "tests/ashlar-databricks/key-refusal-native.py": "51bceff7d694d584075398ee25b12795144f1f8b9235855e9c3dde9f15fa6e90",
+    "tests/ashlar-databricks/unsigned-column-native.py": "c04ea809d25d5f7261e9a8091da9ced87499a47763f149a765366a86d1e866c8",
+    "tests/ashlar-databricks/native_transport.py": "21a05564439b106f2ba8981ad8198b239395144374937d7b7d857f0eb1623f95"
+  },
+  "qualification": "Candidate component coverage. Typed-home/application native execution precedes the unsigned-subdomain admission-only enhancement; all 180 full native-tested responses are identical with current binary. New unsigned paths have separate native evidence. Optional/compound/related values, actual host enforcement and embeddings remain unfinished."
+}

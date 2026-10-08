@@ -1,0 +1,463 @@
+{
+  "state": "passed",
+  "cases": 36,
+  "positive": 12,
+  "refusals": 24,
+  "outcomes": [
+    {
+      "id": "string-present-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"é\\\"\\\\\\nx \"}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": "é\"\\\nx "
+      }
+    },
+    {
+      "id": "string-present-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"é\\\"\\\\\\nx \"}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": "é\"\\\nx "
+      }
+    },
+    {
+      "id": "string-absent-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "string-absent-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "string-explicit-null-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-explicit-null-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-wrong-type-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-wrong-type-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-malformed-root-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-hidden-corruption-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-hidden-corruption-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-present-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"-128\"}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": "-128"
+      }
+    },
+    {
+      "id": "integer-present-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"-128\"}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": "-128"
+      }
+    },
+    {
+      "id": "integer-absent-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "integer-absent-column",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "integer-explicit-null-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-explicit-null-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-wrong-type-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-wrong-type-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-malformed-root-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-hidden-corruption-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-hidden-corruption-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "boolean-present-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":false}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": false
+      }
+    },
+    {
+      "id": "boolean-absent-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "boolean-explicit-null-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "boolean-wrong-type-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "boolean-malformed-root-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "boolean-hidden-corruption-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "decimal-present-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"value\",\"value\":\"12345678901234567890123456.78\"}"
+        ]
+      ],
+      "expected": {
+        "state": "value",
+        "value": "12345678901234567890123456.78"
+      }
+    },
+    {
+      "id": "decimal-absent-props",
+      "outcome": "published-fixture-result",
+      "rows": [
+        [
+          "{\"state\":\"absent\"}"
+        ]
+      ],
+      "expected": {
+        "state": "absent"
+      }
+    },
+    {
+      "id": "decimal-explicit-null-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "decimal-wrong-type-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "decimal-malformed-root-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "decimal-hidden-corruption-props",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "0"
+          ]
+        ],
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "string-false-with-value-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "integer-false-with-value-column",
+      "outcome": "refused-before-user-query",
+      "counts": [
+        [
+          [
+            "1"
+          ]
+        ]
+      ]
+    }
+  ],
+  "fixture": {
+    "phase": "ready",
+    "payloadSha256": "414ca856b762df0aeed420b8a148aa99b778cf9decabb6113cdbca7e90601434",
+    "tableUuid": "3091570f-fdff-4a3f-ad30-1961062c4911",
+    "version": 1,
+    "manifestUuid": "c759527e-9f98-4399-a97c-096ca49a9faa",
+    "publicationId": "weft-optional-fixtures"
+  },
+  "compilerBinarySha256": "af59db8a692e1b27587671f120bae6f567c5e301a010e0fee36ded9918a2c430",
+  "harnessSha256": "7bdff10794ce71672d065ff73452e140284af46657b001c60ee29c553d93b516",
+  "qualification": "Synthetic pinned owner projection layout, independent optional scalar envelopes across props and STRING/BIGINT homes. No production publication/policy qualification or explicit native-null permission."
+}

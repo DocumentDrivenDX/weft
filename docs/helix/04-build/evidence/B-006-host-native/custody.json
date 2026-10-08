@@ -1,0 +1,9 @@
+{
+  "firstSourceLine": 512,
+  "lastSourceLine": 1009,
+  "statements": 498,
+  "scope": "Final frozen-binary run only; earlier attempts retained separately in statements.jsonl",
+  "acceptedSha256": "cf5c580591e82c4ff25400b33196a3414db25c56e02bd5bd6666884b75717a23",
+  "hostFixtureSha256": "39ff78c22d8550a7b6afabc200a7117aac20a4c3eecf97e108955b4e9e6a45a9",
+  "principalRedaction": "SHA-256 of exact caller text; canonical original response digest retained"
+}

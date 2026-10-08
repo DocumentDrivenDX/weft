@@ -1,0 +1,5 @@
+{
+  "state": "passed",
+  "cases": 4,
+  "qualification": "Read-only native path controls for canonical signed64 props IDs -1/minimum/maximum/zero; exact statement and parameter receipts retained, no separate compiler qualification."
+}

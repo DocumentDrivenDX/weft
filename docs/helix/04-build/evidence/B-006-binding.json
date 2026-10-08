@@ -1,0 +1,16 @@
+{
+  "state": "passed",
+  "command": "cargo test -p weft-databricks",
+  "rustVersion": "1.90.0",
+  "tests": 4,
+  "nativeTests": 0,
+  "qualification": "Binding admission component only. No registered Backend implementation, target SQL, host custody or US-004 acceptance claim. Initial owner layout column profiles are bounded; other typed projections require a separately registered layout.",
+  "sources": {
+    "Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "Cargo.lock": "085c34667f0a65393dc4024049d19ccbc1a8f7249093e0696f1edb2a60fe1e45",
+    "crates/weft-databricks/Cargo.toml": "8c58992d746f728c644ecddce150aa9e249f22c08865dd5aff263348efdaf62d",
+    "crates/weft-databricks/src/lib.rs": "c5e13e1d065eb809e0ed2540cbb7248a4a818b2ea42054742a278c8ceef2e475",
+    "crates/weft-databricks/src/binding.rs": "213f23d84a8f06758faf922151e660a56491cb9d1ca7e9ed3aa65ab24a55bbd6",
+    "tests/ashlar-databricks/binding.rs": "e024163f1ffe0b4607b5c8c603d8ef75743c43181deea638cc233481be591008"
+  }
+}

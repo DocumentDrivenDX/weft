@@ -1,0 +1,25 @@
+{
+  "state": "passed",
+  "outcomes": [
+    {
+      "id": "exact",
+      "rows": [
+        [
+          "100000000000000000000000003.76"
+        ]
+      ],
+      "nullable": true
+    },
+    {
+      "id": "empty",
+      "rows": [
+        [
+          null
+        ]
+      ],
+      "nullable": true
+    }
+  ],
+  "harnessSha256": "2fdcd3ab4a991d6671d817f1d51130e6a7bbbc093073d934b3fe18cb24e7310d",
+  "qualification": "Actual registered Rust/compiler SQL and native STRING/null result metadata on two immutable synthetic Delta fixture cuts. Independent decimal oracle includes unmatched orders for global SUM. No application, policy, embedding or production qualification."
+}

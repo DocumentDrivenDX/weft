@@ -1,0 +1,18 @@
+[package]
+name = "weft-databricks"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+weft-core = { path = "../weft-core" }
+serde.workspace = true
+serde_json.workspace = true
+
+[[test]]
+name = "ashlar-binding"
+path = "../../tests/ashlar-databricks/binding.rs"
+
+[[test]]
+name = "ashlar-compiler"
+path = "../../tests/ashlar-databricks/compiler.rs"
