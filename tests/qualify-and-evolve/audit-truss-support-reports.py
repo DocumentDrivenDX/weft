@@ -16,6 +16,21 @@ def exact(value):
     if isinstance(value,(list,tuple)):return [exact(v) for v in value]
     return value
 by_id={r['id']:r for r in ns['reports']};results=[]
+hosts={}
+for host in ['python','browser']:
+    path=root/f'docs/helix/04-build/evidence/B-007-truss-{host}-case-receipts/receipts.json'
+    receipt=json.loads(path.read_text());summary=receipt['summary']
+    assert summary['cases']==76 and summary['byteParity'] is True
+    if host=='python':assert summary['subprocessDisabled'] is True and len(summary['extensionSha256'])==64
+    else:assert summary['nodeGlobals'] is False and len(summary['wasmSha256'])==64
+    index={c['id']:c for c in receipt['cases']}
+    assert len(index)==len(receipt['cases'])==76 and set(index)==set(by_id)
+    for id,r in by_id.items():
+        case=index[id];expected=hashlib.sha256(r['raw'].encode()).hexdigest()
+        assert case['actualSha256']==case['expectedSha256']==expected
+        request=json.dumps(ns['requests'][id],ensure_ascii=False,**({'separators':(',',':')} if host=='browser' else {}))
+        assert case['requestSha256']==hashlib.sha256(request.encode()).hexdigest()
+    hosts[host]={'casesJoined':len(index),'receiptSha256':hashlib.sha256(path.read_bytes()).hexdigest(),'runtime':summary}
 with tempfile.TemporaryDirectory() as tmp:
     for index,(key,ids) in enumerate(sorted(ns['scopes'].items())):
         scope=json.loads(key);assert len(scope['modelPins'])==1
@@ -31,4 +46,4 @@ with tempfile.TemporaryDirectory() as tmp:
         claim={'status':'supported','profile':profile,'requiredLayers':['native'],'cases':cases,'evidence':[{'path':str(path),'sha256':hashlib.sha256(data).hexdigest()}]}
         result=audit(claim);results.append({'scope':scope,'audit':result,'reportSha256':hashlib.sha256(data).hexdigest()})
 assert sum(r['audit']['cases'] for r in results)==76
-print(json.dumps({'status':'passed','scopesAudited':len(results),'casesAudited':76,'results':results,'qualification':'Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and host-layer qualification remain unresolved.'},indent=2))
+print(json.dumps({'status':'passed','scopesAudited':len(results),'casesAudited':76,'hostArtifactJoins':hosts,'results':results,'qualification':'Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution.'},indent=2))

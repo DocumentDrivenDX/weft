@@ -660,6 +660,57 @@
         "status": "passed",
         "scopesAudited": 21,
         "casesAudited": 76,
+        "hostArtifactJoins": {
+          "python": {
+            "casesJoined": 76,
+            "receiptSha256": "c22c31ef5bee45c381794d12e82ead0fe7884a8aa363376aca31fdddd7e7f909",
+            "runtime": {
+              "cases": 76,
+              "byteParity": true,
+              "subprocessDisabled": true,
+              "nativeModule": "/private/tmp/weft-b007-truss-python-package/weft/weft.abi3.so",
+              "version": "0.1.0",
+              "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+              "extensionSha256": "e203a68aec6f9041d235882552540a5a3be681f58aad2bd760172681f0c1f798"
+            }
+          },
+          "browser": {
+            "casesJoined": 76,
+            "receiptSha256": "253e24fd429e7bf57c75fe5c5093391f21440ade528a8bfe1b60768638b21561",
+            "runtime": {
+              "cases": 76,
+              "batchSize": 64,
+              "streamingCorpus": false,
+              "browser": "148.0.7778.96",
+              "playwrightVersion": "1.62.1",
+              "wasmBytes": 10401358,
+              "wasmSha256": "8fed42e77d5c8f641e73f22ab9f3a021b59ccd3d866e2325cc59a1f131707c92",
+              "jsGlueBytes": 6559,
+              "imports": [
+                {
+                  "module": "wbg",
+                  "name": "__wbg___wbindgen_throw_b855445ff6a94295",
+                  "kind": "function"
+                },
+                {
+                  "module": "wbg",
+                  "name": "__wbindgen_init_externref_table",
+                  "kind": "function"
+                }
+              ],
+              "initialMemoryBytes": 1835008,
+              "finalMemoryBytes": 3473408,
+              "networkRequests": [
+                "http://weft.spike.test/",
+                "http://weft.spike.test/spike.wasm",
+                "http://weft.spike.test/spike.js",
+                "http://weft.spike.test/wrapper.js"
+              ],
+              "nodeGlobals": false,
+              "byteParity": true
+            }
+          }
+        },
         "results": [
           {
             "scope": {
@@ -1292,9 +1343,9 @@
             "reportSha256": "f93841dda4d08aecce5270560b09874d8465f9a118bce8bc05be896776332207"
           }
         ],
-        "qualification": "Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and host-layer qualification remain unresolved."
+        "qualification": "Real retained native report consistency and independent expected rows. Internal supported-claim inputs exercise the verifier only; candidate inventory is unchanged. Layout label is candidate, producer trust and final qualification remain unresolved. Host joins prove compiler artifact parity, not separate host database execution."
       },
-      "sourceSha256": "0d8f491eea79e74becfce39bf15f0d6f9257e68830abdd813f6afff96e9228ac"
+      "sourceSha256": "35e3c0e895fbfd7e27fcaf026e75032c95c8a79596be8aef43e8abd6846f7ed5"
     },
     {
       "component": "evidence-check.py",

@@ -577,3 +577,9 @@ execution for all 76 Truss requests with exact artifact byte parity. Each
 request/actual/expected hash is retained with the loaded WASM hash and
 network/import/trap checks. PostgreSQL was not rerun. This supplies a
 case-level browser receipt index for joining native report scopes.
+
+The real Truss report audit now joins all 76 Python and 76 browser case
+receipts to original request hashes and exact native compiler artifact hashes.
+host-joined-summary.json retains loaded runtime identities and receipt hashes
+for these 152 joins. They prove host compiler artifact parity, not separate
+host database executions or final native/support provenance qualification.
