@@ -1,0 +1,73 @@
+name: Deploy signed Weft microsite
+on:
+  pull_request:
+    paths: ['website/**', 'scripts/build-site.mjs', 'scripts/sign-site.mjs', 'scripts/check-site.mjs', '.innsigle/**', 'docs/helix/02-design/brand-voice.md', 'docs/helix/02-design/design.md', '.github/workflows/pages.yml']
+  push:
+    branches: [main]
+    paths: ['website/**', 'scripts/build-site.mjs', 'scripts/sign-site.mjs', 'scripts/check-site.mjs', '.innsigle/**', 'docs/helix/02-design/brand-voice.md', 'docs/helix/02-design/design.md', '.github/workflows/pages.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: weft-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch pinned Innsigle
+        uses: actions/checkout@v4
+        with:
+          repository: DocumentDrivenDX/innsigle
+          ref: 4185eb56beb7b52beaa4a00c2fc897f93d44b939
+          path: .tools/innsigle
+      - name: Build microsite
+        run: node scripts/build-site.mjs
+      - name: Sign and verify every published content file
+        env:
+          INNSIGLE_BUILD_KEY: ${{ secrets.INNSIGLE_BUILD_KEY }}
+          INNSIGLE_CLI: .tools/innsigle/src/cli.mjs
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$INNSIGLE_BUILD_KEY"
+          umask 077
+          key_file="$(mktemp)"
+          trap 'rm -f "$key_file"' EXIT
+          printf '%s' "$INNSIGLE_BUILD_KEY" > "$key_file"
+          INNSIGLE_KEY_FILE="$key_file" node scripts/sign-site.mjs
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.4.2'
+      - name: Install pinned browser test dependencies
+        run: bun install --frozen-lockfile
+      - name: Install test browser
+        run: bunx playwright install --with-deps chromium
+      - name: Check site in desktop and mobile browsers
+        run: |
+          python3 -m http.server 48193 --bind 127.0.0.1 --directory dist/site &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in 1 2 3 4 5; do curl -fsS http://127.0.0.1:48193/ > /dev/null && break || sleep 1; done
+          node scripts/check-site.mjs
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

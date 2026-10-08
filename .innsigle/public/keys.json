@@ -1,0 +1,16 @@
+{
+  "innsigle_issuer": "1",
+  "issuer_id": "weft",
+  "issuer_name": "Weft",
+  "keys": [
+    {
+      "key_id": "ed25519:00b0e3a624616098f54e5294784bf62f",
+      "alg": "ed25519",
+      "public_key": "FM7_d63tDgFkPl7D3cx1zn6Gq58YVOgBCY1M2eHJLCQ",
+      "created_at": "2026-10-08T20:19:14Z",
+      "revoked_at": null,
+      "role": "build"
+    }
+  ],
+  "endorsements": []
+}
