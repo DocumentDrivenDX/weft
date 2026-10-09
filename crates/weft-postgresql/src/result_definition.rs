@@ -349,7 +349,7 @@ fn column(descriptor: &Descriptor, position: usize, output_name: &str) -> Result
     };
     Ok(Column {
         position,
-        output_name: output_name.into(),
+        carrier_name: None, output_name: output_name.into(),
         representation,
         source_identities: vec![descriptor.identity.clone()],
         nullable: false,
@@ -495,7 +495,7 @@ pub fn projection_columns(
                         validate_output(index + 1, &output.name)?;
                         Column {
                             position: index + 1,
-                            output_name: output.name.clone(),
+                            carrier_name: None, output_name: output.name.clone(),
                             representation: Representation::RelatedKeys {
                                 relationship: relationship.identity.clone(),
                                 key: relationship.target_key.clone(),
@@ -526,7 +526,7 @@ fn scalar_column(
     validate_output(position, name)?;
     Ok(Column {
         position,
-        output_name: name.into(),
+        carrier_name: None, output_name: name.into(),
         representation: Representation::Scalar {
             logical_type: logical_type.clone(),
             carrier: ScalarCarrier::Text,

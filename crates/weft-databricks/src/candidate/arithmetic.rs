@@ -453,6 +453,7 @@ pub(super) fn lower(
             "Grouped arithmetic requires a separately admitted lowering",
         ));
     }
+    let positioned = p.required_capabilities.iter().any(|c| c == "project.positionedOutputs");
     let mut lower = Lower::new(binding);
     lower.mathematical_profile = true;
     lower
@@ -597,7 +598,8 @@ pub(super) fn lower(
             }
             _ => unreachable!(),
         };
-        projections.push(format!("{sql} AS {}", binding::quote(&output.name)));
+        let carrier_name = positioned.then(||format!("_weft_output_{}", index+1));
+        projections.push(format!("{sql} AS {}", binding::quote(carrier_name.as_deref().unwrap_or(&output.name))));
         let decoder = match ty.family {
             Family::String => ScalarDecoder::Text,
             Family::Boolean => ScalarDecoder::Boolean,
@@ -606,7 +608,7 @@ pub(super) fn lower(
         };
         columns.push(Column {
             position: index + 1,
-            output_name: output.name.clone(),
+            carrier_name, output_name: output.name.clone(),
             representation: Representation::Scalar {
                 logical_type: ty,
                 carrier: ScalarCarrier::Text,
@@ -659,10 +661,9 @@ pub(super) fn lower(
         owner: ObligationOwner::Host,
         failure_code: "WFT-CAPABILITY".into(),
     };
-    Ok(TargetPlan(Emission {
-        sql,
-        parameters: lower.parameters,
-        columns,
-        obligations: vec![integrity, exact, publication(binding)],
-    }))
+    let mut obligations=vec![integrity, exact, publication(binding)];
+    if positioned {
+        obligations.push(Obligation{id:"weft.output.positioned".into(),parameters:json!({"profile":"weft-positioned-output/0.3.0","columns":columns.iter().map(|c|json!({"position":c.position,"outputName":c.output_name,"carrierName":c.carrier_name,"sourceIdentities":c.source_identities})).collect::<Vec<_>>(),"decoding":"exact ordered row arrays; complete output count/order and unique physical names; no logical-name dictionary","lineage":"each ordinal binds the original logicalPlan output, including scan occurrence","host":"explicit opt-in before SQL; reject unknown carrierName/obligations; buffer and preserve all cells"}),owner:ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});
+    }
+    Ok(TargetPlan(Emission {sql,parameters:lower.parameters,columns,obligations}))
 }

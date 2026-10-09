@@ -382,7 +382,7 @@ impl Backend for Candidate {
             }
             columns.push(Column {
                 position: i + 1,
-                output_name: o.name.clone(),
+                carrier_name: None, output_name: o.name.clone(),
                 nullable: ty.nullable,
                 representation: Representation::Scalar {
                     logical_type: ty,

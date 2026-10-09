@@ -275,7 +275,7 @@ pub(super) fn lower(
         ));
         columns.push(Column {
             position: i + 1,
-            output_name: output.name.clone(),
+            carrier_name: None, output_name: output.name.clone(),
             representation,
             nullable,
             source_identities: identities,

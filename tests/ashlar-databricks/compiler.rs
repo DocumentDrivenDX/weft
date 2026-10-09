@@ -600,7 +600,7 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
         fn lower(&self,_:&Context<'_>,_:&())->Result<()> {panic!()}
         fn emit(&self,_:&Context<'_>,_:&())->Result<Emission> {panic!()}
     }
-    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name")] {
+    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id")] {
         for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
             let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();
             let mut request=arithmetic_request(sql);if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
@@ -612,5 +612,44 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
     for sql in ["SELECT c.name FROM Customer c WHERE c.name='z'","SELECT c.name FROM Customer c WHERE c.name<'z'"] {
         let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id:"compare.less",mode:"admitted",calls:calls.clone()}).unwrap();
         let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&arithmetic_request(sql).to_string())).unwrap();assert_eq!(response["diagnostics"][0]["code"],"WFT-BACKEND-FAILURE");assert_eq!(calls.load(Ordering::SeqCst),1);
+    }
+}
+
+#[test]
+fn positioned_field_outputs_preserve_duplicate_labels_scan_lineage_and_unique_carriers() {
+    let sql="SELECT c.id,d.id,c.name AS \"_weft_output_1\" FROM Customer c JOIN Customer d ON c.id=d.id";
+    let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"compiled","{response}");
+    let outputs=response["logicalPlan"]["outputs"].as_array().unwrap();let columns=response["columns"].as_array().unwrap();
+    assert_eq!(outputs.iter().map(|o|o["name"].as_str().unwrap()).collect::<Vec<_>>(),vec!["id","id","_weft_output_1"]);
+    assert_eq!(outputs[0]["expression"]["identity"],outputs[1]["expression"]["identity"]);assert_ne!(outputs[0]["expression"]["scan"],outputs[1]["expression"]["scan"]);
+    for (index,column) in columns.iter().enumerate() {assert_eq!(column["position"],index+1);assert_eq!(column["outputName"],outputs[index]["name"]);assert_eq!(column["carrierName"],format!("_weft_output_{}",index+1));assert_eq!(column["sourceIdentities"],json!([outputs[index]["expression"]["identity"].clone()]));}
+    assert!(response["sql"].as_str().unwrap().contains("AS `_weft_output_3`"));
+    assert!(response["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="weft.output.positioned"));
+    for old in [common::request(sql),application(sql)] {assert_eq!(run(&old)["status"],"blocked");}
+    for sql in ["SELECT c.id AS n,c.name AS n FROM Customer c", "SELECT c.id+1 AS n,c.id+2 AS n FROM Customer c", "SELECT c.id,c.name AS id FROM Customer c"] {
+        let refused=arithmetic_compile(&arithmetic_request(sql));assert_eq!(refused["diagnostics"][0]["code"],"WFT-OUTPUT-NAME","{refused}");assert!(refused.get("sql").is_none());
+    }
+    let unique=arithmetic_compile(&arithmetic_request("SELECT c.id,c.name FROM Customer c"));assert!(unique["columns"].as_array().unwrap().iter().all(|c|c.get("carrierName").is_none()));assert!(!unique["obligations"].as_array().unwrap().iter().any(|o|o["id"]=="weft.output.positioned"));
+}
+#[test]
+fn different_fields_with_same_authored_name_keep_distinct_original_identities() {
+    let mut request=arithmetic_request("SELECT c.id,o.id FROM Customer c JOIN Orders o ON c.id=o.id");
+    let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="order-customer").unwrap()["name"]=json!("id");
+    let raw=doc.to_string();let hash=sha256(raw.as_bytes());request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(hash);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(hash);let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+    let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");assert_eq!(response["columns"][0]["outputName"],"id");assert_eq!(response["columns"][1]["outputName"],"id");assert_ne!(response["columns"][0]["sourceIdentities"],response["columns"][1]["sourceIdentities"]);
+}
+
+#[test]
+fn repeated_implicit_complex_members_refuse_before_backend_admission() {
+    for field in ["tags", "address"] {
+        let mut request=arithmetic_request(&format!("SELECT c.{field},d.{field} FROM Customer c JOIN Customer d ON c.id=d.id"));
+        let cases:Value=serde_json::from_str(include_str!("../application/fixtures/cases.json")).unwrap();
+        request["modules"]=cases.as_array().unwrap().iter().find(|c|c["id"]=="join-count").unwrap()["request"]["modules"].clone();
+        let response=arithmetic_compile(&request);
+        assert_eq!(response["status"],"blocked","{response}");
+        assert_eq!(response["diagnostics"][0]["code"],"WFT-OUTPUT-NAME","{response}");
+        assert_eq!(response["diagnostics"][0]["phase"],"resolve","{response}");
     }
 }

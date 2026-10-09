@@ -120,6 +120,30 @@ scale-alignment guards cover complete pre-ON and pre-WHERE candidate bags before
 any user predicate can eliminate rows. New operator IR/capability admission MUST
 precede backend binding; hosts MUST execute emitted SQL unchanged.
 
+## Positional outputs with repeated Field labels
+
+The explicit 0.3 profile MAY admit repeated implicit unaliased scalar Field
+output labels with `project.positionedOutputs`, gated before backend binding.
+Explicit duplicate aliases, computed duplicate labels and whole-entity label
+collisions remain refused. Older profiles retain their duplicate-label refusal.
+Original Output names and Field identities/scan occurrences MUST remain unchanged;
+ordered output array positions identify each cell independently.
+
+A positioned artifact MUST declare a unique bounded physical `carrierName` for
+EVERY output, separate from the original logical `outputName`, and retain
+contiguous integer positions, exact output count/order/type and original lineage.
+Backends MUST generate collision-free physical aliases across all outputs rather
+than preserve only some logical labels. Unique-label artifacts MUST omit
+`carrierName` and retain their original bytes. Older response schemas stay closed.
+
+The `weft.output.positioned` host obligation requires explicit carrier-name
+admission, actual native column count/order/name checks, original logical-plan
+ordinal/scan lineage checks, and complete exact ordered row arrays. Unknown
+carrierName or this obligation MUST refuse before user SQL. Named dictionaries
+MUST NOT collapse repeated logical labels; hosts MUST NOT rewrite SQL or rename
+results to bypass missing compiler support. Python/browser transport MUST preserve
+all repeated cells and metadata through the shared Rust implementation.
+
 ## Backend admission and results
 
 Require separately declared exact arithmetic capabilities for the selected

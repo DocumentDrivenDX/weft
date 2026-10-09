@@ -639,6 +639,11 @@
               },
               "nullable": {
                 "type": "boolean"
+              },
+              "carrierName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
               }
             },
             "required": [
@@ -1002,7 +1007,48 @@
         "obligations",
         "qualification"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "logicalPlan": {
+                "properties": {
+                  "requiredCapabilities": {
+                    "contains": {
+                      "const": "project.positionedOutputs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "columns": {
+                "items": {
+                  "required": [
+                    "carrierName"
+                  ]
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "columns": {
+                "items": {
+                  "not": {
+                    "required": [
+                      "carrierName"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   ]
 }

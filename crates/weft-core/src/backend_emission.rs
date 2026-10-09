@@ -133,7 +133,21 @@ pub(crate) fn validate(
             "Emission must describe every logical output exactly once",
         ));
     }
+    let positioned = matches!(plan, Plan::V03(p) if p.required_capabilities.iter().any(|id|id=="project.positionedOutputs"));
+    let repeated = expected.iter().enumerate().any(|(i,(name,_))|expected[..i].iter().any(|(other,_)|other==name));
+    if matches!(plan, Plan::V03(_)) && positioned != repeated {return Err(fail("Positional output admission must match repeated logical labels"));}
+    if positioned && !assessments.iter().any(|a|a.id=="project.positionedOutputs"&&a.status!=crate::backend::Status::Unsupported) {return Err(fail("Positional result labels require explicit capability admission"));}
+    if positioned {
+        let map=serde_json::json!(emission.columns.iter().map(|c|serde_json::json!({"position":c.position,"outputName":c.output_name,"carrierName":c.carrier_name,"sourceIdentities":c.source_identities})).collect::<Vec<_>>());
+        if !emission.obligations.iter().any(|o|o.id=="weft.output.positioned" && o.owner==crate::backend::ObligationOwner::Host && o.failure_code=="WFT-OBLIGATION" && o.parameters["profile"]=="weft-positioned-output/0.3.0" && o.parameters["columns"]==map) {return Err(fail("Positional output requires its exact ordered host custody obligation"));}
+    }
+    let mut carriers=std::collections::BTreeSet::new();
     for (index, (column, (name, expected))) in emission.columns.iter().zip(expected).enumerate() {
+        if positioned {
+            let carrier=column.carrier_name.as_deref().ok_or_else(||fail("Positional outputs require every physical result name"))?;
+            if carrier.is_empty()||carrier.len()>128||carrier.contains('\0')||!carriers.insert(carrier) {return Err(fail("Physical result names must be bounded, nonempty and unique"));}
+            if let Expected::Field(identity)=&expected {if column.source_identities.as_slice()!=std::slice::from_ref(*identity) {return Err(fail("Positional Field output changes original ordinal lineage"));}}
+        } else if column.carrier_name.is_some() {return Err(fail("Physical result names require explicit 0.3 positional admission"));}
         if column.position != index + 1
             || column.output_name != name
             || column.source_identities.is_empty()
@@ -281,7 +295,7 @@ mod tests {
                 crate::arithmetic_resolve::Domain::Integer => (Family::Integer, json!({}), ScalarDecoder::ExactInteger),
                 crate::arithmetic_resolve::Domain::Decimal { scale } => (Family::Decimal, json!({"scale":scale}), ScalarDecoder::ExactDecimal),
             };
-            Column { position: i+1, output_name: output.name.clone(), representation: Representation::Scalar { logical_type: LogicalType { family, facets, nullable:false }, carrier:ScalarCarrier::Text, decoder }, source_identities:vec![plan.source.record.clone()], nullable:false }
+            Column { position: i+1, carrier_name: None, output_name: output.name.clone(), representation: Representation::Scalar { logical_type: LogicalType { family, facets, nullable:false }, carrier:ScalarCarrier::Text, decoder }, source_identities:vec![plan.source.record.clone()], nullable:false }
         }).collect();
         let baseline = Emission { sql:"SELECT fixture".into(), parameters:vec![], obligations:vec![], columns };
         validate(Plan::V03(&plan), &baseline, &selection, &[]).unwrap();
@@ -389,7 +403,7 @@ mod tests {
         assert_eq!(p.outputs.len(),1);
         let crate::application_ir::Expression::RelatedKeys{relationship:r,bound,..}=&p.outputs[0].expression else {unreachable!()};
         let selection=Selection{records:vec![r.from.clone(),r.to.clone()],..Default::default()};
-        let baseline=Emission{sql:"SELECT fixture".into(),parameters:vec![],obligations:vec![],columns:vec![Column{position:1,output_name:p.outputs[0].name.clone(),representation:Representation::RelatedKeys{relationship:r.identity.clone(),key:r.target_key.clone(),bound:*bound},source_identities:vec![r.from.clone()],nullable:false}]};
+        let baseline=Emission{sql:"SELECT fixture".into(),parameters:vec![],obligations:vec![],columns:vec![Column{position:1,carrier_name: None, output_name:p.outputs[0].name.clone(),representation:Representation::RelatedKeys{relationship:r.identity.clone(),key:r.target_key.clone(),bound:*bound},source_identities:vec![r.from.clone()],nullable:false}]};
         validate(Plan::V02(&p),&baseline,&selection,&[]).unwrap();
         for mode in 0..7 {
             let mut e=baseline.clone();
@@ -430,7 +444,7 @@ mod tests {
             for nullable in [false,true] {
                 let t=LogicalType{family:family.clone(),facets:facets.clone(),nullable};
                 for carrier in &carriers {
-                    let column=Column{position:1,output_name:"value".into(),representation:Representation::Scalar{logical_type:t.clone(),carrier:carrier.clone(),decoder:decoder.clone()},source_identities:vec![],nullable};
+                    let column=Column{position:1,carrier_name: None, output_name:"value".into(),representation:Representation::Scalar{logical_type:t.clone(),carrier:carrier.clone(),decoder:decoder.clone()},source_identities:vec![],nullable};
                     assert!(scalar(&column,&t));
                     let mut wrong=column.clone();wrong.nullable=!nullable;assert!(!scalar(&wrong,&t));
                     let mut wrong=column.clone();
@@ -452,7 +466,7 @@ mod tests {
         };
         let mut c = Column {
             position: 1,
-            output_name: "count".into(),
+            carrier_name: None, output_name: "count".into(),
             representation: Representation::Scalar {
                 logical_type: t.clone(),
                 carrier: ScalarCarrier::Text,
@@ -521,7 +535,7 @@ mod tests {
                     };
                     Column {
                         position: index + 1,
-                        output_name: o.name.clone(),
+                        carrier_name: None, output_name: o.name.clone(),
                         representation: Representation::Value {
                             descriptor: identity.clone(),
                             native_null: false,
@@ -582,4 +596,21 @@ mod tests {
         }
         assert!(validate(Plan::V02(&p), &e, &selection, &[]).is_err());
     }
+    #[test]
+    fn positioned_metadata_refuses_incomplete_colliding_or_reordered_cells() {
+        let cases:serde_json::Value=serde_json::from_str(include_str!("../../../tests/application/fixtures/cases.json")).unwrap();let req=&cases.as_array().unwrap().iter().find(|c|c["id"]=="join-count").unwrap()["request"];
+        let catalog=crate::model::Catalog::prepare(serde_json::from_value(req["modules"].clone()).unwrap()).unwrap();let p=crate::arithmetic_application_resolve::resolve(&catalog,crate::arithmetic_query::parse("SELECT c.id,d.id,c.name FROM Customer c JOIN Customer d ON c.id=d.id").unwrap(),Default::default(),None).unwrap();
+        let identities=p.outputs.iter().map(|o|{let crate::arithmetic_plan::Expression::Field{identity,..}=&o.expression else{panic!()};identity.clone()}).collect::<Vec<_>>();
+        let selection=Selection{fields:identities.clone(),types:p.type_graph.iter().map(|d|d.identity.clone()).collect(),..Default::default()};
+        let columns=p.outputs.iter().enumerate().map(|(i,o)|{let d=p.type_graph.iter().find(|d|d.identity==identities[i]).unwrap();let crate::application_model::Shape::Scalar{logical_type}=&d.shape else{panic!()};Column{position:i+1,output_name:o.name.clone(),carrier_name:Some(format!("_weft_output_{}",i+1)),source_identities:vec![identities[i].clone()],nullable:false,representation:Representation::Scalar{logical_type:logical_type.clone(),carrier:ScalarCarrier::Text,decoder:if logical_type.family==Family::Integer{ScalarDecoder::ExactInteger}else{ScalarDecoder::Text}}}}).collect();
+        let mut baseline=Emission{sql:"SELECT fixture".into(),parameters:vec![],columns,obligations:vec![]};baseline.obligations.push(crate::backend::Obligation{id:"weft.output.positioned".into(),parameters:json!({"profile":"weft-positioned-output/0.3.0","columns":baseline.columns.iter().map(|c|json!({"position":c.position,"outputName":c.output_name,"carrierName":c.carrier_name,"sourceIdentities":c.source_identities})).collect::<Vec<_>>()}),owner:crate::backend::ObligationOwner::Host,failure_code:"WFT-OBLIGATION".into()});let a=crate::backend::Assessment{id:"project.positionedOutputs".into(),status:crate::backend::Status::Candidate,evidence:vec![],obligations:vec![]};
+        validate(Plan::V03(&p),&baseline,&selection,&[a.clone()]).unwrap();assert!(validate(Plan::V03(&p),&baseline,&selection,&[]).is_err());
+        let mut missing=baseline.clone();missing.obligations.clear();assert!(validate(Plan::V03(&p),&missing,&selection,&[a.clone()]).is_err());
+        let mut mismatch=baseline.clone();mismatch.obligations[0].parameters["columns"][0]["carrierName"]=json!("other");assert!(validate(Plan::V03(&p),&mismatch,&selection,&[a.clone()]).is_err());
+        for mutation in 0..7 {let mut bad=baseline.clone();match mutation {0=>bad.columns[1].carrier_name=None,1=>bad.columns[1].carrier_name=bad.columns[0].carrier_name.clone(),2=>bad.columns[1].position=1,3=>bad.columns[1].output_name="changed".into(),4=>{bad.columns.pop();},5=>bad.columns[1].source_identities=vec![identities[2].clone()],_=>bad.columns[1].carrier_name=Some("".into())};bad.obligations[0].parameters["columns"]=json!(bad.columns.iter().map(|c|json!({"position":c.position,"outputName":c.output_name,"carrierName":c.carrier_name,"sourceIdentities":c.source_identities})).collect::<Vec<_>>());assert!(validate(Plan::V03(&p),&bad,&selection,&[a.clone()]).is_err(),"{mutation}");}
+        let mut unique=p.clone();unique.outputs[1].name="other".into();unique.required_capabilities.retain(|c|c!="project.positionedOutputs");let mut bad=baseline.clone();bad.columns[1].output_name="other".into();assert!(validate(Plan::V03(&unique),&bad,&selection,&[]).is_err());
+        // Position-based storage retains both repeated logical labels; a name-keyed map would collapse them.
+        let original_row=vec!["first","second","name"];let cells=baseline.columns.iter().zip(&original_row).map(|(c,v)|(c.position,c.output_name.clone(),*v)).collect::<Vec<_>>();assert_eq!(cells.len(),3);assert_ne!(cells[0].2,cells[1].2);let dictionary=baseline.columns.iter().zip(original_row).map(|(c,v)|(c.output_name.clone(),v)).collect::<std::collections::BTreeMap<_,_>>();assert_eq!(dictionary.len(),2);
+    }
+
 }

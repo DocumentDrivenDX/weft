@@ -220,7 +220,7 @@ pub(super) fn lower(
             if lower.compounds.contains_key(&key) {
                 let sql=lower.expressions.get(&key).unwrap();
                 outputs.push(format!("{sql} AS {}",binding::quote(&output.name)));
-                columns.push(Column{position:index+1,output_name:output.name.clone(),representation:Representation::Value{descriptor:identity.clone(),native_null:false},source_identities:vec![identity.clone()],nullable:false});
+                columns.push(Column{position:index+1,carrier_name: None, output_name:output.name.clone(),representation:Representation::Value{descriptor:identity.clone(),native_null:false},source_identities:vec![identity.clone()],nullable:false});
                 continue;
             }
         }
@@ -235,7 +235,7 @@ pub(super) fn lower(
             outputs.push(format!("{value} AS {}", binding::quote(&output.name)));
             columns.push(Column {
                 position: index + 1,
-                output_name: output.name.clone(),
+                carrier_name: None, output_name: output.name.clone(),
                 representation: Representation::RelatedKeys {
                     relationship: relationship.identity.clone(),
                     key: relationship.target_key.clone(),
@@ -314,7 +314,7 @@ pub(super) fn lower(
         outputs.push(format!("{sql} AS {}", binding::quote(&output.name)));
         columns.push(Column {
             position: index + 1,
-            output_name: output.name.clone(),
+            carrier_name: None, output_name: output.name.clone(),
             representation: repr,
             source_identities: ids,
             nullable,

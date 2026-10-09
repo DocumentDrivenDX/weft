@@ -228,7 +228,7 @@ impl Backend for Third {
             parameters: vec![],
             columns: vec![Column {
                 position: 1,
-                output_name: p.label.clone(),
+                carrier_name: None, output_name: p.label.clone(),
                 representation: Representation::Scalar {
                     logical_type: weft_core::ir::LogicalType {
                         family: Family::String,

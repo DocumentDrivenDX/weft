@@ -236,7 +236,7 @@ pub(crate) fn resolve(
         s.caps.insert("group".into());
     }
     let mut outputs = vec![];
-    let mut labels = BTreeSet::new();
+    let mut labels = BTreeMap::new();
     for p in &q.outputs {
         let (default, expressions) = match &p.output {
             ast::Output::Arithmetic(expression) => {
@@ -384,8 +384,17 @@ pub(crate) fn resolve(
                 } else {
                     default.clone()
                 });
-            if !labels.insert(name.clone()) {
-                return Err(fail("WFT-OUTPUT-NAME", "Repeated output name"));
+            let implicit_field = p.alias.is_none() && matches!(p.output, ast::Output::Field(_))
+                && matches!(&expression, ir::Expression::Field { identity, .. }
+                    if s.graph.iter().any(|descriptor| descriptor.identity == *identity
+                        && matches!(descriptor.shape, crate::application_model::Shape::Scalar { .. })));
+            if let Some(previous) = labels.get(&name) {
+                if !implicit_field || !previous {
+                    return Err(fail("WFT-OUTPUT-NAME", "Repeated explicit or computed output name"));
+                }
+                s.caps.insert("project.positionedOutputs".into());
+            } else {
+                labels.insert(name.clone(), implicit_field);
             }
             outputs.push(ir::Output { name, expression });
         }

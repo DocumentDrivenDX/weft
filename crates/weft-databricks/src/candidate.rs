@@ -130,7 +130,7 @@ impl Backend for Candidate {
             let ty = output.expression.logical_type();
             columns.push(Column {
                 position: index + 1,
-                output_name: output.name.clone(),
+                carrier_name: None, output_name: output.name.clone(),
                 representation: Representation::Scalar {
                     logical_type: ty.clone(),
                     carrier: ScalarCarrier::Text,
