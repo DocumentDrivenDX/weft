@@ -600,7 +600,7 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
         fn lower(&self,_:&Context<'_>,_:&())->Result<()> {panic!()}
         fn emit(&self,_:&Context<'_>,_:&())->Result<Emission> {panic!()}
     }
-    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id"),("predicate.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("value.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("compare.nullAwareStringEqual","SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name")] {
+    for (id,sql) in [("project.distinct","SELECT DISTINCT c.name FROM Customer c"),("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id"),("predicate.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("value.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("compare.nullAwareStringEqual","SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name")] {
         for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
             let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();
             let mut request=if id=="compare.nullAwareStringEqual" {nullable_request(sql,"name")}else{arithmetic_request(sql)};if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
@@ -709,5 +709,44 @@ fn nullable03_boolean_and_decimal_outputs_remain_tagged_ideal_domains() {
         let text=response["sql"].as_str().unwrap();if family=="boolean" {assert!(text.contains("AS BOOLEAN"));}else{assert!(descriptor["type"]["facets"]["scale"].is_number());}
         let checks=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.scalarIntegrity").unwrap()["parameters"]["checks"].as_array().unwrap();
         assert!(checks.iter().all(|c|c["encoding"]==weft_databricks::binding::NATIVE_NULL_ENCODING));assert!(checks.iter().all(|c|c["propertyId"].is_string()));
+    }
+}
+
+#[test]
+fn distinct03_exact_required_string_tuple_and_closed_ir() {
+    for sql in ["SELECT DISTINCT c.name FROM Customer c", "SELECT DISTINCT c.name,c.name FROM Customer c JOIN Customer d ON c.id=d.id", "SELECT DISTINCT c.name FROM Customer c ORDER BY c.name LIMIT 1"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));
+        assert_eq!(response["status"],"compiled","{response}");
+        assert_eq!(response["logicalPlan"]["distinct"],true);
+        assert!(response["logicalPlan"]["requiredCapabilities"].as_array().unwrap().contains(&json!("project.distinct")));
+        assert!(response["sql"].as_str().unwrap().contains("SELECT DISTINCT "));
+        if sql.contains("c.name,c.name") {
+            assert_eq!(response["columns"].as_array().unwrap().len(),2);
+            assert_eq!(response["columns"][0]["outputName"],"name");
+            assert_eq!(response["columns"][1]["outputName"],"name");
+            assert_ne!(response["columns"][0]["carrierName"],response["columns"][1]["carrierName"]);
+        }
+    }
+    let old=arithmetic_compile(&arithmetic_request("SELECT c.name FROM Customer c"));
+    assert!(old["logicalPlan"].get("distinct").is_none());
+    for sql in ["SELECT DISTINCT c.id FROM Customer c", "SELECT DISTINCT c.id+1 AS next FROM Customer c", "SELECT DISTINCT COUNT(*) AS n FROM Customer c", "SELECT DISTINCT c.name FROM Customer c ORDER BY c.id", "SELECT DISTINCT c.name FROM Customer c JOIN Customer d ON c.id=d.id ORDER BY d.name", "SELECT DISTINCT c.* FROM Customer c"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));
+        assert_eq!(response["status"],"blocked","{sql}: {response}");assert!(response.get("sql").is_none());
+    }
+    let response=arithmetic_compile(&nullable_request("SELECT DISTINCT c.name FROM Customer c","name"));
+    assert_eq!(response["status"],"blocked");assert!(response.get("sql").is_none());
+}
+
+#[test]
+fn distinct03_leaves_older_language_profiles_refusing_before_binding() {
+    for version in ["0.1.0", "0.2.0"] {
+        let mut request=common::request("SELECT DISTINCT c.name FROM Customer c");
+        request["interfaceVersion"]=json!(format!("weft-compile/{version}"));
+        request["dialect"]=json!(format!("weft-sql/{version}"));
+        let response=run(&request);
+        assert_eq!(response["status"],"blocked");
+        assert_eq!(response["diagnostics"][0]["code"],"WFT-UNSUPPORTED");
+        assert_eq!(response["diagnostics"][0]["phase"],"parse");
+        assert!(response.get("sql").is_none());
     }
 }

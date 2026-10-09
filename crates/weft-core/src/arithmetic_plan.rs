@@ -67,6 +67,8 @@ pub struct Output {
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Plan {
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub distinct: bool,
     pub ir_version: String,
     pub module_pins: Vec<ModelPin>,
     pub read_profile: Option<ReadProfile>,

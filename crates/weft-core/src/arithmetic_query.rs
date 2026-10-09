@@ -46,6 +46,7 @@ pub enum Predicate {
 }
 #[derive(Debug, Clone)]
 pub struct Query {
+    pub distinct: bool,
     pub outputs: Vec<Projection>,
     pub source: Source,
     pub predicates: Vec<Predicate>,
@@ -239,6 +240,7 @@ pub fn parse(sql: &str) -> Result<Query> {
     let mut p = Parser::new(sql)?;
     let mut budget = Budget::new();
     p.word("select")?;
+    let distinct = if p.peek_word("distinct") { p.word("distinct")?; true } else { false };
     let mut outputs = Vec::new();
     loop {
         let output = if p.peek_word("count") {
@@ -366,6 +368,7 @@ pub fn parse(sql: &str) -> Result<Query> {
     };
     p.finish_application()?;
     Ok(Query {
+        distinct,
         outputs,
         source,
         predicates,

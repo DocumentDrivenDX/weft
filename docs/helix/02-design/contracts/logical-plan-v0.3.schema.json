@@ -1,6 +1,7 @@
 {
   "type": "object",
   "properties": {
+    "distinct": { "const": true },
     "irVersion": {
       "const": "weft-ir/0.3.0"
     },

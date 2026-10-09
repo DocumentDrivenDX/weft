@@ -468,7 +468,7 @@ impl<B: Backend> Registered for Adapter<B> {
         // New 0.3 comparisons must be admitted before any backend binding callback.
         // Retain the ordering of older operations; do not retroactively preflight them.
         if matches!(plan, Plan::V03(_)) {
-            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull"].contains(&id.as_str())) {
+            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "project.distinct", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull"].contains(&id.as_str())) {
                 if !self.manifest.capabilities.iter().any(|c| &c.id == id
                     && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
                     && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {

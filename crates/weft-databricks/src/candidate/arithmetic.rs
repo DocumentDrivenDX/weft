@@ -640,8 +640,9 @@ pub(super) fn lower(
         &guards,
     );
     let mut sql = format!(
-        "WITH {} SELECT {} FROM {from}",
+        "WITH {} SELECT {}{} FROM {from}",
         lower.ctes.join(", "),
+        if p.distinct { "DISTINCT " } else { "" },
         projections.join(", ")
     );
     if let Some(filter) = filter {

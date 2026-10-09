@@ -437,6 +437,22 @@ pub(crate) fn resolve(
     if q.limit.is_some() {
         s.caps.insert("limit".into());
     }
+    if q.distinct {
+        if aggregate || profile.is_some() || q.outputs.iter().any(|o| !matches!(o.output, ast::Output::Field(_))) {
+            return Err(fail("WFT-CAPABILITY", "DISTINCT requires direct required String Field projections without aggregation or page profile"));
+        }
+        for output in &outputs {
+            let ir::Expression::Field { scan: _, identity } = &output.expression else { return Err(fail("WFT-CAPABILITY", "Unsupported DISTINCT output")); };
+            let descriptor = s.graph.iter().find(|d| &d.identity == identity).ok_or_else(|| fail("WFT-TYPE", "Missing DISTINCT descriptor"))?;
+            if descriptor.availability.as_deref() != Some("required") || !matches!(&descriptor.shape, crate::application_model::Shape::Scalar { logical_type } if logical_type.family == Family::String && logical_type.facets == json!({}) && !logical_type.nullable) {
+                return Err(fail("WFT-CAPABILITY", "DISTINCT supports required non-null exact String Fields only"));
+            }
+        }
+        if order.iter().any(|field| !outputs.iter().any(|output| matches!(&output.expression, ir::Expression::Field { scan, identity } if scan == &field.scan && identity == &field.identity))) {
+            return Err(fail("WFT-CAPABILITY", "DISTINCT ordering must reference an exact projected scan and Field identity"));
+        }
+        s.caps.insert("project.distinct".into());
+    }
     let page_key = None;
     if s.used.len() != s.parameters.len() {
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
@@ -444,6 +460,7 @@ pub(crate) fn resolve(
     s.caps.insert("project".into());
     if s.graph.iter().any(|d|d.availability.as_deref()==Some("absent-allowed")) {s.caps.insert("value.nativeNull".into());}
     Ok(ir::Plan {
+        distinct: q.distinct,
         ir_version: "weft-ir/0.3.0".into(),
         module_pins: catalog.pins(),
         read_profile: profile,
@@ -592,6 +609,22 @@ mod tests {
             let mut bad=original.clone();match mutation {"negated"=>bad["filters"][0]["negated"]=json!(0),"extra"=>bad["filters"][0]["future"]=json!(true),_=>bad["filters"][0]["field"]["type"]["nullable"]=json!(true)};assert!(!PlanSchema03::is_valid(&bad));
         }
         assert!(run("join-count","SELECT c.id+1 AS n FROM Customer c WHERE (c.id+1) IS NULL",json!({})).is_err());
+    }
+
+    #[test]
+    fn distinct03_closed_member_is_true_only_and_absent_on_old_plans() {
+        // This separately selected required String declaration preserves every other fixture member.
+        let mut request=request("join-count");
+        let mut document:serde_json::Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        let elements=document["modules"][0]["elements"].as_array_mut().unwrap();
+        elements.iter_mut().find(|e|e["name"]=="name"&&e["kind"]=="field").unwrap()["nullability"]=json!("required");
+        let raw=document.to_string();request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(crate::json::sha256(raw.as_bytes()));
+        let modules=serde_json::from_value(request["modules"].clone()).unwrap();
+        let catalog=Catalog::prepare(modules).unwrap();
+        let plan=resolve(&catalog,ast::parse("SELECT DISTINCT c.name FROM Customer c").unwrap(),Default::default(),None).unwrap();
+        let original=serde_json::to_value(plan).unwrap();assert!(PlanSchema03::is_valid(&original));
+        for value in [json!(false),json!(1),json!(null),json!("true")] {let mut bad=original.clone();bad["distinct"]=value;assert!(!PlanSchema03::is_valid(&bad));}
+        let old=run("join-count","SELECT c.id FROM Customer c",json!({})).unwrap();let original=serde_json::to_value(old).unwrap();assert!(original.get("distinct").is_none());assert!(PlanSchema03::is_valid(&original));
     }
 
 }
