@@ -59,7 +59,7 @@ fn value(p: &mut Parser) -> Result<Value> {
         p.symbol(':')?;
         Ok(Value::Parameter(p.name()?))
     } else if p.peek_identifier() {
-        Ok(Value::Field(p.column()?))
+        Ok(Value::Field(p.column03()?))
     } else {
         Ok(Value::Literal(p.literal()?))
     }
@@ -89,10 +89,10 @@ fn bound(p: &mut Parser) -> Result<u16> {
     })
 }
 fn columns(p: &mut Parser) -> Result<Vec<Column>> {
-    let mut values = vec![p.column()?];
+    let mut values = vec![p.column03()?];
     while p.peek_symbol(',') {
         p.symbol(',')?;
-        values.push(p.column()?);
+        values.push(p.column03()?);
     }
     Ok(values)
 }
@@ -124,7 +124,7 @@ fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
                 p.symbol(')')?;
                 c
             } else {
-                vec![p.column()?]
+                vec![p.column03()?]
             };
             let greater = p.peek_symbol('>');
             p.symbol(if greater { '>' } else { '=' })?;
@@ -224,7 +224,7 @@ pub fn parse(sql: &str) -> Result<Query> {
         } else if p.peek_word("sum") {
             p.word("sum")?;
             p.symbol('(')?;
-            let c = p.column()?;
+            let c = p.column03()?;
             p.symbol(')')?;
             Output::Sum(c)
         } else if p.peek_word("related_keys") {
@@ -255,7 +255,7 @@ pub fn parse(sql: &str) -> Result<Query> {
                     start: alias.span.start,
                     end: field.span.end,
                 };
-                Output::Field(Column { alias, field, span })
+                Output::Field(Column { unqualified: false, alias, field, span })
             }
         };
         let alias = if p.peek_word("as") {
@@ -322,7 +322,7 @@ pub fn parse(sql: &str) -> Result<Query> {
         p.word("order")?;
         p.word("by")?;
         loop {
-            order.push(p.column()?);
+            order.push(p.column03()?);
             if p.peek_word("asc") {
                 p.word("asc")?;
             }

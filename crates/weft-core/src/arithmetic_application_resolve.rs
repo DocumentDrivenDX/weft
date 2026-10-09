@@ -259,7 +259,7 @@ pub(crate) fn resolve(
                 (String::new(), expressions)
             }
             ast::Output::Field(c) => {
-                let (r, scan) = s.record(&c.alias)?;
+                let (r, scan) = s.record_for_column(c)?;
                 let (m, graph) = catalog.member_descriptor(r, &c.field)?;
                 if aggregate {
                     let f = s.field(c)?;

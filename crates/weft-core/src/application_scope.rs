@@ -55,8 +55,23 @@ impl<'a> Scope<'a> {
             .ok_or_else(|| fail("WFT-NAME-MISSING", "Source alias is not in scope").at(&n.span))?;
         Ok((r, s.clone()))
     }
+    pub(crate) fn record_for_column(&self, column: &Column) -> Result<(&Record, String)> {
+        if !column.unqualified { return self.record(&column.alias); }
+        let mut matches = 0;
+        let mut selected = None;
+        for (_, record, scan) in &self.records {
+            let count = self.catalog.member_name_matches(record, &column.field)?;
+            matches += count;
+            if count > 0 { selected = Some((record, scan.clone())); }
+        }
+        if matches != 1 {
+            return Err(fail(if matches == 0 { "WFT-NAME-MISSING" } else { "WFT-NAME-AMBIGUOUS" },
+                "Bare Field name must match exactly one visible Record member").at(&column.span));
+        }
+        Ok(selected.unwrap())
+    }
     pub(crate) fn field(&mut self, c: &Column) -> Result<ir::Field> {
-        let (r, s) = self.record(&c.alias)?;
+        let (r, s) = self.record_for_column(c)?;
         let (id, t, _) = self.catalog.field(r, &c.field)?;
         if t.family == Family::Integer && t.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
         self.caps.insert(format!(

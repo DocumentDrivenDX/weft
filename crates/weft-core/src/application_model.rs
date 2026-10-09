@@ -61,6 +61,15 @@ impl Catalog {
         record: &Record,
         reference: &Value,
     ) -> Result<(Identity, Value)> {
+        let (identity, element) = self.local_element_metadata(record, reference)?;
+        crate::model::selected08(&record.pin, element)?;
+        Ok((identity, element.clone()))
+    }
+    fn local_element_metadata<'a>(
+        &'a self,
+        record: &Record,
+        reference: &Value,
+    ) -> Result<(Identity, &'a Value)> {
         crate::model::reference08(&record.pin, reference, &["module", "element", "role", "key"])?;
         let mid = reference["module"]
             .as_str()
@@ -84,8 +93,21 @@ impl Catalog {
         let mut identity = record.identity.clone();
         identity.module = mid.into();
         identity.element = eid.into();
-        crate::model::selected08(&record.pin, element)?;
-        Ok((identity, element.clone()))
+        Ok((identity, element))
+    }
+    /// Count authored names before interpreting any matching Field's value meaning.
+    pub(crate) fn member_name_matches(&self, record: &Record, name: &Name) -> Result<usize> {
+        let refs = record.value["members"].as_array()
+            .ok_or_else(|| fail("Record needs explicit ordered members"))?;
+        let mut count = 0;
+        for reference in refs {
+            let (_, field) = self.local_element_metadata(record, reference)?;
+            if field["kind"] != "field" { return Err(fail("Record member must reference a Field")); }
+            let authored = field["name"].as_str()
+                .ok_or_else(|| fail("Selected Field needs an authored name"))?;
+            count += usize::from(name.matches(authored));
+        }
+        Ok(count)
     }
     fn members(&self, record: &Record, value: &Value) -> Result<Vec<Member>> {
         let refs = value["members"]

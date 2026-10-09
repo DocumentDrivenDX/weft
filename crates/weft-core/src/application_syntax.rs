@@ -191,7 +191,7 @@ pub fn parse(sql: &str) -> Result<Query> {
                     start: alias.span.start,
                     end: field.span.end,
                 };
-                Output::Field(Column { alias, field, span })
+                Output::Field(Column { unqualified: false, alias, field, span })
             }
         };
         let alias = if p.peek_word("as") {

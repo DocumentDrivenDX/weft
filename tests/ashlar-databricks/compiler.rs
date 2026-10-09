@@ -482,3 +482,49 @@ fn arithmetic_outputs_retain_all_field_identities_across_joined_scans() {
     }
     assert_eq!(response["columns"][2]["sourceIdentities"],json!([response["logicalPlan"]["source"]["record"].clone()]));
 }
+
+#[test]
+fn arithmetic_bare_fields_resolve_original_members_without_expanding_old_profiles() {
+    for sql in ["SELECT id FROM Customer WHERE id=1 ORDER BY id", "SELECT id+1 AS next FROM Customer", "SELECT total FROM Customer c JOIN Orders o ON o.customer_id=c.id", "SELECT total FROM Customer c JOIN Orders o ON customer_id=id"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"compiled","{response}");
+        for request in [common::request(sql),application(sql)] {assert_eq!(run(&request)["status"],"blocked");}
+        assert!(response["columns"][0]["sourceIdentities"].as_array().unwrap()[0]["element"].is_string());
+    }
+    for (sql,code) in [("SELECT id FROM Customer c JOIN Customer other ON other.id=c.id","WFT-NAME-AMBIGUOUS"),("SELECT missing FROM Customer","WFT-NAME-MISSING"),("SELECT c.name FROM Customer c JOIN Customer other ON total=total JOIN Orders future ON future.customer_id=c.id","WFT-NAME-MISSING"),("SELECT id AS invented FROM Customer WHERE invented=1","WFT-NAME-MISSING")] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"blocked","{response}");assert_eq!(response["diagnostics"][0]["code"],code,"{response}");assert!(response.get("sql").is_none());
+    }
+}
+#[test]
+fn bare_field_ambiguity_precedes_unsupported_matching_member_meaning() {
+    let mut request=arithmetic_request("SELECT id FROM Customer c JOIN Orders o ON o.customer_id=c.id");
+    let mut document:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    let field=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="order-total").unwrap();field["name"]=json!("id");field["nullability"]=json!("nullable");
+    let raw=document.to_string();let hash=sha256(raw.as_bytes());request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(hash);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(hash);let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+    let response=arithmetic_compile(&request);assert_eq!(response["diagnostics"][0]["code"],"WFT-NAME-AMBIGUOUS","{response}");assert!(response.get("sql").is_none());
+    request["sql"]=json!("SELECT o.id FROM Customer c JOIN Orders o ON o.customer_id=c.id");
+    let response=arithmetic_compile(&request);assert_eq!(response["diagnostics"][0]["code"],"WFT-TYPE","{response}");assert!(response.get("sql").is_none());
+}
+
+#[test]
+fn bare_quoted_fields_preserve_case_punctuation_and_source_identity() {
+    let mut request=arithmetic_request("SELECT \"odd.Name\" AS exact FROM Customer WHERE \"odd.Name\"='Ada'");
+    let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="customer-name").unwrap()["name"]=json!("odd.Name");
+    let raw=doc.to_string();let hash=sha256(raw.as_bytes());request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(hash);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(hash);let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+    let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");assert_eq!(response["columns"][0]["outputName"],"exact");assert_eq!(response["columns"][0]["sourceIdentities"],json!([common::identity("customer-name")]));
+    request["sql"]=json!("SELECT \"ODD.Name\" FROM Customer");let response=arithmetic_compile(&request);assert_eq!(response["diagnostics"][0]["code"],"WFT-NAME-MISSING","{response}");
+}
+
+#[test]
+fn bare_field_extension_does_not_expand_relationship_name_positions() {
+    for sql in ["SELECT RELATED_KEYS(c.orders,4) AS related FROM Customer c", "SELECT c.id FROM Customer c WHERE HAS_RELATED(c.orders,KEY(1))"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));
+        assert_eq!(response["status"],"blocked","{response}");
+        assert_ne!(response["diagnostics"][0]["phase"],"parse","Qualified relationship grammar must remain accepted: {response}");
+    }
+    for sql in ["SELECT RELATED_KEYS(orders,4) AS related FROM Customer c", "SELECT c.id FROM Customer c WHERE HAS_RELATED(orders,KEY(1))"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"blocked","{response}");assert_eq!(response["diagnostics"][0]["phase"],"parse","{response}");assert!(response.get("sql").is_none());
+    }
+}

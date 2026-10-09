@@ -30,6 +30,19 @@ unknown content and mathematical integer domains remain unchanged.
 
 ## Expressions and relational meaning
 
+The explicit 0.3 grammar admits bare authored Field names in field positions.
+Resolve each name against every visible source Record member before interpreting
+its value type or capability. Exactly one member must match; missing or ambiguous
+names refuse, including self-joins and same-name unsupported or nullable fields.
+Quoted names preserve exact case and embedded punctuation. Unquoted names retain
+the existing identifier rules. Projection aliases are not source members and do
+not become an implicit lookup scope. JOIN ON sees only its current join prefix.
+Relationship arguments in HAS_RELATED and RELATED_KEYS remain qualified; bare
+relationship-name resolution is outside this Field-only extension. Fully qualified
+names retain their existing meaning. Older 0.1/0.2 grammars remain
+qualified-only; their acceptance and refusal boundaries do not widen.
+
+
 Add `+`, binary `-`, `*`, unary negation and parenthesized numeric expressions to
 scalar projections and comparison operands in WHERE and INNER JOIN ON.
 GROUP BY, ORDER BY and aggregate arguments retain their field-only forms;

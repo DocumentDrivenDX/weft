@@ -22,6 +22,7 @@ impl Name {
 }
 #[derive(Debug, Clone)]
 pub struct Column {
+    pub unqualified: bool,
     pub alias: Name,
     pub field: Name,
     pub span: Span,
@@ -339,7 +340,19 @@ impl Parser {
             start: alias.span.start,
             end: field.span.end,
         };
-        Ok(Column { alias, field, span })
+        Ok(Column { unqualified: false, alias, field, span })
+    }
+    /// Bare authored fields belong only to the explicit 0.3 parser.
+    pub(crate) fn column03(&mut self) -> Result<Column> {
+        let first = self.name()?;
+        if self.peek_symbol('.') {
+            self.symbol('.')?;
+            let field = self.name()?;
+            let span = Span { start: first.span.start, end: field.span.end };
+            Ok(Column { unqualified: false, alias: first, field, span })
+        } else {
+            Ok(Column { unqualified: true, alias: first.clone(), field: first.clone(), span: first.span })
+        }
     }
     pub(crate) fn source(&mut self) -> Result<Source> {
         let first = self.name()?;

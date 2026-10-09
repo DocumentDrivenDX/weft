@@ -87,7 +87,7 @@ fn atom(p: &mut Parser, budget: &mut Budget, depth: usize) -> Result<Expression>
         };
         (Kind::Parameter(name), span)
     } else if p.peek_identifier() {
-        let column = p.column()?;
+        let column = p.column03()?;
         let span = column.span.clone();
         (Kind::Field(column), span)
     } else {
