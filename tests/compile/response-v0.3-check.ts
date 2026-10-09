@@ -1,0 +1,17 @@
+import Ajv2020 from 'ajv/dist/2020.js';
+const ajv=new Ajv2020({strict:false,allErrors:true});
+const dir='docs/helix/02-design/contracts/';
+for(const name of ['logical-plan-v0.3.schema.json','backend-manifest-v0.2.schema.json'])ajv.addSchema(await Bun.file(dir+name).json());
+const schema=await Bun.file(dir+'compile-response-v0.3.schema.json').json();
+const validate=ajv.compile(schema);
+const blocked={interfaceVersion:'weft-compile/0.3.0',status:'blocked',diagnostics:[{code:'WFT-CAPABILITY',severity:'error',message:'Exact arithmetic capability is unavailable',phase:'capability',recoverability:'change-profile'}]};
+const check=(id:string,value:unknown,expected:boolean)=>{if(Boolean(validate(value))!==expected)throw new Error(id+': '+JSON.stringify(validate.errors));};
+check('closed-blocked-envelope',blocked,true);
+check('old-version',{...blocked,interfaceVersion:'weft-compile/0.2.0'},false);
+for(const key of ['sql','logicalPlan','parameters','columns','backend'])check('atomic-refusal-'+key,{...blocked,[key]:{}},false);
+check('unqualified-diagnostic',{...blocked,diagnostics:[{code:'WFT-CAPABILITY',severity:'error',message:'Unavailable',phase:'capability'}]},false);
+const scalar=ajv.compile(schema.oneOf[1].properties.columns.items.properties.representation.oneOf[0]);
+const exact={kind:'scalar',logicalType:{family:'decimal',facets:{scale:6},nullable:false},carrier:'text',decoder:'exact-decimal'};
+if(!scalar(exact))throw new Error('Exact derived decimal representation violates schema');
+if(scalar({...exact,carrier:'float'}))throw new Error('Floating arithmetic carrier admitted');
+console.log('Validated eight blocked-response controls and exact-decimal carrier shape; no compiled artifact or native execution claim.');
