@@ -178,6 +178,22 @@ fn arithmetic_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Pr
         let greater = p.peek_symbol('>');
         p.symbol(if greater { '>' } else { '=' })?;
         let right = arithmetic_syntax::parse(p, budget)?;
+        // Operator-free comparisons retain the established application resolver.
+        if let Kind::Field(column) = &left.kind {
+            let value = match &right.kind {
+                Kind::Field(column) => Some(Value::Field(column.clone())),
+                Kind::Parameter(name) => Some(Value::Parameter(name.clone())),
+                Kind::Literal(literal) => Some(Value::Literal(literal.clone())),
+                _ => None,
+            };
+            if let Some(value) = value {
+                return Ok(Predicate::Compare {
+                    columns: vec![column.clone()],
+                    values: vec![value],
+                    greater,
+                });
+            }
+        }
         Ok(Predicate::ArithmeticCompare {
             left,
             right,
@@ -363,6 +379,17 @@ mod tests {
         let sql = "SELECT l.quantity + 1 AS n FROM lines l";
         assert!(parse(sql).is_ok());
         assert!(crate::application_syntax::parse(sql).is_err());
+    }
+    #[test]
+    fn operator_free_comparisons_preserve_existing_semantics() {
+        let q = parse("SELECT l.id FROM lines l JOIN products p ON l.product_id=p.id WHERE l.quantity=:quantity").unwrap();
+        assert!(matches!(q.joins[0].1[0], Predicate::Compare { .. }));
+        assert!(matches!(q.predicates[0], Predicate::Compare { .. }));
+        let q = parse("SELECT l.id FROM lines l WHERE l.quantity+1=:quantity").unwrap();
+        assert!(matches!(
+            q.predicates[0],
+            Predicate::ArithmeticCompare { .. }
+        ));
     }
     #[test]
     fn aggregate_and_order_positions_remain_field_only() {
