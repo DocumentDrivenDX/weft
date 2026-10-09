@@ -1,3 +1,4 @@
+mod application_scope;
 mod arithmetic_resolve;
 mod arithmetic_query;
 mod arithmetic_syntax;
