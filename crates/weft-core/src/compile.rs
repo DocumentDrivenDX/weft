@@ -40,6 +40,8 @@ struct Request01;
     path = "../../docs/helix/02-design/contracts/compile-request-v0.2.schema.json"
 )]
 struct Request02;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
+struct Request03;
 /// Validated request target supplied to trusted host composition code.
 /// Binding bytes/digest, modules and SQL/plan have passed transport admission.
 pub struct CompositionInput<'a> {
@@ -92,8 +94,8 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if input["interfaceVersion"] == "weft-compile/0.2.0" {
-                version = "weft-compile/0.2.0".into();
+            if matches!(input["interfaceVersion"].as_str(), Some("weft-compile/0.2.0" | "weft-compile/0.3.0")) {
+                version = input["interfaceVersion"].as_str().unwrap().into();
             }
             if !matches!(
                 (
@@ -102,6 +104,7 @@ impl Compiler {
                 ),
                 (Some("weft-compile/0.1.0"), Some("weft-sql/0.1.0"))
                     | (Some("weft-compile/0.2.0"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
             ) {
                 return Err(Diagnostic::new(
                     "WFT-VERSION",
@@ -111,8 +114,10 @@ impl Compiler {
             }
             if !(if version == "weft-compile/0.1.0" {
                 Request01::is_valid(&input)
-            } else {
+            } else if version == "weft-compile/0.2.0" {
                 Request02::is_valid(&input)
+            } else {
+                Request03::is_valid(&input)
             }) {
                 return Err(Diagnostic::new(
                     "WFT-INPUT",
@@ -154,6 +159,15 @@ impl Compiler {
                     req.target,
                     req.options.allow_candidate,
                     factory,
+                )
+            } else if req.interface_version == "weft-compile/0.3.0" {
+                let query = crate::arithmetic_query::parse(&req.sql)?;
+                let plan = crate::arithmetic_application_resolve::resolve(
+                    &catalog, query, req.parameters.unwrap_or_default(), None,
+                )?;
+                self.emit(
+                    &req.interface_version, &req.dialect, &catalog, Plan::V03(&plan),
+                    req.target, req.options.allow_candidate, factory,
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;

@@ -87,7 +87,7 @@ fn valid_languages(profiles: &[LanguageProfile]) -> bool {
         && profiles.iter().all(|p| {
             matches!(
                 profile_key(p),
-                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0")
+                ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
             ) && seen.insert(profile_key(p))
         })
 }

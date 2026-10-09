@@ -214,3 +214,16 @@ fn malformed_json_known_members_and_repeated_capability_languages_refuse() {
     assert_eq!(error.code,"WFT-BACKEND-VERSION");
     assert_eq!(error.message,"Capabilities must bind distinct IDs to declared target and language profiles");
 }
+
+#[test]
+fn arithmetic_language_requires_exact_explicit_profile() {
+    let mut value = manifest();
+    let profile = json!({"dialectProfile":"weft-sql/0.3.0","irVersion":"weft-ir/0.3.0"});
+    value["languageProfiles"].as_array_mut().unwrap().push(profile.clone());
+    value["capabilities"][0]["languageProfiles"].as_array_mut().unwrap().push(profile.clone());
+    validate(&value).unwrap();
+    let mut mixed = value.clone(); mixed["languageProfiles"][2]["irVersion"] = json!("weft-ir/0.2.0");
+    assert!(validate(&mixed).is_err());
+    value["languageProfiles"].as_array_mut().unwrap().push(profile);
+    assert!(validate(&value).is_err());
+}

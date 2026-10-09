@@ -147,7 +147,7 @@
           "languageProfiles": {
             "type": "array",
             "minItems": 1,
-            "maxItems": 2,
+            "maxItems": 3,
             "uniqueItems": true,
             "items": {
               "oneOf": [
@@ -175,6 +175,22 @@
                     },
                     "irVersion": {
                       "const": "weft-ir/0.2.0"
+                    }
+                  },
+                  "required": [
+                    "dialectProfile",
+                    "irVersion"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "dialectProfile": {
+                      "const": "weft-sql/0.3.0"
+                    },
+                    "irVersion": {
+                      "const": "weft-ir/0.3.0"
                     }
                   },
                   "required": [
@@ -215,7 +231,7 @@
     "languageProfiles": {
       "type": "array",
       "minItems": 1,
-      "maxItems": 2,
+      "maxItems": 3,
       "uniqueItems": true,
       "items": {
         "oneOf": [
@@ -243,6 +259,22 @@
               },
               "irVersion": {
                 "const": "weft-ir/0.2.0"
+              }
+            },
+            "required": [
+              "dialectProfile",
+              "irVersion"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dialectProfile": {
+                "const": "weft-sql/0.3.0"
+              },
+              "irVersion": {
+                "const": "weft-ir/0.3.0"
               }
             },
             "required": [

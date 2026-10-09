@@ -210,3 +210,32 @@ fn supplied_factory_selection_and_failure_do_not_fall_back() {
         assert_eq!(out["diagnostics"][0]["code"],"WFT-PIN");assert_eq!(calls,0);
     }
 }
+
+#[test]
+fn arithmetic_transport_resolves_only_explicit_version_and_refuses_old_backend() {
+    let mut request = base();
+    request["interfaceVersion"] = json!("weft-compile/0.3.0");
+    request["dialect"] = json!("weft-sql/0.3.0");
+    request["sql"] = json!("SELECT c.id+:n AS next FROM Customer c WHERE c.id*2>1");
+    request["parameters"] = json!({"n":{"family":"integer","value":"9007199254740993"}});
+    let (catalog, _) = weft_core::prepare_and_resolve("SELECT c.name FROM Customer c", fixture::modules()).unwrap();
+    let binding = fixture::binding(&catalog);
+    request["target"] = json!({"backendId":"test.third","backendVersion":"0.1.0","targetProfile":"fixture-only","bindingJson":binding.json,"bindingSha256":binding.sha256});
+    let c = compiler();
+    let response = run(&c, &request);
+    assert_eq!(response["interfaceVersion"], "weft-compile/0.3.0");
+    assert_eq!(response["diagnostics"][0]["code"], "WFT-BACKEND-VERSION");
+    for member in ["sql","logicalPlan","parameters","columns","obligations"] { assert!(response.get(member).is_none()); }
+    for (member, value, code) in [
+        ("readProfile", json!(null), "WFT-INPUT"),
+        ("dialect", json!("weft-sql/0.2.0"), "WFT-VERSION"),
+        ("sql", json!("SELECT c.id/2 AS next FROM Customer c"), "WFT-UNSUPPORTED"),
+        ("parameters", json!({"n":{"family":"integer","value":"1.5"}}), "WFT-NUMERIC-DOMAIN"),
+    ] {
+        let mut altered = request.clone(); altered[member] = value;
+        let response = run(&c, &altered);
+        assert_eq!(response["status"], "blocked");
+        assert_eq!(response["diagnostics"][0]["code"], code, "{response}");
+        assert!(response.get("logicalPlan").is_none());
+    }
+}
