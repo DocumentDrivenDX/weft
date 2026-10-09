@@ -69,8 +69,9 @@ presence/collection subsets remain governed by CONTRACT-001 and the backend
 capabilities. Unselected source content remains retained.
 
 Facetless mathematical integer declarations MUST NOT acquire a synthesized width.
-Until a separately qualified exact representability capability is selected, these
-fields refuse before host execution. Original core 0.8 string/fixed-decimal queries,
+Selection requires an explicit unbounded-integer backend capability. Without an
+admitted exact representability profile, these fields refuse before backend binding
+dispatch and host execution. Original core 0.8 string/fixed-decimal queries,
 string-key joins and COUNT are a partial domain; they do not complete the required
 original commerce integer or general arbitrary-precision query scope.
 

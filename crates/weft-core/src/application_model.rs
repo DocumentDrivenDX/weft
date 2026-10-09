@@ -259,7 +259,7 @@ impl Catalog {
                             span: Span { start: 0, end: 0 },
                         };
                         Shape::Scalar {
-                            logical_type: scalar_type(&required, &name)?,
+                            logical_type: scalar_type(&required, &name, r.pin.umf_version == "0.8.0")?,
                         }
                     }
                     _ => return Err(fail("Selected cardinality is unsupported")),
@@ -327,7 +327,7 @@ impl Catalog {
                 quoted: true,
                 span: Span { start: 0, end: 0 },
             };
-            types.push(scalar_type(&field, &name)?);
+            types.push(scalar_type(&field, &name, record.pin.umf_version == "0.8.0")?);
             fields.push(id);
         }
         Ok(AuthoredKey {

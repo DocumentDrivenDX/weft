@@ -94,6 +94,49 @@ or publication guarantees cannot silently fall back to broader privileges/newer 
 
 ## Precedence and Compatibility
 
+### Mathematical integer representability
+
+An owning core 0.8 Field with no integer width retains its unbounded mathematical
+source domain. Existing backend profiles MUST refuse `type.integer.unbounded`
+before binding dispatch unless their manifest explicitly admits that capability
+for the selected language/profile and candidate opt-in. Native representation
+capacity MUST NOT be added as an invented logical width or integer-to-decimal
+type conversion. Source validity, resource limits and backend representation
+capability are distinct dispositions.
+
+`ashlar.databricks.mathematical-integer` / `dbsql-mathematical-integer-candidate`
+is an explicit candidate representation profile for required scalar relational
+reads. It may represent finite values exactly using DECIMAL(38,0), retaining
+logical Integer and exact integer text results. It MUST guard every consumed
+selected source occurrence over the same pinned source before user SQL. A
+nonrepresentable source or literal MUST fail with WFT-CAPABILITY, without
+asserting that the original UMF value is invalid. Exact lexical literal magnitude
+checks MUST avoid floats, rounding and bounded host integer conversions.
+
+The `ashlar.mathematicalInteger.publicSourceValidity` host obligation MUST
+validate every consumed original numeric JSON token using the actual owning UMF
+public Field validator, retaining exact model/field and pinned row identities,
+raw property bytes, token spans and original receipts. Native revision, presence,
+container and carrier integrity remain separate scalar integrity checks. A host
+MUST NOT validate a rounded VARIANT numeric value. Original numeric token
+extraction MUST match the retained raw token exactly; unsupported lexical
+representations refuse as backend capability failures even if source-valid.
+JSON string, boolean, null, fractional and duplicate-member corruption MUST NOT
+be reported merely as finite magnitude failure. Numeric JSON property custody
+is required in this candidate; direct column homes remain unsupported.
+
+The `ashlar.mathematicalInteger.representability` host obligation MUST remain
+separate from source-value integrity observations; its successful finite native
+representation does not establish original source validity or global coverage.
+Arithmetic/aggregate inputs being representable does not prove intermediate or
+result capacity. SUM MUST retain exact integer meaning, use exact-or-error
+overflow detection and refuse partial/null/rounded/wrapped overflow results.
+Empty global SUM remains its independently declared nullable result. Hosts MUST
+buffer results and fulfill `ashlar.mathematicalInteger.exactResult` with exact
+integer text decoding and finite representation checks before publication.
+Unknown obligations refuse. No general arbitrary-precision execution, native
+Databricks qualification, publication authority or ACK follows from this profile.
+
 CONTRACT-001 governs language meaning; UMF/owning storage contracts govern source
 and layout. Exact manifest/interface/IR/binding versions must agree. Added
 backend implementations do not change the dialect version. Every semantic change

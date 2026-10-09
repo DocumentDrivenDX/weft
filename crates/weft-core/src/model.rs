@@ -271,7 +271,7 @@ impl Catalog {
             .at(&name.span)
         })?;
         selected08(&record.pin, field)?;
-        let logical_type = scalar_type(field, name)?;
+        let logical_type = scalar_type(field, name, record.pin.umf_version == "0.8.0")?;
         Ok((
             identity,
             logical_type,
@@ -280,7 +280,7 @@ impl Catalog {
     }
 }
 
-pub(crate) fn scalar_type(field: &Value, name: &Name) -> Result<LogicalType> {
+pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool) -> Result<LogicalType> {
     let err = || {
         Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported").at(&name.span)
     };
@@ -316,7 +316,7 @@ pub(crate) fn scalar_type(field: &Value, name: &Name) -> Result<LogicalType> {
     {
         return Err(err());
     }
-    if family == Family::Integer {
+    if family == Family::Integer && !(mathematical_integer && facets == json!({})) {
         let width = &facets["integerWidth"];
         let bits = width["bits"].as_u64().ok_or_else(err)?;
         if !(1..=64).contains(&bits)

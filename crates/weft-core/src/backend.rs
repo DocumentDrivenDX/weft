@@ -449,6 +449,14 @@ impl<B: Backend> Registered for Adapter<B> {
             return Err(failure("WFT-BINDING", "Binding root must be an object"));
         }
         let selection = selected(plan);
+        // Unbounded source integers are a new explicit opt-in. Refuse before
+        // unchanged backend binding code can assume an authored width.
+        if plan.capabilities().iter().any(|c| c == "type.integer.unbounded")
+            && !self.manifest.capabilities.iter().any(|c| c.id == "type.integer.unbounded"
+                && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
+                && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
+            return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit mathematical integer source domains"));
+        }
         let context = Context {
             catalog,
             plan,

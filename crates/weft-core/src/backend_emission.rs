@@ -64,7 +64,10 @@ pub(crate) fn validate(
                 "Parameter slots require contiguous positions, typed origins and non-null values",
             ));
         }
-        validate_parameter(&p.value, &p.logical_type)?;
+        let unbounded=p.logical_type.family==Family::Integer && p.logical_type.facets==serde_json::json!({});
+        let admitted=assessments.iter().any(|a| a.id=="type.integer.unbounded" && a.status!=crate::backend::Status::Unsupported);
+        if unbounded && !admitted { return Err(fail("Unbounded integer parameter requires explicit capability admission")); }
+        validate_parameter_domain(&p.value, &p.logical_type, admitted)?;
     }
     let expected: Vec<(&str, Expected<'_>)> = match plan {
         Plan::V01(p) => {
@@ -180,7 +183,10 @@ pub(crate) fn validate(
     }
     Ok(())
 }
-fn validate_parameter(value: &str, t: &LogicalType) -> Result<()> {
+#[cfg(test)]
+fn validate_parameter(value: &str,t:&LogicalType)->Result<()> {validate_parameter_domain(value,t,false)}
+fn validate_parameter_domain(value: &str, t: &LogicalType, unbounded_admitted:bool) -> Result<()> {
+    if t.family==Family::Integer && t.facets==serde_json::json!({}) && !unbounded_admitted {return Err(fail("Integer parameter needs an explicit bounded width"));}
     let kind = match t.family {
         Family::String => {
             if value.contains('\0') {
@@ -206,14 +212,14 @@ fn validate_parameter(value: &str, t: &LogicalType) -> Result<()> {
             {
                 return Err(fail("Numeric parameter is not exact base-ten text"));
             }
-            if t.family == Family::Integer {
+            if t.family == Family::Integer && t.facets != serde_json::json!({}) {
                 let w = &t.facets["integerWidth"];
                 if !w["bits"].as_u64().is_some_and(|b| (1..=64).contains(&b))
                     || !w["signed"].is_boolean()
                 {
                     return Err(fail("Integer parameter needs an explicit bounded width"));
                 }
-            } else {
+            } else if t.family == Family::Decimal {
                 let p = t.facets["precision"].as_u64();
                 let s = t.facets["scale"].as_u64();
                 if !p.is_some_and(|p| (1..=28).contains(&p)) || !s.is_some_and(|s| s <= p.unwrap())

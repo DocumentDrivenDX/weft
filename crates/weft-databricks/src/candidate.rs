@@ -12,7 +12,7 @@ use weft_core::{
 };
 
 pub struct Candidate;
-pub struct TargetPlan(Emission);
+pub struct TargetPlan(pub(crate) Emission);
 fn fail(code: &str, message: &str) -> Diagnostic {
     Diagnostic::new(code, "lower", message)
 }
@@ -114,6 +114,7 @@ impl Backend for Candidate {
             return Err(fail("WFT-EMIT", "Projection root is required"));
         };
         let mut lower = Lower::new(binding);
+        lower.mathematical_profile=c.target.id==crate::mathematical_integer::PROFILE;
         collect(&plan.root, &mut lower.scans, &mut lower.fields);
         lower.prepare()?;
         let mut sql_outputs = Vec::new();
@@ -253,6 +254,7 @@ fn collect(
     }
 }
 struct Lower<'a> {
+    mathematical_profile: bool,
     binding: &'a Binding,
     scans: BTreeMap<String, Identity>,
     fields: BTreeMap<(String, String), (Identity, LogicalType)>,
@@ -270,6 +272,7 @@ impl<'a> Lower<'a> {
     fn new(binding: &'a Binding) -> Self {
         Self {
             binding,
+            mathematical_profile: false,
             scans: BTreeMap::new(),
             fields: BTreeMap::new(),
             expressions: BTreeMap::new(),
@@ -284,6 +287,9 @@ impl<'a> Lower<'a> {
         }
     }
     fn slot(&mut self, ty: LogicalType, value: String, origin: Value) -> Result<String> {
+        if crate::mathematical_integer::unbounded(&ty) && !crate::mathematical_integer::representable(&value) {
+            return Err(fail("WFT-CAPABILITY", "Exact integer literal exceeds the selected finite backend representation"));
+        }
         if self.parameters.len() >= 1024 {
             return Err(fail("WFT-LIMIT", "Databricks slots exceed 1024"));
         }
@@ -366,10 +372,15 @@ impl<'a> Lower<'a> {
                         )?;
                         let variant = format!("variant_get(parse_json(r.props_json), {path})");
                         let schema = format!("schema_of_variant({variant})");
-                        let scalar = format!("CAST({variant} AS STRING)");
+                        let scalar = if crate::mathematical_integer::unbounded(&ty) { format!("get_json_object(r.props_json, {path})") } else { format!("CAST({variant} AS STRING)") };
+                        if crate::mathematical_integer::unbounded(&ty) {
+                            self.checks.push(json!({"publicSourceOnly":true,"field":identity,"record":id,"propertyId":property_id,"logicalType":ty,"sql":format!("SELECT r.source_system, CAST(r.type_id AS STRING) AS type_id, CAST(r.id AS STRING) AS id, r.schema_revision, r.props_json, {scalar} AS extracted_token FROM {table} r WHERE {owner}"),"failureCode":"WFT-NUMERIC-DOMAIN"}));
+                            self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN try_cast({scalar} AS DECIMAL(38,0)) IS NOT NULL THEN FALSE ELSE TRUE END",count_sql()),"failureCode":"WFT-CAPABILITY"}));
+                        }
                         let valid=match ty.family {
                             Family::String=>format!("{schema} = 'STRING' AND instr({scalar}, char(0)) = 0"),
                             Family::Boolean=>format!("{schema} = 'BOOLEAN'"),
+                            Family::Integer if crate::mathematical_integer::unbounded(&ty)=>format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND ({schema} = 'BIGINT' OR {schema} = 'DOUBLE' OR {schema} RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$')"),
                             Family::Integer=>format!("({schema} = 'BIGINT' OR {schema} RLIKE '^DECIMAL\\\\([0-9]+,0\\\\)$') AND {}",numeric_guard(&scalar,&ty)),
                             Family::Decimal=>format!("({schema} = 'BIGINT' OR ({schema} RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract({schema}, ',([0-9]+)\\\\)$', 1) AS INT), 0) <= {})) AND {}",ty.facets["scale"],numeric_guard(&scalar,&ty)),
                         };
@@ -382,6 +393,7 @@ impl<'a> Lower<'a> {
                         (typed(&scalar, &ty), valid, present)
                     }
                     Home::Column { value, present, .. } => {
+                        if crate::mathematical_integer::unbounded(&ty) { return Err(fail("WFT-CAPABILITY","Mathematical integer profile requires original JSON numeric token custody")); }
                         let column = format!("r.{}", binding::quote(value));
                         let mut valid = format!("{column} IS NOT NULL");
                         if let Some(present) = present {
@@ -429,7 +441,9 @@ impl<'a> Lower<'a> {
                     format!("{}.{}", binding::quote(&scan), binding::quote(&field_alias)),
                 );
                 let count = count_sql();
-                self.checks.push(json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"}));
+                let check=json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"});
+
+                self.checks.push(check);
             }
             for ((occurrence, key), graph) in self.compounds.clone() {
                 if occurrence != scan { continue; }
@@ -501,7 +515,8 @@ impl<'a> Lower<'a> {
                 let value = self.expression(argument)?;
                 // TRY_SUM makes finite aggregate overflow observable regardless
                 // of ANSI settings. Empty global aggregates retain SQL NULL.
-                format!("CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM({value}) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM({value}) END")
+                let failure=if self.mathematical_profile || crate::mathematical_integer::unbounded(argument.logical_type()) { "WFT-CAPABILITY" } else { "WFT-NUMERIC-DOMAIN" };
+                format!("CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM({value}) IS NULL THEN raise_error('{failure}') ELSE TRY_SUM({value}) END")
             }
         })
     }
@@ -552,6 +567,7 @@ fn typed(value: &str, ty: &LogicalType) -> String {
 fn numeric_guard(value: &str, ty: &LogicalType) -> String {
     match ty.family {
         Family::Integer => {
+            if crate::mathematical_integer::unbounded(ty) { return format!("try_cast({value} AS DECIMAL(38,0)) IS NOT NULL"); }
             let bits = ty.facets["integerWidth"]["bits"].as_u64().unwrap();
             let (min, max) = if ty.facets["integerWidth"]["signed"] == true {
                 (-(1i128 << (bits - 1)), (1i128 << (bits - 1)) - 1)

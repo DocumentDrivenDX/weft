@@ -23,7 +23,7 @@ fn edit(r:&mut Value,f:impl FnOnce(&mut Value)) {
  for sql in ["SELECT p.id, p.unit_price FROM products p", "SELECT COUNT(*) AS n FROM products p", "SELECT p.id AS left_id, q.id AS right_id FROM products p JOIN products q ON p.id = q.id"] {
   let r=request(sql);let o=run(&r);assert_eq!(o["status"],"resolved","{o}");assert_eq!(o["retainedModules"],r["modules"]);assert_eq!(o["logicalPlan"]["modulePins"][0]["umfVersion"],"0.8.0");
  }
- let o=run(&request("SELECT o.quantity FROM order_lines o"));assert_eq!(o["status"],"blocked");assert_eq!(o["diagnostics"][0]["code"],"WFT-TYPE");assert!(o.get("logicalPlan").is_none());
+ let o=run(&request("SELECT o.quantity FROM order_lines o"));assert_eq!(o["status"],"resolved");assert!(o["logicalPlan"]["requiredCapabilities"].as_array().unwrap().iter().any(|c|c=="type.integer.unbounded"));
 }
 #[test] fn original08_exact_owning_version_and_selected_meaning_refuse() {
  let mut r=request("SELECT p.id, p.unit_price FROM products p");edit(&mut r,|d| {let e=d["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="products").unwrap();e["members"][0]["futureMembership"]=json!({"meaning":"selected-membership"});});assert_eq!(run(&r)["diagnostics"][0]["code"],"WFT-TYPE");

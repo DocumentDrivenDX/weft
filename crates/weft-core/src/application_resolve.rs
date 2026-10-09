@@ -63,6 +63,7 @@ impl<'a> Scope<'a> {
     fn field(&mut self, c: &Column) -> Result<ir::Field> {
         let (r, s) = self.record(&c.alias)?;
         let (id, t, _) = self.catalog.field(r, &c.field)?;
+        if t.family == Family::Integer && t.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
         self.caps.insert(format!(
             "type.{}",
             match t.family {
@@ -83,6 +84,7 @@ impl<'a> Scope<'a> {
         for d in graph {
             match &d.shape {
                 Shape::Scalar { logical_type } => {
+                    if logical_type.family == Family::Integer && logical_type.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
                     self.caps.insert(format!(
                         "type.{}",
                         match logical_type.family {

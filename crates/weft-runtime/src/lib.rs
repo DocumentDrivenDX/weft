@@ -47,6 +47,13 @@ pub fn compile_json(request: &str) -> String {
             .expect("build-time qualified registration must be unique");
         registry
     };
+    #[cfg(feature = "ashlar-databricks-mathematical-integer")]
+    let registry = {
+        let mut registry = registry;
+        registry.register(weft_databricks::mathematical_integer::MathematicalInteger)
+            .expect("explicit mathematical integer backend registration must be unique");
+        registry
+    };
     #[cfg(feature = "test-original")]
     {
         let mut fallback = Some(registry);

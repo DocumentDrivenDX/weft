@@ -14,6 +14,9 @@ pub fn literal(input: &Literal, expected: &LogicalType) -> Result<Expression> {
                     "Integer literal must be integral base-ten text",
                 ));
             }
+            let digits = input.value.strip_prefix('-').unwrap_or(&input.value);
+            if digits.is_empty() || !digits.bytes().all(|b| b.is_ascii_digit()) { return Err(error("WFT-NUMERIC-DOMAIN", "Integer literal must retain exact base-ten digits")); }
+            if expected.facets != serde_json::json!({}) {
             let n = input.value.parse::<i128>().map_err(|_| {
                 error(
                     "WFT-NUMERIC-DOMAIN",
@@ -32,6 +35,7 @@ pub fn literal(input: &Literal, expected: &LogicalType) -> Result<Expression> {
                     "WFT-NUMERIC-DOMAIN",
                     "Integer literal exceeds selected domain",
                 ));
+            }
             }
         }
         (LiteralKind::Number, Family::Decimal) => {

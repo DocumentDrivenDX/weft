@@ -132,6 +132,7 @@ pub(super) fn lower(
     plan: &app::Plan,
 ) -> Result<TargetPlan> {
     let mut lower = Lower::new(binding);
+    lower.mathematical_profile=context.target.id==crate::mathematical_integer::PROFILE;
     lower
         .scans
         .insert(plan.source.occurrence.clone(), plan.source.record.clone());
