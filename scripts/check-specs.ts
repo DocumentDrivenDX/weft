@@ -88,5 +88,17 @@ for (const c of cases) {
   if (c.setup.rows) await read(`docs/helix/03-test/fixtures/${c.setup.rows}`);
 }
 assert(cases.length >= 636 && structuralNegatives > 0, 'Corpus floor / deliberate negatives missing');
+// Nested declarations must admit only explicitly paired language versions.
+for (const version of ['0.1.0','0.2.0','0.3.0']) {
+  const schema = schemas.find(s => s.$id.endsWith(`/compile-response${version === '0.1.0' ? '' : '-v'+version.slice(0,3)}.schema.json`));
+  const profiles = schema.oneOf[1].properties.qualification.properties.operations.items.properties.declaration.properties.languageProfiles;
+  const validate = ajv.compile(profiles);
+  for (const dialect of ['0.1.0','0.2.0','0.3.0']) for (const ir of ['0.1.0','0.2.0','0.3.0']) {
+    const supported = dialect === ir && dialect <= (version === '0.3.0' ? '0.3.0' : '0.2.0');
+    assert(validate([{dialectProfile:`weft-sql/${dialect}`,irVersion:`weft-ir/${ir}`}]) === supported, `Response ${version} declaration pair ${dialect}/${ir}`);
+  }
+}
+
 console.log(`Checked ${artifacts.size} governed artifacts, ${schemas.length} schemas, ${criteria.size} planned criteria and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
 console.log('No compiler, database or embedding tests were executed.');
+
