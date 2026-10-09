@@ -43,18 +43,22 @@ impl Backend for Arithmetic {
                 "type.boolean",
                 "type.integer",
                 "type.decimal",
+                "value.presence",
             ]
             .contains(&c.id.as_str())
         });
         for capability in &mut manifest.capabilities {
             capability.target_profiles = vec![PROFILE.into()];
             capability.language_profiles = manifest.language_profiles.clone();
-            capability.logical_domain = json!({"subset":"required scalar nonaggregate row queries; original Field facets preserved"});
+            capability.logical_domain = if capability.id=="value.presence" {json!({"subset":"selected optional scalar envelope with explicit original native-null property encoding; missing keys refuse physical profile"})}else{json!({"subset":"required scalar nonaggregate row queries; original Field facets preserved"})};
             capability.result_domain =
                 json!({"carrier":"exact text; original logical domains unchanged"});
             capability.constraints = vec!["All consumed original source values and every unfiltered intermediate require exact native guards before buffered result release".into(),"Finite coefficient capacity is not source validity or general arbitrary precision support".into()];
         }
         manifest.capabilities.push(Capability {id:"project.positionedOutputs".into(),target_profiles:vec![PROFILE.into()],language_profiles:manifest.language_profiles.clone(),logical_domain:json!({"subset":"repeated implicit scalar Field labels; logical positions/names/Field scan lineage retained; explicit/computed duplicate labels refuse"}),result_domain:json!({"carrier":"unique physical names separate from repeated logical labels; ordered exact row arrays"}),constraints:vec!["Host must explicitly admit carrierName and decode by position without dictionary collapse".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]});
+        for id in ["predicate.nativeNull","compare.nullAwareStringEqual","value.nativeNull"] {
+            manifest.capabilities.push(Capability{id:id.into(),target_profiles:vec![PROFILE.into()],language_profiles:manifest.language_profiles.clone(),logical_domain:json!({"subset":"selected scalar optional envelopes; explicit present-null or exact nonnull value; missing keys refuse finite physical representation; optional arithmetic refuses"}),result_domain:json!({"carrier":"tagged state:null or state:value exact-text/Boolean; ideal scalar domain unchanged"}),constraints:vec!["Exact selected property home and original source/type/revision guards required before query".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]});
+        }
         for id in ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin"] {
             manifest.capabilities.push(Capability { id:id.into(),target_profiles:vec![PROFILE.into()],language_profiles:manifest.language_profiles.clone(),logical_domain:json!({"subset":"new 0.3 scalar operators; same exact source family; string UTF8_BINARY; Boolean only not-equal; explicit new-operator ON admission"}),result_domain:json!({"comparison":"exact coefficients or original scalar meaning; no null widening"}),constraints:vec!["All numeric scale alignment guards cover complete pre-ON/pre-WHERE candidate bags".into()],obligations:vec![],status:Status::Candidate,evidence:vec![] });
         }

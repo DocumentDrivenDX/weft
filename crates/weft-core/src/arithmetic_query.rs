@@ -26,6 +26,7 @@ pub struct Projection {
 }
 #[derive(Debug, Clone)]
 pub enum Predicate {
+    NullTest { column: Column, negated: bool },
     ExtendedCompare { column: Column, value: Value, operator: crate::arithmetic_plan::ComparisonOperator },
     ArithmeticCompareExtended { left: Expression, right: Expression, operator: crate::arithmetic_plan::ComparisonOperator },
     ArithmeticCompare {
@@ -116,7 +117,9 @@ fn operator(p: &mut Parser) -> Result<Operator> {
 fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
     let mut predicates = Vec::new();
     loop {
-        let predicate = if p.peek_word("has_related") {
+        let predicate = if let Some(predicate) = null_predicate(p)? {
+            predicate
+        } else if p.peek_word("has_related") {
             p.word("has_related")?;
             p.symbol('(')?;
             let relationship = p.column()?;
@@ -175,6 +178,15 @@ fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
         p.word("and")?;
     }
     Ok(predicates)
+}
+fn null_predicate(p: &mut Parser) -> Result<Option<Predicate>> {
+    let checkpoint=p.clone();
+    let column=match p.column03() {Ok(c)=>c,Err(_)=>{*p=checkpoint;return Ok(None)}};
+    if !p.peek_word("is") {*p=checkpoint;return Ok(None)}
+    p.word("is")?;
+    let negated=p.peek_word("not");if negated {p.word("not")?;}
+    p.word("null")?;
+    Ok(Some(Predicate::NullTest{column,negated}))
 }
 fn arithmetic_output(p: &mut Parser, budget: &mut Budget) -> Result<Option<Expression>> {
     let checkpoint = p.clone();

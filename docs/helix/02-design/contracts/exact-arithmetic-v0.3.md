@@ -203,3 +203,15 @@ return (`ordered - fulfilled + returned`), over-fulfillment, exact settlement an
 refund (`returned * original price`). Retain the original model/data; compare full
 result bags against the independent source oracle. A compile-only result or named
 refusal does not satisfy any promised native scenario pass.
+
+## Explicit scalar null tests and tagged optional outputs
+
+The 0.3 language admits scalar `Field IS NULL` and `Field IS NOT NULL`. These predicates retain original Field identity, ideal scalar domain and availability; they do not equate absence with null or rewrite source declarations. Older language/IR profiles retain their required-only scalar refusal. Numeric zero, Boolean false and empty String are nonnull values. Arithmetic on optional operands remains unsupported.
+
+The finite Spark4 candidate supports these tests only with an explicitly admitted original Props JSON home. The exact optional scalar Field/property home must explicitly select Props `encoding:"ashlar-weft-json-native-null/0.1-candidate"`. Required/compound Fields and older profiles refuse that encoding. Guard obligations retain original property ID, identity and encoding. Every consumed optional property must exist: source-valid absence refuses backend representation before user SQL. Present JSON null and present exact scalar values are separately admitted; malformed nonnull values never become null through a failed cast. Required properties containing null retain their original source/integrity refusal. Original schema revision, carrier type and numeric precision/scale checks cover every consumed row, including rows later filtered away.
+
+Optional String equality in INNER JOIN ON uses original binary String equality with native-null UNKNOWN/nonmatch semantics; null/null is not equality. Full join-prefix candidate guards precede ON evaluation. WHERE null tests do not erase original optionality or remove full-source guards. Other optional comparisons and optional arithmetic require separately governed support.
+
+Optional outputs retain `Representation::Value {descriptor,nativeNull:true}` under an explicit selected native-null capability. Their exact JSON tagged carrier is `{state:"null"}` or `{state:"value",value:...}`; nonnull String/Integer/Decimal use exact text and Boolean uses a Boolean value. The ideal scalar descriptor stays nonnullable, while availability remains independently authored. Absent state is not synthesized or silently collapsed into the null tag. Hosts must verify the exact selected descriptor/property home, decode tags without coercion and withhold results until source, publication, guard and cleanup contexts close.
+
+The new predicate/native-null capabilities must be assessed before backend binding/lowering callbacks. Acceptance must cover original optional String join/projection, decimal18,2 output, missing key refusal, null/null nonmatching joins, malformed scalar refusal, required null refusal, zero/false/empty-string distinctions, unknown homes/facets and unchanged older-profile refusals/artifacts.

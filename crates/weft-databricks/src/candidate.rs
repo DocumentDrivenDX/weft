@@ -54,7 +54,7 @@ impl Backend for Candidate {
             capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","value.sequence","value.map","value.structured","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}) } else if ["value.sequence","value.map","value.structured"].contains(&id) { json!({"subset":"explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
-        let binding = binding::admit(c.catalog, c.binding_value)?;
+        let binding = if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
         for id in &c.selection.records {
             if !binding.records.iter().any(|r| &r.logical == id) {
                 return Err(fail(
@@ -265,6 +265,7 @@ struct Lower<'a> {
     compound_checks: Vec<Value>,
     physical_ids: BTreeSet<String>,
     optional: BTreeSet<(String, String)>,
+    native_null: BTreeSet<(String,String)>,
     presence: BTreeMap<(String, String), String>,
     parameters: Vec<ParameterSlot>,
     ctes: Vec<String>,
@@ -282,6 +283,7 @@ impl<'a> Lower<'a> {
             compound_checks: vec![],
             physical_ids: BTreeSet::new(),
             optional: BTreeSet::new(),
+            native_null: BTreeSet::new(),
             presence: BTreeMap::new(),
             parameters: vec![],
             ctes: vec![],
@@ -365,8 +367,10 @@ impl<'a> Lower<'a> {
                         fail("WFT-BINDING", "Mapped field does not belong to its scan")
                     })?;
                 let optional = self.optional.contains(&(scan.clone(), key.clone()));
+                let native_null=self.native_null.contains(&(scan.clone(),key.clone()));
                 let (value, valid, present) = match &property.home {
-                    Home::Props { property_id, .. } => {
+                    Home::Props { property_id, encoding } => {
+                        if native_null && encoding.as_deref()!=Some(binding::NATIVE_NULL_ENCODING) {return Err(fail("WFT-BINDING","Selected optional Field requires explicit original native-null property encoding"));}
                         let path = self.slot(
                             string_type(),
                             format!("$.{property_id}"),
@@ -387,14 +391,20 @@ impl<'a> Lower<'a> {
                             Family::Decimal=>format!("({schema} = 'BIGINT' OR ({schema} RLIKE '^DECIMAL\\\\([0-9]+,[0-9]+\\\\)$' AND coalesce(try_cast(regexp_extract({schema}, ',([0-9]+)\\\\)$', 1) AS INT), 0) <= {})) AND {}",ty.facets["scale"],numeric_guard(&scalar,&ty)),
                         };
                         let present = format!("{variant} IS NOT NULL");
+                        if native_null {
+                            if crate::mathematical_integer::unbounded(&ty) {return Err(fail("WFT-CAPABILITY","Optional unbounded Integer requires separate public token/null profile"));}
+                            self.checks.push(json!({"representabilityOnly":true,"field":identity,"record":id,"propertyId":property_id,"encoding":binding::NATIVE_NULL_ENCODING,"sql":format!("SELECT CAST({} AS STRING) AS violations FROM {table} r WHERE {owner} AND ({variant} IS NULL)",count_sql()),"failureCode":"WFT-CAPABILITY"}));
+                        }
+                        let valid=if native_null {format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND (({variant} IS NULL) OR is_variant_null({variant}) OR ({valid}))")}else{valid};
                         let valid = if optional {
                             format!("schema_of_variant(parse_json(r.props_json)) RLIKE '^OBJECT' AND (({variant} IS NULL) OR ({valid}))")
                         } else {
                             valid
                         };
-                        (typed(&scalar, &ty), valid, present)
+                        (if native_null {format!("CASE WHEN is_variant_null({variant}) THEN NULL ELSE {} END",typed(&scalar,&ty))}else{typed(&scalar,&ty)}, valid, present)
                     }
                     Home::Column { value, present, .. } => {
+                        if native_null {return Err(fail("WFT-CAPABILITY","Explicit native-null profile requires original Props JSON home"));}
                         if crate::mathematical_integer::unbounded(&ty) { return Err(fail("WFT-CAPABILITY","Mathematical integer profile requires original JSON numeric token custody")); }
                         let column = format!("r.{}", binding::quote(value));
                         let mut valid = format!("{column} IS NOT NULL");
@@ -443,8 +453,9 @@ impl<'a> Lower<'a> {
                     format!("{}.{}", binding::quote(&scan), binding::quote(&field_alias)),
                 );
                 let count = count_sql();
-                let check=json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"});
+                let mut check=json!({"field":identity,"record":id,"sql":format!("SELECT CAST({count} AS STRING) AS violations FROM {table} r WHERE {owner} AND CASE WHEN ({revision}) AND ({valid}) THEN FALSE ELSE TRUE END"),"failureCode":"WFT-NUMERIC-DOMAIN"});
 
+                if native_null {if let Home::Props{property_id,..}=&property.home {check["propertyId"]=json!(property_id);check["encoding"]=json!(binding::NATIVE_NULL_ENCODING);}}
                 self.checks.push(check);
             }
             for ((occurrence, key), graph) in self.compounds.clone() {

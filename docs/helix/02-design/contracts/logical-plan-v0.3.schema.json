@@ -933,6 +933,76 @@
             "operator"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "nullTest"
+            },
+            "field": {
+              "$ref": "#/$defs/comparisonField"
+            },
+            "negated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "negated"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "nullableStringEqual"
+            },
+            "left": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/comparisonField"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "right": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/comparisonField"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
         }
       ]
     },

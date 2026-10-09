@@ -97,6 +97,11 @@ fn predicate(scope: &mut Scope, p: &ast::Predicate, on: bool) -> Result<ir::Pred
         scope.caps.insert("arithmetic.compareExact".into());
     }
     match p {
+        ast::Predicate::NullTest{column,negated}=>{
+            let field=scope.presence_field03(column)?;
+            scope.caps.insert("predicate.nativeNull".into());scope.caps.insert("value.nativeNull".into());
+            Ok(ir::Predicate::NullTest{field,negated:*negated})
+        },
         ast::Predicate::ExtendedCompare { column, value, operator } => {
             let left = scope.field(column)?;
             if left.logical_type.family == Family::Boolean && *operator != ir::ComparisonOperator::NotEqual {
@@ -127,6 +132,16 @@ fn predicate(scope: &mut Scope, p: &ast::Predicate, on: bool) -> Result<ir::Pred
             right: expression_value(scope, right, None)?,
             greater: *greater,
         }),
+        ast::Predicate::Compare {columns,values,greater} if on && !greater && columns.len()==1 && values.len()==1 && matches!(values[0],ast::Value::Field(_)) && (scope.optional_field03(&columns[0])? || match &values[0] {ast::Value::Field(c)=>scope.optional_field03(c)?,_=>false}) => {
+            let left=scope.presence_field03(&columns[0])?;
+            let ast::Value::Field(column)=&values[0] else {unreachable!()};
+            let right=scope.presence_field03(column)?;
+            if left.logical_type.family!=Family::String || right.logical_type.family!=Family::String {
+                return Ok(ir::Predicate::Legacy{predicate:scope.predicate(&old_ast::Predicate::Compare{columns:columns.clone(),values:values.iter().map(old_value).collect(),greater:*greater},on)?});
+            }
+            scope.caps.insert("compare.nullAwareStringEqual".into());scope.caps.insert("value.nativeNull".into());
+            Ok(ir::Predicate::NullableStringEqual{left,right})
+        },
         ast::Predicate::Compare {
             columns,
             values,
@@ -427,6 +442,7 @@ pub(crate) fn resolve(
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
     }
     s.caps.insert("project".into());
+    if s.graph.iter().any(|d|d.availability.as_deref()==Some("absent-allowed")) {s.caps.insert("value.nativeNull".into());}
     Ok(ir::Plan {
         ir_version: "weft-ir/0.3.0".into(),
         module_pins: catalog.pins(),
@@ -567,6 +583,15 @@ mod tests {
         assert_eq!(run("join-count","SELECT c.id FROM Customer c WHERE c.id<:n AND c.name<>:n",json!({"n":{"family":"integer","value":"2"}})).unwrap_err().code,"WFT-PARAMETER");
         // One parameter must satisfy every original occurrence's bounded source domain.
         assert!(run("join-count","SELECT c.id FROM Customer c WHERE c.id<:n AND c.id+1>=:n",json!({"n":{"family":"integer","value":"2"}})).is_ok());
+    }
+
+    #[test]
+    fn null03_closed_ir_preserves_nonnullable_ideal_and_boolean_operator() {
+        let plan=run("join-count","SELECT c.name FROM Customer c WHERE c.name IS NULL",json!({})).unwrap();let original=serde_json::to_value(plan).unwrap();assert!(PlanSchema03::is_valid(&original));
+        for mutation in ["negated","extra","nullable"] {
+            let mut bad=original.clone();match mutation {"negated"=>bad["filters"][0]["negated"]=json!(0),"extra"=>bad["filters"][0]["future"]=json!(true),_=>bad["filters"][0]["field"]["type"]["nullable"]=json!(true)};assert!(!PlanSchema03::is_valid(&bad));
+        }
+        assert!(run("join-count","SELECT c.id+1 AS n FROM Customer c WHERE (c.id+1) IS NULL",json!({})).is_err());
     }
 
 }

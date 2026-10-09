@@ -16,6 +16,8 @@ impl ComparisonOperator {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {
+    NullTest { field: Field, negated: bool },
+    NullableStringEqual { left: Field, right: Field },
     ScalarCompare { left: Field, right: crate::application_ir::Value, operator: ComparisonOperator },
     ArithmeticCompareExtended { left: crate::arithmetic_resolve::Expression, right: crate::arithmetic_resolve::Expression, operator: ComparisonOperator },
     Legacy {

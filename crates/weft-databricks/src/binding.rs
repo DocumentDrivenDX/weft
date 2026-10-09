@@ -144,7 +144,10 @@ fn presence(kind: RecordKind, column: &str) -> Option<&'static str> {
 
 /// Admission proves mapping structure/model agreement, never database custody.
 /// Runtime policy, publication, schema and exact field correspondence are host obligations.
-pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
+pub const NATIVE_NULL_ENCODING:&str="ashlar-weft-json-native-null/0.1-candidate";
+pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {admit_mode(catalog,value,false)}
+pub(crate) fn admit03(catalog:&Catalog,value:&Value)->Result<Binding> {admit_mode(catalog,value,true)}
+fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding> {
     // Core Identity intentionally retains a wider compatibility surface. A
     // backend mapping cannot silently ignore extra members in that identity.
     if let Some(records) = value["records"].as_array() {
@@ -292,7 +295,11 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
             }
             match &property.home {
                 Home::Props { property_id, encoding } => {
-                    if encoding.as_deref().is_some_and(|e| e != "ashlar-weft-json-value/0.1-candidate") {
+                    if encoding.as_deref()==Some(NATIVE_NULL_ENCODING) {
+                        if !native_null03 || ty.is_none() || descriptor.availability.as_deref()!=Some("absent-allowed") {
+                            return Err(fail("Explicit native-null encoding requires 0.3 original optional Scalar"));
+                        }
+                    } else if encoding.as_deref().is_some_and(|e| e != "ashlar-weft-json-value/0.1-candidate") {
                         return Err(fail("Unknown exact JSON value encoding"));
                     }
                     if !signed(property_id) {

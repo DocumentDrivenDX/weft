@@ -90,6 +90,18 @@ impl<'a> Scope<'a> {
             span: c.span.clone(),
         })
     }
+    pub(crate) fn optional_field03(&self,c:&Column)->Result<bool> {
+        let (r,_)=self.record_for_column(c)?;
+        let (member,graph)=self.catalog.member_descriptor(r,&c.field)?;
+        Ok(graph.iter().any(|d|d.identity==member.identity && d.availability.as_deref()==Some("absent-allowed")))
+    }
+    pub(crate) fn presence_field03(&mut self,c:&Column)->Result<ir::Field> {
+        let (r,scan)=self.record_for_column(c)?;
+        let (identity,logical_type,_)=self.catalog.field03(r,&c.field)?;
+        let (_,graph)=self.catalog.member_descriptor(r,&c.field)?;
+        self.descriptors(graph);
+        Ok(ir::Field{scan,identity,logical_type,span:c.span.clone()})
+    }
     pub(crate) fn descriptors(&mut self, graph: Vec<Descriptor>) {
         for d in graph {
             match &d.shape {

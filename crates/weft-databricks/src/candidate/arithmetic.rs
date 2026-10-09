@@ -66,6 +66,8 @@ fn collect_value(lower: &mut Lower<'_>, v: &app::Value) {
 }
 fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> Result<()> {
     match p {
+        plan::Predicate::NullTest{field,..}=>collect_field(lower,field),
+        plan::Predicate::NullableStringEqual{left,right}=>{collect_field(lower,left);collect_field(lower,right)},
         plan::Predicate::ScalarCompare { left, right, .. } => { collect_field(lower, left); collect_value(lower, right) }
         plan::Predicate::ArithmeticCompare { left, right, .. } | plan::Predicate::ArithmeticCompareExtended { left, right, .. } => {
             collect_numeric(lower, left);
@@ -337,6 +339,9 @@ fn predicate(
     guards: &mut Vec<String>,
 ) -> Result<String> {
     match p {
+        plan::Predicate::NullTest{field,negated}=>Ok(format!("({} IS {}NULL)",lower.expression(&field_expression(field))?,if *negated {"NOT "}else{""})),
+        plan::Predicate::NullableStringEqual{left,right}=>Ok(format!("({} = {})",lower.expression(&field_expression(left))?,lower.expression(&field_expression(right))?)),
+
         plan::Predicate::ScalarCompare { left, right, operator } => {
             let (a,b) = pair(lower,left,right,guards)?;
             Ok(format!("({a} {} {b})",operator.sql()))
@@ -434,7 +439,7 @@ fn descriptor<'a>(p: &'a plan::Plan, identity: &Identity) -> Result<&'a LogicalT
             "Arithmetic row profile requires scalar outputs",
         ));
     };
-    if logical_type.nullable || d.availability.as_deref() != Some("required") {
+    if logical_type.nullable || !matches!(d.availability.as_deref(),Some("required"|"absent-allowed")) {
         return Err(fail(
             "WFT-CAPABILITY",
             "Arithmetic row profile requires present non-null fields",
@@ -507,6 +512,9 @@ pub(super) fn lower(
                 "Arithmetic row profile does not lower aggregates or relationship output envelopes",
             )),
         }
+    }
+    for ((scan,key),(identity,_)) in &lower.fields {
+        if p.type_graph.iter().any(|d|&d.identity==identity && d.availability.as_deref()==Some("absent-allowed")) {lower.native_null.insert((scan.clone(),key.clone()));}
     }
     lower.prepare()?;
     let mut checks = vec![];
@@ -598,6 +606,11 @@ pub(super) fn lower(
             }
             _ => unreachable!(),
         };
+        let native_null=match &output.expression {plan::Expression::Field{scan,identity}=>lower.native_null.contains(&(scan.clone(),serde_json::to_string(identity).unwrap())),_=>false};
+        let sql=if native_null {
+            let scalar=if ty.family==Family::Boolean {format!("CAST({sql} AS BOOLEAN)")}else{sql};
+            format!("CASE WHEN ({scalar}) IS NULL THEN to_json(named_struct('state','null')) ELSE to_json(named_struct('state','value','value',{scalar})) END")
+        }else{sql};
         let carrier_name = positioned.then(||format!("_weft_output_{}", index+1));
         projections.push(format!("{sql} AS {}", binding::quote(carrier_name.as_deref().unwrap_or(&output.name))));
         let decoder = match ty.family {
@@ -609,11 +622,11 @@ pub(super) fn lower(
         columns.push(Column {
             position: index + 1,
             carrier_name, output_name: output.name.clone(),
-            representation: Representation::Scalar {
+            representation: if native_null {Representation::Value{descriptor:ids[0].clone(),native_null:true}}else{Representation::Scalar {
                 logical_type: ty,
                 carrier: ScalarCarrier::Text,
                 decoder,
-            },
+            }},
             source_identities: ids,
             nullable: false,
         })

@@ -223,6 +223,12 @@ impl Catalog {
         })
     }
     pub fn field(&self, record: &Record, name: &Name) -> Result<(Identity, LogicalType, String)> {
+        self.field_mode(record,name,false)
+    }
+    pub(crate) fn field03(&self, record:&Record,name:&Name)->Result<(Identity,LogicalType,String)> {
+        self.field_mode(record,name,true)
+    }
+    fn field_mode(&self,record:&Record,name:&Name,optional03:bool)->Result<(Identity,LogicalType,String)> {
         let members = record.value["members"]
             .as_array()
             .ok_or_else(|| fail("WFT-TYPE", "Selected record has no explicit members"))?;
@@ -271,7 +277,12 @@ impl Catalog {
             .at(&name.span)
         })?;
         selected08(&record.pin, field)?;
-        let logical_type = scalar_type(field, name, record.pin.umf_version == "0.8.0")?;
+        let ideal;
+        let selected=if optional03 && field["nullability"]=="absent-allowed" {
+            // Derive the ideal scalar domain, leaving original selected source bytes untouched.
+            ideal={let mut v=field.clone();v["nullability"]=Value::String("required".into());v};&ideal
+        } else {field};
+        let logical_type = scalar_type(selected, name, record.pin.umf_version == "0.8.0")?;
         Ok((
             identity,
             logical_type,

@@ -600,10 +600,10 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
         fn lower(&self,_:&Context<'_>,_:&())->Result<()> {panic!()}
         fn emit(&self,_:&Context<'_>,_:&())->Result<Emission> {panic!()}
     }
-    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id")] {
+    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id"),("predicate.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("value.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("compare.nullAwareStringEqual","SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name")] {
         for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
             let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();
-            let mut request=arithmetic_request(sql);if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
+            let mut request=if id=="compare.nullAwareStringEqual" {nullable_request(sql,"name")}else{arithmetic_request(sql)};if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
             let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();
             assert_eq!(response["diagnostics"][0]["code"],"WFT-CAPABILITY","{id}/{mode}:{response}");assert_eq!(calls.load(Ordering::SeqCst),0);assert!(response.get("sql").is_none());
         }
@@ -651,5 +651,63 @@ fn repeated_implicit_complex_members_refuse_before_backend_admission() {
         assert_eq!(response["status"],"blocked","{response}");
         assert_eq!(response["diagnostics"][0]["code"],"WFT-OUTPUT-NAME","{response}");
         assert_eq!(response["diagnostics"][0]["phase"],"resolve","{response}");
+    }
+}
+
+fn nullable_request(sql:&str,field:&str)->Value {
+    let mut request=arithmetic_request(sql);
+    let mut doc:Value=serde_json::from_str(request["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+    let selected=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["name"]==field&&e["kind"]=="field").unwrap();
+    selected["nullability"]=json!("absent-allowed");
+    let raw=doc.to_string();let digest=sha256(raw.as_bytes());request["modules"][0]["documentJson"]=json!(raw);request["modules"][0]["pin"]["sha256"]=json!(digest);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();binding["modelPins"][0]["sha256"]=json!(digest);
+    for record in binding["records"].as_array_mut().unwrap() {for property in record["properties"].as_array_mut().unwrap() {if doc["modules"][0]["elements"].as_array().unwrap().iter().any(|e|e["id"]==property["logical"]["element"]&&e["nullability"]=="absent-allowed") {property["home"]["encoding"]=json!(weft_databricks::binding::NATIVE_NULL_ENCODING);}}}
+    let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));request
+}
+#[test]
+fn nullable03_preserves_original_availability_and_tagged_exact_outputs() {
+    for negation in ["","NOT "] {
+        let request=nullable_request(&format!("SELECT c.name FROM Customer c WHERE c.name IS {negation}NULL"),"name");
+        let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");
+        assert_eq!(response["logicalPlan"]["filters"][0]["op"],"nullTest");assert_eq!(response["logicalPlan"]["filters"][0]["negated"],negation=="NOT ");
+        assert_eq!(response["columns"][0]["representation"]["kind"],"value");assert_eq!(response["columns"][0]["representation"]["nativeNull"],true);assert_eq!(response["columns"][0]["nullable"],false);
+        let descriptor=response["logicalPlan"]["typeGraph"].as_array().unwrap().iter().find(|d|d["availability"]=="absent-allowed").unwrap();assert_eq!(descriptor["type"]["nullable"],false);
+        let sql=response["sql"].as_str().unwrap();assert!(sql.contains("named_struct('state','null')"));assert!(sql.contains("named_struct('state','value','value',"));
+        let checks=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.scalarIntegrity").unwrap()["parameters"]["checks"].as_array().unwrap();
+        assert!(checks.iter().any(|c|c["representabilityOnly"]==true&&c["failureCode"]=="WFT-CAPABILITY"));assert!(checks.iter().any(|c|c["sql"].as_str().unwrap().contains("is_variant_null(")));
+    }
+}
+#[test]
+fn nullable03_string_join_retains_null_nonmatch_and_optional_arithmetic_refusal() {
+    let request=nullable_request("SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name WHERE c.name IS NOT NULL","name");let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");assert_eq!(response["logicalPlan"]["joins"][0]["on"][0]["op"],"nullableStringEqual");assert!(!response["sql"].as_str().unwrap().contains("<=>"));
+    for sql in ["SELECT c.id+1 AS n FROM Customer c","SELECT c.id FROM Customer c WHERE c.id=1"] {
+        let response=arithmetic_compile(&nullable_request(sql,"id"));assert_eq!(response["status"],"blocked","{response}");assert!(response.get("sql").is_none());
+    }
+    for sql in ["SELECT c.name FROM Customer c WHERE c.name IS", "SELECT c.name FROM Customer c WHERE c.name IS FALSE", "SELECT c.name FROM Customer c WHERE c.name=NULL"] {assert_eq!(arithmetic_compile(&nullable_request(sql,"name"))["status"],"blocked");}
+    let mut old=nullable_request("SELECT c.name FROM Customer c WHERE c.name IS NULL","name");old["interfaceVersion"]=json!("weft-compile/0.2.0");old["dialect"]=json!("weft-sql/0.2.0");assert_eq!(run(&old)["status"],"blocked");
+}
+
+#[test]
+fn nullable03_explicit_selected_home_permission_is_closed_and_old_binding_refuses() {
+    let request=nullable_request("SELECT c.name FROM Customer c WHERE c.name IS NULL","name");
+    let catalog=weft_core::model::Catalog::prepare(serde_json::from_value(request["modules"].clone()).unwrap()).unwrap();
+    let original:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    assert!(weft_databricks::binding::admit(&catalog,&original).is_err());
+    for mode in ["missing","unknown","required","wrong-home"] {
+        let mut bad=request.clone();let mut binding=original.clone();
+        let selected=binding["records"][0]["properties"].as_array_mut().unwrap().iter_mut().find(|p|p["home"]["encoding"]==weft_databricks::binding::NATIVE_NULL_ENCODING).unwrap();
+        match mode {"missing"=>{selected["home"].as_object_mut().unwrap().remove("encoding");},"unknown"=>selected["home"]["encoding"]=json!("future-native-null"),"wrong-home"=>selected["home"]=json!({"kind":"column","value":"id","nativeType":"BIGINT","present":null}),_=>binding["records"][0]["properties"][0]["home"]["encoding"]=json!(weft_databricks::binding::NATIVE_NULL_ENCODING)}
+        let raw=binding.to_string();bad["target"]["bindingJson"]=json!(raw);bad["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+        let response=arithmetic_compile(&bad);assert_eq!(response["status"],"blocked","{mode}:{response}");assert!(response.get("sql").is_none());
+    }
+}
+#[test]
+fn nullable03_boolean_and_decimal_outputs_remain_tagged_ideal_domains() {
+    for (field,sql,family) in [("active","SELECT c.active FROM Customer c WHERE c.active IS NOT NULL","boolean"),("total","SELECT o.total FROM Orders o WHERE o.total IS NULL","decimal")] {
+        let response=arithmetic_compile(&nullable_request(sql,field));assert_eq!(response["status"],"compiled","{response}");assert_eq!(response["columns"][0]["representation"]["kind"],"value");
+        let descriptor=response["logicalPlan"]["typeGraph"].as_array().unwrap().iter().find(|d|d["availability"]=="absent-allowed").unwrap();assert_eq!(descriptor["type"]["family"],family);assert_eq!(descriptor["type"]["nullable"],false);
+        let text=response["sql"].as_str().unwrap();if family=="boolean" {assert!(text.contains("AS BOOLEAN"));}else{assert!(descriptor["type"]["facets"]["scale"].is_number());}
+        let checks=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.candidate.scalarIntegrity").unwrap()["parameters"]["checks"].as_array().unwrap();
+        assert!(checks.iter().all(|c|c["encoding"]==weft_databricks::binding::NATIVE_NULL_ENCODING));assert!(checks.iter().all(|c|c["propertyId"].is_string()));
     }
 }
