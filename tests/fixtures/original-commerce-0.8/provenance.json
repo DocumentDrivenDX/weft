@@ -1,0 +1,16 @@
+{
+  "upstreamRevision": "c7c95e1c4ea5b72541f47fa0350ca467ff02f395",
+  "files": [
+    {
+      "sourcePath": "spec/domain-packs/commerce/ontology.json",
+      "path": "ontology.json",
+      "sha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a"
+    },
+    {
+      "sourcePath": "spec/domain-packs/commerce/graph/fixture.json",
+      "path": "graph.json",
+      "sha256": "8052dbcf2cf48a5e344c492d661872bc0a3f80a5c7be033ab5008dea9c86119e"
+    }
+  ],
+  "qualification": "Unchanged original core0.8 declaration and candidate lexical graph fixture; consumer materialization uses explicit development identities, not inferred canonical/native IDs."
+}

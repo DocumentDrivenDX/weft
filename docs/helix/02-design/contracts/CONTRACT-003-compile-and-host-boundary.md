@@ -41,7 +41,7 @@ but may not use binary floats for exact values. The transport schema is
 | dialect | `weft-sql/0.1.0` |
 | sql | String, one fully consumed source query |
 | modules | 1..32 entries; each has documentJson, pin and selectedModuleIds |
-| pin | documentId, opaque nonempty revision, umfVersion `0.7.0`, sha256 of exact documentJson UTF-8 bytes |
+| pin | documentId, opaque nonempty revision, umfVersion `0.7.0` or `0.8.0`, sha256 of exact documentJson UTF-8 bytes |
 | selectedModuleIds | Nonempty unique list of module IDs in that owning document |
 | target | backendId, backendVersion, targetProfile, bindingJson, bindingSha256 |
 | options | allowCandidate defaults false; no implicit lossy mode |
@@ -54,6 +54,25 @@ unimplemented cross-document revision semantics. Selecting a module defines quer
 surface; required local referenced elements may resolve through its supplied owning
 document. A missing referenced dependency blocks rather than fetching/flattening.
 Unknown uninterpreted native extensions survive; selected unknown semantics block.
+
+Owning core version admission is additive within the existing 0.1/0.2 transport
+shapes. The original document `umf` and pin `umfVersion` MUST match exactly;
+validation dispatches to the independently pinned schema for that owning version.
+No version rewrite, inferred upgrade or relabel is permitted. Request, retained
+module, logical-plan and result pins preserve the original version and bytes.
+Core 0.7 selected behavior remains unchanged. Core 0.8 admission does not imply
+support for every newly expressible value meaning: selected defaults,
+allowed-values constraints, range/collection refinements, unknown element members
+and nonempty uninterpreted selected extensions MUST refuse until independently
+implemented with corresponding guards. Existing established scalar facets and
+presence/collection subsets remain governed by CONTRACT-001 and the backend
+capabilities. Unselected source content remains retained.
+
+Facetless mathematical integer declarations MUST NOT acquire a synthesized width.
+Until a separately qualified exact representability capability is selected, these
+fields refuse before host execution. Original core 0.8 string/fixed-decimal queries,
+string-key joins and COUNT are a partial domain; they do not complete the required
+original commerce integer or general arbitrary-precision query scope.
 
 `targetProfile` names the registered backend manifest's exact profile. bindingJson
 is opaque backend-owned JSON validated under CONTRACT-002 and hash-verified first.

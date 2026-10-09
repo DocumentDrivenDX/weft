@@ -30,8 +30,38 @@ pub struct Record {
 fn fail(code: &str, message: &str) -> Diagnostic {
     Diagnostic::new(code, "model", message)
 }
+/// Newly admitted owning versions must not turn additional selected meaning into
+/// ignored annotations. Older owning-version behavior remains unchanged.
+pub(crate) fn selected08(pin: &ModelPin, element: &Value) -> Result<()> {
+    if pin.umf_version != "0.8.0" { return Ok(()); }
+    const KNOWN: &[&str] = &["id", "name", "title", "description", "kind",
+        "scalarType", "nullability", "cardinality", "itemType", "recordType",
+        "facets", "members", "keys", "references", "extensions"];
+    if element.as_object().is_none_or(|m| m.keys().any(|k| !KNOWN.contains(&k.as_str())))
+        || element.get("extensions").is_some_and(|e| e.as_object().is_none_or(|m| !m.is_empty()))
+    { return Err(fail("WFT-TYPE", "Selected core 0.8 element contains unestablished semantics")); }
+    if element["kind"] == "record" && element.get("references").and_then(Value::as_array).is_some_and(|r| !r.is_empty()) {
+        return Err(fail("WFT-TYPE", "Selected core 0.8 Record reference roles are unestablished"));
+    }
+    for member in element.get("members").and_then(Value::as_array).into_iter().flatten() {
+        reference08(pin, member, &["module", "element"])?;
+    }
+    if let Some(item) = element.get("itemType") { reference08(pin, item, &["module", "element"])?; }
+    for reference in element.get("references").and_then(Value::as_array).into_iter().flatten() {
+        reference08(pin, reference, &["module", "element", "role"])?;
+    }
+    Ok(())
+}
+pub(crate) fn reference08(pin: &ModelPin, reference: &Value, known: &[&str]) -> Result<()> {
+    if pin.umf_version == "0.8.0" && reference.as_object().is_none_or(|m| m.keys().any(|k| !known.contains(&k.as_str()))) {
+        return Err(fail("WFT-TYPE", "Selected core 0.8 reference contains unestablished qualifiers"));
+    }
+    Ok(())
+}
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.7.0.schema.json")]
 struct Envelope;
+#[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
+struct Envelope08;
 impl Catalog {
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
         if inputs.is_empty() || inputs.len() > 32 {
@@ -55,7 +85,9 @@ impl Catalog {
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
             }
-            if doc["umf"] != "0.7.0" || input.pin.umf_version != "0.7.0" {
+            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
+                || doc["umf"] != input.pin.umf_version
+            {
                 return Err(fail("WFT-MODEL-VERSION", "Unsupported UMF profile"));
             }
             if input.pin.revision.is_empty() || !ids.insert(input.pin.document_id.clone()) {
@@ -64,7 +96,9 @@ impl Catalog {
                     "Empty revision or repeated owning document",
                 ));
             }
-            if !Envelope::is_valid(&doc) {
+            if !(if input.pin.umf_version == "0.8.0" {
+                Envelope08::is_valid(&doc)
+            } else { Envelope::is_valid(&doc) }) {
                 return Err(fail(
                     "WFT-MODEL",
                     "Document violates the pinned UMF envelope",
@@ -120,6 +154,7 @@ impl Catalog {
                 }
                 for element in module["elements"].as_array().unwrap() {
                     if element["id"] == identity.element && element["kind"] == "record" {
+                        selected08(&input.pin, element)?;
                         found.push(Record {
                             identity: identity.clone(),
                             pin: input.pin.clone(),
@@ -154,6 +189,7 @@ impl Catalog {
                 }
                 for e in module["elements"].as_array().unwrap() {
                     if e["kind"] == "record" && name.matches(e["name"].as_str().unwrap_or("")) {
+                        selected08(&input.pin, e)?;
                         found.push(Record {
                             identity: Identity {
                                 document_id: input.pin.document_id.clone(),
@@ -234,6 +270,7 @@ impl Catalog {
             )
             .at(&name.span)
         })?;
+        selected08(&record.pin, field)?;
         let logical_type = scalar_type(field, name)?;
         Ok((
             identity,

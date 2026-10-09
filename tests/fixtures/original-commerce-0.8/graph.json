@@ -1,0 +1,634 @@
+{
+  "format": "umf.domain-graph",
+  "version": "1.0.0",
+  "schema": {
+    "id": "urn:umf:domain:commerce",
+    "revision": "1.0.0",
+    "sha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a"
+  },
+  "qualification": "Schema-targeted candidate. Values retain CSV lexical text, not UMF canonical Value carriers or native storage IDs. No graph consumer acceptance or OWL reasoning.",
+  "pack": {
+    "id": "commerce",
+    "version": "1.0.0",
+    "sha256": "1a03b93174be64e83f8b9e79b115570fe5950e2277780041553f3ef0a782ef1a"
+  },
+  "source_metadata": {
+    "scenario_replay_output": {
+      "data_kind": "fabricated",
+      "generator": {
+        "id": "tablespec.scenario-replay",
+        "version": "1.0.0"
+      },
+      "kind": "synthetic",
+      "parameters": {
+        "components": 1,
+        "seed": 42
+      },
+      "provenance": {
+        "source_ids": [
+          "template_customers",
+          "template_fulfillments",
+          "template_invoices",
+          "template_order_lines",
+          "template_orders",
+          "template_payments",
+          "template_products",
+          "template_refunds",
+          "template_returns",
+          "template_suppliers"
+        ],
+        "transformations": [
+          "Trusted independent-component replay with consistent identity remapping; source values unchanged."
+        ]
+      }
+    },
+    "template_customers": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "56efc5b9eacf47b8fdf794309785cc62b05f54565ed17ab7f02a23c759dfd28c"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/customers.csv",
+      "revision": "1.0.0"
+    },
+    "template_fulfillments": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "cce5d98ad2efe9436d01b0d1ff24efa198bb46e920a4c80deed356719f65250d"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/fulfillments.csv",
+      "revision": "1.0.0"
+    },
+    "template_invoices": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1aa19948a765e19e7a7805c6cd47ea996abb5cf4249da92f9570368b07ebf919"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/invoices.csv",
+      "revision": "1.0.0"
+    },
+    "template_order_lines": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "47cecd72bd1a4389e577b1b590f0cc266b77fd3ce2433853fd8c2f97986cc33e"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/order_lines.csv",
+      "revision": "1.0.0"
+    },
+    "template_orders": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "88d2bff67d45213af32917b943e2f58a194e56406cb9a22e5121dd1ba1be25ef"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/orders.csv",
+      "revision": "1.0.0"
+    },
+    "template_payments": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "e107ebf5015a0e57696578f147e0100634e7c77ba7ee9d70f37ecf6f3e6c5321"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/payments.csv",
+      "revision": "1.0.0"
+    },
+    "template_products": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "1d2e0659ee22e0764a1c41a4329f994653e5be61df90306c923035ba6c3cc43f"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/products.csv",
+      "revision": "1.0.0"
+    },
+    "template_refunds": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "36ed1bd1673f17a3a949d926e3155cf573b7f1ae86f16215a70a1a89a8cb8333"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/refunds.csv",
+      "revision": "1.0.0"
+    },
+    "template_returns": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "3a2cae4b5271c8f2f834cc7c7e9efe0514a846b61e708349064c3f33ab143ed4"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/returns.csv",
+      "revision": "1.0.0"
+    },
+    "template_suppliers": {
+      "checksum": {
+        "algorithm": "sha256",
+        "value": "625888093e3ec19b18c326d84d47eba0f29e77f92c801eda80c63a39301088fb"
+      },
+      "data_kind": "fabricated",
+      "format": "csv",
+      "kind": "external",
+      "license": {
+        "attribution": "UMF project, authored synthetic fixture",
+        "redistribution": "allowed"
+      },
+      "provenance": {
+        "publisher": "UMF project",
+        "transformations": [
+          "Authored synthetic fixture; no real records or imported standard dataset."
+        ]
+      },
+      "reference": "data/suppliers.csv",
+      "revision": "1.0.0"
+    }
+  },
+  "source_bindings": [
+    {
+      "role": "rows",
+      "schema_id": "customers",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "suppliers",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "products",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "orders",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "order_lines",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "fulfillments",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "invoices",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "payments",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "returns",
+      "source_id": "scenario_replay_output"
+    },
+    {
+      "role": "rows",
+      "schema_id": "refunds",
+      "source_id": "scenario_replay_output"
+    }
+  ],
+  "run": {
+    "components": 1,
+    "generator": {
+      "id": "tablespec.scenario-replay",
+      "version": "1.0.0"
+    },
+    "input_hashes": {
+      "template_customers": {
+        "algorithm": "sha256",
+        "value": "56efc5b9eacf47b8fdf794309785cc62b05f54565ed17ab7f02a23c759dfd28c"
+      },
+      "template_fulfillments": {
+        "algorithm": "sha256",
+        "value": "cce5d98ad2efe9436d01b0d1ff24efa198bb46e920a4c80deed356719f65250d"
+      },
+      "template_invoices": {
+        "algorithm": "sha256",
+        "value": "1aa19948a765e19e7a7805c6cd47ea996abb5cf4249da92f9570368b07ebf919"
+      },
+      "template_order_lines": {
+        "algorithm": "sha256",
+        "value": "47cecd72bd1a4389e577b1b590f0cc266b77fd3ce2433853fd8c2f97986cc33e"
+      },
+      "template_orders": {
+        "algorithm": "sha256",
+        "value": "88d2bff67d45213af32917b943e2f58a194e56406cb9a22e5121dd1ba1be25ef"
+      },
+      "template_payments": {
+        "algorithm": "sha256",
+        "value": "e107ebf5015a0e57696578f147e0100634e7c77ba7ee9d70f37ecf6f3e6c5321"
+      },
+      "template_products": {
+        "algorithm": "sha256",
+        "value": "1d2e0659ee22e0764a1c41a4329f994653e5be61df90306c923035ba6c3cc43f"
+      },
+      "template_refunds": {
+        "algorithm": "sha256",
+        "value": "36ed1bd1673f17a3a949d926e3155cf573b7f1ae86f16215a70a1a89a8cb8333"
+      },
+      "template_returns": {
+        "algorithm": "sha256",
+        "value": "3a2cae4b5271c8f2f834cc7c7e9efe0514a846b61e708349064c3f33ab143ed4"
+      },
+      "template_suppliers": {
+        "algorithm": "sha256",
+        "value": "625888093e3ec19b18c326d84d47eba0f29e77f92c801eda80c63a39301088fb"
+      }
+    },
+    "origin": "synthetic",
+    "scale": "small",
+    "schema_hashes": {
+      "ontology.json": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a",
+      "umf/customers.json": "25e406038523328513999fc1be18afc8205b9be69bda2dc7cd47dd8bb1687d39",
+      "umf/fulfillments.json": "436a8bb3d33f5572e97d17b9655fc03da5e814536f3b1586b2aa703bb7dc2ffa",
+      "umf/invoices.json": "327afba80bc96fdb68b5609d4a85bc15c19a5aea30f507b48e6e2814c339d389",
+      "umf/order_lines.json": "8c2de8b6f812dc2f39c4d3604a8f2593a64acf0eeeff53ab4bbf9f6ded21a857",
+      "umf/orders.json": "5296dddb6e934c0d095897fcfc4289f55e1a21c4052dfb08eb091f51584d3870",
+      "umf/payments.json": "8e9118093a27f804275b5a74f7cfd9b45223481e51479cc7da8b6c50c7759e93",
+      "umf/products.json": "071eee06db1cb9a0b79d8b5fa70294a019ba166807080ffe1deb08482d866418",
+      "umf/refunds.json": "501e6c06877110cb37abc3f28e20bc338977529c5cb5e2ce0c12fbd53ee00e46",
+      "umf/returns.json": "ef71534a2111381271c7cbb29cbf6cbf4a940fed0bbcea4f895887290cd2b476",
+      "umf/suppliers.json": "b05f565957f634d5aa880277b95cd1b02ba055a7c442cdfc7b35ccd7e164e6fe"
+    },
+    "seed": 42,
+    "source_pack": {
+      "id": "commerce",
+      "sha256": "1a03b93174be64e83f8b9e79b115570fe5950e2277780041553f3ef0a782ef1a",
+      "version": "1.0.0"
+    }
+  },
+  "dataset": {
+    "archive_sha256": "2dcf6bca6ae71939178ed662cdb3756c5c6f2387b29327fc48f71bfa2805bdeb",
+    "origin": "synthetic",
+    "seed": 42
+  },
+  "objects": [
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"customers\",[\"[42,0,\\\"C1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "customers"
+      },
+      "values": {
+        "customers.id": "[42,0,\"C1\"]",
+        "customers.name": "Synthetic café"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"suppliers\",[\"[42,0,\\\"S1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "suppliers"
+      },
+      "values": {
+        "suppliers.id": "[42,0,\"S1\"]",
+        "suppliers.name": "Synthetic supply"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"products\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "products"
+      },
+      "values": {
+        "products.id": "[42,0,\"P1\"]",
+        "products.supplier_id": "[42,0,\"S1\"]",
+        "products.sku": "SKU1",
+        "products.unit_price": "12.5"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"orders\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "orders"
+      },
+      "values": {
+        "orders.id": "[42,0,\"O1\"]",
+        "orders.customer_id": "[42,0,\"C1\"]",
+        "orders.ordered_at": "2026-01-01T12:00:00Z",
+        "orders.status": "open"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "order_lines"
+      },
+      "values": {
+        "order_lines.id": "[42,0,\"L1\"]",
+        "order_lines.order_id": "[42,0,\"O1\"]",
+        "order_lines.product_id": "[42,0,\"P1\"]",
+        "order_lines.quantity": "10"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "fulfillments"
+      },
+      "values": {
+        "fulfillments.id": "[42,0,\"F1\"]",
+        "fulfillments.line_id": "[42,0,\"L1\"]",
+        "fulfillments.quantity": "6"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments\",[\"[42,0,\\\"F2\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "fulfillments"
+      },
+      "values": {
+        "fulfillments.id": "[42,0,\"F2\"]",
+        "fulfillments.line_id": "[42,0,\"L1\"]",
+        "fulfillments.quantity": "11"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"invoices\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "invoices"
+      },
+      "values": {
+        "invoices.id": "[42,0,\"I1\"]",
+        "invoices.order_id": "[42,0,\"O1\"]",
+        "invoices.amount": "125",
+        "invoices.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"payments\",[\"[42,0,\\\"PAY1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "payments"
+      },
+      "values": {
+        "payments.id": "[42,0,\"PAY1\"]",
+        "payments.invoice_id": "[42,0,\"I1\"]",
+        "payments.amount": "125",
+        "payments.currency": "USD"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"returns\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "returns"
+      },
+      "values": {
+        "returns.id": "[42,0,\"R1\"]",
+        "returns.line_id": "[42,0,\"L1\"]",
+        "returns.quantity": "2"
+      }
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"refunds\",[\"[42,0,\\\"RF1\\\"]\"]]",
+      "type": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "element": "refunds"
+      },
+      "values": {
+        "refunds.id": "[42,0,\"RF1\"]",
+        "refunds.return_id": "[42,0,\"R1\"]",
+        "refunds.amount": "25",
+        "refunds.currency": "USD"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"products.supplier_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"products\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"suppliers\\\",[\\\"[42,0,\\\\\\\"S1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "products.supplier_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"products\",[\"[42,0,\\\"P1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"suppliers\",[\"[42,0,\\\"S1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"orders.customer_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"orders\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"customers\\\",[\\\"[42,0,\\\\\\\"C1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "orders.customer_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"orders\",[\"[42,0,\\\"O1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"customers\",[\"[42,0,\\\"C1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines.order_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"order_lines\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"orders\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "order_lines.order_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"orders\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines.product_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"order_lines\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"products\\\",[\\\"[42,0,\\\\\\\"P1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "order_lines.product_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"products\",[\"[42,0,\\\"P1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments.line_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"fulfillments\\\",[\\\"[42,0,\\\\\\\"F1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"order_lines\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "fulfillments.line_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments\",[\"[42,0,\\\"F1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments.line_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"fulfillments\\\",[\\\"[42,0,\\\\\\\"F2\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"order_lines\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "fulfillments.line_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"fulfillments\",[\"[42,0,\\\"F2\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"invoices.order_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"invoices\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"orders\\\",[\\\"[42,0,\\\\\\\"O1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "invoices.order_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"invoices\",[\"[42,0,\\\"I1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"orders\",[\"[42,0,\\\"O1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"payments.invoice_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"payments\\\",[\\\"[42,0,\\\\\\\"PAY1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"invoices\\\",[\\\"[42,0,\\\\\\\"I1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "payments.invoice_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"payments\",[\"[42,0,\\\"PAY1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"invoices\",[\"[42,0,\\\"I1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"returns.line_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"returns\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"order_lines\\\",[\\\"[42,0,\\\\\\\"L1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "returns.line_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"returns\",[\"[42,0,\\\"R1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"order_lines\",[\"[42,0,\\\"L1\\\"]\"]]"
+    },
+    {
+      "key": "[\"urn:umf:domain:commerce\",\"domain\",\"refunds.return_id\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"refunds\\\",[\\\"[42,0,\\\\\\\"RF1\\\\\\\"]\\\"]]\",\"[\\\"urn:umf:domain:commerce\\\",\\\"domain\\\",\\\"returns\\\",[\\\"[42,0,\\\\\\\"R1\\\\\\\"]\\\"]]\"]",
+      "relationship": {
+        "document": "urn:umf:domain:commerce",
+        "module": "domain",
+        "id": "refunds.return_id"
+      },
+      "source": "[\"urn:umf:domain:commerce\",\"domain\",\"refunds\",[\"[42,0,\\\"RF1\\\"]\"]]",
+      "target": "[\"urn:umf:domain:commerce\",\"domain\",\"returns\",[\"[42,0,\\\"R1\\\"]\"]]"
+    }
+  ]
+}

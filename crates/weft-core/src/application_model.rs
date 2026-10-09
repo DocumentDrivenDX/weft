@@ -61,6 +61,7 @@ impl Catalog {
         record: &Record,
         reference: &Value,
     ) -> Result<(Identity, Value)> {
+        crate::model::reference08(&record.pin, reference, &["module", "element", "role", "key"])?;
         let mid = reference["module"]
             .as_str()
             .ok_or_else(|| fail("Missing local module reference"))?;
@@ -83,6 +84,7 @@ impl Catalog {
         let mut identity = record.identity.clone();
         identity.module = mid.into();
         identity.element = eid.into();
+        crate::model::selected08(&record.pin, element)?;
         Ok((identity, element.clone()))
     }
     fn members(&self, record: &Record, value: &Value) -> Result<Vec<Member>> {
@@ -307,11 +309,13 @@ impl Catalog {
         if matched.len() != 1 {
             return Err(fail("Authored key identity is missing or ambiguous"));
         }
+        crate::model::reference08(&record.pin, matched[0], &["id", "name", "fields", "primary"])?;
         let members = self.members(record, &record.value)?;
         let mut fields = Vec::new();
         let mut types = Vec::new();
         let mut seen = BTreeSet::new();
         for reference in matched[0]["fields"].as_array().unwrap() {
+            crate::model::reference08(&record.pin, reference, &["module", "element"])?;
             let (id, field) = self.local_element(record, reference)?;
             if !members.iter().any(|m| m.identity == id)
                 || !seen.insert((id.module.clone(), id.element.clone()))
@@ -412,6 +416,9 @@ impl Catalog {
             .at(&name.span));
         }
         let (module, rel, inverse) = matches[0];
+        crate::model::reference08(&source.pin, rel, &["id", "name", "title", "description", "source", "target", "directed", "sourceMultiplicity", "targetMultiplicity", "targetLifecycle", "associationRecord", "inverse"])?;
+        for endpoint in rel["source"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element"])?; }
+        for endpoint in rel["target"].as_array().unwrap() { crate::model::reference08(&source.pin, endpoint, &["module", "element", "key"])?; }
         if rel["source"].as_array().unwrap().len() != 1
             || rel["target"].as_array().unwrap().len() != 1
             || rel["directed"] != true
@@ -425,6 +432,7 @@ impl Catalog {
             .ok_or_else(|| fail("Relationship lifecycle meaning is unsupported"))?;
         for side in ["sourceMultiplicity", "targetMultiplicity"] {
             let m = &rel[side];
+            crate::model::reference08(&source.pin, m, &["min", "max"])?;
             let min = m["min"].as_u64().unwrap();
             if m["max"] != "*" && m["max"].as_u64().is_none_or(|max| max < min) {
                 return Err(fail("Relationship multiplicity is inconsistent"));

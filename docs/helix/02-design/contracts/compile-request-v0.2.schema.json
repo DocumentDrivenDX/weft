@@ -34,7 +34,7 @@
                 "minLength": 1
               },
               "umfVersion": {
-                "const": "0.7.0"
+                "enum": ["0.7.0", "0.8.0"]
               },
               "sha256": {
                 "type": "string",
