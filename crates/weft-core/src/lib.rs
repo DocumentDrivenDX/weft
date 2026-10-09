@@ -1,3 +1,5 @@
+mod arithmetic_plan;
+mod arithmetic_application_resolve;
 mod application_scope;
 mod arithmetic_resolve;
 mod arithmetic_query;
