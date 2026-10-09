@@ -70,7 +70,7 @@ pub enum Kind {
 fn fail(code: &str, message: &str, span: &Span) -> Diagnostic {
     Diagnostic::new(code, "resolve", message).at(span)
 }
-fn token_domain(token: &str, family: Option<&Family>, span: &Span) -> Result<Domain> {
+pub(crate) fn token_domain(token: &str, family: Option<&Family>, span: &Span) -> Result<Domain> {
     if token.len() > crate::arithmetic_syntax::MAX_LITERAL_BYTES {
         return Err(fail(
             "WFT-LIMIT",

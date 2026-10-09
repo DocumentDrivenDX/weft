@@ -8,3 +8,6 @@ pub mod native_profile;
 
 /// Native-semantics-qualified registration; explicit host obligations remain mandatory.
 pub mod qualified_profile;
+
+/// Explicit finite coefficient lowering for exact 0.3 row arithmetic.
+pub mod arithmetic;

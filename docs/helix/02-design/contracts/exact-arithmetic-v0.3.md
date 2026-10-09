@@ -101,6 +101,28 @@ nullability. No JSON number or host float may carry an exact computed value.
 Original source presence and aggregate NULL remain governed by their owning
 contracts. Compilation establishes no source authority, publication or read pin.
 
+### Spark coefficient candidate
+
+The opt-in `spark4-delta4-arithmetic-candidate` target MAY admit nonaggregate
+required-scalar row queries at the explicit 0.3 language/IR pair. It MUST preserve
+source facets and use signed `DECIMAL(38,0)` coefficients with separately retained
+scales, at most 18 in this finite profile. Native capacity MUST NOT appear as a
+logical integer width or derived decimal precision. Literal/parameter slots MUST
+retain their original tokens and logical domains; derive physical coefficients
+inside SQL. Precisionless decimal parameter metadata requires explicit 0.3 exact
+decimal capability admission and its original lexical scale.
+
+Every negation, subtraction, addition, multiplication and comparison scale-alignment
+product MUST use exact-or-null native operations, with pre-execution checks that
+turn any null intermediate into complete-query capability refusal. These checks
+MUST use the logical candidate row sets above, including every ON/WHERE conjunct.
+Final decimal text MUST be formed from the coefficient's sign and zero-padded
+digits; division, floating-point conversion and rounding are forbidden. Hosts MUST
+fulfil source-integrity, arithmetic and publication obligations in order, execute
+compiler SQL unchanged, buffer the full result, and recheck the complete original
+publication context before release. This finite candidate requires independent
+native qualification; registration or compilation alone establishes no support.
+
 ## Required evidence
 
 Freeze executable grammar, IR/request/response/result schemas and positive/refusal

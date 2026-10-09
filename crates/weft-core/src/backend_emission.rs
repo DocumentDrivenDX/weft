@@ -66,9 +66,22 @@ pub(crate) fn validate(
             ));
         }
         let unbounded=p.logical_type.family==Family::Integer && p.logical_type.facets==serde_json::json!({});
-        let admitted=assessments.iter().any(|a| a.id=="type.integer.unbounded" && a.status!=crate::backend::Status::Unsupported);
+        let admitted=assessments.iter().any(|a| (a.id=="type.integer.unbounded" || (matches!(plan,Plan::V03(_)) && a.id=="arithmetic.exact.integer")) && a.status!=crate::backend::Status::Unsupported);
         if unbounded && !admitted { return Err(fail("Unbounded integer parameter requires explicit capability admission")); }
-        validate_parameter_domain(&p.value, &p.logical_type, admitted)?;
+        if p.logical_type.family == Family::Decimal && p.logical_type.facets.get("precision").is_none() {
+            let admitted = matches!(plan, Plan::V03(_)) && assessments.iter().any(|a| a.id == "arithmetic.exact.decimal" && a.status != crate::backend::Status::Unsupported);
+            let scale = p.logical_type.facets["scale"].as_u64().ok_or_else(|| fail("Arithmetic decimal parameter requires its exact lexical scale"))?;
+            if !admitted || p.logical_type.facets != serde_json::json!({"scale":scale}) {
+                return Err(fail("Arithmetic decimal parameter requires explicit 0.3 capability admission"));
+            }
+            let domain = crate::arithmetic_resolve::token_domain(&p.value, Some(&Family::Decimal), &crate::ir::Span {start:0,end:0})
+                .map_err(|_| fail("Arithmetic decimal parameter is not exact base-ten text"))?;
+            if domain != (crate::arithmetic_resolve::Domain::Decimal {scale}) {
+                return Err(fail("Arithmetic decimal parameter changes its original lexical scale"));
+            }
+        } else {
+            validate_parameter_domain(&p.value, &p.logical_type, admitted)?;
+        }
     }
     let expected: Vec<(&str, Expected<'_>)> = match plan {
         Plan::V01(p) => {
@@ -272,6 +285,18 @@ mod tests {
         }).collect();
         let baseline = Emission { sql:"SELECT fixture".into(), parameters:vec![], obligations:vec![], columns };
         validate(Plan::V03(&plan), &baseline, &selection, &[]).unwrap();
+        let mut parameterized = baseline.clone();
+        parameterized.parameters.push(crate::backend::ParameterSlot {
+            position:1, logical_type:LogicalType {family:Family::Decimal,facets:json!({"scale":4}),nullable:false},
+            value:"12.5000".into(),origin:json!({"kind":"literal"}),
+        });
+        let assessment = crate::backend::Assessment {id:"arithmetic.exact.decimal".into(),status:crate::backend::Status::Candidate,evidence:vec![],obligations:vec![]};
+        assert!(validate(Plan::V03(&plan),&parameterized,&selection,&[]).is_err());
+        validate(Plan::V03(&plan),&parameterized,&selection,&[assessment.clone()]).unwrap();
+        for (value,facets) in [("12.5000",json!({"scale":3})),("12.5e1",json!({"scale":4})),("12.5000",json!({"scale":4,"nativeWidth":38}))] {
+            let mut bad=parameterized.clone();bad.parameters[0].value=value.into();bad.parameters[0].logical_type.facets=facets;
+            assert!(validate(Plan::V03(&plan),&bad,&selection,&[assessment.clone()]).is_err());
+        }
         for mutation in 0..4 {
             let mut emission = baseline.clone();
             if mutation == 0 { emission.columns[1].nullable = true; }

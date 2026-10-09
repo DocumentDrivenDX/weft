@@ -426,3 +426,59 @@ fn selected_page_key_extension_meaning_is_not_silently_ignored() {
     assert_eq!(response["diagnostics"][0]["message"],"Selected authored key meaning is not registered");
     assert!(response.get("sql").is_none());assert!(response.get("columns").is_none());
 }
+
+fn arithmetic_request(sql:&str)->Value {
+    let mut request=common::request(sql);
+    request["interfaceVersion"]=json!("weft-compile/0.3.0");request["dialect"]=json!("weft-sql/0.3.0");
+    request["target"]["backendVersion"]=json!("0.3.0-arithmetic-candidate");request["target"]["targetProfile"]=json!(weft_databricks::arithmetic::PROFILE);request
+}
+fn arithmetic_compile(request:&Value)->Value {
+    let mut registry=Registry::default();registry.register(weft_databricks::arithmetic::Arithmetic).unwrap();
+    serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap()
+}
+#[test]
+fn arithmetic_coefficients_preserve_tokens_domains_and_every_guard_phase() {
+    let request=arithmetic_request("SELECT c.id-1+2 AS next,o.total*12.5000 AS scaled FROM Customer c JOIN Orders o ON o.customer_id+1=c.id WHERE o.total*2>1 ORDER BY c.id");
+    let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");
+    assert_eq!(response["logicalPlan"]["irVersion"],"weft-ir/0.3.0");
+    assert_eq!(response["columns"][0]["representation"]["logicalType"]["facets"],json!({}));
+    assert_eq!(response["columns"][1]["representation"]["logicalType"]["facets"],json!({"scale":6}));
+    let slot=response["parameters"].as_array().unwrap().iter().find(|p|p["value"]=="12.5000").unwrap();
+    assert_eq!(slot["logicalType"]["facets"],json!({"scale":4}));
+    let exact=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();
+    assert_eq!(exact["parameters"]["checks"].as_array().unwrap().iter().map(|c|c["phase"].as_str().unwrap()).collect::<Vec<_>>(),vec!["join-candidates","where-candidates","projection-survivors"]);
+    let join=exact["parameters"]["checks"][0]["sql"].as_str().unwrap();assert!(join.contains("CROSS JOIN"));assert!(!join.contains("INNER JOIN"));assert!(join.contains("try_add("));
+    for check in exact["parameters"]["checks"].as_array().unwrap(){assert!(check["sql"].as_str().unwrap().contains(" IS NULL"));}
+    let sql=response["sql"].as_str().unwrap();assert!(sql.contains("try_multiply("));assert!(sql.contains("right("));assert!(!sql.contains("DOUBLE"));assert!(!sql.contains(" / "));
+    assert_eq!(arithmetic_compile(&request),response);
+}
+#[test]
+fn arithmetic_capacity_refuses_without_partial_artifacts() {
+    for sql in ["SELECT c.id+100000000000000000000000000000000000000 AS next FROM Customer c","SELECT o.total*1.0000000000000000000 AS total FROM Orders o","SELECT SUM(o.total) AS total FROM Orders o"] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"blocked","{response}");assert_eq!(response["diagnostics"][0]["code"],"WFT-CAPABILITY","{response}");for key in ["sql","parameters","logicalPlan","columns","obligations"] {assert!(response.get(key).is_none())}
+    }
+}
+#[test]
+fn arithmetic_cancellation_and_where_conjuncts_keep_all_intermediate_checks() {
+    let response=arithmetic_compile(&arithmetic_request("SELECT c.id*99999999999999999999999999999999999999-c.id*99999999999999999999999999999999999999 AS canceled FROM Customer c WHERE c.id=0 AND c.id*99999999999999999999999999999999999999>1"));
+    assert_eq!(response["status"],"compiled","{response}");let checks=&response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap()["parameters"]["checks"];
+    let before=checks[0]["sql"].as_str().unwrap();assert!(before.contains("try_multiply("));assert!(!before.rsplit(" FROM ").next().unwrap().contains(" AND "));let projection=checks[1]["sql"].as_str().unwrap();assert!(projection.contains("try_subtract("));assert!(projection.matches("try_multiply(").count()>=4);
+}
+
+#[test]
+fn arithmetic_outputs_retain_all_field_identities_across_joined_scans() {
+    let response=arithmetic_compile(&arithmetic_request("SELECT c.id+o.customer_id+c.id AS combined,o.total*12.5000 AS scaled,1+2 AS constant FROM Customer c JOIN Orders o ON o.customer_id=c.id"));
+    assert_eq!(response["status"],"compiled","{response}");
+    let outputs=response["logicalPlan"]["outputs"].as_array().unwrap();
+    fn collect(value:&Value, identities:&mut Vec<Value>) {
+        if value["op"]=="field" { identities.push(value["field"]["identity"].clone()); }
+        match value { Value::Object(map)=>for child in map.values(){collect(child,identities)},Value::Array(items)=>for child in items{collect(child,identities)},_=>{} }
+    }
+    for index in [0,1] {
+        let mut expected=vec![];collect(&outputs[index]["expression"],&mut expected);
+        expected.sort_by_key(|id|id.to_string());expected.dedup();
+        assert_eq!(expected.len(),if index==0 {2}else{1},"{response}");
+        assert_eq!(response["columns"][index]["sourceIdentities"],json!(expected));
+    }
+    assert_eq!(response["columns"][2]["sourceIdentities"],json!([response["logicalPlan"]["source"]["record"].clone()]));
+}

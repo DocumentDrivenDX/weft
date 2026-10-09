@@ -1,5 +1,7 @@
 //! Candidate registered SQL lowering. Native execution/custody stays in hosts.
 mod application;
+mod arithmetic;
+pub(crate) fn lower_arithmetic(context: &Context<'_>, binding: &Binding, plan: &weft_core::arithmetic_plan::Plan) -> Result<TargetPlan> { arithmetic::lower(context,binding,plan) }
 pub(crate) mod compound;
 mod relationships;
 use crate::binding::{self, Binding, Home, RecordKind};
