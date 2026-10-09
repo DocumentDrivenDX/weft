@@ -536,6 +536,7 @@ fn old_backend_refuses_arithmetic_before_binding_or_lowering() {
         "SELECT c.name AS label FROM Customer c", modules(), Default::default(), None,
     ).unwrap();
     let plan = weft_core::arithmetic_plan::Plan {
+        distinct: false,
         ir_version: "weft-ir/0.3.0".into(), module_pins:p.module_pins,
         read_profile:None, required_capabilities:p.required_capabilities,
         type_graph:p.type_graph, source:p.source, page_key:p.page_key,
