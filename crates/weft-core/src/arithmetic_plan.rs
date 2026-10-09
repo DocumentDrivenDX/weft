@@ -5,9 +5,19 @@ use crate::{
     ir::{Identity, LogicalType, ModelPin},
 };
 use serde::Serialize;
+/// Additive 0.3 scalar comparison operators; old =/> variants retain their wire shape.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ComparisonOperator { Less, LessEqual, GreaterEqual, NotEqual }
+impl ComparisonOperator {
+    pub fn sql(self) -> &'static str { match self { Self::Less => "<", Self::LessEqual => "<=", Self::GreaterEqual => ">=", Self::NotEqual => "<>" } }
+    pub fn capability(self) -> &'static str { match self { Self::Less => "compare.less", Self::LessEqual => "compare.lessEqual", Self::GreaterEqual => "compare.greaterEqual", Self::NotEqual => "compare.notEqual" } }
+}
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {
+    ScalarCompare { left: Field, right: crate::application_ir::Value, operator: ComparisonOperator },
+    ArithmeticCompareExtended { left: crate::arithmetic_resolve::Expression, right: crate::arithmetic_resolve::Expression, operator: ComparisonOperator },
     Legacy {
         predicate: crate::application_ir::Predicate,
     },

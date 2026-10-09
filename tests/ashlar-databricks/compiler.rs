@@ -528,3 +528,89 @@ fn bare_field_extension_does_not_expand_relationship_name_positions() {
         let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"blocked","{response}");assert_eq!(response["diagnostics"][0]["phase"],"parse","{response}");assert!(response.get("sql").is_none());
     }
 }
+
+#[test]
+fn new_scalar_comparisons_preserve_exact_tokens_collation_and_candidates() {
+    for (op,name) in [("<","less"),("<=","lessEqual"),(">=","greaterEqual"),("<>","notEqual")] {
+        let sql=format!("SELECT c.id FROM Customer c JOIN Orders o ON o.total{op}12.5000 WHERE c.id=0 AND c.id+9007199254740993{op}1");
+        let response=arithmetic_compile(&arithmetic_request(&sql));assert_eq!(response["status"],"compiled","{response}");
+        assert_eq!(response["logicalPlan"]["joins"][0]["on"][0]["op"],"scalarCompare");
+        assert_eq!(response["logicalPlan"]["joins"][0]["on"][0]["operator"],name);
+        assert!(response["logicalPlan"]["requiredCapabilities"].as_array().unwrap().contains(&json!("compare.scalarJoin")));
+        assert!(response["parameters"].as_array().unwrap().iter().any(|p|p["value"]=="9007199254740993"));
+        let exact=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();
+        let join=exact["parameters"]["checks"][0]["sql"].as_str().unwrap();assert!(join.contains("CROSS JOIN"));assert!(!join.contains(" INNER JOIN "));assert!(join.contains("try_multiply("));
+        let filter=exact["parameters"]["checks"][1]["sql"].as_str().unwrap();assert!(filter.contains("try_add("));assert!(!filter.rsplit(" WHERE ").next().unwrap().contains(" = ")); // c.id=0 cannot hide a capacity failure.
+        for old in [common::request(&sql),application(&sql)] { assert_eq!(run(&old)["status"],"blocked"); }
+    }
+    for token in ["é", "e\u{301}", "😀", "\u{10ffff}"] {
+        let request=arithmetic_request(&format!("SELECT c.name FROM Customer c WHERE c.name<>'{token}'"));
+        let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");
+        assert!(response["sql"].as_str().unwrap().contains("COLLATE UTF8_BINARY"));
+        assert!(response["parameters"].as_array().unwrap().iter().any(|p|p["value"]==token));
+    }
+}
+#[test]
+fn new_comparison_capacity_and_families_refuse_atomically() {
+    for (sql,code) in [("SELECT c.id FROM Customer c WHERE c.id+0<100000000000000000000000000000000000000","WFT-CAPABILITY"),("SELECT o.total FROM Orders o WHERE o.total<=1.0000000000000000000","WFT-CAPABILITY"),("SELECT c.id FROM Customer c WHERE c.id<>c.name","WFT-TYPE"),("SELECT c.id FROM Customer c WHERE c.name<1","WFT-TYPE")] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"blocked","{response}");assert_eq!(response["diagnostics"][0]["code"],code,"{response}");assert!(response.get("sql").is_none());
+    }
+    // Scaling a valid 38-digit coefficient can overflow. Keep an unfiltered runtime guard rather than claim source invalidity.
+    let response=arithmetic_compile(&arithmetic_request("SELECT c.id FROM Customer c WHERE c.id=0 AND c.id+99999999999999999999999999999999999999<=0.01"));
+    assert_eq!(response["status"],"compiled","{response}");
+    let exact=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();let check=exact["parameters"]["checks"][0]["sql"].as_str().unwrap();assert!(check.contains("try_multiply("));assert!(check.contains("'100' AS DECIMAL(38,0)"));assert!(check.contains(" IS NULL"));
+}
+
+#[test]
+fn new_boolean_operators_do_not_widen_existing_ordering_or_parameter_domains() {
+    for sql in ["SELECT c.id FROM Customer c WHERE c.active<>false", "SELECT c.id FROM Customer c WHERE c.active<>:flag", "SELECT c.id FROM Customer c WHERE c.active>false"] {
+        let mut request=arithmetic_request(sql);
+        if sql.contains(":flag") {request["parameters"]=json!({"flag":{"family":"boolean","value":"true"}});}
+        let response=arithmetic_compile(&request);assert_eq!(response["status"],"compiled","{response}");
+    }
+    for op in ["<","<=",">="] {
+        let response=arithmetic_compile(&arithmetic_request(&format!("SELECT c.id FROM Customer c WHERE c.active{op}false")));
+        assert_eq!(response["diagnostics"][0]["code"],"WFT-TYPE","{response}");assert!(response.get("sql").is_none());
+    }
+    let mut request=arithmetic_request("SELECT c.id FROM Customer c WHERE c.id<=:n AND c.name<>:n");request["parameters"]=json!({"n":{"family":"integer","value":"2"}});
+    assert_eq!(arithmetic_compile(&request)["diagnostics"][0]["code"],"WFT-PARAMETER");
+}
+
+#[test]
+fn new_comparison_capabilities_refuse_before_binding_callback() {
+    use weft_core::{backend::*,error::Result};
+    use std::sync::{Arc,atomic::{AtomicUsize,Ordering}};
+    struct Probe { id: &'static str, mode: &'static str, calls: Arc<AtomicUsize> }
+    impl Backend for Probe {
+        type Mapping=();type TargetPlan=();
+        fn describe(&self)->Result<Manifest> {
+            let mut m=weft_databricks::arithmetic::Arithmetic.describe()?;
+            if self.mode=="missing" {m.capabilities.retain(|c|c.id!=self.id);}
+            else if self.mode=="target" {
+                let mut other=m.target_profiles[0].clone();other.id="other".into();m.target_profiles.push(other);
+                m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().target_profiles=vec!["other".into()];
+            } else if self.mode=="language" {
+                let other=LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:"weft-ir/0.2.0".into()};m.language_profiles.push(other.clone());
+                m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().language_profiles=vec![other];
+            } else if self.mode=="unsupported" {m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().status=Status::Unsupported;}
+            Ok(m)
+        }
+        fn validate_binding(&self,_:&Context<'_>)->Result<Validated<()>> {self.calls.fetch_add(1,Ordering::SeqCst);panic!("binding must not run before new capability admission")}
+        fn assess(&self,_:&Context<'_>,_:&())->Result<Vec<Assessment>> {panic!()}
+        fn lower(&self,_:&Context<'_>,_:&())->Result<()> {panic!()}
+        fn emit(&self,_:&Context<'_>,_:&())->Result<Emission> {panic!()}
+    }
+    for (id,sql) in [("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name")] {
+        for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
+            let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();
+            let mut request=arithmetic_request(sql);if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
+            let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();
+            assert_eq!(response["diagnostics"][0]["code"],"WFT-CAPABILITY","{id}/{mode}:{response}");assert_eq!(calls.load(Ordering::SeqCst),0);assert!(response.get("sql").is_none());
+        }
+    }
+    // Old equality and admitted new operators still enter binding; old ordering is unchanged.
+    for sql in ["SELECT c.name FROM Customer c WHERE c.name='z'","SELECT c.name FROM Customer c WHERE c.name<'z'"] {
+        let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id:"compare.less",mode:"admitted",calls:calls.clone()}).unwrap();
+        let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&arithmetic_request(sql).to_string())).unwrap();assert_eq!(response["diagnostics"][0]["code"],"WFT-BACKEND-FAILURE");assert_eq!(calls.load(Ordering::SeqCst),1);
+    }
+}

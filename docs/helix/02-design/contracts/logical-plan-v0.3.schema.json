@@ -708,6 +708,231 @@
             "greater"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "scalarCompare"
+            },
+            "left": {
+              "$ref": "#/$defs/comparisonField"
+            },
+            "right": {
+              "$ref": "#/$defs/comparisonValue"
+            },
+            "operator": {
+              "$ref": "#/$defs/comparisonOperator"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "operator"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "boolean"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "operator": {
+                    "const": "notEqual"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "integer"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "decimal"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "decimal"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "decimal"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "arithmeticCompareExtended"
+            },
+            "left": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "operator": {
+              "$ref": "#/$defs/comparisonOperator"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "operator"
+          ],
+          "additionalProperties": false
         }
       ]
     },
@@ -1093,6 +1318,53 @@
         "span"
       ],
       "additionalProperties": false
+    },
+    "comparisonOperator": {
+      "enum": [
+        "less",
+        "lessEqual",
+        "greaterEqual",
+        "notEqual"
+      ]
+    },
+    "comparisonField": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/field"
+        },
+        {
+          "properties": {
+            "type": {
+              "properties": {
+                "nullable": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "comparisonValue": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/value"
+        },
+        {
+          "properties": {
+            "type": {
+              "properties": {
+                "nullable": {
+                  "const": false
+                }
+              }
+            },
+            "field": {
+              "$ref": "#/$defs/comparisonField"
+            }
+          }
+        }
+      ]
     }
   }
 }

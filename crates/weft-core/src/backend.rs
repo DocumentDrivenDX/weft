@@ -462,6 +462,17 @@ impl<B: Backend> Registered for Adapter<B> {
                 && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
             return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit mathematical integer source domains"));
         }
+        // New 0.3 comparisons must be admitted before any backend binding callback.
+        // Retain the ordering of older operations; do not retroactively preflight them.
+        if matches!(plan, Plan::V03(_)) {
+            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin"].contains(&id.as_str())) {
+                if !self.manifest.capabilities.iter().any(|c| &c.id == id
+                    && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
+                    && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
+                    return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit the new comparison operator"));
+                }
+            }
+        }
         let context = Context {
             catalog,
             plan,
@@ -765,7 +776,8 @@ fn selected(plan: Plan<'_>) -> Selection {
             fn pred(p:&crate::arithmetic_plan::Predicate,s:&mut Selection) {
                 match p {
                     crate::arithmetic_plan::Predicate::Legacy{predicate:p}=>predicate(p,s),
-                    crate::arithmetic_plan::Predicate::ArithmeticCompare{left,right,..}=>{arithmetic(left,s);arithmetic(right,s)}
+                    crate::arithmetic_plan::Predicate::ArithmeticCompare{left,right,..}|crate::arithmetic_plan::Predicate::ArithmeticCompareExtended{left,right,..}=>{arithmetic(left,s);arithmetic(right,s)},
+                    crate::arithmetic_plan::Predicate::ScalarCompare{left,right,..}=>{s.fields.push(left.identity.clone());value(right,s)}
                 }
             }
             s.records.push(p.source.record.clone());

@@ -26,6 +26,8 @@ pub struct Projection {
 }
 #[derive(Debug, Clone)]
 pub enum Predicate {
+    ExtendedCompare { column: Column, value: Value, operator: crate::arithmetic_plan::ComparisonOperator },
+    ArithmeticCompareExtended { left: Expression, right: Expression, operator: crate::arithmetic_plan::ComparisonOperator },
     ArithmeticCompare {
         left: Expression,
         right: Expression,
@@ -96,6 +98,21 @@ fn columns(p: &mut Parser) -> Result<Vec<Column>> {
     }
     Ok(values)
 }
+#[derive(Clone, Copy)]
+enum Operator { Equal, Greater, Extended(crate::arithmetic_plan::ComparisonOperator) }
+fn operator(p: &mut Parser) -> Result<Operator> {
+    use crate::arithmetic_plan::ComparisonOperator as O;
+    let span = p.span();
+    let first = if p.peek_symbol('<') { '<' } else if p.peek_symbol('>') { '>' } else { '=' };
+    p.symbol(first)?;
+    if (first == '<' && (p.peek_symbol('=') || p.peek_symbol('>'))) || (first == '>' && p.peek_symbol('=')) {
+        if p.span().start != span.end { return Err(fail(p, "Comparison operator symbols must be contiguous")); }
+        let second = if p.peek_symbol('=') { '=' } else { '>' };
+        p.symbol(second)?;
+        return Ok(Operator::Extended(match (first,second) { ('<','=') => O::LessEqual, ('<','>') => O::NotEqual, _ => O::GreaterEqual }));
+    }
+    Ok(match first { '<' => Operator::Extended(O::Less), '>' => Operator::Greater, _ => Operator::Equal })
+}
 fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
     let mut predicates = Vec::new();
     loop {
@@ -126,8 +143,8 @@ fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
             } else {
                 vec![p.column03()?]
             };
-            let greater = p.peek_symbol('>');
-            p.symbol(if greater { '>' } else { '=' })?;
+            let op = operator(p)?;
+            let greater = matches!(op, Operator::Greater);
             if tuple && !greater {
                 return Err(fail(p, "Tuple equality is outside the application subset"));
             }
@@ -146,10 +163,9 @@ fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
             if columns.len() != values.len() {
                 return Err(fail(p, "Cursor tuple arity mismatch"));
             }
-            Predicate::Compare {
-                columns,
-                values,
-                greater,
+            match op {
+                Operator::Extended(operator) => Predicate::ExtendedCompare { column: columns.into_iter().next().unwrap(), value: values.into_iter().next().unwrap(), operator },
+                _ => Predicate::Compare { columns, values, greater },
             }
         };
         predicates.push(predicate);
@@ -175,8 +191,8 @@ fn arithmetic_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Pr
     let checkpoint = p.clone();
     let result: Result<Predicate> = (|| {
         let left = arithmetic_syntax::parse(p, budget)?;
-        let greater = p.peek_symbol('>');
-        p.symbol(if greater { '>' } else { '=' })?;
+        let op = operator(p)?;
+        let greater = matches!(op, Operator::Greater);
         let right = arithmetic_syntax::parse(p, budget)?;
         // Operator-free comparisons retain the established application resolver.
         if let Kind::Field(column) = &left.kind {
@@ -187,17 +203,15 @@ fn arithmetic_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Pr
                 _ => None,
             };
             if let Some(value) = value {
-                return Ok(Predicate::Compare {
-                    columns: vec![column.clone()],
-                    values: vec![value],
-                    greater,
+                return Ok(match op {
+                    Operator::Extended(operator) => Predicate::ExtendedCompare { column: column.clone(), value, operator },
+                    _ => Predicate::Compare { columns: vec![column.clone()], values: vec![value], greater },
                 });
             }
         }
-        Ok(Predicate::ArithmeticCompare {
-            left,
-            right,
-            greater,
+        Ok(match op {
+            Operator::Extended(operator) => Predicate::ArithmeticCompareExtended { left, right, operator },
+            _ => Predicate::ArithmeticCompare { left, right, greater },
         })
     })();
     match result {
@@ -406,4 +420,19 @@ mod tests {
         assert!(parse("SELECT l.id FROM lines l WHERE l.name='original'").is_ok());
         assert!(parse("SELECT l.id FROM lines l WHERE (l.id,l.quantity)>(:id,:quantity)").is_ok());
     }
+    #[test]
+    fn new_comparison_tokens_are_closed_and_old_tuples_remain() {
+        for op in ["<", "<=", ">=", "<>"] {
+            assert!(matches!(parse(&format!("SELECT c.id FROM Customer c WHERE c.id{op}1")).unwrap().predicates[0], Predicate::ExtendedCompare { .. }));
+            assert!(matches!(parse(&format!("SELECT c.id FROM Customer c WHERE c.id+1{op}2")).unwrap().predicates[0], Predicate::ArithmeticCompareExtended { .. }));
+            assert!(crate::application_syntax::parse(&format!("SELECT c.id FROM Customer c WHERE c.id{op}1")).is_err());
+            assert!(crate::syntax::parse(&format!("SELECT c.id FROM Customer c WHERE c.id{op}1")).is_err());
+            assert!(parse(&format!("SELECT c.id FROM Customer c WHERE (c.id,c.id){op}(1,2)")).is_err());
+        }
+        for op in ["!=", "=>", "=<", "< =", "> =", "< >", "<<", ">>"] {
+            assert!(parse(&format!("SELECT c.id FROM Customer c WHERE c.id{op}1")).is_err(), "{op}");
+        }
+        assert!(parse("SELECT c.id FROM Customer c WHERE (c.id,c.id)>(1,2)").is_ok());
+    }
+
 }

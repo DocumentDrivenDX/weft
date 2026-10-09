@@ -97,6 +97,27 @@ fn predicate(scope: &mut Scope, p: &ast::Predicate, on: bool) -> Result<ir::Pred
         scope.caps.insert("arithmetic.compareExact".into());
     }
     match p {
+        ast::Predicate::ExtendedCompare { column, value, operator } => {
+            let left = scope.field(column)?;
+            if left.logical_type.family == Family::Boolean && *operator != ir::ComparisonOperator::NotEqual {
+                return Err(fail("WFT-TYPE", "New scalar ordering operators exclude Boolean").at(&column.span));
+            }
+            let right = scope.value(&old_value(value), &left.logical_type)?;
+            scope.caps.insert(operator.capability().into());
+            // Explicit new-operator ON admission; the original predicate policy is unchanged.
+            if on { scope.caps.insert("compare.scalarJoin".into()); }
+            Ok(ir::Predicate::ScalarCompare { left, right, operator: *operator })
+        }
+        ast::Predicate::ArithmeticCompareExtended { left, right, operator } => {
+            scope.caps.insert(operator.capability().into());
+            scope.caps.insert("arithmetic.compareExact".into());
+            if on { scope.caps.insert("compare.scalarJoin".into()); }
+            Ok(ir::Predicate::ArithmeticCompareExtended {
+                left: expression_value(scope, left, None)?,
+                right: expression_value(scope, right, None)?,
+                operator: *operator,
+            })
+        }
         ast::Predicate::ArithmeticCompare {
             left,
             right,
@@ -517,4 +538,26 @@ mod tests {
             "WFT-PARAMETER"
         );
     }
+    #[test]
+    fn additive_comparisons_retain_scope_constraints_and_closed_ir() {
+        let p=run("join-count", "SELECT c.id FROM Customer c JOIN Orders o ON o.customer_id<=c.id WHERE o.total+1<>2 AND c.name>='é'",json!({})).unwrap();
+        assert!(p.required_capabilities.contains(&"compare.scalarJoin".into()));
+        let original=serde_json::to_value(p).unwrap();
+        assert!(PlanSchema03::is_valid(&original));
+        for op in ["equal", "greater", "!=", "lesser"] {
+            let mut bad=original.clone();bad["joins"][0]["on"][0]["operator"]=json!(op);
+            assert!(!PlanSchema03::is_valid(&bad));
+        }
+        let mut bad=original.clone();bad["filters"][0]["left"]["domain"]["family"]=json!("string");assert!(!PlanSchema03::is_valid(&bad));
+        for pointer in ["/joins/0/on/0/left/type/nullable","/joins/0/on/0/right/field/type/nullable"] {let mut bad=original.clone();*bad.pointer_mut(pointer).unwrap()=json!(true);assert!(!PlanSchema03::is_valid(&bad));}
+        let mut bad=original.clone();bad["joins"][0]["on"][0]["right"]["field"]["type"]["family"]=json!("string");assert!(!PlanSchema03::is_valid(&bad));
+        let mut bad=original.clone();bad["joins"][0]["on"][0]["left"]["type"]["family"]=json!("boolean");bad["joins"][0]["on"][0]["right"]["field"]["type"]["family"]=json!("boolean");assert!(!PlanSchema03::is_valid(&bad));
+        assert!(run("join-count","SELECT c.id FROM Customer c JOIN Orders o ON o.customer_id>c.id",json!({})).is_err());
+        assert!(run("join-count","SELECT c.id FROM Customer c JOIN Orders o ON o.customer_id=1",json!({})).is_err());
+        assert_eq!(run("join-count","SELECT c.id FROM Customer c WHERE c.id<c.name",json!({})).unwrap_err().code,"WFT-TYPE");
+        assert_eq!(run("join-count","SELECT c.id FROM Customer c WHERE c.id<:n AND c.name<>:n",json!({"n":{"family":"integer","value":"2"}})).unwrap_err().code,"WFT-PARAMETER");
+        // One parameter must satisfy every original occurrence's bounded source domain.
+        assert!(run("join-count","SELECT c.id FROM Customer c WHERE c.id<:n AND c.id+1>=:n",json!({"n":{"family":"integer","value":"2"}})).is_ok());
+    }
+
 }

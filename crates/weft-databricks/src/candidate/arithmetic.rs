@@ -66,7 +66,8 @@ fn collect_value(lower: &mut Lower<'_>, v: &app::Value) {
 }
 fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> Result<()> {
     match p {
-        plan::Predicate::ArithmeticCompare { left, right, .. } => {
+        plan::Predicate::ScalarCompare { left, right, .. } => { collect_field(lower, left); collect_value(lower, right) }
+        plan::Predicate::ArithmeticCompare { left, right, .. } | plan::Predicate::ArithmeticCompareExtended { left, right, .. } => {
             collect_numeric(lower, left);
             collect_numeric(lower, right)
         }
@@ -336,6 +337,16 @@ fn predicate(
     guards: &mut Vec<String>,
 ) -> Result<String> {
     match p {
+        plan::Predicate::ScalarCompare { left, right, operator } => {
+            let (a,b) = pair(lower,left,right,guards)?;
+            Ok(format!("({a} {} {b})",operator.sql()))
+        }
+        plan::Predicate::ArithmeticCompareExtended { left, right, operator } => {
+            let a = numeric(lower,left,guards)?;
+            let b = numeric(lower,right,guards)?;
+            let s = a.scale.max(b.scale);
+            Ok(format!("({} {} {})",align(a,s,guards)?.sql,operator.sql(),align(b,s,guards)?.sql))
+        }
         plan::Predicate::ArithmeticCompare {
             left,
             right,

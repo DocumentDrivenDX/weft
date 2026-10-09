@@ -93,6 +93,33 @@ limits before recursive work or allocation. Publish exact limits with the profil
 and preserve source spans on resource refusals. Deep nesting, large expressions,
 hostile literal lengths and boundary-sized valid expressions require fixtures.
 
+## Additive scalar comparisons
+
+The explicit 0.3 grammar additionally admits `<`, `<=`, `>=` and `<>` in
+scalar WHERE and INNER JOIN ON comparisons. Multi-character operators MUST be
+contiguous; `!=`, `=>`, `=<` and new tuple operators refuse. Existing `=` and `>`
+IR serialization and old-profile acceptance/refusal rules remain unchanged,
+including the existing lexicographic `>` tuple and Boolean `>` behavior.
+
+`scalarCompare` retains the original left Field and right typed Field, literal
+or named parameter; `arithmeticCompareExtended` retains original numeric
+expressions. Both use the closed operator values `less`, `lessEqual`,
+`greaterEqual` and `notEqual`, with separately required `compare.less`,
+`compare.lessEqual`, `compare.greaterEqual` and `compare.notEqual` capabilities.
+New operators in ON additionally require `compare.scalarJoin`; this does not
+widen the original field-equality ON policy for operator-free `=` or `>`.
+
+Scalar operands MUST satisfy the original selected Field/presence/family/facet
+rules and every occurrence-specific literal or parameter constraint. Scalar
+fields of different families refuse. Numeric expressions retain the established
+exact integer/decimal promotion. Strings preserve Unicode scalar sequences with
+explicit UTF8_BINARY comparison, without normalization or coercion. New Boolean
+ordering operators refuse; `<>` admits exact Boolean operands. Nullable/absent
+values and unknown meanings remain outside this profile. All numeric comparison
+scale-alignment guards cover complete pre-ON and pre-WHERE candidate bags before
+any user predicate can eliminate rows. New operator IR/capability admission MUST
+precede backend binding; hosts MUST execute emitted SQL unchanged.
+
 ## Backend admission and results
 
 Require separately declared exact arithmetic capabilities for the selected

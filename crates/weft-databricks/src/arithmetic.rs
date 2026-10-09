@@ -54,6 +54,9 @@ impl Backend for Arithmetic {
                 json!({"carrier":"exact text; original logical domains unchanged"});
             capability.constraints = vec!["All consumed original source values and every unfiltered intermediate require exact native guards before buffered result release".into(),"Finite coefficient capacity is not source validity or general arbitrary precision support".into()];
         }
+        for id in ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin"] {
+            manifest.capabilities.push(Capability { id:id.into(),target_profiles:vec![PROFILE.into()],language_profiles:manifest.language_profiles.clone(),logical_domain:json!({"subset":"new 0.3 scalar operators; same exact source family; string UTF8_BINARY; Boolean only not-equal; explicit new-operator ON admission"}),result_domain:json!({"comparison":"exact coefficients or original scalar meaning; no null widening"}),constraints:vec!["All numeric scale alignment guards cover complete pre-ON/pre-WHERE candidate bags".into()],obligations:vec![],status:Status::Candidate,evidence:vec![] });
+        }
         for id in [
             "arithmetic.exact.integer",
             "arithmetic.exact.decimal",
