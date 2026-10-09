@@ -198,6 +198,7 @@ fn lex(sql: &str) -> Result<Vec<Token>> {
     }
     Ok(tokens)
 }
+#[derive(Clone)]
 pub(crate) struct Parser {
     tokens: Vec<Token>,
     index: usize,

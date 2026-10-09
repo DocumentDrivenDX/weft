@@ -1,3 +1,4 @@
+mod arithmetic_query;
 mod arithmetic_syntax;
 pub mod application_ir;
 pub mod application_model;
