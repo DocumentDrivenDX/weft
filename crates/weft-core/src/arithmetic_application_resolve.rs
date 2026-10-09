@@ -414,6 +414,8 @@ pub(crate) fn resolve(
         limit: q.limit,
     })
 }
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.3.schema.json")]
+struct PlanSchema03;
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -444,6 +446,21 @@ mod tests {
     fn arithmetic_join_projection_and_exact_domain() {
         let p=run("join-count","SELECT c.id+1 AS next,o.total*12.5000 AS scaled FROM Customer c JOIN Orders o ON o.customer_id=c.id WHERE o.total*2>1",json!({})).unwrap();
         assert_eq!(p.ir_version, "weft-ir/0.3.0");
+        assert!(PlanSchema03::is_valid(&serde_json::to_value(&p).unwrap()));
+        let original=serde_json::to_value(&p).unwrap();
+        for (pointer,value) in [
+            ("/irVersion",json!("weft-ir/0.2.0")),
+            ("/readProfile",json!({"version":"weft-application-read/0.2.0","subset":"entity-page"})),
+            ("/outputs/1/expression/expression/kind/operator",json!("/")),
+            ("/outputs/1/expression/expression/kind/right/kind/value",json!(12.5)),
+            ("/outputs/1/expression/expression/kind/left/kind/field/type/nullable",json!(true)),
+        ] {
+            let mut bad=original.clone();*bad.pointer_mut(pointer).unwrap()=value;
+            assert!(!PlanSchema03::is_valid(&bad),"{pointer}");
+        }
+        let mut bad=original.clone();bad["outputs"][1]["expression"]["expression"]["domain"]["precision"]=json!(38);
+        assert!(!PlanSchema03::is_valid(&bad));
+
         assert_eq!(p.joins.len(), 1);
         assert!(matches!(p.joins[0].on[0], ir::Predicate::Legacy { .. }));
         assert!(matches!(
