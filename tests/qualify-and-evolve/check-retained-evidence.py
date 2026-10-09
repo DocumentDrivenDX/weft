@@ -110,8 +110,15 @@ workspace=json.loads((workspace_path/'summary.json').read_text())
 assert workspace['status']=='passed'
 source_bytes=(workspace_path/'sources.json').read_bytes()
 assert hashlib.sha256(source_bytes).hexdigest()==workspace['sourceManifestSha256']
+# Historical workspace receipts bind their saved checkpoint, not later source.
+# Fresh candidate/qualified CI above independently exercises the current tree.
+checkpoint=workspace['sourceCheckpoint']
+assert isinstance(checkpoint,str) and re.fullmatch(r'[0-9a-f]{40}',checkpoint)
+subprocess.run(['git','merge-base','--is-ancestor',checkpoint,'HEAD'],cwd=ROOT,check=True)
 for name,sha in json.loads(source_bytes).items():
- assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==sha,name
+ assert isinstance(name,str) and name and not name.startswith('/') and '..' not in pathlib.PurePosixPath(name).parts
+ original=subprocess.run(['git','show',checkpoint+':'+name],cwd=ROOT,check=True,capture_output=True).stdout
+ assert hashlib.sha256(original).hexdigest()==sha,name
 for composition,count in [('candidate',241),('qualified',242)]:
  receipt=workspace[composition]
  assert receipt['status']=='passed' and receipt['exitCode']==0 and receipt['testsExecuted']==count and receipt['terminalSuites']==35 and receipt['ignored']==receipt['filtered']==0
