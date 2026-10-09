@@ -250,6 +250,7 @@ pub(crate) fn lower_scoped(
         Ok(())
     };
     match context.plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             while let Some(node) = nodes.pop() {

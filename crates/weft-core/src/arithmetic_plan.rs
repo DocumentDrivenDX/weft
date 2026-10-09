@@ -7,7 +7,7 @@ use crate::{
 use serde::Serialize;
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
-pub(crate) enum Predicate {
+pub enum Predicate {
     Legacy {
         predicate: crate::application_ir::Predicate,
     },
@@ -18,13 +18,13 @@ pub(crate) enum Predicate {
     },
 }
 #[derive(Debug, Clone, Serialize)]
-pub(crate) struct Join {
+pub struct Join {
     pub right: Scan,
     pub on: Vec<Predicate>,
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
-pub(crate) enum Expression {
+pub enum Expression {
     Arithmetic {
         expression: crate::arithmetic_resolve::Expression,
     },
@@ -48,13 +48,13 @@ pub(crate) enum Expression {
     },
 }
 #[derive(Debug, Clone, Serialize)]
-pub(crate) struct Output {
+pub struct Output {
     pub name: String,
     pub expression: Expression,
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub(crate) struct Plan {
+pub struct Plan {
     pub ir_version: String,
     pub module_pins: Vec<ModelPin>,
     pub read_profile: Option<ReadProfile>,

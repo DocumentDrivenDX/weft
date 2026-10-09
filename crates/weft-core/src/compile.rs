@@ -240,12 +240,13 @@ impl Compiler {
         let logical_plan = match plan {
             Plan::V01(p) => serde_json::to_value(p),
             Plan::V02(p) => serde_json::to_value(p),
+            Plan::V03(p) => serde_json::to_value(p),
         }
         .expect("typed plan");
         let columns = if version == "weft-compile/0.1.0" {
             let crate::ir::Node::Project { outputs, .. } = &match plan {
                 Plan::V01(p) => p,
-                Plan::V02(_) => unreachable!(),
+                Plan::V02(_) | Plan::V03(_) => unreachable!(),
             }
             .root
             else {

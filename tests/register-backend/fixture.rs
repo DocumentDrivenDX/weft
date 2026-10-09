@@ -181,6 +181,7 @@ impl Backend for Third {
             return Err(error("WFT-CAPABILITY"));
         }
         let label = match c.plan {
+            Plan::V03(_) => return Err(error("WFT-BACKEND-VERSION")),
             Plan::V01(p) => {
                 let Node::Project { input, outputs } = &p.root else {
                     return Err(error("WFT-CAPABILITY"));

@@ -9,6 +9,7 @@ fn fail(message: &str) -> Diagnostic {
 }
 enum Expected<'a> {
     Scalar(&'a LogicalType),
+    Arithmetic(&'a crate::arithmetic_resolve::Domain),
     Field(&'a Identity),
     Related(&'a crate::application_model::RelationshipRead, u16),
 }
@@ -84,6 +85,12 @@ pub(crate) fn validate(
                 })
                 .collect()
         }
+        Plan::V03(p) => p.outputs.iter().map(|o|(o.name.as_str(),match &o.expression {
+            crate::arithmetic_plan::Expression::Field{identity,..}=>Expected::Field(identity),
+            crate::arithmetic_plan::Expression::Count{logical_type}|crate::arithmetic_plan::Expression::Sum{logical_type,..}=>Expected::Scalar(logical_type),
+            crate::arithmetic_plan::Expression::RelatedKeys{relationship,bound,..}=>Expected::Related(relationship,*bound),
+            crate::arithmetic_plan::Expression::Arithmetic{expression}=>Expected::Arithmetic(&expression.domain),
+        })).collect(),
         Plan::V02(p) => p
             .outputs
             .iter()
@@ -129,10 +136,13 @@ pub(crate) fn validate(
         }
         let valid = match expected {
             Expected::Scalar(t) => scalar(column, t),
+            Expected::Arithmetic(domain) => {
+                let (family,facets)=match domain {crate::arithmetic_resolve::Domain::Integer=>(Family::Integer,serde_json::json!({})),crate::arithmetic_resolve::Domain::Decimal{scale}=>(Family::Decimal,serde_json::json!({"scale":scale}))};
+                scalar(column,&LogicalType{family,facets,nullable:false})
+            },
             Expected::Field(identity) => {
-                let Plan::V02(p) = plan else { unreachable!() };
-                let descriptor = p
-                    .type_graph
+                let graph=match plan {Plan::V02(p)=>&p.type_graph,Plan::V03(p)=>&p.type_graph,Plan::V01(_)=>unreachable!()};
+                let descriptor = graph
                     .iter()
                     .find(|d| &d.identity == identity)
                     .ok_or_else(|| fail("Projected Field lacks its type descriptor"))?;
@@ -245,6 +255,38 @@ fn validate_parameter_domain(value: &str, t: &LogicalType, unbounded_admitted:bo
 mod tests {
     use super::*;
     use serde_json::json;
+    #[test]
+    fn arithmetic_output_retains_exact_derived_domains() {
+        let cases: serde_json::Value = serde_json::from_str(include_str!("../../../tests/application/fixtures/cases.json")).unwrap();
+        let req = &cases.as_array().unwrap().iter().find(|c| c["id"] == "join-count").unwrap()["request"];
+        let catalog = crate::model::Catalog::prepare(serde_json::from_value(req["modules"].clone()).unwrap()).unwrap();
+        let plan = crate::arithmetic_application_resolve::resolve(&catalog, crate::arithmetic_query::parse("SELECT c.id+1 AS next,o.total*12.5000 AS scaled FROM Customer c JOIN Orders o ON o.customer_id=c.id").unwrap(), Default::default(), None).unwrap();
+        let selection = Selection { records: vec![plan.source.record.clone()], ..Default::default() };
+        let columns = plan.outputs.iter().enumerate().map(|(i, output)| {
+            let crate::arithmetic_plan::Expression::Arithmetic { expression } = &output.expression else { panic!("expected arithmetic"); };
+            let (family, facets, decoder) = match expression.domain {
+                crate::arithmetic_resolve::Domain::Integer => (Family::Integer, json!({}), ScalarDecoder::ExactInteger),
+                crate::arithmetic_resolve::Domain::Decimal { scale } => (Family::Decimal, json!({"scale":scale}), ScalarDecoder::ExactDecimal),
+            };
+            Column { position: i+1, output_name: output.name.clone(), representation: Representation::Scalar { logical_type: LogicalType { family, facets, nullable:false }, carrier:ScalarCarrier::Text, decoder }, source_identities:vec![plan.source.record.clone()], nullable:false }
+        }).collect();
+        let baseline = Emission { sql:"SELECT fixture".into(), parameters:vec![], obligations:vec![], columns };
+        validate(Plan::V03(&plan), &baseline, &selection, &[]).unwrap();
+        for mutation in 0..4 {
+            let mut emission = baseline.clone();
+            if mutation == 0 { emission.columns[1].nullable = true; }
+            else {
+                let Representation::Scalar { logical_type, carrier, decoder } = &mut emission.columns[1].representation else { unreachable!() };
+                match mutation {
+                    1 => { logical_type.facets["precision"] = json!(38); },
+                    2 => { *carrier = ScalarCarrier::Boolean; },
+                    3 => { *decoder = ScalarDecoder::ExactInteger; },
+                    _ => unreachable!(),
+                }
+            }
+            assert_eq!(validate(Plan::V03(&plan), &emission, &selection, &[]).unwrap_err().code, "WFT-EMIT");
+        }
+    }
     #[test]
     fn exact_numeric_slots_refuse_invalid_domains_and_lexemes() {
         let integer = LogicalType {

@@ -529,3 +529,25 @@ fn mapping_derived_capabilities_are_qualified_and_deduplicate_plan_requirements(
         assert_eq!(result.emission.sql,"SELECT \"display_name\" AS \"label\" FROM \"fixture_customers\"");
     }
 }
+
+#[test]
+fn old_backend_refuses_arithmetic_before_binding_or_lowering() {
+    let (catalog, p) = weft_core::prepare_and_resolve_application(
+        "SELECT c.name AS label FROM Customer c", modules(), Default::default(), None,
+    ).unwrap();
+    let plan = weft_core::arithmetic_plan::Plan {
+        ir_version: "weft-ir/0.3.0".into(), module_pins:p.module_pins,
+        read_profile:None, required_capabilities:p.required_capabilities,
+        type_graph:p.type_graph, source:p.source, page_key:p.page_key,
+        joins:vec![], filters:vec![], groups:p.groups, aggregate:p.aggregate,
+        outputs:vec![], order:p.order, limit:p.limit,
+    };
+    let mut input = binding(&catalog);
+    input.json = "not valid binding JSON".into();
+    for behavior in [Behavior::Normal, Behavior::Panics] {
+        let err = registry(Status::Supported, behavior).compile(
+            &catalog, Plan::V03(&plan), &target(false), &input,
+        ).unwrap_err();
+        assert_eq!(err.code, "WFT-BACKEND-VERSION");
+    }
+}

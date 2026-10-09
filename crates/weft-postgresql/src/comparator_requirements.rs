@@ -158,6 +158,7 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
     let mut all = BTreeMap::new();
     let mut owners = BTreeMap::new();
     match plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             let mut expressions = vec![];
@@ -304,6 +305,7 @@ pub fn collect_reads(plan: Plan<'_>) -> Result<Vec<(Identity, Identity)>> {
     let mut owners = BTreeMap::new();
     let mut reads = Vec::new();
     match plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             let mut expressions = Vec::new();

@@ -10,7 +10,7 @@ use crate::{
 use serde::Serialize;
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(tag = "family", rename_all = "camelCase")]
-pub(crate) enum Domain {
+pub enum Domain {
     Integer,
     Decimal { scale: u64 },
 }
@@ -40,14 +40,14 @@ impl Domain {
     }
 }
 #[derive(Debug, Clone, Serialize)]
-pub(crate) struct Expression {
+pub struct Expression {
     pub domain: Domain,
     pub span: Span,
     pub kind: Kind,
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
-pub(crate) enum Kind {
+pub enum Kind {
     Field {
         field: Field,
     },

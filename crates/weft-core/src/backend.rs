@@ -219,12 +219,14 @@ pub trait Backend: Send + Sync + 'static {
 pub enum Plan<'a> {
     V01(&'a crate::ir::LogicalPlan),
     V02(&'a crate::application_ir::Plan),
+    V03(&'a crate::arithmetic_plan::Plan),
 }
 impl Plan<'_> {
     pub fn language(&self) -> LanguageProfile {
         let suffix = match self {
             Self::V01(_) => "0.1.0",
             Self::V02(_) => "0.2.0",
+            Self::V03(_) => "0.3.0",
         };
         LanguageProfile {
             dialect_profile: format!("weft-sql/{suffix}"),
@@ -235,12 +237,14 @@ impl Plan<'_> {
         match self {
             Self::V01(p) => &p.required_capabilities,
             Self::V02(p) => &p.required_capabilities,
+            Self::V03(p) => &p.required_capabilities,
         }
     }
     pub fn pins(&self) -> &[crate::ir::ModelPin] {
         match self {
             Self::V01(p) => &p.module_pins,
             Self::V02(p) => &p.module_pins,
+            Self::V03(p) => &p.module_pins,
         }
     }
 }
@@ -397,6 +401,7 @@ impl<B: Backend> Registered for Adapter<B> {
         let actual_ir = match plan {
             Plan::V01(p) => &p.ir_version,
             Plan::V02(p) => &p.ir_version,
+            Plan::V03(p) => &p.ir_version,
         };
         if actual_ir != &language.ir_version || !unique_strings(plan.capabilities()) {
             return Err(failure(
@@ -747,6 +752,41 @@ fn selected(plan: Plan<'_>) -> Selection {
     let mut s = Selection::default();
     match plan {
         Plan::V01(p) => node(&p.root, &mut s),
+        Plan::V03(p) => {
+            fn arithmetic(e:&crate::arithmetic_resolve::Expression,s:&mut Selection) {
+                use crate::arithmetic_resolve::Kind;
+                match &e.kind {
+                    Kind::Field{field}=>s.fields.push(field.identity.clone()),
+                    Kind::Negate{operand}=>arithmetic(operand,s),
+                    Kind::Binary{left,right,..}=>{arithmetic(left,s);arithmetic(right,s)},
+                    Kind::Literal{..}|Kind::Parameter{..}=>{}
+                }
+            }
+            fn pred(p:&crate::arithmetic_plan::Predicate,s:&mut Selection) {
+                match p {
+                    crate::arithmetic_plan::Predicate::Legacy{predicate:p}=>predicate(p,s),
+                    crate::arithmetic_plan::Predicate::ArithmeticCompare{left,right,..}=>{arithmetic(left,s);arithmetic(right,s)}
+                }
+            }
+            s.records.push(p.source.record.clone());
+            for j in &p.joins {s.records.push(j.right.record.clone());for p in &j.on {pred(p,&mut s)}}
+            for p in &p.filters {pred(p,&mut s)}
+            s.fields.extend(p.groups.iter().chain(&p.order).map(|f|f.identity.clone()));
+            if let Some(key) = &p.page_key {
+                s.fields.extend(key.fields.clone());
+            }
+            for output in &p.outputs {
+                use crate::arithmetic_plan::Expression;
+                match &output.expression {
+                    Expression::Field{identity,..}=>s.fields.push(identity.clone()),
+                    Expression::Sum{argument,..}=>s.fields.push(argument.identity.clone()),
+                    Expression::RelatedKeys{relationship,..}=>rel(relationship,&mut s),
+                    Expression::Arithmetic{expression}=>arithmetic(expression,&mut s),
+                    Expression::Count{..}=>{}
+                }
+            }
+            s.types.extend(p.type_graph.iter().map(|d|d.identity.clone()));
+        }
         Plan::V02(p) => {
             s.records.push(p.source.record.clone());
             for j in &p.joins {
@@ -804,6 +844,34 @@ fn selected(plan: Plan<'_>) -> Selection {
 mod tests {
     use super::*;
     use serde_json::json;
+    #[test]
+    fn arithmetic_selection_retains_original_operands_and_versions() {
+        let cases: Value = serde_json::from_str(include_str!("../../../tests/application/fixtures/cases.json")).unwrap();
+        let req = &cases.as_array().unwrap().iter().find(|c| c["id"] == "join-count").unwrap()["request"];
+        let catalog = crate::model::Catalog::prepare(serde_json::from_value(req["modules"].clone()).unwrap()).unwrap();
+        let plan = crate::arithmetic_application_resolve::resolve(&catalog, crate::arithmetic_query::parse("SELECT c.id+1 AS next,o.total*12.5000 AS scaled FROM Customer c JOIN Orders o ON o.customer_id=c.id WHERE o.total*2>1").unwrap(), Default::default(), None).unwrap();
+        let selected = selected(Plan::V03(&plan));
+        assert_eq!(Plan::V03(&plan).language().ir_version, "weft-ir/0.3.0");
+        assert_eq!(selected.records.len(), 2);
+        assert_eq!(selected.fields.len(), 3);
+        let mut with_key = plan.clone();
+        let mut key_field = with_key.source.record.clone();
+        key_field.element = "page-key-not-in-query".into();
+        with_key.page_key = Some(crate::application_model::AuthoredKey {
+            id:"original-page-key".into(), fields:vec![key_field.clone()],
+            types:vec![crate::ir::LogicalType { family:crate::ir::Family::Integer, facets:json!({}), nullable:false }],
+        });
+        let keyed_selection = self::selected(Plan::V03(&with_key));
+        assert_eq!(keyed_selection.fields.len(), 4);
+        assert!(keyed_selection.fields.contains(&key_field));
+
+        for output in &plan.outputs {
+            let crate::arithmetic_plan::Expression::Arithmetic { expression } = &output.expression else { panic!("expected arithmetic"); };
+            let crate::arithmetic_resolve::Kind::Binary { left, .. } = &expression.kind else { panic!("expected binary"); };
+            let crate::arithmetic_resolve::Kind::Field { field } = &left.kind else { panic!("expected field"); };
+            assert!(selected.fields.contains(&field.identity));
+        }
+    }
     #[test]
     fn obligations_are_retained_sorted_and_conflicts_refuse() {
         let obligation = |id: &str, parameters: Value| Obligation {

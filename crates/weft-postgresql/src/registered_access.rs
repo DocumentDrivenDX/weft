@@ -52,6 +52,7 @@ pub fn requests(plan: Plan<'_>) -> Result<Vec<Request>> {
     use weft_core::{application_ir as app, ir::Expression};
     let mut fields: Vec<(String, Identity)> = Vec::new();
     match plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             let mut expressions = Vec::new();
@@ -222,6 +223,7 @@ fn lower_with_owners<'a>(
     let reads = self::requests(context.plan)?;
     let mut scans = BTreeMap::new();
     match context.plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             while let Some(node) = nodes.pop() {
@@ -373,6 +375,7 @@ pub struct Prepared<'a> {
 }
 fn context_pin(context: &Context<'_>) -> Result<String> {
     let plan = match context.plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => serde_json::to_value(plan),
         Plan::V02(plan) => serde_json::to_value(plan),
     }

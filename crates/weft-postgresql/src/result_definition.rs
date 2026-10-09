@@ -380,6 +380,7 @@ pub fn projection_columns(
         Ok(())
     };
     match context.plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let mut nodes = vec![&plan.root];
             while let Some(node) = nodes.pop() {
@@ -416,6 +417,7 @@ pub fn projection_columns(
         };
     let mut columns = Vec::new();
     match context.plan {
+        Plan::V03(_) => return Err(weft_core::error::Diagnostic::new("WFT-BACKEND-VERSION", "capability", "This PostgreSQL backend does not admit arithmetic 0.3")),
         Plan::V01(plan) => {
             let Node::Project { outputs, .. } = &plan.root else {
                 return Err(fail("Result plan has no outer projection"));
