@@ -111,7 +111,7 @@ class CustodyTests(unittest.TestCase):
     with self.assertRaises(custody.CustodyError):custody.snapshot(root)
 
  def test_implicit_module_ancestor_shapes_cannot_activate_archives(self):
-  for name,source in [('lib.rs','mod distributions;'),('lib.rs','mod distributions { mod realizations; }'),('distributions/realizations.rs','mod nested;')]:
+  for name,source in [('lib.rs','mod distributions;'),('lib.rs','macro_rules! module { ($name:ident)=>{mod $name;} } module!(distributions);'),('lib.rs','mod distributions { mod realizations; }'),('distributions/realizations.rs','mod nested;')]:
    with tempfile.TemporaryDirectory() as work:
     root=pathlib.Path(work);path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(source);archive=root/'distributions/realizations/nested.rs';archive.parent.mkdir(parents=True,exist_ok=True);archive.write_text('include!("../../../../outside.rs")')
     with self.assertRaises(custody.CustodyError):custody.snapshot(root)

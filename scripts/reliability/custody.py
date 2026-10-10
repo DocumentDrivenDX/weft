@@ -49,7 +49,7 @@ def embedded_inputs(root,path,entries):
  root=root.resolve();path=path.resolve()
  tokens,literals=rust_tokens(path.read_text())
  module_base=path.parent if path.name in ('lib.rs','main.rs','mod.rs') else path.parent/path.stem
- if any((root/prefix).is_relative_to(module_base) for prefix in ARCHIVE_ROOTS) and any(tokens[i]=='mod' and tokens[i+2:i+3] in ([';'],['{']) for i in range(len(tokens)-2)):raise CustodyError()
+ if any((root/prefix).is_relative_to(module_base) for prefix in ARCHIVE_ROOTS) and 'mod' in tokens:raise CustodyError()
  def owned(base,index,executable=False):
   value=literals.get(index)
   if type(value)!=str or not value or '\x00' in value:raise CustodyError()
