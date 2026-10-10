@@ -1,12 +1,20 @@
 """@covers US-008-AC7 Actual helper isolation and receipt corruption refusals."""
 import copy,hashlib,json,os,pathlib,subprocess,sys,tempfile,unittest,zipfile
 from unittest.mock import patch
-from reliability.fresh_hosts import validate_reports
+from reliability.fresh_hosts import BASELINE,validate_reports
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 class FreshHostTests(unittest.TestCase):
+ def test_security_blocked_qualification_refuses_executable_members(self):
+  from reliability.fresh_cases import validate_blocked_security
+  version='weft-security-compile/0.2.0';code='WFT-SECURITY-BACKEND-REQUIRED'
+  blocked={'interfaceVersion':version,'status':'blocked','diagnostics':[{'code':code,'severity':'error'}]}
+  validate_blocked_security(blocked,version,code)
+  for member in ('lowering','ownerPlan','resultContract','nativeAdmission','sql'):
+   leaked=copy.deepcopy(blocked);leaked[member]={'execution':{'sql':'SELECT secret FROM protected'}}
+   with self.assertRaises(RuntimeError):validate_blocked_security(leaked,version,code)
  def test_optimized_helpers_refuse_before_qualification(self):
   helpers=[ROOT/'tests/qualify-and-evolve'/name for name in ('prepare-qualified-host-corpus.py','qualified-host-python.py','host-resources.py')]
-  helpers.append(ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline-generator.py')
+  helpers.extend([ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline-generator.py',ROOT/BASELINE/'baseline-generator.py'])
   for helper in helpers:
    result=subprocess.run([sys.executable,'-O',str(helper)],cwd=ROOT,capture_output=True,text=True)
    self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,'');self.assertIn('Qualification requires nonoptimized Python',result.stderr)
@@ -24,7 +32,8 @@ class FreshHostTests(unittest.TestCase):
    out=pathlib.Path(work);native=out/'weft.abi3.so';native.write_bytes(b'fresh-native');digest=hashlib.sha256(native.read_bytes()).hexdigest();wheel=out/'fresh.whl'
    with zipfile.ZipFile(wheel,'w') as package:package.writestr('weft/weft.abi3.so',native.read_bytes())
    raw='{}';response_sha=hashlib.sha256(raw.encode()).hexdigest();rows=[{'id':str(i),'actualSha256':response_sha,'expectedSha256':response_sha} for i in range(2181)]
-   values={'cli-summary.json':{'status':'passed','cases':2181,'historicalIdenticalOutputs':2128,'nativeRequalificationOpen':53,'mainCheckpoint':'14c58146dad2e3aeb755c8035e91754a150be74c'},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':13,'securityCases':6,'resourceCases':7,'libraryByteParity':True,'cliResponseParityCases':12,'cliInputLimitRefusals':1,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':13,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
+   baseline=json.loads((ROOT/BASELINE/'baseline.json').read_bytes())
+   values={'cli-summary.json':{'status':'passed','cases':2181,'historicalIdenticalOutputs':baseline['historicalIdenticalOutputs'],'nativeRequalificationOpen':baseline['changedOutputs'],'mainCheckpoint':baseline['checkpoint']},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':17,'securityCases':10,'resourceCases':7,'libraryByteParity':True,'cliResponseParityCases':16,'cliInputLimitRefusals':1,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':17,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
    def write(data):
     for name,value in data.items():(out/name).write_text(json.dumps(value))
    write(values)

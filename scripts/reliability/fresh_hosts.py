@@ -4,6 +4,7 @@ if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve
 from reliability.config import load_config
 from reliability.process import run
 ROOT=pathlib.Path(__file__).resolve().parents[2]
+BASELINE=pathlib.Path('docs/helix/04-build/evidence/main-ed2-integration-20261010/baseline')
 def canonical_json(value):
  return json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False)
 
@@ -23,7 +24,7 @@ def reconcile_main_baseline(historical,records,receipt,differences):
  return records,receipt
 
 def load_main_baseline(root,historical_path,historical):
- base=root/'docs/helix/04-build/evidence/main-integration-20261010'
+ base=root/BASELINE
  receipt=json.loads((base/'baseline.json').read_bytes())
  for path,key in [(historical_path,'historicalArtifactsSha256'),(base/'main-reference-artifacts.jsonl.gz','baselineSha256'),(base/'historical-to-main-differences.json.gz','differencesSha256'),(base/'main-reference-inputs.json','sourceInputsSha256'),(base/'baseline-generator.py','generatorSha256')]:
   if hashlib.sha256(path.read_bytes()).hexdigest()!=receipt.get(key):raise RuntimeError()
@@ -36,16 +37,16 @@ def validate_reports(out,wheel,built=None):
  for name in ('cli-summary.json','python-summary.json','browser-summary.json'):
   value=summaries[name]
   if value.get('cases')!=2181 or (name!='browser-summary.json' and value.get('status')!='passed'):raise RuntimeError()
- baseline=json.loads((ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline.json').read_bytes())
+ baseline=json.loads((ROOT/BASELINE/'baseline.json').read_bytes())
  cli_summary=summaries['cli-summary.json']
  if cli_summary.get('historicalIdenticalOutputs')!=baseline['historicalIdenticalOutputs'] or cli_summary.get('nativeRequalificationOpen')!=baseline['changedOutputs'] or cli_summary.get('mainCheckpoint')!=baseline['checkpoint']:raise RuntimeError()
  for name in ('python-summary.json','browser-summary.json','browser-resource-security-summary.json'):
   if summaries[name].get('byteParity') is not True:raise RuntimeError()
  security=summaries['security-summary.json']
- if security.get('libraryByteParity') is not True or security.get('cliResponseParityCases')!=12 or security.get('cliInputLimitRefusals')!=1:raise RuntimeError()
+ if security.get('libraryByteParity') is not True or security.get('cliResponseParityCases')!=16 or security.get('cliInputLimitRefusals')!=1:raise RuntimeError()
  for name in ('resource-summary.json','security-summary.json','browser-resource-security-summary.json'):
-  if summaries[name].get('status')!='passed' or summaries[name].get('cases')!=(7 if name=='resource-summary.json' else 13):raise RuntimeError()
- if summaries['security-summary.json'].get('securityCases')!=6 or summaries['security-summary.json'].get('resourceCases')!=7 or summaries['python-summary.json'].get('subprocessDisabled') is not True:raise RuntimeError()
+  if summaries[name].get('status')!='passed' or summaries[name].get('cases')!=(7 if name=='resource-summary.json' else 17):raise RuntimeError()
+ if summaries['security-summary.json'].get('securityCases')!=10 or summaries['security-summary.json'].get('resourceCases')!=7 or summaries['python-summary.json'].get('subprocessDisabled') is not True:raise RuntimeError()
  cli=json.loads((out/'cli-reports.json').read_bytes());expected={r['id']:hashlib.sha256(r['raw'].encode()).hexdigest() for r in cli}
  if len(cli)!=2181 or len(expected)!=2181:raise RuntimeError()
  for name in ('python-receipts.json','browser-receipts.json'):
@@ -110,7 +111,7 @@ def main():
    resource={'WEFT_RESOURCE_BINARY':str(target/'debug/weft-runtime'),'WEFT_RESOURCE_CASES':str(out/'resource-cases.json'),'WEFT_RESOURCE_SUMMARY':str(out/'resource-summary.json')}
    execute([sys.executable,'-I','tests/qualify-and-evolve/host-resources.py'],resource)
    execute([sys.executable,'-I','scripts/reliability/fresh_cases.py'],dict(resource,WEFT_FRESH_HOST_OUT=str(out)))
-   browser_resource={'WEFT_RESOURCE_CASES':str(out/'resource-security-cases.json'),'WEFT_RESOURCE_JS':str(out/'web/weft_wasm.js'),'WEFT_RESOURCE_WASM':str(out/'web/weft_wasm_bg.wasm'),'WEFT_RESOURCE_WRAPPER':str(ROOT/'packages/weft-browser/dist/index.js'),'WEFT_RESOURCE_SUMMARY':str(out/'browser-resource-security-summary.json'),'WEFT_RESOURCE_SCOPE':'Fresh WASM/native library byte parity for7resource and6blocked-security controls; CLI parity covers6resource and6security responses, with1separate input-limit transport refusal. No database/security enforcement.'}
+   browser_resource={'WEFT_RESOURCE_CASES':str(out/'resource-security-cases.json'),'WEFT_RESOURCE_JS':str(out/'web/weft_wasm.js'),'WEFT_RESOURCE_WASM':str(out/'web/weft_wasm_bg.wasm'),'WEFT_RESOURCE_WRAPPER':str(ROOT/'packages/weft-browser/dist/index.js'),'WEFT_RESOURCE_SUMMARY':str(out/'browser-resource-security-summary.json'),'WEFT_RESOURCE_SCOPE':'Fresh WASM/native library byte parity for7resource and10blocked-security controls; CLI parity covers6resource and10security responses, with1separate input-limit transport refusal. No database/security enforcement.'}
    if options.chromium:browser_resource['WEFT_CHROMIUM_EXECUTABLE']=options.chromium
    execute([bun,'tests/qualify-and-evolve/host-resources-browser.mjs'],browser_resource)
    summaries=validate_reports(out,wheels[0],built)
@@ -120,8 +121,8 @@ def main():
   except Exception:diagnostics.close(failed=True);raise
   if diagnostics.close()!='passed':raise RuntimeError()
   sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181unchanged retained fixture requests against independently built pinned-main outputs;12resource/security CLI response-parity controls,1CLI input-limit refusal and13Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
+  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181unchanged retained fixture requests against independently built pinned-main outputs;16resource/security CLI response-parity controls,1CLI input-limit refusal and17Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
   with open(diagnostics.directory/'qualification.json','x',opener=lambda name,flags:os.open(name,flags,0o600)) as f:json.dump(result,f,indent=2);f.write('\n')
-  print(json.dumps({'version':result['version'],'status':'passed','ordinaryCases':2181,'refusalCases':13,'inputFiles':len(inputs['files'])}));return 0
+  print(json.dumps({'version':result['version'],'status':'passed','ordinaryCases':2181,'refusalCases':17,'inputFiles':len(inputs['files'])}));return 0
  except Exception:print('weft-runner: fresh host qualification failed',file=sys.stderr);return 1
 if __name__=='__main__':sys.exit(main())

@@ -559,3 +559,30 @@ This current-main clarification supersedes the prior S04 blanket callback prohib
 Prepared Catalog source remains immutable. Main’s faithful opaque-JSON readers and evolved evaluator/result semantics remain; resource checks reserve normalization capacity before allocation, charge cloned identities and share composition ledgers across repeated rows. Simulation retains 4M normalized/16M copy limits; separate result phases retain 16M budgets, with explicit finite phase boundaries rather than a reset per row/action. Native authentication, complete source/coverage/authority, physical lowering and release qualification remain open.
 
 S00 must reconcile the pinned current UMF main cd4cc937 security authority CONTRACT-062/063 (migrated052/053), preserving the original 132-case owner allocation. Incoming 556 Rust passes remain historical component evidence. New independent current-main comparison, merged-source tests, Astra chunk review, fresh 2419-plus input custody and final-SHA hosted CI are pending; the earlier 014ae44 green CI cannot qualify this newer compiler.
+
+### B-009 current-main reconciliation — 2026-10-10
+
+Astra Ultra approved the dedicated security protocol reconciliation at `202b0b9`
+and the subsequent typed field/Key custody merge at `4bf8d2d`. Main's ordinary
+versions and dedicated security 0.1/0.2 remain intact; compatibility compile 0.5
+is a separate blocked-only entrypoint. Runner CONTRACT-006 migrated explicitly
+to CONTRACT-008, preserving main's security CONTRACT-006 and compatibility
+CONTRACT-007. Original plans and migration preimages remain retained.
+
+The [new independent baseline](evidence/main-ed2-integration-20261010/baseline/baseline.json)
+pins clean main `bf64c8c` and compares all 2,181 unchanged requests with the merged
+compiler. All complete response objects match under type-preserving canonical
+JSON. Exactly 2,128 also match the historical native-qualified response objects;
+53 changed outputs remain open for native requalification. Historical wire bytes
+were not compared. The older baseline and native receipts remain unchanged.
+
+Current focused checks pass 224 core library and 64 security admission tests,
+including public API controls for aggregate mask normalization and escaped-copy
+exhaustion across rows. Those limits return `WFT-LIMIT/result`; smaller batches
+pass both cells and selection. Main's field/Key conditional algebra scripts
+replay 18 formulas, without claiming Rust refinement or native enforcement.
+Module ownership, offline pinned schema validation and CLI boundary controls
+pass. Fresh CLI, installed Python and real Chromium checks now require ten blocked
+security vectors alongside seven resource controls, with exact blocked response
+members and separate CLI input-limit refusal. Fresh full-input custody and final
+hosted CI are required before merge; this paragraph does not claim their completion.
