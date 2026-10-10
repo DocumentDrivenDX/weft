@@ -63,7 +63,9 @@ class Config:
     maximum_receipt_bytes: int
     cases_sha256: str
     backend_sha256: str
+    declared_capability_count: int
     def __post_init__(self):
+        if type(self.declared_capability_count)is not int or not 1<=self.declared_capability_count<=512:raise Refusal('declared-capability-count')
         if any(not isinstance(p,Path) or not p.is_absolute() for p in (self.source,self.binary,self.cases,self.backend,self.output,self.source_inventory,self.schema_checker)):raise Refusal('absolute-settings-required')
         if any(len(d)!=64 or any(c not in '0123456789abcdef' for c in d) for d in (self.source_inventory_sha256,self.schema_checker_sha256,self.cases_sha256,self.backend_sha256)):raise Refusal('digest-setting')
         if any(type(n)is not int or n<=0 or n>2*1024*1024*1024 for n in (self.maximum_source_files,self.maximum_source_file_bytes,self.maximum_source_total_bytes,self.maximum_cases,self.maximum_receipt_bytes)):raise Refusal('source-bound-setting')
@@ -271,7 +273,7 @@ def qualify(config,*,execute,validate_schema):
     for i,identity in enumerate(CONTROL_IDS):
         if statuses.get('controls:'+identity)!=('blocked' if i<16 else 'compiled'):raise Refusal('control-status')
     capabilities={x['id'] for x in backend['capabilities']}
-    if len(capabilities)!=48 or set(bundle['coverage'])!=capabilities:raise Refusal('capability-inventory')
+    if len(capabilities)!=config.declared_capability_count or len(backend['capabilities'])!=config.declared_capability_count or set(bundle['coverage'])!=capabilities:raise Refusal('capability-inventory')
     for capability,item in bundle['coverage'].items():
         if set(item)!= {'accepted','refused','scope'} or not item['scope'] or not(item['accepted'] or item['refused']):raise Refusal('capability-coverage')
         for identity in item['accepted']:
@@ -290,7 +292,7 @@ def qualify(config,*,execute,validate_schema):
     if verify_source(config)!=inventory_raw:raise Refusal('source-inventory-drift')
     for path,digest in source_hashes+[(Path(__file__).resolve(),sha(harness)),(config.schema_checker,config.schema_checker_sha256)]+[(config.cases,sha(bundle_raw)),(config.backend,sha(backend_raw)),(config.binary,config.binary_sha256)]:
         if sha(read(path,max(config.maximum_input_bytes,32*1024*1024)))!=digest:raise Refusal('closing-drift')
-    result={'casesInput':{'sha256':sha(bundle_raw),'bytes':len(bundle_raw)},'backendInput':{'sha256':sha(backend_raw),'bytes':len(backend_raw)},'sourceCommit':config.source_commit,'binarySha256':config.binary_sha256,'harnessSha256':sha(harness),'schemaCheckerSha256':config.schema_checker_sha256,'sourceInventorySha256':sha(inventory_raw),'cases':records,'coverage':bundle['coverage'],'transport':controls,'sources':original_sources+bundle['sources'],'scope':'Exact compiler producer bytes/schema/case correspondence; refusal mapping is reviewed input, not native support or index authority'}
+    result={'casesInput':{'sha256':sha(bundle_raw),'bytes':len(bundle_raw)},'backendInput':{'sha256':sha(backend_raw),'bytes':len(backend_raw)},'declaredCapabilityCount':config.declared_capability_count,'sourceCommit':config.source_commit,'binarySha256':config.binary_sha256,'harnessSha256':sha(harness),'schemaCheckerSha256':config.schema_checker_sha256,'sourceInventorySha256':sha(inventory_raw),'cases':records,'coverage':bundle['coverage'],'transport':controls,'sources':original_sources+bundle['sources'],'scope':'Exact compiler producer bytes/schema/case correspondence; refusal mapping is reviewed input, not native support or index authority'}
     payload=encoded(result)+b'\n'
     if len(payload)>config.maximum_receipt_bytes:raise Refusal('receipt-limit')
     config.output.mkdir(exist_ok=False)
@@ -301,8 +303,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     for key in ('source','binary','cases','backend','output','schema-checker','source-inventory'):parser.add_argument('--'+key,type=Path,required=True)
     for key in ('source-commit','binary-sha256','schema-checker-sha256','source-inventory-sha256','cases-sha256','backend-sha256'):parser.add_argument('--'+key,required=True)
-    for key in ('maximum-input-bytes','maximum-response-bytes','timeout-seconds','maximum-source-files','maximum-source-file-bytes','maximum-source-total-bytes','maximum-cases','maximum-receipt-bytes'):parser.add_argument('--'+key,type=int,required=True)
-    a=parser.parse_args();config=Config(a.source,a.binary,a.cases,a.backend,a.output,a.source_commit,a.binary_sha256,a.maximum_input_bytes,a.maximum_response_bytes,a.timeout_seconds,a.source_inventory,a.source_inventory_sha256,a.schema_checker,a.schema_checker_sha256,a.maximum_source_files,a.maximum_source_file_bytes,a.maximum_source_total_bytes,a.maximum_cases,a.maximum_receipt_bytes,a.cases_sha256,a.backend_sha256)
+    for key in ('maximum-input-bytes','maximum-response-bytes','timeout-seconds','maximum-source-files','maximum-source-file-bytes','maximum-source-total-bytes','maximum-cases','maximum-receipt-bytes','declared-capability-count'):parser.add_argument('--'+key,type=int,required=True)
+    a=parser.parse_args();config=Config(a.source,a.binary,a.cases,a.backend,a.output,a.source_commit,a.binary_sha256,a.maximum_input_bytes,a.maximum_response_bytes,a.timeout_seconds,a.source_inventory,a.source_inventory_sha256,a.schema_checker,a.schema_checker_sha256,a.maximum_source_files,a.maximum_source_file_bytes,a.maximum_source_total_bytes,a.maximum_cases,a.maximum_receipt_bytes,a.cases_sha256,a.backend_sha256,a.declared_capability_count)
     # Explicit trusted schema program receives a bounded byte envelope; no retrieval.
     def schema(scope,role,request,response):
         body=encoded({'scope':scope,'role':role,'requestHex':request.hex(),'responseHex':response.hex()})

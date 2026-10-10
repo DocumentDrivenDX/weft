@@ -17,7 +17,7 @@ class CorpusTests(unittest.TestCase):
   self.source=self.root/'source';self.source.mkdir();(self.source/'original').write_bytes(b'original')
   self.inventory=self.root/'inventory';self.inventory.write_bytes(m.encoded({'sourceCommit':'a'*40,'files':[{'path':'original','mode':'100644','gitBlob':m.hashlib.sha1(b'blob 8\0original').hexdigest(),'sha256':m.sha(b'original'),'bytes':8}]}))
   self.checker=self.root/'checker';self.checker.write_bytes(b'trusted fixture schema checker')
-  self.config=m.Config(self.source,self.binary,self.cases,self.backend,self.root/'out','a'*40,m.sha(b'fake-no-executable'),4000000,4000000,10,self.inventory,m.sha(self.inventory.read_bytes()),self.checker,m.sha(self.checker.read_bytes()),100,1000000,10000000,1000,64000000,m.sha(self.cases.read_bytes()),m.sha(self.backend.read_bytes()))
+  self.config=m.Config(self.source,self.binary,self.cases,self.backend,self.root/'out','a'*40,m.sha(b'fake-no-executable'),4000000,4000000,10,self.inventory,m.sha(self.inventory.read_bytes()),self.checker,m.sha(self.checker.read_bytes()),100,1000000,10000000,1000,64000000,m.sha(self.cases.read_bytes()),m.sha(self.backend.read_bytes()),48)
  def save(self):
   self.cases.write_bytes(m.encoded(self.bundle))
   if hasattr(self,'config'):
@@ -39,7 +39,7 @@ class CorpusTests(unittest.TestCase):
   with patch.object(m,'extract_legacy',return_value=(self.legacy,[])):
    return m.qualify(self.config,execute=execute or self.execute,validate_schema=validate or (lambda *args:None))
  def test_full_fake_transport_receipts_and_no_authority(self):
-  result=self.qualify();self.assertEqual(result['casesInput'],{'sha256':m.sha(self.cases.read_bytes()),'bytes':len(self.cases.read_bytes())});self.assertEqual(result['backendInput'],{'sha256':m.sha(self.backend.read_bytes()),'bytes':len(self.backend.read_bytes())});self.assertEqual(len(result['transport']),8);self.assertEqual(len(result['cases']),21);self.assertTrue((self.config.output/'receipt.json').exists())
+  result=self.qualify();self.assertEqual(result['declaredCapabilityCount'],48);self.assertEqual(result['casesInput'],{'sha256':m.sha(self.cases.read_bytes()),'bytes':len(self.cases.read_bytes())});self.assertEqual(result['backendInput'],{'sha256':m.sha(self.backend.read_bytes()),'bytes':len(self.backend.read_bytes())});self.assertEqual(len(result['transport']),8);self.assertEqual(len(result['cases']),21);self.assertTrue((self.config.output/'receipt.json').exists())
  def test_mismatched_response_withholds(self):
   with self.assertRaises(m.Refusal):self.qualify(execute=lambda *a:(0,b'{}',b''))
   self.assertFalse(self.config.output.exists())
@@ -144,6 +144,22 @@ class CorpusTests(unittest.TestCase):
    if args[1]==b'{':return 0,b'{"status":"blocked","padding":"'+b'x'*200000+b'"}\n',b''
    return self.execute(*args)
   with self.assertRaises(m.Refusal):self.qualify(execute=execute)
+  self.assertFalse(self.config.output.exists())
+ def test_explicit47_profile_success_preserves48_profile(self):
+  from dataclasses import replace
+  removed=self.caps.pop();del self.bundle['coverage'][removed]
+  for group in ('paths','controls'):
+   for row in self.bundle[group]:
+    if m.document(bytes.fromhex(row['responseHex']))['status']=='compiled':row['responseHex']=(m.encoded(self.response)+b'\n').hex()
+  backend=m.document(self.backend.read_bytes());backend['capabilities'].pop();self.backend.write_bytes(m.encoded(backend));self.save()
+  self.config=replace(self.config,backend_sha256=m.sha(self.backend.read_bytes()),declared_capability_count=47)
+  result=self.qualify();self.assertEqual(len(result['coverage']),47);self.assertEqual(result['declaredCapabilityCount'],47)
+ def test_declared_count_mismatch_and_invalid_settings_refuse(self):
+  from dataclasses import replace
+  for count in (0,513,True):
+   with self.assertRaises(m.Refusal):replace(self.config,declared_capability_count=count)
+  self.config=replace(self.config,declared_capability_count=47)
+  with self.assertRaises(m.Refusal):self.qualify()
   self.assertFalse(self.config.output.exists())
  def test_actual_checked_in_legacy_extraction_only(self):
   source=Path(__file__).resolve().parents[2]
