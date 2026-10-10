@@ -268,87 +268,73 @@ fn arithmetic_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Pr
         }
     }
 }
-pub fn parse(sql: &str) -> Result<Query> {
-    let mut p = Parser::new(sql)?;
-    let mut budget = Budget::new();
-    p.word("select")?;
-    let distinct = if p.peek_word("distinct") { p.word("distinct")?; true } else { false };
-    let mut outputs = Vec::new();
-    loop {
-        let output = if p.peek_word("count") {
-            p.word("count")?;
-            p.symbol('(')?;
-            let output=if p.peek_word("distinct") {p.word("distinct")?;Output::CountDistinct(p.column03()?)} else {p.symbol('*')?;Output::Count};
-            p.symbol(')')?;
-            output
-        } else if p.peek_word("sum") {
-            p.word("sum")?;
-            p.symbol('(')?;
-            let c = p.column03()?;
-            p.symbol(')')?;
-            Output::Sum(c)
-        } else if p.peek_word("related_keys") {
-            p.word("related_keys")?;
-            p.symbol('(')?;
-            let relationship = p.column()?;
-            p.symbol(',')?;
-            let bound = bound(&mut p)?;
-            p.symbol(')')?;
-            Output::Related {
-                relationship,
-                bound,
-            }
-        } else if let Some(expression) = arithmetic_output(&mut p, &mut budget)? {
-            match expression.kind {
-                Kind::Field(column) => Output::Field(column),
-                _ => Output::Arithmetic(expression),
-            }
-        } else {
-            let alias = p.name()?;
-            p.symbol('.')?;
-            if p.peek_symbol('*') {
-                p.symbol('*')?;
-                Output::Entity(alias)
-            } else {
-                let field = p.name()?;
-                let span = crate::ir::Span {
-                    start: alias.span.start,
-                    end: field.span.end,
-                };
-                Output::Field(Column { unqualified: false, alias, field, span })
-            }
-        };
-        let alias = if p.peek_word("as") {
-            p.word("as")?;
-            Some(p.name()?)
-        } else {
-            None
-        };
-        if matches!(output, Output::Arithmetic(_)) && alias.is_none() {
-            return Err(fail(
-                &p,
-                "Computed arithmetic projection requires an explicit alias",
-            ));
-        }
-        if matches!(output, Output::Entity(_)) && alias.is_some() {
-            return Err(fail(
-                &p,
-                "Whole-entity projection cannot have a single alias",
-            ));
-        }
-        outputs.push(Projection { output, alias });
-        if outputs.len() > 256 {
-            return Err(
-                Diagnostic::new("WFT-LIMIT", "parse", "Output count exceeds limit").at(&p.span()),
-            );
-        }
-        if !p.peek_symbol(',') {
-            break;
-        }
+// Shared query segments keep each private dialect on the same legacy grammar.
+pub(crate) fn projection(p: &mut Parser, budget: &mut Budget) -> Result<Projection> {
+    let output = if p.peek_word("count") {
+        p.word("count")?;
+        p.symbol('(')?;
+        let output=if p.peek_word("distinct") {p.word("distinct")?;Output::CountDistinct(p.column03()?)} else {p.symbol('*')?;Output::Count};
+        p.symbol(')')?;
+        output
+    } else if p.peek_word("sum") {
+        p.word("sum")?;
+        p.symbol('(')?;
+        let c = p.column03()?;
+        p.symbol(')')?;
+        Output::Sum(c)
+    } else if p.peek_word("related_keys") {
+        p.word("related_keys")?;
+        p.symbol('(')?;
+        let relationship = p.column()?;
         p.symbol(',')?;
+        let bound = bound(p)?;
+        p.symbol(')')?;
+        Output::Related {
+            relationship,
+            bound,
+        }
+    } else if let Some(expression) = arithmetic_output(p, budget)? {
+        match expression.kind {
+            Kind::Field(column) => Output::Field(column),
+            _ => Output::Arithmetic(expression),
+        }
+    } else {
+        let alias = p.name()?;
+        p.symbol('.')?;
+        if p.peek_symbol('*') {
+            p.symbol('*')?;
+            Output::Entity(alias)
+        } else {
+            let field = p.name()?;
+            let span = crate::ir::Span {
+                start: alias.span.start,
+                end: field.span.end,
+            };
+            Output::Field(Column { unqualified: false, alias, field, span })
+        }
+    };
+    let alias = if p.peek_word("as") {
+        p.word("as")?;
+        Some(p.name()?)
+    } else {
+        None
+    };
+    if matches!(output, Output::Arithmetic(_)) && alias.is_none() {
+        return Err(fail(
+            p,
+            "Computed arithmetic projection requires an explicit alias",
+        ));
     }
-    p.word("from")?;
-    let source = p.source()?;
+    if matches!(output, Output::Entity(_)) && alias.is_some() {
+        return Err(fail(
+            p,
+            "Whole-entity projection cannot have a single alias",
+        ));
+    }
+    Ok(Projection { output, alias })
+}
+
+pub(crate) fn joins(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Join>> {
     let mut joins = Vec::new();
     while p.peek_word("inner") || p.peek_word("join") || p.peek_word("left") {
         if joins.len() >= 16 {
@@ -362,33 +348,46 @@ pub fn parse(sql: &str) -> Result<Query> {
         p.word("join")?;
         let right = p.source()?;
         p.word("on")?;
-        joins.push(Join { right, on: predicates(&mut p, &mut budget)?, left });
+        joins.push(Join { right, on: predicates(p, budget)?, left });
     }
+    Ok(joins)
+}
+
+#[derive(Debug, Clone)]
+pub(crate) struct Tail {
+    pub predicates: Vec<Predicate>,
+    pub groups: Vec<Column>,
+    pub having: Vec<Having>,
+    pub order: Vec<Column>,
+    pub limit: Option<u16>,
+}
+
+pub(crate) fn tail(p: &mut Parser, budget: &mut Budget) -> Result<Tail> {
     let predicates = if p.peek_word("where") {
         p.word("where")?;
-        predicates(&mut p, &mut budget)?
+        predicates(p, budget)?
     } else {
         vec![]
     };
     let groups = if p.peek_word("group") {
         p.word("group")?;
         p.word("by")?;
-        columns(&mut p)?
+        columns(p)?
     } else {
         vec![]
     };
     let mut having=Vec::new();
     if p.peek_word("having") {
-        budget.reserve(&p)?;
+        budget.reserve(p)?;
         p.word("having")?;p.word("count")?;p.symbol('(')?;p.word("distinct")?;
         let argument=p.column03()?;p.symbol(')')?;p.symbol('>')?;
-        budget.reserve(&p)?;
+        budget.reserve(p)?;
         let threshold=p.literal()?;
         if threshold.value.len()>crate::arithmetic_syntax::MAX_LITERAL_BYTES {
             return Err(Diagnostic::new("WFT-LIMIT","parse","Numeric literal exceeds expression limit").at(&threshold.span));
         }
         if !matches!(threshold.kind,LiteralKind::Number) || threshold.value.is_empty() || !threshold.value.bytes().all(|b|b.is_ascii_digit()) {
-            return Err(fail(&p,"HAVING admits COUNT DISTINCT > a nonnegative exact Integer literal only"));
+            return Err(fail(p,"HAVING admits COUNT DISTINCT > a nonnegative exact Integer literal only"));
         }
         having.push(Having{argument,threshold});
     }
@@ -409,11 +408,36 @@ pub fn parse(sql: &str) -> Result<Query> {
     }
     let limit = if p.peek_word("limit") {
         p.word("limit")?;
-        Some(bound(&mut p)?)
+        Some(bound(p)?)
     } else {
         None
     };
     p.finish_application()?;
+    Ok(Tail { predicates, groups, having, order, limit })
+}
+
+pub fn parse(sql: &str) -> Result<Query> {
+    let mut p = Parser::new(sql)?;
+    let mut budget = Budget::new();
+    p.word("select")?;
+    let distinct = if p.peek_word("distinct") { p.word("distinct")?; true } else { false };
+    let mut outputs = Vec::new();
+    loop {
+        outputs.push(projection(&mut p, &mut budget)?);
+        if outputs.len() > 256 {
+            return Err(
+                Diagnostic::new("WFT-LIMIT", "parse", "Output count exceeds limit").at(&p.span()),
+            );
+        }
+        if !p.peek_symbol(',') {
+            break;
+        }
+        p.symbol(',')?;
+    }
+    p.word("from")?;
+    let source = p.source()?;
+    let joins = joins(&mut p, &mut budget)?;
+    let Tail { predicates, groups, having, order, limit } = tail(&mut p, &mut budget)?;
     Ok(Query {
         distinct,
         outputs,
