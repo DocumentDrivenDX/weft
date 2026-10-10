@@ -1,0 +1,40 @@
+{
+  "reviewer": "Astra ultra",
+  "status": "qualified-template-expansion-review-passed",
+  "remainingFindings": [],
+  "executionByReviewer": false,
+  "independentAudit": {
+    "passed": 569,
+    "core": 226,
+    "groups": 44,
+    "failed": 0,
+    "ignored": 0,
+    "measured": 0,
+    "filtered": 0,
+    "declaredInputPinsMatched": 828,
+    "decisiveTests": [
+      "security_requirement_templates::tests::independently_counted_small_encoding_and_retention_ledgers",
+      "security_requirement_templates::tests::transitive_missing_dependency_refuses_instead_of_panicking",
+      "security_requirement_templates::tests::unselected_deployment_template_is_not_selected_capability_duty",
+      "security_requirement_templates::tests::aggregate_link_boundary_includes_shared_origins_cases_and_deployment",
+      "security_requirement_templates::tests::exact_atom_boundary_and_typed_address_distinctions",
+      "security_semantic_coverage::tests::independent_template_issuer_does_not_union_fragmented_codec_privacy_origins",
+      "security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift",
+      "security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties",
+      "security_semantic_coverage::tests::independent_template_issuer_preserves_shared_originals_and_unchosen_origin_duties"
+    ]
+  },
+  "feedbackApplied": [
+    "Transitive missing dependency returns refusal rather than panic",
+    "Selected templates assigned per selected capability; matching semantic selectors globally mandatory",
+    "Explicit repeated prerequisite visit charges",
+    "Path tag charged before retained copy",
+    "Shared-origin, aggregate-link and independently counted small-ledger isolation controls"
+  ],
+  "scope": "Conditional private template expansion and matching. Case/template completeness remain trusted premises; no authenticated profile, payload-specific backend completeness, native admission or original acceptance promotion.",
+  "receiptHashes": {
+    "start.json": "63f6a83e9cb592cdc884afec5da9f89109dc22b661b94b1a38573bcf930f2bc4",
+    "terminal.json": "88a5dd63ae52c98869e237b326b1bae36013b8ad714a0698622b80f986417acb",
+    "workspace.log": "397248564058f9527a5d6b08f488764b9dc8659f58ad081045723bd563090358"
+  }
+}

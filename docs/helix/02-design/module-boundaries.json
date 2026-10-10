@@ -1376,6 +1376,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_case_catalog.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_composition.rs",
           "publicDeclarations": [
             "enum:Truth",
@@ -1585,6 +1590,11 @@
         },
         {
           "path": "crates/weft-core/src/security_record_homes.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_requirement_templates.rs",
           "publicDeclarations": [],
           "pathReferences": []
         },
@@ -3136,6 +3146,8 @@
         "scripts/run-b006-embeddings.sh",
         "scripts/security/prove-field-event-addresses.py",
         "scripts/security/prove-key-event-addresses.py",
+        "scripts/security/run-case-catalog-checkpoint.py",
+        "scripts/security/run-template-checkpoint.py",
         "scripts/sign-site.mjs",
         "scripts/spec-allocation.test.ts",
         "scripts/spec-allocation.ts",

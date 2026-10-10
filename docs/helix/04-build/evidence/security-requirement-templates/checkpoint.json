@@ -1,0 +1,52 @@
+{
+  "version": "weft.security.requirement-templates-checkpoint/0.1.0",
+  "base": "2650937c1cc1827689d903d7d97b3dbc08c6c637",
+  "exitCode": 0,
+  "passed": 569,
+  "core": 226,
+  "testGroups": 44,
+  "declaredInputs": 828,
+  "sourceCustody": "Frozen before execution and unchanged through independent terminal audit; external Cargo registry/runtime excluded. Historical source manifest provides paths only.",
+  "scope": "Conditional private template expansion and matching. Case/template completeness remain trusted premises; no authenticated profile, payload-specific backend completeness, native admission or original acceptance promotion.",
+  "acceptanceCasesPromoted": [],
+  "requiredOriginalCases": 132,
+  "goal": "active",
+  "requirementTrace": {
+    "US-056-AC7": [
+      "Independent template-authoring/input boundary",
+      "Exact original kind/site/failure/prerequisite and complete case expansion",
+      "No codec/privacy fragment union",
+      "All shared original origins mandatory"
+    ],
+    "US-056-AC10": [
+      "Missing typed applicability/case/prerequisite refusal",
+      "Zero-edge selected deployment duties",
+      "4096/4097 aggregate repeated-origin/case links",
+      "Independent exact/minus-one retention ledgers"
+    ]
+  },
+  "decisiveTests": [
+    "security_requirement_templates::tests::independently_counted_small_encoding_and_retention_ledgers",
+    "security_requirement_templates::tests::transitive_missing_dependency_refuses_instead_of_panicking",
+    "security_requirement_templates::tests::unselected_deployment_template_is_not_selected_capability_duty",
+    "security_requirement_templates::tests::aggregate_link_boundary_includes_shared_origins_cases_and_deployment",
+    "security_requirement_templates::tests::exact_atom_boundary_and_typed_address_distinctions",
+    "security_semantic_coverage::tests::independent_template_issuer_does_not_union_fragmented_codec_privacy_origins",
+    "security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift",
+    "security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties",
+    "security_semantic_coverage::tests::independent_template_issuer_preserves_shared_originals_and_unchosen_origin_duties"
+  ],
+  "specCheck": "exit0;51 artifacts,31 schemas,30 compiler criteria,636 fixtures; not security acceptance",
+  "logs": {
+    "start.json": "63f6a83e9cb592cdc884afec5da9f89109dc22b661b94b1a38573bcf930f2bc4",
+    "terminal.json": "88a5dd63ae52c98869e237b326b1bae36013b8ad714a0698622b80f986417acb",
+    "workspace.log": "397248564058f9527a5d6b08f488764b9dc8659f58ad081045723bd563090358",
+    "astra-review.json": "5922bebdf065de975db9974856235ceb4fff112ec1f5f5e857356bff180030c4",
+    "spec-check.log": "1de77e7382ebd4f780569c7444fc009137f7b7fff768a630a2ff3fc2feb8e939",
+    "development-attempts.json": "d574e312d757794bb0176b446b33d3ba3a54c1ad5a86e83830f899ddf151e81d",
+    "development-golden-failure.log": "87c7ef7bae9aa824ee66e702fe2678946475f146d1e87c309195df18e363ad3b",
+    "development-focused-controls.log": "37028b11e05a27ad968a496251c80085b0f21b4ce697f717364a3eaf4645dba5",
+    "development-core223.log": "48f3684cbf3e4af11d769dc647097cd5100ebd0015e9742cc7d646c1e676f069",
+    "development-shared-profile-failure.log": "21a6169d1497d21a2cba2cccfc0477c5bd55cbbce89d76f31943aa31cf0a32f1"
+  }
+}

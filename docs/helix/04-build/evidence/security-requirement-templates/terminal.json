@@ -1,0 +1,14 @@
+{
+  "version": "weft.security.requirement-templates-run/0.1.0",
+  "exitCode": 0,
+  "finishedAt": "2026-10-10T22:15:00.363662+00:00",
+  "sourcePinsUnchanged": true,
+  "changedInputs": [],
+  "testGroups": 44,
+  "passed": 569,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "workspaceLogSha256": "397248564058f9527a5d6b08f488764b9dc8659f58ad081045723bd563090358",
+  "declaredSources": 828
+}

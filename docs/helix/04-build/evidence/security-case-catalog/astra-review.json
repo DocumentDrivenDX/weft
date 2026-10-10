@@ -1,0 +1,16 @@
+{
+  "reviewer": "Astra ultra",
+  "outcome": "passed",
+  "scope": "Independent audit of parent-run receipts; no reviewer Cargo/native execution",
+  "testsPassed": 573,
+  "groups": 44,
+  "coreTestsPassed": 230,
+  "sourcePins": 833,
+  "failed": 0,
+  "ignored": 0,
+  "measured": 0,
+  "filtered": 0,
+  "selectedBackendCasesPending": 42,
+  "acceptancePromotion": false,
+  "findings": []
+}

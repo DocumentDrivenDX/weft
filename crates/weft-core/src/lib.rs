@@ -146,3 +146,7 @@ mod security_rule_occurrences;
 mod security_obligation_matching;
 
 mod security_budget;
+
+mod security_requirement_templates;
+
+mod security_case_catalog;

@@ -1,0 +1,25 @@
+{
+  "scope": "Original required-case catalog binding component checkpoint",
+  "acceptanceLinks": [
+    "US-056 AC7",
+    "US-056 AC10"
+  ],
+  "testsPassed": 573,
+  "groups": 44,
+  "coreTestsPassed": 230,
+  "sourcePins": 833,
+  "selectedBackendCasesPending": 42,
+  "originalRequiredCases": 132,
+  "authenticationQualified": false,
+  "nativeEnforcementQualified": false,
+  "receipts": {
+    "astra-review.json": "2c3e8111e991abe91e0953193a4ea799d0b25dbee42df564edf44dec8863cc73",
+    "development-attempts.json": "3b363f39cbb5496dd561ba0512295ffabc1810a755e2f964d38b0e7fc19eaaba",
+    "development-core230.log": "fb1cd743757ea859f29f708c823edc3fe1b432b4c807206fd361bab9cb6c0733",
+    "development-null-evidence-failure.log": "77373ed93d719fc7b33a1d19a3b0131a729fcf4ab9dd8afbd9ae6f634e381247",
+    "spec-check.log": "1de77e7382ebd4f780569c7444fc009137f7b7fff768a630a2ff3fc2feb8e939",
+    "start.json": "294088cc9660b34a7734509ef3176ec73a72a2469c54e3d70064c36da6fd1716",
+    "terminal.json": "831c6aa882a747c77ec7c4778aa3e14b15283cd58339487e80404c76a5a82339",
+    "workspace.log": "5f43811263cb0d5f1aec1911311ca129def0942b3924a317f0912af4e74f886b"
+  }
+}

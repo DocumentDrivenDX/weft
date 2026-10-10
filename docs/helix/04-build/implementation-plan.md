@@ -280,6 +280,64 @@ and assertion mappings, authentication, physical lowering or native qualificatio
 It adds no formal Rust refinement proof and promotes none of the original132
 required backend cases. B10/admission-drift closure and integrated native acceptance
 remain open. B-008 and the implementation goal remain active.
+
+
+
+### B-008 independent template expansion — 2026-10-10
+
+Under CONTRACT-006 and UMF's independent backend requirement issuer annex,
+private template expansion now instantiates independently authored kinds, original
+contracts/sites/failures/cases and bounded same-occurrence prerequisites from
+actual owner event categories and structural rule payloads. It retains complete
+shared origins and independently assigned deployment duties even for zero-edge
+selections. It does not read manifest obligations to author the expected inventory.
+The actual matcher then compares that independently expanded inventory against
+original declaration custody; codec/privacy fragments cannot satisfy a whole scope.
+
+The typed applicability subset covers18 owner event categories and all existing
+Rule variants, not payload-specific field/domain/operator/transform/backend rules.
+The declared full profile case set and catalog completeness remain trusted premises.
+Exact backend catalogs, original132-case mappings, authenticated registration,
+physical lowering and native enforcement remain required. Prerequisites currently
+instantiate only at the same selector/address; cross-target mappings refuse.
+Separate template and rule-enumeration budgets do not establish aggregate CPU/
+memory bounds. Public security lowering remains closed. No new formal Rust
+refinement or original acceptance-case promotion is claimed; B-008 remains open.
+
+
+The [execution checkpoint](evidence/security-requirement-templates/checkpoint.json)
+retains a terminal release workspace run:569 passing tests across44 groups,
+including226 core tests and nine new decisive controls. All828 declared repository
+build/test inputs were frozen before execution and verified unchanged afterward;
+external Cargo registry/runtime dependencies are excluded. Astra independently
+verified all pins, full anchored test summaries, all nine exact passing lines and
+the retained log hash. No actionable review findings remain within the stated
+subset. Specification checks pass for51 artifacts/31 schemas/30 compiler criteria/
+636 fixtures, separately from security acceptance. Development failures and their
+corrections are retained; exact failed-attempt source snapshots were not captured,
+so those logs do not support source-qualified claims. The goal remains active.
+
+
+### B-008 original required-case catalog binding — 2026-10-10
+
+Under CONTRACT-006 and UMF CONTRACT-063, catalog custody now preserves the exact
+147,740-byte original132-case plan with explicit source SHA256 and selected
+backend/registration premises. Each selected backend retains all12 shared and30
+backend cases, their complete original assertions/procedures and unresolved
+metadata. Catalog-bound template expansion requires this exact42-case inventory,
+even for selected zero-edge deployment duties. S10's additional assertion and
+B10's counterexample/absent procedure stay intact. No command is executed and
+all native qualification remains pending. The ordinary private trusted-case path
+and historical receipts retain their original meaning.
+
+Expected plan/registration hashes and backend association are not authenticated.
+The test catalog's template-to-case assignments are synthetic, not independently
+qualified production mappings. Separate catalog, template and rule phase bounds
+do not prove native/Rust refinement or aggregate resource bounds. All original132
+cases remain binding, no acceptance case is promoted, and B-008 remains open.
+
+Validation checkpoint: the frozen workspace run passed 573 tests across 44 groups (230 core), with all 833 declared input pins unchanged and zero failed, ignored, measured, or filtered tests. Astra ultra independently audited the terminal receipts and four new test results with no blockers. See [retained checkpoint](evidence/security-case-catalog/checkpoint.json). All 42 selected backend cases remain pending; no authentication or native enforcement acceptance is promoted.
+
 ## B-009: Reliability remediation
 
 ### Scope and governing authority
@@ -662,3 +720,22 @@ same objects and retains real SDK logging, tracing and encoding. Retrieval keeps
 its one-second, byte, record, owner and privacy limits. Actual successful `-S`
 and malformed-cursor `-O -S` CLI controls retain the five-second harness deadline;
 no timeout or validation check was removed.
+
+
+### B-009 private requirement-template and catalog reconciliation
+
+Main commits `ae13dbb` and `f7a682e` add private typed requirement-template
+issuance and original required-case catalog custody. Their complete source,
+132-case catalog, provenance, conditional claims and historical checkpoint
+receipts are preserved. Both private modules and their host checkpoint scripts
+are explicitly owned in the module map. The new coverage fixture uses the
+immutable Catalog getter. Main's B-008 execution notes remain together before
+the B-009 reliability plan. Public security lowering remains closed; no
+authentication, native enforcement or acceptance-case promotion is introduced.
+
+The previous `01bccbd` PR and push workflows passed for the preceding source.
+They cannot qualify these newer private compiler modules. Fresh source-bound
+formal checks, rebuilt CLI/Python/Chromium parity and full new input custody,
+Astra Ultra review, and terminal hosted CI at the final pushed head are required
+before main integration. The fixed independent ordinary baseline and the 53
+open native-requalification outputs retain their original scope.
