@@ -121,6 +121,143 @@ identities/types, original multiplicities and lifecycle. ModelPin records retain
 original document bytes, owning version, revision and digest. Backend physical
 names, edge IDs and native scalar widths MUST NOT enter logical identities.
 
+### Closed 0.4 wire selection
+
+The initial request retains the 0.3 members with the exact
+`weft-compile/0.4.0` / `weft-sql/0.4.0` pair. It has no `readProfile`
+member; the plan retains `readProfile:null`. Existing 0.2 entity-page or
+count-summary profiles do not select path operations.
+
+The plan may contain one `pathExpansion` object, never an array:
+`{"occurrence":"paths","path":PathRead}`. Omit this member when no expansion
+is selected. Its stage is after all ordinary joins and before filters. An
+occurrence must be unique among all scan and expansion occurrences. A count
+expression is `{"op":"countDistinctPathTargets","pathOccurrence":"paths",
+"type":{"family":"integer","facets":{},"nullable":false}}`; its type uses the existing mathematical Integer
+shape, not a native-width annotation. This is the existing LogicalType shape for a nonnullable mathematical Integer.
+
+A path column representation is the closed object
+`{"kind":"relatedPaths","path":PathRead,"startRecord":Identity,"bound":2,
+"edgeEncoding":"signed64-decimal/0.1"}`. Only a potentially unmatched start
+adds `"outerJoin":{"scan":"root","record":Identity}`. PathRead and each hop
+retain the existing ordered authored key descriptors, including component types.
+The outerJoin scan and Record must equal the selected path start. Original column
+position, outputName, optional admitted carrierName, sourceIdentities and nullable
+metadata retain their established shapes. Every path column has nullable:false,
+including tagged absence; SQL NULL is never a path carrier.
+
+A distinct-target count representation retains the established exact Integer
+scalar carrier/decoder (logicalType exactly {family:"integer",facets:{},
+nullable:false}, carrier:"text", decoder:"exact-integer") and additionally
+carries a closed `pathTarget` object:
+`{"pathOccurrence":"paths","record":Identity,"key":AuthoredKey}`.
+The Record is the second hop's terminal Record; its document/revision/module/
+element identity and ordered authored key define distinctness within the held
+source. The descriptor does not introduce a caller-chosen source label or local
+edge token. The backend binding and publication obligations establish the exact
+source-system/type/model population for that Record. The host must compare this
+object to the referenced expansion; a schema-valid detached descriptor is not
+admitted identity evidence.
+
+Path results have their own closed `pathCollection` definition containing only
+`items` and `truncated`; each item contains only `intermediate`, `terminal` and
+`edges`, with exactly two String edges. All key atoms are Strings as in relatedKeys:
+String unchanged, Boolean exactly "true" or "false", Integer/Decimal exact
+lexical strings validated by their declared decoders. No native Boolean atom is
+admitted. Do not apply uniqueItems: equal keys and
+parallel edges retain their bag occurrences. A nullable-root representation
+selects only `pathPresence`: `{state:"absent"}` or
+`{state:"value",value:pathCollection}`. Neither `state:null`, bare null nor a
+generic value object is accepted. Required-root representations select the
+unwrapped pathCollection directly. No old generic presence fallback applies.
+
+JSON Schema proves closed members, exact version/tag alternatives, two hops/two
+spans/two edge tokens, positive bound at most 1000 and primitive carrier shapes.
+Resolver/descriptor validation proves occurrence references, hop continuity,
+original pin/key/type correspondence, capabilities and descriptor equality.
+Held input/capacity/representation checks establish their declared constraints.
+Reviewed backend correspondence and independent native conformance establish full
+bag enumeration and truncation semantics; zero-check success alone is no universal
+proof of emitted SQL.
+Structural validity alone discharges none of these latter obligations.
+
+The new typed backend admission uses `weft-backend/0.3.0` and a new
+`backend-manifest-v0.3.schema.json`, selecting only the exact initial 0.4
+language/IR pair and explicitly selected new profile. Existing backend 0.2
+manifest schemas, typed routes and registrations remain unchanged. Collection
+requires relationship.twoHopPaths and result.pathOccurrences; expansion requires
+relationship.twoHopPaths and relationship.pathExpansion; distinct-target count
+adds aggregate.pathTargetDistinctCount. Existing selected aggregate/group/count
+and LEFT capabilities remain independently mandatory before binding callbacks.
+
+### Held checks and closed obligation payloads
+
+Reuse the existing publication, scalarIntegrity and relationshipIntegrity
+obligations without changing their payload shapes. Emit relationshipIntegrity
+checks for both consumed hops, preserving complete authored endpoint, orphan,
+source/type/model, unique key/edge and distinct-neighbor constraints. Retain
+`outerJoin.matchIntegrity` with its existing scans payload for every selected
+LEFT scan; path encoding adds no alternative presence authority.
+
+Introduce only two path-specific host obligations. Both use the established
+Obligation envelope (id, parameters, owner:"host", failureCode). For
+`ashlar.path.occurrenceIntegrity`, failureCode is WFT-BINDING; parameters are
+exactly `{phase:"before-user-query",samePublicationRequired:true,
+noPartialPublication:true,paths:[{path:PathRead,edgeEncoding:"signed64-decimal/0.1"}],
+edgeSchemas:[{pathIndex:0,hop:0,relationship:RelationshipIdentity,
+table:PublicationTable,identityColumn:"id",nativeType:"BIGINT"},
+{pathIndex:0,hop:1,relationship:RelationshipIdentity,table:PublicationTable,
+identityColumn:"id",nativeType:"BIGINT"}],
+checks:[{pathIndex:0,kind:"edgeEncoding",sql:"…",failureCode:"WFT-BINDING"}],
+success:"one exact STRING count equal to 0 per check"}`. paths is nonempty;
+pathIndex references its position. Check kind is exactly edgeEncoding,
+intermediateIdentity or collectionEncoding. The first covers original native
+non-null/unique IDs and reversible token/order encoding; the second
+covers complete intermediate identity continuity; the third covers selected
+collection keys/encoding/prefix-marker proof. Each selected collection includes
+its bound in its paths entry; expansion entries omit bound. Every paths entry is closed: required path and edgeEncoding, optional bound
+1..1000 only for a collection. Inventory is all relatedPaths output expressions
+in output order, each with its bound, followed by the sole expansion if present
+without bound. Repeated equal output expressions retain their separate positions.
+For every pathIndex require exactly one edgeEncoding check and one
+intermediateIdentity check; a collection additionally requires exactly one
+collectionEncoding check, while expansion forbids that kind. No other or duplicate
+(pathIndex,kind) pair is admitted.
+
+occurrenceIntegrity parameters additionally require edgeSchemas, in pathIndex
+then hop order, exactly two entries per path:
+`{pathIndex:0,hop:0,relationship:RelationshipIdentity,table:PublicationTable,
+identityColumn:"id",nativeType:"BIGINT"}`. PublicationTable is the existing
+complete pinned table descriptor, not an unpinned SQL alias. hop is 0 or 1;
+relationship equals that hop's original identity. Table/column must equal its
+admitted physical binding. The host obtains the complete native field schema
+from that exact UUID/version/table under the same active publication hold,
+including every field's name, type and nullable Boolean, before SQL checks.
+The identity field must actually have BIGINT type. Nullable:true schema metadata
+is permitted only with the complete-source non-null value check; nullable:false
+metadata never replaces that check. Missing callback, partial/mismatched schema,
+stale pin or wrong type refuses even for an empty source. SQL zero counts cannot
+prove native schema. Retain these actual observations with the check results.
+Schema validation cannot attest that a SQL check establishes these meanings.
+
+For `ashlar.path.countCapacity`, failureCode is WFT-CAPABILITY; parameters are
+exactly `{phase:"before-user-query",samePublicationRequired:true,
+noPartialPublication:true,nativeRepresentation:"signed64",
+checks:[{pathOccurrence:"paths",kind:"targetDistinct",sql:"…",
+failureCode:"WFT-CAPABILITY"}],
+success:"one exact STRING count equal to 0 per check"}`. Check kind is exactly
+pathRows or targetDistinct. Require one pathRows check when COUNT(*) consumes
+the expansion and one targetDistinct check when a distinct-target output is
+selected; multiple outputs of the same count share that check. Forbid duplicate
+(pathOccurrence,kind) pairs and checks for unselected counts/occurrences. These checks use the existing aggregate-candidates
+method: complete post-join/post-expansion/post-WHERE bags, per group before
+HAVING/ORDER/LIMIT. targetDistinct uses the declared terminal Record/key identity;
+pathRows preserves all edge pairs and left-input duplicates. Ordinary aggregate
+capacity checks retain their existing owning obligations; no arithmetic-specific
+DECIMAL coefficient claim is made for path counts. Unknown obligation members,
+kinds or unfulfilled checks refuse. All SQL uses the same emitted ordered slots;
+no value interpolation or second publication context is permitted.
+
 ### Occurrence result and order
 
 The collection descriptor names the starting Record and both ordered relationship

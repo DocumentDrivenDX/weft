@@ -37,6 +37,7 @@ jobs:
         run: |
           bun run specs:check
           bun tests/compile/schema-v0.4-check.ts
+          bun tests/two-hop-schemas/check.ts
       - name: Check distribution metadata boundaries
         run: |
           bun test tests/distribution-manifest/schema.test.ts
