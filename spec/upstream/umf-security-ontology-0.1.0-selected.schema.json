@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:security:ontology:0.1.0:weft-selected-source-overlay",
+  "title": "Shared security ontology resolution package 0.1.0",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.1.0"
+    },
+    "documentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "documentId",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "subject": {
+      "$ref": "#/$defs/ref"
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "associations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/association"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "context": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ref"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "version",
+    "documentId",
+    "revision",
+    "documents",
+    "subject",
+    "entities",
+    "associations",
+    "context",
+    "actions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "protection": {
+          "enum": [
+            "protected",
+            "unprotected"
+          ]
+        },
+        "queryUse": {
+          "type": "object",
+          "properties": {
+            "predicate": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "order": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "group": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "join": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "aggregate": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ref",
+        "protection"
+      ],
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "type",
+        "keyId",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "endpoint": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/ref"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "role",
+        "target",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "association": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/endpoint"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "type",
+        "keyId",
+        "fields",
+        "endpoints"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

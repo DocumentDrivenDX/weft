@@ -52,7 +52,7 @@ Factories generate small models and rows with fixed recorded seeds. Shrink faili
 
 | Gate | Minimum | Enforcement |
 |---|---|---|
-| Story acceptance | All 30 P0 criteria have passing named tests | Traceability audit; no planned-only criterion qualifies |
+| Story acceptance | All 30 B-007 P0 criteria have passing named tests at the recorded historical checkpoint | Traceability audit; no planned-only criterion qualifies |
 | Initial corpus | All 636 cases evaluated, deliberate structural negatives included | No unexplained skip or changed expected output |
 | Expanded release corpus | At least 1,000 distinct assertions across frontend/backend/runtime matrices | Counts are a floor, not evidence of semantic completeness |
 | Property checks | At least 10,000 deterministic generated cases per release plus persisted regressions | Record seed, generator version and failures |
@@ -72,7 +72,7 @@ P0 paths: model pins and identity; parse/resolve/type; exact numeric overflow; m
 | Host embeddings | STP-005 | Cross-runtime end-to-end |
 | Version/evidence/unknowns/bounds | STP-006 | Contract/property |
 
-Each STP owns its four criterion rows; `story-test-allocation.json` records the 30 stable IDs and planned test names. Test implementation must carry those IDs. Allocation does not imply coverage.
+Each STP owns its criterion rows; the original B-007 allocation contains 30 stable IDs. B-009 adds seven reliability criteria in STP-008 and four separately open full security outcomes in STP-009; `story-test-allocation.json` exhaustively records all declared criteria and planned test names. Test implementation must carry those IDs. Allocation does not imply coverage.
 
 ## Implementation Order
 

@@ -1027,6 +1027,7 @@ name = "weft-core"
 version = "0.1.0"
 dependencies = [
  "jsonschema",
+ "num-bigint",
  "proptest",
  "serde",
  "serde_json",

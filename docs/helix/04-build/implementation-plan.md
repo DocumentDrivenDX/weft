@@ -70,3 +70,197 @@ B-002 establishes the unchanged 0.1 frontend. The next separately reviewed slice
 ## Compiler/storage ownership correction (2026-10-07)
 
 The user clarified that UMF owns logical and physical schema meaning, Truss supplies its storage realization and mapping, and Weft owns query lowering, target SQL and result decoding. Truss runtime implementation, public decoder adoption, authorization procedures and installed-production qualification are not prerequisites for compiler implementation or completion of the compiler slice. Hosts execute SQL and enforce the emitted obligations. B-005 uses exact pinned draft storage descriptions plus independent PostgreSQL fixtures; production compatibility remains separately qualified. This supersedes earlier runtime/adoption blocking interpretations without weakening exact type, presence, storage-home or unknown-meaning refusal requirements. Full recursive and scalar query coverage, public backend integration and actual native/compiler evidence remain required B-005 work. The goal resumes in B-005; B-006 follows its merge.
+
+
+## B-008: Shared security compiler integration
+
+Owner-directed UMF security work adds CONTRACT-005 and the versioned 0.3 request
+foundation. Existing ordinary transports remain core07. The separate core08
+source-custody path and required security source transport refuse activation
+until semantic admission, logical/physical lowering, disclosure result domains
+and authenticated native host obligations are implemented. B-008 is open;
+foundation refusal tests cannot close security/native acceptance. Rust/Python/
+browser parity and all four UMF backend plans remain required.
+
+
+### B-008 immutable compiler mapping handoff — 2026-10-08
+
+Implemented the actual Rust owner's private-constructor profiled-query export,
+`weft.security.mapping-handoff/0.1.0`, under CONTRACT-005. It preserves the
+original resolved application plan and complete source/field-use/scan-action
+obligations, with exact reuse refusal and deterministic bounded JSON. The owner
+test validates retained resolved-plan meaning, derived protected-field action,
+separate action obligations, source-byte/backend-version refusal and repeat
+export equality. Current-source Rust admission replay passes, with canonical
+UMF overlays and ordinary compiler regressions intact. UMF evidence resides at
+`/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json`.
+
+This implements a concrete backend-mapping handoff component, not physical
+lowering or host authority. Public compiler security activation, Python/browser
+transport, native field-use enforcement, physical fact issuer and final-release
+qualification remain open. No acceptance criterion is credited by packet shape.
+
+
+### Actual Rust handoff inspection transport — 2026-10-08
+
+Added the offline-buildable `weft-core` example `security_mapping_handoff` under
+CONTRACT-005. UMF's `tools/security/weft-handoff-probe.py` retains two actual
+compiler packets and nine execution observations, including seven refusals for
+protected query use, stale backend/model sources, unknown version/member,
+duplicate JSON and over-budget input. Refusals have no stdout packet. Exact
+source/schema inputs and binary digest are retained in UMF evidence
+`docs/helix/04-build/evidence/security/weft-handoff.json`. This gives physical
+mapping tests an executable original-owner source, not fabricated annotations.
+No backend is activated, no data query runs and no trusted host issuer is claimed.
+
+
+### Preserved core primary-Key metadata — 2026-10-09
+
+SecurityOntologyClosure accepts the supported core Boolean primary annotation,
+checks carriers and at-most-one primary, and keeps explicit ontology keyId
+selection. Original source bytes/trees retain true and false. A distinct Resource
+secondary Key over integer salary cannot replace explicit string resourceId pk;
+IR endpoint and Resource identities remain pk. Null/string/numeric primary
+carriers on selected and unselected Keys refuse at WFT-MODEL; duplicate primary
+annotations refuse ontology closure. Rust source admission and unsupported
+activation remain separate. UMF retains actual original compiler evidence in
+weft-admission.json. This is a source-fidelity integration increment, not draft
+0.2 admission, native Key enforcement, or protected execution qualification.
+
+
+## B-009: Reliability remediation
+
+### Scope and governing authority
+
+Address the seven findings from the owner-requested reliability evaluation.
+FR-10–12 and CONTRACT-003 govern embedding fidelity, bounded input and evidence;
+FR-19–22 and CONTRACT-005 govern the security foundation. Architecture and
+TP-001 retain compiler/storage/host ownership and scoped native qualification.
+This plan applies HELIX 0.15.4 modularity, Rust configuration, OpenTelemetry
+diagnostics and formal-methods guidance, read from the installed HELIX 0.15.4 full-plugin catalog. The active
+catalog is its workflows/graph.yml; templates are not copied into this repository.
+
+The repository owner authorized implementation, Astra Ultra review, commits and
+pushes. Each chunk must receive an independent gpt-6-astra review at ultra
+reasoning, resolve material findings, and receive a follow-up disposition before
+commit and normal push to codex/reliability-review. No force push or production
+deployment is included. Preserve unknown source content and historical receipts.
+
+The existing uncommitted B-008 security foundation is a prerequisite snapshot.
+The isolated checkout retains its exact starting bytes; its review and focused
+tests precede a checkpoint commit. Security remains blocked before composition
+or emission. This remediation does not activate protected queries, invent native
+authority, or complete security physical lowering. FR-19–22 remain separately
+allocated open product requirements until their full acceptance evidence exists.
+The goal closes the evaluation findings, not those additional product outcomes.
+
+### Shared constraints
+
+- Record scope, commands, results, source fingerprints, reviewer model/reasoning
+  and residual limits for each chunk under 04-build/evidence/reliability/.
+- Keep the original checkout intact. Include prerequisite source only after its
+  explicit review; do not stage unrelated user changes or copy secrets.
+- Preserve frontmatter and artifact IDs; contracts own exact shared surfaces,
+  technical designs own wiring/properties and test plans own coverage.
+- Keep IO/configuration/telemetry in runners and host entry points. The Rust core
+  remains deterministic, offline and independent of storage implementations.
+- Qualified ordinary compiler profiles never qualify security, production
+  layouts, current stored data, new engines or released packages.
+- A failed or missing check is recorded as failed/unknown, never as passed.
+
+### Implementation slices
+
+| Slice | Responsibility | Depends on | Validation and review gate |
+| --- | --- | --- | --- |
+| R0 | Review/checkpoint existing B-008 source; frame US-008 reliability and US-009 security allocations, TD-008/009 and STP-008/009; adopt concern scopes | Plan review | Astra Ultra reviews the plan first; exhaustive PRD requirement → story → AC → test-plan allocation; delete requirement/story/AC controls; focused original/draft security tests and prerequisite diff review |
+| R1 | Bound CLI input before allocation; stable IO/UTF-8 refusal, no partial artifact; immutable Catalog input access | R0 | Real CLI tests for exact limit, overflow with unread suffix, invalid UTF-8/read failure; compile-negative privacy control and public API regressions |
+| R2 | Define actual package/type ownership, construction/integration map and enforced dependency graph | R1 | Cargo metadata dependency checker; allowed edge, forbidden edge and cycle controls use the real checker; compiler visibility proves private access refusal; local/pre-commit/CI use one command |
+| R3 | Centralized validated harness configuration and pinned toolchain wrapper | R2 | Defaults/file/env/CLI precedence and malformed/missing values; no default ops handles; mutation runner works with configured Cargo and isolated paths; unapplied mutation, missing test and optimized-Python controls refuse; no compiler ambient configuration |
+| R4 | Safe bounded runner diagnostics and read-only retrieval with pinned OTel mapping | R3 | Redaction before sinks, stdout cleanliness, record/retention limits, timeout/cancel/failure/final outcome; bounded retrieval and expired cursor behavior; actual local OTLP receiver/mapping test, unavailable exporter/local capture failure/queue overflow/flush timeout controls; no duplicates or invented trace IDs |
+| R5 | Explicit security acceptance allocation and formal specification/correspondence | R0, R2 | Stable requirement/property IDs; precise semantic review plus independently executable finite checks with success/failure witnesses and broken controls; exact tool/bounds/assumptions/source mapping; security activation gate remains closed |
+| R6 | Fresh bindings in CI and reproducible current-source qualification | R1–R5 | Fresh CLI/Python/Chromium whole-artifact parity against retained ordinary qualified corpus and blocked security cases; raw-resource/corruption controls; both valid Rust workspace compositions; feature conflicts; historical receipt replay and current-source stale controls; final Astra Ultra review and terminal hosted CI success at the final pushed SHA |
+
+### Design and test realization
+
+US-008 allocates the seven findings to independently measurable acceptance
+criteria. TD-008 owns reliability wiring and configuration/diagnostic boundaries;
+STP-008 owns commands and negative controls. US-009 allocates FR-19–22 without
+claiming completion; TD-009 owns the selected security formal specification and
+STP-009 distinguishes existing foundation tests from deferred native activation
+and host enforcement gates. The existing 30 acceptance IDs and fixtures remain
+unchanged. specs:check requires exhaustive PRD requirement → story → acceptance criterion →
+test-plan allocation without hardcoding the old total. Every requirement and
+story criterion must have an allocation; deletion of a requirement mapping, a
+story allocation or a criterion fails. Explicit open/deferred execution remains
+distinct from allocation validity and passing executed acceptance.
+
+The module map covers core, both adapters, runtime composition, Python/WASM
+bindings, browser wrapper, test probes and reliability tooling. The checker
+validates actual Cargo package edges and cycles. Intra-crate type ownership and
+semantic coupling receive named review evidence; unsupported static checks are
+explicit. No directory exclusion or inflated baseline hides a new edge.
+
+Harness configuration owns executable/output paths, timeouts, capture/export
+limits and non-secret fingerprints. Injected operational resource handles have
+no committed defaults. Rust compiler requests remain explicit inputs. Existing
+fixture-native executors keep host-owned credential access and are outside
+the local runner's automatic execution; no native database call is authorized
+merely by a config file or selected model.
+
+Diagnostics use safe typed lifecycle events and referenced evidence. Default
+subprocess capture excludes raw streams; supported safe summaries are allowlisted.
+Run manifests distinguish pending/failed/completed runs, loss and crash limits.
+The runner owns local files/retention, stderr console and an optional bounded
+OTLP route; no deployed service, production sidecar or service SLO is introduced.
+Formal checks cover compiler/security-foundation properties; publication/current
+authority are documented host assumptions with deferred implementation evidence.
+
+Historical B-007 evidence retains original source hashes. Its verifier separates
+immutable receipt/source custody from present-workspace qualification: historical
+source is verified through retained snapshots or Git object identity, never
+rewritten to match current files. Current qualification uses a fresh manifest
+covering the complete compiler/binding/schema/corpus/oracle/test/harness/build/
+lock/config/checker input set and exact freshly loaded binaries. Relevant changed,
+missing or newly introduced files invalidate it. The old source custody verifier
+resolves its declared f81565a1addaa6d2c83561f62d3805d1167233ee checkpoint from
+Git; CI checkout fetches that object and fails if it is unavailable.
+Semantic artifact mismatch invalidates current qualification.
+Replaying a native receipt never becomes a new database execution claim.
+
+### Issue decomposition and review loop
+
+The runtime goal tracks R0–R6; no external tracker is required. Each chunk has
+one diff, commands/evidence and an Astra Ultra review. Material findings are
+implemented and the changed scope re-reviewed until no blocking finding remains.
+Record advisory/deferred findings with requirement authority and rationale.
+Only then commit its explicit paths and push normally. R6 validates the complete
+committed composition and the final current-source evidence. The compiler
+workflow must trigger on codex/reliability-review pushes (or be explicitly
+dispatched at the final SHA). Record hosted run identity, head SHA and required
+job outcomes; missing, skipped, cancelled or failed required jobs keep the goal
+incomplete. Every final source/review fix requires a new final-SHA CI result. Review evidence
+must remain attributable to the reviewed source; a later change reopens affected
+checks. A reviewer timeout or unavailable model remains an incomplete gate.
+
+### Risks and rollbacks
+
+| Risk | Response | Rollback |
+| --- | --- | --- |
+| Pre-existing security source is incomplete | Review only the blocked foundation; preserve open activation/native gates | Decline the checkpoint or revert the reviewed change on this branch |
+| Public Rust Catalog access changes | Add read-only getters and update callers; compiler-negative and semantic regression checks | Revert the encapsulation chunk without weakening transport pins |
+| Historical evidence cannot be tied to original source | Fail historical custody and retain the unknown; obtain exact Git blobs/snapshots | Keep historical claim suspended; never rewrite hashes |
+| Long property/domain suites | Focused tests per chunk, complete both compositions at final gate; capture exact terminal outcome | Do not release/qualify an incomplete run |
+| Telemetry leaks source or subprocess content | Allowlist before every sink; inject secret-shaped controls and test each sink | Disable export/capture and record loss without changing compiler behavior |
+| Formal abstraction misses runtime behavior | Reviewed property-to-code/test mapping and explicit exclusions | Withdraw the assurance claim; keep activation closed |
+
+### Exit criteria
+
+All seven findings have named implementation/acceptance evidence and no unresolved
+blocking Astra Ultra review findings. Original source and historical evidence are
+preserved. Fresh committed-source ordinary compiler checks and actual Python/
+Chromium parity pass; security refusals retain exact versions and no partial SQL.
+All completed chunks are committed and pushed to the intended branch; the final
+pushed SHA has terminal successful hosted CI with no missing/skipped required
+jobs. Native
+production/security execution and package release remain separately open and
+are explicitly excluded from these reliability support claims.

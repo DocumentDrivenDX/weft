@@ -1,0 +1,759 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:security:0.1.0",
+  "title": "Shared security policy 0.1.0 representation",
+  "type": "object",
+  "properties": {
+    "vocabulary": {
+      "const": "umf.security"
+    },
+    "version": {
+      "const": "0.1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ontology": {
+      "$ref": "#/$defs/ontologyRef"
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/rule"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "native": {}
+  },
+  "required": [
+    "vocabulary",
+    "version",
+    "id",
+    "revision",
+    "ontology",
+    "rules"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": true
+    },
+    "literal": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "boolean"
+          ],
+          "properties": {
+            "boolean": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "integerToken"
+          ],
+          "properties": {
+            "integerToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "decimalToken"
+          ],
+          "properties": {
+            "decimalToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "string"
+          ],
+          "properties": {
+            "string": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "binaryHex"
+          ],
+          "properties": {
+            "binaryHex": {
+              "type": "string",
+              "pattern": "^([0-9a-fA-F]{2})*$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "floatToken"
+          ],
+          "properties": {
+            "floatToken": {
+              "type": "string",
+              "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "date"
+          ],
+          "properties": {
+            "date": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "time"
+          ],
+          "properties": {
+            "time": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "timestamp"
+          ],
+          "properties": {
+            "timestamp": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "array"
+          ],
+          "properties": {
+            "array": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/literal"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "map"
+          ],
+          "properties": {
+            "map": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/literal"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "term": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "subject",
+                "resource"
+              ]
+            },
+            "identity": {
+              "const": true
+            }
+          },
+          "required": [
+            "kind",
+            "identity"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "field": {}
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "endpoint": {}
+                },
+                "required": [
+                  "endpoint"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "subject",
+                "resource",
+                "context"
+              ]
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "kind",
+            "field"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "identity": {}
+                },
+                "required": [
+                  "identity"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "endpoint": {}
+                },
+                "required": [
+                  "endpoint"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "variable"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identity": {
+              "const": true
+            }
+          },
+          "required": [
+            "kind",
+            "name",
+            "identity"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "field": {}
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "endpoint": {}
+                },
+                "required": [
+                  "endpoint"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "variable"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            }
+          },
+          "required": [
+            "kind",
+            "name",
+            "field"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "identity": {}
+                },
+                "required": [
+                  "identity"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "endpoint": {}
+                },
+                "required": [
+                  "endpoint"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "variable"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "endpoint": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "name",
+            "endpoint"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "identity": {}
+                },
+                "required": [
+                  "identity"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "field": {}
+                },
+                "required": [
+                  "field"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "value": {}
+                },
+                "required": [
+                  "value"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "constant"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "value": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "required": [
+            "kind",
+            "field",
+            "value"
+          ],
+          "additionalProperties": true,
+          "not": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "identity": {}
+                },
+                "required": [
+                  "identity"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "endpoint": {}
+                },
+                "required": [
+                  "endpoint"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "expr": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "literal"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "op",
+            "value"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "eq"
+            },
+            "left": {
+              "$ref": "#/$defs/term"
+            },
+            "right": {
+              "$ref": "#/$defs/term"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "and",
+                "or"
+              ]
+            },
+            "args": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expr"
+              },
+              "minItems": 1,
+              "maxItems": 64
+            }
+          },
+          "required": [
+            "op",
+            "args"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "not"
+            },
+            "arg": {
+              "$ref": "#/$defs/expr"
+            }
+          },
+          "required": [
+            "op",
+            "arg"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "exists"
+            },
+            "association": {
+              "$ref": "#/$defs/ref"
+            },
+            "as": {
+              "type": "string",
+              "minLength": 1
+            },
+            "where": {
+              "$ref": "#/$defs/expr"
+            }
+          },
+          "required": [
+            "op",
+            "association",
+            "as",
+            "where"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "disposition": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "enum": [
+                "original",
+                "withheld"
+              ]
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": true
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "transformed"
+            },
+            "transform": {
+              "const": "constant"
+            },
+            "version": {
+              "const": "0.1.0"
+            },
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "value": {
+              "$ref": "#/$defs/literal"
+            }
+          },
+          "required": [
+            "kind",
+            "transform",
+            "version",
+            "field",
+            "value"
+          ],
+          "additionalProperties": true
+        }
+      ]
+    },
+    "disclosure": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/ref"
+        },
+        "disposition": {
+          "$ref": "#/$defs/disposition"
+        }
+      },
+      "required": [
+        "field",
+        "disposition"
+      ],
+      "additionalProperties": true
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "effect": {
+          "enum": [
+            "permit",
+            "require",
+            "forbid"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "target": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "condition": {
+          "$ref": "#/$defs/expr"
+        },
+        "disclosure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disclosure"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "effect",
+        "actions",
+        "target",
+        "condition"
+      ],
+      "additionalProperties": true
+    },
+    "ontologyRef": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

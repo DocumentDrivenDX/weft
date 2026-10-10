@@ -18,6 +18,7 @@ struct Request {
     options: Options,
     parameters: Option<crate::application_resolve::Parameters>,
     read_profile: Option<crate::application_ir::ReadProfile>,
+    security: Option<Value>,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -40,6 +41,8 @@ struct Request01;
     path = "../../docs/helix/02-design/contracts/compile-request-v0.2.schema.json"
 )]
 struct Request02;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
+struct Request03;
 /// Validated request target supplied to trusted host composition code.
 /// Binding bytes/digest, modules and SQL/plan have passed transport admission.
 pub struct CompositionInput<'a> {
@@ -92,6 +95,9 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
+            if input["interfaceVersion"] == "weft-compile/0.3.0" {
+                version = "weft-compile/0.3.0".into();
+            }
             if input["interfaceVersion"] == "weft-compile/0.2.0" {
                 version = "weft-compile/0.2.0".into();
             }
@@ -102,6 +108,7 @@ impl Compiler {
                 ),
                 (Some("weft-compile/0.1.0"), Some("weft-sql/0.1.0"))
                     | (Some("weft-compile/0.2.0"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.3.0"), Some("weft-sql/0.2.0"))
             ) {
                 return Err(Diagnostic::new(
                     "WFT-VERSION",
@@ -111,6 +118,8 @@ impl Compiler {
             }
             if !(if version == "weft-compile/0.1.0" {
                 Request01::is_valid(&input)
+            } else if version == "weft-compile/0.3.0" {
+                Request03::is_valid(&input)
             } else {
                 Request02::is_valid(&input)
             }) {
@@ -142,7 +151,23 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
-            let catalog = crate::model::Catalog::prepare(req.modules)?;
+            let catalog = if req.interface_version == "weft-compile/0.3.0" {
+                crate::model::Catalog::prepare_security(req.modules)?
+            } else {
+                crate::model::Catalog::prepare(req.modules)?
+            };
+            if let Some(source)=req.security.as_ref() {
+                let packet=crate::security_source::SecuritySourcePacket::read(
+                    source["policyJson"].as_str().expect("security request schema"),
+                    source["ontologyJson"].as_str().expect("security request schema"),&catalog)?;
+                let security_plan=crate::security_ir::SecurityLogicalPlan::read(packet,&catalog)?;
+                if let Some(profile)=source.get("queryProfileJson"){
+                    let profile=crate::security_query_profile::SecurityQueryProfile::read(profile.as_str().expect("security request schema"),&security_plan,&catalog,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                    let query=crate::security_query_uses::SecurityResolvedQuery::resolve(&req.sql,&catalog,&security_plan,req.parameters.clone().unwrap_or_default(),req.read_profile.clone())?;
+                    let _uses=profile.admit_resolved_query(&query,&security_plan,&catalog,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                }
+                return Err(Diagnostic::new("WFT-SECURITY-UNSUPPORTED", "capability", "Security policy lowering and native host obligations are not implemented"));
+            }
             if req.interface_version == "weft-compile/0.1.0" {
                 let query = crate::syntax::parse(&req.sql)?;
                 let plan = crate::resolve::resolve(&catalog, query)?;

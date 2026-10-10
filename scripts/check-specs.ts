@@ -3,6 +3,7 @@ import { resolve, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
 import Ajv2020 from 'ajv/dist/2020.js';
+import { checkAllocation } from './spec-allocation';
 
 const root = resolve(import.meta.dir, '..');
 const read = (p: string) => readFile(resolve(root, p), 'utf8');
@@ -40,19 +41,7 @@ for (const [id, a] of artifacts) {
   }
 }
 const allocation = await json('docs/helix/03-test/story-test-allocation.json');
-const criteria = new Set<string>();
-for (const story of allocation) {
-  const us = [...artifacts.values()].find(a => a.meta.id === story.story);
-  const stp = [...artifacts.values()].find(a => a.meta.id === `STP-${story.story.slice(3)}`);
-  assert(us && stp && story.criteria.length > 0, `${story.story}: missing story/test allocation`);
-  for (const criterion of story.criteria) {
-    assert(!criteria.has(criterion.id), `Duplicate criterion ${criterion.id}`);
-    assert(us.body.includes(criterion.id) && stp.body.includes(criterion.id) && stp.body.includes(criterion.plannedTest), `Missing trace ${criterion.id}`);
-    assert(criterion.state === 'planned', 'Bootstrap must not claim executed tests');
-    criteria.add(criterion.id);
-  }
-}
-assert(criteria.size === 30, 'Expected 30 criteria after the application-read input');
+const criteria = checkAllocation(artifacts, allocation, await json('docs/helix/03-test/requirement-allocation.json'));
 const schemaDir = 'docs/helix/02-design/contracts';
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 const schemas = [];
@@ -88,5 +77,5 @@ for (const c of cases) {
   if (c.setup.rows) await read(`docs/helix/03-test/fixtures/${c.setup.rows}`);
 }
 assert(cases.length >= 636 && structuralNegatives > 0, 'Corpus floor / deliberate negatives missing');
-console.log(`Checked ${artifacts.size} governed artifacts, ${schemas.length} schemas, ${criteria.size} planned criteria and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
+console.log(`Checked ${artifacts.size} governed artifacts, ${schemas.length} schemas, ${criteria.size} allocated criteria (planned/open/deferred; execution separate) and ${cases.length} fixture scenarios (${structuralNegatives} deliberate schema negatives).`);
 console.log('No compiler, database or embedding tests were executed.');
