@@ -1,0 +1,10 @@
+{
+  "scope": "Only shared publish with inert fake bytes; no real assembly/compiler/native",
+  "sourceSha256": "fb70ca6f78063248671534bed0ecb993297039133f92cd2727e342f41b5257b1",
+  "modes": {
+    "bin/weft-paths-keys": "0o444",
+    "bin/weft-paths": "0o555",
+    "metadata.json": "0o444"
+  },
+  "finding": "New advertised executable path receives read-only mode 0444 while legacy path receives executable 0555"
+}

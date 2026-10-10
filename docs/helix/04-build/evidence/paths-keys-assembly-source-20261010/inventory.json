@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "bytes": 811,
+      "original": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-c/manifest.json",
+      "path": "source-c-freeze.json",
+      "sha256": "da609d5fddc10fdb6f21c8b642685e80a6f68581c946a20b0cb758768a8cc4ae"
+    },
+    {
+      "bytes": 1811,
+      "original": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-c/receipt.json",
+      "path": "source-c-checks.json",
+      "sha256": "61d71209abd17cad4fe4d8f31617d6362261d3c3017913db3151ab2185f06c53"
+    },
+    {
+      "bytes": 4979,
+      "original": "/private/tmp/astra-paths-keys-assembly-source-review-20261010-c.json",
+      "path": "source-c-review.json",
+      "sha256": "d739bb925f00c0b14d00c44e23bf67725d6dd2da5e54cb9bb23a8004eaca282f"
+    },
+    {
+      "bytes": 7011,
+      "original": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.json",
+      "path": "independent-controls.json",
+      "sha256": "eaeb0a4788e73fa7eb309dab2c9b77531e15ca6645eac3261fd5b427f9a11142"
+    },
+    {
+      "bytes": 11016,
+      "original": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.py",
+      "path": "independent-controls.py",
+      "sha256": "ab0ac32498d2e833b637b998ebfa0a094ed77c53a5391cb9157d1aa9c5887435"
+    },
+    {
+      "bytes": 229,
+      "original": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.log",
+      "path": "independent-controls.log",
+      "sha256": "5de399c4d066677b5244fcff5d4a14f1833396d43d11a53bbd223cba73b23cd2"
+    },
+    {
+      "bytes": 412,
+      "original": "/private/tmp/astra-paths-keys-assembler-mode-probe-20261010-a.json",
+      "path": "mode-finding.json",
+      "sha256": "49ea170c38d56e517561d09e76896844d33306254720289ae1c8aa782cc9bbb8"
+    },
+    {
+      "bytes": 247,
+      "original": "/private/tmp/astra-paths-keys-assembler-close-probe-20261010-a.json",
+      "path": "close-finding.json",
+      "sha256": "6501a0d0fbc9443941a1a9e233977662b4202bf37a716a9356989ddd2e8e1da2"
+    },
+    {
+      "bytes": 243,
+      "original": "/private/tmp/astra-paths-keys-assembler-config-probe-20261010-a.json",
+      "path": "id-finding.json",
+      "sha256": "dfcc1faa1d51687a9ff233f11a76f8113c9dfffd16e64bced42d2da4adefdbfd"
+    }
+  ],
+  "format": "weft-source-evidence/0.1",
+  "scope": "Reviewed sourceC and exactCI wiring; no actual package assembly/index/compiler/native claim."
+}

@@ -119,9 +119,11 @@ class Config:
     corpus_root: Path
     output: Path
     realization_id: str
+    profile: str = 'paths'
     def __post_init__(self):
+        if type(self.profile)is not str or self.profile not in ('paths','paths-keys'):raise ValueError('assembly-profile')
         if any(not isinstance(p,Path)or not p.is_absolute()for p in (self.source_root,self.build_root,self.corpus_root,self.output)):raise ValueError('absolute-config')
-        if type(self.realization_id)is not str or not self.realization_id or len(self.realization_id)>128 or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._'for c in self.realization_id):raise ValueError('realization-id')
+        if type(self.realization_id)is not str or not self.realization_id or self.realization_id[0] not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' or len(self.realization_id)>128 or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._'for c in self.realization_id):raise ValueError('realization-id')
 
 
 def platform(binary,observed_os):
@@ -198,6 +200,9 @@ def verify_legacy(source_root, harness_path, cases, expected_harness_sha):
 
 
 def assemble(config):
+    if config.profile=='paths-keys':
+        import paths_keys_distribution
+        return paths_keys_distribution.assemble_keys(config,sys.modules[__name__])
     if config.output.exists()or config.output.is_symlink()or any(p.is_symlink()for p in config.output.parents):raise ValueError('fresh-contained-output')
     s=Snapshot()
     inventory_raw=s.compressed(config.build_root/'source-inventory.json','evidence/source-inventory.json.gz')
@@ -262,14 +267,32 @@ def assemble(config):
     s.generated('assembly-custody.json',encoded(proof)+b'\n');publish(s,config.output);return record
 
 
-def publish(snapshot,output):
+def write_exclusive(path,raw):
+    """Owned stream: every BaseException primary survives close failure."""
+    stream=None;primary=None
+    try:
+        stream=path.open('xb');stream.write(raw);stream.flush();os.fsync(stream.fileno())
+    except BaseException as error:primary=error
+    finally:
+        if stream is not None:
+            try:stream.close()
+            except BaseException as error:
+                if primary is None:primary=error
+                else:
+                    try:primary.cleanup_failed=True
+                    except BaseException:pass
+    if primary is not None:raise primary
+
+
+def publish(snapshot,output,*,executable='bin/weft-paths'):
+    if type(executable)is not str or executable not in ('bin/weft-paths','bin/weft-paths-keys'):raise ValueError('closed-executable-selection')
     snapshot.close();parent=output.parent.resolve(strict=True);temporary=Path(tempfile.mkdtemp(prefix='.paths-distribution-',dir=parent))
     primary=None
     try:
         for name,raw in snapshot.artifacts.items():
             p=temporary/name;p.parent.mkdir(parents=True,exist_ok=True)
-            with p.open('xb')as f:f.write(raw);f.flush();os.fsync(f.fileno())
-            p.chmod(0o555 if name=='bin/weft-paths'else 0o444)
+            write_exclusive(p,raw)
+            p.chmod(0o555 if name==executable else 0o444)
             if read(p)!=raw:raise ValueError('copy-drift')
         snapshot.close()
         if output.exists()or output.is_symlink():raise ValueError('output-appeared')
@@ -290,7 +313,7 @@ def publish(snapshot,output):
 def main():
     p=argparse.ArgumentParser()
     for name in ['source-root','build-root','corpus-root','output']:p.add_argument('--'+name,type=Path,required=True)
-    p.add_argument('--realization-id',required=True);a=p.parse_args()
-    record=assemble(Config(a.source_root,a.build_root,a.corpus_root,a.output,a.realization_id))
+    p.add_argument('--realization-id',required=True);p.add_argument('--profile',choices=('paths','paths-keys'),default='paths');a=p.parse_args()
+    record=assemble(Config(a.source_root,a.build_root,a.corpus_root,a.output,a.realization_id,a.profile))
     print(json.dumps({'state':'inert-candidate-assembled','realizationId':record['realizationId']}))
 if __name__=='__main__':main()

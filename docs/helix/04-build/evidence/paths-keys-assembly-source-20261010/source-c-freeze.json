@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "bytes": 23157,
+      "path": "scripts/distribution/assemble-paths-distribution.py",
+      "sha256": "623e1c174e98e6415f86010784a0fd61e53c7f2a368f0a555d2bc36b1d8a6159"
+    },
+    {
+      "bytes": 18716,
+      "path": "scripts/distribution/paths_keys_distribution.py",
+      "sha256": "5e981a454bbfbc31b797559dd6d4c4ee67d0114fc5922ff7d437c63a13f8a2c0"
+    },
+    {
+      "bytes": 9976,
+      "path": "tests/distribution-paths-assembly/test_paths_keys_assembly.py",
+      "sha256": "5718b6a61e5bae2ec7f854024e0b13044720dc887848f6ccf36afd2e4f949f17"
+    }
+  ],
+  "receipt": {
+    "path": "receipt.json",
+    "sha256": "61d71209abd17cad4fe4d8f31617d6362261d3c3017913db3151ab2185f06c53"
+  },
+  "supersedes": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-b/manifest.json"
+}

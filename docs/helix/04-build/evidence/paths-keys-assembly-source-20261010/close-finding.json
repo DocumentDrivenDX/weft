@@ -1,0 +1,8 @@
+{
+  "scope": "Shared writer with injected inert write/close failure, no real assembly/compiler/native",
+  "actualType": "OSError",
+  "retainsPrimaryIdentity": false,
+  "actualIsCleanupException": true,
+  "outputAbsent": true,
+  "stageNames": []
+}

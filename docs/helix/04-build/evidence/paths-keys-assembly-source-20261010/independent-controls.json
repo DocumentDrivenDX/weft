@@ -1,0 +1,186 @@
+{
+  "actualProofInputs": [
+    {
+      "bytes": 577199,
+      "path": "/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source-inventory.json",
+      "sha256": "e9f1e0ac01d7b9dc1b2d61148c74274c1fed5a5593726487aa4562f2e4bf3512"
+    },
+    {
+      "bytes": 52274,
+      "path": "/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/backend-manifest.json",
+      "sha256": "ead2df8de9927765775ec7267a9a1865b1c02ec21c849255ada85c36a645fb84"
+    },
+    {
+      "bytes": 7987,
+      "path": "/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/command-b.json",
+      "sha256": "1ad88380c1c0ece419c7054c6a8d474aaaa425fdef1027798848df1f9e17ac90"
+    },
+    {
+      "bytes": 26019878,
+      "path": "/private/tmp/weft-paths-keys-qualification-20261010-d/producer-output/receipt.json",
+      "sha256": "d5f586b09499d8a099d4b270ab49f03e797dbd9e9ca38ec1bc8034aa0dbf5aa0"
+    },
+    {
+      "bytes": 20542587,
+      "path": "/private/tmp/weft-paths-keys-candidate-corpus-20261010-a/candidate-cases.json",
+      "sha256": "b9661c7ff024e9696417ef5bce3ca70a28d8cd8b93b109835ab0517ededf63d0"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "-W",
+        "error::ResourceWarning",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/distribution-paths-assembly",
+        "-q"
+      ],
+      "cwd": "/private/tmp/astra-paths-keys-assembly-review-source-20261010-c",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exitCode": 0,
+      "stderr": "python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\n----------------------------------------------------------------------\nRan 9 tests in 0.042s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "-W",
+        "error::ResourceWarning",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/distribution",
+        "-p",
+        "test_paths_assembly.py",
+        "-q"
+      ],
+      "cwd": "/private/tmp/astra-paths-keys-assembly-review-source-20261010-c",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exitCode": 0,
+      "stderr": "python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\n----------------------------------------------------------------------\nRan 12 tests in 0.067s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/python3",
+        "-B",
+        "-S",
+        "-W",
+        "error::ResourceWarning",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/distribution-assembly",
+        "-q"
+      ],
+      "cwd": "/private/tmp/astra-paths-keys-assembly-review-source-20261010-c",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exitCode": 0,
+      "stderr": "python3: warning: confstr() failed with code 5: couldn't get path of DARWIN_USER_TEMP_DIR; using /tmp instead\n----------------------------------------------------------------------\nRan 14 tests in 0.025s\n\nOK\n",
+      "stdout": ""
+    },
+    {
+      "argv": [
+        "/private/tmp/ashlar-spark311/bin/python",
+        "-B",
+        "-S",
+        "-W",
+        "error::ResourceWarning",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/distribution-paths-assembly",
+        "-q"
+      ],
+      "cwd": "/private/tmp/astra-paths-keys-assembly-review-source-20261010-c",
+      "environment": {
+        "PATH": "/usr/bin:/bin",
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exitCode": 0,
+      "stderr": "----------------------------------------------------------------------\nRan 9 tests in 0.025s\n\nOK\n",
+      "stdout": ""
+    }
+  ],
+  "controls": [
+    "All original helper definitions unchanged except named Config/publish/main; original assemble body exact after new dispatch",
+    "Both closed executable profiles preserve exact inert bytes and selected0555/others0444; old default retained",
+    "Unknown executable refuses before any close/publication effect",
+    "Both profiles preserve write-cancellation identity through close failure, including readonly-marker primary; no final/stage remains",
+    "Cleanup-only SystemExit and GeneratorExit identities preserved",
+    "Final custody failure refuses availability and cleans staged files",
+    "Realization IDs align with bounded public schema ASCII-leading rule",
+    "Exact accepted actual74 receipt/candidate/backend/inventory/build pins pass pure full-record correspondence; no execution",
+    "45 selected source descriptors, historical inventory/source/extractor463 original pairs, and20 closed public-schema bytes match Git3a inventory; historical530 retained separately"
+  ],
+  "freeze": {
+    "bytes": 811,
+    "path": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-c/manifest.json",
+    "sha256": "da609d5fddc10fdb6f21c8b642685e80a6f68581c946a20b0cb758768a8cc4ae"
+  },
+  "oldBaseCommit": "3d4dc41e0882d0911979b2c57d76d86f107ac7d2",
+  "scope": "Source-only independent tests and pure accepted proof correspondence. No real candidate assembly/compiler/Cargo/native/index/installation execution.",
+  "script": {
+    "bytes": 11016,
+    "path": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.py",
+    "sha256": "ab0ac32498d2e833b637b998ebfa0a094ed77c53a5391cb9157d1aa9c5887435"
+  },
+  "selectedSourceBytes": 16706409,
+  "selectedSourceCount": 92,
+  "sources": [
+    {
+      "bytes": 23157,
+      "path": "scripts/distribution/assemble-paths-distribution.py",
+      "sha256": "623e1c174e98e6415f86010784a0fd61e53c7f2a368f0a555d2bc36b1d8a6159"
+    },
+    {
+      "bytes": 18716,
+      "path": "scripts/distribution/paths_keys_distribution.py",
+      "sha256": "5e981a454bbfbc31b797559dd6d4c4ee67d0114fc5922ff7d437c63a13f8a2c0"
+    },
+    {
+      "bytes": 9976,
+      "path": "tests/distribution-paths-assembly/test_paths_keys_assembly.py",
+      "sha256": "5718b6a61e5bae2ec7f854024e0b13044720dc887848f6ccf36afd2e4f949f17"
+    },
+    {
+      "bytes": 6925,
+      "path": "scripts/distribution/test_paths_assembly.py",
+      "sha256": "2cee7232f5480cb2f427cbdc7a8e97c5dd201dcf4857590cb517403fd6005ced",
+      "sourceCommit": "3d4dc41e0882d0911979b2c57d76d86f107ac7d2"
+    },
+    {
+      "bytes": 27880,
+      "path": "scripts/distribution/assemble-distribution.py",
+      "sha256": "c49ba7665e62b200cf2ad57ce7a12e9f36ad2682f2166d30d31d2cc098155123",
+      "sourceCommit": "3d4dc41e0882d0911979b2c57d76d86f107ac7d2"
+    },
+    {
+      "bytes": 8804,
+      "path": "tests/distribution-assembly/test_assembly.py",
+      "sha256": "51246a3ac1b83c34dc34031fa3cfa36a51d5e097427eabccf80f60fb16b6355e",
+      "sourceCommit": "3d4dc41e0882d0911979b2c57d76d86f107ac7d2"
+    }
+  ],
+  "status": "passed"
+}

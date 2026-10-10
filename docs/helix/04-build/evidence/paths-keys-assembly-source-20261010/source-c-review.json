@@ -1,0 +1,107 @@
+{
+  "actualTestSuites": [
+    {
+      "genericAssembly": 14,
+      "newPathsKeys": 9,
+      "oldPaths": 12,
+      "python": "3.9.6"
+    },
+    {
+      "newPathsKeys": 9,
+      "python": "3.11.17"
+    }
+  ],
+  "ciAddendum": {
+    "baseCommit": "3d4dc41e0882d0911979b2c57d76d86f107ac7d2",
+    "decision": "approved",
+    "exactDelta": "Only two strict stdlib discovery lines immediately after generic assembly tests; no other workflow change. Both suites independently executed from exact source snapshot.",
+    "file": {
+      "bytes": 5634,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/.github/workflows/conformance.yml",
+      "sha256": "bbec44559433b51d47389a2349c59bd3f9d61fb4205d018d695e4857383700d2"
+    }
+  },
+  "correspondence": {
+    "actualReceipt": "d5f586b09499d8a099d4b270ab49f03e797dbd9e9ca38ec1bc8034aa0dbf5aa0",
+    "blocked": 35,
+    "compiled": 39,
+    "compiledSource": "3a2a79ccc19d636f20d31116662d61365c1b4ff7",
+    "coverage": 48,
+    "historicalCasesNotReplayed": true,
+    "historicalNamespaceCasesRetained": 463,
+    "metadataProbe": "Separate resource-bound build producer, not represented as Git3a-authored source.",
+    "producerH": "77517097fe5c5c3b27f90433c505c36514e409896beaa3d473f1937542eb75a5",
+    "protocolCases": 74,
+    "publicSchemas": 20,
+    "selectedSourceBytes": 16706409,
+    "selectedSourceFilesIndependentlyRead": 92,
+    "transportControls": 8,
+    "wholeReceiptAndCandidatePin": "Fixed digests bind already independently accepted complete bytes; local structural verifier is not a new semantic oracle."
+  },
+  "decision": "approved-source-only",
+  "format": "independent-source-review/0.1",
+  "freeze": {
+    "bytes": 811,
+    "path": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-c/manifest.json",
+    "sha256": "da609d5fddc10fdb6f21c8b642685e80a6f68581c946a20b0cb758768a8cc4ae"
+  },
+  "helix0154": {
+    "configuration": "Explicit absolute roots and closed profile/executable selector; fixed reviewed identity pins; finite32MiB file96MiB package64MiB decoded bounds; no caller trust override.",
+    "formal": "Finite executable custody/withholding/primary-preservation controls support DIST-F1/F2/F3 boundary; neither unbounded nor mechanical proof. Atomic rename assumes cooperating single writer.",
+    "modularity": "New profile proof logic in separate owned module; shared bounded I/O/publication mechanisms; unchanged original assembly body after closed dispatch; no compiler/native host dependencies.",
+    "observability": "Source-only local refusal/command state; no OTel receiver/export or payload logging assurance inferred."
+  },
+  "independentChecks": {
+    "bytes": 7011,
+    "path": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.json",
+    "sha256": "eaeb0a4788e73fa7eb309dab2c9b77531e15ca6645eac3261fd5b427f9a11142"
+  },
+  "log": {
+    "bytes": 229,
+    "path": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.log",
+    "sha256": "5de399c4d066677b5244fcff5d4a14f1833396d43d11a53bbd223cba73b23cd2"
+  },
+  "remainingBlockers": [],
+  "resolvedFindings": [
+    {
+      "issue": "New binary published with0444",
+      "resolution": "Closed explicit executable selector; legacy default and both modes verified."
+    },
+    {
+      "issue": "Write cancellation replaced by stream close failure",
+      "resolution": "Exclusive stream helper retains first BaseException including readonly marker cases and cleanup-only cancellations; failed output withheld."
+    },
+    {
+      "issue": "Realization IDs accepted outside public-schema grammar",
+      "resolution": "Initial ASCII alphanumeric enforced before effects; exact negative controls pass."
+    }
+  ],
+  "scopeLimitations": [
+    "This approves three frozen source/test files plus exact two-line CI delta.",
+    "No actual candidate assembly, package output/schema validity, public index admission, installation, compiler replay or native execution was performed in this review.",
+    "Actual assembly and resulting package require separate root command and output review.",
+    "No hermetic rebuild, full environment closure, hostile-principal filesystem fence or broader platform qualification."
+  ],
+  "script": {
+    "bytes": 11016,
+    "path": "/private/tmp/astra-paths-keys-assembly-source-controls-20261010-c.py",
+    "sha256": "ab0ac32498d2e833b637b998ebfa0a094ed77c53a5391cb9157d1aa9c5887435"
+  },
+  "sourceFiles": [
+    {
+      "bytes": 23157,
+      "path": "scripts/distribution/assemble-paths-distribution.py",
+      "sha256": "623e1c174e98e6415f86010784a0fd61e53c7f2a368f0a555d2bc36b1d8a6159"
+    },
+    {
+      "bytes": 18716,
+      "path": "scripts/distribution/paths_keys_distribution.py",
+      "sha256": "5e981a454bbfbc31b797559dd6d4c4ee67d0114fc5922ff7d437c63a13f8a2c0"
+    },
+    {
+      "bytes": 9976,
+      "path": "tests/distribution-paths-assembly/test_paths_keys_assembly.py",
+      "sha256": "5718b6a61e5bae2ec7f854024e0b13044720dc887848f6ccf36afd2e4f949f17"
+    }
+  ]
+}

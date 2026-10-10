@@ -1,0 +1,31 @@
+{
+  "actualPureRecordCheck": {
+    "receiptSha256": "d5f586b09499d8a099d4b270ab49f03e797dbd9e9ca38ec1bc8034aa0dbf5aa0",
+    "rows": 74,
+    "scope": "Read-only receipt/bundle/backend correspondence only",
+    "status": "passed"
+  },
+  "additionalCorrections": "Owned exclusive writer preserves every body/close BaseException and best-effort marker; actual both-profile writeKI+closeOSError readonly-marker controls withhold output and clean stage. Public schema ASCII-alphanumeric initial realization requirement enforced preeffects; valid historicalIDs retained.",
+  "bounds": "Existing32MiB/file,96MiB/package,64MiB/decoded unchanged; original source-subset matches full3a inventory.",
+  "correction": "Shared publish has closed executable selector default bin/weft-paths; PathsKeys explicitly selects bin/weft-paths-keys. Actual inert both-profile mode test verifies selected0555/allothers0444 and exact bytes; arbitrary selector refuses before effects.",
+  "diffCheck": "passed",
+  "oldProfile": "Paths530 constants,70-file/512 receipt checks and default body preserved; trailing closed Config.profile dispatch selects only PathsKeys",
+  "provenance": "Compiler source3a inventory independent of producerH/metadata probe; exact producer resources and qualification/build commands/outcomes retained. No old native proof transfer, hermetic build, OTel or machine-proof claim.",
+  "scope": "Source-only inert assembly profile; no actual assembly/index/compiler/native run",
+  "tests": [
+    {
+      "genericAssembly": 14,
+      "interpreter": "/usr/bin/python3",
+      "new": 9,
+      "oldPaths": 12,
+      "status": "passed",
+      "version": "3.9.6"
+    },
+    {
+      "interpreter": "/private/tmp/ashlar-spark311/bin/python",
+      "new": 9,
+      "status": "passed",
+      "version": "3.11.17"
+    }
+  ]
+}

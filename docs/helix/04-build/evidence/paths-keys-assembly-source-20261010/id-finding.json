@@ -1,0 +1,10 @@
+{
+  "scope": "Config construction and exact public schema pattern only; no filesystem publication",
+  "schemaPattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "admittedButSchemaInvalid": [
+    ".",
+    "..",
+    "_candidate",
+    "-candidate"
+  ]
+}
