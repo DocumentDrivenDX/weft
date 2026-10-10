@@ -1,0 +1,102 @@
+{
+  "format": "weft-count-star-boundary-archive-inventory/0.1",
+  "archive": {
+    "path": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundary-evidence-b.tar.gz",
+    "bytes": 11079,
+    "sha256": "af8e2dcc2dd52b617c6a3e5ed584be1060fe9bbab130155b161fb2c0fe9731d0"
+  },
+  "files": [
+    {
+      "member": "command-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundary-command-b.json",
+      "bytes": 3689,
+      "sha256": "5885cdbf086ba1429df852d704e381ef886379d2533bd2123ee39614485086ba"
+    },
+    {
+      "member": "landing-freeze-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundary-landing-freeze-b.json",
+      "bytes": 896,
+      "sha256": "10c342283e972c0a8f3f4c6c3e5a37544df96e2b654a7177daccb1de0bd3515e"
+    },
+    {
+      "member": "observations-b.jsonl",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.observations.jsonl",
+      "bytes": 2667,
+      "sha256": "cafd677534dcce6bc4a78e9034ee0080dc90d299e17f99cfd3321aeda07b05ed"
+    },
+    {
+      "member": "outcome-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b-outcome.json",
+      "bytes": 621,
+      "sha256": "f0229bbeb325fc89ca4cbfb0c272d55c9de01942b9bd5e712a771239894f9606"
+    },
+    {
+      "member": "producer/launch-reviewed-build.py",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-build.py",
+      "bytes": 6275,
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "member": "producer/launch-reviewed-parity-g.py",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-parity-g.py",
+      "bytes": 2541,
+      "sha256": "0b238f4b0cb5544f93cf669f9839562292d518c43fdb4ed52fdee84ee507bb9e"
+    },
+    {
+      "member": "result-inventory-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b-result-inventory.json",
+      "bytes": 1142,
+      "sha256": "954b259a227da3359b75a232c044a951d74343b3e4c93f17746d50ad102b9d9a"
+    },
+    {
+      "member": "review/actual-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-boundary-actual-independent-review-20261010-b.json",
+      "bytes": 884,
+      "sha256": "c2de03ef40d79a956cdd40c4db28314afc90455fc2933daba61c2a9be6edfd6c"
+    },
+    {
+      "member": "review/source-command-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-boundary-source-command-independent-review-20261010-b.json",
+      "bytes": 1319,
+      "sha256": "280a7e511c135652119596a6018338ec25d092fa315658d481e1a77c6b81512e"
+    },
+    {
+      "member": "source-freeze-b.json",
+      "sourcePath": "/private/tmp/weft-count-star-boundary-source-freeze-20261010-b.json",
+      "bytes": 648,
+      "sha256": "6c1a058dd59218e4cf320ea57c62c539bb345215f5b9e9abaa0496f0a9a8ba3a"
+    },
+    {
+      "member": "source/check-count-star-cli-boundaries.py",
+      "sourcePath": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-count-star-cli-boundaries.py",
+      "bytes": 8602,
+      "sha256": "3aa0033acea737d97038aefbf264a98f457771b34f10d3253202ed988d768629"
+    },
+    {
+      "member": "source/conformance.yml",
+      "sourcePath": "/private/tmp/ashlar-weft-distribution-d2d/.github/workflows/conformance.yml",
+      "bytes": 6050,
+      "sha256": "d2daa3586efaefa96fc7aea99962c847d04518c64c3c9fd1ced2cd72abb64dd1"
+    },
+    {
+      "member": "source/test_boundaries.py",
+      "sourcePath": "/private/tmp/ashlar-weft-distribution-d2d/tests/distribution-count-star-boundaries/test_boundaries.py",
+      "bytes": 2066,
+      "sha256": "6b6d8fef69b3bf73c6d6b1751a77e95c5952706ee810100813678f700c42afa9"
+    },
+    {
+      "member": "stderr-b.log",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "stdout-b.log",
+      "sourcePath": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.stdout.log",
+      "bytes": 419,
+      "sha256": "d0aabe7fa6dde3d22350385c169c82149001f40084e6bc135b2fc0a1eaef23b7"
+    }
+  ],
+  "decodedMemberBytes": 37819,
+  "qualification": "Eight actual CLI boundaries on exact5dd binary; no binary/runtime executable copies. Nine resource descriptors retained; descriptors are not archived executable bytes. Separate source B/actual reviews. No installed/native/index claim."
+}
