@@ -140,5 +140,38 @@ mod tests{
    let (catalog,plan)=fixture(p);let truths=BTreeMap::from([("reader".into(),Truth::True),("membership".into(),Truth::True),("second".into(),Truth::True)]);assert_eq!(compose(&plan,&catalog,&plan.rules()[0].target,"read",&fields(),&truths).unwrap().decision,expected);
   }
  }
+ #[test]
+ fn bounded_disposition_oracle_correspondence(){
+  let oracle:serde_json::Value=serde_json::from_str(include_str!("../tests/security-disposition-oracle.json")).unwrap();
+  let f:serde_json::Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();
+  assert_eq!(oracle["cases"].as_array().unwrap().len(),432);
+  let mut seen=BTreeSet::new();
+  for vector in oracle["cases"].as_array().unwrap(){
+   let slots=vector["slots"].as_array().unwrap();assert_eq!(slots.len(),3);let protected=vector["protected"].as_bool().unwrap();
+   assert!(seen.insert((slots.iter().map(|s|s.as_u64().unwrap()).collect::<Vec<_>>(),protected)));
+   let mut policy=f["policy"].clone();let template=policy["rules"][0].clone();policy["rules"]=serde_json::json!([policy["rules"][1].clone()]);
+   let mut reference=template["disclosure"][0]["field"].clone();if !protected{reference["elementId"]=serde_json::json!("resourceId");}
+   let mut output=reference.clone();output["elementId"]=serde_json::json!("resourceId");
+   let mut truths=BTreeMap::from([("membership".into(),Truth::True)]);
+   for (index,slot) in slots.iter().enumerate(){
+    let slot=slot.as_u64().unwrap();let mut rule=template.clone();let id=format!("permit{index}");rule["id"]=serde_json::json!(id);truths.insert(id,Truth::True);
+    rule.as_object_mut().unwrap().remove("disclosure");
+    if slot!=0{
+     let disposition=match slot{1=>serde_json::json!({"kind":"original"}),2=>serde_json::json!({"kind":"withheld"}),3..=5=>serde_json::json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":output,"value":{"string":format!("identity{slot}")}}),_=>panic!("invalid oracle")};
+     rule["disclosure"]=serde_json::json!([{"field":reference,"disposition":disposition}]);
+    }
+    policy["rules"].as_array_mut().unwrap().push(rule);
+   }
+   let selected=SecurityRef::read(&reference).unwrap();let (catalog,plan)=fixture(policy.clone());
+   let result=compose(&plan,&catalog,&plan.rules()[0].target,"read",std::slice::from_ref(&selected),&truths).unwrap();
+   let observed=match result.decision{Decision::Permit=>"permit",Decision::Deny=>"deny",Decision::Indeterminate=>"indeterminate",Decision::Conflict=>"conflict"};assert_eq!(vector["decision"],observed,"{vector}");
+   if result.decision!=Decision::Permit{assert!(result.disclosure.is_empty());}else{
+    assert_eq!(result.disclosure.len(),1);assert_eq!(result.disclosure[0].0,selected);
+    let kind=match &result.disclosure[0].1{Disposition::Original=>1,Disposition::Withheld=>2,Disposition::Transformed{literal,..}=>literal["string"].as_str().unwrap().strip_prefix("identity").unwrap().parse::<u64>().unwrap()};assert_eq!(vector["disposition"],kind,"{vector}");
+   }
+   policy["rules"].as_array_mut().unwrap().reverse();let (reversed_catalog,reversed_plan)=fixture(policy);
+   assert_eq!(result,compose(&reversed_plan,&reversed_catalog,&reversed_plan.rules()[0].target,"read",std::slice::from_ref(&selected),&truths).unwrap());
+  }
+ }
 
 }

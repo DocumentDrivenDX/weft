@@ -49,6 +49,11 @@ jobs:
           --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")"
           --temp-root "$RUNNER_TEMP/weft-mutations"
           --output-root "$RUNNER_TEMP/weft-mutation-evidence"
+      - name: Formal controls and actual Rust correspondence
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_formal.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_formal.py -v
+          python scripts/reliability/gate.py --cargo "$(command -v cargo)" --rustup-home "$(rustup show home)" --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")" --temp-root "$RUNNER_TEMP/weft-formal" --output-root "$RUNNER_TEMP/weft-formal-evidence"
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance

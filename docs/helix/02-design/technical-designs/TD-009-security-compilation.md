@@ -54,6 +54,13 @@ release are host assumptions for future integration, never simulator outputs.
 | WFT-FM-004 | CONTRACT-005: withheld dominates; incompatible selected transform identities conflict | Selected one field, up to three active permit dispositions; abstract exact normalized identities; Rust exact-literal/custody tests supply correspondence |
 | WFT-FM-005 | CONTRACT-005: a stale source/catalog cannot be admitted as the same prepared plan | Actual source/pin/admission tests; precise custody invariant rather than SMT hash-collision claim |
 
+FM004 starts after the rule truth gate has admitted at least one active permit.
+Slot0 means that an active permit contributes no disposition for the selected
+field, not an absent grant. The Rust correspondence fixture uses three true
+permit rules and one true requirement for all432 disposition/protection tuples;
+it compares the independent authored table and reversed rule order. Three
+transform equivalence classes cover up to three distinct exact identities.
+
 Formal abstraction separately encodes authored decision/disclosure rules and a
 bounded counterpart of implementation behavior. R5 records formulas, source
 fingerprints, tool/version, SAT witnesses, UNSAT results and broken-model SAT
@@ -91,3 +98,14 @@ No native schema migration. Bounded assurance gives inspectable counterexamples
 at low execution cost but cannot prove larger populations, native custody or
 arbitrary policy semantics. Withdraw a property claim when its mapping changes;
 keep public activation blocked until separately governed native acceptance passes.
+
+## R5 executable gate
+
+`python scripts/reliability/gate.py` consumes CONTRACT-006 configuration. It runs
+the pinned solver and exact selected Rust correspondence tests; missing tools,
+unknown/timeout, mismatched solver versions, zero/ignored/failed selected tests
+or an altered oracle fail qualification. `formal.py` contains separate authored
+tables and implementation abstractions, negated UNSAT checks, SAT witnesses and
+deliberately broken permit/withheld counterexamples. Host-only dependencies
+remain outside the core. Retained evidence maps each stable property to its
+actual code, test and fixture fingerprints; no full FR19–22 acceptance is claimed.
