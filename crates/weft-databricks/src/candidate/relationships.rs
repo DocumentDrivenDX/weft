@@ -191,6 +191,8 @@ impl Traversals {
                     checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM (SELECT {columns} FROM {quoted} GROUP BY {columns} HAVING {count}>1) duplicates",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", ")),"failureCode":"WFT-BINDING"}));
                 }
             }
+            // Participation counts distinct associated Record instances, not edge occurrences.
+            // Keep the occurrence CTE intact for RELATED_KEYS and exact lookahead.
             // Authored multiplicities remain in their forward orientation, even for inverse reads.
             for (alias, column, m) in [
                 (&source, "source_id", &r.target_multiplicity),
@@ -201,7 +203,7 @@ impl Traversals {
                 if let Some(max) = m["max"].as_u64() {
                     violations.push_str(&format!(" OR n > {max}"));
                 }
-                checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM {alias} v LEFT JOIN (SELECT {column}, {count} AS n FROM {edge} GROUP BY {column}) degree ON v.__id=degree.{column} WHERE {}",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),violations.replace("n ","coalesce(n, CAST(0 AS DECIMAL(38,0))) ")),"failureCode":"WFT-BINDING"}));
+                checks.push(json!({"relationship":p.logical,"sql":format!("WITH{} {} SELECT CAST({count} AS STRING) AS violations FROM {alias} v LEFT JOIN (SELECT {column}, {count} AS n FROM (SELECT DISTINCT source_id, target_id FROM {edge}) associated GROUP BY {column}) degree ON v.__id=degree.{column} WHERE {}",if lower.compounds.is_empty(){""}else{" RECURSIVE"},lower.ctes.join(", "),violations.replace("n ","coalesce(n, CAST(0 AS DECIMAL(38,0))) ")),"failureCode":"WFT-BINDING"}));
             }
         }
         Ok(checks)

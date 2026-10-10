@@ -45,6 +45,38 @@ Proposed source forms: `HAS_RELATED(c.orders, KEY(:order_id))` as a WHERE predic
 
 HAS_RELATED is existential and cannot multiply the source row. RELATED_KEYS preserves endpoint/edge multiplicity as declared by the relationship/profile; its result is `{items:[keyTuples],truncated:boolean}`. Items are ordered by the complete target key; equal key tuples retain multiplicity. Truncation is true exactly when more than the requested bound exist in the same qualified read context. Empty related results have an empty list and false marker. Backend must obtain a lookahead or equivalent exact cardinality proof; silently cutting a list is forbidden. Multiple endpoint variants require tagged key tuples, not an inferred common identity.
 
+### Participation degree and occurrence bags
+
+For the supported owning UMF core 0.7/0.8 relationship meaning, participation
+multiplicity MUST count distinct associated endpoint Record instances in the
+complete authorized pinned dataset. It MUST NOT count edge occurrences, key
+component values or projected key tuples. After verifying source scope, endpoint
+Record type and identity, schema revision, endpoint existence and key uniqueness,
+a backend MAY count distinct physical endpoint pairs within that exact relationship
+scope. Forward target participation groups by source instance; inverse source
+participation groups by target instance. Zero-associated instances MUST remain in
+minimum-participation checks. Unknown endpoint meaning or incomplete authority
+MUST refuse rather than infer a degree.
+
+Independent edge occurrence identity and uniqueness remain separate constraints.
+Two different edges between the same source and target contribute one neighbor to
+each degree, but MUST remain two occurrences in RELATED_KEYS, exact lookahead and
+truncation. Deduplicating the degree input MUST NOT deduplicate result inputs,
+existential source rows, occurrence ordering or any future path bag. Distinct
+physical endpoint pairs are a guarded representation of original Record identity,
+not a replacement authored key or an invented association Record.
+
+This clarification changes only relationship-integrity degree checks for newly
+built compiler realizations. It does not change language, logical-plan, binding or
+result shapes, nor silently upgrade an immutable compiler package or trusted
+index. A previously qualified realization retains its original bytes and guard
+receipts. Hosts MUST separately admit the exact new compiler realization and
+its changed checks before execution; they MUST NOT label old occurrence-count
+checks as distinct-neighbor evidence. Non-relationship artifacts and relationship
+result SQL MUST retain their existing behavior. Native degree/parallel-occurrence
+qualification is separate from compiler tests. Two-hop traversal remains outside
+this application-read surface until separately versioned.
+
 These outcomes require known bindings of UMF relationship IDs to actual Truss edges/foreign keys or Ashlar layout. Missing backend access paths/capabilities refuse. Read authorization applies to source and related entities; inverse traversal cannot elevate privileges.
 
 ## Parameters, literals and recognizable subsets
