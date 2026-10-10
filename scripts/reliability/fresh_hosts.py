@@ -1,9 +1,33 @@
 """Fresh pinned CLI/native-wheel/Chromium qualification with input reconciliation."""
-import argparse,hashlib,json,os,pathlib,sys,zipfile
+import argparse,gzip,hashlib,json,os,pathlib,sys,zipfile
 if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve().parents[1]))
 from reliability.config import load_config
 from reliability.process import run
 ROOT=pathlib.Path(__file__).resolve().parents[2]
+def reconcile_main_baseline(historical,records,receipt,differences):
+ if receipt.get('status')!='passed' or receipt.get('requests')!=2181 or receipt.get('requestsUnchanged') is not True:raise RuntimeError()
+ if len(historical)!=2181 or len(records)!=2181 or len({r['id'] for r in records})!=2181:raise RuntimeError()
+ changed=[]
+ def diff(a,b,path=''):
+  if a==b:return []
+  if isinstance(a,dict) and isinstance(b,dict) and a.keys()==b.keys():return [x for key in sorted(a) for x in diff(a[key],b[key],path+'/'+key)]
+  if isinstance(a,list) and isinstance(b,list) and len(a)==len(b):return [x for index,(left,right) in enumerate(zip(a,b)) for x in diff(left,right,path+'/'+str(index))]
+  return [{'path':path,'historical':a,'main':b}]
+ for old,current in zip(historical,records,strict=True):
+  if old['id']!=current['id'] or json.dumps(old['request'],ensure_ascii=False)!=json.dumps(current['request'],ensure_ascii=False):raise RuntimeError()
+  if old['response']!=current['response']:changed.append({'id':old['id'],'differences':diff(old['response'],current['response']),'qualification':'Current main compatibility and fresh cross-host parity only; native requalification remains open.'})
+ if changed!=differences or receipt.get('changedOutputs')!=len(changed) or receipt.get('historicalIdenticalOutputs')!=2181-len(changed):raise RuntimeError()
+ return records,receipt
+
+def load_main_baseline(root,historical_path,historical):
+ base=root/'docs/helix/04-build/evidence/main-integration-20261010'
+ receipt=json.loads((base/'baseline.json').read_bytes())
+ for path,key in [(historical_path,'historicalArtifactsSha256'),(base/'main-reference-artifacts.jsonl.gz','baselineSha256'),(base/'historical-to-main-differences.json.gz','differencesSha256'),(base/'main-reference-inputs.json','sourceInputsSha256'),(base/'baseline-generator.py','generatorSha256')]:
+  if hashlib.sha256(path.read_bytes()).hexdigest()!=receipt.get(key):raise RuntimeError()
+ records=[json.loads(line) for line in gzip.decompress((base/'main-reference-artifacts.jsonl.gz').read_bytes()).decode().splitlines()]
+ differences=json.loads(gzip.decompress((base/'historical-to-main-differences.json.gz').read_bytes()))
+ return reconcile_main_baseline(historical,records,receipt,differences)
+
 def validate_reports(out,wheel,built=None):
  summaries={name:json.loads((out/name).read_bytes()) for name in ('cli-summary.json','python-summary.json','browser-summary.json','resource-summary.json','security-summary.json','browser-resource-security-summary.json')}
  for name in ('cli-summary.json','python-summary.json','browser-summary.json'):
@@ -90,7 +114,7 @@ def main():
   except Exception:diagnostics.close(failed=True);raise
   if diagnostics.close()!='passed':raise RuntimeError()
   sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181ordinary native-qualified fixtures;12resource/security CLI response-parity controls,1CLI input-limit refusal and13Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
+  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181unchanged retained fixture requests against independently built pinned-main outputs;12resource/security CLI response-parity controls,1CLI input-limit refusal and13Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
   with open(diagnostics.directory/'qualification.json','x',opener=lambda name,flags:os.open(name,flags,0o600)) as f:json.dump(result,f,indent=2);f.write('\n')
   print(json.dumps({'version':result['version'],'status':'passed','ordinaryCases':2181,'refusalCases':13,'inputFiles':len(inputs['files'])}));return 0
  except Exception:print('weft-runner: fresh host qualification failed',file=sys.stderr);return 1

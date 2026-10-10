@@ -48,12 +48,14 @@ def rust_tokens(source):
 def embedded_inputs(root,path,entries):
  root=root.resolve();path=path.resolve()
  tokens,literals=rust_tokens(path.read_text())
+ module_base=path.parent if path.name in ('lib.rs','main.rs','mod.rs') else path.parent/path.stem
+ if any((root/prefix).is_relative_to(module_base) for prefix in ARCHIVE_ROOTS) and any(tokens[i]=='mod' and tokens[i+2:i+3] in ([';'],['{']) for i in range(len(tokens)-2)):raise CustodyError()
  def owned(base,index,executable=False):
   value=literals.get(index)
   if type(value)!=str or not value or '\x00' in value:raise CustodyError()
   target=(base/value).resolve()
   if not target.is_relative_to(root) or target.relative_to(root).as_posix() not in entries:raise CustodyError()
-  if executable and any(target.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
+  if executable and (target.suffix!='.rs' or any(target.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS)):raise CustodyError()
  for i,token in enumerate(tokens):
   if token in ('include_str','include_bytes','include') and tokens[i+1:i+2]==['as']:raise CustodyError()
   if token in ('include_str','include_bytes','include') and tokens[i+1:i+2]==['!']:
@@ -90,6 +92,27 @@ def embedded_inputs(root,path,entries):
     if not direct and not conditional:raise CustodyError()
    for k in path_keys:owned(base,k+2,not schema)
 
+def active_manifest_archives(root,path,manifest):
+ base=path.parent
+ def refuse(value):
+  if type(value)!=str:raise CustodyError()
+  target=(base/value).resolve()
+  if target.is_relative_to(root) and any(target==root/prefix or target.is_relative_to(root/prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
+ def dependencies(group):
+  for dependency in group.values():
+   if type(dependency)==dict and 'path' in dependency:refuse(dependency['path'])
+ for kind in ('dependencies','dev-dependencies','build-dependencies','replace'):
+  dependencies(manifest.get(kind,{}))
+ for target in manifest.get('target',{}).values():
+  for kind in ('dependencies','dev-dependencies','build-dependencies'):dependencies(target.get(kind,{}))
+ for group in manifest.get('patch',{}).values():dependencies(group)
+ workspace=manifest.get('workspace',{})
+ dependencies(workspace.get('dependencies',{}))
+ for pattern in workspace.get('members',[])+workspace.get('default-members',[]):
+  refuse(pattern)
+  for member in base.glob(pattern):refuse(str(member.relative_to(base)))
+ if 'workspace' in manifest.get('package',{}):refuse(manifest['package']['workspace'])
+
 def snapshot(root):
  root=root.resolve()
  entries={}
@@ -109,16 +132,20 @@ def snapshot(root):
  for name in list(entries):
   # Frozen source excerpts remain byte-bound inputs, not current build graphs.
   if any(name.startswith(prefix) for prefix in ARCHIVE_ROOTS):continue
+  if pathlib.PurePosixPath(name).name in ('config','config.toml') and pathlib.PurePosixPath(name).parent.name=='.cargo':
+   config=tomllib.loads((root/name).read_text())
+   # Source activation overrides require a separate qualified Cargo profile.
+   if any(key in config for key in ('paths','source','patch','replace','include')):raise CustodyError()
   if name.endswith('.rs'):embedded_inputs(root,root/name,entries)
   if pathlib.PurePosixPath(name).name=='Cargo.toml':
-   manifest=tomllib.loads((root/name).read_text());targets=([manifest['lib']] if 'lib' in manifest else [])+[v for kind in ('bin','example','test','bench') for v in manifest.get(kind,[])]
+   manifest=tomllib.loads((root/name).read_text());active_manifest_archives(root,root/name,manifest);targets=([manifest['lib']] if 'lib' in manifest else [])+[v for kind in ('bin','example','test','bench') for v in manifest.get(kind,[])]
    build=manifest.get('package',{}).get('build')
    if type(build)==str:targets.append({'path':build})
    for target in targets:
     if 'path' in target:
      path=((root/name).parent/target['path']).resolve()
      if not path.is_relative_to(root) or path.relative_to(root).as_posix() not in entries:raise CustodyError()
-     if any(path.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
+     if path.suffix!='.rs' or any(path.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
  return {'version':'weft-inputs/1','scope':'Complete compiler/binding/schema/corpus/oracle/test/host/build/lock/config/checker and governing HELIX input closure, including vendor and embedded inputs. Archived evidence/distribution realizations are byte-hashed, not reinterpreted as current build trees. Named generated qualification outputs/build products excluded.','archivalByteOnlyRoots':list(ARCHIVE_ROOTS),'roots':list(ROOTS),'rootFiles':list(FILES),'excludedOutputFiles':list(OUTPUTS),'excludedBuildDirectories':sorted(BUILD_OUTPUTS),'excludedGeneratedSuffixes':['.pyc'],'excludedGeneratedFiles':['.DS_Store'],'files':entries}
 
 def verify(root,manifest):

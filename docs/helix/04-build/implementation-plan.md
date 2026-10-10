@@ -449,3 +449,14 @@ existing bounded readers and are not qualified for exact unread OS offsets.
 Module ownership now includes main's arithmetic, paths, keys and distribution
 tooling. Inventory checks require semantic review of the added APIs; refreshing
 that inventory alone is not architectural qualification.
+
+
+Main qualification now has an independently built, clean reference at
+14c58146dad2e3aeb755c8035e91754a150be74c. All 2,181 retained requests are
+unchanged and integrated responses match that main reference exactly. Of these,
+2,128 outputs retain byte correspondence with historical native-qualified
+outputs; 53 changed outputs carry current-main compatibility evidence only.
+The complete differences, source hashes, build features and compiler hashes are
+recorded under evidence/main-integration-20261010. Changed cardinality SQL and
+diagnostic phases do not inherit native qualification. Fresh cross-host parity
+and final hosted CI are still required before merging this integration.

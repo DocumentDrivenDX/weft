@@ -1,0 +1,127 @@
+{
+  "scope": "Reviewed recipe and source/inert checks only; no actual builds/parity/full041/native claim",
+  "removed_local_tool_copies": [
+    {
+      "path": "bd5dd88c0ac1-cargo",
+      "bytes": 30854216,
+      "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6"
+    },
+    {
+      "path": "31f2aee4e71d-python3",
+      "bytes": 200560,
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    },
+    {
+      "path": "4a4af3831d74-rustc",
+      "bytes": 414776,
+      "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea"
+    },
+    {
+      "path": "caa2fc50064c-wasm-bindgen",
+      "bytes": 6272560,
+      "sha256": "8413bdf70847451cd35bd242e7eb2aa5d8c717699d39273248ebdf1d1cc43ae4"
+    },
+    {
+      "path": "134c2f478fef-node",
+      "bytes": 132848,
+      "sha256": "02dc8fa00d7f857c2412a5d55a85a1b7a341e94c3df430bd8733c732e31dca46"
+    }
+  ],
+  "files": [
+    {
+      "path": "015fd23c88a9-main.rs",
+      "bytes": 398,
+      "sha256": "dea57ae28eb9458c82310da95d9803dbaf67ad5ee826868846525ecc078fbb77"
+    },
+    {
+      "path": "04a9d46057da-Cargo.lock",
+      "bytes": 22716,
+      "sha256": "b69384f0e23ae43a62bd59edfadf27ffe73789df3ec09da23c564bb31e396ca6"
+    },
+    {
+      "path": "68b4b14c6bfe-source-inventory.json",
+      "bytes": 687929,
+      "sha256": "08e32444e85f71cb9e960d1731e41e7fe05d93d44d4b4f710c0c1dfbbe392c70"
+    },
+    {
+      "path": "69f08e8cccc9-launch-reviewed-build.py",
+      "bytes": 6275,
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "path": "8ffabb84a3f1-tsc.js",
+      "bytes": 267,
+      "sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+    },
+    {
+      "path": "924275f5bf4f-Cargo.toml",
+      "bytes": 519,
+      "sha256": "5a794f86518908af26fd674dd0a67e2da27315ec055ffc339f544d4974680ce4"
+    },
+    {
+      "path": "astra-weft-count-star-build-review-20261010-e-tests.stderr.log",
+      "bytes": 102,
+      "sha256": "71f385628efaeed61b8ca36819a695a12058846f3539952fa581e781da33250f"
+    },
+    {
+      "path": "astra-weft-count-star-build-review-20261010-e-tests.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "astra-weft-count-star-build-review-20261010-e.json",
+      "bytes": 3187,
+      "sha256": "14a62d183ff4d217247c0bbf0c3459ddf45dd68bed934e386eac0ae4cd4c3c0b"
+    },
+    {
+      "path": "astra-weft-count-star-build-review-20261010-e.py",
+      "bytes": 7401,
+      "sha256": "fb6ddeeb2b79a099d54da79956e3128fc7b2b7f441c03b128783680955ae9c40"
+    },
+    {
+      "path": "command-e.json",
+      "bytes": 17669,
+      "sha256": "a73bf24915efbabea6dbf6f4454ad9c956cd58b722b745b16e67cd4eb0d916e3"
+    },
+    {
+      "path": "fb5101e865ae-build-closure-inventory.json",
+      "bytes": 73147,
+      "sha256": "23852dbd6e30c465fbc37cb4b475a7a53898e26ae1f4716666a52c1fd487a265"
+    },
+    {
+      "path": "root-weft-count-star-harness-review-20261010-d.json",
+      "bytes": 2237,
+      "sha256": "467d9c89cbc6e48fe168e9285afe2b47a2bb18e037f166982ce2599187ad3054"
+    },
+    {
+      "path": "source/scripts/distribution/check-paths-embedding-browser.mjs",
+      "bytes": 5017,
+      "sha256": "423ad07dec89a93ca7b4bec15eb6e398af517ead5d4eb14b16d6098246edbefa"
+    },
+    {
+      "path": "source/scripts/distribution/check-paths-embedding-cli.py",
+      "bytes": 4877,
+      "sha256": "5d0361c77fa584263f8e351dbdfbc1a09b674eb9484023595fc74e8eb234c682"
+    },
+    {
+      "path": "source/scripts/distribution/check-paths-embedding-python.py",
+      "bytes": 4584,
+      "sha256": "fc12ba4b7f2a2da9c6d4ab3b436d841994590a494cec67b666ce9432a86a0ee8"
+    },
+    {
+      "path": "source/scripts/distribution/test_paths_embedding.py",
+      "bytes": 2669,
+      "sha256": "491253fc85acc244034e49bcd95e42a8cc8623c681068bf55785d7ad70e9b3ef"
+    },
+    {
+      "path": "weft-count-star-parity-harness-freeze-20261010-d.json",
+      "bytes": 1107,
+      "sha256": "fafd440ef3ac205f17fa675eb409a1b65748b75acf07ef2b17a3ee3c8c20775a"
+    },
+    {
+      "path": "astra-weft-count-star-recipe-cleanup-review-20261010-a.json",
+      "bytes": 2044,
+      "sha256": "5da50eee509e71c1e05918ee7710119e03b1fd4420ca737938d285ce6f26a239"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 """@covers US-008-AC1 @covers US-008-AC7 Full input/history stale controls."""
-import hashlib,json,pathlib,shutil,tempfile,unittest
+import hashlib,json,pathlib,shutil,tempfile,unittest,os,subprocess
 from unittest.mock import patch
 from reliability import custody
 ROOT=pathlib.Path(__file__).resolve().parents[2]
@@ -86,6 +86,34 @@ class CustodyTests(unittest.TestCase):
   for source,manifest in [('include!("../distributions/realizations/control/nested.txt")',''),('#[path="../distributions/realizations/control/nested.txt"] mod nested;',''),('', '[lib]\npath="distributions/realizations/control/nested.txt"\n'),('', '[package]\nname="control"\nversion="0.1.0"\nbuild="distributions/realizations/control/nested.txt"\n')]:
    with tempfile.TemporaryDirectory() as work:
     root=pathlib.Path(work);archive=root/'distributions/realizations/control/nested.txt';archive.parent.mkdir(parents=True);archive.write_text('include!("../../../../unowned.rs")');(root/'src').mkdir();(root/'src/lib.rs').write_text(source);(root/'Cargo.toml').write_text(manifest)
+    with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_active_cargo_archive_dependency_and_member_routes_refuse(self):
+  variants=['[dependencies]\narchived={path="distributions/realizations/control"}', '[target."cfg(unix)".dependencies]\narchived={path="distributions/realizations/control"}', '[workspace.dependencies]\narchived={path="distributions/realizations/control"}', '[patch.crates-io]\narchived={path="distributions/realizations/control"}', '[replace]\n"archived:0.1.0"={path="distributions/realizations/control"}', '[workspace]\nmembers=["distributions/realizations/*"]', '[workspace]\nmembers=["**/control"]', '[workspace]\ndefault-members=["distributions/realizations/*"]']
+  for manifest in variants:
+   with tempfile.TemporaryDirectory() as work:
+    root=pathlib.Path(work);archive=root/'distributions/realizations/control/src/lib.rs';archive.parent.mkdir(parents=True);archive.write_text('include!("../../../../unowned.rs")');(root/'Cargo.toml').write_text(manifest)
+    with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_actual_cargo_implicit_archive_library_is_rejected(self):
+  with tempfile.TemporaryDirectory() as work:
+   base=pathlib.Path(work);root=base/'repo';root.mkdir();outside=base/'outside.rs';outside.write_text('pub const EXTERNAL:u8=1;')
+   archive=root/'distributions/realizations/control';(archive/'src').mkdir(parents=True);(archive/'Cargo.toml').write_text('[package]\nname="archived"\nversion="0.1.0"\nedition="2021"\n');(archive/'src/lib.rs').write_text('include!(r#"'+str(outside)+'"#);')
+   (root/'src').mkdir();(root/'src/lib.rs').write_text('pub use archived::EXTERNAL;');(root/'Cargo.toml').write_text('[package]\nname="control"\nversion="0.1.0"\nedition="2021"\n[dependencies]\narchived={path="distributions/realizations/control"}\n')
+   result=subprocess.run([os.environ.get('WEFT_CARGO','cargo'),'check','--offline'],cwd=root,env=dict(os.environ,CARGO_TARGET_DIR=str(base/'target')),capture_output=True,timeout=30)
+   self.assertEqual(result.returncode,0,result.stderr.decode())
+   with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_cargo_configuration_source_activation_overrides_refuse(self):
+  for override in ['paths=["distributions/realizations/control"]', '[source.local]\ndirectory="distributions/realizations/control"', '[patch.crates-io]\narchived={path="distributions/realizations/control"}', 'include="nested.toml"']:
+   with tempfile.TemporaryDirectory() as work:
+    root=pathlib.Path(work);(root/'.cargo').mkdir();(root/'.cargo/config.toml').write_text(override)
+    with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_implicit_module_ancestor_shapes_cannot_activate_archives(self):
+  for name,source in [('lib.rs','mod distributions;'),('lib.rs','mod distributions { mod realizations; }'),('distributions/realizations.rs','mod nested;')]:
+   with tempfile.TemporaryDirectory() as work:
+    root=pathlib.Path(work);path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(source);archive=root/'distributions/realizations/nested.rs';archive.parent.mkdir(parents=True,exist_ok=True);archive.write_text('include!("../../../../outside.rs")')
     with self.assertRaises(custody.CustodyError):custody.snapshot(root)
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,64 @@
+{
+  "authorInertTests": 4,
+  "command": {
+    "bytes": 17669,
+    "path": "/private/tmp/weft-count-star-build-20261010-b/command-e.json",
+    "sha256": "a73bf24915efbabea6dbf6f4454ad9c956cd58b722b745b16e67cd4eb0d916e3"
+  },
+  "completeGitTreeFiles": 2295,
+  "correctedPriorFinding": "Command D omitted .cargo/config.toml; E restores exact tracked wasm32 entropy configuration.",
+  "findings": [],
+  "freeze": {
+    "bytes": 1107,
+    "path": "/private/tmp/weft-count-star-parity-harness-freeze-20261010-c.json",
+    "sha256": "f919b51f10723bfc2a16ef2b86e12e9a3e3643eac2b4a47423c32f6d26ff5920"
+  },
+  "harnessSources": [
+    {
+      "bytes": 4543,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-python.py",
+      "sha256": "bbb9f6c01c16e544b9c982b08fcf005b72e3e730c28ab44fc3889b3714f90a0a"
+    },
+    {
+      "bytes": 5012,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-browser.mjs",
+      "sha256": "e649e5398d2bcc06c77c6ba2738bdf57c62618e3e48162223af08051a1956b51"
+    },
+    {
+      "bytes": 4876,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-cli.py",
+      "sha256": "7482dc55ca48c5031c4b79d46a45e88ce692fdf0c67bc21462a1fd0f5f3f9f69"
+    },
+    {
+      "bytes": 2669,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/test_paths_embedding.py",
+      "sha256": "491253fc85acc244034e49bcd95e42a8cc8623c681068bf55785d7ad70e9b3ef"
+    }
+  ],
+  "independentInertControls": [
+    "Closed child environment excludes parent-only marker",
+    "Both exact stream limits preserve bytes",
+    "One extra stderr byte refuses",
+    "Closed pipes do not let live leader escape deadline",
+    "Original cancellation survives cleanup failure",
+    "Existing output refuses before launch"
+  ],
+  "limits": [
+    "No Cargo/Rust/Weft compiler/native extension/browser execution performed.",
+    "Cached dependencies/target, full TypeScript loader dependency chain, SDK/dynamic libraries are not fully inventoried; no hermetic or deterministic-byte claim.",
+    "Build target must have sole cooperating owner through retained output copy/hash.",
+    "Actual fresh artifacts, six phase exit results, full emitted metadata schema, 85-case corpus and Python/browser parity remain future qualification.",
+    "The 74 historical cases qualify their original 0.4 route; eleven new 0.4.1 semantic cases do not qualify all 49 new-profile capabilities. Full 0.4.1 profile coverage and index admission remain separate required work.",
+    "Harness approval assumes its explicit files and owning bounded outer launcher will be pinned independently in an exact parity command."
+  ],
+  "materializedBytes": 79610566,
+  "materializedFiles": 271,
+  "resourcesRehashed": 12,
+  "script": {
+    "bytes": 7401,
+    "path": "/private/tmp/astra-weft-count-star-build-review-20261010-e.py",
+    "sha256": "fb6ddeeb2b79a099d54da79956e3128fc7b2b7f441c03b128783680955ae9c40"
+  },
+  "sourceCommit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688",
+  "verdict": "approved-exact-command-e-bounded-component-build; harness-c-source-approved-only"
+}

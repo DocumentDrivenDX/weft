@@ -41,4 +41,23 @@ class FreshHostTests(unittest.TestCase):
      with self.assertRaises(RuntimeError):validate_reports(out,wheel)
     write(values);native.write_bytes(b'stale-native')
     with self.assertRaises(RuntimeError):validate_reports(out,wheel)
+class MainBaselineTests(unittest.TestCase):
+ def test_main_compatibility_cannot_change_requests_or_hide_native_gaps(self):
+  from reliability.fresh_hosts import reconcile_main_baseline
+  historical=[{'id':str(i),'request':{'sql':'SELECT'},'response':{'diagnostics':[{'phase':'sql'}]}} for i in range(2181)]
+  current=copy.deepcopy(historical);current[0]['response']['diagnostics'][0]['phase']='input'
+  receipt={'status':'passed','requests':2181,'requestsUnchanged':True,'changedOutputs':1,'historicalIdenticalOutputs':2180}
+  differences=[{'id':'0','differences':[{'path':'/diagnostics/0/phase','historical':'sql','main':'input'}],'qualification':'Current main compatibility and fresh cross-host parity only; native requalification remains open.'}]
+  reconcile_main_baseline(historical,current,receipt,differences)
+  for mode in ('request','identifier','duplicate','count','gap','missing-difference','wrong-difference'):
+   records=copy.deepcopy(current);summary=copy.deepcopy(receipt);changes=copy.deepcopy(differences)
+   if mode=='request':records[0]['request']['sql']='CHANGED'
+   elif mode=='identifier':records[0]['id']='unowned'
+   elif mode=='duplicate':records[0]['id']=records[1]['id']
+   elif mode=='count':records.pop()
+   elif mode=='gap':summary['changedOutputs']=0
+   elif mode=='missing-difference':changes=[]
+   else:changes[0]['differences'][0]['main']='wrong'
+   with self.assertRaises(RuntimeError):reconcile_main_baseline(historical,records,summary,changes)
+
 if __name__=='__main__':unittest.main()

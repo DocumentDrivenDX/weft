@@ -1,0 +1,26 @@
+{
+  "format": "weft-paths-embedding-harness-freeze/0.1",
+  "files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-python.py",
+      "bytes": 4584,
+      "sha256": "fc12ba4b7f2a2da9c6d4ab3b436d841994590a494cec67b666ce9432a86a0ee8"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-browser.mjs",
+      "bytes": 5017,
+      "sha256": "423ad07dec89a93ca7b4bec15eb6e398af517ead5d4eb14b16d6098246edbefa"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-cli.py",
+      "bytes": 4877,
+      "sha256": "5d0361c77fa584263f8e351dbdfbc1a09b674eb9484023595fc74e8eb234c682"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/test_paths_embedding.py",
+      "bytes": 2669,
+      "sha256": "491253fc85acc244034e49bcd95e42a8cc8623c681068bf55785d7ad70e9b3ef"
+    }
+  ],
+  "scope": "Bounded explicit executable/native extension/real-browser parity harness; no actual compiler/embedding run yet"
+}
