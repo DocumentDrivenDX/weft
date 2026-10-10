@@ -144,3 +144,5 @@ mod security_obligation_sources;
 mod security_rule_occurrences;
 
 mod security_obligation_matching;
+
+mod security_requirement_templates;

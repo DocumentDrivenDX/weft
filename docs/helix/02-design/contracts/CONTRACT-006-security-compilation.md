@@ -1505,3 +1505,40 @@ UMF SPIKE-010 source-demand-binding annex governs the exact tested subset.
 ## Main integration identity migration — 2026-10-10
 
 Main already owns CONTRACT-005 for authored paths and ordinary compile 0.3/0.4 schemas. This security contract is explicitly migrated to CONTRACT-006. The pending blocked security 0.3 and registered security 0.4 transports become `weft-security-compile/0.1.0` and `weft-security-compile/0.2.0`, both paired with the existing `weft-sql/0.2.0` grammar. Separate security request/response schema paths preserve ordinary main contracts. Historical receipts retain original source identifiers and do not qualify the merged source. Both security transports remain blocked before emission; registration does not authorize physical execution.
+
+
+#### Private independent template expansion experiment
+
+The `weft.security.requirement-templates/0.1.0` private trusted premise supplies
+explicit typed applicability selectors, kind, owner, site, failure, cases and
+same-occurrence prerequisite template references. The issuer consumes actual
+OwnerSourceDemands plus typed RuleOccurrences, never manifest obligation payloads
+or parsed canonical source names, and emits the separate required-instances0.2
+inventory. Original identities include profile/template/source/scope/address and
+exclude capability origin; all eligible assigned origins retain full case atoms.
+Semantic templates matching a selector are globally mandatory, even if another
+kind is present at that source. Selected deployment templates are independently
+assigned per capability, including selected zero-edge capabilities. Every authored
+capability must cover the complete declared profile case inventory through its
+Selected templates. This case inventory is a trusted premise, not original backend
+qualification or independently authenticated catalog completeness.
+
+The current applicability subset is all18 owner event categories and exact typed
+Rule effect/condition/operand/disposition variants at retained occurrence paths.
+False/empty branches and withheld dispositions remain distinct from stored reads.
+Payload-specific domain, transform, operator/output and backend predicates are not
+implemented by these selectors; an authenticated complete backend catalog remains
+required before physical admission. No aggregate semantic support follows from
+owner lineage. The initial prerequisite subset is a same-selector, same-occurrence
+DAG, bounded to64 traversal levels; cross-target instantiation is unsupported.
+Unknown/missing mappings and dependencies, cycles, mismatched registration/target,
+foreign cases and incomplete selected deployment catalogs refuse atomically.
+
+Template retention has a separate1m-visit/16m-text phase ledger, with charges before
+retained copies and aggregate4096 expanded atom links/originals/instances limits.
+Rule enumeration has its own bounded phase ledger. These are not one aggregate
+CPU/memory or allocator guarantee. Conditional matching checks the original decoded
+contracts and every required kind at one whole eligible capability per actual scope;
+source completeness cannot authorize a fragmented codec/privacy result. This
+private boundary does not authenticate its profile, select a production backend,
+emit SQL, establish native cases or grant authorization/publication authority.

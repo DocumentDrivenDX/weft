@@ -1,0 +1,126 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 52 | impl PathRead {
+    | ------------- method in this implementation
+...
+120 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-core` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-core --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.04s
+     Running unittests src/lib.rs (/private/tmp/umf-security-weft-bridge-target/debug/deps/weft_core-189cbadb0bdab47b)
+
+running 2 tests
+test security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties ... FAILED
+test security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift ... FAILED
+
+failures:
+
+---- security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties stdout ----
+
+thread 'security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties' panicked at crates/weft-core/src/security_semantic_coverage.rs:1018:151:
+assertion `left == right` failed
+  left: {"[\"action\",\"s0\",\"read\"]": (Action, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"resourceId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"domain\",\"m\",\"staffId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\",\"1\",\"domain\",\"m\",\"resourceId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\",\"1\",\"domain\",\"m\",\"staffId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"model\",\"domain\",\"schema-1\",\"0.8.0\",\"82255ebdeb28957912661a111cf4b6572772ee8dffcbcdc8d27d56b2672bb4ba\"]": (Model, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"module\",\"domain\",\"m\"]": (Module, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"ontology\",\"1387d4a8b93ef4cbb28c6539c1933afd5f5049ca979e47ca95d52e0a1da75df5\"]": (Ontology, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"1\",\"first_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"2\",\"second_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"policy\",\"629950bec868422e39c1ef5d60afb0a0b6c4a913a4a69afb4a6a518244a8acce\"]": (Policy, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"primary-action\",\"read\"]": (PrimaryAction, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"projection\",\"s0\",\"domain\",\"m\",\"salary\"]": (Projection, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"query\",\"fca36d2c4a4f1f50d6e2a07ab7df03551337214fd1d455bed0da84741952d745\"]": (Query, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"rule\",\"s0\",\"read\",\"reader\"]": (Rule, {ScanAction { scan: "s0", action: "read" }}), "[\"scan\",\"s0\",\"domain\",\"m\",\"Resource\"]": (Scan, {ScanAction { scan: "s0", action: "read" }, Application})}
+ right: {"[\"action\",\"s0\",\"read\"]": (Action, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"resourceId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"salary\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"domain\",\"m\",\"staffId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\",\"1\",\"domain\",\"m\",\"resourceId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\",\"1\",\"domain\",\"m\",\"staffId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"model\",\"domain\",\"schema-1\",\"0.8.0\",\"82255ebdeb28957912661a111cf4b6572772ee8dffcbcdc8d27d56b2672bb4ba\"]": (Model, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"module\",\"domain\",\"m\"]": (Module, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"ontology\",\"1387d4a8b93ef4cbb28c6539c1933afd5f5049ca979e47ca95d52e0a1da75df5\"]": (Ontology, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"1\",\"first_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"2\",\"second_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"policy\",\"629950bec868422e39c1ef5d60afb0a0b6c4a913a4a69afb4a6a518244a8acce\"]": (Policy, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"primary-action\",\"read\"]": (PrimaryAction, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"projection\",\"s0\",\"domain\",\"m\",\"salary\"]": (Projection, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"query\",\"fca36d2c4a4f1f50d6e2a07ab7df03551337214fd1d455bed0da84741952d745\"]": (Query, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"rule\",\"s0\",\"read\",\"reader\"]": (Rule, {ScanAction { scan: "s0", action: "read" }}), "[\"scan\",\"s0\",\"domain\",\"m\",\"Resource\"]": (Scan, {ScanAction { scan: "s0", action: "read" }, Application})}
+
+---- security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift stdout ----
+
+thread 'security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift' panicked at crates/weft-core/src/security_semantic_coverage.rs:1018:151:
+assertion `left == right` failed
+  left: {"[\"action\",\"s0\",\"read\"]": (Action, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"resourceId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"domain\",\"m\",\"staffId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\",\"1\",\"domain\",\"m\",\"resourceId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\",\"1\",\"domain\",\"m\",\"staffId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"model\",\"domain\",\"schema-1\",\"0.8.0\",\"82255ebdeb28957912661a111cf4b6572772ee8dffcbcdc8d27d56b2672bb4ba\"]": (Model, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"module\",\"domain\",\"m\"]": (Module, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"ontology\",\"1387d4a8b93ef4cbb28c6539c1933afd5f5049ca979e47ca95d52e0a1da75df5\"]": (Ontology, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"1\",\"first_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"2\",\"second_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"policy\",\"629950bec868422e39c1ef5d60afb0a0b6c4a913a4a69afb4a6a518244a8acce\"]": (Policy, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"primary-action\",\"read\"]": (PrimaryAction, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"projection\",\"s0\",\"domain\",\"m\",\"salary\"]": (Projection, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"query\",\"fca36d2c4a4f1f50d6e2a07ab7df03551337214fd1d455bed0da84741952d745\"]": (Query, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"rule\",\"s0\",\"read\",\"reader\"]": (Rule, {ScanAction { scan: "s0", action: "read" }}), "[\"scan\",\"s0\",\"domain\",\"m\",\"Resource\"]": (Scan, {ScanAction { scan: "s0", action: "read" }, Application})}
+ right: {"[\"action\",\"s0\",\"read\"]": (Action, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"resourceId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"domain\",\"m\",\"salary\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"domain\",\"m\",\"staffId\"]": (Field, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\"]": (Key, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Resource\",\"pk\",\"1\",\"domain\",\"m\",\"resourceId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"key-field\",\"s0\",\"read\",\"domain\",\"m\",\"Staff\",\"pk\",\"1\",\"domain\",\"m\",\"staffId\"]": (KeyField, {ScanAction { scan: "s0", action: "read" }}), "[\"model\",\"domain\",\"schema-1\",\"0.8.0\",\"82255ebdeb28957912661a111cf4b6572772ee8dffcbcdc8d27d56b2672bb4ba\"]": (Model, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"module\",\"domain\",\"m\"]": (Module, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"ontology\",\"1387d4a8b93ef4cbb28c6539c1933afd5f5049ca979e47ca95d52e0a1da75df5\"]": (Ontology, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"1\",\"first_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"output\",\"2\",\"second_value\"]": (Output, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"policy\",\"629950bec868422e39c1ef5d60afb0a0b6c4a913a4a69afb4a6a518244a8acce\"]": (Policy, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"primary-action\",\"read\"]": (PrimaryAction, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"projection\",\"s0\",\"domain\",\"m\",\"salary\"]": (Projection, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"query\",\"fca36d2c4a4f1f50d6e2a07ab7df03551337214fd1d455bed0da84741952d745\"]": (Query, {ScanAction { scan: "s0", action: "read" }, Application}), "[\"rule\",\"s0\",\"read\",\"reader\"]": (Rule, {ScanAction { scan: "s0", action: "read" }}), "[\"scan\",\"s0\",\"domain\",\"m\",\"Resource\"]": (Scan, {ScanAction { scan: "s0", action: "read" }, Application})}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    security_semantic_coverage::tests::independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties
+    security_semantic_coverage::tests::independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 217 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p weft-core --lib`

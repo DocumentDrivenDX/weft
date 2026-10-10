@@ -280,3 +280,38 @@ and assertion mappings, authentication, physical lowering or native qualificatio
 It adds no formal Rust refinement proof and promotes none of the original132
 required backend cases. B10/admission-drift closure and integrated native acceptance
 remain open. B-008 and the implementation goal remain active.
+
+
+### B-008 independent template expansion — 2026-10-10
+
+Under CONTRACT-006 and UMF's independent backend requirement issuer annex,
+private template expansion now instantiates independently authored kinds, original
+contracts/sites/failures/cases and bounded same-occurrence prerequisites from
+actual owner event categories and structural rule payloads. It retains complete
+shared origins and independently assigned deployment duties even for zero-edge
+selections. It does not read manifest obligations to author the expected inventory.
+The actual matcher then compares that independently expanded inventory against
+original declaration custody; codec/privacy fragments cannot satisfy a whole scope.
+
+The typed applicability subset covers18 owner event categories and all existing
+Rule variants, not payload-specific field/domain/operator/transform/backend rules.
+The declared full profile case set and catalog completeness remain trusted premises.
+Exact backend catalogs, original132-case mappings, authenticated registration,
+physical lowering and native enforcement remain required. Prerequisites currently
+instantiate only at the same selector/address; cross-target mappings refuse.
+Separate template and rule-enumeration budgets do not establish aggregate CPU/
+memory bounds. Public security lowering remains closed. No new formal Rust
+refinement or original acceptance-case promotion is claimed; B-008 remains open.
+
+
+The [execution checkpoint](evidence/security-requirement-templates/checkpoint.json)
+retains a terminal release workspace run:569 passing tests across44 groups,
+including226 core tests and nine new decisive controls. All828 declared repository
+build/test inputs were frozen before execution and verified unchanged afterward;
+external Cargo registry/runtime dependencies are excluded. Astra independently
+verified all pins, full anchored test summaries, all nine exact passing lines and
+the retained log hash. No actionable review findings remain within the stated
+subset. Specification checks pass for51 artifacts/31 schemas/30 compiler criteria/
+636 fixtures, separately from security acceptance. Development failures and their
+corrections are retained; exact failed-attempt source snapshots were not captured,
+so those logs do not support source-qualified claims. The goal remains active.

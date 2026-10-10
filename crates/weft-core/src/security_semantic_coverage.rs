@@ -991,4 +991,122 @@ mod tests{
   });
  }
 
+ // Independently authored fixture declarations; never copied from issued requirements.
+ fn with_template_fixture(run:impl FnOnce(&crate::security_obligation_sources::OwnerSourceDemands<'_, '_, '_, '_>,&crate::security_obligation_custody::ObligationCustody<'_>,&crate::security_requirement_templates::Profile)) {
+  with_template_fixture_mode(0,run);
+ }
+ fn with_template_fixture_mode(mode:u8,run:impl FnOnce(&crate::security_obligation_sources::OwnerSourceDemands<'_, '_, '_, '_>,&crate::security_obligation_custody::ObligationCustody<'_>,&crate::security_requirement_templates::Profile)) {
+  use crate::security_requirement_templates::{Profile,Template,Selector};
+  use crate::security_obligation_sources::OwnerEventKind as E;
+  use crate::backend::{Obligation,ObligationOwner};
+  with_mutated_context("SELECT r.salary AS first_value,r.salary AS second_value FROM Resource r",|f|{
+   f["policy"]["rules"].as_array_mut().unwrap().truncate(1);
+   f["policy"]["rules"][0]["condition"]=json!({"op":"literal","value":false});
+   f["policy"]["rules"][0]["disclosure"]=json!([{"field":{"documentId":"domain","moduleId":"m","elementId":"salary"},"disposition":{"kind":"withheld"}}]);
+  },|ctx,mut m|{
+   let read=scan_scope("s0","read");let app=CoverageScope::Application;
+   let mut golden=BTreeMap::<String,(E,BTreeSet<CoverageScope>)>::new();
+   let mut put=|tokens:&[&str],kind:E,scopes:Vec<CoverageScope>|{golden.insert(serde_json::to_string(tokens).unwrap(),(kind,scopes.into_iter().collect()));};
+   put(&["primary-action","read"],E::PrimaryAction,vec![read.clone(),app.clone()]);
+   for (tag,kind,raw) in [("policy",E::Policy,ctx.logical_plan().source().policy_json()),("ontology",E::Ontology,ctx.logical_plan().source().ontology_json()),("query",E::Query,ctx.query().sql())]{put(&[tag,&crate::json::sha256(raw.as_bytes())],kind,vec![read.clone(),app.clone()]);}
+   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs[0].pin.sha256],E::Model,vec![read.clone(),app.clone()]);put(&["module","domain","m"],E::Module,vec![read.clone(),app.clone()]);
+   put(&["scan","s0","domain","m","Resource"],E::Scan,vec![read.clone(),app.clone()]);
+   put(&["action","s0","read"],E::Action,vec![read.clone()]);put(&["rule","s0","read","reader"],E::Rule,vec![read.clone()]);
+   for (owner,field) in [("Staff","staffId"),("Resource","resourceId")]{put(&["key","s0","read","domain","m",owner,"pk"],E::Key,vec![read.clone()]);put(&["key-field","s0","read","domain","m",owner,"pk","1","domain","m",field],E::KeyField,vec![read.clone()]);put(&["field","s0","read","domain","m",owner,"domain","m",field],E::Field,vec![read.clone()]);}
+   put(&["projection","s0","domain","m","salary"],E::Projection,vec![read.clone(),app.clone()]);
+   for (i,name) in [("1","first_value"),("2","second_value")]{put(&["output",i,name],E::Output,vec![read.clone(),app.clone()]);}
+   with_registered_coverage(ctx,m.clone(),&["all".into()],|coverage|{
+    let owner=crate::security_obligation_sources::issue_demands(coverage).unwrap();
+    let actual=owner.events().iter().map(|(s,k)|(s.clone(),(*k,owner.demands()[s].iter().map(|q|(*q).clone()).collect()))).collect::<BTreeMap<_,_>>();assert_eq!(actual,golden);
+   });
+   let mut templates=BTreeMap::new();
+   for event in [E::PrimaryAction,E::Policy,E::Ontology,E::Query,E::Model,E::Module,E::Scan,E::Projection,E::QueryField,E::Action,E::Rule,E::Key,E::KeyField,E::Field,E::Context,E::Association,E::Operator,E::Output]{
+    templates.insert(format!("event-{event:?}"),Template{selector:Selector::Event(event),kind:if event==E::Field{"codec".into()}else{"lineage".into()},owner:ObligationOwner::Host,site:"host".into(),failure:"WFT-FIXTURE-TEMPLATE".into(),cases:BTreeSet::from(["semantic-case".into()]),prerequisites:BTreeSet::new()});
+   }
+   for (id,selector) in [("permit",Selector::Permit),("false",Selector::False),("withheld",Selector::Withheld)]{templates.insert(id.into(),Template{selector,kind:"logical-node".into(),owner:ObligationOwner::Backend,site:"native".into(),failure:"WFT-FIXTURE-RULE".into(),cases:BTreeSet::from(["semantic-case".into()]),prerequisites:BTreeSet::new()});}
+   templates.insert("privacy".into(),Template{selector:Selector::Event(E::Field),kind:"privacy".into(),owner:ObligationOwner::Host,site:"host".into(),failure:"WFT-FIXTURE-PRIVACY".into(),cases:BTreeSet::from(["semantic-case".into()]),prerequisites:BTreeSet::from(["event-Field".into()])});
+   templates.insert("deployment".into(),Template{selector:Selector::Selected,kind:"installed-profile".into(),owner:ObligationOwner::Backend,site:"native".into(),failure:"WFT-FIXTURE-DEPLOY".into(),cases:BTreeSet::from(["semantic-case".into(),"deployment-case".into()]),prerequisites:BTreeSet::new()});
+   let mut authored=Vec::new();
+   for (source,(kind,scopes)) in &golden{for scope in scopes{
+    let id=format!("event-{kind:?}");authored.push((id,source.clone(),scope.clone(),"event".into()));
+    if *kind==E::Field{authored.push(("privacy".into(),source.clone(),scope.clone(),"event".into()));}
+   }}
+   let rule=json!(["rule","s0","read","reader"]).to_string();
+   for (id,address) in [("permit",json!(["rule"])),("false",json!(["condition"])),("withheld",json!(["disclosure","0"]))]{authored.push((id.into(),rule.clone(),read.clone(),address.to_string()));}
+   let original_id=|template:&str,source:&str,scope:&CoverageScope,occurrence:&str|match scope{CoverageScope::Application=>json!(["template","fixture-templates",template,source,"application",occurrence]).to_string(),CoverageScope::ScanAction{scan,action}=>json!(["template","fixture-templates",template,source,"scan-action",scan,action,occurrence]).to_string()};
+   for (template,source,scope,occurrence) in &authored{
+    let t=&templates[template];let q=match scope{CoverageScope::Application=>json!({"kind":"application"}),CoverageScope::ScanAction{scan,action}=>json!({"kind":"scan-action","scan":scan,"action":action})};
+    m.capabilities[0].obligations.push(Obligation{id:original_id(template,source,scope,occurrence),owner:t.owner.clone(),failure_code:t.failure.clone(),parameters:json!({"version":"weft.security.admission-obligation/0.2.0","subjects":[{"kind":"semantic","source":source,"scope":q}],"enforcementSite":t.site,"prerequisites":t.prerequisites.iter().map(|d|original_id(d,source,scope,occurrence)).collect::<Vec<_>>(),"evidenceCaseIds":t.cases})});
+   }
+   let mut unused=m.capabilities[0].clone();unused.id="unused-staff".into();unused.logical_domain["targets"]=json!([{"documentId":"domain","revision":"schema-1","moduleId":"m","elementId":"Staff"}]);unused.obligations.clear();m.capabilities.push(unused);
+   if mode!=0{
+    let field_ids=authored.iter().filter(|(t,_,_,_)|t=="event-Field"||t=="privacy").map(|(t,source,scope,address)|original_id(t,source,scope,address)).collect::<BTreeSet<_>>();
+    let privacy_ids=authored.iter().filter(|(t,_,_,_)|t=="privacy").map(|(t,source,scope,address)|original_id(t,source,scope,address)).collect::<BTreeSet<_>>();
+    let mut also=m.capabilities[0].clone();also.id=if mode==1{"also-fields".into()}else{"also-complete".into()};if mode==1{also.obligations.retain(|o|field_ids.contains(&o.id));}
+    if mode==1{m.capabilities[0].obligations.retain(|o|!privacy_ids.contains(&o.id));}m.capabilities.push(also);
+   }
+   for cap in &mut m.capabilities{cap.obligations.push(Obligation{id:original_id("deployment",&cap.id,&app,"deployment"),owner:ObligationOwner::Backend,failure_code:"WFT-FIXTURE-DEPLOY".into(),parameters:json!({"version":"weft.security.admission-obligation/0.2.0","subjects":[{"kind":"selected-capability","profileRequirementId":"deployment"}],"enforcementSite":"native","prerequisites":[],"evidenceCaseIds":["semantic-case","deployment-case"]})});}
+   let selected=m.capabilities.iter().map(|c|c.id.clone()).collect::<Vec<_>>();
+   with_registered_coverage(ctx,m,&selected,|coverage|{
+    let owner=crate::security_obligation_sources::issue_demands(coverage).unwrap();let custody=crate::security_obligation_custody::ObligationCustody::collect(*coverage.declaration(),&selected,true).unwrap();
+    let profile=Profile{version:"weft.security.requirement-templates/0.1.0".into(),id:"fixture-templates".into(),registration_json:coverage.declaration().manifest_json().into(),target:"fixture".into(),capabilities:BTreeMap::from([("all".into(),templates.keys().cloned().collect()),("unused-staff".into(),BTreeSet::from(["deployment".into()]))]),templates,cases:BTreeSet::from(["semantic-case".into(),"deployment-case".into()])};
+    let mut profile=profile;
+    if mode==1{profile.capabilities.get_mut("all").unwrap().remove("privacy");profile.capabilities.insert("also-fields".into(),BTreeSet::from(["deployment".into(),"event-Field".into(),"privacy".into()]));}
+    if mode==2{profile.capabilities.insert("also-complete".into(),profile.templates.keys().cloned().collect());}
+    run(&owner,&custody,&profile);
+   });
+  });
+ }
+ #[test]
+ fn independent_template_issuer_matches_authored_originals_false_nodes_and_zero_edge_duties(){
+  use crate::security_requirement_templates::issue;
+  with_template_fixture(|owner,custody,profile|{
+   let issued=issue(owner,profile).unwrap();let r=issued.required();
+   assert_eq!(r.instances.len(),33);assert_eq!(r.base.contracts.len(),35);assert_eq!(r.base.atoms.len(),37);
+   let matched=crate::security_obligation_matching::match_instances(owner,custody,r).unwrap();assert!(matched.alternatives().values().all(|ids|ids==&BTreeSet::from(["all".into()])));
+   for (instance,origins) in &r.instances{assert_eq!(origins.keys().cloned().collect::<BTreeSet<_>>(),BTreeSet::from(["all".into()]));if instance.kind=="codec"{assert!(r.instances.keys().any(|i|i.source==instance.source&&i.scope==instance.scope&&i.kind=="privacy"));}}
+   assert_eq!(r.base.selected_requirements["unused-staff"],BTreeSet::from(["deployment".into()]));
+   for atom in &r.base.atoms{let mut omitted=r.clone();omitted.base.atoms.remove(atom);assert!(crate::security_obligation_matching::match_instances(owner,custody,&omitted).is_err());}
+   let (w,t)=crate::security_requirement_templates::test_budget(owner,profile,1_000_000,16_000_000).unwrap();let exact_w=1_000_000-w;let exact_t=16_000_000-t;
+   assert!(crate::security_requirement_templates::test_budget(owner,profile,exact_w,exact_t).is_ok());assert!(crate::security_requirement_templates::test_budget(owner,profile,exact_w-1,exact_t).is_err());assert!(crate::security_requirement_templates::test_budget(owner,profile,exact_w,exact_t-1).is_err());
+  });
+ }
+ #[test]
+ fn independent_template_issuer_refuses_unknown_applicability_catalog_and_prerequisite_drift(){
+  use crate::security_requirement_templates::{issue,Selector};
+  with_template_fixture(|owner,custody,profile|{
+   for id in ["event-Policy","false","withheld"]{let mut missing=profile.clone();missing.templates.remove(id);for ids in missing.capabilities.values_mut(){ids.remove(id);}assert!(issue(owner,&missing).is_err());}
+   for field in ["version","target","registration"]{let mut wrong=profile.clone();match field{"version"=>wrong.version="unknown".into(),"target"=>wrong.target="foreign".into(),_=>wrong.registration_json="{}".into()}assert!(issue(owner,&wrong).is_err());}
+   let mut missing=profile.clone();missing.capabilities.get_mut("unused-staff").unwrap().clear();assert!(issue(owner,&missing).is_err());
+   let mut shortened=profile.clone();shortened.templates.get_mut("deployment").unwrap().cases.remove("deployment-case");assert!(issue(owner,&shortened).is_err());
+   let mut foreign=profile.clone();foreign.templates.get_mut("false").unwrap().cases.insert("foreign-case".into());assert!(issue(owner,&foreign).is_err());
+   for dependency in ["missing","false","privacy"]{let mut bad=profile.clone();bad.templates.get_mut("privacy").unwrap().prerequisites.insert(dependency.into());assert!(issue(owner,&bad).is_err());}
+   let mut cycle=profile.clone();cycle.templates.get_mut("event-Field").unwrap().prerequisites.insert("privacy".into());assert!(issue(owner,&cycle).is_err());
+   let mut wrong=profile.clone();wrong.templates.get_mut("false").unwrap().selector=Selector::True;assert!(issue(owner,&wrong).is_err());
+   for mutation in ["site","failure","owner","prerequisites"]{let mut changed=profile.clone();let t=changed.templates.get_mut("privacy").unwrap();match mutation{"site"=>t.site="foreign".into(),"failure"=>t.failure="foreign".into(),"owner"=>t.owner=crate::backend::ObligationOwner::Backend,_=>t.prerequisites.clear()};let issued=issue(owner,&changed).unwrap();assert!(crate::security_obligation_matching::match_instances(owner,custody,issued.required()).is_err());}
+  });
+ }
+
+ #[test]
+ fn independent_template_issuer_does_not_union_fragmented_codec_privacy_origins(){
+  with_template_fixture_mode(1,|owner,custody,profile|{
+   let issued=crate::security_requirement_templates::issue(owner,profile).unwrap();let required=issued.required();
+   assert!(crate::security_obligation_matching::match_required(owner,custody,&required.base).is_ok());
+   assert!(crate::security_obligation_matching::match_instances(owner,custody,required).is_err());
+   let fields=required.instances.iter().filter(|(i,_)|i.kind=="codec"||i.kind=="privacy").collect::<Vec<_>>();assert_eq!(fields.len(),4);
+   for (instance,origins) in fields{if instance.kind=="privacy"{assert_eq!(origins.keys().cloned().collect::<BTreeSet<_>>(),BTreeSet::from(["also-fields".into()]));}else{assert_eq!(origins.keys().cloned().collect::<BTreeSet<_>>(),BTreeSet::from(["all".into(),"also-fields".into()]));}}
+  });
+ }
+
+ #[test]
+ fn independent_template_issuer_preserves_shared_originals_and_unchosen_origin_duties(){
+  with_template_fixture_mode(2,|owner,custody,profile|{
+   let issued=crate::security_requirement_templates::issue(owner,profile).unwrap();let r=issued.required();
+   assert_eq!(r.instances.len(),33);assert_eq!(r.base.contracts.len(),36);assert_eq!(r.base.atoms.len(),72);
+   let matched=crate::security_obligation_matching::match_instances(owner,custody,r).unwrap();
+   assert!(matched.alternatives().values().all(|ids|ids==&BTreeSet::from(["all".into(),"also-complete".into()])));
+   for origins in r.instances.values(){assert_eq!(origins.keys().cloned().collect::<BTreeSet<_>>(),BTreeSet::from(["all".into(),"also-complete".into()]));let a=&origins["all"];let b=&origins["also-complete"];assert_eq!(a.iter().map(|x|(&x.obligation,&x.case)).collect::<BTreeSet<_>>(),b.iter().map(|x|(&x.obligation,&x.case)).collect());}
+   for atom in r.base.atoms.iter().filter(|a|a.origin=="also-complete"){let mut missing=r.clone();missing.base.atoms.remove(atom);assert!(crate::security_obligation_matching::match_instances(owner,custody,&missing).is_err());}
+  });
+ }
 }

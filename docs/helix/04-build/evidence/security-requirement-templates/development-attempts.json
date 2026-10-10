@@ -1,0 +1,20 @@
+{
+  "scope": "Development diagnostics only; exact failed-attempt source snapshots were not captured. No claim of source-qualified execution from these logs. Final source-qualified workspace evidence is separate.",
+  "failures": [
+    {
+      "log": "development-golden-failure.log",
+      "reason": "Golden fixture incorrectly expected withheld salary as a stored field read; actual typed inventory retains it as a separate disclosure occurrence."
+    },
+    {
+      "log": "development-shared-profile-failure.log",
+      "reason": "Shared-origin test profile mistakenly applied fragmentation mode; corrected test predicate, production unchanged."
+    }
+  ],
+  "reviewCorrections": [
+    "Checked lookup for transitive missing prerequisite",
+    "Selected-only templates instantiate per assigned capability; semantic selectors remain globally mandatory",
+    "Prerequisite membership visits explicitly charged",
+    "Rule path tag charged before copy"
+  ],
+  "unchangedAcceptance": "All132 original cases remain binding; no case promoted."
+}
