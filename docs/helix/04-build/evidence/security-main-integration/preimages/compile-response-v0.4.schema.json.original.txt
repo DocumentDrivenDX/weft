@@ -1,0 +1,548 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.4.0"
+        },
+        "diagnostics": {
+          "allOf": [
+            {
+              "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.2.schema.json#/oneOf/0/properties/diagnostics"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "contains": {
+                "type": "object",
+                "properties": {
+                  "severity": {
+                    "const": "error"
+                  }
+                },
+                "required": [
+                  "severity"
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "const": "blocked"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "diagnostics",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.4.0"
+        },
+        "status": {
+          "const": "compiled"
+        },
+        "diagnostics": {
+          "allOf": [
+            {
+              "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.2.schema.json#/oneOf/0/properties/diagnostics"
+            },
+            {
+              "type": "array",
+              "not": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "severity": {
+                      "const": "error"
+                    }
+                  },
+                  "required": [
+                    "severity"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "compilerVersion": {
+          "$ref": "#/$defs/text"
+        },
+        "backend": {
+          "type": "object",
+          "properties": {
+            "interfaceVersion": {
+              "const": "weft-security-backend/0.1.0"
+            },
+            "backendId": {
+              "$ref": "#/$defs/text"
+            },
+            "backendVersion": {
+              "$ref": "#/$defs/text"
+            },
+            "targetProfile": {
+              "$ref": "#/$defs/text"
+            },
+            "bindingProfile": {
+              "$ref": "#/$defs/text"
+            },
+            "bindingSha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "interfaceVersion",
+            "backendId",
+            "backendVersion",
+            "targetProfile",
+            "bindingProfile",
+            "bindingSha256"
+          ],
+          "additionalProperties": false
+        },
+        "sourceRequestJson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16777216
+        },
+        "sourceRequestSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "ownerPlan": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "weft.security.mapping-handoff/0.2.0"
+            },
+            "json": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16000000
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "required": [
+            "version",
+            "json",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "lowering": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "weft.security.physical/0.1.0"
+            },
+            "installation": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/operation"
+              },
+              "minItems": 1,
+              "maxItems": 4096
+            },
+            "execution": {
+              "$ref": "#/$defs/operation"
+            }
+          },
+          "required": [
+            "version",
+            "installation",
+            "execution"
+          ],
+          "additionalProperties": false
+        },
+        "resultContract": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "const": "weft.security.result-contract/0.1.0"
+            },
+            "encoding": {
+              "const": "weft.security.cells/0.1.0"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "position": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 256
+                  },
+                  "outputName": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "sourceFields": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/identity"
+                    },
+                    "minItems": 0,
+                    "maxItems": 4096
+                  },
+                  "outcomes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/outcome"
+                    },
+                    "minItems": 1,
+                    "maxItems": 256
+                  }
+                },
+                "required": [
+                  "position",
+                  "outputName",
+                  "sourceFields",
+                  "outcomes"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "version",
+            "encoding",
+            "columns"
+          ],
+          "additionalProperties": false
+        },
+        "resultContractJson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 16000000
+        },
+        "resultContractSha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "obligations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/text"
+              },
+              "semanticSources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/text"
+                },
+                "minItems": 1,
+                "maxItems": 4096
+              },
+              "enforcementSite": {
+                "enum": [
+                  "compiler",
+                  "backend",
+                  "host",
+                  "native"
+                ]
+              },
+              "prerequisites": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/text"
+                },
+                "minItems": 0,
+                "maxItems": 4096
+              },
+              "failureCode": {
+                "type": "string",
+                "pattern": "^WFT-[A-Z0-9-]+$"
+              },
+              "evidenceCaseIds": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/text"
+                },
+                "minItems": 1,
+                "maxItems": 4096
+              }
+            },
+            "required": [
+              "id",
+              "semanticSources",
+              "enforcementSite",
+              "prerequisites",
+              "failureCode",
+              "evidenceCaseIds"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "nativeAdmission": {
+          "const": "required"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "status",
+        "diagnostics",
+        "compilerVersion",
+        "backend",
+        "sourceRequestJson",
+        "sourceRequestSha256",
+        "ownerPlan",
+        "lowering",
+        "resultContract",
+        "resultContractJson",
+        "resultContractSha256",
+        "obligations",
+        "nativeAdmission"
+      ],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/text"
+        },
+        "revision": {
+          "$ref": "#/$defs/text"
+        },
+        "module": {
+          "$ref": "#/$defs/text"
+        },
+        "element": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "domain": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "scalar"
+            },
+            "type": {
+              "type": "object",
+              "properties": {
+                "family": {
+                  "enum": [
+                    "boolean",
+                    "string",
+                    "integer",
+                    "decimal"
+                  ]
+                },
+                "facets": {
+                  "type": "object"
+                },
+                "nullable": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "family",
+                "facets",
+                "nullable"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "kind",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "model"
+            },
+            "field": {
+              "$ref": "#/$defs/identity"
+            }
+          },
+          "required": [
+            "kind",
+            "field"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "outcome": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/text"
+            },
+            "disposition": {
+              "const": "original"
+            },
+            "domain": {
+              "$ref": "#/$defs/domain"
+            }
+          },
+          "required": [
+            "id",
+            "disposition",
+            "domain"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/text"
+            },
+            "disposition": {
+              "const": "transformed"
+            },
+            "transform": {
+              "$ref": "#/$defs/transform"
+            },
+            "dispositionSources": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/dispositionSource"
+              },
+              "minItems": 1,
+              "maxItems": 4096
+            },
+            "domain": {
+              "$ref": "#/$defs/domain"
+            }
+          },
+          "required": [
+            "id",
+            "disposition",
+            "transform",
+            "dispositionSources",
+            "domain"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/text"
+            },
+            "disposition": {
+              "enum": [
+                "withheld",
+                "absent"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "disposition"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000000
+        },
+        "parameters": {
+          "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.2.schema.json#/oneOf/1/properties/parameters"
+        }
+      },
+      "required": [
+        "id",
+        "sql",
+        "parameters"
+      ],
+      "additionalProperties": false
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "constant"
+        },
+        "version": {
+          "const": "0.1.0"
+        },
+        "outputField": {
+          "$ref": "#/$defs/identity"
+        },
+        "literal": {
+          "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+        }
+      },
+      "required": [
+        "kind",
+        "version",
+        "outputField",
+        "literal"
+      ],
+      "additionalProperties": false
+    },
+    "dispositionSource": {
+      "type": "object",
+      "properties": {
+        "ruleId": {
+          "$ref": "#/$defs/text"
+        },
+        "target": {
+          "$ref": "#/$defs/identity"
+        },
+        "field": {
+          "$ref": "#/$defs/identity"
+        }
+      },
+      "required": [
+        "ruleId",
+        "target",
+        "field"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

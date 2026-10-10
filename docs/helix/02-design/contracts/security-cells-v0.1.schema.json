@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-cells-v0.1.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.cells/0.1.0"
+    },
+    "resultContractSha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "outcomeId": {
+                  "$ref": "#/$defs/text"
+                },
+                "disposition": {
+                  "enum": [
+                    "original",
+                    "transformed"
+                  ]
+                },
+                "value": {
+                  "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                }
+              },
+              "required": [
+                "outcomeId",
+                "disposition",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "outcomeId": {
+                  "$ref": "#/$defs/text"
+                },
+                "disposition": {
+                  "enum": [
+                    "withheld",
+                    "absent"
+                  ]
+                }
+              },
+              "required": [
+                "outcomeId",
+                "disposition"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "minItems": 1,
+        "maxItems": 256
+      },
+      "minItems": 0,
+      "maxItems": 4096
+    }
+  },
+  "required": [
+    "version",
+    "resultContractSha256",
+    "rows"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  }
+}

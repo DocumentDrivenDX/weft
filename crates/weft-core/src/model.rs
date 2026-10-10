@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::collections::BTreeSet;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ModuleInput {
     pub document_json: String,
@@ -64,6 +64,13 @@ struct Envelope;
 struct Envelope08;
 impl Catalog {
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
+        Self::prepare_version(inputs, "0.7.0")
+    }
+    /// Source custody only; security activation remains independently gated.
+    pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
+        Self::prepare_version(inputs, "0.8.0")
+    }
+    fn prepare_version(inputs: Vec<ModuleInput>, version: &str) -> Result<Self> {
         if inputs.is_empty() || inputs.len() > 32 {
             return Err(fail(
                 "WFT-LIMIT",
@@ -85,7 +92,8 @@ impl Catalog {
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
             }
-            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
+            if (version == "0.8.0" && input.pin.umf_version != "0.8.0")
+                || !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
                 || doc["umf"] != input.pin.umf_version
             {
                 return Err(fail("WFT-MODEL-VERSION", "Unsupported UMF profile"));

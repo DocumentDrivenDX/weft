@@ -163,3 +163,20 @@ The owner requested that [the merged discovery input](../00-discover/application
 | FR-18 | P0 | Named normative application-read subsets, positive/refusal fixtures and construct diagnostics let hosts recognize supported queries without widening semantics |
 
 Backend requirements include Truss key lookups/property filters/ordered scans and Ashlar gold mappings with host publication positions. Production layout, ordering, presence and relationship guarantees require selected binding evidence. User-requested language behavior must not be simulated by SQL text forwarding or uncertified fixture profiles.
+
+## Shared security compiler integration requirements
+
+Owner direction: the UMF shared security goal requires logical, semantic and
+physical security across ordinary relational and Truss/Ashlar typed stores.
+UMF CONTRACT-062/063 (the security artifacts migrated from CONTRACT-052/053 on UMF main) own policy/lifecycle meaning; Weft implements compilation,
+while authenticated native enforcement remains host/backend owned.
+
+| ID | Priority | Requirement |
+| --- | --- | --- |
+| FR-19 | P0 | A separately versioned security transport accepts exactly pinned core08 sources and preserves prior core07 compiler contracts without relabeling or fallback. |
+| FR-20 | P0 | Complete typed policy/ontology admission preserves qualified identity, private-fact completeness and permit/require/forbid composition; unknown selected meaning refuses before emission. |
+| FR-21 | P0 | Security logical/physical lowering preserves disclosure and protected predicate/order/group/join/aggregate semantics, including typed replacements and null/absence/withheld distinctions. |
+| FR-22 | P0 | Security artifacts carry mandatory versioned host/backend obligations for native custody, current authority and guarded final release; compilation never invents credentials or native qualification. |
+
+All four remain open for full execution. CONTRACT-006's initial source/transport
+foundation is scoped evidence only; it emits no security-enabled artifact.
