@@ -1,0 +1,15 @@
+{
+  "reviewer": "gpt-6-astra ultra",
+  "mode": "read-only",
+  "sourcePins": {
+    "crates/weft-core/src/security_obligation_sources.rs": "784e16caf02e715de5e123dee4dcf2e03817b7cee14e9db95dc508e93e9d3841",
+    "crates/weft-core/src/security_obligation_sources/association_events.rs": "fbd1fff2fca560b7f55c71f70c5061f9d3b00575a1aff782947b7d002d95f79e",
+    "crates/weft-core/src/security_semantic_coverage.rs": "ce4a8c77dc5de521cb61eb60c48e06c416c003a42d170ef7e6f8cd707d9b1d3d"
+  },
+  "findings": [
+    "Golden association IDs originally chose expected payloads from event.reference; corrected to independently authored source-to-full-qualified-reference map before workspace run."
+  ],
+  "controls": "Exact original custody, isolated five pointer substitutions, 3/11 exact/minus-one budgets, 4096/4097 population, self-join owner isolation, compound endpoint order and actual empty inventory.",
+  "finalResult": "No remaining implementation findings; corrected file matches pre-execution start pin.",
+  "scope": "Per-scan/action association dependency custody, not each Exists AST occurrence or native population completeness. No Cargo execution by reviewer, formal Rust proof or acceptance promotion."
+}

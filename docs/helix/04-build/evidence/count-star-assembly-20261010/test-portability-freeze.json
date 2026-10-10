@@ -1,0 +1,9 @@
+{
+  "head": "bd490abc877a1992666c7b45412b14a0ca6c2cac",
+  "files": {
+    "tests/distribution-count-star-assembly/test_assembly.py": "4ddb58d1e6a538c1b7c11d1b8c51fee9fe054b7d821ded7816d72d6e66c17e93"
+  },
+  "failed_ci": 38087909418,
+  "failure": "Three tests require nonexistent /private/tmp on Ubuntu; compilation and distribution records unchanged",
+  "fix": "Resolve platform temporary root before creating test directories; preserve no-symlink input guards and all five controls"
+}

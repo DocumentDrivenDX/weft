@@ -1,0 +1,48 @@
+{
+  "version": "weft.security.association-events-checkpoint/0.1.0",
+  "base": "45910686acb1c607bcd9769e163f8189a0afc595",
+  "command": [
+    "cargo",
+    "test",
+    "--release",
+    "--locked",
+    "--workspace"
+  ],
+  "exitCode": 0,
+  "passed": 560,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "testGroups": 44,
+  "declaredSources": 825,
+  "sourceCustody": "Declared repository inputs frozen before workspace execution; external Cargo registry/runtime dependencies excluded. All825 declared hashes verified unchanged at terminal.",
+  "toolchain": "Rust1.90.0 aarch64-apple-darwin release",
+  "scope": "Private admitted record-association dependency custody; graph association activation, complete independent issuer/authentication, public lowering and native enforcement remain open. No new formal refinement or original132-case promotion.",
+  "review": "astra-review.json",
+  "requirementTrace": {
+    "qualified identities and endpoint order": "Original S01/S02/S05 and B02/B13 remain binding; these unit controls verify compiler custody only, not backend case discharge.",
+    "actual empty inventory": "No Association source is invented and original action demand remains; unconditional backend qualification remains pending.",
+    "original objects and budgets": "CONTRACT-006 and shared backend-requirement-issuer-v0.2 design.",
+    "actualTests": [
+      "issued_source_demands_match_independent_complete_fixture_map_and_exact_budgets",
+      "issued_source_demands_keep_output_selfjoin_and_false_branch_ownership",
+      "composite_key_sources_retain_actual_same_domain_member_order",
+      "association_custody_preserves_actual_empty_inventory"
+    ]
+  },
+  "attempts": [
+    "Initial core216 green before stronger controls; enhanced core216 green; compound/empty core217 green.",
+    "Astra identified swapped-payload golden oracle gap; expected qualified refs authored independently before workspace execution."
+  ],
+  "logs": {
+    "astra-review.json": "c9f78da2813173abf79df4a2b626cfad096502b2eff045d0efe7fc0f4433bfb6",
+    "initial-core.log": "2bb50620cdee305ffe2b07e8e69c07b785b445d311a652f4bfc29a67ba3bf05f",
+    "workspace.log": "93d72705989d4705303d0f8b3e458d6fad3620bcf4b2ed69575fe04070520fe5",
+    "start.json": "a0f5748cebec11a6abefd7d9e6d0a4f8ee4c51d567b5be62dd6354bf680ee1f1",
+    "terminal.json": "65fa9bd82f5755276d092ef3a0546fe8732fbf5f38501e936b0cf960a379a12e",
+    "enhanced-core.log": "34994eb4a2259dc18f1068e43f0a2b97c21cba2620f7e4330840bbc6525e25db",
+    "compound-empty-core.log": "9a5769ec307e0881720dd5dfbd9636f387692de8e4f004a633140e6df5e25fa3",
+    "spec-check.log": "1de77e7382ebd4f780569c7444fc009137f7b7fff768a630a2ff3fc2feb8e939"
+  },
+  "specCheck": "exit0;51 governed artifacts,31 schemas,30 planned compiler criteria,636 fixtures; separate from security acceptance"
+}

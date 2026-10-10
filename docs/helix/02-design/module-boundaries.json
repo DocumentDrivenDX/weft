@@ -1495,7 +1495,17 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_obligation_sources/association_events.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_obligation_sources/key_events.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_obligation_sources/query_events.rs",
           "publicDeclarations": [],
           "pathReferences": []
         },

@@ -19,7 +19,7 @@ class Controls(unittest.TestCase):
             self.assertIs(m.cleanup_primary(ValueError(),cancellation),cancellation)
             body=KeyboardInterrupt();self.assertIs(m.cleanup_primary(body,cancellation),body)
     def test_read_closing_cancellation_outranks_nonregular_error(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             closing=KeyboardInterrupt()
             original_close=m.os.close
             def close(fd):
@@ -28,14 +28,14 @@ class Controls(unittest.TestCase):
                 with self.assertRaises(KeyboardInterrupt) as caught:m.read(Path(directory))
             self.assertIs(caught.exception,closing)
     def test_publish_failed_copy_never_creates_available_output(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             s=m.Snapshot(codec);s.generated('manifest.json',b'{}')
             output=Path(directory)/'candidate'
             with patch.object(m,'write_exclusive',side_effect=OSError('disk-full')):
                 with self.assertRaises(OSError):m.publish(s,output)
             self.assertFalse(output.exists());self.assertEqual(list(Path(directory).iterdir()),[])
     def test_file_pin_refusal_does_not_capture_artifact(self):
-        with tempfile.TemporaryDirectory(dir="/private/tmp") as directory:
+        with tempfile.TemporaryDirectory(dir=Path(tempfile.gettempdir()).resolve()) as directory:
             p=Path(directory)/'file';p.write_bytes(b'changed')
             s=m.Snapshot(codec)
             with self.assertRaises(ValueError):s.take(p,'artifact','0'*64,7)

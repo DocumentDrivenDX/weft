@@ -1,0 +1,15 @@
+{
+  "reviewer": "gpt-6-astra ultra",
+  "mode": "read-only",
+  "sourcePins": {
+    "crates/weft-core/src/security_obligation_sources.rs": "aaccbbc410aabddb305c8fd0524d8f34205f9a4016f99ac638e64d392185b80a",
+    "crates/weft-core/src/security_obligation_sources/query_events.rs": "f61a3a4daea7a55fc1cd0ee97f116bf84ac48006a8365932d4f306545108625f",
+    "crates/weft-core/src/security_semantic_coverage.rs": "f236cd0a1ecd822eef332701513333652f85c757a9a1fba504ea777f2fbb3758"
+  },
+  "findings": [
+    "Corrected test pointer expectation to profile-owned QueryUse; separately compare raw resolved use value.",
+    "Added isolated Field.scan, Operator.carrier and Operator.classification substitutions."
+  ],
+  "finalResult": "No remaining implementation findings in this slice.",
+  "scope": "No Cargo execution by reviewer, formal proof, complete issuer, native or acceptance qualification."
+}
