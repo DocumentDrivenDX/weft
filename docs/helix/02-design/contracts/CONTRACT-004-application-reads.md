@@ -153,3 +153,11 @@ map string keys, structured members and exact numeric leaves need qualified
 carriers/decoders. Native null permission must be explicit in the eventual binding
 and output descriptor. The result schema models allowed envelope shapes, not
 permission to use every state for every field.
+
+## Separately versioned two-hop proposal
+
+[CONTRACT-005](CONTRACT-005-authored-two-hop-paths.md) proposes bounded path
+collections and relational path expansion/counting. This preserves the one-hop
+surface here: RELATED_KEYS still returns its original terminal-key bag. A future
+path bag must retain both actual edge occurrences and the intermediate identity;
+degree remains distinct-associated-instance counting, separate from path bags.

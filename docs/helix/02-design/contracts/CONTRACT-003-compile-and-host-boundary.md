@@ -287,3 +287,12 @@ executable custody, reports stage/profile/digests and stable refusal codes, and
 keeps protocol output clean. Diagnostics exclude credentials and raw user model or
 query payloads. These state transitions are a precise specification with
 executable positive/adversarial tests, not a mechanical proof claim.
+
+## Two-hop transport proposal
+
+[CONTRACT-005](CONTRACT-005-authored-two-hop-paths.md) proposes new closed
+request/response/IR/result versions for typed path occurrences and exact grouped
+counts. Old schemas, historical artifacts and immutable distribution realizations
+remain unchanged. Hosts must decode the new typed descriptor and discharge every
+required obligation before releasing results; wrapper coercion or SQL repair
+cannot provide compatibility.

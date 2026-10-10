@@ -206,3 +206,12 @@ type/key descriptors, not generic JSON-number conversion. The emitted qualificat
 retains both the selected declaration (domains/constraints/obligations/evidence)
 and its per-query assessment. Obligation data is validated and conflicting IDs
 refuse before an artifact is returned.
+
+## Two-hop backend proposal
+
+[CONTRACT-005](CONTRACT-005-authored-two-hop-paths.md) owns proposed path
+capabilities, occurrence encoding, ordering, exact count and host obligations.
+Each backend must assess them independently and use a separately admitted
+profile/realization; existing supported declarations must not acquire new
+capabilities without qualification. Logical path identity remains frontend-owned;
+physical edge tokens and native checks remain backend-owned.

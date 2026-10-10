@@ -147,3 +147,11 @@ columns, but must preserve the same named logical fields, bag and exact totals.
 The versioned representation is `crates/weft-core/src/ir.rs`: `LogicalPlan`, `Node`, `Expression`, `LogicalType`, `Identity`, `ModelPin` and `Span`. Serde encodes node/expression enum tags as schema `op` strings and uses camelCase member names. Binary expression variants box operands; nodes box inputs; scans allocate `s0`, `s1`, ... in source order. No physical identifiers occur in IR.
 
 Default output names are the UMF field name and `sum` for an unnamed aggregate; AS supplies the parsed identifier value. Duplicate output names block. GROUP BY without SUM is supported with an aggregate node containing groups and an empty aggregate list; an aggregate node must have at least one group or aggregate. Global SUM is nullable; grouped SUM is non-null for the required input subset. SUM result facets carry decimal scale without a precision bound, or no integer width bound; argument facets remain on FieldRef. Numeric equality compares exact values within the same family even if input field domains differ. Required capability IDs are `scan`, `project`, `innerJoin`, `filter`, `equal`, `and`, `group`, `sum` and `type.<family>` as used, sorted and unique. These IDs are logical needs, not backend support declarations.
+
+## Separately versioned authored path proposal
+
+[CONTRACT-005](CONTRACT-005-authored-two-hop-paths.md) proposes an explicit
+two-hop path bag, bounded path projection and grouped path counts under a new
+closed language/IR family. It does not extend this document's 0.1 grammar or
+retroactively admit paths in retained dialect versions. Explicit source property
+joins remain property joins; adapters must not reinterpret them as paths.

@@ -1,0 +1,98 @@
+{
+  "format": "astra-twohop-design-review/0.1",
+  "freeze": {
+    "path": "/private/tmp/ashlar-twohop-design-freeze-20261010-d.json",
+    "sha256": "091149476e7155d29d4e5fa312ea03ad41bb422f70218a3fb8aa18e6dd5b9721",
+    "files": [
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md",
+        "bytes": 9503,
+        "sha256": "1c5b7ecf997e969b464442e634d202b3b72ab859b775256541f770000fe6bc8e"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-002-backend-interface.md",
+        "bytes": 13348,
+        "sha256": "edaed06599a88842fd3bf5d3448d6690cc09e2941a0e22d3c415a7b7b6d99445"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+        "bytes": 18407,
+        "sha256": "d586aec8a51e8c0f43a09b055e5d003f504f631e9e54d96b5ef191a11272dba0"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-004-application-reads.md",
+        "bytes": 15624,
+        "sha256": "ec7db0a935ee11236296abe47ef025cb50577780f74e147075e88258b69b4587"
+      },
+      {
+        "path": "docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+        "bytes": 14564,
+        "sha256": "1506c4cf09b05a4ca93941358e38b50f4cfb7c9b6b1ee1de8c76dc6a1840e891"
+      },
+      {
+        "path": "docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+        "bytes": 11510,
+        "sha256": "4256d8c7919e84dfd11975ad9c51540a40dc680450f46102b820493f39111b69"
+      }
+    ]
+  },
+  "decision": "approve exact six draft governed documents for landing; closed schemas and profile implementation remain separate reviews",
+  "base": "b8867c91bce3f01c21938ab1b09df0e1be45adf9",
+  "checks": {
+    "all_file_hashes_lengths": true,
+    "specs_check": {
+      "governedArtifacts": 50,
+      "schemas": 15,
+      "plannedCriteria": 30,
+      "fixtureScenarios": 636,
+      "exitCode": 0
+    },
+    "existing_four_contracts_append_only": true,
+    "no_engine_execution": true
+  },
+  "resolved_findings": [
+    "Unmatched ordinary LEFT roots require original scan/Record outerJoin metadata and actual identity sentinel; collection has absent versus value, no collection null state.",
+    "Collection projection is nongrouped/nonaggregate; expansion defines grouped/global counts over current occurrence bags.",
+    "Capacity scope is complete post-join/post-expansion/WHERE bag before HAVING or outer LIMIT.",
+    "Original commerce edge identity is native BIGINT, encoded reversibly as canonical signed-decimal String and ordered by signed integer, not logical source key or lexical token."
+  ],
+  "native_type_authority": {
+    "path": "/private/tmp/ashlar-indexed-commerce-queries-20261010-d/report.json",
+    "sha256": "26635d077da10fd685f83be670b1d75d6754500565ccc99e16932adfaf4e271b",
+    "table": {
+      "name": [
+        "spark_catalog",
+        "commerce",
+        "edge_current"
+      ],
+      "uuid": "f9b4c46d-f0a7-4701-ac91-1c2f639b05c2",
+      "version": 2
+    },
+    "identityField": {
+      "metadata": {},
+      "name": "id",
+      "nullable": true,
+      "type": "long"
+    }
+  },
+  "semantic_scope": [
+    "Two authored monomorphic directed relationships with full model/source/Record continuity.",
+    "Every legal edge pair per starting input occurrence preserved, including ordinary join duplication, parallel edges, forward/inverse return and self-loops.",
+    "Distinct terminal counts and per-side distinct-neighbor degree do not deduplicate path bags.",
+    "Exact ordered bounded prefix/lookahead is independent of outer LIMIT and aggregate capacity.",
+    "New explicit 0.4 dialect/IR/transport/result proposal and profile; old artifacts/profiles/packages unchanged.",
+    "Configuration and module ownership remain explicit; formal scope is precise specification, not executable proof; telemetry receiver claims require actual receiver evidence."
+  ],
+  "remaining_before_code": [
+    "Review closed syntax/plan/result/obligation schemas, exact version pair routing and capability mapping.",
+    "Select explicit backend/profile/realization identity and prove sentinel/token/identity descriptor correspondence.",
+    "Author independent semantic/refusal fixtures, numeric token/range/order boundaries, exact capacity and absence controls."
+  ],
+  "claims_excluded": [
+    "compiler implementation",
+    "native two-hop execution",
+    "profile or distribution admission",
+    "machine proof",
+    "OTel receiver qualification"
+  ]
+}
