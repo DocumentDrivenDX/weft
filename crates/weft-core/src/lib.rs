@@ -105,3 +105,4 @@ pub fn prepare_and_resolve_application(
 
 mod path_ir;
 mod path_query;
+mod path_resolve;
