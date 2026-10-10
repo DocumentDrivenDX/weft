@@ -1,0 +1,32 @@
+{
+  "decision": "approve-post-fast-forward-preservation",
+  "previousMain": "badf0f0f4c096f4f65153d285870c2e57754fd4e",
+  "currentMain": "effe0276abb486c847d2901581a2255199931c18",
+  "previousAncestorOfCurrent": true,
+  "remoteChangedPaths": [
+    "crates/weft-core/src/security_obligation_sources.rs",
+    "crates/weft-core/src/security_semantic_coverage.rs",
+    "docs/helix/04-build/evidence/security-field-events/astra-review.json",
+    "docs/helix/04-build/evidence/security-field-events/checkpoint.json",
+    "docs/helix/04-build/evidence/security-field-events/field-address-formal.json",
+    "docs/helix/04-build/evidence/security-field-events/final-core.log",
+    "docs/helix/04-build/evidence/security-field-events/formal-initial-attempt.log",
+    "docs/helix/04-build/evidence/security-field-events/formal.log",
+    "docs/helix/04-build/evidence/security-field-events/initial-core.log",
+    "docs/helix/04-build/evidence/security-field-events/pre-refinement-field-address-formal.json",
+    "docs/helix/04-build/evidence/security-field-events/pre-refinement-formal.log",
+    "docs/helix/04-build/evidence/security-field-events/pre-refinement-start.json",
+    "docs/helix/04-build/evidence/security-field-events/pre-refinement-terminal.json",
+    "docs/helix/04-build/evidence/security-field-events/pre-refinement-workspace-release.log",
+    "docs/helix/04-build/evidence/security-field-events/spec-check-initial-attempt.log",
+    "docs/helix/04-build/evidence/security-field-events/spec-check.log",
+    "docs/helix/04-build/evidence/security-field-events/start.json",
+    "docs/helix/04-build/evidence/security-field-events/terminal.json",
+    "docs/helix/04-build/evidence/security-field-events/workspace-release.log",
+    "docs/helix/04-build/implementation-plan.md",
+    "scripts/security/prove-field-event-addresses.py"
+  ],
+  "boundarySourceAndNineResourcePinsExact": true,
+  "workingStatus": "M tests/ashlar-databricks/common.rs\n?? scripts/distribution/check-count-star-cli-boundaries.py\n?? tests/distribution-count-star-boundaries/",
+  "qualification": "Post-operation preservation audit; no preapproval asserted.21 remote paths no overlap with owned frozen boundary files/distribution scripts or foreign common.rs. Historical product proof remains pinned5dd; no security review/new-main compiler qualification."
+}
