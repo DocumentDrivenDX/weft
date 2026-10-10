@@ -95,3 +95,27 @@ TP-001 requires shared independent result fixtures, native execution for each
 claimed backend profile, Python/browser parity, resource refusal and independent
 plugin registration. Plans and generated SQL are observable; SQL equality alone
 never establishes semantic conformance.
+
+## Module Boundaries
+
+**Source Applicability**: source; handwritten Rust compiler, target adapters and embedding entrypoints require one owned meaning boundary. The map covers all Cargo workspace packages, including historical spike and conformance packages; it excludes no workspace member.
+
+| Module | Responsibility / Owned Types | Public API | Allowed Dependencies | Forbidden Dependencies |
+| --- | --- | --- | --- | --- |
+| `crates/weft-core` | Original owning-version model interpretation, logical AST/IR, capability gates and compile protocol | Compiler/Registry, CONTRACT-001–003 | Locked external compiler dependencies; no workspace imports | Backend crates, embedding crates, storage/host implementations |
+| `crates/weft-databricks` | Target binding, finite native representation, SQL/decoder obligations; `count_having` owns its explicit profile | Backend implementations of CONTRACT-002 | `weft-core`; locked serialization dependencies | Runtime/wrappers, PostgreSQL adapter, live storage clients |
+| `crates/weft-postgresql` | PostgreSQL target meanings and SQL/obligations | Backend implementations of CONTRACT-002 | `weft-core`; locked target dependencies | Runtime/wrappers, Databricks adapter, live storage clients |
+| `tests/register-backend/probe` | Independent conformance backend | Registered test Backend | `weft-core` | Concrete production adapters/runtime |
+| `tests/frontend/wasm-probe` | Browser core probe entrypoint | WASM probe exports | `weft-core` | Target adapters/runtime |
+| `crates/weft-runtime` | Explicit feature-selected compiler composition and portable entrypoint | `compile_json` | `weft-core`, Databricks/PostgreSQL adapters, backend probe | Python/WASM wrappers, storage/host implementations |
+| `crates/weft-python` | Thin native Python translation | Python `compile_json` | `weft-runtime`; locked PyO3 | Direct core/adapters, browser wrapper, storage |
+| `crates/weft-wasm` | Thin browser/WASM translation | WASM `compile_json` | `weft-runtime`; locked wasm-bindgen | Direct core/adapters, Python wrapper, storage |
+| `spikes/b001/core` | Historical isolated foundation | Spike compiler exports | Locked external dependencies only | Active compiler/adapters/runtime |
+| `spikes/b001/python` | Historical native spike wrapper | Spike Python exports | `weft-spike-core`; locked PyO3 | Active compiler/runtime and other wrappers |
+| `spikes/b001/wasm` | Historical browser spike wrapper | Spike WASM exports | `weft-spike-core`; locked wasm-bindgen | Active compiler/runtime and other wrappers |
+
+**Integration Owners**: UMF document interpretation -> `weft-core` owning-version reader; Databricks physical translation -> `weft-databricks`; PostgreSQL physical translation -> `weft-postgresql`; Python/browser translation -> their thin wrappers. External execution, original public UMF receipts, native source guards and authority/ACK admission belong to the caller host, not these compiler packages.
+
+**Construction Policy**: `weft-runtime` registers explicitly compiled features; request backend ID/version/profile selects registered code. A SQL expression MUST NOT choose or silently switch a backend. Existing library consumers may construct their own Registry through CONTRACT-002.
+
+**Boundary Check**: `python3 scripts/checks/check-module-boundaries.py`; its actual `cargo metadata --locked --offline --no-deps` graph MUST match every named workspace member, permitted workspace edges and exact manifest paths, refuse unknown local dependencies and cycles. Use this command locally, in `.githooks/pre-commit` (opt-in installation with `git config core.hooksPath .githooks`) and CI. `python3 tests/module-boundaries/check.py` MUST demonstrate a real allowed Cargo edge, a real forbidden core-to-adapter edge and Rust compiler refusal of private symbol access. Rust visibility owns symbol access; this checker does not claim AST-level within-crate responsibility checks. Such checks, target semantics and external dependency behavior remain explicit semantic review obligations. New workspace edges/members require reviewed map changes, not an expanded debt baseline.

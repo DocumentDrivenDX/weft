@@ -1,0 +1,16 @@
+{
+  "format": "weft-cargo-boundaries/0.1",
+  "modules": {
+    "weft-core": [],
+    "weft-databricks": ["weft-core"],
+    "weft-postgresql": ["weft-core"],
+    "weft-backend-probe": ["weft-core"],
+    "weft-frontend-probe": ["weft-core"],
+    "weft-runtime": ["weft-core", "weft-databricks", "weft-postgresql", "weft-backend-probe"],
+    "weft-python": ["weft-runtime"],
+    "weft-wasm": ["weft-runtime"],
+    "weft-spike-core": [],
+    "weft-spike-python": ["weft-spike-core"],
+    "weft-spike-wasm": ["weft-spike-core"]
+  }
+}

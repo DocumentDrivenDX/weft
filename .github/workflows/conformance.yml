@@ -41,6 +41,10 @@ jobs:
         run: cargo test --workspace --features weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
       - name: Qualified Rust workspace conformance
         run: cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
+      - name: Enforce Cargo module boundaries
+        run: |
+          python3 scripts/checks/check-module-boundaries.py
+          python3 tests/module-boundaries/check.py
       - name: Build explicit distinct-count runtime
         run: cargo build -p weft-runtime --features ashlar-databricks-count-distinct --locked
       - name: Build explicit optional count HAVING composition
