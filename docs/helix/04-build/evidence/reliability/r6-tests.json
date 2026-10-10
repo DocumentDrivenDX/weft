@@ -1,10 +1,10 @@
 {
   "chunk": "current-main-integration-final-local-qualification",
-  "qualifiedSourceCommit": "858323b24749533b38c890d329599851cb9b4d3c",
-  "priorReceiptsAtCommit": "858323b24749533b38c890d329599851cb9b4d3c",
+  "qualifiedSourceCommit": "efedfae2dc7f5ec2be94f3ae213f112ab8b5d105",
+  "priorReceiptsAtCommit": "efedfae2dc7f5ec2be94f3ae213f112ab8b5d105",
   "status": "local-passed-final-hosted-CI-required",
   "checks": {
-    "coreLibPassed": 225,
+    "coreLibPassed": 238,
     "securityAdmissionPassed": 64,
     "moduleControlsPassed": 16,
     "diagnosticsNormalPassed": 18,
@@ -19,9 +19,9 @@
     "scope": "Preceding reconciliations; current source-specific core and final hosted full workspace gates are distinct"
   },
   "hostEvidence": "r6-hosts.json",
-  "hostEvidenceSha256": "8326924556ad739c236a41fc37b5e088639d897d36a554032db157912a66ae35",
+  "hostEvidenceSha256": "d4618430c7fd4a3e703b0ee627cf070a402662a35587695b0ee117e9d3b6798f",
   "inputEvidence": "r6-inputs.json",
-  "inputEvidenceSha256": "9ba84ce1c4d188ff73ba533938c9bba3006cd63fa31f0a17a662ad351c3516e2",
+  "inputEvidenceSha256": "ef0ca1a320acbf439de25d15f4b72f23138e554599d9c6cd38c67924106065d9",
   "currentFormalQualification": {
     "version": "weft-formal/1",
     "solver": "z3-solver4.15.4.0",
@@ -171,79 +171,79 @@
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 28262
+        "durationMs": 21547
       },
       "lib:security_composition::tests::bounded_disposition_oracle_correspondence": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 5980
+        "durationMs": 5870
       },
       "lib:security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 351
+        "durationMs": 645
       },
       "lib:security_composition::tests::portable_typescript_truth_corpus_correspondence": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 310
+        "durationMs": 455
       },
       "lib:security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 420
+        "durationMs": 274
       },
       "security_admission:core08_source_custody_never_activates_uninterpreted_security": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 11056
+        "durationMs": 9645
       },
       "security_admission:invalid_source_digest_refuses_before_security_gate": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 463
+        "durationMs": 298
       },
       "security_admission:rehashed_catalog_input_cannot_substitute_for_prepared_definitions": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 413
+        "durationMs": 291
       },
       "security_admission:security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 488
+        "durationMs": 382
       },
       "security_admission:security04_owner_refusals_never_dispatch_registration": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 375
+        "durationMs": 348
       },
       "security_admission:separate_security_protocols_preserve_callback_and_blocked_response_boundaries": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 457
+        "durationMs": 393
       },
       "security_admission:source_packet_cannot_be_reused_with_changed_model_bytes": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 350
+        "durationMs": 319
       },
       "security_admission:unsupported_security_does_not_invoke_backend_factory": {
         "exitCode": 0,
         "selected": 1,
         "passed": 1,
-        "durationMs": 392
+        "durationMs": 295
       }
     },
     "propertyTests": {
@@ -320,7 +320,7 @@
       "cargoExecutableSha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
       "rustToolchainSha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
     },
-    "diagnosticRunId": "ce7172bb15624df3a55f57e531451ea7",
+    "diagnosticRunId": "b6e76dea29db41efbdbfcd5271ce4c68",
     "inputs": {
       "crates/weft-core/src/compile.rs": "af6ade33982d823a13e5097c8b94ce36fa1d5c8a90deb3685d403a344cea0999",
       "crates/weft-core/src/model.rs": "ddf8b851462c8f2da6bbae6d70b560c9a144a691c82ea1102578880be7b085c5",
@@ -339,7 +339,7 @@
       "scripts/reliability/gate.py": "92a45cd886579a3ec5bbb44551bbd3fbfcaef50667b1f345e0316bc55900bbef",
       "scripts/reliability/requirements.txt": "0884383734d31e9dcdabe732d5de94b0cb6baf06f9269859b71568b4034e309f",
       "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "2639ac6b82759baf773d428c48bb8e7eb2008296a20eed5fe38f40fa8a2d85e6",
-      "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "e962c26da58bbd6c7b6b9a76cce0ced24a868eec9a8011d7aaa96d47f7f4dcb5",
+      "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "6aefce858870b3078d3d21ffa196dbf842a202e69343634dede74e792e45ddce",
       "docs/helix/02-design/contracts/security-compile-response-v0.1.schema.json": "01022aa9742bbc51e8004055845af50c194cffb469f7158d7461e94a70533787",
       "docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json": "0ba4f4c36e9e646ba9f649da37edaca920da8a8982f2df20cec5c20f3823e473",
       "docs/helix/03-test/fixtures/cases.json": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
@@ -351,14 +351,14 @@
     },
     "compilerAndHostRevision": {
       "kind": "sha256",
-      "value": "419b5cef7210d4bd848efb02b669814a2b479950a507ac2bf203d769539191e8",
+      "value": "1d177ae7af942d18b327bf76609795da2c3c32ce71f6c46c65a24198b04f30e5",
       "scope": "compiler-and-host-source"
     }
   },
-  "originalFormalReceiptSha256": "14a670dc245211fb9785408fee4d428b645431befa363043d7bc7eb729c9bf96",
+  "originalFormalReceiptSha256": "2b17d8cac03f1c6edfe8926005129f50a732b94a26652b61b71d3ff051f40681",
   "compilerAndHostRevision": {
     "kind": "sha256",
-    "value": "419b5cef7210d4bd848efb02b669814a2b479950a507ac2bf203d769539191e8",
+    "value": "1d177ae7af942d18b327bf76609795da2c3c32ce71f6c46c65a24198b04f30e5",
     "scope": "compiler-and-host-source"
   },
   "historicalResponseObjectsIdentical": 2128,
@@ -366,40 +366,24 @@
   "limits": "Local rebuilt public-host parity and retained historical custody; no current database execution, native security enforcement or package release. Final exact-head hosted CI remains required.",
   "reviewedLocalLogs": [
     {
-      "checks": "core and security admission",
-      "pathAtExecution": "/private/tmp/weft-2650937-core.log",
-      "sha256": "8dc5079841008227aa12196485b542b8f41f0f8a6dbb241a01eb6f7f35b63a51",
-      "scope": "2650937 integration; final Rust source retained unchanged"
+      "path": "/private/tmp/weft-f7a682e-core.log",
+      "sha256": "3cf09c783d1cf1b97b57108019ccb2f11d2796368e739ca07560ecdaf8ff0e23",
+      "scope": "Current f7a682e integration:238core and64admission"
     },
     {
-      "checks": "modules, specifications and assembly",
-      "pathAtExecution": "/private/tmp/weft-2650937-checks.log",
-      "sha256": "379052d6c0281812c28ce91b3d0f3480ea217a9233b11403535c57f3edca8706",
-      "scope": "2650937 integration; final source retained unchanged"
+      "path": "/private/tmp/weft-f7a682e-checks.log",
+      "sha256": "87d4974337089b4c30ede98f5d5af4f52bc645f3472347454256fc2e5257b34b",
+      "scope": "Current module16 and governed-specification checks"
     },
     {
-      "checks": "SDK diagnostics normal/optimized and module controls",
-      "pathAtExecution": "/private/tmp/weft-reader-diagnostics-tests.log",
+      "path": "/private/tmp/weft-reader-diagnostics-tests.log",
       "sha256": "01c084c47ff6de650d07786284aae30c895efe97db465879c360150e1adcb459",
-      "scope": "Reader extraction committed at6140513; Python reader/writer sources retained unchanged"
+      "scope": "Preceding614 diagnostic reader source unchanged"
     },
     {
-      "checks": "host receipt/refusal normal and optimized controls",
-      "pathAtExecution": "/private/tmp/weft-final-host-controls.log",
+      "path": "/private/tmp/weft-final-host-controls.log",
       "sha256": "2f146e795f4ab0888c9688d394674a1f7a24a88879dce92449b2fcb30bf0d949",
-      "scope": "Host/baseline chunk committed at4fcc898; corresponding Python control sources retained unchanged"
-    },
-    {
-      "checks": "preceding candidate workspace",
-      "pathAtExecution": "/private/tmp/weft-ed2-candidate-workspace.log",
-      "sha256": "bb13975aa67c0b7eb62957d5bfa73cb73ee437527ae75361427920c94fcea5c7",
-      "scope": "Ed2 reconciliation before later main additions; not final workspace qualification"
-    },
-    {
-      "checks": "preceding qualified workspace",
-      "pathAtExecution": "/private/tmp/weft-ed2-qualified-workspace.log",
-      "sha256": "9460695982bb5935e1a5e7cdb36e782a273c02b1372830bed5b8e44039667ff8",
-      "scope": "Ed2 qualified runtime features before later main additions; not final workspace qualification"
+      "scope": "Preceding4fcc fresh-host control source unchanged"
     }
   ]
 }
