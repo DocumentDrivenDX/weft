@@ -3,12 +3,12 @@
   "reviewer": "Astra Ultra",
   "verdict": "approved-local-qualification",
   "materialFindingsRemaining": 0,
-  "qualifiedSourceCommit": "efedfae2dc7f5ec2be94f3ae213f112ab8b5d105",
-  "priorReceiptsAtCommit": "efedfae2dc7f5ec2be94f3ae213f112ab8b5d105",
-  "hostQualificationSha256": "d4618430c7fd4a3e703b0ee627cf070a402662a35587695b0ee117e9d3b6798f",
-  "originalFormalQualificationSha256": "2b17d8cac03f1c6edfe8926005129f50a732b94a26652b61b71d3ff051f40681",
+  "qualifiedSourceCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "priorReceiptsAtCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "hostQualificationSha256": "a0dac4c46bf7667f0fccfb40f04ceea8e2b5cb4ca302f2fcdd3f127922b362fe",
+  "originalFormalQualificationSha256": "b053ccc46417d4311dd832be21fc857c733affc77b21a7a8322b3846f153cdfc",
   "verified": {
-    "currentInputs": 2646,
+    "currentInputs": 2687,
     "historicalSourceBlobs": 111,
     "ordinaryCases": 2181,
     "libraryResourceSecurityControls": 17,
@@ -19,7 +19,7 @@
   },
   "compilerAndHostRevision": {
     "kind": "sha256",
-    "value": "1d177ae7af942d18b327bf76609795da2c3c32ce71f6c46c65a24198b04f30e5",
+    "value": "06ff9ba591b0f825e4e70c54f680e24990767adacad6228270ef9f347d706068",
     "scope": "compiler-and-host-source"
   },
   "evidence": {
