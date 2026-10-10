@@ -5,7 +5,7 @@ fn fail()->Diagnostic {Diagnostic::new("WFT-SECURITY-LOWERING-UNSUPPORTED","capa
 /// Structural applicability is dispatched on actual typed payloads, never source text.
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
 pub(crate) enum Selector {
- Event(OwnerEventKind), Selected,
+ Event(OwnerEventKind), Selected, Payload(crate::security_payload_applicability::Selector),
  Permit,Require,Forbid,True,False,Equal,And,Or,Not,Exists,
  Identity,Endpoint,StoredOperand,ContextOperand,Constant,Original,Withheld,Transformed,
 }
@@ -99,10 +99,11 @@ fn path(p:&RulePath,b:&mut Budget)->Result<String> {
 }
 fn validate(p:&Profile,b:&mut Budget)->Result<()> {
  b.id(&p.version)?;b.id(&p.id)?;b.id(&p.target)?;b.charge(p.registration_json.len())?;
- if p.version!="weft.security.requirement-templates/0.1.0"||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
+ if !matches!(p.version.as_str(),"weft.security.requirement-templates/0.1.0"|"weft.security.requirement-templates/0.2.0")||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
  for case in &p.cases{b.id(case)?;}
  for (id,t) in &p.templates{
   b.id(id)?;b.id(&t.kind)?;b.id(&t.site)?;b.id(&t.failure)?;
+  if p.version=="weft.security.requirement-templates/0.1.0"&&matches!(t.selector,Selector::Payload(_)){return Err(fail());}
   if t.cases.is_empty()||t.cases.len()>4096||t.prerequisites.len()>4096{return Err(fail());}
   for c in &t.cases{b.id(c)?;if !p.cases.contains(c){return Err(fail());}}
   for dependency in &t.prerequisites{b.id(dependency)?;if p.templates.get(dependency).is_none_or(|d|d.selector!=t.selector){return Err(fail());}}
@@ -157,6 +158,14 @@ impl Builder<'_>{
   if !applicable{return Err(fail());}Ok(())
  }
 }
+struct PayloadDispatcher<'a,'d,'m,'c,'s,'b,'p>{owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,builder:&'b mut Builder<'p>}
+impl crate::security_payload_applicability::Sink for PayloadDispatcher<'_, '_, '_, '_, '_, '_, '_>{
+ fn charge(&mut self,bytes:usize)->Result<()>{self.builder.budget.charge(bytes)}
+ fn duty(&mut self,source:&str,selector:crate::security_payload_applicability::Selector,address:&[&str])->Result<()>{
+  let occurrence=self.builder.budget.encode(address)?;
+  for scope in self.owner.demands().get(source).ok_or_else(fail)?{self.builder.emit(Selector::Payload(selector),source,scope,&occurrence,self.owner.candidates(scope).ok_or_else(fail)?)?;}Ok(())
+ }
+}
 #[allow(dead_code)]
 pub(crate) fn issue<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile)->Result<Issued<'a,'d,'m,'c,'s>>{issue_budget(owner,profile,1_000_000,16_000_000).map(|(out,_,_)|out)}
 fn issue_budget<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,work:usize,text:usize)->Result<(Issued<'a,'d,'m,'c,'s>,usize,usize)> {
@@ -182,6 +191,7 @@ fn issue_budget_deployment<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c
  // Structural rules expand all nodes, including false/empty branches and disclosures.
  let rules=crate::security_rule_occurrences::issue(owner)?;
  for ((source,address),payload) in rules.entries(){let occurrence=path(address,&mut b.budget)?;for scope in owner.demands().get(*source).ok_or_else(fail)?{b.emit(node(payload),source,scope,&occurrence,owner.candidates(scope).ok_or_else(fail)?)?;}}
+ if profile.version=="weft.security.requirement-templates/0.2.0"{crate::security_payload_applicability::visit(owner,&mut PayloadDispatcher{owner,builder:&mut b})?;}
  for cap in coverage.selected_capabilities(){b.budget.id(cap)?;b.emit(Selector::Selected,cap,&CoverageScope::Application,"deployment",&BTreeSet::from([cap.clone()]))?;}
  let remaining=(b.budget.work,b.budget.text);Ok((Issued{owner,profile,required:b.result},remaining.0,remaining.1))
 }

@@ -1192,4 +1192,98 @@ mod tests{
   });
  }
 
+ #[test]
+ fn typed_payload_template_v2_matches_independent_source_scope_golden_and_refuses_each_missing_kind(){
+  use crate::security_payload_applicability::{Selector as P,Role,Scalar,Nullability,Facet,Output,Availability,Sink};
+  use crate::security_requirement_templates::{Selector,Template,issue};
+  struct Collector(BTreeSet<(String,P,String)>);
+  impl Sink for Collector{
+   fn charge(&mut self,_:usize)->crate::error::Result<()>{Ok(())}
+   fn duty(&mut self,s:&str,p:P,a:&[&str])->crate::error::Result<()>{assert!(self.0.insert((s.into(),p,serde_json::to_string(a).unwrap())));Ok(())}
+  }
+  with_template_fixture(|owner,custody,profile|{
+   // Independently authored expected payloads. Neither selectors nor addresses
+   // are reconstructed from the dispatcher or its issued obligations.
+   let mut expected=BTreeSet::new();let mut add=|s:Vec<&str>,p:P,a:Vec<&str>|{expected.insert((json!(s).to_string(),p,json!(a).to_string()));};
+   for (target,field) in [("Staff","staffId"),("Resource","resourceId")]{
+    let stored=vec!["field","s0","read","domain","m",target,"domain","m",field];
+    for (p,a) in [(P::Role(Role::Stored),"role"),(P::Scalar(Scalar::String),"scalar"),(P::Nullability(Nullability::Required),"nullability"),(P::Protection(false),"protection")]{add(stored.clone(),p,vec!["payload",a]);}
+    let member=vec!["key-field","s0","read","domain","m",target,"pk","1","domain","m",field];
+    for (p,a) in [(P::Role(Role::KeyMember),"role"),(P::Scalar(Scalar::String),"scalar"),(P::Nullability(Nullability::Required),"nullability"),(P::OrderedKeyMember,"key-member")]{add(member.clone(),p,vec!["payload",a]);}
+    add(vec!["key","s0","read","domain","m",target,"pk"],P::KeyPrimary(None),vec!["payload","key-primary"]);
+   }
+   let projection=vec!["projection","s0","domain","m","salary"];
+   for (p,a) in [(P::Role(Role::Projection),vec!["payload","role"]),(P::Scalar(Scalar::Integer),vec!["payload","scalar"]),(P::Nullability(Nullability::Required),vec!["payload","nullability"]),(P::Protection(true),vec!["payload","protection"]),(P::Facet(Facet::IntegerWidth),vec!["payload","facet","integerWidth"]) ]{add(projection.clone(),p,a);}
+   for (position,name) in [("1","first_value"),("2","second_value")]{
+    for (p,a) in [(P::OutputAvailability(Availability::Required),vec!["payload","output-availability"]),(P::Output(Output::Field),vec!["payload","output-kind"]),(P::OutputScalar(Scalar::Integer),vec!["payload","output-scalar"]),(P::OutputNullable(false),vec!["payload","output-nullable"]),(P::OutputFacet(Facet::IntegerWidth),vec!["payload","output-facet","integerWidth"]) ]{add(vec!["output",position,name],p,a);}
+   }
+   let mut actual=Collector(BTreeSet::new());crate::security_payload_applicability::visit(owner,&mut actual).unwrap();assert_eq!(actual.0,expected);assert_eq!(expected.len(),33);
+   let mut v2=profile.clone();v2.version="weft.security.requirement-templates/0.2.0".into();
+   let selectors=expected.iter().map(|(_,p,_)|*p).collect::<BTreeSet<_>>();
+   for p in &selectors{let id=format!("payload-{p:?}");v2.templates.insert(id.clone(),Template{selector:Selector::Payload(*p),kind:format!("payload-{p:?}"),owner:crate::backend::ObligationOwner::Host,site:"host".into(),failure:"WFT-FIXTURE-PAYLOAD".into(),cases:BTreeSet::from(["semantic-case".into()]),prerequisites:BTreeSet::new()});v2.capabilities.get_mut("all").unwrap().insert(id);}
+   let (rw,rt)=crate::security_requirement_templates::test_budget(owner,&v2,1_000_000,16_000_000).unwrap();let (w,t)=(1_000_000-rw,16_000_000-rt);
+   assert!(crate::security_requirement_templates::test_budget(owner,&v2,w,t).is_ok());assert!(crate::security_requirement_templates::test_budget(owner,&v2,w-1,t).is_err());assert!(crate::security_requirement_templates::test_budget(owner,&v2,w,t-1).is_err());
+   let issued=issue(owner,&v2).unwrap();assert_eq!(issued.required().instances.len(),81);assert_eq!(issued.required().base.contracts.len(),83);assert_eq!(issued.required().base.atoms.len(),85);
+   let payload_instances=issued.required().instances.keys().filter(|i|i.kind.starts_with("payload-")).map(|i|(i.source.clone(),i.kind.clone(),i.scope.clone(),i.occurrence.clone())).collect::<BTreeSet<_>>();
+   let golden=expected.iter().flat_map(|(source,p,address)|{let scopes=if source.starts_with("[\"projection\"")||source.starts_with("[\"output\""){vec![scan_scope("s0","read"),CoverageScope::Application]}else{vec![scan_scope("s0","read")]};scopes.into_iter().map(move |scope|(source.clone(),format!("payload-{p:?}"),scope,json!([format!("payload-{p:?}"),address]).to_string()))}).collect::<BTreeSet<_>>();
+   assert_eq!(payload_instances,golden);assert_eq!(golden.len(),48);
+   assert!(crate::security_obligation_matching::match_instances(owner,custody,issued.required()).is_err()); // Old agreeing originals lack these independent duties.
+   for p in selectors{let id=format!("payload-{p:?}");let mut missing=v2.clone();missing.templates.remove(&id);missing.capabilities.get_mut("all").unwrap().remove(&id);assert!(issue(owner,&missing).is_err());let mut no_origin=v2.clone();no_origin.capabilities.get_mut("all").unwrap().remove(&id);assert!(issue(owner,&no_origin).is_err());}
+   let mut legacy=v2.clone();legacy.version=profile.version.clone();assert!(issue(owner,&legacy).is_err());assert!(issue(owner,profile).is_ok());
+  });
+ }
+
+ #[test]
+ fn typed_payload_dispatch_preserves_operator_modes_context_and_ordered_endpoints(){
+  use crate::security_payload_applicability::{Selector as P,Role,Sink};
+  struct Collector(Vec<(String,P,String)>);
+  impl Sink for Collector{fn charge(&mut self,_:usize)->Result<()>{Ok(())}fn duty(&mut self,s:&str,p:P,a:&[&str])->Result<()>{self.0.push((s.into(),p,json!(a).to_string()));Ok(())}}
+  let bindings=json!([{"target":{"documentId":"domain","moduleId":"m","elementId":"Resource"},"field":{"documentId":"domain","moduleId":"m","elementId":"salary"},"operator":"predicate","originalAction":"query-original"}]);
+  with_bound_context("SELECT r.salary FROM Resource r JOIN Resource s ON r.resourceId=s.resourceId WHERE r.salary > 0 AND s.salary > 0",|f|{
+   f["resolution"]["ontology"]["actions"].as_array_mut().unwrap().push(json!("query-original"));f["resolution"]["ontology"]["entities"][2]["fields"][1]["queryUse"]=json!({"predicate":"original-authorized"});
+   let active=json!({"documentId":"domain","moduleId":"m","elementId":"active"});f["resolution"]["ontology"]["context"]=json!([active.clone()]);
+   let old=f["policy"]["rules"][1]["condition"].clone();f["policy"]["rules"][1]["condition"]=json!({"op":"and","args":[old,{"op":"eq","left":{"kind":"context","field":active},"right":{"kind":"constant","field":active,"value":{"boolean":true}}}]});
+   for rule in f["policy"]["rules"].as_array_mut().unwrap(){rule["actions"].as_array_mut().unwrap().push(json!("query-original"));}
+  },bindings,|ctx,m|{with_registered_coverage(ctx,m,&["all".into()],|coverage|{
+   let owner=crate::security_obligation_sources::issue_demands(coverage).unwrap();let mut out=Collector(vec![]);crate::security_payload_applicability::visit(&owner,&mut out).unwrap();
+   use crate::security_ir::QueryOperator as Q;
+   assert_eq!(out.0.iter().filter(|(_,p,_)|*p==P::Operator(Q::Predicate,true)).count(),2);
+   assert_eq!(out.0.iter().filter(|(_,p,_)|*p==P::Operator(Q::Join,false)).count(),2);
+   assert!(out.0.iter().any(|(_,p,_)|*p==P::Role(Role::Context)));
+   let mut wanted=BTreeSet::new();for scan in ["s0","s1"]{for action in ["read","query-original"]{for association in ["Assignment","Ownership"]{
+    let source=json!(["association",scan,action,"domain","m",association]).to_string();
+    for i in ["0","1"]{wanted.insert((source.clone(),P::AssociationEndpoint,json!(["payload","endpoint",i]).to_string()));wanted.insert((source.clone(),P::AssociationEndpointMember,json!(["payload","endpoint-member",i,"0"]).to_string()));}
+   }}}
+   assert_eq!(out.0.iter().filter(|(_,p,_)|matches!(p,P::AssociationEndpoint|P::AssociationEndpointMember)).cloned().collect::<BTreeSet<_>>(),wanted);
+  });});
+ }
+ #[test]
+ fn typed_output_extraction_keeps_optional_field_and_nullable_sum_separate_from_result_admission(){
+  use crate::security_payload_applicability::{Selector as P,Availability,Output,Sink};
+  struct Collector(Vec<P>);impl Sink for Collector{fn charge(&mut self,_:usize)->Result<()>{Ok(())}fn duty(&mut self,_:&str,p:P,_:&[&str])->Result<()>{self.0.push(p);Ok(())}}
+
+  // These are authentic resolved source plans before query-profile/result admission.
+  for (sql,optional,kind,nullable) in [("SELECT r.salary FROM Resource r",true,Output::Field,false),("SELECT r.salary FROM Resource r",false,Output::Field,false),("SELECT COUNT(*) FROM Resource r",false,Output::Count,false),("SELECT SUM(r.salary) FROM Resource r",false,Output::Sum,true)]{
+   let mut f:Value=serde_json::from_str(include_str!("../tests/security-source-fixture.json")).unwrap();f["policy"]["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"original"});let source=&f["resolution"]["documents"][0];let mut doc=source["document"].clone();
+   for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){e["name"]=e["id"].clone();if e["scalarType"]=="integer"{e["facets"]=json!({"integerWidth":{"bits":64,"signed":true}});}if optional&&e["id"]=="salary"{e["nullability"]=json!("absent-allowed");}}
+   let text=doc.to_string();let inputs=serde_json::from_value(json!([{"documentJson":text,"pin":{"documentId":doc["id"],"revision":source["revision"],"umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]}])).unwrap();
+   let catalog=crate::model::Catalog::prepare_security(inputs).unwrap();let policy=f["policy"].to_string();let ontology=f["resolution"]["ontology"].to_string();let packet=crate::security_source::SecuritySourcePacket::read(&policy,&ontology,&catalog).unwrap();let plan=crate::security_ir::SecurityLogicalPlan::read(packet,&catalog).unwrap();
+   let query=crate::security_query_uses::SecurityResolvedQuery::resolve(sql,&catalog,&plan,Default::default(),None).unwrap();let app=query.application_plan();
+   let mut out=Collector(vec![]);crate::security_payload_applicability::output("output",&app.outputs[0],app,&mut out).unwrap();
+   assert!(out.0.contains(&P::Output(kind)));assert!(out.0.contains(&P::OutputNullable(nullable)));
+   if kind==Output::Field{assert!(out.0.contains(&P::OutputAvailability(if optional{Availability::AbsentAllowed}else{Availability::Required})));}else{assert!(!out.0.iter().any(|p|matches!(p,P::OutputAvailability(_))));}
+   // Exact result correspondence remains separate. Optional original Fields refuse;
+   // COUNT/SUM extraction alone cannot establish owner/result/native admission.
+   let raw=json!({"version":"weft.security.query-profile/0.1.0","id":"coverage","revision":"p1","action":"read","modelPins":catalog.pins(),"policySha256":crate::json::sha256(policy.as_bytes()),"ontologySha256":crate::json::sha256(ontology.as_bytes()),"binding":{"backendId":"fixture","backendVersion":"v1","targetProfile":"fixture","sha256":crate::json::sha256(b"{}")},"targets":[{"documentId":"domain","moduleId":"m","elementId":"Resource"}],"bindings":[]}).to_string();
+   let profile=crate::security_query_profile::SecurityQueryProfile::read(&raw,&plan,&catalog,"{}","fixture","v1","fixture").unwrap();if kind==Output::Field{
+    let uses=profile.admit_resolved_query(&query,&plan,&catalog,"{}","fixture","v1","fixture").unwrap();let ctx=SecurityBackendContext::new(&catalog,&plan,&query,&uses,"{}","fixture","v1","fixture").unwrap();
+    use crate::security_lowering::{SecurityIdentity as I,SecurityResultContract as C,SecurityResultColumn as Column,SecurityResultOutcome as O,SecurityResultDomain as D};
+    let field=I{document_id:"domain".into(),revision:"schema-1".into(),module:"m".into(),element:"salary".into()};
+    let contract=C{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns:vec![Column{position:1,output_name:app.outputs[0].name.clone(),source_fields:vec![field.clone()],outcomes:vec![O::Original{id:"original".into(),domain:D::Model{field}}]}]};
+    assert_eq!(ctx.check_result_declaration(&contract).is_ok(),!optional);
+   }
+  }
+
+ }
+
 }

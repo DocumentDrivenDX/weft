@@ -1,0 +1,113 @@
+//! Direct typed payload dispatch for template0.2. No facet-value qualification,
+//! physical capability selection, authenticated profile or native authorization.
+use crate::{error::{Diagnostic,Result},security_obligation_sources::{OwnerSourceDemands,FieldChannel,KeyPayload,QueryPayload,FieldUse},security_requirements::SecurityOperatorMode,security_ir::QueryOperator};
+use serde_json::Value;
+fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-LOWERING-UNSUPPORTED","capability","Typed payload applicability refused")}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Scalar{Boolean,String,Integer,Decimal,Binary}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Nullability{Required,AbsentAllowed,Unspecified}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Role{Stored,Context,KeyMember,Projection,QueryField,Operator}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Facet{Length,Precision,Scale,IntegerWidth,Range,CollectionSize,AllowedValues}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Output{Field,Count,Sum}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Availability{Required,AbsentAllowed}
+fn availability(value:Option<&str>)->Result<Availability>{match value{Some("required")=>Ok(Availability::Required),Some("absent-allowed")=>Ok(Availability::AbsentAllowed),_=>Err(fail())}}
+#[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
+pub(crate) enum Selector{
+ Role(Role),Scalar(Scalar),Nullability(Nullability),Facet(Facet),Protection(bool),
+ KeyPrimary(Option<bool>),OrderedKeyMember,Operator(QueryOperator,bool),
+ Output(Output),OutputScalar(Scalar),OutputNullable(bool),OutputAvailability(Availability),OutputFacet(Facet),
+ AssociationEndpoint,AssociationEndpointMember,
+}
+pub(crate) trait Sink{
+ fn charge(&mut self,bytes:usize)->Result<()>;
+ fn duty(&mut self,source:&str,selector:Selector,address:&[&str])->Result<()>;
+}
+fn facet(name:&str)->Result<Facet>{Ok(match name{"length"=>Facet::Length,"precision"=>Facet::Precision,"scale"=>Facet::Scale,"integerWidth"=>Facet::IntegerWidth,"range"=>Facet::Range,"collectionSize"=>Facet::CollectionSize,_=>return Err(fail())})}
+fn facets(source:&str,value:Option<&Value>,output:bool,sink:&mut impl Sink)->Result<()> {
+ if let Some(value)=value{let object=value.as_object().ok_or_else(fail)?;if object.len()>6{return Err(fail());}
+  for name in object.keys(){sink.charge(name.len())?;let f=facet(name)?;sink.duty(source,if output{Selector::OutputFacet(f)}else{Selector::Facet(f)},&["payload",if output{"output-facet"}else{"facet"},name])?;}
+ }Ok(())
+}
+fn scalar(value:&Value)->Result<Scalar>{Ok(match value.as_str(){Some("boolean")=>Scalar::Boolean,Some("string")=>Scalar::String,Some("integer")=>Scalar::Integer,Some("decimal")=>Scalar::Decimal,Some("binary")=>Scalar::Binary,_=>return Err(fail())})}
+fn domain(source:&str,field:&Value,role:Role,sink:&mut impl Sink)->Result<()> {
+ sink.charge(0)?;if field["cardinality"]!="one"{return Err(fail());}
+ let scalar=scalar(&field["scalarType"])?;let nullable=match field["nullability"].as_str(){Some("required")=>Nullability::Required,Some("absent-allowed")=>Nullability::AbsentAllowed,Some("unspecified")=>Nullability::Unspecified,_=>return Err(fail())};
+ sink.duty(source,Selector::Role(role),&["payload","role"])?;
+ sink.duty(source,Selector::Scalar(scalar),&["payload","scalar"])?;
+ sink.duty(source,Selector::Nullability(nullable),&["payload","nullability"])?;
+ facets(source,field.get("facets"),false,sink)?;
+ if let Some(allowed)=field.get("allowedValues"){if !allowed.is_null(){if !allowed.is_array(){return Err(fail());}sink.duty(source,Selector::Facet(Facet::AllowedValues),&["payload","allowed-values"])?;}}
+ Ok(())
+}
+fn protection(source:&str,classification:&Value,sink:&mut impl Sink)->Result<()> {
+ sink.charge(0)?;let protected=match classification["protection"].as_str(){Some("protected")=>true,Some("unprotected")=>false,_=>return Err(fail())};
+ sink.duty(source,Selector::Protection(protected),&["payload","protection"])
+}
+pub(crate) fn output(source:&str,selected:&crate::application_ir::Output,plan:&crate::application_ir::Plan,sink:&mut impl Sink)->Result<()> {
+   use crate::{application_ir::Expression,ir::Family};
+   let (kind,t)=match &selected.expression{Expression::Field{identity,..}=>{
+    let mut selected=None;for d in &plan.type_graph{sink.charge(0)?;if d.identity==*identity{if selected.is_some(){return Err(fail());}selected=Some(d);}}
+    let d=selected.ok_or_else(fail)?;let crate::application_model::Shape::Scalar{logical_type}=&d.shape else{return Err(fail());};
+    sink.duty(source,Selector::OutputAvailability(availability(d.availability.as_deref())?),&["payload","output-availability"])?;
+    (Output::Field,logical_type)
+   },Expression::Count{logical_type}=>(Output::Count,logical_type),Expression::Sum{logical_type,..}=>(Output::Sum,logical_type),Expression::RelatedKeys{..}=>return Err(fail())};
+   sink.duty(source,Selector::Output(kind),&["payload","output-kind"])?;
+   let family=match t.family{Family::Boolean=>Scalar::Boolean,Family::String=>Scalar::String,Family::Integer=>Scalar::Integer,Family::Decimal=>Scalar::Decimal};sink.duty(source,Selector::OutputScalar(family),&["payload","output-scalar"])?;sink.duty(source,Selector::OutputNullable(t.nullable),&["payload","output-nullable"])?;facets(source,Some(&t.facets),true,sink)?;
+ Ok(())
+}
+/// Sources/borrowed payloads come exclusively from the actual owner. Facet values,
+/// action names, ordered members, transforms and full types remain there intact.
+/// Dispatch never parses canonical source names or clones/normalizes JSON values.
+pub(crate) fn visit(owner:&OwnerSourceDemands<'_, '_, '_, '_>,sink:&mut impl Sink)->Result<()> {
+ for (source,e) in owner.field_events(){
+  sink.charge(source.len())?;let role=match e.channel{FieldChannel::Stored{..}=>Role::Stored,FieldChannel::Context=>Role::Context};domain(source,e.carrier,role,sink)?;
+  match (e.channel,e.classification){(FieldChannel::Stored{..},Some(c))=>protection(source,c,sink)?,(FieldChannel::Context,None)=>{},_=>return Err(fail())}
+ }
+ for (source,e) in owner.key_events(){sink.charge(source.len())?;match e{
+  KeyPayload::Key(key)=>{let primary=match key.definition.get("primary"){None=>None,Some(v)=>Some(v.as_bool().ok_or_else(fail)?)};sink.duty(source,Selector::KeyPrimary(primary),&["payload","key-primary"])?;},
+  KeyPayload::Member{carrier,..}=>{domain(source,carrier,Role::KeyMember,sink)?;sink.duty(source,Selector::OrderedKeyMember,&["payload","key-member"])?;}
+ }}
+ for (source,e) in owner.query_events(){sink.charge(source.len())?;match e{
+  QueryPayload::Field{kind,carrier,classification,..}=>{domain(source,carrier,match kind{FieldUse::Projection=>Role::Projection,FieldUse::QueryField=>Role::QueryField},sink)?;protection(source,classification,sink)?;},
+  QueryPayload::Operator{requirement,carrier,classification,..}=>{domain(source,carrier,Role::Operator,sink)?;protection(source,classification,sink)?;sink.duty(source,Selector::Operator(requirement.usage().operator,matches!(requirement.mode(),SecurityOperatorMode::OriginalAuthorized(_))),&["payload","operator-mode"])?;},
+  QueryPayload::Output{requirement,plan}=>{
+   output(source,requirement.output(),plan,sink)?;
+  }
+ }}
+ for (source,e) in owner.association_events(){sink.charge(source.len())?;let endpoints=e.declaration["endpoints"].as_array().ok_or_else(fail)?;if endpoints.len()>4096{return Err(fail());}
+  for (i,endpoint) in endpoints.iter().enumerate(){sink.charge(20)?;let i=i.to_string();sink.duty(source,Selector::AssociationEndpoint,&["payload","endpoint",&i])?;let members=endpoint["fields"].as_array().ok_or_else(fail)?;if members.len()>4096{return Err(fail());}
+   for (j,_) in members.iter().enumerate(){sink.charge(20)?;let j=j.to_string();sink.duty(source,Selector::AssociationEndpointMember,&["payload","endpoint-member",&i,&j])?;}
+  }
+ }
+ Ok(())
+}
+#[cfg(test)]
+mod tests{
+ use super::*;use serde_json::json;
+ #[derive(Default)]struct Collected{duties:Vec<(Selector,Vec<String>)>,visits:usize,text:usize}
+ impl Sink for Collected{fn charge(&mut self,bytes:usize)->Result<()>{self.visits+=1;self.text+=bytes;Ok(())}fn duty(&mut self,_:&str,s:Selector,a:&[&str])->Result<()>{self.duties.push((s,a.iter().map(|s|s.to_string()).collect()));Ok(())}}
+ #[test]
+ fn domain_dispatch_keeps_every_scalar_nullability_facet_and_protection_kind(){
+  for (name,s) in [("boolean",Scalar::Boolean),("string",Scalar::String),("integer",Scalar::Integer),("decimal",Scalar::Decimal),("binary",Scalar::Binary)]{for (name_n,n) in [("required",Nullability::Required),("absent-allowed",Nullability::AbsentAllowed),("unspecified",Nullability::Unspecified)]{
+   let mut out=Collected::default();domain("s",&json!({"scalarType":name,"nullability":name_n,"cardinality":"one"}),Role::Stored,&mut out).unwrap();assert_eq!(out.duties.iter().map(|(s,_)|*s).collect::<Vec<_>>(),vec![Selector::Role(Role::Stored),Selector::Scalar(s),Selector::Nullability(n)]);
+  }}
+  let mut out=Collected::default();domain("s",&json!({"scalarType":"integer","nullability":"required","cardinality":"one","facets":{"integerWidth":{"bits":128,"signed":false},"range":{"min":{"integerToken":"9007199254740993"}}},"allowedValues":[]}),Role::Context,&mut out).unwrap();
+  assert_eq!(out.duties.iter().map(|(s,_)|*s).collect::<Vec<_>>(),vec![Selector::Role(Role::Context),Selector::Scalar(Scalar::Integer),Selector::Nullability(Nullability::Required),Selector::Facet(Facet::IntegerWidth),Selector::Facet(Facet::Range),Selector::Facet(Facet::AllowedValues)]);
+  for (name,p) in [("protected",true),("unprotected",false)]{let mut out=Collected::default();protection("s",&json!({"protection":name}),&mut out).unwrap();assert_eq!(out.duties[0].0,Selector::Protection(p));}
+ }
+ #[test]
+ fn availability_preserves_required_and_absent_allowed_and_refuses_unestablished(){
+  assert_eq!(availability(Some("required")).unwrap(),Availability::Required);assert_eq!(availability(Some("absent-allowed")).unwrap(),Availability::AbsentAllowed);
+  for v in [None,Some("unspecified"),Some("nullable")]{assert!(availability(v).is_err());}
+ }
+ #[test]
+ fn unknown_selected_domain_and_classification_refuse(){
+  for v in [json!({"scalarType":"floating","nullability":"required","cardinality":"one"}),json!({"scalarType":"string","nullability":"nullable","cardinality":"one"}),json!({"scalarType":"integer","nullability":"required","cardinality":"one","facets":{"nativeGuess":true}}),json!({"scalarType":"integer","nullability":"required","cardinality":"one","allowedValues":{}})]{assert!(domain("s",&v,Role::Stored,&mut Collected::default()).is_err());}
+  assert!(protection("s",&json!({"protection":"inferred"}),&mut Collected::default()).is_err());
+ }
+}

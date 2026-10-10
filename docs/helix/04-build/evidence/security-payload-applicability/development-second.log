@@ -1,0 +1,130 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+error[E0609]: no field `kind` on type `&(&DemandInstance, &BTreeMap<String, BTreeSet<Atom>>)`
+    --> crates/weft-core/src/security_semantic_coverage.rs:1225:73
+     |
+1225 |    let payload_instances=issued.required().instances.iter().filter(|i|i.kind.starts_with("payload-")).map(|i|(i.source.clone(),i.kind.clo...
+     |                                                                         ^^^^ unknown field
+     |
+     = note: the full name for the type has been written to '/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928.long-type-18151588656238455838.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `source` on type `(&DemandInstance, &BTreeMap<String, BTreeSet<Atom>>)`
+    --> crates/weft-core/src/security_semantic_coverage.rs:1225:113
+     |
+1225 |    let payload_instances=issued.required().instances.iter().filter(|i|i.kind.starts_with("payload-")).map(|i|(i.source.clone(),i.kind.clo...
+     |                                                                                                                 ^^^^^^ unknown field
+     |
+     = note: the full name for the type has been written to '/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928.long-type-5009419764964684690.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `kind` on type `(&DemandInstance, &BTreeMap<String, BTreeSet<Atom>>)`
+    --> crates/weft-core/src/security_semantic_coverage.rs:1225:130
+     |
+1225 | ....kind.starts_with("payload-")).map(|i|(i.source.clone(),i.kind.clone(),i.scope.clone(),i.occurrence.clone())).collect::<BTreeSet<_>>();
+     |                                                              ^^^^ unknown field
+     |
+     = note: the full name for the type has been written to '/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928.long-type-5009419764964684690.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `scope` on type `(&DemandInstance, &BTreeMap<String, BTreeSet<Atom>>)`
+    --> crates/weft-core/src/security_semantic_coverage.rs:1225:145
+     |
+1225 | ...h("payload-")).map(|i|(i.source.clone(),i.kind.clone(),i.scope.clone(),i.occurrence.clone())).collect::<BTreeSet<_>>();
+     |                                                             ^^^^^ unknown field
+     |
+     = note: the full name for the type has been written to '/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928.long-type-5009419764964684690.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+error[E0609]: no field `occurrence` on type `(&DemandInstance, &BTreeMap<String, BTreeSet<Atom>>)`
+    --> crates/weft-core/src/security_semantic_coverage.rs:1225:161
+     |
+1225 | ...(|i|(i.source.clone(),i.kind.clone(),i.scope.clone(),i.occurrence.clone())).collect::<BTreeSet<_>>();
+     |                                                           ^^^^^^^^^^ unknown field
+     |
+     = note: the full name for the type has been written to '/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928.long-type-5009419764964684690.txt'
+     = note: consider using `--verbose` to print the full type name to the console
+
+For more information about this error, try `rustc --explain E0609`.
+warning: `weft-core` (lib test) generated 2 warnings
+error: could not compile `weft-core` (lib test) due to 5 previous errors; 2 warnings emitted

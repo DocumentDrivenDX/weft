@@ -1,0 +1,33 @@
+{
+  "status": "qualified-payload-family-presence-dispatch-component",
+  "templateVersion": "weft.security.requirement-templates/0.2.0",
+  "covers": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ],
+  "componentEvidenceOnly": true,
+  "testsPassed": 584,
+  "groups": 44,
+  "coreTestsPassed": 241,
+  "newControls": 6,
+  "sourcePins": 840,
+  "selectedBackendCasesPending": 42,
+  "requiredAcceptanceProgress": "26/132 historical; unchanged",
+  "acceptancePromotion": false,
+  "receipts": {
+    "astra-review.json": "86244d2e5fc2c8d61f8a7df24d76165cf6290b48d72d30d1c7a07279c1624bb5",
+    "development-attempts.json": "2ac783aaa2e746ef748df5789518bac48365817b20811f6b44e0ce1bef147e10",
+    "development-development.log": "0ff00119f7a010ff5466b58124a224c3d320b91b11d4d62f1b8e09e026862f15",
+    "development-eighth.log": "04d3a583ebea82e43bc102805292acb932797bd66e7f816293262953fff606b4",
+    "development-fifth.log": "e94ba8a83861b9f6b6d570463058cd45e37f9e668565d9fe8115d49cfbf3b8bd",
+    "development-fourth.log": "f6b30ccc37e4ec2517d34f35f6fc2cee670ce3ea8bc39e1b506557ff739663d1",
+    "development-second.log": "4080bfa3f9de49c8e3cfc34e0cce9ec6da55d56850fa4f1e0900269296bc6c9a",
+    "development-seventh.log": "6caf6df47ec37371939c599f9c27f9c115f6411f244956e64f93b0e65f9506b4",
+    "development-sixth.log": "9594ddd0ce745942515e7d6ba71047d96e7bf43e2fd5090a4708ff6f2c592eb9",
+    "development-third.log": "1f4042117e90222cf628f8cebf42b1d3f34abee7135cc82d5f170cfd90d8156f",
+    "spec-check.log": "4d7687d1dd58669070b91970c0d496d4ed2b3ad4ea55d92ffbf5bdb18c228f9a",
+    "start.json": "d12e4845c179cbeba0162197417045503923b3480756c68bb9793c5732cfd665",
+    "terminal.json": "1310b0ea124b2e9105dd929bdd0832f7e126996d22e9f37f2a65684a074ae6e4",
+    "workspace.log": "bfc97c14d5ebd7466835a455eae2ff380fa870eb0a4078d622d75cafbd30544b"
+  }
+}

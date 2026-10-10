@@ -1,0 +1,15 @@
+{
+  "version": "weft.security.payload-applicability-run/0.1.0",
+  "exitCode": 0,
+  "finishedAt": "2026-10-10T23:04:01.264205+00:00",
+  "sourcePinsUnchanged": true,
+  "changedInputs": [],
+  "testGroups": 44,
+  "passed": 584,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "measured": 0,
+  "workspaceLogSha256": "bfc97c14d5ebd7466835a455eae2ff380fa870eb0a4078d622d75cafbd30544b",
+  "declaredSources": 840
+}

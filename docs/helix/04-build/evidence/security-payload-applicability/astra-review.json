@@ -1,0 +1,29 @@
+{
+  "reviewer": "Astra ultra",
+  "outcome": "passed",
+  "scope": "Read-only independent source and parent-run receipt audit; no reviewer Cargo/native execution",
+  "testsPassed": 584,
+  "groups": 44,
+  "coreTestsPassed": 241,
+  "newControls": 6,
+  "sourcePins": 840,
+  "rustCargoPathsCovered": 184,
+  "failed": 0,
+  "ignored": 0,
+  "measured": 0,
+  "filtered": 0,
+  "findingsApplied": [
+    "Replace output-availability presence flag with exact Required/AbsentAllowed values and refuse unestablished values",
+    "Exercise actual Context/operator/ordered association visitor branches and authentic optional Field/COUNT/SUM source-plan extraction",
+    "Separate optional original result-contract refusal from source/profile/context admission"
+  ],
+  "remainingFindings": [],
+  "acceptancePromotion": false,
+  "remaining": [
+    "Numeric refinement and allowed-value member compatibility",
+    "Constant/transform domain/literal/revision semantics",
+    "Authenticated complete template selection",
+    "Physical and native backend qualification",
+    "Original required acceptance and public lowering"
+  ]
+}

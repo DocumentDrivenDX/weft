@@ -360,3 +360,41 @@ native bodies/evidence and public lowering remain required. Historical required
 acceptance remains26/132; no selected case is promoted by this catalog.
 
 Final [retained checkpoint](evidence/security-deployment-catalog/checkpoint.json):578 release workspace tests across44 groups,235 core, all five new controls passing, all837 declared input pins unchanged, zero failed/ignored/measured/filtered. Astra ultra independently checked the source mapping, bounded gate and terminal receipts with no remaining blocker in the candidate-duty scope. Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures. The distinct strict result remains private and all42 cases remain pending.
+
+
+#### B-008 typed payload applicability candidate
+
+Template0.2 now derives mandatory scalar/nullability/refinement-family/protection,
+key, query/output and ordered association duties directly from actual borrowed
+payloads under CONTRACT-006. Independently authored source/address/scope golden
+expectations check33 payload occurrences and48 extra scoped requirements in the
+repeated-output fixture. Each applicable selector and its eligible origin is
+omitted in turn; every omission refuses. Legacy template0.1 rejects payload
+selectors. Whole0.2 exact/minus-one visit/text controls remain conditional bounded
+execution checks, not a formal implementation refinement proof. Astra's output
+availability finding was applied before freezing: required and absent-allowed
+values remain distinct; unestablished values refuse.
+
+Scalar/facet families and occurrence presence are qualified by these component
+checks only. Numeric refinement compatibility, constant/transform literal and
+domain meaning, complete authenticated template profiles, optional/nullable result
+admission, physical/native implementation and original acceptance qualification
+remain open. Historical required acceptance stays26/132; the goal remains active.
+Frozen workspace receipts and independent review must be retained before landing.
+
+Additional controls execute actual-owner context/operator/ordered-association
+dispatch across two scans and two actions. Authentic resolved source-plan helpers
+check COUNT/SUM and optional Field output typing before result admission. An exact
+direct-original result contract passes for a required Field and refuses for the
+otherwise equivalent absent-allowed Field; this does not forbid all withheld
+optional-output source plans or establish aggregate result admission.
+
+Final [retained checkpoint](evidence/security-payload-applicability/checkpoint.json):
+584 release workspace tests across44 groups,241 core, all six new controls passing,
+all840 freshly frozen declared input pins unchanged, zero failed/ignored/measured/
+filtered. Astra ultra independently audited source semantics,184 Rust/Cargo path
+coverage and all terminal receipts with no landing blocker in the stated subset.
+Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures.
+Development logs retain corrections as diagnostics without failed-attempt source
+snapshots; only the final fresh frozen run supports source-qualified test claims.
+No original required acceptance case is promoted and the full goal stays active.

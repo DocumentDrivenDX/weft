@@ -1615,3 +1615,29 @@ membership lookups charge visits. No comparison map is constructed from incoming
 Selected template IDs. Those reservations bound copied authored text only, not
 allocator metadata or aggregate process resources. Existing4096 template/capability/
 expanded-atom limits and1m-visit/16m-text phase budgets remain.
+
+
+#### Typed payload applicability candidate — template0.2
+
+The private requirement-template0.2 experiment adds mandatory duty dispatch from
+the actual borrowed field, key, query and association payloads. It preserves
+source/scope/occurrence identities, scalar families, required/absent-allowed/
+unspecified carrier nullability, facet-family presence, stored classification,
+ordered key members and primary absent/false/true, operator kind and disclosed/
+original-authorized mode. Direct outputs use the exact descriptor identity and
+retain required versus absent-allowed availability separately from logical type
+nullability; COUNT/SUM use their actual typed output families and facets. Ordered
+association endpoint/member positions are independent duty occurrences. Selected
+unknown variants refuse. All expansion uses the existing issuer visit/text ledger
+and aggregate atom/contract limits; payload JSON is neither cloned nor normalized.
+
+This is a presence/family applicability subset. Facet numeric values, allowed-value
+members, constant/transform domains/literals/revisions, endpoint direction and
+physical join semantics remain retained in owner payloads but are not qualified
+by these selectors. No authenticated template completeness, exact native capability
+compatibility or semantic-to-physical refinement is established. The admitted
+required-direct-cells result profile does not thereby admit optional original Field or
+nullable SUM output. Template0.1 keeps its earlier experimental behavior and
+refuses payload selectors; DeploymentIssued still denotes deployment catalog
+provenance, not payload or native qualification. Public security lowering remains
+closed; all original acceptance cases and the full goal remain binding.

@@ -149,3 +149,4 @@ mod security_requirement_templates;
 
 mod security_case_catalog;
 mod security_deployment_catalog;
+mod security_payload_applicability;
