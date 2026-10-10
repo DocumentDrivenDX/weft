@@ -182,3 +182,60 @@ signed-decimal tokens ordered by their decoded integer value; admission must
 verify real native order, reversible encoding and original identity guards.
 Interface review must settle the restricted path alias and closed schemas before
 implementation readiness.
+
+## Required-root related-key profile realization
+
+The separate profile in CONTRACT-005 composes unchanged Plan04/Backend03 types
+and exact inherited RelatedKeys representation with the existing two-hop/scalar
+capabilities. `weft-databricks::paths_keys` owns its named backend manifest and
+admission; `weft-runtime::paths_keys` owns feature-selected registration and the
+`weft-paths-keys` entrypoint. The existing paths route never auto-selects it.
+Keep shared binding/relationship access and collection lowering private to
+Databricks, with explicit selected-profile policy rather than a SQL-triggered
+fallback. Core emission validates original output/relationship/key lineage and
+complete obligation inventories before emitting an admitted response. Native
+source-schema declarations are immutable metadata; host observations prove their
+actual correspondence.
+
+Extract or reuse the exact two-hop DECIMAL38 prefix operation for one-hop
+collections. Do not call the historical Traversals::related ROW_NUMBER algorithm
+for this profile. Access caches include original relationship identity and root
+occurrence; full authorized bag enumeration preserves parallel edges while degree
+checks retain distinct-neighbor inputs. The new ordinalCapacity inventory covers
+both selected one-hop and two-hop bounded outputs before any lookahead. Keep
+signed64 aggregate capacity, source integrity and encoding proof separate.
+
+Configuration has one owner per field: runtime/build selects the named feature;
+trusted application composition selects the registered backend/version/profile,
+immutable index and platform qualification; operators inject deployment handles,
+credentials and finite capture limits through the host's typed startup config.
+Compiler/lowerer reads no ambient environment. A library request cannot provide
+its own trust authority; no mutable global registration or new dependency edge
+is needed.
+
+Extend the precise specification with a held admitted edge bag E for each root
+occurrence s. One-hop enumeration contains (s,e,t) once for each legal e; its
+ordered prefix P is take(bound, E ordered by complete target key then edge ID),
+and truncated iff |E|>bound. Initial state has no released result. Admission,
+source/schema checks, full wide-prefix capacity, encoding, decode and closure are
+required transitions; any failing transition withholds release. PATH-K1 preserves
+original identities and bag multiplicity; PATH-K2 establishes exact order/prefix/
+marker and full DECIMAL38 overflow refusal; PATH-K3 preserves PATH-S6's publication
+and cleanup fence. Assurance remains precise semantic review plus implementation
+and actual native correspondence tests, without machine proof. Liveness assumes
+finite admitted inputs and terminating available native/cleanup operations;
+no production fairness, crash-durability or unbounded-fanout claim follows.
+
+Reuse CONTRACT-003 safe bounded diagnostics. Attribute profile, stage and outcome
+without logging keys, SQL values or credentials; stdout remains protocol-only.
+Known capture loss/cleanup failure must remain visible and primary cancellation
+must survive cleanup. This change adds no OpenTelemetry exporter or receiver
+claim; host instrumentation changes require its own exact mapping/receiver proof.
+
+Verify contract/descriptor and forbidden combinations first, then backend manifest
+and lowering correspondence, then fresh immutable compiler transport/package
+admission, and finally the actual original ten-case UMF0.8 commerce workflow.
+The required RelatedKeys case must pass under the new realization; another
+profile's collection/property-join result cannot substitute. Recheck PATH-S1–S6
+where shared prefix/access changes affect two-hop behavior. Native claims retain
+exact compiler/source/backend/runtime/publication/ACK identities.

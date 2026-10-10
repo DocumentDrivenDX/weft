@@ -114,6 +114,18 @@ never establishes semantic conformance.
 | `spikes/b001/python` | Historical native spike wrapper | Spike Python exports | `weft-spike-core`; locked PyO3 | Active compiler/runtime and other wrappers |
 | `spikes/b001/wasm` | Historical browser spike wrapper | Spike WASM exports | `weft-spike-core`; locked wasm-bindgen | Active compiler/runtime and other wrappers |
 
+For the separately selected CONTRACT-005 paths-keys profile, core Plan04 and
+Backend03 own immutable logical views and exact descriptor/obligation admission;
+`weft-databricks::paths_keys` owns its manifest, required-root RelatedKeys domain
+and native collection lowering; private relationship/prefix helpers stay in that
+crate. `weft-runtime::paths_keys` and `weft-paths-keys` own explicit feature-selected
+construction. Their dependencies remain core <- adapter <- runtime; core never
+imports adapter/host/native clients, and wrappers never register a profile by SQL
+content. Host source/schema/ACK checks and release are external integration
+ownership. Existing paths registration is independent. Cargo direction/private
+visibility checks apply unchanged; exact per-profile inventory, prefix overflow
+and native correspondence require semantic review and tests under CONTRACT-005.
+
 **Integration Owners**: UMF document interpretation -> `weft-core` owning-version reader; Databricks physical translation -> `weft-databricks`; PostgreSQL physical translation -> `weft-postgresql`; Python/browser translation -> their thin wrappers. External execution, original public UMF receipts, native source guards and authority/ACK admission belong to the caller host, not these compiler packages.
 
 **Construction Policy**: `weft-runtime` registers explicitly compiled features; request backend ID/version/profile selects registered code. A SQL expression MUST NOT choose or silently switch a backend. Existing library consumers may construct their own Registry through CONTRACT-002.

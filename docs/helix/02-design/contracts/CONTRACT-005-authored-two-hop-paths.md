@@ -379,3 +379,126 @@ is an acceptable public foundation. No syntax/version decision is implied by
 this draft. A backend encoding gap blocks its lane, not the typed frontend or
 other independent engines. A bounded collection alone cannot satisfy grouped
 path-count acceptance.
+
+## Separate required-root related-key profile
+
+Select backend `ashlar.databricks.paths-keys`, version
+`0.4.0-paths-keys-candidate`, target `spark4-delta4-paths-keys-candidate`
+explicitly. Its runtime feature is `ashlar-databricks-paths-keys` and executable
+is `weft-paths-keys`. It retains the exact 0.4 language/IR/compile pair and
+Backend03 interface, with the existing path profile's 47 capabilities plus
+`relationship.boundedKeys`. The existing `ashlar.databricks.paths` registration,
+profile, artifacts and refusal behavior remain independently selected.
+Registration, schema validity and candidate status establish no native or
+production support claim.
+
+`RELATED_KEYS(root.relationship, bound)` uses the existing resolved
+RelationshipRead and original complete target AuthoredKey. Its root must be a
+required visible Record occurrence; every selected key component must be required
+String with an admitted exact home. Forward and authored inverse traversal are
+supported. Bound is 1..1000. Aggregate/group/HAVING use, a potentially unmatched
+LEFT root, and mixing with path expansion refuse. Required-root one-hop and
+two-hop collection outputs may coexist; each retains its output position.
+This extension introduces no readProfile, page key, new grammar or inferred
+relationship from a property join.
+
+The emitted column is the existing closed `relatedKeys` representation from
+`compile-response-v0.4.schema.json`, with exact original relationship/key/type
+identity, bound and nullable:false. Select the inherited closed `relatedKeys`
+carrier in `application-result-v0.2.schema.json`: exactly
+`{items:[["key-component"]],truncated:false}`, with String atoms and complete
+key arity. Do not use that schema's generic presence alternatives. The
+`application-result-v0.4.schema.json` root remains path-only and unchanged;
+representation-specific decoder dispatch must not relabel this carrier as
+pathCollection or permit null/absence fallback.
+
+Items retain one occurrence per admitted edge, including equal complete key
+tuples. Order by complete target key components using the admitted exact String
+order, then signed native edge ID. Empty input is `{items:[],truncated:false}`.
+Items are exactly the first bound occurrences; truncated is true iff the full
+bag exceeds bound in the same held publication. Authored participation degree
+continues to count DISTINCT associated Record instances, not edges or tuples.
+Reuse relationshipIntegrity unchanged for complete authorized endpoints, source,
+model revision, key uniqueness, edge uniqueness/orphans, degree and lifecycle.
+
+### Closed one-hop integrity and collection capacity obligations
+
+Both new obligations use the existing envelope with owner:"host". All parameter
+objects and inventory/check entries below are closed; missing, unknown, duplicate
+or unselected members refuse. Output positions are the existing one-based column
+positions, never labels. Repeated equal expressions retain separate entries.
+
+`ashlar.relatedKeys.collectionIntegrity` has failureCode WFT-BINDING and exactly:
+
+```json
+{
+  "phase":"before-user-query",
+  "samePublicationRequired":true,
+  "noPartialPublication":true,
+  "collections":[{"outputPosition":1,"startScan":"root","relationship":"RelationshipRead","bound":2}],
+  "edgeSchemas":[{"outputPosition":1,"relationship":"RelationshipIdentity","table":"PublicationTable","identityColumn":"id","nativeType":"BIGINT"}],
+  "checks":[{"outputPosition":1,"kind":"collectionEncoding","sql":"emitted check SQL","failureCode":"WFT-BINDING"}],
+  "success":"one exact STRING count equal to 0 per check"
+}
+```
+
+The quoted type names in this example stand for their complete existing typed
+objects. collections is exactly every selected RelatedKeys output in output
+order; edgeSchemas has exactly one corresponding entry per collection, including
+standalone edges not consumed by a two-hop path. RelationshipIdentity equals
+RelationshipRead.identity; table/column/type equal the admitted immutable
+NativeEdgeSource. For each output require exactly one collectionEncoding check
+covering every consumed edge id IS NULL refusal and uniqueness of original edge
+IDs across the complete authorized source, plus reversible complete String-key
+carrier encoding and prefix/marker correspondence. A single NULL ID must refuse;
+key-only carrier encoding and the reused relationshipIntegrity checks cannot
+stand in for this value check. Check the full source even when outer selection
+returns no rows or the bad edge lies outside the bounded prefix. Do not treat
+that SQL check as native schema proof. Obtain the
+complete native table field schema, ordered names/types/nullable Booleans, from
+its exact UUID/version/table in the same hold before SQL. Require actual BIGINT
+id and retain nullable:true only with full-source non-null/uniqueness guards.
+Missing, partial, stale or inconsistent observations refuse even on empty tables.
+Existing path occurrenceIntegrity remains mandatory for selected two-hop outputs.
+
+`ashlar.relatedKeys.ordinalCapacity` has failureCode WFT-CAPABILITY and exactly:
+
+```json
+{
+  "phase":"before-user-query",
+  "samePublicationRequired":true,
+  "noPartialPublication":true,
+  "nativeRepresentation":"decimal38",
+  "maximum":"99999999999999999999999999999999999999",
+  "collections":[{"outputPosition":1,"kind":"relatedKeys"}],
+  "checks":[{"outputPosition":1,"kind":"fullOccurrencePrefix","sql":"emitted check SQL","failureCode":"WFT-CAPABILITY"}],
+  "success":"one exact STRING count equal to 0 per check"
+}
+```
+
+Its inventory is all selected RelatedKeys and RelatedPaths collection outputs in
+output order, with kind exactly relatedKeys or relatedPaths and exactly one
+fullOccurrencePrefix check per output. Require it whenever any such collection
+is selected in this profile. This capacity is separate from signed64 aggregate
+pathRows/targetDistinct counts and their existing countCapacity obligations.
+
+Use the existing two-hop wide-prefix algorithm for both collection forms:
+`TRY_SUM(CAST(1 AS DECIMAL(38,0)))` over the complete per-owner occurrence bag,
+ordered by the complete selected keys and native edge identities, with ROWS
+BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW. Check NULL overflow across the full
+population before outer filtering/ORDER/LIMIT or bound-plus-one lookahead can
+hide it. Never narrow the internal ordinal or use ROW_NUMBER followed by a cast;
+that cannot widen its native counter. A nonempty overflowing bag refuses;
+empty input remains an empty collection. The maximum is a finite representation
+bound, not a promised operational fanout. Encoding/prefix checks and independently
+reviewed lowering/native bag conformance establish truncation; a zero guard
+alone is not a proof of arbitrary SQL.
+
+Host admission validates exact inventories against the typed plan, original
+bindings and selected profile, then obtains all native schemas and runs owning
+source/public-UMF checks before dependent capacity/encoding guards and user SQL.
+Use the emitted parameter slots unchanged, one active publication reader and
+ordinary protected ACK. Buffer bounded cells; validate carrier/key order and
+bag multiplicity; close publication/resource checks, reader and engine before
+report release. No profile fallback, SQL repair, source policy grant or transfer
+of another realization's native evidence is permitted.

@@ -127,3 +127,47 @@ stage/refusal diagnostics; check that credential and raw request payloads are
 absent. A separately executed fresh native publication/read from documented
 commands is required for the consumer's setup claim. Compiler transport evidence
 cannot substitute for that native execution.
+
+## Separate paths-keys profile verification
+
+CONTRACT-005 and TD-007's PATH-K1–K3 require 100% coverage of selected supported
+and refused branches. Contract tests use the exact 0.4/Backend03 pair, inherited
+closed RelatedKeys carrier, original complete key/pin/output-position lineage and
+closed collectionIntegrity/ordinalCapacity inventories. Test required String
+composite keys, inverse names, repeated outputs, missing/stale/forged edge schemas,
+unknown/duplicate obligations and LEFT-root/aggregate/expansion-mix refusals.
+The owning collectionEncoding check must reject one NULL original edge ID and
+duplicate original edge IDs in the complete consumed source, including an edge
+outside the bounded prefix and an outer selection returning no rows. Native
+schema observation remains separate from these full-source value controls.
+The old paths manifest/route retains its one-hop refusal; the new manifest has
+exactly its previous 47 capabilities plus boundedKeys, without silent registration.
+
+Unit/lowering correspondence tests use independent tiny edge bags for empty,
+exact-bound, bound-plus-one, equal-key parallel occurrences and distinct-neighbor
+degree. One-hop and two-hop prefix SQL must use the full DECIMAL38 TRY_SUM ordinal,
+with full-population NULL overflow checks before lookahead/outer LIMIT. Verify
+emitted expressions and independent arithmetic boundary witnesses; do not allocate
+10^38 rows or claim an actual enormous-population test. Guard omission/misordering,
+dropped parallel edges, wrong key order and hidden overflow are negative controls.
+PATH-K1–K3 remain precise-review properties; no analyzer pass is implied.
+
+Native integration independently compares full raw-source bags, exact collection
+cells, ordering/truncation and schemas under one held publication with ordinary
+protected ACK. Run the actual original UMF0.8 ten-case commerce workflow, including
+required one-hop, two-hop multiplicity/distinct/grouped counts, property joins and
+settlement/refund arithmetic. Retain source-public-UMF, parameter slots, actual
+schema observations, guard outcomes and closing custody; inject query/cancellation,
+reader/ACK/resource drift and cleanup failures to withhold release. Keep separately
+authored parallel/signed-edge/self-loop/inverse/LEFT witnesses distinct from that
+original source. Other compiler/native receipts cannot qualify the new realization.
+
+Distribution tests execute the new release binary's complete declared corpus,
+selected/refused capability map, namespace fences and bounded transport controls;
+index admission and installed fresh-process use remain separate. Tests verify
+required typed configuration and permitted/forbidden dependency edges with the
+existing boundary commands. Diagnostics must preserve primary failures, bounded
+safe stage evidence and explicit capture loss without credential/value leakage;
+local records alone claim no OpenTelemetry receiver integration or production
+retention. No renewed scale experiment is required for these finite semantic
+and representation-bound controls.

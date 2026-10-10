@@ -1,0 +1,59 @@
+{
+  "format": "weft-paths-keys-design-freeze/0.1",
+  "scope": "Four desired-state documents only; no source implementation, compiler/native execution, build, index admission or production/machine-proof claim",
+  "files": [
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "d0ee010b138e0b6f2210e8b0aaf857ca605b67f2d746ad9a741d93afacd91443",
+      "bytes": 9387,
+      "originalSha256": "55b000b8d835561b865c8bb88c58f56aafac75378de3b6f349d53013d44323fa"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "sha256": "915294bfff1539e123f9407c84caa3805eef2a050942370f2a7bc29c0a70bc65",
+      "bytes": 31067,
+      "originalSha256": "82f94c9eefb01f1cf99eed7810f2420176a574383354bb7cb8390ce4236453d9"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "sha256": "3bb393c692f58847b8f3b0e747b9df166fd970532616fee14e36b4b4afe76f44",
+      "bytes": 15317,
+      "originalSha256": "4256d8c7919e84dfd11975ad9c51540a40dc680450f46102b820493f39111b69"
+    },
+    {
+      "path": "docs/helix/03-test/TP-001-compiler-conformance.md",
+      "sha256": "7b9001dfc7389ad3a4a3bb8db9861f4e5b2f519c9e1081040137bb7ce46e0785",
+      "bytes": 12575,
+      "originalSha256": "c516fe5582fd3177acb7419ae405ea1654997a409eeb2f86768e306886a87d1e"
+    }
+  ],
+  "checks": {
+    "frontmatterByteEquivalent": true,
+    "relativeLinksExist": true,
+    "relativeLinkCount": 1,
+    "diffCheck": true,
+    "specsCheck": "terminal0;50 artifacts/20 schemas/30 planned criteria/636 scenarios; no compiler/database/embedding tests"
+  },
+  "governingProfile": {
+    "backendId": "ashlar.databricks.paths-keys",
+    "backendVersion": "0.4.0-paths-keys-candidate",
+    "targetProfile": "spark4-delta4-paths-keys-candidate",
+    "feature": "ashlar-databricks-paths-keys",
+    "binary": "weft-paths-keys",
+    "interfaces": [
+      "weft-compile/0.4.0",
+      "weft-backend/0.3.0"
+    ],
+    "ordinalRepresentation": "decimal38",
+    "maximum": "99999999999999999999999999999999999999"
+  },
+  "catalog": "HELIX0.15.4 installed workflow graph/templates/prompts/meta and concern practices",
+  "unknowns": [
+    "Implementation and exact native conformance of the new realization remain unqualified; trust/index admission separate"
+  ],
+  "supersedes": {
+    "manifest": "/private/tmp/weft-paths-keys-design-20261010-a/manifest.json",
+    "sha256": "ea435d46edb10ac0a49cd3ce17adb13fff80dea597e9949f3cc5cdd540139629"
+  },
+  "delta": "CollectionEncoding explicitly owns full-source original edge ID non-null and uniqueness, independent of outer selection/prefix; TP isolated negative controls."
+}

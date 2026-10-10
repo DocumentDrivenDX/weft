@@ -1,0 +1,88 @@
+{
+  "format": "astra-weft-paths-keys-design-review/0.1",
+  "verdict": "approved exact four-document B desired-state slice for landing; no implementation or runtime approval",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-design-20261010-b/manifest.json",
+    "bytes": 2680,
+    "sha256": "a743b2168b039e20d7c7a28571d034eb26853ea6630f7a62fb85ab89836160b3"
+  },
+  "baseCommit": "c8d825808a27e15517c1fc93c3fba0faffc2406e",
+  "files": [
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "d0ee010b138e0b6f2210e8b0aaf857ca605b67f2d746ad9a741d93afacd91443",
+      "bytes": 9387,
+      "originalSha256": "55b000b8d835561b865c8bb88c58f56aafac75378de3b6f349d53013d44323fa"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "sha256": "915294bfff1539e123f9407c84caa3805eef2a050942370f2a7bc29c0a70bc65",
+      "bytes": 31067,
+      "originalSha256": "82f94c9eefb01f1cf99eed7810f2420176a574383354bb7cb8390ce4236453d9"
+    },
+    {
+      "path": "docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "sha256": "3bb393c692f58847b8f3b0e747b9df166fd970532616fee14e36b4b4afe76f44",
+      "bytes": 15317,
+      "originalSha256": "4256d8c7919e84dfd11975ad9c51540a40dc680450f46102b820493f39111b69"
+    },
+    {
+      "path": "docs/helix/03-test/TP-001-compiler-conformance.md",
+      "sha256": "7b9001dfc7389ad3a4a3bb8db9861f4e5b2f519c9e1081040137bb7ce46e0785",
+      "bytes": 12575,
+      "originalSha256": "c516fe5582fd3177acb7419ae405ea1654997a409eeb2f86768e306886a87d1e"
+    }
+  ],
+  "findings": [],
+  "resolvedFinding": "B explicitly assigns complete consumed-source id IS NULL and unique original edge-ID checks to each collectionEncoding entry, including a single NULL, bad edge outside prefix and empty outer selection. The unchanged legacy relationshipIntegrity and key-only encoding are expressly insufficient substitutes.",
+  "checks": {
+    "allLiveFileHashesAndLengthsMatch": true,
+    "allOriginalHashesMatchHEAD": true,
+    "allFrontmatterByteEquivalent": true,
+    "diffCheck": true,
+    "independentSpecsCheck": {
+      "command": "bun run specs:check",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/astra-weft-paths-keys-specs-20261010-b.log",
+        "bytes": 207,
+        "sha256": "5b439c6d284afc9f0c4c5c47d9b16a439f51fc5e923467155f79823fee6a39d8"
+      },
+      "scope": "artifact/schema/scenario validation, not compiler or native execution"
+    }
+  },
+  "crossProject": {
+    "ashlarBFreeze": {
+      "path": "/private/tmp/ashlar-paths-keys-governing-freeze-20261010-b/manifest.json",
+      "bytes": 1028,
+      "sha256": "09455e81162a6a5e612e12a73513e972c61af54ae6da3cf615d12719739fc521"
+    },
+    "ashlarIndependentReview": {
+      "path": "/private/tmp/astra-ashlar-paths-keys-contract-review-20261010-a.json",
+      "bytes": 5519,
+      "sha256": "85eaa9ca84cdfe63ddea1d8238f583c97a43796493a314ae76a9e2538998fb76"
+    },
+    "finding": "BackendID/version/target, required String/root/subset fences, original inherited carrier, obligations and held/closing/noACK/noFallback requirements agree. Ashlar TP separately establishes observable edge tie-break witness rather than inferring it from equal key tuples."
+  },
+  "semanticChecks": [
+    "Profile/feature/executable separately named; unchanged old paths route and 47-capability profile remain independent; new profile adds relationship.boundedKeys. No dead entity-page capability or SQL-triggered profile selection.",
+    "Existing Plan04/Backend03 RelatedKeys wire and exact inherited result02 relatedKeys carrier reused; result04 root explicitly remains path-only. Nullable/presence alternatives cannot admit unmatched LEFT roots.",
+    "Required monomorphic exact-home String keys, ordered complete target key, inverse direction, nongrouped/nonaggregate/noHAVING/noExpansion restriction are explicit; repeated outputs retain positions and repeated equal-key edge occurrences.",
+    "CollectionIntegrity inventories complete RelatedKeys output positions, full RelationshipRead/root/bound and NativeEdgeSource schemas. One exact owning check per output, same source/pub/native schema even empty/standalone, no NULL/duplicate originaledge loss hidden by outer/prefix selection. Existing two-hop occurrence obligations remain mandatory.",
+    "OrdinalCapacity inventories all selected one/two-hop collection outputs under this new profile, separately from signed64 counts. TRY_SUM DECIMAL38 ROWS prefix uses complete per-owner occurrence bag and full NULL overflow checks before outer filters/lookahead; no ROW_NUMBER cast narrowing and no claim of operational 10^38 fanout.",
+    "New profile retains independent original source/endpoint/key/degree/lifecycle checks. Degree counts distinct neighboring Records while collection bag retains independent parallel edges.",
+    "Precise PATH-K1-K3 states/transition release gate, assumptions and correspondence tests extend existing PATH-S constraints without machine-proof, authority, native or crash-durability claim. Native all-ten original commerce, separate adversarial fixtures and fresh compiler/corpus/index/install evidence remain required."
+  ],
+  "helixAssessment": {
+    "modularity": "Named core/adapter/runtime owners preserve core<-adapter<-runtime direction; private shared helpers remain adapter-owned; admission/payload semantics remain Contracts, map does not duplicate signatures.",
+    "configuration": "Runtime feature and trustedapplication profile/index/platform ownership separate from operator deployment paths/credentials/finite limits; lowerer has no environmental discovery.",
+    "observability": "Existing safe diagnostic contract retained; clean stdout, bounded stage/outcome/loss context and primary cancellation preservation; no new receiver claim.",
+    "formal": "Stable PATH-K1-K3 precise scope, initial no-release state, required transitions, conditional finite terminating external calls, targeted broken-mechanism/overflow models and required implementation/native correspondence; query properties remain independent of Ashlar publication model."
+  },
+  "requiredNextGates": [
+    "Implement exact typed closed obligations plus semantic inventory validation; preserve existing public types/schemas/routes and prove original response compatibility.",
+    "Implement pure admitted String carrier decoder and host exact source/schema/guard/hold/closing enforcement with meaningful positive and isolated refusal controls.",
+    "Retain actual immutable new source/build/corpus/package/index and native evidence before support claims. No inherited530/c6/ab899 native qualification."
+  ],
+  "operations": "Read-only design/source correspondence review and validation; no source edit, Git mutation, compiler invocation, build, install, SDK/native engine or database execution."
+}
