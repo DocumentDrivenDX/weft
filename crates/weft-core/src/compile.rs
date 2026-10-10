@@ -286,6 +286,9 @@ impl Compiler {
         )
     }
 }
+#[path = "compile04.rs"]
+pub mod v04;
+
 fn public_diagnostic(d: Diagnostic) -> Value {
     let recovery = match d.code.as_str() {
         "WFT-BACKEND-MISSING" | "WFT-BACKEND-VERSION" | "WFT-CAPABILITY" => "change-profile",
