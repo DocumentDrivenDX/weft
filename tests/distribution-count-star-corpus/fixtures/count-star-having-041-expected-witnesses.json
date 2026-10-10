@@ -1,0 +1,1408 @@
+{
+  "cases": [
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:0:explicit_profile_refuses_invalid_mapping_unmatched_numeric_and_old_routes",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan"
+      ],
+      "id": "paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.inverse",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan"
+      ],
+      "id": "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "order.asc",
+        "project",
+        "project.distinct",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:3:distinct_composition_remains_required_string_only",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan"
+      ],
+      "id": "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "project.positionedOutputs",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan"
+      ],
+      "id": "paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "arithmetic.+",
+        "arithmetic.exact.integer",
+        "equal",
+        "filter",
+        "parameter.named",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.integer",
+        "type.integer.unbounded",
+        "type.string"
+      ],
+      "id": "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "equal",
+        "join.left",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string",
+        "value.outerJoinPresence"
+      ],
+      "id": "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.countDistinct",
+        "aggregate.havingCountDistinctGreater",
+        "aggregate.pathTargetDistinctCount",
+        "equal",
+        "filter",
+        "group",
+        "innerJoin",
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.inverse",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan"
+      ],
+      "id": "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:13:explicit_profile_refuses_invalid_mapping_unmatched_numeric_and_old_routes",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:14:distinct_composition_remains_required_string_only",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.pathTargetDistinctCount",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan"
+      ],
+      "id": "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan"
+      ],
+      "id": "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.pathTargetDistinctCount",
+        "equal",
+        "group",
+        "join.left",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan",
+        "type.string",
+        "value.outerJoinPresence"
+      ],
+      "id": "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:19:explicit_profile_refuses_invalid_mapping_unmatched_numeric_and_old_routes",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.pathTargetDistinctCount",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan"
+      ],
+      "id": "paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "and",
+        "arithmetic.*",
+        "arithmetic.-",
+        "arithmetic.compareExact",
+        "arithmetic.exact.integer",
+        "arithmetic.negate",
+        "compare.greaterEqual",
+        "compare.less",
+        "compare.lessEqual",
+        "compare.notEqual",
+        "filter",
+        "order.asc",
+        "project",
+        "scan",
+        "type.integer",
+        "type.integer.unbounded",
+        "type.string"
+      ],
+      "id": "paths:integer-expression",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "arithmetic.*",
+        "arithmetic.exact.decimal",
+        "project",
+        "scan",
+        "type.decimal"
+      ],
+      "id": "paths:decimal-expression",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "scan",
+        "type.boolean"
+      ],
+      "id": "paths:boolean-direct",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "scan",
+        "type.string",
+        "value.nativeNull",
+        "value.presence"
+      ],
+      "id": "paths:optional-projection",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "filter",
+        "predicate.nativeNull",
+        "project",
+        "scan",
+        "type.string",
+        "value.nativeNull",
+        "value.presence"
+      ],
+      "id": "paths:optional-null-predicate",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "compare.nullAwareStringEqual",
+        "innerJoin",
+        "project",
+        "project.positionedOutputs",
+        "scan",
+        "type.string",
+        "value.nativeNull",
+        "value.presence"
+      ],
+      "id": "paths:optional-string-join",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "compare.lessEqual",
+        "compare.scalarJoin",
+        "innerJoin",
+        "project",
+        "scan",
+        "type.integer"
+      ],
+      "id": "paths:numeric-property-join",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "and",
+        "compare.lexicographicGreater",
+        "filter",
+        "order.asc",
+        "predicate.stringIn",
+        "project",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:string-lex-in",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.countDistinct",
+        "aggregate.countDistinct.optional",
+        "project",
+        "scan",
+        "type.string",
+        "value.nativeNull",
+        "value.presence"
+      ],
+      "id": "paths:optional-count-distinct",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:original",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "equal",
+        "filter",
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:empty_outer",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.boundedKeys",
+        "scan"
+      ],
+      "id": "paths:keys:repeated_expressions",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.boundedKeys",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:mixed_reverse_order",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "equal",
+        "innerJoin",
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:two_roots",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "equal",
+        "join.left",
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.string",
+        "value.outerJoinPresence"
+      ],
+      "id": "paths:keys:required_root_with_left_other",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "arithmetic.+",
+        "arithmetic.exact.integer",
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.integer",
+        "type.integer.unbounded"
+      ],
+      "id": "paths:keys:arithmetic_and_collection",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.boundedKeys",
+        "relationship.inverse",
+        "scan"
+      ],
+      "id": "paths:keys:inverse",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "relationship.boundedKeys",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:composite",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "project",
+        "scan",
+        "type.string"
+      ],
+      "id": "paths:keys:scalar_only",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-LIMIT"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:bound0",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-LIMIT"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:bound1001",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:left_root",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-GROUPING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:aggregate",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-GROUPING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:group",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-GROUPING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:expansion_mix",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-TYPE"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:optional_key",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:numeric_key",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:candidate_off",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "paths:keys:wrong_profile",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:candidate-opt-out",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BACKEND-MISSING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:unknown-backend",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:wrong-backend-version",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:wrong-profile",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-INPUT"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:unknown-envelope-member",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:mismatched-interface-dialect",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-PIN"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:binding-digest-mismatch",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-PIN"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:model-digest-mismatch",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-LIMIT"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:sql-byte-limit",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-LIMIT"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:binding-byte-limit",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-JSON-DUPLICATE"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:duplicate-envelope-member",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:missing-publication",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:negative-table-version",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:duplicate-table-uuid",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:missing-table-mapping",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BINDING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "controls:inconsistent-model-pin",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "controls:fresh-binding-0",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "controls:fresh-binding-1",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.twoHopPaths",
+        "result.pathOccurrences",
+        "scan",
+        "type.string"
+      ],
+      "id": "controls:fresh-binding-2",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.havingCountStarGreater",
+        "group",
+        "project",
+        "scan",
+        "type.string"
+      ],
+      "id": "count-star:original-replay",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.havingCountStarGreater",
+        "equal",
+        "filter",
+        "group",
+        "innerJoin",
+        "limit",
+        "order.asc",
+        "project",
+        "scan",
+        "type.string"
+      ],
+      "id": "count-star:joined-filtered-full-bag",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [],
+      "expectedRequiredCapabilities": [
+        "aggregate",
+        "aggregate.count",
+        "aggregate.havingCountStarGreater",
+        "group",
+        "limit",
+        "order.asc",
+        "project",
+        "relationship.pathExpansion",
+        "relationship.twoHopPaths",
+        "scan",
+        "type.string"
+      ],
+      "id": "count-star:expansion-count-owner",
+      "status": "compiled"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:old-dialect-new-interface",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:new-dialect-old-interface",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-BACKEND-VERSION"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:new-language-old-backend",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-UNSUPPORTED"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:old-language-new-backend",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-CAPABILITY"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:candidate-optout",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-GROUPING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:unprojected-count",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-GROUPING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:no-groups",
+      "status": "blocked"
+    },
+    {
+      "expectedDiagnosticCodes": [
+        "WFT-NAME-MISSING"
+      ],
+      "expectedRequiredCapabilities": [],
+      "id": "count-star:output-alias-not-source-field",
+      "status": "blocked"
+    }
+  ],
+  "coverage": {
+    "aggregate": {
+      "accepted": [
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "aggregate.count": {
+      "accepted": [
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "aggregate.countDistinct": {
+      "accepted": [
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "aggregate.countDistinct.optional": {
+      "accepted": [
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "aggregate.havingCountDistinctGreater": {
+      "accepted": [
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "aggregate.havingCountStarGreater": {
+      "accepted": [
+        "count-star:original-replay",
+        "count-star:joined-filtered-full-bag",
+        "count-star:expansion-count-owner"
+      ],
+      "refused": [
+        "count-star:candidate-optout",
+        "count-star:unprojected-count",
+        "count-star:no-groups",
+        "count-star:output-alias-not-source-field"
+      ],
+      "scope": "Original explicit COUNT(*) HAVING requests: independent expected complete responses, projected/grouped count correspondence and candidate refusal. Native bag/capacity/source execution remains separate."
+    },
+    "aggregate.pathTargetDistinctCount": {
+      "accepted": [
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "and": {
+      "accepted": [
+        "paths:integer-expression",
+        "paths:string-lex-in"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.*": {
+      "accepted": [
+        "paths:integer-expression",
+        "paths:decimal-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.+": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.-": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.compareExact": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.exact.decimal": {
+      "accepted": [
+        "paths:decimal-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.exact.integer": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "arithmetic.negate": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.greaterEqual": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.less": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.lessEqual": {
+      "accepted": [
+        "paths:integer-expression",
+        "paths:numeric-property-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.lexicographicGreater": {
+      "accepted": [
+        "paths:string-lex-in"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.notEqual": {
+      "accepted": [
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.nullAwareStringEqual": {
+      "accepted": [
+        "paths:optional-string-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "compare.scalarJoin": {
+      "accepted": [
+        "paths:numeric-property-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "equal": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "filter": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:integer-expression",
+        "paths:optional-null-predicate",
+        "paths:string-lex-in"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "group": {
+      "accepted": [
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "innerJoin": {
+      "accepted": [
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:optional-string-join",
+        "paths:numeric-property-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "join.left": {
+      "accepted": [
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "limit": {
+      "accepted": [
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "order.asc": {
+      "accepted": [
+        "paths:3:distinct_composition_remains_required_string_only",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:integer-expression",
+        "paths:string-lex-in"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "parameter.named": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "predicate.nativeNull": {
+      "accepted": [
+        "paths:optional-null-predicate"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "predicate.stringIn": {
+      "accepted": [
+        "paths:string-lex-in"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "project": {
+      "accepted": [
+        "paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+        "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:3:distinct_composition_remains_required_string_only",
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:integer-expression",
+        "paths:decimal-expression",
+        "paths:boolean-direct",
+        "paths:optional-projection",
+        "paths:optional-null-predicate",
+        "paths:optional-string-join",
+        "paths:numeric-property-join",
+        "paths:string-lex-in",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "project.distinct": {
+      "accepted": [
+        "paths:3:distinct_composition_remains_required_string_only"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "project.positionedOutputs": {
+      "accepted": [
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:optional-string-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "relationship.boundedKeys": {
+      "accepted": [
+        "paths:keys:original",
+        "paths:keys:empty_outer",
+        "paths:keys:repeated_expressions",
+        "paths:keys:mixed_reverse_order",
+        "paths:keys:two_roots",
+        "paths:keys:required_root_with_left_other",
+        "paths:keys:arithmetic_and_collection",
+        "paths:keys:inverse",
+        "paths:keys:composite"
+      ],
+      "refused": [
+        "paths:keys:bound0",
+        "paths:keys:bound1001",
+        "paths:keys:left_root",
+        "paths:keys:aggregate",
+        "paths:keys:group",
+        "paths:keys:expansion_mix",
+        "paths:keys:optional_key",
+        "paths:keys:numeric_key",
+        "paths:keys:candidate_off",
+        "paths:keys:wrong_profile"
+      ],
+      "scope": "Bounded required-String one-hop bag collection plus independently reviewed domain/group/bound/profile fences. Source review retained; release expectation acceptance pending."
+    },
+    "relationship.inverse": {
+      "accepted": [
+        "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "relationship.pathExpansion": {
+      "accepted": [
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "relationship.twoHopPaths": {
+      "accepted": [
+        "paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+        "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "result.pathOccurrences": {
+      "accepted": [
+        "paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+        "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "scan": {
+      "accepted": [
+        "paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+        "paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:3:distinct_composition_remains_required_string_only",
+        "paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+        "paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+        "paths:integer-expression",
+        "paths:decimal-expression",
+        "paths:boolean-direct",
+        "paths:optional-projection",
+        "paths:optional-null-predicate",
+        "paths:optional-string-join",
+        "paths:numeric-property-join",
+        "paths:string-lex-in",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "type.boolean": {
+      "accepted": [
+        "paths:boolean-direct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "type.decimal": {
+      "accepted": [
+        "paths:decimal-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "type.integer": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:integer-expression",
+        "paths:numeric-property-join"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "type.integer.unbounded": {
+      "accepted": [
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:integer-expression"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "type.string": {
+      "accepted": [
+        "paths:3:distinct_composition_remains_required_string_only",
+        "paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+        "paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+        "paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+        "paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+        "paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:integer-expression",
+        "paths:optional-projection",
+        "paths:optional-null-predicate",
+        "paths:optional-string-join",
+        "paths:string-lex-in",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "value.nativeNull": {
+      "accepted": [
+        "paths:optional-projection",
+        "paths:optional-null-predicate",
+        "paths:optional-string-join",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "value.outerJoinPresence": {
+      "accepted": [
+        "paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+        "paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    },
+    "value.presence": {
+      "accepted": [
+        "paths:optional-projection",
+        "paths:optional-null-predicate",
+        "paths:optional-string-join",
+        "paths:optional-count-distinct"
+      ],
+      "refused": [],
+      "scope": "Exact selected logicalPlan capabilities from independently accepted finite response expectations; full same-binary replay and native qualification separate"
+    }
+  },
+  "qualification": "Authored expected witness map only; actual execution and native qualification are separate."
+}

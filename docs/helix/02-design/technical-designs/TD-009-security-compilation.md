@@ -13,6 +13,8 @@ ddx:
       kind: informed_by
     - id: SD-004
       kind: informed_by
+    - id: CONTRACT-006
+      kind: informed_by
     - id: CONTRACT-007
       kind: informed_by
 ---
@@ -101,7 +103,7 @@ keep public activation blocked until separately governed native acceptance passe
 
 ## R5 executable gate
 
-`python scripts/reliability/gate.py` consumes CONTRACT-006 configuration. It runs
+`python scripts/reliability/gate.py` consumes CONTRACT-008 configuration. It runs
 the pinned solver and exact selected Rust correspondence tests; missing tools,
 unknown/timeout, mismatched solver versions, zero/ignored/failed selected tests
 or an altered oracle fail qualification. `formal.py` contains separate authored
@@ -131,7 +133,7 @@ complete scan-action-rule inventory and ordered resolved outputs. Backends own
 physical mappings, interpreted coverage and SQL/result carriers. Hosts own
 original actors, complete private-fact issuers/current cuts, installed inventory,
 publication and final release. Boundary changes precede feature code and run
-`bun run modules:check`; operational configuration follows CONTRACT-006 outside
+`bun run modules:check`; operational configuration follows CONTRACT-008 outside
 core. Existing B-009 scoped concern overrides require review on activation.
 
 The compiler must retain all selected requirements, including unsupported
@@ -165,3 +167,8 @@ normalized-value correspondence before filtering; omitted/extra/duplicate rows,
 same-typed Key-component swaps and stale values are explicit refusal controls.
 Current main version/artifact-ID collisions are an integration prerequisite;
 checkpoint foundation claims do not qualify the reconciled composition.
+
+
+## Current-main security registration correspondence
+
+CONTRACT-006 now governs main’s dedicated security 0.1/0.2 protocols; CONTRACT-007 retains the blocked compile 0.5 compatibility envelope. The finite no-executable-output property includes the new registration protocol: security 0.2 may call its explicit trusted registration factory once after source/query/profile admission, but SecurityBackend::lower remains uncalled and the response refuses unsupported lowering. Compatibility 0.5 and security 0.1 never invoke either backend factory. Generic security 0.2 has no implicit registration and refuses BACKEND-REQUIRED. The prior callback prohibition is historical and does not erase main’s admitted registration component. New protocol-matrix and main registration/owner-refusal tests provide actual Rust correspondence; native authentication, enforcement and release remain unqualified.

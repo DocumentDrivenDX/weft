@@ -179,3 +179,8 @@ fn physical_identifiers_are_quoted_and_values_never_become_code() {
         "`odd.catalog`.`schema``name`.`table; DROP TABLE x` VERSION AS OF 0"
     );
 }
+
+#[test]
+fn malformed_mapping_roots_return_diagnostics(){
+    for value in [json!([]),json!(true),json!(1),json!("x"),Value::Null]{assert!(check(value).is_err());}
+}

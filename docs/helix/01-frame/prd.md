@@ -168,7 +168,7 @@ Backend requirements include Truss key lookups/property filters/ordered scans an
 
 Owner direction: the UMF shared security goal requires logical, semantic and
 physical security across ordinary relational and Truss/Ashlar typed stores.
-UMF CONTRACT-052/053 own policy/lifecycle meaning; Weft implements compilation,
+UMF CONTRACT-062/063 (the security artifacts migrated from CONTRACT-052/053 on UMF main) own policy/lifecycle meaning; Weft implements compilation,
 while authenticated native enforcement remains host/backend owned.
 
 | ID | Priority | Requirement |
@@ -178,5 +178,5 @@ while authenticated native enforcement remains host/backend owned.
 | FR-21 | P0 | Security logical/physical lowering preserves disclosure and protected predicate/order/group/join/aggregate semantics, including typed replacements and null/absence/withheld distinctions. |
 | FR-22 | P0 | Security artifacts carry mandatory versioned host/backend obligations for native custody, current authority and guarded final release; compilation never invents credentials or native qualification. |
 
-All four remain open for full execution. CONTRACT-007's initial source/transport
+All four remain open for full execution. CONTRACT-006's initial source/transport
 foundation is scoped evidence only; it emits no security-enabled artifact.

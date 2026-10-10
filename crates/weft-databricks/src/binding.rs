@@ -142,6 +142,33 @@ fn presence(kind: RecordKind, column: &str) -> Option<&'static str> {
     }
 }
 
+fn faithful_binding(value:&Value)->Result<Binding>{
+    if !value.is_object(){return Err(fail("Ashlar mapping must be an object"));}
+    if value["relationships"].as_array().is_some_and(|a|a.len()>4096){return Err(fail("Excessive relationship mappings"));}
+    let records=value["records"].as_array().ok_or_else(||fail("Record mappings must be an array"))?;
+    if records.len()>4096{return Err(fail("Excessive record mappings"));}
+    for record in records {
+        if !record.is_object()||!record["kind"].as_str().is_some_and(|s|matches!(s,"object"|"edge"|"nodeProjection"|"edgeProjection")){return Err(fail("Record kind must be a declared string token"));}
+    }
+    if let Some(relationships)=value["relationships"].as_array(){for relationship in relationships{
+        if !relationship.is_object()||!relationship["kind"].as_str().is_some_and(|s|matches!(s,"object"|"edge"|"nodeProjection"|"edgeProjection")){return Err(fail("Relationship kind must be a declared string token"));}
+    }}
+    let mut skeleton=value.clone();let mut originals=Vec::new();
+    if let Some(relationships)=skeleton.get_mut("relationships"){
+        for relationship in relationships.as_array_mut().ok_or_else(||fail("Relationship mappings must be an array"))?{
+            let object=relationship.as_object_mut().ok_or_else(||fail("Relationship mapping must be an object"))?;
+            let logical=object.get_mut("logical").ok_or_else(||fail("Missing relationship identity"))?;
+            let logical=std::mem::replace(logical,Value::Null);
+            let accepted=object.get_mut("acceptedDefinition").ok_or_else(||fail("Missing accepted relationship definition"))?;
+            let accepted=std::mem::replace(accepted,Value::Null);originals.push((logical,accepted));
+        }
+    }
+    let mut binding:Binding=serde_json::from_value(skeleton).map_err(|_|fail("Unknown or malformed Ashlar mapping member"))?;
+    if binding.relationships.len()!=originals.len(){return Err(fail("Relationship correspondence changed"));}
+    for (relationship,(logical,accepted)) in binding.relationships.iter_mut().zip(originals){relationship.logical=logical;relationship.accepted_definition=accepted;}
+    Ok(binding)
+}
+
 /// Admission proves mapping structure/model agreement, never database custody.
 /// Runtime policy, publication, schema and exact field correspondence are host obligations.
 pub const NATIVE_NULL_ENCODING:&str="ashlar-weft-json-native-null/0.1-candidate";
@@ -187,8 +214,7 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding>
             }
         }
     }
-    let binding: Binding = serde_json::from_value(value.clone())
-        .map_err(|_| fail("Unknown or malformed Ashlar mapping member"))?;
+    let binding=faithful_binding(value)?;
     if binding.profile != PROFILE
         || binding.layout_revision != "ashlar-delta/0.3"
         || binding.layout_sha256 != LAYOUT_SHA256

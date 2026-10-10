@@ -74,8 +74,8 @@ The user clarified that UMF owns logical and physical schema meaning, Truss supp
 
 ## B-008: Shared security compiler integration
 
-Owner-directed UMF security work adds CONTRACT-007 and the versioned 0.5 request
-foundation. Existing ordinary transports remain core07. The separate core08
+Owner-directed UMF security work adds CONTRACT-006 and the namespaced security 0.1 request
+foundation. Main ordinary transports retain core07/core08 source admission. The separate core08
 source-custody path and required security source transport refuse activation
 until semantic admission, logical/physical lowering, disclosure result domains
 and authenticated native host obligations are implemented. B-008 is open;
@@ -86,7 +86,7 @@ browser parity and all four UMF backend plans remain required.
 ### B-008 immutable compiler mapping handoff — 2026-10-08
 
 Implemented the actual Rust owner's private-constructor profiled-query export,
-`weft.security.mapping-handoff/0.1.0`, under CONTRACT-007. It preserves the
+`weft.security.mapping-handoff/0.1.0`, under CONTRACT-006. It preserves the
 original resolved application plan and complete source/field-use/scan-action
 obligations, with exact reuse refusal and deterministic bounded JSON. The owner
 test validates retained resolved-plan meaning, derived protected-field action,
@@ -104,7 +104,7 @@ qualification remain open. No acceptance criterion is credited by packet shape.
 ### Actual Rust handoff inspection transport — 2026-10-08
 
 Added the offline-buildable `weft-core` example `security_mapping_handoff` under
-CONTRACT-007. UMF's `tools/security/weft-handoff-probe.py` retains two actual
+CONTRACT-006. UMF's `tools/security/weft-handoff-probe.py` retains two actual
 compiler packets and nine execution observations, including seven refusals for
 protected query use, stale backend/model sources, unknown version/member,
 duplicate JSON and over-budget input. Refusals have no stdout packet. Exact
@@ -127,6 +127,10 @@ activation remain separate. UMF retains actual original compiler evidence in
 weft-admission.json. This is a source-fidelity integration increment, not draft
 0.2 admission, native Key enforcement, or protected execution qualification.
 
+
+### B-008 main integration — 2026-10-10
+
+The security foundation is integrated against main14c5814 while preserving the incoming95991ee browser/evidence update. Main's CONTRACT-005 authored-path meaning and ordinary compile0.3/0.4 remain unchanged; the security contract and transports have an explicit [identity migration](evidence/security-main-integration/identity-migration.json). `cargo test --release --locked --workspace` passes all 556 tests across 44 groups, with none failed, ignored or filtered. The [checkpoint](evidence/security-main-integration/checkpoint.json) retains exact source/log hashes, scoped Astra ultra review, the corrected initial diagnostic failures and the intentionally interrupted debug attempt. Both security transports remain blocked before physical emission. B-008, installed Python/browser parity and the original native backend acceptance plan remain open.
 
 ## B-009: Reliability remediation
 
@@ -326,7 +330,7 @@ No stage may convert a candidate plan into an original admitted plan by relabeli
   Preserve ordered aliases/repeated outputs; projection dependency sets are not
   output columns. COUNT retains every scan/action; SUM retains argument lineage.
 - Keep compiler IO/configuration/credentials/telemetry out of core. Use
-  CONTRACT-006 typed operational handles, pinned tools, bounded runners and safe
+  CONTRACT-008 typed operational handles, pinned tools, bounded runners and safe
   diagnostics. No implicit warehouse, schema, actor, fact issuer or test workspace.
 - Apply the existing module map and `bun run modules:check` locally, through the
   optional hook and CI. Update ownership/allowed edges before new feature modules;
@@ -354,7 +358,7 @@ foundation evidence; their names do not establish coverage.
 | S01 | Adopt security module boundaries and immutable requirement construction; Weft | S00 | Real module checker and allowed/forbidden/cycle controls; compile-negative tests prohibit caller-created admitted requirements and plan substitution; no host/SDK/solver dependency in core. |
 | S02 | Bridge draft source/graph plans to actual resolved query, scan/actions and collection admission; Weft | S01 | `security_graph_query_bridge`: raw, opaque and Record-witness variants; self-joins, nested correlation, field-freeCOUNT, original-action uses, empty/unused populations and whole-cut incompleteness; exact keys and context channels; public activation still blocked. |
 | S03 | Derive owner requirements and conservative result coverage from actual rules, uses and ordered outputs; Weft | S02 | `security_owner_requirements`: all permit/require/forbid branches, every action/operator, repeated aliases, all transform classes and source domains; conservative empty-envelope refusal; work/text charges before allocation. Model coverage independently and replay real Rust counterexamples. COUNT/SUM stay explicit unresolved requirements until proved, never omitted. |
-| S04 | Interpret closed capability/constraint/obligation matching and versioned result-domain declarations; Weft + UMF | S03 | `security_capability_coverage`: coherent complete scan/action and whole-application bundle coverage with compatible selected capabilities; reject fragmented primitive-feature unions, incompatible bundles, unknown/extra constraints, stale source/session/profile and candidate substitutions before any backend callback; no opaque declaration/evidence-ID matching. `security_disclosure_codec`: original-null/absent/withheld/replacement domains, whole-batch corruption, ordered outputs and computed results; no executable public security result yet. |
+| S04 | Interpret closed capability/constraint/obligation matching and versioned result-domain declarations; Weft + UMF | S03 | `security_capability_coverage`: coherent complete scan/action and whole-application bundle coverage with compatible selected capabilities; reject fragmented primitive-feature unions, incompatible bundles, unknown/extra constraints, stale source/session/profile and candidate substitutions before executable physical lowering; only the explicit security 0.2 trusted registration factory may run once after owner admission (see current-main clarification); no opaque declaration/evidence-ID matching. `security_disclosure_codec`: original-null/absent/withheld/replacement domains, whole-batch corruption, ordered outputs and computed results; no executable public security result yet. |
 | S05 | Protected relational lowering against explicit raw PostgreSQL mapping; Weft + raw host | S04 | `security_pgraw_lowering`: permit/require/forbid, private correlated facts and bag semantics; disclosed vs separately authorized original predicate/order/group/join/SUM; row eligibility forCOUNT/page; exact native types, errors and no raw-value leakage. Before filtering, prove bidirectional authority/query-carrier selected-Key population and normalized-field correspondence; extra/missing/duplicate carriers, same-typed Key-component swaps and stale values refuse. Compare actual SQL/decoder results to independent oracle using least-privilege actors. |
 | S06 | Truss physical mapping and protected lowering; Weft + Truss | S05 | `security_truss_lowering`: original node/edge/property homes, logical Keys, direction and Record/opaque witnesses; hidden fact/retained-carrier bypass controls. Actual Truss mapping/native evidence required; synthetic graph tables cannot qualify this profile. |
 | S07 | Raw Delta protected lowering/publication contract; Weft + raw Delta host | S04 | `security_deltaraw_lowering`: native policy/compute/table support, typed masking/operators, exact carriers, immutable data cut and publication eligibility. Refuse unsupported native authority guarantees; PostgreSQL evidence never certifies Delta. |
@@ -460,3 +464,14 @@ The complete differences, source hashes, build features and compiler hashes are
 recorded under evidence/main-integration-20261010. Changed cardinality SQL and
 diagnostic phases do not inherit native qualification. Fresh cross-host parity
 and final hosted CI are still required before merging this integration.
+
+
+### Concurrent main security reconciliation — 2026-10-10
+
+Main ed2b677 adopts separate security0.1/0.2 protocols and expanded pure security components under CONTRACT-006. The [Astra Ultra-approved integration plan](evidence/main-ed2-integration-20261010/astra-approved-integration-plan.md) governs this reconciliation. [Identity migration](evidence/main-ed2-integration-20261010/identity-migration.json) moves the runner contract006 to008 and preserves main security 006 and blocked compatibility 007. Old receipts and the [original approved continuation plan](evidence/main-ed2-integration-20261010/prior-approved-security-plan.md.original.txt) remain historical.
+
+This current-main clarification supersedes the prior S04 blanket callback prohibition: compatibilitycompile0.5 andsecurity0.1 never dispatch a backend; generic or ordinary-factorysecurity0.2 refuses BACKEND-REQUIRED with ordinary callback 0; the valid explicitsecurity0.2 registration entrypoint calls the trusted factory once and still refuses LOWERING-UNSUPPORTED with SecurityBackend::lower0; owner-admission failures call registration 0. Security transport 0.2 still consumespolicy/ontology0.1; selected candidatesource0.2 remains a separate logical type. No result checker or simulator authorizes native execution or data release.
+
+Prepared Catalog source remains immutable. Main’s faithful opaque-JSON readers and evolved evaluator/result semantics remain; resource checks reserve normalization capacity before allocation, charge cloned identities and share composition ledgers across repeated rows. Simulation retains 4M normalized/16M copy limits; separate result phases retain 16M budgets, with explicit finite phase boundaries rather than a reset per row/action. Native authentication, complete source/coverage/authority, physical lowering and release qualification remain open.
+
+S00 must reconcile the pinned current UMF main cd4cc937 security authority CONTRACT-062/063 (migrated052/053), preserving the original 132-case owner allocation. Incoming 556 Rust passes remain historical component evidence. New independent current-main comparison, merged-source tests, Astra chunk review, fresh 2419-plus input custody and final-SHA hosted CI are pending; the earlier 014ae44 green CI cannot qualify this newer compiler.

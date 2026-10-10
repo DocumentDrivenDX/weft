@@ -26,6 +26,7 @@ pub struct SecurityQueryProfile{spec:Spec,model_inputs:Vec<crate::model::ModuleI
 #[derive(Debug)]
 pub struct SecurityProfiledQuery<'a>{query:&'a crate::security_query_uses::SecurityResolvedQuery,profile:&'a SecurityQueryProfile,uses:Vec<(crate::security_query_uses::QueryUse,Option<String>)>,obligations:Vec<crate::security_scan_obligations::ScanObligations>}
 impl SecurityProfiledQuery<'_>{
+ pub fn primary_action(&self)->&str{&self.profile.spec.action}
  pub fn obligations(&self)->&[crate::security_scan_obligations::ScanObligations]{&self.obligations}
  pub fn query(&self)->&crate::security_query_uses::SecurityResolvedQuery{self.query}
  pub fn uses(&self)->&[(crate::security_query_uses::QueryUse,Option<String>)]{&self.uses}

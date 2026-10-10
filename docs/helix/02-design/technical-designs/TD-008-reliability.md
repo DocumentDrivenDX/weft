@@ -114,7 +114,7 @@ Fifteen test cases exercise allowed edges, forbidden optional edges, unowned and
 
 ## R3 host configuration and mutation implementation
 
-CONTRACT-006 governs the central immutable Python Config. `scripts/reliability/config.py` is the one runner configuration provider; `cargo.py` validates the pinned Cargo/Rust toolchain and invokes it through the bounded process boundary. `tests/qualify-and-evolve/source-mutations.py` consumes that provider and never contains machine-specific operational defaults. The boundary checker requires an explicit Cargo handle; CI supplies it from its installed toolchain. Python standard-library dataclasses, argparse and JSON supply typed validation without adding a compiler dependency.
+CONTRACT-008 governs the central immutable Python Config. `scripts/reliability/config.py` is the one runner configuration provider; `cargo.py` validates the pinned Cargo/Rust toolchain and invokes it through the bounded process boundary. `tests/qualify-and-evolve/source-mutations.py` consumes that provider and never contains machine-specific operational defaults. The boundary checker requires an explicit Cargo handle; CI supplies it from its installed toolchain. Python standard-library dataclasses, argparse and JSON supply typed validation without adding a compiler dependency.
 
 The mutation catalog is repository-owned in `scripts/reliability/mutations.py`. Copies are fresh and isolated, replacement cardinality is explicit, and a clean original-source baseline (exactly one executed/passed test, no failures/ignored tests) precedes each edit. Its outcome is retained. A detection requires exactly one executed/failed selected test plus exit101 and every expected panic/signature. All decisions use explicit conditions under normal and optimized Python. Subprocess output is drained in8192-byte chunks, with at most65536 bytes for line parsing and4096 bytes of signature overlap; only safe numeric counters and known signature identities survive. Unix process groups receive TERM/KILL on timeout with at most two seconds of drain/kill grace and one second of wait. This Unix host boundary is scoped to macOS/Linux; Windows runner execution remains unqualified.
 
@@ -149,7 +149,7 @@ excluded; Rust embedded inputs must be present in the inventory. Changed, remove
 or new relevant files invalidate the manifest. B-007 source hashes resolve only
 against immutable checkpoint f81565a1addaa6d2c83561f62d3805d1167233ee.
 
-`fresh_hosts.py` uses CONTRACT-006 configuration, explicit pinned host-tool
+`fresh_hosts.py` uses CONTRACT-008 configuration, explicit pinned host-tool
 handles and safe lifecycle capture. It builds a public qualified CLI, native wheel
 and WASM, installs that exact wheel, and runs the actual Chromium compiler. The
 complete2181 ordinary corpus retains full-response byte parity to fresh CLI and
@@ -170,7 +170,7 @@ build-script IO. Unsupported Rust include forms and nested schema attributes
 and unknown path-bearing attributes refuse instead of hiding a dependency. Historical manifest membership is anchored
 to its original digest.
 
-CONTRACT-006 bounded raw-stream scanning describes the direct diagnostic process
+CONTRACT-008 bounded raw-stream scanning describes the direct diagnostic process
 boundary. Fixed-corpus parity helpers retain complete authored protocol artifacts
 through their existing captures; those captures have outer deadlines and are not
 SDK diagnostic sinks or a general adversarial-output memory guarantee.

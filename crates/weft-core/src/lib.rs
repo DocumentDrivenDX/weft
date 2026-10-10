@@ -4,7 +4,6 @@ mod application_scope;
 pub mod arithmetic_resolve;
 mod arithmetic_query;
 mod arithmetic_syntax;
-mod security_budget;
 pub mod security_scan_obligations;
 pub mod security_query_uses;
 pub mod security_query_profile;
@@ -125,3 +124,25 @@ mod path_query;
 mod path_resolve;
 mod path_application_resolve;
 pub mod backend03;
+pub mod security_backend;
+pub mod security_lowering;
+pub mod security_requirements;
+
+mod security_result_check;
+
+mod security_result_cells;
+
+mod security_result_selection;
+
+mod security_semantic_coverage;
+
+mod security_record_homes;
+
+mod security_obligation_custody;
+
+mod security_obligation_sources;
+mod security_rule_occurrences;
+
+mod security_obligation_matching;
+
+mod security_budget;

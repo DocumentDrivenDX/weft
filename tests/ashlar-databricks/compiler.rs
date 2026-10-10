@@ -982,3 +982,33 @@ fn left03_keeps_old_language_refusals_and_inner_wire_omission() {
     }
     let mut request=left_request();request["sql"]=json!("SELECT p.form AS original,q.form AS related FROM pottery_results p JOIN pottery_results q ON p.id=q.id ORDER BY p.id");request["target"]["backendId"]=json!("ashlar.databricks");request["target"]["backendVersion"]=json!("0.3.0-arithmetic-candidate");request["target"]["targetProfile"]=json!("spark4-delta4-arithmetic-candidate");let mut registry=Registry::default();registry.register(weft_databricks::arithmetic::Arithmetic).unwrap();let r:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();assert_eq!(r["status"],"compiled","{r}");assert!(r["logicalPlan"].get("outerJoinScans").is_none());assert!(r["logicalPlan"]["joins"][0].get("kind").is_none());assert!(r["columns"].as_array().unwrap().iter().all(|c|c["representation"].get("outerJoin").is_none()));assert!(r["obligations"].as_array().unwrap().iter().all(|o|o["id"]!="outerJoin.matchIntegrity"));
 }
+
+#[test]
+fn raw_value_wrappers_cannot_substitute_authored_relationship_correspondence(){
+    for projection in [false,true] {
+        let original=common::relationship_request("SELECT c.id, RELATED_KEYS(c.orders, 2) AS related FROM Customer c",projection);
+        assert_eq!(run(&original)["status"],"compiled");
+        for member in ["logical","acceptedDefinition"] {
+            let mut request=original.clone();let mut binding=weft_core::json::checked_json(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+            let authored=binding["relationships"][0][member].to_string();
+            binding["relationships"][0][member]=json!({"$serde_json::private::RawValue":authored});
+            let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+            let response=run(&request);assert_eq!(response["status"],"blocked","{member}/{projection}: {response}");
+            assert!(response.get("sql").is_none());assert!(response.get("parameters").is_none());
+        }
+    }
+}
+
+#[test]
+fn object_enum_carriers_cannot_substitute_native_record_kinds(){
+    for projection in [false,true]{
+        let original=common::relationship_request("SELECT c.id, RELATED_KEYS(c.orders, 2) AS related FROM Customer c",projection);
+        assert_eq!(run(&original)["status"],"compiled");
+        for collection in ["records","relationships"]{
+            let mut request=original.clone();let mut binding=weft_core::json::checked_json(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+            let kind=binding[collection][0]["kind"].as_str().unwrap().to_owned();binding[collection][0]["kind"]=json!({kind:null});
+            let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+            let response=run(&request);assert_eq!(response["status"],"blocked","{projection}/{collection}: {response}");assert!(response.get("sql").is_none());assert!(response.get("parameters").is_none());
+        }
+    }
+}

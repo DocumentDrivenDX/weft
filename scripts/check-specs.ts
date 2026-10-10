@@ -46,6 +46,8 @@ const allocation = await json('docs/helix/03-test/story-test-allocation.json');
 const criteria = checkAllocation(artifacts, allocation, await json('docs/helix/03-test/requirement-allocation.json'));
 const schemaDir = 'docs/helix/02-design/contracts';
 const ajv = new Ajv2020({ allErrors: true, strict: false });
+// Main's security cell/result contracts reference the pinned owning literal vocabulary.
+ajv.addSchema(await json('spec/upstream/umf-0.8.0.schema.json'));
 const schemas = [];
 for (const file of files.filter(f => f.endsWith('.schema.json'))) {
   const schema = await json(file);

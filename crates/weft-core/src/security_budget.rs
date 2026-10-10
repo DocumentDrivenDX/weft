@@ -13,14 +13,19 @@ pub(crate) struct PayloadBudget {
     normalized: usize,
     copied: usize,
     code: &'static str,
+    normalized_limit: usize,
+    copy_limit: usize,
 }
 impl PayloadBudget {
     pub(crate) fn new(code: &'static str) -> Self {
-        Self {
-            normalized: 0,
-            copied: 0,
-            code,
-        }
+        Self::with_limits(code, NORMALIZED_LIMIT, COPY_LIMIT)
+    }
+    /// Result selection has a separate 16M phase contract, not the 4M simulator.
+    pub(crate) fn result_phase(code: &'static str) -> Self {
+        Self::with_limits(code, 16_000_000, 16_000_000)
+    }
+    fn with_limits(code: &'static str, normalized_limit: usize, copy_limit: usize) -> Self {
+        Self { normalized: 0, copied: 0, code, normalized_limit, copy_limit }
     }
     fn fail(&self) -> Diagnostic {
         Diagnostic::new(self.code, "model", "Security payload budget exhausted")
@@ -37,7 +42,7 @@ impl PayloadBudget {
     }
     fn copy_bytes(&mut self, cost: usize) -> Result<()> {
         let next = self.copied.checked_add(cost).ok_or_else(|| self.fail())?;
-        if next > COPY_LIMIT {
+        if next > self.copy_limit {
             return Err(self.fail());
         }
         self.copied = next;
@@ -74,7 +79,7 @@ impl PayloadBudget {
         if self
             .normalized
             .checked_add(upper)
-            .is_none_or(|n| n > NORMALIZED_LIMIT)
+            .is_none_or(|n| n > self.normalized_limit)
         {
             return Err(self.fail());
         }
@@ -90,7 +95,7 @@ impl PayloadBudget {
         Ok(result)
     }
 }
-fn literal_upper_bound(field: &Value, value: &Value) -> Option<usize> {
+pub(crate) fn literal_upper_bound(field: &Value, value: &Value) -> Option<usize> {
     if value.is_null() {
         return Some(1);
     }
@@ -202,4 +207,15 @@ mod tests {
             Some(ScalarLiteral::Number(0.into()))
         );
     }
+    #[test]
+    fn result_phase_keeps_its_16m_limits_and_never_resets_between_rows() {
+        let field=json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required"});
+        let value=json!({"string":"x".repeat(4_000_000)});
+        let mut phase=PayloadBudget::result_phase("WFT-SECURITY-RESULT-SELECTION");
+        for _ in 0..4 { phase.literal(&field,&value).unwrap(); }
+        assert!(phase.literal(&field,&json!({"string":"x"})).is_err());
+        for _ in 0..16 { phase.copy_json(&Value::String("x".repeat(999_998))).unwrap(); }
+        assert!(phase.copy_json(&Value::String(String::new())).is_err());
+    }
+
 }

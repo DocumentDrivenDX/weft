@@ -1,0 +1,21 @@
+{
+  "decision": "approve-scoped-full80-component-parity-and-seven-source-iteration",
+  "inventorySha256": "8107ece574d73b18c728c6ce75dfc3f550ea6dbccdcabd7d6ae3614eb61f0fa0",
+  "commandSha256": "455a23de87899c4cc3311f1fa347bbe4169478a44d44fdd00a40a0c3d46b73ec",
+  "cliReviewSha256": "01c8f6b43a51b537c6602834fcf999e9ef0f7b57a54d20bb62523dcfd22cfb41",
+  "sourceFreezeSha256": "30728007b27b90ff8d5245ba3ba1dd180a9b8327510a5fd47cb3259870f1830f",
+  "actualTerminalHandles": {
+    "browser": 84299,
+    "conversion": 75955,
+    "python": 10165
+  },
+  "verified": [
+    "13 output files and 105 opening/closing resources exact",
+    "All80 extracted Python and real Chromium responses byte-equal actual CLI conversion; response hashes exact",
+    "Both actual native/browser harnesses call explicit public API twice per row and require exact repeat response",
+    "Generic041 fence, strict scalar refusal controls executed by frozen successful harness; browser actual WASM trap retirement and offline routed request custody pass",
+    "Conversion matches all80 actual CLI request/fullresponse bytes except exactly one CLI newline",
+    "CLI actual49 accepted capability witnesses retained separately; original C duplicate-preselection failure preserved"
+  ],
+  "qualification": "Actual full80 authored corpus parity across CLI/extracted Python extension/real Chromium151 WASM. Not native SQL, full transport-boundary suite, pip-installed package, release/index admission, or installed Ashlar end-to-end witness."
+}

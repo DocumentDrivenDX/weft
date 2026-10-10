@@ -91,22 +91,52 @@ fn valid_languages(profiles: &[LanguageProfile]) -> bool {
             ) && seen.insert(profile_key(p))
         })
 }
+pub(crate) struct OpaqueManifest { settings:Vec<Value>, capabilities:Vec<(Value,Value,Vec<Value>)> }
+fn take_opaque(value:&mut Value,key:&str)->Result<Value>{
+ let member=value.as_object_mut().and_then(|o|o.get_mut(key)).ok_or_else(||failure("WFT-BACKEND-VERSION","Missing opaque declaration member"))?;
+ Ok(std::mem::replace(member,Value::Object(Default::default())))
+}
+pub(crate) fn take_manifest_opaque(value:&mut Value)->Result<OpaqueManifest>{
+ if !value.is_object(){return Err(failure("WFT-BACKEND-VERSION","Manifest must be an object"));}
+ let mut settings=Vec::new();let mut capabilities=Vec::new();
+ for target in value["targetProfiles"].as_array_mut().ok_or_else(||failure("WFT-BACKEND-VERSION","Invalid targets"))? {settings.push(take_opaque(target,"sessionSettings")?);}
+ for capability in value["capabilities"].as_array_mut().ok_or_else(||failure("WFT-BACKEND-VERSION","Invalid capabilities"))? {
+  if !capability["status"].as_str().is_some_and(|s|matches!(s,"supported"|"candidate"|"unsupported")){return Err(failure("WFT-BACKEND-VERSION","Status must be a declared string token"));}
+  let logical=take_opaque(capability,"logicalDomain")?;let result=take_opaque(capability,"resultDomain")?;let mut parameters=Vec::new();
+  for obligation in capability["obligations"].as_array_mut().ok_or_else(||failure("WFT-BACKEND-VERSION","Invalid obligations"))? {
+   if !obligation["owner"].as_str().is_some_and(|s|matches!(s,"host"|"backend")){return Err(failure("WFT-BACKEND-VERSION","Obligation owner must be a declared string token"));}
+   parameters.push(take_opaque(obligation,"parameters")?);
+  }
+  capabilities.push((logical,result,parameters));
+ }Ok(OpaqueManifest{settings,capabilities})
+}
+pub(crate) fn restore_manifest_opaque(targets:&mut [TargetProfile],capabilities:&mut [Capability],opaque:OpaqueManifest)->Result<()>{
+ if targets.len()!=opaque.settings.len()||capabilities.len()!=opaque.capabilities.len(){return Err(failure("WFT-BACKEND-VERSION","Declaration correspondence changed"));}
+ for (target,setting) in targets.iter_mut().zip(opaque.settings){target.session_settings=setting;}
+ for (capability,(logical,result,parameters)) in capabilities.iter_mut().zip(opaque.capabilities){
+  if capability.obligations.len()!=parameters.len(){return Err(failure("WFT-BACKEND-VERSION","Obligation correspondence changed"));}
+  capability.logical_domain=logical;capability.result_domain=result;
+  for (obligation,parameter) in capability.obligations.iter_mut().zip(parameters){obligation.parameters=parameter;}
+ }Ok(())
+}
 pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     if raw.len() > 1024 * 1024 {
         return Err(failure("WFT-LIMIT", "Backend manifest exceeds one MiB"));
     }
-    let value = checked_json(raw).map_err(|_| {
+    let mut value = checked_json(raw).map_err(|_| {
         failure(
             "WFT-BACKEND-VERSION",
             "Malformed or duplicate-key backend manifest JSON",
         )
     })?;
-    let manifest: Manifest = serde_json::from_value(value).map_err(|_| {
+    let opaque=take_manifest_opaque(&mut value)?;
+    let mut manifest: Manifest = serde_json::from_value(value).map_err(|_| {
         failure(
             "WFT-BACKEND-VERSION",
             "Backend manifest has unknown or malformed members",
         )
     })?;
+    restore_manifest_opaque(&mut manifest.target_profiles,&mut manifest.capabilities,opaque)?;
     validate_manifest(&manifest)?;
     Ok(manifest)
 }

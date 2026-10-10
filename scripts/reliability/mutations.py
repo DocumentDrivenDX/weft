@@ -5,7 +5,7 @@ from .process import run, Result
 class MutationError(Exception):pass
 cases=[
  ('duplicate-key-guard','crates/weft-core/src/json.rs','if !keys.insert(key) {','if false && !keys.insert(key) {','qualification-resources','generated_truncated_json_and_nested_duplicates'),
- ('node-limit-guard','crates/weft-core/src/json.rs','if depth > 128 || *count >= 100_000 {','if depth > 128 || false {','qualification-resources','json_node_and_request_byte_limits'),
+ ('node-limit-guard','crates/weft-core/src/json.rs','if depth > max_depth || *count >= max_nodes {','if depth > max_depth || false {','qualification-resources','json_node_and_request_byte_limits'),
  ('scan-type-filter','crates/weft-postgresql/src/candidate.rs','WHERE type_id={slot}::int','WHERE {slot}::int IS NOT NULL','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
  ('projection-distinct','crates/weft-postgresql/src/candidate.rs','let mut sql = format!("SELECT {} FROM {from}", projection.join(", "));','let mut sql = format!("SELECT DISTINCT {} FROM {from}", projection.join(", "));','postgresql-candidate','relational_emission_keeps_owner_selection_and_bag_projection'),
  ('decimal-through-double','crates/weft-postgresql/src/conformance_original.rs','value.clone(),\n                serde_json::json!({"literalSpan":span}),','value.parse::<f64>().unwrap().to_string(),\n                serde_json::json!({"literalSpan":span}),','postgresql-original','admitted_decimal_precision_scale_pairs_preserve_exact_operands'),

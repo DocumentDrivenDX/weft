@@ -920,6 +920,7 @@
             "field:registry",
             "fn:compile_json",
             "fn:compile_json_with_factory",
+            "fn:compile_json_with_security_factory",
             "mod:v04",
             "mod:v041"
           ],
@@ -1052,7 +1053,10 @@
             "fn:prepare_and_resolve",
             "fn:frontend_json",
             "fn:prepare_and_resolve_application",
-            "mod:backend03"
+            "mod:backend03",
+            "mod:security_backend",
+            "mod:security_lowering",
+            "mod:security_requirements"
           ],
           "pathReferences": []
         },
@@ -1189,6 +1193,48 @@
             "enum:SecurityAssociationRef",
             "fn:record",
             "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_backend.rs",
+          "publicDeclarations": [
+            "use:crate : : security_lowering : : SecurityLowering",
+            "struct:SecuritySourceProfile",
+            "field:dialect",
+            "field:application_ir",
+            "field:policy",
+            "field:ontology",
+            "field:security_ir",
+            "struct:SecurityManifest",
+            "field:interface_version",
+            "field:backend_id",
+            "field:backend_version",
+            "field:source_profiles",
+            "field:binding_profile",
+            "field:target_profiles",
+            "field:capabilities",
+            "field:evidence",
+            "fn:validate_security_manifest_json",
+            "struct:SecurityBackendContext",
+            "type:SecuritySimulatedRowTruths",
+            "fn:check_result_declaration",
+            "fn:check_result_cells",
+            "fn:check_simulated_result_selection",
+            "fn:check_simulated_fact_selection",
+            "fn:requirements",
+            "fn:catalog",
+            "fn:logical_plan",
+            "fn:query",
+            "fn:profiled_query",
+            "fn:binding_json",
+            "fn:backend_id",
+            "fn:backend_version",
+            "fn:target_profile",
+            "trait:SecurityBackend",
+            "struct:SecurityRegistry",
+            "fn:register",
+            "type:SecurityRegistryFactory"
           ],
           "pathReferences": []
         },
@@ -1386,6 +1432,69 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_lowering.rs",
+          "publicDeclarations": [
+            "struct:SecurityIdentity",
+            "field:document_id",
+            "field:revision",
+            "field:module",
+            "field:element",
+            "enum:SecurityResultDomain",
+            "struct:SecurityDispositionSource",
+            "field:rule_id",
+            "field:target",
+            "field:field",
+            "enum:SecurityTransform",
+            "enum:SecurityResultOutcome",
+            "struct:SecurityResultColumn",
+            "field:position",
+            "field:output_name",
+            "field:source_fields",
+            "field:outcomes",
+            "struct:SecurityResultContract",
+            "field:version",
+            "field:encoding",
+            "field:columns",
+            "struct:SecurityOperation",
+            "field:id",
+            "field:sql",
+            "field:parameters",
+            "struct:SecurityPhysicalPlan",
+            "field:version",
+            "field:installation",
+            "field:execution",
+            "enum:SecurityEnforcementSite",
+            "struct:SecurityAdmissionObligation",
+            "field:id",
+            "field:semantic_sources",
+            "field:enforcement_site",
+            "field:prerequisites",
+            "field:failure_code",
+            "field:evidence_case_ids",
+            "struct:SecurityLowering",
+            "field:lowering",
+            "field:result_contract",
+            "field:obligations",
+            "field:capability_ids"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_obligation_custody.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_obligation_matching.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_obligation_sources.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_ontology.rs",
           "publicDeclarations": [
             "struct:SecurityRef",
@@ -1418,6 +1527,7 @@
           "publicDeclarations": [
             "struct:SecurityQueryProfile",
             "struct:SecurityProfiledQuery",
+            "fn:primary_action",
             "fn:obligations",
             "fn:query",
             "fn:uses",
@@ -1459,6 +1569,55 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_record_homes.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_requirements.rs",
+          "publicDeclarations": [
+            "enum:SecurityOperatorMode",
+            "struct:SecurityOperatorRequirement",
+            "fn:usage",
+            "fn:mode",
+            "struct:SecurityActionRequirement",
+            "fn:inventory",
+            "fn:rules",
+            "struct:SecurityScanRequirement",
+            "fn:inventory",
+            "fn:actions",
+            "struct:SecurityOutputRequirement",
+            "fn:position",
+            "fn:output",
+            "struct:SecurityRequirements",
+            "fn:primary_action",
+            "fn:scans",
+            "fn:operators",
+            "fn:outputs"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_result_cells.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_result_check.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_result_selection.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_rule_occurrences.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_scan_obligations.rs",
           "publicDeclarations": [
             "struct:ActionObligations",
@@ -1475,6 +1634,11 @@
             "fn:projection_fields",
             "fn:query_fields"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_semantic_coverage.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -2903,8 +3067,10 @@
         "scripts/checks/check-module-boundaries.py",
         "scripts/distribution/assemble-distribution.py",
         "scripts/distribution/assemble-paths-distribution.py",
+        "scripts/distribution/build-count-star-corpus.py",
         "scripts/distribution/check-cli-controls.py",
         "scripts/distribution/check-cli.py",
+        "scripts/distribution/check-count-star-corpus.py",
         "scripts/distribution/check-paths-cli.py",
         "scripts/distribution/check-paths-embedding-browser.mjs",
         "scripts/distribution/check-paths-embedding-cli.py",

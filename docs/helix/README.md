@@ -9,7 +9,7 @@ Public contracts and requirements remain drafts. ADR-001 selects Rust after the 
 | Discover | [Vision](00-discover/product-vision.md), [research](00-discover/research.md) |
 | Frame | [PRD](01-frame/prd.md), [concerns](01-frame/concerns.md); six features and nine stories in adjacent directories |
 | Design | [Architecture](02-design/architecture.md), [ADR-001](02-design/adr/ADR-001-rust-and-embedding.md), [ADR-002](02-design/adr/ADR-002-dialect-and-plugin-boundary.md) |
-| Contracts | [Language/IR](02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md), [backend interface](02-design/contracts/CONTRACT-002-backend-interface.md), [compile/host boundary](02-design/contracts/CONTRACT-003-compile-and-host-boundary.md), [application reads](02-design/contracts/CONTRACT-004-application-reads.md), [blocked security foundation](02-design/contracts/CONTRACT-007-security-compilation.md), [reliability runner](02-design/contracts/CONTRACT-006-reliability-runner.md) |
+| Contracts | [Language/IR](02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md), [backend interface](02-design/contracts/CONTRACT-002-backend-interface.md), [compile/host boundary](02-design/contracts/CONTRACT-003-compile-and-host-boundary.md), [application reads](02-design/contracts/CONTRACT-004-application-reads.md), [blocked compatibility security foundation](02-design/contracts/CONTRACT-007-security-compilation.md), [reliability runner](02-design/contracts/CONTRACT-008-reliability-runner.md) |
 | Test | [Project plan](03-test/TP-001-compiler-conformance.md), nine story plans, [fixture corpus](03-test/fixtures/README.md) |
 | Build | [Implementation plan](04-build/implementation-plan.md), [embedding spike](02-design/spikes/SPIKE-001-native-python-browser.md) |
 
@@ -32,7 +32,7 @@ production profile or qualify an engine version. Historical B-007 records [passi
 
 Shared security integration is B-008 (open), framed as FR-19–22 and
 [CONTRACT-007](02-design/contracts/CONTRACT-007-security-compilation.md).
-The initial 0.5 transport/core08 custody foundation refuses activation;
+Main’s separate security0.1/0.2 protocols are governed by [CONTRACT-006](02-design/contracts/CONTRACT-006-security-compilation.md). Compile0.5 remains a separately validated blocked compatibility envelope underCONTRACT-007. Trusted security0.2 registration may run once after owner admission; physical lowering remains closed. The initial0.5 transport/core08 custody foundation refuses activation;
 security logical/physical lowering and Rust/Python/browser/native qualification
 remain unfinished. Prior B-007 ordinary compiler claims remain qualified to their original checkpoint.
 

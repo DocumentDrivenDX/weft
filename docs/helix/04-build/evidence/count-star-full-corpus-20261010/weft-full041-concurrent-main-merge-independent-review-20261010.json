@@ -1,0 +1,27 @@
+{
+  "decision": "approve-merge-boundary-for-push",
+  "ownCommit": "c4060d1aa35177ded8b775fad29ae57a2696641d",
+  "mergedMain": "793865c1588f071991bbea52d916455b7de694d3",
+  "remoteParent": "c9f19f9d94b8b348d00c8145c90d72bdb2fc22c7",
+  "parents": [
+    "c4060d1aa35177ded8b775fad29ae57a2696641d",
+    "c9f19f9d94b8b348d00c8145c90d72bdb2fc22c7"
+  ],
+  "ownElevenFileBlobs": {
+    ".github/workflows/conformance.yml": "42dd68392c7bad70653c7bfb18481619e2b2874c",
+    "docs/helix/04-build/evidence/count-star-full-corpus-20261010/full041-corpus-component-archive-inventory-dg.json": "f87de31bdfad0a5f7b5292878e905bf5e570ab03",
+    "docs/helix/04-build/evidence/count-star-full-corpus-20261010/full041-corpus-component-evidence-dg.tar.gz": "8702392b748fa5d76c491db79cb46b3591fc3688",
+    "docs/helix/04-build/evidence/count-star-full-corpus-20261010/weft-full041-archive-independent-review-20261010-dg.json": "20a570ffdd7a2735d84ad04ebe4c962eddcb676f",
+    "docs/helix/04-build/evidence/count-star-full-corpus-20261010/weft-full80-component-parity-actual-result-independent-review-20261010-dg.json": "bf47619f17b7b455a2337fdbfc9dcc67a2f0dd42",
+    "scripts/distribution/build-count-star-corpus.py": "cce27276ae58e45f807e11978ab6150cecc0e82e",
+    "scripts/distribution/check-count-star-corpus.py": "752471b23b77352d5b814b1a70ba5558bdbfbe4c",
+    "tests/distribution-count-star-corpus/fixtures/count-star-having-041-corpus.json.gz": "d5bbf3ac12578c62f83d4a307959063b2eead938",
+    "tests/distribution-count-star-corpus/fixtures/count-star-having-041-expected-witnesses.json": "51388a5d73a7e438abdd4ae2822e231709d7bafb",
+    "tests/distribution-count-star-corpus/fixtures/count-star-having-041-migrations.json.gz": "0515d5b400a40181598a2c42f3888fd1c1de1bc5",
+    "tests/distribution-count-star-corpus/test_migration.py": "7d92ddd8e1a04bc0a9a854a4261a50731b232936"
+  },
+  "remoteChangedFiles": 79,
+  "overlap": [],
+  "preservedForeignDirtyFile": "tests/ashlar-databricks/common.rs",
+  "qualification": "All own reviewed seven source/four evidence blobs unchanged by conflict-free merge. Historical component evidence remains pinned to actual 5ddcebd products; no security-code review, merged-main compiler requalification, native SQL or release/index admission claim."
+}
