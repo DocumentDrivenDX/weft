@@ -375,3 +375,81 @@ fn generated_collection_and_guard_sql_are_lexically_closed() {
         }
     }
 }
+
+#[test]
+fn paths_manifest_declares_only_reachable_initial04_operations() {
+    let mut registry = Registry::default();
+    registry.register(Paths).unwrap();
+    let manifest = registry.manifest(weft_databricks::paths::ID).unwrap();
+    let actual = manifest.capabilities.iter().map(|c| c.id.as_str()).collect::<Vec<_>>();
+    let expected = [
+        "scan",
+        "project",
+        "filter",
+        "innerJoin",
+        "equal",
+        "and",
+        "parameter.named",
+        "compare.lexicographicGreater",
+        "order.asc",
+        "limit",
+        "type.string",
+        "type.boolean",
+        "type.integer",
+        "type.decimal",
+        "value.presence",
+        "value.nativeNull",
+        "predicate.nativeNull",
+        "compare.nullAwareStringEqual",
+        "project.positionedOutputs",
+        "project.distinct",
+        "compare.less",
+        "compare.lessEqual",
+        "compare.greaterEqual",
+        "compare.notEqual",
+        "compare.scalarJoin",
+        "arithmetic.exact.integer",
+        "arithmetic.exact.decimal",
+        "arithmetic.+",
+        "arithmetic.-",
+        "arithmetic.*",
+        "arithmetic.negate",
+        "arithmetic.compareExact",
+        "type.integer.unbounded",
+        "aggregate",
+        "group",
+        "aggregate.count",
+        "aggregate.countDistinct",
+        "aggregate.countDistinct.optional",
+        "aggregate.havingCountDistinctGreater",
+        "predicate.stringIn",
+        "join.left",
+        "value.outerJoinPresence",
+        "relationship.twoHopPaths",
+        "relationship.pathExpansion",
+        "relationship.inverse",
+        "result.pathOccurrences",
+        "aggregate.pathTargetDistinctCount",
+    ];
+    assert_eq!(actual, expected);
+    assert!(!actual.contains(&"key.uniqueStable"));
+    let mut old = weft_core::backend::Registry::default();
+    old.register(weft_databricks::candidate::Candidate).unwrap();
+    let old_manifest = old.manifest("ashlar.databricks").unwrap();
+    assert_eq!(old_manifest.interface_version, "weft-backend/0.2.0");
+    assert!(old_manifest.capabilities.iter().any(|c| c.id == "key.uniqueStable"));
+    let mut selected = request(COLLECTION);
+    selected["readProfile"] = json!("related-entity-page");
+    let refused = compile(&selected);
+    assert_eq!(refused["status"], "blocked");
+    assert_eq!(refused["diagnostics"][0]["code"], "WFT-INPUT");
+    for pair in ["0.1.0", "0.2.0", "0.3.0"] {
+        let mut original = request(COLLECTION);
+        original["interfaceVersion"] = json!(format!("weft-compile/{pair}"));
+        original["dialect"] = json!(format!("weft-sql/{pair}"));
+        let refused = compile(&original);
+        assert_eq!(refused["status"], "blocked");
+        assert_eq!(refused["diagnostics"][0]["code"], "WFT-VERSION");
+        assert_eq!(refused["interfaceVersion"], "weft-compile/0.4.0");
+    }
+}

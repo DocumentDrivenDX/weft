@@ -41,7 +41,6 @@ impl Backend for Paths {
             "compare.lexicographicGreater",
             "order.asc",
             "limit",
-            "key.uniqueStable",
             "type.string",
             "type.boolean",
             "type.integer",
