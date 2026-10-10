@@ -1,5 +1,7 @@
 """@covers US-006-AC4: raw resource refusals through CLI and native Python."""
 import copy,hashlib,json,os,pathlib,subprocess,sys
+import sys
+if sys.flags.optimize:raise RuntimeError('Qualification requires nonoptimized Python')
 import weft
 import weft.weft as extension
 ROOT=pathlib.Path(__file__).resolve().parents[2]

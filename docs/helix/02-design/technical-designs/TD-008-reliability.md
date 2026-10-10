@@ -139,3 +139,38 @@ privacy at all projections and failed-attempt retrieval. Failure controls exerci
 local capture denial/gaps, queue/record overflow, outage, bounded shutdown,
 retention, malformed/symlink input, cursor integrity/expiry and replacement.
 Recorded pilot timing is a scoped local observation, without a production SLO.
+
+## R6 qualification ownership
+
+`custody.py` inventories repository compiler, bindings, schemas, corpora, oracles,
+tests, runners, vendor sources, build and lock/config/checker inputs plus governing
+HELIX artifacts. Exact named generated evidence outputs and build products are
+excluded; Rust embedded inputs must be present in the inventory. Changed, removed
+or new relevant files invalidate the manifest. B-007 source hashes resolve only
+against immutable checkpoint f81565a1addaa6d2c83561f62d3805d1167233ee.
+
+`fresh_hosts.py` uses CONTRACT-006 configuration, explicit pinned host-tool
+handles and safe lifecycle capture. It builds a public qualified CLI, native wheel
+and WASM, installs that exact wheel, and runs the actual Chromium compiler. The
+complete2181 ordinary corpus retains full-response byte parity to fresh CLI and
+semantic parity to retained native artifacts. Seven resource and six blocked
+security cases cover all three hosts. The input snapshot is verified unchanged
+before a passing qualification is written. CI runs the same gate at the final
+pushed SHA, alongside both Rust feature compositions, conflicts, retained replay
+and controls. Successful replay is historical custody, never current native
+authority, security enforcement or a release claim.
+
+Qualification helpers execute with isolated nonoptimized Python (`-I`), and
+legacy assertion-based helpers explicitly refuse optimization. Loaded native
+extension bytes must match the exact fresh wheel member; all2181 receipt IDs,
+counts and expected/actual response hashes must join to fresh CLI. Built CLI,
+batch, wheel, WASM/glue and wrapper hashes are frozen and reconciled. Scope is
+repository inputs plus pinned dependency/tool identities, not arbitrary dynamic
+build-script IO. Unsupported Rust include forms and nested schema attributes
+and unknown path-bearing attributes refuse instead of hiding a dependency. Historical manifest membership is anchored
+to its original digest.
+
+CONTRACT-006 bounded raw-stream scanning describes the direct diagnostic process
+boundary. Fixed-corpus parity helpers retain complete authored protocol artifacts
+through their existing captures; those captures have outer deadlines and are not
+SDK diagnostic sinks or a general adversarial-output memory guarantee.

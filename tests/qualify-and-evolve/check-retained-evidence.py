@@ -110,8 +110,9 @@ workspace=json.loads((workspace_path/'summary.json').read_text())
 assert workspace['status']=='passed'
 source_bytes=(workspace_path/'sources.json').read_bytes()
 assert hashlib.sha256(source_bytes).hexdigest()==workspace['sourceManifestSha256']
-for name,sha in json.loads(source_bytes).items():
- assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==sha,name
+sys.path.insert(0,str(ROOT/'scripts'))
+from reliability.custody import historical
+historical_custody=historical(ROOT)
 for composition,count in [('candidate',241),('qualified',242)]:
  receipt=workspace[composition]
  assert receipt['status']=='passed' and receipt['exitCode']==0 and receipt['testsExecuted']==count and receipt['terminalSuites']==35 and receipt['ignored']==receipt['filtered']==0
@@ -128,8 +129,6 @@ for row in review['criteria']:
  assert row['assessment']=='passed' and row['reason']
  for reference in row['evidence']:
   assert hashlib.sha256((ROOT/reference['path']).read_bytes()).hexdigest()==reference['sha256'],reference['path']
-results.append({'component':'final-workspace-and-criterion-records','result':{'status':'passed','candidateTests':241,'qualifiedTests':242,'criteria':30,'sourceHashesVerified':len(json.loads(source_bytes))},'scope':'Saved logs/source/acceptance custody only; fresh CI remains required at the final PR head.'})
+results.append({'component':'final-workspace-and-criterion-records','result':{'status':'passed','candidateTests':241,'qualifiedTests':242,'criteria':30,'sourceHashesVerified':len(json.loads(source_bytes))},'historicalSourceCustody':historical_custody,'scope':'Saved logs and immutable historical Git object custody only; current files and fresh CI are qualified separately at the final pushed head.'})
 report={'status':'passed','components':results,'verifiedEvidenceReferences':len(references),'scope':'Retained receipt reconciliation and synthetic verifier controls only. Does not execute native databases, Rust properties, Python wheels or browser WASM; does not close release gates.'}
-OUT=ROOT/'docs/helix/04-build/evidence/B-007-retained-evidence-replay';OUT.mkdir(exist_ok=True)
-(OUT/'summary.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps({'status':'passed','components':len(results),'verifiedEvidenceReferences':len(references),'releaseQualified':False}))

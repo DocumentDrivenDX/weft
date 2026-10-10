@@ -24,8 +24,8 @@ ddx:
 ## Scope and Objective
 
 Prove B-009 reliability outcomes on the complete reviewed compiler revision.
-Allocation validity is separate from executed acceptance. Every row remains
-planned until its real chunk evidence passes.
+Allocation validity is separate from executed acceptance. The allocation rows record planned test ownership; executed acceptance is retained
+separately in the B-009 chunk receipts. A planned row alone never claims a pass.
 
 ## Acceptance Criteria Test Mapping
 
@@ -69,3 +69,14 @@ accept a missing gate. Selected unknown security meaning remains blocked.
 Follow B-009 dependency order and independent Astra Ultra review per chunk.
 Done requires named executable tests, citations, observed passes and no unresolved
 blocking review. Deferred full security/native acceptance remains open.
+
+## B-009 observed execution
+
+R0–R5 reviewed receipts are retained under `04-build/evidence/reliability/`. They
+record actual allocation controls, bounded CLI/immutable Catalog checks, module
+gates, clean-baseline mutations, SDK receiver/privacy/loss/retrieval checks, and
+bounded formal plus actual Rust correspondence. R6 current-host receipts and
+input manifest are separate from the historical B-007 acceptance matrix. The
+final hosted CI run at the pushed SHA is required for AC7; absent/failing/skipped
+required jobs keep current acceptance incomplete. FR19–22/US009 native security
+acceptance remains open.

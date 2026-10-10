@@ -3,7 +3,7 @@ name: Compiler conformance
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, codex/reliability-review]
   workflow_dispatch:
 
 permissions:
@@ -16,15 +16,26 @@ concurrency:
 jobs:
   compiler-and-evidence:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.4.2'
+      - name: Install pinned Rust and host builders
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal --component rustfmt --target wasm32-unknown-unknown
+          rustup default 1.90.0
+          python -m pip install maturin==1.9.6
+          cargo install wasm-bindgen-cli --version 0.2.105 --locked
+          cargo fetch --locked
+      - name: Install actual Chromium and system dependencies
+        run: bunx --bun playwright@1.62.1 install --with-deps chromium
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
       - name: Validate governed specifications
@@ -73,3 +84,30 @@ jobs:
           done
       - name: Replay retained evidence and corruption controls
         run: python tests/qualify-and-evolve/check-retained-evidence.py
+      - name: Current input closure and stale controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_custody.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_custody.py -v
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_fresh_hosts.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_fresh_hosts.py -v
+      - name: Fresh CLI, installed native wheel and real Chromium WASM parity
+        run: >-
+          python scripts/reliability/fresh_hosts.py
+          --cargo "$(command -v cargo)"
+          --rustup-home "$(rustup show home)"
+          --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")"
+          --temp-root "$RUNNER_TEMP/weft-fresh-hosts"
+          --output-root "$RUNNER_TEMP/weft-fresh-host-evidence"
+          --bun "$(command -v bun)"
+          --maturin "$(command -v maturin)"
+          --wasm-bindgen "$(command -v wasm-bindgen)"
+      - name: Retain current qualification receipts and fresh artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-qualification-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/weft-fresh-host-evidence
+            ${{ runner.temp }}/weft-fresh-hosts/fresh-host-evidence
+            ${{ runner.temp }}/weft-formal-evidence
+            ${{ runner.temp }}/weft-mutation-evidence
+          if-no-files-found: error
