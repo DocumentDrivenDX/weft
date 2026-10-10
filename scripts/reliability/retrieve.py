@@ -6,7 +6,7 @@ from reliability.config import SafeParser
 def main():
  try:
   parser=SafeParser();parser.add_argument('--run-directory',required=True);parser.add_argument('--cursor');options=parser.parse_args()
-  from reliability.diagnostics import retrieve
+  from reliability.diagnostic_records import retrieve
   page=retrieve(pathlib.Path(options.run_directory),options.cursor)
   print(json.dumps(page,separators=(',',':'),sort_keys=True));return 0
  except Exception:

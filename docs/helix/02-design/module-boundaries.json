@@ -3100,6 +3100,7 @@
         "scripts/reliability/cargo.py",
         "scripts/reliability/config.py",
         "scripts/reliability/custody.py",
+        "scripts/reliability/diagnostic_records.py",
         "scripts/reliability/diagnostics.py",
         "scripts/reliability/formal.py",
         "scripts/reliability/fresh_cases.py",

@@ -1,0 +1,37 @@
+{
+  "reviewer": "Astra Ultra",
+  "planStatus": "approved",
+  "reason": "Intermediate hosted CI read-only CLI optimized-startup timeout; remove unnecessary SDK import dependency",
+  "movedNames": [
+    "RESOURCE",
+    "SCOPE",
+    "EVENTS",
+    "OPERATIONS",
+    "OUTCOMES",
+    "UUID",
+    "DiagnosticError",
+    "unique",
+    "parsed",
+    "packed",
+    "regular",
+    "RECORD_KEYS",
+    "ATTRS",
+    "validate_record",
+    "validate_revision",
+    "MANIFEST_KEYS",
+    "COUNT_KEYS",
+    "LOSS",
+    "read_manifest",
+    "retrieve"
+  ],
+  "unchangedMovedTextSha256": "db81b6aa3742c9e336108539b9d48669b3cb1af36d89c27266567abd3cf78901",
+  "scope": "Same validators, shared exception and constants through reexports; unchanged five-second CLI and one-second retrieval limits; actual -S and -O -S CLI controls",
+  "implementationStatus": "approved",
+  "normalDiagnosticsControls": 18,
+  "optimizedDiagnosticsControls": 18,
+  "moduleControls": 16,
+  "remainingGates": [
+    "fresh hosts and custody",
+    "final head hosted CI"
+  ]
+}

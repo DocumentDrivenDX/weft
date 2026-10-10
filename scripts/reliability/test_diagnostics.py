@@ -97,10 +97,10 @@ class DiagnosticsTests(unittest.TestCase):
  def test_actual_readonly_cli_pages_and_malformed_safe_failure(self):
   run=Run(self.config,'pilot');run.close();entry=pathlib.Path(__file__).with_name('retrieve.py')
   before={p.name:(p.stat().st_size,p.stat().st_mtime_ns) for p in run.directory.iterdir()}
-  result=subprocess.run([sys.executable,str(entry),'--run-directory',str(run.directory)],capture_output=True,timeout=5)
+  result=subprocess.run([sys.executable,'-S',str(entry),'--run-directory',str(run.directory)],capture_output=True,timeout=5)
   self.assertEqual(result.returncode,0);self.assertEqual(result.stderr,b'');self.assertEqual(json.loads(result.stdout)['outcome'],'passed')
   self.assertEqual(before,{p.name:(p.stat().st_size,p.stat().st_mtime_ns) for p in run.directory.iterdir()})
-  result=subprocess.run([sys.executable,'-O',str(entry),'--run-directory',str(run.directory),'--cursor','private-sentinel'],capture_output=True,timeout=5)
+  result=subprocess.run([sys.executable,'-O','-S',str(entry),'--run-directory',str(run.directory),'--cursor','private-sentinel'],capture_output=True,timeout=5)
   self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'');self.assertEqual(result.stderr,b'weft-runner: diagnostic retrieval refused\n')
  def test_crash_debris_pending_allowance_and_retention_do_not_delete_unknown_files(self):
   self.config.output_root.mkdir();debris=self.config.output_root/('weft-run-'+uuid.uuid4().hex);debris.mkdir();(debris/'private').write_text('owner content')

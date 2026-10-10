@@ -586,3 +586,15 @@ pass. Fresh CLI, installed Python and real Chromium checks now require ten block
 security vectors alongside seven resource controls, with exact blocked response
 members and separate CLI input-limit refusal. Fresh full-input custody and final
 hosted CI are required before merge; this paragraph does not claim their completion.
+
+### B-009 read-only diagnostic CLI dependency repair
+
+An intermediate hosted run timed out during optimized diagnostic CLI startup at
+its existing five-second process limit. The CLI imported the telemetry SDK despite
+using only bounded record readers. Following Astra Ultra plan review, unchanged
+record validation, cursor authentication and retrieval helpers moved into the
+standard-library-only `diagnostic_records` module. The SDK writer reexports those
+same objects and retains real SDK logging, tracing and encoding. Retrieval keeps
+its one-second, byte, record, owner and privacy limits. Actual successful `-S`
+and malformed-cursor `-O -S` CLI controls retain the five-second harness deadline;
+no timeout or validation check was removed.
