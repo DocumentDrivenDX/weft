@@ -1,0 +1,31 @@
+{
+  "version": "weft.security.field-events-astra-review/0.1.0",
+  "reviewer": "Astra ultra authorized read-only agent /root/astra_security_review",
+  "outcome": "clean after implemented feedback",
+  "implementationScope": "Exact borrowed field/reference/carrier/owner/classification, typed Stored/Context channels, charged lookup/retention, source-only ledger preservation and Field/Context inventory equality. No production issuer/native admission.",
+  "feedbackImplemented": [
+    "Channel-only substitution isolates channel guard",
+    "Independent false-branch self-join original occurrences",
+    "Formal declared sources frozen before construction and rechecked before publication",
+    "SMT retained before solving"
+  ],
+  "formalReceiptSha256": "974cc95141a299d175c43db183010d83521ad8a602beda8e09fd96d7b474bc9c",
+  "sourcePins": {
+    "scripts/security/prove-field-event-addresses.py": "185f573d1c4c7cb5d84210748a9186c70989c9e9da0ef80bd089d98835bb9483",
+    "crates/weft-core/src/security_obligation_sources.rs": "23bbee577f569518a1c74dc5e3890e3de286ee12d2d75b4df213e7cfc77c832b",
+    "crates/weft-core/src/security_semantic_coverage.rs": "b60a9e315f1e8e6139a59234c21725e2eac6ff6f3581968d634f9b568b2561c7"
+  },
+  "independentReplay": {
+    "formulas": 9,
+    "unsat": 3,
+    "sat": 6,
+    "z3Version": "4.15.4",
+    "freshContexts": true
+  },
+  "exclusions": [
+    "No independent Cargo/native execution",
+    "No Rust representation/traversal refinement proof",
+    "Erasure controls are projection sanity checks, not Rust implementation mutants",
+    "No acceptance promotion"
+  ]
+}

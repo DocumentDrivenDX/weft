@@ -131,3 +131,41 @@ weft-admission.json. This is a source-fidelity integration increment, not draft
 ### B-008 main integration — 2026-10-10
 
 The security foundation is integrated against main14c5814 while preserving the incoming95991ee browser/evidence update. Main's CONTRACT-005 authored-path meaning and ordinary compile0.3/0.4 remain unchanged; the security contract and transports have an explicit [identity migration](evidence/security-main-integration/identity-migration.json). `cargo test --release --locked --workspace` passes all 556 tests across 44 groups, with none failed, ignored or filtered. The [checkpoint](evidence/security-main-integration/checkpoint.json) retains exact source/log hashes, scoped Astra ultra review, the corrected initial diagnostic failures and the intentionally interrupted debug attempt. Both security transports remain blocked before physical emission. B-008, installed Python/browser parity and the original native backend acceptance plan remain open.
+
+
+### B-008 typed field semantics — 2026-10-10
+
+Under CONTRACT-006 and UMF's independent requirement issuer design, private
+OwnerSourceDemands retains every selected Field/Context event's exact borrowed
+qualified field reference and original catalog field carrier. Stored events also
+retain the exact inventory owner reference and raw ontology field declaration,
+including protection/query-use settings. Context is a distinct typed channel
+without a stored-field classification. No domain normalization or model cloning
+is used to manufacture applicability; facets, allowed values and opaque content
+remain available through the original carrier. Catalog/ontology lookup visits and
+retained source-ID copies are charged. Source-only derivation keeps its prior
+ledger. Field/Context event-key projection must equal the payload inventory.
+
+Independent controls cover actual catalog/ontology pointers and authored fixture
+keys, stored/context uses of the same Boolean field, equal-but-foreign reference,
+carrier, owner and classification substitutions, exact/minus-one retention limits,
+and populated 4096/4097 entry boundaries. The [execution evidence](evidence/security-field-events/)
+retains actual runs, declared source custody and scoped Astra review. Three
+conditional algebraic address laws preserve channel, stored owner and original
+occurrence; erasure controls and independent fresh-context replay accompany them.
+These laws do not prove Rust pointer/string representation or traversal refinement.
+
+This completes field payload custody for the existing Field/Context event subset.
+Key/member order, query projection/operator/output details, complete backend
+kind/template applicability, authenticated profiles and original native assertion
+mappings still require issuance work. B-008 and all132 original backend cases
+remain binding; no native acceptance or public security lowering is promoted.
+
+Final current-source `cargo test --release --locked --workspace` passes557 tests
+across44 groups with zero failures/ignored/filtered. All822 declared repository
+inputs were frozen before execution and verified unchanged at terminal exit0.
+External Cargo registry/build runtime dependencies are outside that inventory.
+Astra's read-only implementation review is clean after channel-only/self-join
+controls, and independently replays all9 current formulas in fresh Z3 contexts.
+The checkpoint preserves both pre-refinement successful runs and the corrected
+initial formal parser failure; stored receipts are not relabeled or repinned.

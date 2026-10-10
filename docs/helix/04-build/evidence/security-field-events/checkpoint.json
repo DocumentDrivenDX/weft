@@ -1,0 +1,54 @@
+{
+  "version": "weft.security.field-events-checkpoint/0.1.0",
+  "base": "ed2b6777d3a1d63850af4bac8bc0180e3820ed01",
+  "command": [
+    "cargo",
+    "test",
+    "--release",
+    "--locked",
+    "--workspace"
+  ],
+  "exitCode": 0,
+  "testGroups": 44,
+  "passed": 557,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "declaredSources": 822,
+  "sourceCustody": "start.json exact822 repository inputs frozen before execution and rechecked unchanged in terminal.json; external Cargo registry dependencies/build tool execution closure excluded",
+  "toolchain": "rustc1.90.0 aarch64-apple-darwin; release profile",
+  "scope": "Private owner-derived stored/context field payload custody; public security emission remains blocked. No native/backend132 acceptance promotion, installed Python or browser qualification.",
+  "formal": {
+    "laws": 3,
+    "formulas": 9,
+    "unsat": 3,
+    "sat": 6,
+    "scope": "Conditional algebraic constructors, not Rust/native refinement",
+    "receipt": "field-address-formal.json",
+    "independentReview": "astra-review.json"
+  },
+  "attempts": [
+    "initial-core213pass before classification/test refinement",
+    "final-core214pass before final isolated test refinement",
+    "pre-refinement fullworkspace557pass44groups822unchanged inputs archived",
+    "formal-initial-attempt parse replay failure from SMT symbol/accessor collision; corrected and actualrerun",
+    "pre-refinement formal receipt retained before prefreeze/pre-solve custody correction"
+  ],
+  "logs": {
+    "astra-review.json": "ca0a17f116fc69f5e09b1bbab3734b90f8cd23a9a1ac40843c03983c3f4e3f73",
+    "field-address-formal.json": "974cc95141a299d175c43db183010d83521ad8a602beda8e09fd96d7b474bc9c",
+    "final-core.log": "a8ec59027581afea1cb2810eca7af5a12dad9c2e8b8c42470b76747d34ab5333",
+    "formal-initial-attempt.log": "56db42e1943444cd7ff49800864be3a5a687236b552a9f12c47dedaf5a2ea117",
+    "formal.log": "e29a6ec66ebac0ec53e52537f228d8f295de24cbc6c7a0516b56985ee4588581",
+    "initial-core.log": "0b59ce7283d7b46621831dace39a9c19f2091fe470206eb9d053de80c3256dec",
+    "pre-refinement-field-address-formal.json": "3cdd92152e9274f11a42928923ee922e9c538ce3322fab0f4fa4803502dd978f",
+    "pre-refinement-formal.log": "e29a6ec66ebac0ec53e52537f228d8f295de24cbc6c7a0516b56985ee4588581",
+    "pre-refinement-start.json": "1abc29f7714a390330c43c19345e9b5c23b89c4ac0f1effb32fc64456e9e0562",
+    "pre-refinement-terminal.json": "6f2b790cf6b668adfeff9dd53213a785c7d9352d3e2a1440b4f57830e9e8c9e4",
+    "pre-refinement-workspace-release.log": "8579997a759ffbba6cc2c41aec60eb776bcdca7666008c80b52bcf68056285a8",
+    "start.json": "b05e739f34d6572ac8f782e13ec14a6469b8c1d8361df78aab6aba307e5d9668",
+    "terminal.json": "d0a53d30bc1adee2720c70a7ce953e5a69a99493bcf26eadb8354473b1326ee1",
+    "workspace-release.log": "8263461c21f5d0caf8764f49d977021b662bd5565d89e13df1ee8ce402dd42c5"
+  },
+  "acceptance": "Original132 cases and B-008 remain open; field/event custody does not discharge native duties."
+}

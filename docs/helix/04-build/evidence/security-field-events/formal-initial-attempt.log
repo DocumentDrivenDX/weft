@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-security-main-integration/scripts/security/prove-field-event-addresses.py", line 52, in <module>
+    replay.add(z3.parse_smt2_string(smt, ctx=context))
+  File "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3.py", line 9557, in parse_smt2_string
+    return AstVector(Z3_parse_smtlib2_string(ctx.ref(), s, ssz, snames, ssorts, dsz, dnames, ddecls), ctx)
+  File "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py", line 3644, in Z3_parse_smtlib2_string
+    _elems.Check(a0)
+  File "/private/tmp/umf-security-proof-venv/lib/python3.9/site-packages/z3/z3core.py", line 1583, in Check
+    raise self.Exception(self.get_error_message(ctx, err))
+z3.z3types.Z3Exception: b'(error "line 10 column 22: ambiguous constant reference, more than one constant with the same sort, use a qualified expression (as <symbol> <sort>) to disambiguate source")\n'

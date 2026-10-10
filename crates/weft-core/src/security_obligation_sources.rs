@@ -68,6 +68,21 @@ pub(crate) enum OwnerEventKind {
  PrimaryAction, Policy, Ontology, Query, Model, Module, Scan, Projection,
  QueryField, Action, Rule, Key, KeyField, Field, Context, Association, Operator, Output,
 }
+/// Actual field carrier and qualified references; no normalized/cloned domain.
+#[derive(Clone, Copy, Debug)]
+pub(crate) enum FieldChannel<'a> {
+    Stored { target: &'a SecurityRef },
+    Context,
+}
+#[derive(Clone, Copy, Debug)]
+pub(crate) struct FieldEvent<'a> {
+    pub(crate) reference: &'a SecurityRef,
+    pub(crate) carrier: &'a serde_json::Value,
+    pub(crate) channel: FieldChannel<'a>,
+    /// Exact ontology field declaration (protection/query-use), absent for context.
+    pub(crate) classification: Option<&'a serde_json::Value>,
+}
+type FieldEvents<'a> = BTreeMap<String, FieldEvent<'a>>;
 type Events = BTreeMap<String, OwnerEventKind>;
 // References point only into the retained coverage relation; no capability product.
 type Demands<'a> = BTreeMap<String, BTreeSet<&'a CoverageScope>>;
@@ -77,11 +92,13 @@ pub(crate) struct OwnerSourceDemands<'a, 'm, 'c, 's> {
     demands: Demands<'a>,
     events: Events,
     rule_events: BTreeMap<String, &'a crate::security_ir::Rule>,
+    field_events: FieldEvents<'a>,
 }
 #[allow(dead_code)]
 impl<'a, 'm, 'c, 's> OwnerSourceDemands<'a, 'm, 'c, 's> {
     pub(crate) fn coverage(&self) -> &'a OwnerCoverage<'m, 'c, 's> { self.coverage }
     pub(crate) fn rule_events(&self) -> &BTreeMap<String, &'a crate::security_ir::Rule> { &self.rule_events }
+    pub(crate) fn field_events(&self) -> &FieldEvents<'a> { &self.field_events }
     pub(crate) fn events(&self) -> &Events { &self.events }
     pub(crate) fn demands(&self) -> &Demands<'a> { &self.demands }
     pub(crate) fn candidates(&self, scope: &CoverageScope) -> Option<&BTreeSet<String>> {
@@ -90,9 +107,9 @@ impl<'a, 'm, 'c, 's> OwnerSourceDemands<'a, 'm, 'c, 's> {
 }
 #[allow(dead_code)]
 pub(crate) fn issue_demands<'a, 'm, 'c, 's>(coverage: &'a OwnerCoverage<'m, 'c, 's>) -> Result<OwnerSourceDemands<'a, 'm, 'c, 's>> {
-    let (_, demands, events, rule_events) = traverse(coverage.context(), Some(coverage.assignments()),
+    let (_, demands, events, rule_events, field_events) = traverse(coverage.context(), Some(coverage.assignments()),
         &mut Budget { work: 1_000_000, text: 16_000_000 })?;
-    Ok(OwnerSourceDemands { coverage, demands, events, rule_events })
+    Ok(OwnerSourceDemands { coverage, demands, events, rule_events, field_events })
 }
 struct SourceIssuer<'a, 'b> {
     ledger: &'b mut Budget,
@@ -101,6 +118,7 @@ struct SourceIssuer<'a, 'b> {
     demands: Demands<'a>,
     events: Events,
     rule_events: BTreeMap<String, &'a crate::security_ir::Rule>,
+    field_events: FieldEvents<'a>,
     edges: usize,
 }
 impl<'a> SourceIssuer<'a, '_> {
@@ -137,6 +155,63 @@ impl<'a> SourceIssuer<'a, '_> {
         let id=self.ledger.encode(tokens)?;self.charge(id.len())?;
         if let Some(old)=self.rule_events.insert(id,rule) { if !std::ptr::eq(old,rule) {return Err(fail());} }
         if self.rule_events.len()>4096 {return Err(fail());} Ok(())
+    }
+    fn field_carrier(&mut self, ctx: &'a SecurityBackendContext<'_>, reference: &SecurityRef) -> Result<&'a serde_json::Value> {
+        for document in &ctx.catalog().documents {
+            self.charge(0)?;
+            if document["id"].as_str() != Some(reference.document_id.as_str()) { continue; }
+            for module in document["modules"].as_array().ok_or_else(fail)? {
+                self.charge(0)?;
+                if module["id"].as_str() != Some(reference.module_id.as_str()) { continue; }
+                for element in module["elements"].as_array().ok_or_else(fail)? {
+                    self.charge(0)?;
+                    if element["id"].as_str() == Some(reference.element_id.as_str()) { return Ok(element); }
+                }
+            }
+        }
+        Err(fail())
+    }
+    fn field_classification(&mut self, ctx: &'a SecurityBackendContext<'_>, target: &SecurityRef, field: &SecurityRef) -> Result<&'a serde_json::Value> {
+        fn matches(value: &serde_json::Value, reference: &SecurityRef) -> bool {
+            value["documentId"].as_str() == Some(reference.document_id.as_str())
+                && value["moduleId"].as_str() == Some(reference.module_id.as_str())
+                && value["elementId"].as_str() == Some(reference.element_id.as_str())
+        }
+        let ontology = ctx.logical_plan().source().ontology();
+        for group in ["entities", "associations"] {
+            for owner in ontology[group].as_array().ok_or_else(fail)? {
+                self.charge(0)?;
+                if !matches(&owner["type"], target) { continue; }
+                for declaration in owner["fields"].as_array().ok_or_else(fail)? {
+                    self.charge(0)?;
+                    if matches(&declaration["ref"], field) { return Ok(declaration); }
+                }
+            }
+        }
+        Err(fail())
+    }
+    fn retain_field(&mut self, tokens: &[&str], field: FieldEvent<'a>) -> Result<()> {
+        if self.assignments.is_none() { return Ok(()); }
+        let id = self.ledger.encode(tokens)?;
+        self.charge(id.len())?;
+        if let Some(old) = self.field_events.get(&id) {
+            let same_channel = match (old.channel, field.channel) {
+                (FieldChannel::Context, FieldChannel::Context) => true,
+                (FieldChannel::Stored { target: a }, FieldChannel::Stored { target: b }) => std::ptr::eq(a, b),
+                _ => false,
+            };
+            if !same_channel || !std::ptr::eq(old.reference, field.reference)
+                || !std::ptr::eq(old.carrier, field.carrier)
+                || match (old.classification, field.classification) {
+                    (None, None) => false,
+                    (Some(a), Some(b)) => !std::ptr::eq(a, b),
+                    _ => true,
+                } { return Err(fail()); }
+            return Ok(());
+        }
+        if self.field_events.len() >= 4096 { return Err(fail()); }
+        self.field_events.insert(id, field);
+        Ok(())
     }
     fn event(&mut self, kind: OwnerEventKind, tokens: &[&str], out: &mut BTreeSet<String>) -> Result<()> {
         self.issue(tokens, out)?;
@@ -183,10 +258,10 @@ pub(crate) fn derive(ctx: &SecurityBackendContext<'_>) -> Result<BTreeSet<String
     )
 }
 fn derive_budget(ctx: &SecurityBackendContext<'_>, b: &mut Budget) -> Result<BTreeSet<String>> {
-    traverse(ctx, None, b).map(|(sources, _, _, _)| sources)
+    traverse(ctx, None, b).map(|(sources, _, _, _, _)| sources)
 }
-fn traverse<'a>(ctx: &'a SecurityBackendContext<'_>, assignments: Option<&'a BTreeMap<CoverageScope, BTreeSet<String>>>, ledger: &mut Budget) -> Result<(BTreeSet<String>, Demands<'a>, Events, BTreeMap<String, &'a crate::security_ir::Rule>)> {
-    let mut b = SourceIssuer { ledger, assignments, current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), edges: 0 };
+fn traverse<'a>(ctx: &'a SecurityBackendContext<'_>, assignments: Option<&'a BTreeMap<CoverageScope, BTreeSet<String>>>, ledger: &mut Budget) -> Result<(BTreeSet<String>, Demands<'a>, Events, BTreeMap<String, &'a crate::security_ir::Rule>, FieldEvents<'a>)> {
+    let mut b = SourceIssuer { ledger, assignments, current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
     let mut out = BTreeSet::new();
     let req = ctx.requirements();
     for scan in req.scans() { b.action(scan.inventory().scan(), req.primary_action())?; }
@@ -285,11 +360,22 @@ fn traverse<'a>(ctx: &'a SecurityBackendContext<'_>, assignments: Option<&'a BTr
                         &["field", name, an, t[0], t[1], t[2], f[0], f[1], f[2]],
                         &mut out,
                     )?;
+                    if assignments.is_some() {
+                        let carrier = b.field_carrier(ctx, field)?;
+                        let classification = b.field_classification(ctx, target, field)?;
+                        b.retain_field(&["field", name, an, t[0], t[1], t[2], f[0], f[1], f[2]],
+                            FieldEvent { reference: field, carrier, channel: FieldChannel::Stored { target }, classification: Some(classification) })?;
+                    }
                 }
             }
             for field in a.context() {
                 let f = reference(field);
                 b.event(OwnerEventKind::Context,&["context", name, an, f[0], f[1], f[2]], &mut out)?;
+                if assignments.is_some() {
+                    let carrier = b.field_carrier(ctx, field)?;
+                    b.retain_field(&["context", name, an, f[0], f[1], f[2]],
+                        FieldEvent { reference: field, carrier, channel: FieldChannel::Context, classification: None })?;
+                }
             }
             for association in a.associations() {
                 let r = reference(association);
@@ -334,7 +420,11 @@ fn traverse<'a>(ctx: &'a SecurityBackendContext<'_>, assignments: Option<&'a BTr
     }
     if assignments.is_some() && (b.demands.len() != out.len() || !b.demands.keys().eq(out.iter())) { return Err(fail()); }
     if assignments.is_some() && !b.events.keys().eq(out.iter()) { return Err(fail()); }
-    Ok((out, b.demands, b.events, b.rule_events))
+    if assignments.is_some() {
+        let required = b.events.iter().filter(|(_, kind)| matches!(kind, OwnerEventKind::Field | OwnerEventKind::Context)).map(|(id, _)| id);
+        if !required.eq(b.field_events.keys()) { return Err(fail()); }
+    }
+    Ok((out, b.demands, b.events, b.rule_events, b.field_events))
 }
 #[cfg(test)]
 pub(crate) fn test_budget(ctx: &SecurityBackendContext<'_>, work: usize, text: usize) -> Result<BTreeSet<String>> {
@@ -343,7 +433,7 @@ pub(crate) fn test_budget(ctx: &SecurityBackendContext<'_>, work: usize, text: u
 #[cfg(test)]
 pub(crate) fn test_demands<'a>(ctx: &'a SecurityBackendContext<'a>, assignments: &'a BTreeMap<CoverageScope, BTreeSet<String>>, work: usize, text: usize) -> Result<(Demands<'a>, usize, usize)> {
     let mut ledger = Budget { work, text };
-    let (_, demands, _, _) = traverse(ctx, Some(assignments), &mut ledger)?;
+    let (_, demands, _, _, _) = traverse(ctx, Some(assignments), &mut ledger)?;
     Ok((demands, ledger.work, ledger.text))
 }
 #[cfg(test)]
@@ -378,7 +468,7 @@ mod tests {
     fn demand_retention_merges_edges_and_refuses_exact_bound_overrun() {
         let scopes = BTreeMap::from([(CoverageScope::Application, BTreeSet::from(["whole".into()]))]);
         let mut ledger = Budget { work: 100, text: 1000 };
-        let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), edges: 65_535 };
+        let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 65_535 };
         issuer.application().unwrap();
         let mut sources = BTreeSet::new();
         issuer.issue(&["x"], &mut sources).unwrap();
@@ -389,7 +479,7 @@ mod tests {
         // Independently populate the entire finite edge boundary, not just its counter.
         let population: BTreeMap<_, _> = (0..256).map(|i| (CoverageScope::ScanAction { scan: format!("s{i}"), action: "read".into() }, BTreeSet::from(["whole".into()]))).collect();
         let mut ledger = Budget { work: 1_000_000, text: 16_000_000 };
-        let mut population_issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&population), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), edges: 0 };
+        let mut population_issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&population), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
         population_issuer.global().unwrap();
         let mut population_sources = BTreeSet::new();
         for i in 0..256 { population_issuer.issue(&["population", &i.to_string()], &mut population_sources).unwrap(); }
@@ -400,7 +490,7 @@ mod tests {
         // Only the private traversal sees intermediates; issuance returns no prefix on Err.
         for (work, text, ok) in [(5, 11, true), (4, 11, false), (5, 10, false)] {
             let mut ledger = Budget { work, text };
-            let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), edges: 0 };
+            let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
             issuer.application().unwrap();
             assert_eq!(issuer.issue(&["x"], &mut BTreeSet::new()).is_ok(), ok);
         }
@@ -413,12 +503,12 @@ mod tests {
         // ["x"] encodes to5 bytes: source11 + event11 =22 retained/processed bytes.
         for (work,text,ok) in [(8,22,true),(7,22,false),(8,21,false)] {
             let mut ledger=Budget{work,text};
-            let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),edges:0};
+            let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),field_events:BTreeMap::new(),edges:0};
             issuer.application().unwrap();
             assert_eq!(issuer.event(OwnerEventKind::Output,&["x"],&mut BTreeSet::new()).is_ok(),ok);
         }
         let mut ledger=Budget{work:100,text:1000};
-        let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),edges:0};
+        let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),field_events:BTreeMap::new(),edges:0};
         issuer.application().unwrap();let mut out=BTreeSet::new();
         issuer.event(OwnerEventKind::Output,&["x"],&mut out).unwrap();
         issuer.event(OwnerEventKind::Output,&["x"],&mut out).unwrap();
@@ -433,12 +523,56 @@ mod tests {
         let scopes=BTreeMap::from([(CoverageScope::Application,BTreeSet::new())]);
         // Four token bytes(16), JSON encoding(29), retained ID(29):6 visits/74 bytes.
         for (work,text,ok) in [(6,74,true),(5,74,false),(6,73,false)] {
-         let mut ledger=Budget{work,text};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),edges:0};
+         let mut ledger=Budget{work,text};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),field_events:BTreeMap::new(),edges:0};
          assert_eq!(issuer.retain_rule(&["rule","s0","read","reader"],&rule).is_ok(),ok);
         }
-        let mut ledger=Budget{work:100,text:1000};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),edges:0};
+        let mut ledger=Budget{work:100,text:1000};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTreeMap::new(),rule_events:BTreeMap::new(),field_events:BTreeMap::new(),edges:0};
         issuer.retain_rule(&["rule","s0","read","reader"],&rule).unwrap();issuer.retain_rule(&["rule","s0","read","reader"],&rule).unwrap();
         assert_eq!(issuer.rule_events.len(),1);assert!(issuer.retain_rule(&["rule","s0","read","reader"],&equal).is_err());
+    }
+
+    #[test]
+    fn field_retention_refuses_equal_foreign_carriers_references_channels_and_classifications() {
+        let reference = SecurityRef { document_id: "d".into(), module_id: "m".into(), element_id: "f".into() };
+        let foreign_reference = reference.clone();
+        let target = SecurityRef { element_id: "t".into(), ..reference.clone() };
+        let foreign_target = target.clone();
+        let carrier = serde_json::json!({"id":"f","facets":{"integerWidth":{"bits":32,"signed":false}},"allowedValues":[1,2]});
+        let foreign_carrier = carrier.clone();
+        let classification = serde_json::json!({"protection":"protected","queryUse":{"predicate":"original-authorized"}});
+        let foreign_classification = classification.clone();
+        let original = FieldEvent { reference: &reference, carrier: &carrier, channel: FieldChannel::Stored { target: &target }, classification: Some(&classification) };
+        let scopes = BTreeMap::from([(CoverageScope::Application, BTreeSet::new())]);
+        // One token byte + encoded five-byte key + retained five-byte key: 3 visits/11 bytes.
+        for (work, text, ok) in [(3,11,true),(2,11,false),(3,10,false)] {
+            let mut ledger = Budget { work, text };
+            let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
+            assert_eq!(issuer.retain_field(&["x"], original).is_ok(), ok);
+        }
+        let mut ledger = Budget { work: 1000, text: 10000 };
+        let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
+        issuer.retain_field(&["x"], original).unwrap();
+        issuer.retain_field(&["x"], original).unwrap();
+        for substituted in [
+            FieldEvent { reference: &foreign_reference, ..original },
+            FieldEvent { carrier: &foreign_carrier, ..original },
+            FieldEvent { channel: FieldChannel::Stored { target: &foreign_target }, ..original },
+            FieldEvent { channel: FieldChannel::Context, ..original }, // Channel-only substitution.
+            FieldEvent { channel: FieldChannel::Context, classification: None, ..original },
+            FieldEvent { classification: Some(&foreign_classification), ..original },
+            FieldEvent { classification: None, ..original },
+        ] { assert!(issuer.retain_field(&["x"], substituted).is_err()); }
+        assert_eq!(issuer.field_events.len(), 1);
+        assert!(std::ptr::eq(issuer.field_events["[\"x\"]"].carrier, &carrier));
+        // Separate occurrences can borrow the same field without collapsing.
+        issuer.retain_field(&["y"], original).unwrap();
+        assert_eq!(issuer.field_events.len(), 2);
+        let mut ledger = Budget { work: 100_000, text: 1_000_000 };
+        let mut issuer = SourceIssuer { ledger: &mut ledger, assignments: Some(&scopes), current: BTreeSet::new(), demands: BTreeMap::new(), events: BTreeMap::new(), rule_events: BTreeMap::new(), field_events: BTreeMap::new(), edges: 0 };
+        for i in 0..4096 { issuer.retain_field(&["population", &i.to_string()], original).unwrap(); }
+        assert_eq!(issuer.field_events.len(), 4096);
+        assert!(issuer.retain_field(&["population", "overflow"], original).is_err());
+        assert_eq!(issuer.field_events.len(), 4096);
     }
 
 }

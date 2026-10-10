@@ -1,0 +1,328 @@
+   Compiling syn v2.0.119
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+   Compiling once_cell v1.21.4
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling serde_derive v1.0.228
+   Compiling strum_macros v0.28.0
+   Compiling strum v0.28.0
+   Compiling serde v1.0.228
+   Compiling jsonschema-macros v0.56.0
+   Compiling ahash v0.8.12 (/private/tmp/weft-security-main-integration/vendor/ahash)
+   Compiling fluent-uri v0.4.1
+   Compiling email_address v0.2.9
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling referencing v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 52 | impl PathRead {
+    | ------------- method in this implementation
+...
+120 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-core` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-core --tests` to apply 2 suggestions)
+    Finished `release` profile [optimized] target(s) in 1m 15s
+     Running unittests src/lib.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928)
+
+running 213 tests
+test arithmetic_query::tests::commerce_arithmetic_in_projection_filter_and_join ... ok
+test arithmetic_syntax::tests::precedence_association_tokens_and_spans ... ok
+test arithmetic_syntax::tests::nesting_and_tree_depth_boundaries ... ok
+test arithmetic_query::tests::operator_free_comparisons_preserve_existing_semantics ... ok
+test arithmetic_syntax::tests::common_budget_and_literal_boundaries ... ok
+test arithmetic_query::tests::aggregate_and_order_positions_remain_field_only ... ok
+test arithmetic_resolve::tests::mathematical_integer_and_original_field_facets ... ok
+test arithmetic_query::tests::new_comparison_tokens_are_closed_and_old_tuples_remain ... ok
+test arithmetic_syntax::tests::unsupported_constructs_and_old_profile_isolation ... ok
+test arithmetic_resolve::tests::exact_scale_and_token_retention ... ok
+test arithmetic_resolve::tests::invalid_and_unavailable_numeric_meaning_refuses ... ok
+test arithmetic_query::tests::one_budget_for_entire_query_and_old_profile_isolation ... ok
+test backend03::tests::obligation_conflicts_and_bounded_metadata_refuse ... ok
+test backend03::tests::view_retains_full_original_identity_and_binding_digest_gate ... ok
+test backend03::tests::all_declared_path_capabilities_refuse_before_binding ... ok
+test backend::tests::obligations_are_retained_sorted_and_conflicts_refuse ... ok
+test backend03::tests::closed_manifest_and_old_interface_refuse ... ok
+test backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes ... ok
+test arithmetic_application_resolve::tests::count_distinct_and_string_in_closed_ir_refuse_domain_and_slot_mutations ... ok
+test backend_emission::tests::numeric_results_require_exact_text_decoders ... ok
+test backend_emission::tests::initial_plan_requires_projection_root_before_output_validation ... ok
+test backend_emission::tests::parameter_domain_guards_have_exact_diagnostics ... ok
+test backend03::tests::manifest_identifiers_and_obligation_codes_preserve_original_rejection_rules ... ok
+test backend::tests::arithmetic_selection_retains_original_operands_and_versions ... ok
+test backend03::tests::repeated_fields_require_the_exact_positioned_custody_obligation ... ok
+test arithmetic_application_resolve::tests::arithmetic_join_projection_and_exact_domain ... ok
+test backend03::tests::registry_success_and_edge_source_refusals_before_assessment ... ok
+test backend03::tests::ordinary_type_and_exact_parameter_domains_remain_closed ... ok
+test backend03::tests::expansion_counts_require_complete_target_identity_and_both_capacities ... ok
+test backend03::tests::full_path_emission_and_exact_hop_schema_inventory ... ok
+test backend03::tests::left_match_integrity_requires_exact_immutable_record_source ... ok
+test backend_emission::tests::scalar_carriers_preserve_family_nullability_and_facets ... ok
+test arithmetic_application_resolve::tests::having_count_closed_schema_and_original_spans ... ok
+test arithmetic_application_resolve::tests::null03_closed_ir_preserves_nonnullable_ideal_and_boolean_operator ... ok
+test backend_emission::tests::arithmetic_output_retains_exact_derived_domains ... ok
+test arithmetic_application_resolve::tests::distinct03_closed_member_is_true_only_and_absent_on_old_plans ... ok
+test compile::v04::tests::old_transport_keeps_refusing_new_pair ... ok
+test json::bounded_transport_tests::byte_limits_count_utf8_and_whitespace ... ok
+test backend_emission::tests::outer_join_metadata_binds_scan_record_and_unprojected_match_guards ... ok
+test json::bounded_transport_tests::charged_reader_uses_the_callers_actual_remaining_work ... ok
+test json::bounded_transport_tests::depth_counts_root_and_nodes_count_values_not_names ... ok
+test backend_emission::tests::presence_and_native_null_require_qualified_descriptors ... ok
+test json::bounded_transport_tests::duplicate_members_and_malformed_json_refuse ... ok
+test json::bounded_transport_tests::ordinary_reserved_looking_objects_survive_every_reader ... ok
+test backend_emission::tests::positioned_metadata_refuses_incomplete_colliding_or_reordered_cells ... ok
+test backend_emission::tests::related_result_metadata_preserves_authored_key_and_bound ... ok
+test path_application_resolve::tests::old_version_entrypoints_still_refuse_new_path_queries ... ok
+test compile::v04::tests::explicit_candidate_fixture_preserves_original_path_metadata ... ok
+test compile::v04::tests::malformed_json_and_foreign_diagnostics_have_closed_refusals ... ok
+test path_application_resolve::tests::legacy_only_queries_keep_the_same_resolved_members ... ok
+test path_ir::tests::alternative_intermediate_keys_and_parallel_path_structure_survive ... ok
+test path_application_resolve::tests::ordinary_join_filter_group_legacy_having_order_and_parameters_share_semantics ... ok
+test path_application_resolve::tests::original_commerce_collection_keeps_pins_relationships_keys_and_spans ... ok
+test path_ir::tests::collection_and_count_schema_correspondence ... ok
+test path_application_resolve::tests::left_join_roots_keep_original_scan_and_outer_join_metadata ... ok
+test path_ir::tests::endpoint_key_and_paging_metadata_refuse ... ok
+test path_ir::tests::impossible_paths_and_spans_refuse ... ok
+test path_ir::tests::legacy_aggregates_are_not_opaque ... ok
+test path_ir::tests::pin_only_mutation_refuses_before_root_correspondence ... ok
+test path_ir::tests::stage_root_count_and_collision_refuse ... ok
+test path_ir::tests::original_catalog_cross_module_key_is_preserved ... ok
+test path_query::tests::escaped_unicode_names_and_optional_as_keep_original_byte_offsets ... ok
+test path_query::tests::expansion_follows_ordinary_joins_and_keeps_legacy_tail ... ok
+test path_query::tests::expansion_placement_arity_alias_and_trailing_tokens_are_closed ... ok
+test path_query::tests::new_having_forms_are_not_silently_admitted ... ok
+test path_query::tests::old_entrypoints_continue_to_refuse_new_query_forms ... ok
+test path_query::tests::original_commerce_collection_preserves_function_and_operand_spans ... ok
+test path_application_resolve::tests::separately_declared_inverse_and_optional_count_fixture_keeps_own_semantics ... ok
+test path_query::tests::original_commerce_expansion_and_both_counts_retain_occurrence_spans ... ok
+test path_query::tests::row_count_having_is_version_gated_and_keeps_original_star_span ... ok
+test path_query::tests::syntax_does_not_claim_resolver_admission ... ok
+test path_resolve::tests::alias_case_quoting_and_ambiguity_follow_existing_scope ... ok
+test path_query::tests::shared_limits_cover_all_query_segments ... ok
+test compile::v04::tests::exact_envelope_and_resolution_precede_composition ... ok
+test path_resolve::tests::missing_alias_relationship_and_stale_root_refuse ... ok
+test path_resolve::tests::separately_declared_inverse_fixture_preserves_orientation ... ok
+test path_application_resolve::tests::grouped_and_global_counts_use_one_complete_expansion_and_exact_integer ... ok
+test path_application_resolve::tests::scalar_parameter_occurrences_and_surplus_rules_remain_shared ... ok
+test path_syntax::tests::bound_endpoints_and_invalid_literal_domains ... ok
+test path_syntax::tests::distinct_target_alias_has_its_original_name_span ... ok
+test path_syntax::tests::fragments_leave_surrounding_query_tokens_to_the_existing_parser ... ok
+test path_syntax::tests::function_arity_aliases_and_trailing_syntax_refuse ... ok
+test path_syntax::tests::original_commerce_collection_operands_and_spans ... ok
+test path_syntax::tests::qualified_first_and_single_second_names_are_required ... ok
+test path_syntax::tests::quoted_escaping_unicode_bytes_and_case_folding ... ok
+test path_syntax::tests::shared_lexer_limits_and_existing_frontend_refusals_remain ... ok
+test security_association_ref::tests::all_qualified_components_and_unicode_spelling_remain_distinct ... ok
+test security_association_ref::tests::malformed_or_ambiguous_selectors_refuse ... ok
+test security_association_ref::tests::reference_shapes_roundtrip_without_record_graph_namespace_erasure ... ok
+test security_candidate_dependencies::tests::dependency_budgets_refuse_work_and_text_exhaustion ... ok
+test security_candidate_dependencies::tests::graph_endpoint_charges_every_retained_identifier_copy_before_issuance ... ok
+test path_resolve::tests::equal_local_names_remain_scoped_to_original_document_revision ... ok
+test path_resolve::tests::unchanged_original_commerce_and_name_spans ... ok
+test path_ir::tests::complete_local_schema_and_pin_refusals ... ok
+test security_candidate_incidence::tests::empty_unused_populations_require_declared_supported_relationships ... ok
+test security_candidate_incidence::tests::empty_graph_quantifier_cannot_hide_unsupported_nested_profiles ... ok
+test security_candidate_incidence::tests::aggregate_normalized_storage_is_bounded_before_retention ... ok
+test path_application_resolve::tests::alias_binding_is_separate_from_record_and_field_scope ... ok
+test security_candidate_incidence::tests::equal_numeric_carriers_retain_distinct_domains_and_catalog_custody ... ok
+test path_application_resolve::tests::aggregate_classification_collection_composition_and_labels_are_closed ... ok
+test arithmetic_application_resolve::tests::grouped_leaves_and_parameter_occurrences ... ok
+test security_candidate_incidence::tests::entity_identity_preserves_key_order_exact_numbers_and_domains ... ok
+test security_candidate_incidence::tests::fact_budget_accumulates_across_coherent_fields_in_both_orders ... ok
+test path_query::tests::legacy_fixture_asts_and_diagnostics_keep_original_spans ... ok
+test security_candidate_incidence::tests::graph_ir_budgets_are_charged_after_a_first_matching_witness ... ok
+test security_candidate_incidence::tests::matching_first_bundle_cannot_hide_later_source_substitution ... ok
+test arithmetic_application_resolve::tests::additive_comparisons_retain_scope_constraints_and_closed_ir ... ok
+test security_candidate_incidence::tests::bundle_requires_complete_distinct_role_specific_endpoints ... ok
+test security_candidate_incidence::tests::raw_composite_endpoint_retains_order_domain_and_source_custody ... ok
+test security_composition::tests::complete_strong_kleene_tables_and_bounds ... ok
+test security_composition::tests::portable_typescript_truth_corpus_correspondence ... ok
+test security_candidate_incidence::tests::graph_rule_matches_subject_and_resource_exact_logical_identities ... ok
+test security_candidate_incidence::tests::identity_payload_budgets_and_unused_binding_checks_are_isolated ... ok
+test security_evaluation::faithful_fact_tests::raw_literal_objects_cannot_masquerade_through_typed_fact_consumers ... ok
+test resolve::tests::typed_ast_resolver_literal_boundary_and_empty_join_refusal ... ok
+test security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict ... ok
+test security_candidate_incidence::tests::original_graph_ir_preserves_nested_outer_witness_correlation ... ok
+test security_candidate_incidence::tests::raw_witness_projects_endpoints_from_one_source_bound_record ... ok
+test security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain ... ok
+test security_evaluation::tests::record_fact_evaluator_refuses_graph_variants_instead_of_empty_relations ... ok
+test security_ir::tests::existential_ir_preserves_record_and_relationship_reference_shapes ... ok
+test security_obligation_custody::faithful_parameter_tests::malformed_manifest_roots_refuse_without_panicking ... ok
+test security_ir::tests::plan_reuse_refuses_mutated_prepared_definitions ... ok
+test security_candidate_incidence::tests::authored_abac_graph_rule_uses_exact_resource_fields_and_subject_identity ... ok
+test security_obligation_custody::faithful_parameter_tests::typed_status_and_owner_do_not_accept_object_enum_carriers ... ok
+test security_obligation_custody::tests::closed_projection_preserves_complete_declared_inventory ... ok
+test security_obligation_custody::tests::complete_inventory_and_repeated_provenance_are_retained ... ok
+test security_obligation_custody::tests::exact_inventory_budget_and_parameter_depth_are_atomic ... ok
+test security_obligation_custody::tests::diamond_dag_shared_dependencies_and_isolated_cycle_are_distinct ... ok
+test security_obligation_custody::tests::exact_selection_retains_empty_capabilities_from_immutable_registration ... ok
+test security_obligation_custody::tests::host_reconstruction_requires_exact_bytes_and_target ... ok
+test security_obligation_custody::tests::original_bytes_and_opaque_parameters_survive_callback_drift ... ok
+test security_obligation_custody::tests::incomplete_duplicate_inapplicable_and_status_selection_refuse ... ok
+test security_candidate_incidence::tests::existential_simulation_keeps_both_endpoints_on_the_same_bundle ... ok
+test security_obligation_custody::tests::prerequisite_closure_and_disconnected_cycles_refuse_atomically ... ok
+test security_candidate_incidence::tests::raw_population_admission_budgets_identity_and_all_sources ... ok
+test security_obligation_custody::tests::prerequisites_resolve_only_in_complete_selected_capability_inventory ... ok
+test security_obligation_custody::tests::projection_work_and_utf8_limits_refuse_before_returning_inventory ... ok
+test security_obligation_custody::tests::repeated_id_parameter_owner_and_failure_code_conflicts_refuse ... ok
+test security_obligation_custody::tests::scoped_decoder_retains_paired_subjects_originals_and_all_origins ... ok
+test security_obligation_custody::tests::shared_obligation_comparisons_have_independent_budget_cost ... ok
+test security_obligation_custody::tests::scoped_decoder_refuses_ambiguous_subjects_and_legacy_parameters ... ok
+test security_obligation_sources::tests::rule_retention_requires_exact_owner_pointer_and_independent_copy_budget ... ok
+test security_obligation_sources::tests::typed_events_reject_category_aliasing_and_charge_the_retained_copy ... ok
+test security_obligation_sources::tests::tuple_encoding_preserves_escaping_boundaries_and_exact_utf8_limits ... ok
+test security_obligation_custody::tests::unknown_projection_meaning_owner_and_carriers_refuse ... ok
+test security_obligation_custody::faithful_parameter_tests::raw_manifest_reserved_looking_keys_are_ordinary_opaque_members ... ok
+test security_candidate_incidence::tests::mixed_raw_ownership_and_graph_membership_keep_project_correlation ... ok
+test security_candidate_incidence::tests::stored_and_context_same_field_are_independent_channels ... ok
+test security_evaluation::tests::unknown_cut_members_and_key_field_mismatch_refuse ... ok
+test security_obligation_custody::tests::scoped_decoder_checks_disconnected_dag_and_repeated_origin_expansion_bound ... ok
+test security_evaluation::tests::nested_same_type_relation_and_bag_multiplicity_are_preserved ... ok
+test security_query_uses::tests::extraction_covers_every_operator_and_both_join_occurrences ... ok
+test security_obligation_sources::tests::demand_retention_merges_edges_and_refuses_exact_bound_overrun ... ok
+test security_query_profile::tests::actual_resolved_predicate_derives_profile_action_without_caller_annotation ... ok
+test security_query_uses::tests::field_free_counts_preserve_scan_and_keyset_fields_are_predicate_uses ... ok
+test security_query_uses::tests::ordered_alias_outputs_survive_dependency_deduplication_and_stale_models_refuse ... ok
+test security_query_profile::tests::scan_obligations_preserve_correlated_keys_and_field_free_count_dependencies ... ok
+test security_record_homes::tests::exact_integer_native_image_never_rounds_or_expands_unboundedly ... ok
+test security_query_profile::tests::original_action_false_branches_and_context_are_retained_without_constant_fact_reads ... ok
+test security_query_profile::tests::profile_reuse_is_exact_source_custody_not_a_native_mapping_claim ... ok
+test security_query_profile::tests::bound_action_is_derived_and_unrelated_granted_action_cannot_substitute ... ok
+test security_query_profile::tests::complete_qualified_bindings_unknown_meaning_and_exact_pins_are_required ... ok
+test security_query_profile::tests::mapping_handoff_keeps_self_join_occurrences_and_field_free_count_authority ... ok
+test security_query_profile::tests::mapping_handoff_preserves_plan_identity_dependencies_and_source_refusal ... ok
+test security_record_homes::tests::actual_context_dependencies_refuse_even_under_false_branches ... ok
+test security_requirements::tests::budget_refuses_before_allocation_or_underflow ... ok
+test security_result_check::tests::normalized_numeric_payload_is_charged_independently_of_short_tokens ... ok
+test security_record_homes::tests::late_key_and_role_matches_consume_each_comparison ... ok
+test security_rule_occurrences::tests::exact_paths_keep_false_empty_nodes_operands_and_repeated_disclosures ... ok
+test security_rule_occurrences::tests::independent_small_ledger_accounts_for_stack_and_each_owned_path ... ok
+test security_scan_obligations::tests::inventory_work_and_identifier_text_limits_refuse_before_underflow ... ok
+test security_scan_obligations::tests::record_inventory_collector_refuses_graph_namespaces_before_inventing_reads ... ok
+test security_rule_occurrences::tests::exact_occurrence_and_depth_boundaries_refuse_without_returning_inventory ... ok
+test security_requirements::derivation_tests::actual_admitted_count_cannot_issue_requirements_after_work_or_text_exhaustion ... ok
+test security_record_homes::tests::single_budget_refuses_before_partial_correspondence ... ok
+test security_semantic_coverage::tests::allocation_relation_bounds_refuse_empty_duplicate_scope_and_overflow ... ok
+test security_semantic_coverage::tests::closed_domain_grammar_refuses_unknown_positional_duplicate_and_numeric_meaning ... ok
+test security_semantic_coverage::tests::actual_owner_coverage_keeps_whole_conditions_selection_and_output_positions ... ok
+test security_semantic_coverage::tests::allocation_issuer_borrows_actual_registration_and_context_after_callback_drift ... ok
+test security_semantic_coverage::tests::actual_context_and_original_authorized_modes_keep_source_channels ... ok
+test security_record_homes::tests::same_domain_composite_endpoints_keep_position_and_own_association_key ... ok
+test security_semantic_coverage::tests::entire_component_budget_refuses_before_lookup_copy_or_matching_overrun ... ok
+test security_evaluation::faithful_fact_tests::actual_simulation_refuses_raw_value_wrapped_keys_fields_and_context ... ok
+test security_semantic_coverage::tests::false_branch_retains_whole_correlated_condition_at_exact_declared_bounds ... ok
+test security_record_homes::tests::actual_raw_typed_and_discriminated_homes_keep_natural_keys_and_scan_occurrences ... ok
+test security_semantic_coverage::tests::composite_key_sources_retain_actual_same_domain_member_order ... ok
+test security_record_homes::tests::exact_registration_pins_and_closed_transport_refuse ... ok
+test security_semantic_coverage::tests::issued_allocations_keep_all_complete_candidates_without_fragment_union ... ok
+test security_semantic_coverage::tests::issued_allocations_keep_original_authorized_action_separate_from_read ... ok
+test security_evaluation::tests::repeated_large_identity_work_refuses_without_returning_an_admitted_prefix ... ok
+test security_semantic_coverage::tests::issued_source_demands_keep_output_selfjoin_and_false_branch_ownership ... ok
+test security_semantic_coverage::tests::issued_selfjoin_allocations_preserve_scopes_and_whole_application ... ok
+test security_semantic_coverage::tests::issued_source_demands_accumulate_distinct_original_actions_on_one_field ... ok
+test security_semantic_coverage::tests::issued_source_demands_preserve_disjoint_candidates_and_zero_edge_selection ... ok
+test security_semantic_coverage::tests::field_free_count_and_selfjoin_keep_actual_plan_requirements ... ok
+test security_semantic_coverage::tests::issued_source_demands_match_independent_complete_fixture_map_and_exact_budgets ... ok
+test security_record_homes::tests::known_literal_native_images_survive_false_branches_and_empty_results ... ok
+test security_composition::tests::all_permit_require_forbid_truths_and_rule_order ... ok
+test security_semantic_coverage::tests::partial_capabilities_source_substitution_and_unknown_selected_targets_refuse ... ok
+test security_semantic_coverage::tests::rule_event_custody_retains_both_scan_and_action_coordinates ... ok
+test security_record_homes::tests::metadata_only_transforms_and_selected_unknown_meaning_are_checked ... ok
+test security_semantic_coverage::tests::source_paths_preserve_selfjoin_occurrences_and_field_free_count ... ok
+test security_semantic_coverage::tests::projected_sources_require_actual_complete_owner_inventory ... ok
+test compile::v04::tests::transport_byte_budgets_precede_composition ... ok
+test security_record_homes::tests::complete_actual_keys_endpoints_fields_and_revisions_cannot_be_substituted ... ok
+test security_semantic_coverage::tests::scoped_matching_uses_actual_owner_demands_and_independent_required_contracts ... ok
+test security_record_homes::tests::source_reuse_partition_carrier_and_subject_correspondence_are_distinct ... ok
+test security_semantic_coverage::tests::scoped_matching_refuses_agreeing_fragments_and_foreign_subjects_but_allows_distinct_complete_scopes ... ok
+test security_candidate_incidence::tests::record_backed_graph_fields_stay_with_their_edge_endpoints ... ok
+test security_semantic_coverage::tests::scoped_instance_matching_requires_all_kinds_at_one_origin ... ok
+test security_evaluation::tests::portable_project_membership_and_whole_collection_refusal_correspondence ... ok
+test security_candidate_incidence::tests::existential_simulation_matches_independent_finite_edge_oracle ... ok
+
+test result: ok. 213 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+

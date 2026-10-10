@@ -1,0 +1,87 @@
+{
+  "version": "weft.security.field-address-laws/0.1.0",
+  "scope": "Conditional finite algebraic constructor laws. No Rust string/Vec/pointer correspondence, traversal completeness, template applicability, authority, evidence admission or native refinement proof.",
+  "assumptions": "Typed address constructor preserves original source occurrence, qualified field identity and Stored(owner)/Context channel. Rust retains canonical opaque source IDs separately; this model does not decode or prove their representation.",
+  "z3Version": "4.15.4",
+  "laws": 3,
+  "formulas": [
+    {
+      "law": "stored-context-separation",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun occurrence_source () String)\n(declare-fun stored_owner () QualifiedFieldRef)\n(assert\n (let ((?x13 (Address occurrence_source Context declared_field)))\n(let ((?x11 (Stored stored_owner)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(= ?x12 ?x13)))))\n(check-sat)\n"
+    },
+    {
+      "law": "stored-context-separation",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-fun declared_field () QualifiedFieldRef)\n(assert\n (= declared_field declared_field))\n(check-sat)\n"
+    },
+    {
+      "law": "stored-context-separation",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun occurrence_source () String)\n(declare-fun stored_owner () QualifiedFieldRef)\n(assert\n (let ((?x13 (Address occurrence_source Context declared_field)))\n(let ((?x11 (Stored stored_owner)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(and (distinct ?x12 ?x13) true)))))\n(check-sat)\n"
+    },
+    {
+      "law": "stored-owner-separation",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun other_stored_owner () QualifiedFieldRef)\n(declare-fun stored_owner () QualifiedFieldRef)\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun occurrence_source () String)\n(assert\n (and (distinct stored_owner other_stored_owner) true))\n(assert\n (let ((?x18 (Stored other_stored_owner)))\n(let ((?x19 (Address occurrence_source ?x18 declared_field)))\n(let ((?x11 (Stored stored_owner)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(= ?x12 ?x19))))))\n(check-sat)\n"
+    },
+    {
+      "law": "stored-owner-separation",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-fun other_stored_owner () QualifiedFieldRef)\n(declare-fun stored_owner () QualifiedFieldRef)\n(declare-fun declared_field () QualifiedFieldRef)\n(assert\n (and (distinct stored_owner other_stored_owner) true))\n(assert\n (= declared_field declared_field))\n(check-sat)\n"
+    },
+    {
+      "law": "stored-owner-separation",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun other_stored_owner () QualifiedFieldRef)\n(declare-fun stored_owner () QualifiedFieldRef)\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun occurrence_source () String)\n(assert\n (and (distinct stored_owner other_stored_owner) true))\n(assert\n (let ((?x18 (Stored other_stored_owner)))\n(let ((?x19 (Address occurrence_source ?x18 declared_field)))\n(let ((?x11 (Stored stored_owner)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(and (distinct ?x12 ?x19) true))))))\n(check-sat)\n"
+    },
+    {
+      "law": "original-occurrence-separation",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun other_occurrence_source () String)\n(declare-fun occurrence_source () String)\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun stored_owner () QualifiedFieldRef)\n(assert\n (and (distinct occurrence_source other_occurrence_source) true))\n(assert\n (let ((?x11 (Stored stored_owner)))\n(let ((?x23 (Address other_occurrence_source ?x11 declared_field)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(= ?x12 ?x23)))))\n(check-sat)\n"
+    },
+    {
+      "law": "original-occurrence-separation",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-fun other_occurrence_source () String)\n(declare-fun occurrence_source () String)\n(declare-fun stored_owner () QualifiedFieldRef)\n(assert\n (and (distinct occurrence_source other_occurrence_source) true))\n(assert\n (let ((?x11 (Stored stored_owner)))\n(= ?x11 ?x11)))\n(check-sat)\n"
+    },
+    {
+      "law": "original-occurrence-separation",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((QualifiedFieldRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((FieldChannel 0)) (((Context) (Stored (owner QualifiedFieldRef)))))\n(declare-datatypes ((FieldAddress 0)) (((Address (source String) (channel FieldChannel) (field QualifiedFieldRef)))))\n(declare-fun other_occurrence_source () String)\n(declare-fun occurrence_source () String)\n(declare-fun declared_field () QualifiedFieldRef)\n(declare-fun stored_owner () QualifiedFieldRef)\n(assert\n (and (distinct occurrence_source other_occurrence_source) true))\n(assert\n (let ((?x11 (Stored stored_owner)))\n(let ((?x23 (Address other_occurrence_source ?x11 declared_field)))\n(let ((?x12 (Address occurrence_source ?x11 declared_field)))\n(and (distinct ?x12 ?x23) true)))))\n(check-sat)\n"
+    }
+  ],
+  "sourcePins": {
+    "scripts/security/prove-field-event-addresses.py": "185f573d1c4c7cb5d84210748a9186c70989c9e9da0ef80bd089d98835bb9483",
+    "crates/weft-core/src/security_obligation_sources.rs": "23bbee577f569518a1c74dc5e3890e3de286ee12d2d75b4df213e7cfc77c832b",
+    "crates/weft-core/src/security_semantic_coverage.rs": "b60a9e315f1e8e6139a59234c21725e2eac6ff6f3581968d634f9b568b2561c7"
+  },
+  "custody": "Declared source hashes frozen before formula construction and rechecked before publication; SMT2 captured before solve."
+}

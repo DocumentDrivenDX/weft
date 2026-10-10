@@ -291,6 +291,16 @@ mod tests{
     use crate::security_obligation_sources::OwnerEventKind as E;
     for (tokens,event) in [(json!(["context","s0","read","domain","m","active"]),E::Context),(json!(["field","s0","read","domain","m","Assignment","domain","m","active"]),E::Field)] {
      let id=tokens.to_string();assert_eq!(issued.events().get(&id),Some(&event));
+     let retained = &issued.field_events()[&id];
+     assert_eq!(retained.reference.element_id, "active");
+     assert!(std::ptr::eq(retained.carrier, crate::security_ontology::locate(ctx.catalog(), retained.reference).unwrap()));
+     assert_eq!(retained.carrier["scalarType"], "boolean");
+     match (event, retained.channel) {
+         (E::Context, crate::security_obligation_sources::FieldChannel::Context) => assert!(retained.classification.is_none()),
+         (E::Field, crate::security_obligation_sources::FieldChannel::Stored { target }) => { assert_eq!(target.element_id, "Assignment"); assert_eq!(retained.classification.unwrap()["protection"], "unprotected"); },
+         _ => panic!("field channel alias"),
+     }
+
      assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s0","read")]));
     }
    });
@@ -447,6 +457,30 @@ mod tests{
     let kinds=BTreeMap::from([("primary-action",E::PrimaryAction),("policy",E::Policy),("ontology",E::Ontology),("query",E::Query),("model",E::Model),("module",E::Module),("scan",E::Scan),("projection",E::Projection),("query-field",E::QueryField),("action",E::Action),("rule",E::Rule),("key",E::Key),("key-field",E::KeyField),("field",E::Field),("context",E::Context),("association",E::Association),("operator",E::Operator),("output",E::Output)]);
     let expected_events:BTreeMap<_,_>=expected.keys().map(|id|{let golden:Vec<String>=serde_json::from_str(id).unwrap();(id.clone(),kinds[golden[0].as_str()])}).collect();
     assert_eq!(issued.events(),&expected_events);
+    // Independently authored selected stored-field inventory; no production ID decoding.
+    let mut golden_fields = BTreeMap::new();
+    for (owner, fields) in [("Staff",vec!["staffId"]),("Project",vec!["projectId"]),("Resource",vec!["resourceId"]),("Ownership",vec!["ownerId","ownerResource","ownerProject"]),("Assignment",vec!["assignmentId","assignmentStaff","assignmentProject","active"])] {
+        for field in fields {
+            let id = json!(["field","s0","read","domain","m",owner,"domain","m",field]).to_string();
+            golden_fields.insert(id, (owner, field));
+        }
+    }
+    assert_eq!(issued.field_events().keys().collect::<Vec<_>>(), golden_fields.keys().collect::<Vec<_>>());
+    for (source, (owner, field)) in golden_fields {
+        let event = &issued.field_events()[&source];
+        assert_eq!(event.reference.element_id, field);
+        let crate::security_obligation_sources::FieldChannel::Stored { target } = event.channel else { panic!() };
+        assert_eq!(target.element_id, owner);
+        let original_reference = ctx.requirements().scans()[0].actions()[0].inventory().fields()[target].iter().find(|f|f.element_id == field).unwrap();
+        let original_target = ctx.requirements().scans()[0].actions()[0].inventory().fields().get_key_value(target).unwrap().0;
+        assert!(std::ptr::eq(event.reference, original_reference));
+        assert!(std::ptr::eq(target, original_target));
+        assert!(std::ptr::eq(event.carrier, crate::security_ontology::locate(ctx.catalog(), original_reference).unwrap()));
+        let ontology = ctx.logical_plan().source().ontology();
+        let declaration = ontology["entities"].as_array().unwrap().iter().chain(ontology["associations"].as_array().unwrap()).find(|e| e["type"]["elementId"] == owner).unwrap()["fields"].as_array().unwrap().iter().find(|f| f["ref"]["elementId"] == field).unwrap();
+        assert!(std::ptr::eq(event.classification.unwrap(), declaration));
+    }
+
     let expected_rules:BTreeMap<_,_>=ctx.requirements().scans().iter().flat_map(|scan|scan.actions().iter().flat_map(move |action|action.rules().iter().map(move |rule|(serde_json::to_string(&["rule",scan.inventory().scan(),action.inventory().action(),&rule.id]).unwrap(),*rule)))).collect();
     assert_eq!(issued.rule_events().keys().collect::<Vec<_>>(),expected_rules.keys().collect::<Vec<_>>());
 
@@ -551,7 +585,19 @@ mod tests{
     assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
    }
    let output=json!(["output","1","chosen"]).to_string();assert_eq!(issued.demands()[&output].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s1","read"),CoverageScope::Application]));
-   for scan in ["s0","s1"]{let field=json!(["field",scan,"read","domain","m","Assignment","domain","m","active"]).to_string();assert_eq!(issued.demands()[&field].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));}
+   let mut active_occurrences = Vec::new();
+   for scan in ["s0","s1"] {
+    let field=json!(["field",scan,"read","domain","m","Assignment","domain","m","active"]).to_string();
+    assert_eq!(issued.demands()[&field].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
+    let retained = &issued.field_events()[&field];
+    assert!(std::ptr::eq(retained.carrier, crate::security_ontology::locate(ctx.catalog(), retained.reference).unwrap()));
+    let crate::security_obligation_sources::FieldChannel::Stored { target } = retained.channel else { panic!() };
+    assert_eq!(target.element_id, "Assignment");
+    assert_eq!(retained.classification.unwrap()["protection"], "unprotected");
+    active_occurrences.push(field);
+   }
+   assert_ne!(active_occurrences[0], active_occurrences[1]);
+   assert!(std::ptr::eq(issued.field_events()[&active_occurrences[0]].carrier, issued.field_events()[&active_occurrences[1]].carrier));
   });});
  }
 
