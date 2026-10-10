@@ -250,3 +250,33 @@ required backend cases remain binding and none is promoted. Next complete the
 independent backend kind/template/site/failure/prerequisite and original assertion
 mappings, remaining association custody, authenticated issuance, physical lowering
 and B10/admission-drift closure. B-008 and the active goal remain open.
+
+### B-008 original association custody — 2026-10-10
+
+Under CONTRACT-006 and the shared independent requirement issuer design, private
+Association events retain exact scan/action inventories, qualified association
+references, original native catalog records and complete original ontology
+declarations. Ordered endpoint roles, targets and component fields remain in the
+borrowed declaration, along with selected Key identity and classification metadata.
+This preserves a per-scan/action association dependency, not one payload for each
+Exists AST occurrence. Rule occurrences separately retain those expressions.
+
+Declaration lookup charges every candidate and uses full qualified identity;
+missing/duplicate matches refuse. Identity retention is charged before insert,
+refuses foreign equal objects and bounds population at4096. Association source-key
+projection equals the payload map. Source-only traversal retains its existing
+ledger. Actual tests independently bind each source ID to its qualified reference,
+verify exact original inventory/catalog/declaration pointers, self-join ownership,
+both compound endpoint orders, original empty inventories, each of five pointer
+substitutions, exact/minus-one budgets and populated4096/4097 boundaries. Astra
+ultra's read-only review caught a golden test-oracle gap that could accept swapped
+payloads; independently authored source-to-reference expectations close that gap.
+The final review has no remaining findings.
+
+The [execution checkpoint](evidence/security-association-events/checkpoint.json)
+retains actual core/workspace results and qualified source custody. This private
+semantic input does not complete backend kind/template/site/failure/prerequisite
+and assertion mappings, authentication, physical lowering or native qualification.
+It adds no formal Rust refinement proof and promotes none of the original132
+required backend cases. B10/admission-drift closure and integrated native acceptance
+remain open. B-008 and the implementation goal remain active.

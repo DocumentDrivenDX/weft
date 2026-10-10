@@ -347,6 +347,12 @@ mod tests{
      let issued=crate::security_obligation_sources::issue_demands(coverage).unwrap();
      let source=json!(["key","s0","read","domain","m","Staff","pk"]).to_string();
      let crate::security_obligation_sources::KeyPayload::Key(key)=issued.key_events()[&source] else{panic!()};
+     let association=issued.association_events()[&json!(["association","s0","read","domain","m","Assignment"]).to_string()];
+     let original=&ctx.logical_plan().source().ontology()["associations"][1];assert!(std::ptr::eq(association.declaration,original));
+     let endpoint=&association.declaration["endpoints"][0];assert!(std::ptr::eq(endpoint,&original["endpoints"][0]));
+     let expected=if reversed{["assignmentStaff2","assignmentStaff"]}else{["assignmentStaff","assignmentStaff2"]};
+     assert_eq!(endpoint["fields"].as_array().unwrap().iter().map(|v|v["elementId"].as_str().unwrap()).collect::<Vec<_>>(),expected);
+     assert_eq!(endpoint["target"]["elementId"],"Staff");
      let inventory=ctx.requirements().scans()[0].actions()[0].inventory();
      let (original_target,(original_id,original_members))=inventory.keys().iter().find(|(target,_)|target.element_id=="Staff").unwrap();
      assert!(std::ptr::eq(key.target,original_target));assert!(std::ptr::eq(key.id,original_id.as_str()));assert!(std::ptr::eq(key.members,original_members.as_slice()));
@@ -367,6 +373,16 @@ mod tests{
     });
    });
   }
+ }
+
+ #[test]
+ fn association_custody_preserves_actual_empty_inventory(){
+  with_mutated_context("SELECT r.salary FROM Resource r",|f|{f["policy"]["rules"][1]["condition"]=json!({"op":"literal","value":true});},|ctx,m|{with_registered_coverage(ctx,m,&["all".into()],|coverage|{
+   let issued=crate::security_obligation_sources::issue_demands(coverage).unwrap();
+   assert!(ctx.requirements().scans()[0].actions()[0].inventory().associations().is_empty());assert!(issued.association_events().is_empty());
+   assert!(!issued.events().values().any(|kind|*kind==crate::security_obligation_sources::OwnerEventKind::Association));
+   assert!(issued.demands().contains_key(&json!(["action","s0","read"]).to_string()));
+  });});
  }
 
  #[test]
@@ -505,6 +521,26 @@ mod tests{
         let declaration = ontology["entities"].as_array().unwrap().iter().chain(ontology["associations"].as_array().unwrap()).find(|e| e["type"]["elementId"] == owner).unwrap()["fields"].as_array().unwrap().iter().find(|f| f["ref"]["elementId"] == field).unwrap();
         assert!(std::ptr::eq(event.classification.unwrap(), declaration));
     }
+
+    use crate::security_obligation_sources::{AssociationPayload as A,test_association_retain};
+    let expected_associations:BTreeMap<_,_>=["Ownership","Assignment"].map(|name|(json!(["association","s0","read","domain","m",name]).to_string(),SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:name.into()})).into_iter().collect();
+    assert_eq!(issued.association_events().keys().cloned().collect::<BTreeSet<_>>(),expected_associations.keys().cloned().collect());
+    for (source,expected_ref) in &expected_associations {
+     let event=issued.association_events()[source];assert_eq!(event.reference,expected_ref);
+     let original_action=ctx.requirements().scans()[0].actions()[0].inventory();
+     assert!(std::ptr::eq(event.scan,ctx.requirements().scans()[0].inventory()));assert!(std::ptr::eq(event.action,original_action));
+     assert!(std::ptr::eq(event.reference,original_action.associations().get(expected_ref).unwrap()));
+     assert!(std::ptr::eq(event.carrier,crate::security_ontology::locate(ctx.catalog(),expected_ref).unwrap()));
+     let original=ctx.logical_plan().source().ontology()["associations"].as_array().unwrap().iter().find(|a|a["type"]["documentId"]==expected_ref.document_id && a["type"]["moduleId"]==expected_ref.module_id && a["type"]["elementId"]==expected_ref.element_id).unwrap();
+     assert!(std::ptr::eq(event.declaration,original));assert_eq!(event.declaration["endpoints"].as_array().unwrap().len(),2);
+     assert!(std::ptr::eq(&event.declaration["endpoints"],&original["endpoints"]));
+    }
+    let event=issued.association_events()[&json!(["association","s0","read","domain","m","Assignment"]).to_string()];
+    let foreign_ref=event.reference.clone();let foreign_carrier=event.carrier.clone();let foreign_declaration=event.declaration.clone();
+    for (work,text,ok) in [(3,11,true),(2,11,false),(3,10,false)]{assert_eq!(test_association_retain(&mut BTreeMap::new(),&["x"],event,work,text).is_ok(),ok);}
+    let mut retained=BTreeMap::new();test_association_retain(&mut retained,&["x"],event,100,10000).unwrap();test_association_retain(&mut retained,&["x"],event,100,10000).unwrap();
+    for substitute in [A{reference:&foreign_ref,..event},A{carrier:&foreign_carrier,..event},A{declaration:&foreign_declaration,..event}]{assert!(test_association_retain(&mut retained,&["x"],substitute,100,10000).is_err());}
+    let mut population=BTreeMap::new();for index in 0..4096{test_association_retain(&mut population,&["occurrence",&index.to_string()],event,100,10000).unwrap();}assert!(test_association_retain(&mut population,&["overflow"],event,100,10000).is_err());assert_eq!(population.len(),4096);
 
     use crate::security_obligation_sources::{QueryPayload as Q,FieldUse as U,test_query_retain};
     let projection=json!(["projection","s0","domain","m","salary"]).to_string();
@@ -663,6 +699,12 @@ mod tests{
     assert!(std::ptr::eq(issued.rule_events()[&id],membership));
     assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
    }
+   use crate::security_obligation_sources::{AssociationPayload as A,test_association_retain};
+   let event=issued.association_events()[&json!(["association","s1","read","domain","m","Assignment"]).to_string()];
+   let other_scan=ctx.requirements().scans()[0].inventory();let other_action=ctx.requirements().scans()[0].actions()[0].inventory();
+   assert!(!std::ptr::eq(event.scan,other_scan));assert!(!std::ptr::eq(event.action,other_action));assert_eq!(event.action,other_action);
+   let mut retained_associations=BTreeMap::new();test_association_retain(&mut retained_associations,&["x"],event,100,10000).unwrap();
+   for substitute in [A{scan:other_scan,..event},A{action:other_action,..event}]{assert!(test_association_retain(&mut retained_associations,&["x"],substitute,100,10000).is_err());}
    use crate::security_obligation_sources::{QueryPayload as Q,test_query_retain};
    let projection=json!(["projection","s1","domain","m","salary"]).to_string();
    let original=issued.query_events()[&projection];
