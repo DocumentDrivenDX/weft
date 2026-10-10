@@ -216,3 +216,37 @@ are prefrozen and verified unchanged at terminal exit0. External Cargo registry
 and build-runtime dependencies remain outside that inventory. Both initial failed
 attempts and the prior source-specific formal receipt remain preserved. The current
 four formal source pins match; Astra independently replays all9 current formulas.
+
+### B-008 query payload custody — 2026-10-10
+
+Under CONTRACT-006 and the shared independent requirement issuer design, private
+Projection/QueryField/Operator/Output events retain original scan inventories,
+qualified references, catalog carriers, ontology classification declarations,
+admitted requirements and the full original resolved application Plan. Projection
+events retain the exact resolved projection. Operator requirements borrow the
+profile-owned admitted QueryUse and preserve Disclosed versus OriginalAuthorized
+with its original action string. Ordered outputs retain original position, alias
+and expression through the actual requirement; repeated fields remain distinct
+outputs. Query uses/projections are resolved families, not every syntactic AST
+occurrence. No source-string decoding or manifest-inferred semantics is introduced.
+
+Retention charges visit/text work, refuses conflicting pointer custody and bounds
+population at4096. Source-key projection equals the complete query payload map;
+legacy source-only traversal retains its existing ledger. Actual tests independently
+assert six source IDs, exact references, repeated outputs, original-action custody,
+self-join scan isolation, exact/minus-one budgets and4096/4097 limits. Isolated
+substitutions cover field, operator and output identities. Astra ultra's read-only
+review identified a test expectation using the raw query's use pointer rather than
+the admitted profile-owned clone; corrected pointer plus separate value equality
+and three additional isolated controls leave no remaining implementation findings.
+The failed test attempt is retained with corrected runs in the
+[execution checkpoint](evidence/security-query-events/checkpoint.json).
+
+This is tested private custody preparation, not a formal Rust refinement proof,
+complete independent requirement issuer, authenticated backend profile, public
+security lowering or native enforcement qualification. Earlier source-specific
+formal receipts are preserved without repinning to this changed traversal. All132
+required backend cases remain binding and none is promoted. Next complete the
+independent backend kind/template/site/failure/prerequisite and original assertion
+mappings, remaining association custody, authenticated issuance, physical lowering
+and B10/admission-drift closure. B-008 and the active goal remain open.

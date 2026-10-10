@@ -1,0 +1,10 @@
+$ bun scripts/check-specs.ts
+ENOENT: no such file or directory, open '/private/tmp/weft-security-main-integration/docs/helix/04-build/evidence/security-query-events/checkpoint.json'
+    path: "/private/tmp/weft-security-main-integration/docs/helix/04-build/evidence/security-query-events/checkpoint.json",
+ syscall: "open",
+   errno: -2,
+    code: "ENOENT"
+
+
+Bun v1.4.2 (macOS arm64)
+error: script "specs:check" exited with code 1

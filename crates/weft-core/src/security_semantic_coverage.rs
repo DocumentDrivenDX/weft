@@ -506,6 +506,56 @@ mod tests{
         assert!(std::ptr::eq(event.classification.unwrap(), declaration));
     }
 
+    use crate::security_obligation_sources::{QueryPayload as Q,FieldUse as U,test_query_retain};
+    let projection=json!(["projection","s0","domain","m","salary"]).to_string();
+    let query_field=json!(["query-field","s0","domain","m","resourceId"]).to_string();
+    let operator_sources:[String;2]=[("1","predicate"),("2","order")].map(|(position,kind)|json!(["operator",position,"s0","domain","m","Resource","domain","m","resourceId",kind,"disclosed"]).to_string());
+    let output_sources:[String;2]=[("1","first_value"),("2","second_value")].map(|(position,name)|json!(["output",position,name]).to_string());
+    let golden_query:BTreeSet<_>=[projection.clone(),query_field.clone(),operator_sources[0].clone(),operator_sources[1].clone(),output_sources[0].clone(),output_sources[1].clone()].into_iter().collect();
+    assert_eq!(issued.query_events().keys().cloned().collect::<BTreeSet<_>>(),golden_query);
+    let original_plan=ctx.query().application_plan();
+    for (source,expected_kind,field) in [(&projection,U::Projection,"salary"),(&query_field,U::QueryField,"resourceId")] {
+     let Q::Field{kind,scan,reference,carrier,classification,projection:projected,plan}=issued.query_events()[source] else{panic!()};
+     assert_eq!(kind,expected_kind);assert!(std::ptr::eq(scan,ctx.requirements().scans()[0].inventory()));assert_eq!(reference.element_id,field);
+     assert!(std::ptr::eq(carrier,crate::security_ontology::locate(ctx.catalog(),reference).unwrap()));assert!(std::ptr::eq(plan,original_plan));
+     let ontology=ctx.logical_plan().source().ontology();let original_classification=ontology["entities"][2]["fields"].as_array().unwrap().iter().find(|f|f["ref"]["elementId"]==field).unwrap();assert!(std::ptr::eq(classification,original_classification));
+     if expected_kind==U::Projection {assert!(std::ptr::eq(projected.unwrap(),&ctx.query().projections()[0]));}else{assert!(projected.is_none());}
+    }
+    for (index,source) in operator_sources.iter().enumerate(){
+     let Q::Operator{index:position,requirement,carrier,classification,plan}=issued.query_events()[source] else{panic!()};
+     assert_eq!(position,index);assert!(std::ptr::eq(requirement,&ctx.requirements().operators()[index]));assert!(std::ptr::eq(requirement.usage(),&ctx.profiled_query().uses()[index].0));assert_eq!(requirement.usage(),&ctx.query().uses()[index]);assert_eq!(requirement.mode(),crate::security_requirements::SecurityOperatorMode::Disclosed);
+     assert!(std::ptr::eq(plan,original_plan));assert!(std::ptr::eq(carrier,crate::security_ontology::locate(ctx.catalog(),&requirement.usage().field).unwrap()));assert_eq!(classification["protection"],"unprotected");
+    }
+    for (index,source) in output_sources.iter().enumerate(){
+     let Q::Output{requirement,plan}=issued.query_events()[source] else{panic!()};
+     assert!(std::ptr::eq(requirement,&ctx.requirements().outputs()[index]));assert_eq!(requirement.position(),index+1);assert!(std::ptr::eq(requirement.output(),&original_plan.outputs[index]));assert!(std::ptr::eq(plan,original_plan));
+    }
+    assert!(!std::ptr::eq(ctx.requirements().outputs()[0].output(),ctx.requirements().outputs()[1].output()));
+    // Full plan retains actual predicate values/order stages, not only use-family labels.
+    assert!(!original_plan.filters.is_empty());assert!(!original_plan.order.is_empty());
+    let original=issued.query_events()[&projection];
+    for (work,text,ok) in [(3,11,true),(2,11,false),(3,10,false)]{assert_eq!(test_query_retain(&mut BTreeMap::new(),&["x"],original,work,text).is_ok(),ok);}
+    let Q::Field{kind,scan,reference,carrier,classification,projection:projected,plan}=original else{panic!()};
+    let foreign_ref=reference.clone();let foreign_carrier=carrier.clone();let foreign_classification=classification.clone();let foreign_projection=projected.unwrap().clone();let foreign_plan=plan.clone();
+    let mut retained=BTreeMap::new();test_query_retain(&mut retained,&["x"],original,100,10000).unwrap();test_query_retain(&mut retained,&["x"],original,100,10000).unwrap();
+    for substitute in [
+     Q::Field{kind:U::QueryField,scan,reference,carrier,classification,projection:projected,plan},
+     Q::Field{kind,scan,reference:&foreign_ref,carrier,classification,projection:projected,plan},
+     Q::Field{kind,scan,reference,carrier:&foreign_carrier,classification,projection:projected,plan},
+     Q::Field{kind,scan,reference,carrier,classification:&foreign_classification,projection:projected,plan},
+     Q::Field{kind,scan,reference,carrier,classification,projection:Some(&foreign_projection),plan},
+     Q::Field{kind,scan,reference,carrier,classification,projection:None,plan},
+     Q::Field{kind,scan,reference,carrier,classification,projection:projected,plan:&foreign_plan},
+     issued.query_events()[&operator_sources[0]],issued.query_events()[&output_sources[0]],
+    ]{assert!(test_query_retain(&mut retained,&["x"],substitute,100,10000).is_err());}
+    let Q::Operator{index,requirement,carrier,classification,plan}=issued.query_events()[&operator_sources[0]] else{panic!()};
+    let foreign_operator_carrier=carrier.clone();let foreign_operator_classification=classification.clone();
+    let mut operators=BTreeMap::new();test_query_retain(&mut operators,&["x"],issued.query_events()[&operator_sources[0]],100,10000).unwrap();
+    for substitute in [Q::Operator{index,requirement,carrier:&foreign_operator_carrier,classification,plan},Q::Operator{index,requirement,carrier,classification:&foreign_operator_classification,plan},Q::Operator{index:index+1,requirement,carrier,classification,plan},Q::Operator{index,requirement:&ctx.requirements().operators()[1],carrier,classification,plan},Q::Operator{index,requirement,carrier,classification,plan:&foreign_plan}]{assert!(test_query_retain(&mut operators,&["x"],substitute,100,10000).is_err());}
+    let mut outputs=BTreeMap::new();test_query_retain(&mut outputs,&["x"],issued.query_events()[&output_sources[0]],100,10000).unwrap();
+    for substitute in [issued.query_events()[&output_sources[1]],Q::Output{requirement:&ctx.requirements().outputs()[0],plan:&foreign_plan}]{assert!(test_query_retain(&mut outputs,&["x"],substitute,100,10000).is_err());}
+    let mut population=BTreeMap::new();for index in 0..4096{test_query_retain(&mut population,&["occurrence",&index.to_string()],original,100,10000).unwrap();}assert_eq!(population.len(),4096);assert!(test_query_retain(&mut population,&["overflow"],original,100,10000).is_err());assert_eq!(population.len(),4096);
+
     let expected_rules:BTreeMap<_,_>=ctx.requirements().scans().iter().flat_map(|scan|scan.actions().iter().flat_map(move |action|action.rules().iter().map(move |rule|(serde_json::to_string(&["rule",scan.inventory().scan(),action.inventory().action(),&rule.id]).unwrap(),*rule)))).collect();
     assert_eq!(issued.rule_events().keys().collect::<Vec<_>>(),expected_rules.keys().collect::<Vec<_>>());
 
@@ -571,6 +621,10 @@ mod tests{
    for (pos,op,action) in [("1","predicate","original-predicate"),("2","order","original-order")]{
     let id=json!(["operator",pos,"s0","domain","m","Resource","domain","m","salary",op,"original-authorized",action]).to_string();
     assert_eq!(issued.demands()[&id].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s0","read"),scan_scope("s0",action),CoverageScope::Application]));
+    let crate::security_obligation_sources::QueryPayload::Operator{index,requirement,plan,..}=issued.query_events()[&id] else{panic!()};
+    assert!(std::ptr::eq(requirement,&ctx.requirements().operators()[index]));assert!(std::ptr::eq(plan,ctx.query().application_plan()));
+    let crate::security_requirements::SecurityOperatorMode::OriginalAuthorized(retained_action)=requirement.mode() else{panic!()};assert_eq!(retained_action,action);assert!(std::ptr::eq(retained_action,ctx.profiled_query().uses()[index].1.as_ref().unwrap().as_str()));
+
    }
   });});
  }
@@ -609,6 +663,14 @@ mod tests{
     assert!(std::ptr::eq(issued.rule_events()[&id],membership));
     assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
    }
+   use crate::security_obligation_sources::{QueryPayload as Q,test_query_retain};
+   let projection=json!(["projection","s1","domain","m","salary"]).to_string();
+   let original=issued.query_events()[&projection];
+   let Q::Field{kind,scan,reference,carrier,classification,projection:projected,plan}=original else{panic!()};
+   assert_eq!(scan.scan(),"s1");
+   let foreign_scan=ctx.requirements().scans()[0].inventory();assert!(!std::ptr::eq(scan,foreign_scan));
+   let mut retained=BTreeMap::new();test_query_retain(&mut retained,&["x"],original,100,10000).unwrap();
+   assert!(test_query_retain(&mut retained,&["x"],Q::Field{kind,scan:foreign_scan,reference,carrier,classification,projection:projected,plan},100,10000).is_err());
    let output=json!(["output","1","chosen"]).to_string();assert_eq!(issued.demands()[&output].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s1","read"),CoverageScope::Application]));
    let mut active_occurrences = Vec::new();
    for scan in ["s0","s1"] {

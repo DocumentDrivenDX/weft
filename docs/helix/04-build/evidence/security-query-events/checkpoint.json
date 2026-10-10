@@ -1,0 +1,38 @@
+{
+  "version": "weft.security.query-events-checkpoint/0.1.0",
+  "base": "bf64c8c56520d1117ace6d12b517c6b5a15559de",
+  "command": [
+    "cargo",
+    "test",
+    "--release",
+    "--locked",
+    "--workspace"
+  ],
+  "exitCode": 0,
+  "passed": 559,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "testGroups": 44,
+  "declaredSources": 824,
+  "sourceCustody": "Captured during workspace execution, not a pre-execution freeze. External Cargo registry and runtime dependencies excluded. All declared hashes checked unchanged after terminal exit0.",
+  "toolchain": "Rust1.90.0 aarch64-apple-darwin release",
+  "scope": "Private query payload custody; no new formal proof, complete issuer, public lowering, native enforcement or original132-case acceptance promotion.",
+  "review": "astra-review.json",
+  "attempts": [
+    "Initial core216 passed before strengthened assertions.",
+    "Enhanced core215pass1fail due test comparing profile-owned use pointer against raw query use; corrected expectation, corrected core216 passed.",
+    "Early specs check failed because checkpoint had not yet been written; preserved."
+  ],
+  "logs": {
+    "failed-pointer-expectation.log": "66a561f3d4ba002552e452e00c8a905a759ae540c35562533ed25519ffa9099c",
+    "source-inventory.json": "ee843139a437c4da087b531941930b69429ab80aecc2579520f6c3cae74e2941",
+    "astra-review.json": "c435960c5a4af8a398afc3342bee0aa811962d59f6c2fb019d4e50ae3e872947",
+    "initial-core.log": "79a5fd7cb3bbd814743c926139b9955ec39976bd427c87d3e3883ae30e2af868",
+    "early-spec-check.log": "d86aedb9f7e888573669d9636d7f14d96f31dcf9f8f816a13a580bfc9b319028",
+    "workspace.log": "826d186797c2757f839239d67ce6154afef22ba00f848449555678d4c6708963",
+    "corrected-core.log": "40eeb1dad50ba8e7b94076f6e5e1f118d267c822ef014f8e089afa9da1ea7b12",
+    "spec-check.log": "1de77e7382ebd4f780569c7444fc009137f7b7fff768a630a2ff3fc2feb8e939"
+  },
+  "specCheck": "exit0; documentation/schema/corpus checker, separate from security acceptance"
+}
