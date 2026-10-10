@@ -107,7 +107,7 @@ pub struct Relationship {
     pub target: Identity,
 }
 fn fail(message: &str) -> Diagnostic {
-    Diagnostic::new("WFT-BINDING", "binding", message)
+    Diagnostic::new("WFT-BINDING", "lower", message)
 }
 fn text(s: &str) -> bool {
     !s.is_empty() && !s.contains('\0') && s.len() <= 4096

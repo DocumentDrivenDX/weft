@@ -904,3 +904,23 @@ fn count_having_numeric_literal_uses_existing_expression_byte_budget() {
         else {assert_eq!(result["diagnostics"][0]["code"],"WFT-LIMIT");assert_eq!(result["diagnostics"][0]["phase"],"parse");assert!(result.get("sql").is_none());}
     }
 }
+
+#[test]
+fn malformed_binding_refusals_use_public_phase_in_all_compile_versions() {
+    for version in ["0.1.0","0.2.0","0.3.0"] {
+        for mode in ["encoding","property-id","shape"] {
+            let mut request=if version=="0.3.0" {arithmetic_request("SELECT c.name FROM Customer c")} else {common::request("SELECT c.name FROM Customer c")};
+            request["interfaceVersion"]=json!(format!("weft-compile/{version}"));request["dialect"]=json!(format!("weft-sql/{version}"));
+            let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+            match mode {"encoding"=>binding["records"][0]["properties"][0]["home"]["encoding"]=json!("future-value-encoding"),"property-id"=>binding["records"][0]["properties"][0]["home"]["propertyId"]=json!("noncanonical-id"),_=>binding["records"]=json!("malformed-record-array")}
+            let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+            let result=if version=="0.3.0" {arithmetic_compile(&request)}else{run(&request)};
+            assert_eq!(result["status"],"blocked","{version}/{mode}:{result}");assert_eq!(result["diagnostics"][0]["code"],"WFT-BINDING");assert_eq!(result["diagnostics"][0]["phase"],"lower");assert!(result.get("sql").is_none());
+            if let Ok(directory)=std::env::var("WEFT_BINDING_PHASE_RECEIPTS") {
+                let root=std::path::Path::new(&directory);std::fs::create_dir_all(root).unwrap();
+                std::fs::write(root.join(format!("{version}-{mode}-request.json")),request.to_string()).unwrap();
+                std::fs::write(root.join(format!("{version}-{mode}-artifact.json")),result.to_string()).unwrap();
+            }
+        }
+    }
+}
