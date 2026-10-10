@@ -336,3 +336,27 @@ do not prove native/Rust refinement or aggregate resource bounds. All original13
 cases remain binding, no acceptance case is promoted, and B-008 remains open.
 
 Validation checkpoint: the frozen workspace run passed 573 tests across 44 groups (230 core), with all 833 declared input pins unchanged and zero failed, ignored, measured, or filtered tests. Astra ultra independently audited the terminal receipts and four new test results with no blockers. See [retained checkpoint](evidence/security-case-catalog/checkpoint.json). All 42 selected backend cases remain pending; no authentication or native enforcement acceptance is promoted.
+
+#### B-008 authored deployment qualification duties
+
+The next private catalog revision replaces the test-only42-case catch-all with an
+explicit independently authored qualification interface for each original required
+case. All42 distinct duties, exact owner/site/failure/case/prerequisite tuples and
+all authored capability assignments are checked before the stricter versioned
+DeploymentIssued result is created. This includes unchosen and zero-edge capabilities.
+The original-case record supplies the full assertion; catalog membership alone
+cannot discharge it. The four backend homes retain separate qualified IDs and
+implementations despite shared assertion interfaces.
+
+Five new controls compare the complete map to a separately authored42-row golden
+fixture, remove every duty and every capability assignment, substitute each contract
+component, retain actual owner source/scope/kind inventory and test a coherent
+manifest/profile catch-all that passes weaker instance matching but refuses the
+strict gate. Exact169-visit/21504-reserved-text and minus-one controls isolate the
+shared deployment comparison ledger. Development core execution passed235 tests;
+full source-frozen workspace validation and independent review must be retained
+before landing. Semantic payload applicability, trusted profile authentication,
+native bodies/evidence and public lowering remain required. Historical required
+acceptance remains26/132; no selected case is promoted by this catalog.
+
+Final [retained checkpoint](evidence/security-deployment-catalog/checkpoint.json):578 release workspace tests across44 groups,235 core, all five new controls passing, all837 declared input pins unchanged, zero failed/ignored/measured/filtered. Astra ultra independently checked the source mapping, bounded gate and terminal receipts with no remaining blocker in the candidate-duty scope. Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures. The distinct strict result remains private and all42 cases remain pending.

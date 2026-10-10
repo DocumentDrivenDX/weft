@@ -1,0 +1,271 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:828:8
+    |
+828 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:117:12
+    |
+ 52 | impl PathRead {
+    | ------------- methods in this implementation
+...
+117 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+120 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:238:12
+    |
+237 | impl Plan {
+    | --------- associated function in this implementation
+238 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: constant `VERSION` is never used
+ --> crates/weft-core/src/security_deployment_catalog.rs:7:18
+  |
+7 | pub(crate) const VERSION:&str="weft.security.deployment-duty-catalog/0.1.0";
+  |                  ^^^^^^^
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:120:12
+    |
+ 52 | impl PathRead {
+    | ------------- method in this implementation
+...
+120 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-core` (lib) generated 9 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+warning: variant `Upgrade` is never constructed
+  --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:21:5
+   |
+ 9 | pub(crate) enum Behavior {
+   |                 -------- variant in this enum
+...
+21 |     Upgrade,
+   |     ^^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `target` is never used
+   --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:297:15
+    |
+297 | pub(crate) fn target(candidate: bool) -> Target {
+    |               ^^^^^^
+
+warning: `weft-core` (test "compile-envelope") generated 2 warnings
+warning: `weft-core` (lib test) generated 3 warnings (2 duplicates)
+    Finished `release` profile [optimized] target(s) in 23.91s
+     Running unittests src/lib.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/weft_core-def00e82d93c6928)
+
+running 2 tests
+test security_deployment_catalog::tests::all_four_homes_retain_single_case_duties_owners_and_explicit_prerequisites ... ok
+test security_deployment_catalog::tests::every_duty_and_capability_omission_and_contract_substitution_refuses ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 230 filtered out; finished in 0.02s
+
+     Running unittests src/bin/frontend.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/frontend-887e9be7fa19b73b)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running ../../tests/application/model.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/application_model-1a5ab0dacdde2770)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.00s
+
+     Running ../../tests/application/resolve.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/application_resolve-aa5522fd188c4662)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running ../../tests/application/syntax.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/application_syntax-dc42820d2ec6b4ef)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+
+     Running ../../tests/register-backend/pipeline.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/backend_pipeline-2ef5482ea632e4d4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 18 filtered out; finished in 0.00s
+
+     Running ../../tests/register-backend/registry.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/backend_registry-04934a44f60477c7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 9 filtered out; finished in 0.00s
+
+     Running ../../tests/compile/envelope.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/compile_envelope-7f3f6085c24dbffc)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running tests/frontend.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/frontend-3e05aa9a98d32f97)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/mathematical08.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/mathematical08-89a91f1bbff074b4)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/original08.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/original08-3432336c292c6f29)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running ../../tests/qualify-and-evolve/properties.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/qualification_properties-f2a281abee13297c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+     Running ../../tests/qualify-and-evolve/resources.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/qualification_resources-15f9609fa64c2605)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+     Running tests/security_admission.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/security_admission-2cefd805e120ca4e)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 61 filtered out; finished in 0.00s
+
+     Running tests/security_literals.rs (/private/tmp/umf-security-weft-bridge-target/release/deps/security_literals-8ead58967a640283)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+

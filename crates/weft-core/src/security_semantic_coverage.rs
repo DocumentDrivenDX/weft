@@ -1039,18 +1039,23 @@ mod tests{
     m.capabilities[0].obligations.push(Obligation{id:original_id(template,source,scope,occurrence),owner:t.owner.clone(),failure_code:t.failure.clone(),parameters:json!({"version":"weft.security.admission-obligation/0.2.0","subjects":[{"kind":"semantic","source":source,"scope":q}],"enforcementSite":t.site,"prerequisites":t.prerequisites.iter().map(|d|original_id(d,source,scope,occurrence)).collect::<Vec<_>>(),"evidenceCaseIds":t.cases})});
    }
    let mut unused=m.capabilities[0].clone();unused.id="unused-staff".into();unused.logical_domain["targets"]=json!([{"documentId":"domain","revision":"schema-1","moduleId":"m","elementId":"Staff"}]);unused.obligations.clear();m.capabilities.push(unused);
-   if mode!=0{
+   if mode==1||mode==2{
     let field_ids=authored.iter().filter(|(t,_,_,_)|t=="event-Field"||t=="privacy").map(|(t,source,scope,address)|original_id(t,source,scope,address)).collect::<BTreeSet<_>>();
     let privacy_ids=authored.iter().filter(|(t,_,_,_)|t=="privacy").map(|(t,source,scope,address)|original_id(t,source,scope,address)).collect::<BTreeSet<_>>();
     let mut also=m.capabilities[0].clone();also.id=if mode==1{"also-fields".into()}else{"also-complete".into()};if mode==1{also.obligations.retain(|o|field_ids.contains(&o.id));}
     if mode==1{m.capabilities[0].obligations.retain(|o|!privacy_ids.contains(&o.id));}m.capabilities.push(also);
    }
    for cap in &mut m.capabilities{cap.obligations.push(Obligation{id:original_id("deployment",&cap.id,&app,"deployment"),owner:ObligationOwner::Backend,failure_code:"WFT-FIXTURE-DEPLOY".into(),parameters:json!({"version":"weft.security.admission-obligation/0.2.0","subjects":[{"kind":"selected-capability","profileRequirementId":"deployment"}],"enforcementSite":"native","prerequisites":[],"evidenceCaseIds":["semantic-case","deployment-case"]})});}
+   let full_cases=|| (1..=12).map(|i|format!("S{i:02}")).chain((1..=16).map(|i|format!("pg-raw.B{i:02}"))).chain((1..=14).map(|i|format!("pg-raw.L{i:02}"))).collect::<BTreeSet<_>>();
+   if mode==3{for cap in &mut m.capabilities{for o in &mut cap.obligations{
+    o.parameters["evidenceCaseIds"]=if o.parameters["subjects"][0]["kind"]=="selected-capability"{json!(full_cases())}else{json!(["S01"])};
+   }}}
    let selected=m.capabilities.iter().map(|c|c.id.clone()).collect::<Vec<_>>();
    with_registered_coverage(ctx,m,&selected,|coverage|{
     let owner=crate::security_obligation_sources::issue_demands(coverage).unwrap();let custody=crate::security_obligation_custody::ObligationCustody::collect(*coverage.declaration(),&selected,true).unwrap();
     let profile=Profile{version:"weft.security.requirement-templates/0.1.0".into(),id:"fixture-templates".into(),registration_json:coverage.declaration().manifest_json().into(),target:"fixture".into(),capabilities:BTreeMap::from([("all".into(),templates.keys().cloned().collect()),("unused-staff".into(),BTreeSet::from(["deployment".into()]))]),templates,cases:BTreeSet::from(["semantic-case".into(),"deployment-case".into()])};
     let mut profile=profile;
+    if mode==3{profile.cases=full_cases();for t in profile.templates.values_mut(){t.cases=if t.selector==Selector::Selected{full_cases()}else{BTreeSet::from(["S01".into()])};}}
     if mode==1{profile.capabilities.get_mut("all").unwrap().remove("privacy");profile.capabilities.insert("also-fields".into(),BTreeSet::from(["deployment".into(),"event-Field".into(),"privacy".into()]));}
     if mode==2{profile.capabilities.insert("also-complete".into(),profile.templates.keys().cloned().collect());}
     run(&owner,&custody,&profile);
@@ -1134,4 +1139,57 @@ mod tests{
    }
   });
  }
+ #[test]
+ fn explicit_deployment_duties_remain_complete_at_every_original_capability(){
+  use crate::security_case_catalog::CaseCatalog;
+  use crate::security_requirement_templates::{issue_deployment_bound,Selector};
+  const RAW:&str=include_str!("../tests/security-required-case-plan.json");
+  const PIN:&str="37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9";
+  with_template_fixture(|owner,custody,profile|{
+   let registration=crate::json::sha256(profile.registration_json.as_bytes());
+   for backend in ["pg-raw","truss","delta-raw","ashlar"]{
+    let catalog=CaseCatalog::read(RAW,PIN,backend,&registration).unwrap();
+    let mut full=profile.clone();full.cases=catalog.required().clone();
+    full.templates.retain(|_,t|t.selector!=Selector::Selected);
+    for t in full.templates.values_mut(){t.cases=BTreeSet::from(["S01".into()]);}
+    for ids in full.capabilities.values_mut(){ids.remove("deployment");}
+    let duties=crate::security_deployment_catalog::authored(&catalog).unwrap();
+    for ids in full.capabilities.values_mut(){ids.extend(duties.keys().cloned());}
+    full.templates.extend(duties);
+    let issued=issue_deployment_bound(owner,&full,&catalog).unwrap();
+    assert_eq!(issued.deployment_version(),"weft.security.deployment-duty-catalog/0.1.0");
+    assert_eq!(issued.required().base.contracts.len(),117);assert_eq!(issued.required().base.atoms.len(),117);assert_eq!(issued.required().instances.len(),33);
+    assert_eq!(issued.pending_cases().len(),42);assert_eq!(issued.original_case("S10").unwrap()["assertionIds"],json!(["S10","S10:disclosure"]));
+    assert!(crate::security_obligation_matching::match_instances(owner,custody,issued.required()).is_err()); // Old synthetic original declarations cannot discharge new duties.
+    for cap in ["all","unused-staff"]{
+     let atoms=issued.required().base.atoms.iter().filter(|a|a.origin==cap&&matches!(a.subject,crate::security_obligation_matching::Subject::SelectedCapability{..})).collect::<Vec<_>>();
+     assert_eq!(atoms.len(),42);assert_eq!(atoms.iter().map(|a|a.case.clone()).collect::<BTreeSet<_>>(),*catalog.required());
+     let identity=|suffix:&str|json!(["template","fixture-templates",format!("deployment:{backend}:{suffix}"),cap,"application","deployment"]).to_string();
+     assert_eq!(issued.required().base.contracts[&identity("L06")].prerequisites,BTreeSet::from([identity("L05")]));
+     assert_eq!(issued.required().base.contracts[&identity("B12")].owner,crate::backend::ObligationOwner::Host);
+     assert_eq!(issued.required().base.contracts[&identity("L06")].owner,crate::backend::ObligationOwner::Backend);
+    }
+    for id in full.templates.iter().filter(|(_,t)|t.selector==Selector::Selected).map(|(id,_)|id){
+     let mut omitted=full.clone();omitted.capabilities.get_mut("unused-staff").unwrap().remove(id);assert!(issue_deployment_bound(owner,&omitted,&catalog).is_err());
+    }
+    let mut catchall=full.clone();catchall.templates.retain(|_,t|t.selector!=Selector::Selected);
+    let mut template=profile.templates["deployment"].clone();template.cases=catalog.required().clone();catchall.templates.insert("deployment".into(),template);
+    for ids in catchall.capabilities.values_mut(){ids.retain(|id|!id.starts_with("deployment:"));ids.insert("deployment".into());}
+    assert!(crate::security_requirement_templates::issue_catalog_bound(owner,&catchall,&catalog).is_ok()); // Same42 IDs alone are weaker.
+    assert!(issue_deployment_bound(owner,&catchall,&catalog).is_err());
+   }
+  });
+ }
+
+ #[test]
+ fn agreeing_original_manifest_and_profile_catchall_cannot_enter_strict_deployment_gate(){
+  with_template_fixture_mode(3,|owner,custody,profile|{
+   let catalog=crate::security_case_catalog::CaseCatalog::read(include_str!("../tests/security-required-case-plan.json"),"37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9","pg-raw",&crate::json::sha256(profile.registration_json.as_bytes())).unwrap();
+   let weaker=crate::security_requirement_templates::issue_catalog_bound(owner,profile,&catalog).unwrap();
+   assert_eq!(weaker.pending_cases().len(),42);
+   assert!(crate::security_obligation_matching::match_instances(owner,custody,weaker.required()).is_ok());
+   assert!(crate::security_requirement_templates::issue_deployment_bound(owner,profile,&catalog).is_err());
+  });
+ }
+
 }

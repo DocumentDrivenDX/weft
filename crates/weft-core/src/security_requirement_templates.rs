@@ -9,7 +9,7 @@ pub(crate) enum Selector {
  Permit,Require,Forbid,True,False,Equal,And,Or,Not,Exists,
  Identity,Endpoint,StoredOperand,ContextOperand,Constant,Original,Withheld,Transformed,
 }
-#[derive(Clone)]
+#[derive(Clone,PartialEq,Eq)]
 pub(crate) struct Template {
  pub(crate) selector:Selector,pub(crate) kind:String,pub(crate) owner:ObligationOwner,
  pub(crate) site:String,pub(crate) failure:String,pub(crate) cases:BTreeSet<String>,
@@ -46,11 +46,30 @@ impl CatalogIssued<'_, '_, '_, '_, '_>{
 /// This does not authenticate either premise or verify a native case execution.
 #[allow(dead_code)]
 pub(crate) fn issue_catalog_bound<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,catalog:&'a crate::security_case_catalog::CaseCatalog)->Result<CatalogIssued<'a,'d,'m,'c,'s>>{
- let actual=owner.coverage().declaration().manifest_json();
- // Registry admission bounds this immutable source to one MiB. Refuse foreign
- // profile strings before hashing; no caller-controlled unbounded hash work.
- if actual.len()>1024*1024||profile.registration_json!=actual||crate::json::sha256(actual.as_bytes())!=catalog.registration_sha256()||profile.cases!=*catalog.required(){return Err(fail());}
+ catalog_preflight(owner,profile,catalog)?;
  Ok(CatalogIssued{issued:issue(owner,profile)?,catalog})
+}
+fn catalog_preflight(owner:&OwnerSourceDemands<'_, '_, '_, '_>,profile:&Profile,catalog:&crate::security_case_catalog::CaseCatalog)->Result<()> {
+ let actual=owner.coverage().declaration().manifest_json();
+ // Hash only bounded registered source; exact case IDs remain trusted premises.
+ if actual.len()>1024*1024||profile.registration_json!=actual||crate::json::sha256(actual.as_bytes())!=catalog.registration_sha256()||profile.cases!=*catalog.required(){return Err(fail());}Ok(())
+}
+/// Stricter independent deployment-duty boundary; earlier experimental issuance
+/// remains unchanged. All deployment duties stay pending without native evidence.
+#[allow(dead_code)]
+pub(crate) struct DeploymentIssued<'a,'d,'m,'c,'s>{catalog:CatalogIssued<'a,'d,'m,'c,'s>}
+#[allow(dead_code)]
+impl DeploymentIssued<'_, '_, '_, '_, '_>{
+ pub(crate) fn deployment_version(&self)->&'static str{crate::security_deployment_catalog::VERSION}
+ pub(crate) fn required(&self)->&InstancePremise{self.catalog.required()}
+ pub(crate) fn pending_cases(&self)->&BTreeSet<String>{self.catalog.pending_cases()}
+ pub(crate) fn original_case(&self,id:&str)->Result<&serde_json::Value>{self.catalog.original_case(id)}
+}
+#[allow(dead_code)]
+pub(crate) fn issue_deployment_bound<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,catalog:&'a crate::security_case_catalog::CaseCatalog)->Result<DeploymentIssued<'a,'d,'m,'c,'s>>{
+ catalog_preflight(owner,profile,catalog)?;
+ let issued=issue_budget_deployment(owner,profile,1_000_000,16_000_000,Some(catalog))?.0;
+ Ok(DeploymentIssued{catalog:CatalogIssued{issued,catalog}})
 }
 struct Budget{work:usize,text:usize}
 impl Budget {
@@ -141,7 +160,12 @@ impl Builder<'_>{
 #[allow(dead_code)]
 pub(crate) fn issue<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile)->Result<Issued<'a,'d,'m,'c,'s>>{issue_budget(owner,profile,1_000_000,16_000_000).map(|(out,_,_)|out)}
 fn issue_budget<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,work:usize,text:usize)->Result<(Issued<'a,'d,'m,'c,'s>,usize,usize)> {
+ issue_budget_deployment(owner,profile,work,text,None)
+}
+fn issue_budget_deployment<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,work:usize,text:usize,deployment:Option<&crate::security_case_catalog::CaseCatalog>)->Result<(Issued<'a,'d,'m,'c,'s>,usize,usize)> {
  let mut budget=Budget{work,text};validate(profile,&mut budget)?;
+ // The same charged preflight bounds all IDs/maps before deployment comparison.
+ if let Some(catalog)=deployment{crate::security_deployment_catalog::validate_charged(profile,catalog,&mut |bytes|budget.charge(bytes))?;}
  let coverage=owner.coverage();budget.charge(coverage.declaration().manifest_json().len())?;
  if profile.registration_json!=coverage.declaration().manifest_json()||profile.target!=coverage.declaration().target().id{return Err(fail());}
  for cap in coverage.selected_capabilities(){budget.id(cap)?;if !profile.capabilities.contains_key(cap){return Err(fail());}}

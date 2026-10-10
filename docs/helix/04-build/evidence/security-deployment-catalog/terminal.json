@@ -1,0 +1,15 @@
+{
+  "version": "weft.security.deployment-catalog-run/0.1.0",
+  "exitCode": 0,
+  "finishedAt": "2026-10-10T22:46:28.304658+00:00",
+  "sourcePinsUnchanged": true,
+  "changedInputs": [],
+  "testGroups": 44,
+  "passed": 578,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "measured": 0,
+  "workspaceLogSha256": "8237e1e41585ad80c504f88b94bd7130ac9b04d3b3b61183af21dc65ed78ddcf",
+  "declaredSources": 837
+}

@@ -1573,3 +1573,45 @@ backend/registration association remain trusted host premises; an agreeing calle
 hash cannot authenticate a profile. Template sufficiency, live procedure source
 pins, native observations, installation/authority freshness and publication gates
 remain required. This implementation does not execute the132 acceptance cases.
+
+#### Authored deployment duty catalog candidate
+
+The separate private `weft.security.deployment-duty-catalog/0.1.0` candidate
+supplies42 distinct Selected qualification duties: all12 semantic cases and all30
+original backend cases. The [authored golden table](../../../../crates/weft-core/tests/security-deployment-duty-catalog.txt)
+records each original suffix, exact kind, owner, site and prerequisite suffixes.
+All duties use failure `WFT-SECURITY-QUALIFICATION-REQUIRED`; each retains exactly
+one original case record, including all that record's assertion IDs. S10 therefore
+retains both S10 and S10:disclosure through the original pinned case catalog.
+This is an explicit candidate qualification interface, not a claim that a case
+label or this table defines all physical enforcement steps.
+
+Template IDs are `deployment:<backend>:<original-suffix>`. Semantic cases retain
+their original S identifiers; backend cases use the exact selected backend home.
+The four original backend assertion sets have identical suffix assertions, so this
+revision shares duty interfaces while requiring separate backend procedures,
+physical mappings, native identities and evidence. Twelve semantic verifiers and
+B12 receipt custody are Host/host duties; the other29 are Backend/native duties.
+The81 explicit prerequisite edges form a same-Selected-occurrence DAG. Prerequisite
+original identities instantiate separately at each original capability and do not
+cross capabilities or targets. These proposed dependencies constrain qualification
+composition; they do not establish sufficiency of any procedure or semantic proof.
+
+The strict private boundary requires the exact42 authored Selected templates,
+including kinds, owners, sites, refusal codes, single-case assignments and
+prerequisites. Every authored capability retains all42 duties, including unchosen
+or zero-edge entries. Extra catch-alls, omissions, home substitution and agreeing
+manifest/profile weakening refuse. The returned private DeploymentIssued type
+records this candidate version and is distinct from weaker catalog-only issuance.
+Earlier experiments remain unchanged. Semantic templates are still independently
+trusted inputs: this catalog does not implement payload-specific domain/operator/
+transform applicability, authenticated registration selection or native execution.
+No SQL/public transport is activated and every case remains pending.
+
+Strict checking occurs after the existing charged profile preflight and consumes
+the same issuer ledger. The42 fixed authored records each reserve512 text bytes
+before map construction; all template counts, expected comparisons and capability
+membership lookups charge visits. No comparison map is constructed from incoming
+Selected template IDs. Those reservations bound copied authored text only, not
+allocator metadata or aggregate process resources. Existing4096 template/capability/
+expanded-atom limits and1m-visit/16m-text phase budgets remain.
