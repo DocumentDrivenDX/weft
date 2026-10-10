@@ -174,18 +174,292 @@ fn predicate(scope: &mut Scope, p: &ast::Predicate, on: bool) -> Result<ir::Pred
         }),
     }
 }
-pub(crate) fn resolve(
-    catalog: &Catalog,
-    q: ast::Query,
-    parameters: Parameters,
-    profile: Option<ir::ReadProfile>,
-) -> Result<ir::Plan> {
-    if profile.is_some() {
-        return Err(fail(
-            "WFT-PROFILE",
-            "Existing named application-read subsets do not admit arithmetic 0.3",
-        ));
+/// Borrowed syntax views preserve every original node and span across dialects.
+pub(crate) enum ProjectionSource<'a, P> {
+    Legacy(&'a ast::Output),
+    Extra(P),
+}
+pub(crate) struct ProjectionView<'a, P> {
+    pub output: ProjectionSource<'a, P>,
+    pub alias: Option<&'a crate::syntax::Name>,
+}
+pub(crate) struct QueryView<'a, P> {
+    pub distinct: bool,
+    pub outputs: Vec<ProjectionView<'a, P>>,
+    pub source: &'a crate::syntax::Source,
+    pub joins: &'a [ast::Join],
+    pub predicates: &'a [ast::Predicate],
+    pub groups: &'a [crate::syntax::Column],
+    pub having: &'a [ast::Having],
+    pub order: &'a [crate::syntax::Column],
+    pub limit: Option<u16>,
+}
+pub(crate) struct NamedExpressions<E> {
+    pub default: String,
+    pub expressions: Vec<(String, E)>,
+}
+pub(crate) struct ResolvedOutput<E> {
+    pub name: String,
+    pub expression: E,
+}
+pub(crate) struct ResolvedHaving<E> {
+    pub count: E,
+    pub threshold: crate::application_ir::Value,
+}
+pub(crate) struct ResolvedParts<E, S> {
+    pub distinct: bool,
+    pub module_pins: Vec<crate::ir::ModelPin>,
+    pub required_capabilities: Vec<String>,
+    pub type_graph: Vec<crate::application_model::Descriptor>,
+    pub source: ir::Scan,
+    pub joins: Vec<ir::Join>,
+    pub outer_join_scans: Vec<String>,
+    pub filters: Vec<ir::Predicate>,
+    pub groups: Vec<ir::Field>,
+    pub having: Vec<ResolvedHaving<E>>,
+    pub aggregate: bool,
+    pub outputs: Vec<ResolvedOutput<E>>,
+    pub order: Vec<ir::Field>,
+    pub limit: Option<u16>,
+    pub extension: S,
+}
+/// Only the relational extension and new projections vary. Existing scalar,
+/// parameter, label, grouping, ordering, DISTINCT and HAVING rules stay here.
+pub(crate) trait QueryExtension {
+    type Projection;
+    type Expression;
+    type State;
+    fn after_joins(&self, scope: &mut Scope<'_>) -> Result<Self::State>;
+    fn is_aggregate(&self, output: &Self::Projection) -> bool;
+    fn projection(
+        &self,
+        scope: &mut Scope<'_>,
+        state: &Self::State,
+        output: &Self::Projection,
+        aggregate: bool,
+        groups: &Vec<ir::Field>,
+    ) -> Result<NamedExpressions<Self::Expression>>;
+    fn lift_legacy(expression: ir::Expression) -> Self::Expression;
+    fn as_legacy(expression: &Self::Expression) -> Option<&ir::Expression>;
+}
+struct Legacy;
+impl QueryExtension for Legacy {
+    type Projection = std::convert::Infallible;
+    type Expression = ir::Expression;
+    type State = ();
+    fn after_joins(&self, _: &mut Scope<'_>) -> Result<()> {
+        Ok(())
     }
+    fn is_aggregate(&self, output: &Self::Projection) -> bool {
+        match *output {}
+    }
+    fn projection(
+        &self,
+        _: &mut Scope<'_>,
+        _: &(),
+        output: &Self::Projection,
+        _: bool,
+        _: &Vec<ir::Field>,
+    ) -> Result<NamedExpressions<Self::Expression>> {
+        match *output {}
+    }
+    fn lift_legacy(expression: ir::Expression) -> ir::Expression {
+        expression
+    }
+    fn as_legacy(expression: &ir::Expression) -> Option<&ir::Expression> {
+        Some(expression)
+    }
+}
+
+fn legacy_projection(
+    s: &mut Scope<'_>,
+    output: &ast::Output,
+    aggregate: bool,
+    groups: &Vec<ir::Field>,
+) -> Result<NamedExpressions<ir::Expression>> {
+    let catalog = s.catalog;
+    let (default, expressions) = match output {
+        ast::Output::Arithmetic(expression) => {
+            let value =
+                expression_value(s, expression, if aggregate { Some(&groups) } else { None })?;
+            (
+                String::new(),
+                vec![(
+                    String::new(),
+                    ir::Expression::Arithmetic { expression: value },
+                )],
+            )
+        }
+        ast::Output::Entity(n) => {
+            if aggregate {
+                return Err(fail(
+                    "WFT-GROUPING",
+                    "Whole-entity projection is excluded from aggregation",
+                ));
+            }
+            let (r, scan) = s.record(n)?;
+            let e = catalog.entity_descriptor(r)?;
+            s.descriptors(e.graph);
+            s.caps.insert("project.entity".into());
+            let expressions = e
+                .members
+                .into_iter()
+                .map(|m| {
+                    (
+                        m.name,
+                        ir::Expression::Field {
+                            scan: scan.clone(),
+                            identity: m.identity,
+                        },
+                    )
+                })
+                .collect::<Vec<_>>();
+            (String::new(), expressions)
+        }
+        ast::Output::Field(c) => {
+            let (r, scan) = s.record_for_column(c)?;
+            let (m, graph) = catalog.member_descriptor(r, &c.field)?;
+            if aggregate {
+                let f = s.field(c)?;
+                if !groups.iter().any(|g| same(g, &f)) {
+                    return Err(fail("WFT-GROUPING", "Projected field is not grouped").at(&c.span));
+                }
+            }
+            s.descriptors(graph);
+            (
+                m.name.clone(),
+                vec![(
+                    m.name,
+                    ir::Expression::Field {
+                        scan,
+                        identity: m.identity,
+                    },
+                )],
+            )
+        }
+        ast::Output::CountDistinct(c) => {
+            let optional = s.optional_field03(c)?;
+            let argument = if optional {
+                let f = s.presence_field03(c)?;
+                if f.logical_type.family != Family::String {
+                    s.field(c)?
+                } else {
+                    s.caps.insert("aggregate.countDistinct.optional".into());
+                    s.caps.insert("value.nativeNull".into());
+                    f
+                }
+            } else {
+                s.field(c)?
+            };
+            if argument.logical_type.family != Family::String
+                || argument.logical_type.nullable
+                || argument.logical_type.facets != json!({})
+            {
+                return Err(fail(
+                    "WFT-TYPE",
+                    "COUNT DISTINCT requires an exact required String Field",
+                ));
+            }
+            s.caps.insert("aggregate.countDistinct".into());
+            (
+                "count".into(),
+                vec![(
+                    "count".into(),
+                    ir::Expression::CountDistinct {
+                        argument,
+                        logical_type: LogicalType {
+                            family: Family::Integer,
+                            facets: json!({}),
+                            nullable: false,
+                        },
+                    },
+                )],
+            )
+        }
+        ast::Output::Count => {
+            s.caps.insert("aggregate.count".into());
+            (
+                "count".into(),
+                vec![(
+                    "count".into(),
+                    ir::Expression::Count {
+                        logical_type: LogicalType {
+                            family: Family::Integer,
+                            facets: json!({}),
+                            nullable: false,
+                        },
+                    },
+                )],
+            )
+        }
+        ast::Output::Sum(c) => {
+            let argument = s.field(c)?;
+            if !matches!(
+                argument.logical_type.family,
+                Family::Integer | Family::Decimal
+            ) {
+                return Err(fail("WFT-TYPE", "SUM requires an exact numeric field").at(&c.span));
+            }
+            let facets = if argument.logical_type.family == Family::Decimal {
+                json!({"scale":argument.logical_type.facets["scale"]})
+            } else {
+                json!({})
+            };
+            let t = LogicalType {
+                family: argument.logical_type.family.clone(),
+                facets,
+                nullable: groups.is_empty(),
+            };
+            s.caps.insert("sum".into());
+            (
+                "sum".into(),
+                vec![(
+                    "sum".into(),
+                    ir::Expression::Sum {
+                        argument,
+                        logical_type: t,
+                    },
+                )],
+            )
+        }
+        ast::Output::Related {
+            relationship,
+            bound,
+        } => {
+            if aggregate {
+                return Err(fail("WFT-GROUPING", "RELATED_KEYS cannot be aggregated"));
+            }
+            let (r, scan) = s.record(&relationship.alias)?;
+            let rel = catalog.relationship_read(r, &relationship.field)?;
+            s.caps.insert("relationship.boundedKeys".into());
+            if rel.inverse {
+                s.caps.insert("relationship.inverse".into());
+            }
+            (
+                relationship.field.value.clone(),
+                vec![(
+                    relationship.field.value.clone(),
+                    ir::Expression::RelatedKeys {
+                        scan,
+                        relationship: rel,
+                        bound: *bound,
+                    },
+                )],
+            )
+        }
+    };
+    Ok(NamedExpressions {
+        default,
+        expressions,
+    })
+}
+
+pub(crate) fn resolve_parts<X: QueryExtension>(
+    catalog: &Catalog,
+    q: QueryView<'_, X::Projection>,
+    parameters: Parameters,
+    extra: &X,
+) -> Result<ResolvedParts<X::Expression, X::State>> {
     let mut normalized = BTreeMap::new();
     if parameters.len() > 1024 {
         return Err(fail("WFT-LIMIT", "Source parameter count exceeds 1024"));
@@ -212,12 +486,13 @@ pub(crate) fn resolve(
         caps: BTreeSet::new(),
         graph: vec![],
     };
-    let source = s.add_source(&q.source)?;
+    let source = s.add_source(q.source)?;
     let mut joins = vec![];
     let mut outer_join_scans = vec![];
-    for join in &q.joins {
+    for join in q.joins {
         let right = s.add_source(&join.right)?;
-        let on = join.on
+        let on = join
+            .on
             .iter()
             .map(|p| predicate(&mut s, p, true))
             .collect::<Result<Vec<_>>>()?;
@@ -226,9 +501,13 @@ pub(crate) fn resolve(
             s.caps.insert("value.outerJoinPresence".into());
             outer_join_scans.push(right.occurrence.clone());
             Some(ir::JoinKind::Left)
-        } else { s.caps.insert("innerJoin".into()); None };
+        } else {
+            s.caps.insert("innerJoin".into());
+            None
+        };
         joins.push(ir::Join { kind, right, on });
     }
+    let extension = extra.after_joins(&mut s)?;
     let filters = q
         .predicates
         .iter()
@@ -252,11 +531,13 @@ pub(crate) fn resolve(
     {
         return Err(fail("WFT-GROUPING", "Repeated grouping field"));
     }
-    let aggregate = q
-        .outputs
-        .iter()
-        .any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_)))
-        || !groups.is_empty();
+    let aggregate = q.outputs.iter().any(|p| match &p.output {
+        ProjectionSource::Legacy(output) => matches!(
+            output,
+            ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_)
+        ),
+        ProjectionSource::Extra(output) => extra.is_aggregate(output),
+    }) || !groups.is_empty();
     if aggregate {
         s.caps.insert("aggregate".into());
     }
@@ -266,150 +547,23 @@ pub(crate) fn resolve(
     let mut outputs = vec![];
     let mut labels = BTreeMap::new();
     for p in &q.outputs {
-        let (default, expressions) = match &p.output {
-            ast::Output::Arithmetic(expression) => {
-                let value = expression_value(
-                    &mut s,
-                    expression,
-                    if aggregate { Some(&groups) } else { None },
-                )?;
-                (
-                    String::new(),
-                    vec![(
-                        String::new(),
-                        ir::Expression::Arithmetic { expression: value },
-                    )],
-                )
-            }
-            ast::Output::Entity(n) => {
-                if aggregate {
-                    return Err(fail(
-                        "WFT-GROUPING",
-                        "Whole-entity projection is excluded from aggregation",
-                    ));
+        let NamedExpressions {
+            default,
+            expressions,
+        } = match &p.output {
+            ProjectionSource::Legacy(output) => {
+                let batch = legacy_projection(&mut s, output, aggregate, &groups)?;
+                NamedExpressions {
+                    default: batch.default,
+                    expressions: batch
+                        .expressions
+                        .into_iter()
+                        .map(|(label, expression)| (label, X::lift_legacy(expression)))
+                        .collect(),
                 }
-                let (r, scan) = s.record(n)?;
-                let e = catalog.entity_descriptor(r)?;
-                s.descriptors(e.graph);
-                s.caps.insert("project.entity".into());
-                let expressions = e
-                    .members
-                    .into_iter()
-                    .map(|m| {
-                        (
-                            m.name,
-                            ir::Expression::Field {
-                                scan: scan.clone(),
-                                identity: m.identity,
-                            },
-                        )
-                    })
-                    .collect::<Vec<_>>();
-                (String::new(), expressions)
             }
-            ast::Output::Field(c) => {
-                let (r, scan) = s.record_for_column(c)?;
-                let (m, graph) = catalog.member_descriptor(r, &c.field)?;
-                if aggregate {
-                    let f = s.field(c)?;
-                    if !groups.iter().any(|g| same(g, &f)) {
-                        return Err(
-                            fail("WFT-GROUPING", "Projected field is not grouped").at(&c.span)
-                        );
-                    }
-                }
-                s.descriptors(graph);
-                (
-                    m.name.clone(),
-                    vec![(
-                        m.name,
-                        ir::Expression::Field {
-                            scan,
-                            identity: m.identity,
-                        },
-                    )],
-                )
-            }
-            ast::Output::CountDistinct(c) => {
-                let optional=s.optional_field03(c)?;
-                let argument=if optional {
-                    let f=s.presence_field03(c)?;
-                    if f.logical_type.family!=Family::String {s.field(c)?} else {s.caps.insert("aggregate.countDistinct.optional".into());s.caps.insert("value.nativeNull".into());f}
-                } else {s.field(c)?};
-                if argument.logical_type.family!=Family::String || argument.logical_type.nullable || argument.logical_type.facets!=json!({}) {return Err(fail("WFT-TYPE","COUNT DISTINCT requires an exact required String Field"));}
-                s.caps.insert("aggregate.countDistinct".into());
-                ("count".into(),vec![("count".into(),ir::Expression::CountDistinct{argument,logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}})])
-            }
-            ast::Output::Count => {
-                s.caps.insert("aggregate.count".into());
-                (
-                    "count".into(),
-                    vec![(
-                        "count".into(),
-                        ir::Expression::Count {
-                            logical_type: LogicalType {
-                                family: Family::Integer,
-                                facets: json!({}),
-                                nullable: false,
-                            },
-                        },
-                    )],
-                )
-            }
-            ast::Output::Sum(c) => {
-                let argument = s.field(c)?;
-                if !matches!(
-                    argument.logical_type.family,
-                    Family::Integer | Family::Decimal
-                ) {
-                    return Err(fail("WFT-TYPE", "SUM requires an exact numeric field").at(&c.span));
-                }
-                let facets = if argument.logical_type.family == Family::Decimal {
-                    json!({"scale":argument.logical_type.facets["scale"]})
-                } else {
-                    json!({})
-                };
-                let t = LogicalType {
-                    family: argument.logical_type.family.clone(),
-                    facets,
-                    nullable: groups.is_empty(),
-                };
-                s.caps.insert("sum".into());
-                (
-                    "sum".into(),
-                    vec![(
-                        "sum".into(),
-                        ir::Expression::Sum {
-                            argument,
-                            logical_type: t,
-                        },
-                    )],
-                )
-            }
-            ast::Output::Related {
-                relationship,
-                bound,
-            } => {
-                if aggregate {
-                    return Err(fail("WFT-GROUPING", "RELATED_KEYS cannot be aggregated"));
-                }
-                let (r, scan) = s.record(&relationship.alias)?;
-                let rel = catalog.relationship_read(r, &relationship.field)?;
-                s.caps.insert("relationship.boundedKeys".into());
-                if rel.inverse {
-                    s.caps.insert("relationship.inverse".into());
-                }
-                (
-                    relationship.field.value.clone(),
-                    vec![(
-                        relationship.field.value.clone(),
-                        ir::Expression::RelatedKeys {
-                            scan,
-                            relationship: rel,
-                            bound: *bound,
-                        },
-                    )],
-                )
+            ProjectionSource::Extra(output) => {
+                extra.projection(&mut s, &extension, output, aggregate, &groups)?
             }
         };
         for (label, expression) in expressions {
@@ -422,19 +576,23 @@ pub(crate) fn resolve(
                 } else {
                     default.clone()
                 });
-            let implicit_field = p.alias.is_none() && matches!(p.output, ast::Output::Field(_))
-                && matches!(&expression, ir::Expression::Field { identity, .. }
+            let implicit_field = p.alias.is_none()
+                && matches!(p.output, ProjectionSource::Legacy(ast::Output::Field(_)))
+                && matches!(X::as_legacy(&expression), Some(ir::Expression::Field { identity, .. })
                     if s.graph.iter().any(|descriptor| descriptor.identity == *identity
                         && matches!(descriptor.shape, crate::application_model::Shape::Scalar { .. })));
             if let Some(previous) = labels.get(&name) {
                 if !implicit_field || !previous {
-                    return Err(fail("WFT-OUTPUT-NAME", "Repeated explicit or computed output name"));
+                    return Err(fail(
+                        "WFT-OUTPUT-NAME",
+                        "Repeated explicit or computed output name",
+                    ));
                 }
                 s.caps.insert("project.positionedOutputs".into());
             } else {
                 labels.insert(name.clone(), implicit_field);
             }
-            outputs.push(ir::Output { name, expression });
+            outputs.push(ResolvedOutput { name, expression });
         }
         if outputs.len() > 256 {
             return Err(fail("WFT-LIMIT", "Expanded output count exceeds 256"));
@@ -449,7 +607,13 @@ pub(crate) fn resolve(
     let order = q
         .order
         .iter()
-        .map(|c| if outer_join_scans.is_empty(){s.field(c)}else{s.presence_field03(c)})
+        .map(|c| {
+            if outer_join_scans.is_empty() {
+                s.field(c)
+            } else {
+                s.presence_field03(c)
+            }
+        })
         .collect::<Result<Vec<_>>>()?;
     if aggregate && order.iter().any(|f| !groups.iter().any(|g| same(f, g))) {
         return Err(fail("WFT-GROUPING", "Ordering field is not grouped"));
@@ -461,45 +625,97 @@ pub(crate) fn resolve(
         s.caps.insert("limit".into());
     }
     if q.distinct {
-        if aggregate || profile.is_some() || q.outputs.iter().any(|o| !matches!(o.output, ast::Output::Field(_))) {
+        if aggregate
+            || q.outputs
+                .iter()
+                .any(|o| !matches!(o.output, ProjectionSource::Legacy(ast::Output::Field(_))))
+        {
             return Err(fail("WFT-CAPABILITY", "DISTINCT requires direct required String Field projections without aggregation or page profile"));
         }
         for output in &outputs {
-            let ir::Expression::Field { scan: _, identity } = &output.expression else { return Err(fail("WFT-CAPABILITY", "Unsupported DISTINCT output")); };
-            let descriptor = s.graph.iter().find(|d| &d.identity == identity).ok_or_else(|| fail("WFT-TYPE", "Missing DISTINCT descriptor"))?;
-            if descriptor.availability.as_deref() != Some("required") || !matches!(&descriptor.shape, crate::application_model::Shape::Scalar { logical_type } if logical_type.family == Family::String && logical_type.facets == json!({}) && !logical_type.nullable) {
-                return Err(fail("WFT-CAPABILITY", "DISTINCT supports required non-null exact String Fields only"));
+            let Some(ir::Expression::Field { scan: _, identity }) =
+                X::as_legacy(&output.expression)
+            else {
+                return Err(fail("WFT-CAPABILITY", "Unsupported DISTINCT output"));
+            };
+            let descriptor = s
+                .graph
+                .iter()
+                .find(|d| &d.identity == identity)
+                .ok_or_else(|| fail("WFT-TYPE", "Missing DISTINCT descriptor"))?;
+            if descriptor.availability.as_deref() != Some("required")
+                || !matches!(&descriptor.shape, crate::application_model::Shape::Scalar { logical_type } if logical_type.family == Family::String && logical_type.facets == json!({}) && !logical_type.nullable)
+            {
+                return Err(fail(
+                    "WFT-CAPABILITY",
+                    "DISTINCT supports required non-null exact String Fields only",
+                ));
             }
         }
-        if order.iter().any(|field| !outputs.iter().any(|output| matches!(&output.expression, ir::Expression::Field { scan, identity } if scan == &field.scan && identity == &field.identity))) {
+        if order.iter().any(|field| !outputs.iter().any(|output| matches!(X::as_legacy(&output.expression), Some(ir::Expression::Field { scan, identity }) if scan == &field.scan && identity == &field.identity))) {
             return Err(fail("WFT-CAPABILITY", "DISTINCT ordering must reference an exact projected scan and Field identity"));
         }
         s.caps.insert("project.distinct".into());
     }
-    let mut having=Vec::new();
-    for h in &q.having {
-        let argument=if s.optional_field03(&h.argument)? {s.presence_field03(&h.argument)?} else {s.field(&h.argument)?};
-        let count=outputs.iter().find_map(|o|match &o.expression {ir::Expression::CountDistinct{argument:projected,..} if same(projected,&argument)=>Some(ir::Expression::CountDistinct{argument:argument.clone(),logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}}),_=>None})
-            .ok_or_else(||fail("WFT-GROUPING","HAVING count must match an explicitly projected COUNT DISTINCT scan and Field"))?;
-        let threshold=s.value(&old_ast::Value::Literal(h.threshold.clone()),&LogicalType{family:Family::Integer,facets:json!({}),nullable:false})?;
+    let mut having = Vec::new();
+    for h in q.having {
+        let argument = if s.optional_field03(&h.argument)? {
+            s.presence_field03(&h.argument)?
+        } else {
+            s.field(&h.argument)?
+        };
+        let count = outputs
+            .iter()
+            .find_map(|o| match X::as_legacy(&o.expression) {
+                Some(ir::Expression::CountDistinct {
+                    argument: projected,
+                    ..
+                }) if same(projected, &argument) => Some(ir::Expression::CountDistinct {
+                    argument: argument.clone(),
+                    logical_type: LogicalType {
+                        family: Family::Integer,
+                        facets: json!({}),
+                        nullable: false,
+                    },
+                }),
+                _ => None,
+            })
+            .ok_or_else(|| {
+                fail(
+                    "WFT-GROUPING",
+                    "HAVING count must match an explicitly projected COUNT DISTINCT scan and Field",
+                )
+            })?;
+        let threshold = s.value(
+            &old_ast::Value::Literal(h.threshold.clone()),
+            &LogicalType {
+                family: Family::Integer,
+                facets: json!({}),
+                nullable: false,
+            },
+        )?;
         s.caps.insert("aggregate.havingCountDistinctGreater".into());
-        having.push(ir::Having{count,threshold});
+        having.push(ResolvedHaving {
+            count: X::lift_legacy(count),
+            threshold,
+        });
     }
-    let page_key = None;
     if s.used.len() != s.parameters.len() {
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
     }
     s.caps.insert("project".into());
-    if s.graph.iter().any(|d|d.availability.as_deref()==Some("absent-allowed")) {s.caps.insert("value.nativeNull".into());}
-    Ok(ir::Plan {
+    if s.graph
+        .iter()
+        .any(|d| d.availability.as_deref() == Some("absent-allowed"))
+    {
+        s.caps.insert("value.nativeNull".into());
+    }
+    Ok(ResolvedParts {
         distinct: q.distinct,
-        ir_version: "weft-ir/0.3.0".into(),
         module_pins: catalog.pins(),
-        read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),
         type_graph: s.graph,
         source,
-        page_key,
         joins,
         outer_join_scans,
         filters,
@@ -509,8 +725,76 @@ pub(crate) fn resolve(
         outputs,
         order,
         limit: q.limit,
+        extension,
     })
 }
+
+pub(crate) fn resolve(
+    catalog: &Catalog,
+    q: ast::Query,
+    parameters: Parameters,
+    profile: Option<ir::ReadProfile>,
+) -> Result<ir::Plan> {
+    if profile.is_some() {
+        return Err(fail(
+            "WFT-PROFILE",
+            "Existing named application-read subsets do not admit arithmetic 0.3",
+        ));
+    }
+    let view = QueryView {
+        distinct: q.distinct,
+        outputs: q
+            .outputs
+            .iter()
+            .map(|p| ProjectionView {
+                output: ProjectionSource::Legacy(&p.output),
+                alias: p.alias.as_ref(),
+            })
+            .collect(),
+        source: &q.source,
+        joins: &q.joins,
+        predicates: &q.predicates,
+        groups: &q.groups,
+        having: &q.having,
+        order: &q.order,
+        limit: q.limit,
+    };
+    let p = resolve_parts(catalog, view, parameters, &Legacy)?;
+    Ok(ir::Plan {
+        distinct: p.distinct,
+        ir_version: "weft-ir/0.3.0".into(),
+        module_pins: p.module_pins,
+        read_profile: profile,
+        required_capabilities: p.required_capabilities,
+        type_graph: p.type_graph,
+        source: p.source,
+        page_key: None,
+        joins: p.joins,
+        outer_join_scans: p.outer_join_scans,
+        filters: p.filters,
+        groups: p.groups,
+        having: p
+            .having
+            .into_iter()
+            .map(|h| ir::Having {
+                count: h.count,
+                threshold: h.threshold,
+            })
+            .collect(),
+        aggregate: p.aggregate,
+        outputs: p
+            .outputs
+            .into_iter()
+            .map(|o| ir::Output {
+                name: o.name,
+                expression: o.expression,
+            })
+            .collect(),
+        order: p.order,
+        limit: p.limit,
+    })
+}
+
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.3.schema.json")]
 struct PlanSchema03;
 #[cfg(test)]
