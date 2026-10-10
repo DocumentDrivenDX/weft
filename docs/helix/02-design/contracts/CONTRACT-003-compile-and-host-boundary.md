@@ -194,3 +194,29 @@ re-entering WASM. The fatal envelope uses interface 0.1 because a damaged host
 cannot reliably determine the active request version; hosts must create a fresh
 module context/realm to recover. Ordinary compiler refusals retain the selected
 request interface version and do not poison the instance.
+
+## CLI byte transport
+
+The `weft-cli/0.1.0` component accepts one complete UTF-8 request on stdin
+through EOF and writes the unchanged `compile_json` response plus one LF on
+stdout. Exit zero means a complete transport response, including a normal
+blocked compiler response; the caller must inspect its status. Candidate and
+backend registration remain governed by CONTRACT-002 and build selection.
+
+Before constructing a string, the CLI MUST capture at most 16 MiB plus one
+sentinel byte. Requests longer than 16 MiB MUST fail transport. Input I/O
+failures and malformed UTF-8 MUST fail before compilation and emit no stdout.
+Fatal transport failures use exit 2 and one payload-free stderr code:
+`WEFT_CLI_INPUT_LIMIT`, `WEFT_CLI_INPUT_IO`, `WEFT_CLI_UTF8` or
+`WEFT_CLI_OUTPUT_IO`. Output I/O failure can leave a prefix; consumers MUST
+reject it on nonzero exit and MUST NOT release a partial artifact. No retry,
+compiler substitution or target fallback is implied. Total process memory,
+execution deadlines and cancellation remain host responsibilities.
+
+These byte-transport failures do not alter the string library interface, its
+versioned schemas or normal compiler diagnostics. Valid inputs preserve exact
+response strings and ordered arrays under the existing comparison rules.
+The produced CLI must be checked at the exact byte boundary, multibyte boundary,
+oversized input and malformed UTF-8, alongside ordinary response framing and
+the full declared compiler-profile corpus. A build alone establishes none of
+that conformance or native execution.
