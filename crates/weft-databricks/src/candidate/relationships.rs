@@ -9,6 +9,12 @@ struct Access {
     edge: String,
     physical: crate::binding::Relationship,
 }
+pub(super) struct RawAccess<'a> {
+    pub edge: &'a str,
+    pub endpoint: &'a str,
+    pub from_id: &'static str,
+    pub to_id: &'static str,
+}
 pub(super) struct Traversals {
     accesses: BTreeMap<String, Access>,
     next: usize,
@@ -35,10 +41,6 @@ fn fresh(lower: &Lower<'_>, next: &mut usize, suffix: &str) -> String {
 }
 impl Traversals {
     pub(super) fn collect(lower: &mut Lower<'_>, plan: &app::Plan) -> Result<Self> {
-        let mut result = Self {
-            accesses: BTreeMap::new(),
-            next: 0,
-        };
         let mut refs = Vec::new();
         for p in plan
             .filters
@@ -60,6 +62,10 @@ impl Traversals {
                 refs.push((scan, relationship));
             }
         }
+        Self::collect_reads(lower, refs)
+    }
+    pub(super) fn collect_reads<'r>(lower: &mut Lower<'_>, refs: impl IntoIterator<Item = (&'r String, &'r RelationshipRead)>) -> Result<Self> {
+        let mut result = Self { accesses: BTreeMap::new(), next: 0 };
         for (scan, r) in refs {
             lower.physical_ids.insert(scan.clone());
             if result.accesses.contains_key(&key(r)) {
@@ -221,6 +227,10 @@ impl Traversals {
         } else {
             (a, &a.target, "source_id", "target_id")
         })
+    }
+    pub(super) fn raw<'a>(&'a self, r: &RelationshipRead) -> Result<RawAccess<'a>> {
+        let (access, endpoint, from_id, to_id) = self.endpoint(r)?;
+        Ok(RawAccess { edge: &access.edge, endpoint, from_id, to_id })
     }
     pub(super) fn exists(
         &self,

@@ -4,6 +4,7 @@ mod arithmetic;
 pub(crate) fn lower_arithmetic(context: &Context<'_>, binding: &Binding, plan: &weft_core::arithmetic_plan::Plan) -> Result<TargetPlan> { arithmetic::lower(context,binding,plan) }
 pub(crate) mod compound;
 mod relationships;
+pub(crate) mod path_lowering;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};

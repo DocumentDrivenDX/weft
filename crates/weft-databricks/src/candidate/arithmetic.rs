@@ -9,7 +9,7 @@ use weft_core::{
 };
 const MAX_SCALE: u64 = 18;
 #[derive(Clone)]
-struct Coefficient {
+pub(super) struct Coefficient {
     sql: String,
     scale: u64,
 }
@@ -19,7 +19,7 @@ fn scale(domain: &Domain) -> u64 {
         Domain::Decimal { scale } => *scale,
     }
 }
-fn field_expression(field: &app::Field) -> Expression {
+pub(super) fn field_expression(field: &app::Field) -> Expression {
     Expression::Field {
         scan: field.scan.clone(),
         identity: field.identity.clone(),
@@ -27,10 +27,10 @@ fn field_expression(field: &app::Field) -> Expression {
         span: field.span.clone(),
     }
 }
-fn collect_field(lower: &mut Lower<'_>, field: &app::Field) {
+pub(super) fn collect_field(lower: &mut Lower<'_>, field: &app::Field) {
     collect_expression(&field_expression(field), &mut lower.fields)
 }
-fn collect_numeric(lower: &mut Lower<'_>, e: &Numeric) {
+pub(super) fn collect_numeric(lower: &mut Lower<'_>, e: &Numeric) {
     match &e.kind {
         Kind::Field { field } => collect_field(lower, field),
         Kind::Negate { operand } => collect_numeric(lower, operand),
@@ -41,7 +41,7 @@ fn collect_numeric(lower: &mut Lower<'_>, e: &Numeric) {
         Kind::Literal { .. } | Kind::Parameter { .. } => {}
     }
 }
-fn numeric_identities(expression: &Numeric, fallback: &Identity) -> Vec<Identity> {
+pub(super) fn numeric_identities(expression: &Numeric, fallback: &Identity) -> Vec<Identity> {
     fn visit(expression: &Numeric, identities: &mut BTreeMap<String, Identity>) {
         match &expression.kind {
             Kind::Field { field } => {
@@ -64,7 +64,7 @@ fn collect_value(lower: &mut Lower<'_>, v: &app::Value) {
         collect_field(lower, field)
     }
 }
-fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> Result<()> {
+pub(super) fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> Result<()> {
     match p {
         plan::Predicate::StringIn{field,values}=>{collect_field(lower,field);for value in values{collect_value(lower,value)}},
         plan::Predicate::NullTest{field,..}=>collect_field(lower,field),
@@ -185,7 +185,7 @@ fn align(value: Coefficient, target: u64, guards: &mut Vec<String>) -> Result<Co
         guards,
     )
 }
-fn numeric(lower: &mut Lower<'_>, e: &Numeric, guards: &mut Vec<String>) -> Result<Coefficient> {
+pub(super) fn numeric(lower: &mut Lower<'_>, e: &Numeric, guards: &mut Vec<String>) -> Result<Coefficient> {
     let result = match &e.kind {
         Kind::Field { field } => coefficient_field(lower, field, guards)?,
         Kind::Literal { value: token } => {
@@ -334,7 +334,7 @@ fn pair(
         ))
     }
 }
-fn predicate(
+pub(super) fn predicate(
     lower: &mut Lower<'_>,
     p: &plan::Predicate,
     guards: &mut Vec<String>,
@@ -405,7 +405,7 @@ fn predicate(
         },
     }
 }
-fn check(
+pub(super) fn check(
     lower: &Lower<'_>,
     checks: &mut Vec<Value>,
     phase: &str,
@@ -420,7 +420,7 @@ fn check(
     let filter = filter.map_or(condition.clone(), |f| format!("({f}) AND {condition}"));
     checks.push(json!({"phase":phase,"sql":format!("WITH {} SELECT CAST(COUNT(*) AS STRING) AS violations FROM {from} WHERE {filter}",lower.ctes.join(", "))}));
 }
-fn decimal_text(value: &Coefficient) -> String {
+pub(super) fn decimal_text(value: &Coefficient) -> String {
     if value.scale == 0 {
         return format!("CAST({} AS STRING)", value.sql);
     }

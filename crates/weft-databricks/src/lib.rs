@@ -19,3 +19,6 @@ pub mod count_having;
 
 /// Explicit scalar String outer-join profile.
 pub mod left_join;
+
+/// Explicit Backend03 candidate; native acceptance remains a host obligation.
+pub mod paths;
