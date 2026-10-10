@@ -9,6 +9,8 @@ const read = (p: string) => readFile(resolve(root, p), 'utf8');
 const json = async (p: string) => JSON.parse(await read(p));
 const assert = (ok: unknown, message: string): asserts ok => { if (!ok) throw new Error(message); };
 async function walk(p: string): Promise<string[]> {
+  // Byte-preserved historical copies are evidence, not governing instances or schemas.
+  if (p === 'docs/helix/04-build/evidence') return [];
   const entries = await readdir(resolve(root, p), { withFileTypes: true });
   return (await Promise.all(entries.map(e => e.isDirectory() ? walk(`${p}/${e.name}`) : [`${p}/${e.name}`]))).flat();
 }

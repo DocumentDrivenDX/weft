@@ -38,6 +38,7 @@ jobs:
       - name: Check distribution metadata boundaries
         run: |
           bun test tests/distribution-manifest/schema.test.ts
+          bun test tests/specification-scope/checker.test.ts
           python3 -m unittest discover -s tests/distribution-source-metadata -q
       - name: Build browser ESM and declarations
         run: bun run browser:build
