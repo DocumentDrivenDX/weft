@@ -1,0 +1,3819 @@
+{
+  "version": "0.1.0",
+  "scope": "FEAT-008 first security qualification; planned required tests, not execution evidence",
+  "cases": [
+    {
+      "id": "S01",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC1"
+      ],
+      "name": "qualified-ontology-path",
+      "assertion": "Resolve Staff/Project/Ownership/Assignment and require active Assignment to same owning Project.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S01"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S01"
+      ]
+    },
+    {
+      "id": "S02",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC2"
+      ],
+      "name": "qualified-identity-collision",
+      "assertion": "Same labels in different documents never join; exact typed keys and Unicode remain distinct.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S02"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S02"
+      ]
+    },
+    {
+      "id": "S03",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC3"
+      ],
+      "name": "invalid-typed-expression",
+      "assertion": "Reject wrong endpoint role, undeclared action, boolean/string comparison, unknown operator and depth/node excess.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S03"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S03"
+      ]
+    },
+    {
+      "id": "S04",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC4"
+      ],
+      "name": "mandatory-overrides-broad-grant",
+      "assertion": "Broad read permit plus false mandatory membership denies; forbid dominates all permits; rule permutation agrees.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S04"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S04"
+      ]
+    },
+    {
+      "id": "S05",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC5"
+      ],
+      "name": "active-membership-and-owner-quantifier",
+      "assertion": "Active same-Project allows; inactive, missing, sibling Client/Project denies; any/all and ownerless behavior explicit.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S05"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S05"
+      ]
+    },
+    {
+      "id": "S06",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC6"
+      ],
+      "name": "incomplete-trust-refusal",
+      "assertion": "Missing/ambiguous subject, incomplete assignment inventory, stale cut or untrusted attribute refuses entire collection.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S06"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S06"
+      ]
+    },
+    {
+      "id": "S07",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC7"
+      ],
+      "name": "disclosure-dispositions",
+      "assertion": "Null, absence, withheld, constant transform and output type survive encoding; false permits add no obligations; absent protected disposition refuses.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S07"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S07"
+      ]
+    },
+    {
+      "id": "S08",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC8"
+      ],
+      "name": "protected-query-use",
+      "assertion": "Predicate/order/group/join/aggregate uses disclosed representation or explicit original-use action; withheld use refuses.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S08"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S08"
+      ]
+    },
+    {
+      "id": "S09",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC9"
+      ],
+      "name": "native-unknown-roundtrip",
+      "assertion": "Preserve unknown rules and native source byte content where promised; unknown security meaning blocks interpretation.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S09"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S09"
+      ]
+    },
+    {
+      "id": "S10",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC10"
+      ],
+      "name": "bun-browser-parity",
+      "assertion": "Same policy/facts/diagnostics and refusal outcomes in Bun and Chromium, no host globals or external requests.",
+      "required": true,
+      "layer": "contract/browser",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tools/security/browser.ts"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tools/security/browser.ts",
+      "oracleSource": "tests/security/browser-corpus.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts",
+        "src/extensions/security/authority-guard.ts",
+        "src/extensions/security/write.ts",
+        "tests/security/write-fixture.ts",
+        "src/extensions/security/dependencies.ts",
+        "src/extensions/security/disclosure.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S10",
+        "S10:disclosure"
+      ]
+    },
+    {
+      "id": "S11",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC3"
+      ],
+      "name": "generated-invalid-policy",
+      "assertion": "Generate corrupted references/types/unknown members; no fabricated trusted issuer or stale classification admits.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S11"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "implementationSources": [
+        "tests/security/fixture.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/types.ts",
+        "src/model/json.ts",
+        "src/model/serialization.ts",
+        "src/model/schema-literals.ts",
+        "src/model/types.ts",
+        "src/registry/registry.ts",
+        "src/validation/schema.ts",
+        "src/validation/document.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/relationships.ts",
+        "src/validation/keys.ts",
+        "src/validation/facets.ts",
+        "spec/extensions/security/schema.json",
+        "spec/extensions/security/ontology.schema.json",
+        "spec/extensions/security/package.json",
+        "bun.lock",
+        "tests/security/evaluation-fixture.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/model/key-tuple.ts",
+        "src/extensions/security/registration.ts"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S11"
+      ]
+    },
+    {
+      "id": "S12",
+      "backend": "semantic",
+      "covers": [
+        "US-079-AC4",
+        "US-079-AC2",
+        "US-079-AC8",
+        "US-056-AC10",
+        "US-056-AC1"
+      ],
+      "name": "formal-counterexample-controls",
+      "assertion": "Retain SAT weakened controls and UNSAT scoped safety checks; assumptions have positive witnesses.",
+      "required": true,
+      "layer": "contract",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/formal-acceptance.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json",
+      "testSource": "tests/security/formal-acceptance.py",
+      "oracleSource": "tests/security/formal-oracle.json",
+      "implementationSources": [
+        "docs/helix/02-design/spikes/security/prove.py",
+        "docs/helix/02-design/contracts/CONTRACT-062-security-semantics.md",
+        "docs/helix/02-design/contracts/CONTRACT-063-security-enforcement.md"
+      ],
+      "timeoutMs": 30000,
+      "assertionIds": [
+        "S12"
+      ]
+    },
+    {
+      "id": "pg-raw.B01",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "name": "read-membership",
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B01.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B01"
+      ]
+    },
+    {
+      "id": "pg-raw.B02",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "name": "association-endpoints",
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B02.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql",
+        "tools/security/pg-association.py",
+        "tools/security/reviewed-python.py"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B02"
+      ]
+    },
+    {
+      "id": "pg-raw.B03",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "name": "collection-operators",
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B03.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B03"
+      ]
+    },
+    {
+      "id": "pg-raw.B04",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "direct-storage-bypass",
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B04.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B04"
+      ]
+    },
+    {
+      "id": "pg-raw.B05",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "native-role-escalation",
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B05.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-pool.ts"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B05"
+      ]
+    },
+    {
+      "id": "pg-raw.B06",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "definer-resolution",
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B06.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B06"
+      ]
+    },
+    {
+      "id": "pg-raw.B07",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "logical-property-masking",
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B07.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-disclosure.ts",
+        "tests/security/fixture.ts",
+        "src/adapters/arrow/capture.ts",
+        "src/adapters/arrow/flatbuffer-decode.ts",
+        "src/adapters/arrow/flatbuffer-encode.ts",
+        "src/adapters/arrow/flatbuffer-layout.ts",
+        "src/adapters/arrow/flatbuffer-model.ts",
+        "src/adapters/arrow/index.ts",
+        "src/adapters/arrow/ipc-consistency.ts",
+        "src/adapters/arrow/ipc-layout.ts",
+        "src/adapters/arrow/ipc-rename.ts",
+        "src/adapters/arrow/ipc.ts",
+        "src/adapters/avro/avsc.d.ts",
+        "src/adapters/avro/facet-type.ts",
+        "src/adapters/avro/index.ts",
+        "src/adapters/avro/metadata.ts",
+        "src/adapters/dbt/artifact.ts",
+        "src/adapters/dbt/graph.ts",
+        "src/adapters/dbt/index.ts",
+        "src/adapters/dbt/selection.ts",
+        "src/adapters/dbt/semantic.ts",
+        "src/adapters/delta/actions.ts",
+        "src/adapters/delta/column-mapping.ts",
+        "src/adapters/delta/index.ts",
+        "src/adapters/delta/log.ts",
+        "src/adapters/delta/multipart.ts",
+        "src/adapters/delta/parquet-checkpoint.ts",
+        "src/adapters/delta/parquet.ts",
+        "src/adapters/delta/reconcile.ts",
+        "src/adapters/delta/rename.ts",
+        "src/adapters/delta/sidecars.ts",
+        "src/adapters/delta/spark-hash.ts",
+        "src/adapters/delta/stat-scalar.ts",
+        "src/adapters/delta/table.ts",
+        "src/adapters/generalized-rdf/index.ts",
+        "src/adapters/graphql/index.ts",
+        "src/adapters/iceberg/index.ts",
+        "src/adapters/iceberg/table-context.ts",
+        "src/adapters/iceberg/table-promotion.ts",
+        "src/adapters/iceberg/table-rename.ts",
+        "src/adapters/iceberg/table-transforms.ts",
+        "src/adapters/iceberg/table.ts",
+        "src/adapters/iceberg/transforms.ts",
+        "src/adapters/javascript-numeric.ts",
+        "src/adapters/json-schema/index.ts",
+        "src/adapters/json-schema/tree.ts",
+        "src/adapters/jsonld/index.ts",
+        "src/adapters/jsonld/rdf-terms.ts",
+        "src/adapters/linkml/class-slots.ts",
+        "src/adapters/linkml/imports.ts",
+        "src/adapters/linkml/index.ts",
+        "src/adapters/linkml/merge.ts",
+        "src/adapters/linkml/slot-values.ts",
+        "src/adapters/odcs/index.ts",
+        "src/adapters/odcs/references.ts",
+        "src/adapters/odcs/relationships.ts",
+        "src/adapters/odcs/rename.ts",
+        "src/adapters/openapi/dynamic.ts",
+        "src/adapters/openapi/extraction.ts",
+        "src/adapters/openapi/index.ts",
+        "src/adapters/openapi/references.ts",
+        "src/adapters/openapi/schemas.ts",
+        "src/adapters/openapi/scope.ts",
+        "src/adapters/openapi/validation.ts",
+        "src/adapters/owl/annotations.ts",
+        "src/adapters/owl/axioms.ts",
+        "src/adapters/owl/declarations.ts",
+        "src/adapters/owl/expressions.ts",
+        "src/adapters/owl/index.ts",
+        "src/adapters/owl/list-axioms.ts",
+        "src/adapters/parquet/arrow-rename.ts",
+        "src/adapters/parquet/arrow-schema.ts",
+        "src/adapters/parquet/bodies.ts",
+        "src/adapters/parquet/compact.ts",
+        "src/adapters/parquet/containers.ts",
+        "src/adapters/parquet/encode.ts",
+        "src/adapters/parquet/facet-type.ts",
+        "src/adapters/parquet/field-metadata.ts",
+        "src/adapters/parquet/footer.ts",
+        "src/adapters/parquet/hybrid.ts",
+        "src/adapters/parquet/idl-map.ts",
+        "src/adapters/parquet/index.ts",
+        "src/adapters/parquet/json-text.ts",
+        "src/adapters/parquet/levels.ts",
+        "src/adapters/parquet/logical.ts",
+        "src/adapters/parquet/metadata.ts",
+        "src/adapters/parquet/pages.ts",
+        "src/adapters/parquet/physical.ts",
+        "src/adapters/parquet/plain.ts",
+        "src/adapters/parquet/rename.ts",
+        "src/adapters/parquet/repair-offsets.ts",
+        "src/adapters/parquet/rewrite.ts",
+        "src/adapters/parquet/rows.ts",
+        "src/adapters/parquet/schema.ts",
+        "src/adapters/parquet/snappy.ts",
+        "src/adapters/parquet/transform.ts",
+        "src/adapters/parquet/values.ts",
+        "src/adapters/postgresql/cardinality-catalog.ts",
+        "src/adapters/postgresql/catalog.ts",
+        "src/adapters/postgresql/column-metadata.ts",
+        "src/adapters/postgresql/declarations.ts",
+        "src/adapters/postgresql/facet-catalog.ts",
+        "src/adapters/postgresql/facet-node-tree.ts",
+        "src/adapters/postgresql/facet-predicate.ts",
+        "src/adapters/postgresql/facet-resolved-predicate.ts",
+        "src/adapters/postgresql/facet-typmod.ts",
+        "src/adapters/postgresql/index.ts",
+        "src/adapters/postgresql/key-catalog.ts",
+        "src/adapters/postgresql/key-correlation.ts",
+        "src/adapters/protobuf/descriptor.ts",
+        "src/adapters/protobuf/index.ts",
+        "src/adapters/protobuf/source.ts",
+        "src/adapters/rdf/index.ts",
+        "src/adapters/shacl/engine.ts",
+        "src/adapters/shacl/float.ts",
+        "src/adapters/shacl/index.ts",
+        "src/adapters/shacl/lists.ts",
+        "src/adapters/shacl/metadata.ts",
+        "src/adapters/shacl/numeric.ts",
+        "src/adapters/shacl/strings.ts",
+        "src/adapters/smithy/assembly.ts",
+        "src/adapters/smithy/index.ts",
+        "src/adapters/smithy/selection.ts",
+        "src/adapters/smithy/source-profile.ts",
+        "src/adapters/smithy/sources.ts",
+        "src/adapters/smithy/worker.ts",
+        "src/adapters/spark/collations.ts",
+        "src/adapters/spark/index.ts",
+        "src/adapters/spark/metadata.ts",
+        "src/adapters/spark/parameters.ts",
+        "src/adapters/spark/rename.ts",
+        "src/adapters/sqlserver/facet-constraints.ts",
+        "src/adapters/sqlserver/facet-predicate.ts",
+        "src/adapters/sqlserver/facet-type.ts",
+        "src/adapters/sqlserver/index.ts",
+        "src/adapters/tablespec/index.ts",
+        "src/adapters/typespec/compiler.ts",
+        "src/adapters/typespec/emission.ts",
+        "src/adapters/typespec/index.ts",
+        "src/adapters/typespec/libraries.ts",
+        "src/adapters/typespec/semantic.ts",
+        "src/core-ideals/avro-availability-type.ts",
+        "src/core-ideals/avro-cardinality-type.ts",
+        "src/core-ideals/avro-carriers.ts",
+        "src/core-ideals/avro-facet-selection.ts",
+        "src/core-ideals/avro-field.ts",
+        "src/core-ideals/avro-record-type.ts",
+        "src/core-ideals/avro-record.ts",
+        "src/core-ideals/avro-records.ts",
+        "src/core-ideals/cardinality-avro-projection.ts",
+        "src/core-ideals/cardinality-avro.ts",
+        "src/core-ideals/cardinality-parquet-projection.ts",
+        "src/core-ideals/cardinality-parquet.ts",
+        "src/core-ideals/cardinality-postgresql-projection.ts",
+        "src/core-ideals/cardinality-postgresql.ts",
+        "src/core-ideals/cardinality-sqlserver-projection.ts",
+        "src/core-ideals/cardinality-sqlserver.ts",
+        "src/core-ideals/cardinality-tablespec-projection.ts",
+        "src/core-ideals/cardinality-tablespec.ts",
+        "src/core-ideals/classification-report.ts",
+        "src/core-ideals/facets-avro-projection.ts",
+        "src/core-ideals/facets-avro.ts",
+        "src/core-ideals/facets-parquet-projection.ts",
+        "src/core-ideals/facets-parquet.ts",
+        "src/core-ideals/facets-postgresql-projection.ts",
+        "src/core-ideals/facets-postgresql.ts",
+        "src/core-ideals/facets-sqlserver-projection.ts",
+        "src/core-ideals/facets-sqlserver.ts",
+        "src/core-ideals/facets-tablespec-projection.ts",
+        "src/core-ideals/facets-tablespec.ts",
+        "src/core-ideals/field-avro-projection.ts",
+        "src/core-ideals/field-parquet-projection.ts",
+        "src/core-ideals/field-postgresql-projection.ts",
+        "src/core-ideals/field-report.ts",
+        "src/core-ideals/field-sqlserver-projection.ts",
+        "src/core-ideals/field-tablespec-projection.ts",
+        "src/core-ideals/key-avro-projection.ts",
+        "src/core-ideals/key-avro.ts",
+        "src/core-ideals/key-parquet-projection.ts",
+        "src/core-ideals/key-parquet.ts",
+        "src/core-ideals/key-postgresql-projection.ts",
+        "src/core-ideals/key-postgresql.ts",
+        "src/core-ideals/key-sqlserver-carriers.ts",
+        "src/core-ideals/key-sqlserver-projection.ts",
+        "src/core-ideals/key-sqlserver.ts",
+        "src/core-ideals/key-tablespec-projection.ts",
+        "src/core-ideals/key-tablespec.ts",
+        "src/core-ideals/nullability-avro-projection.ts",
+        "src/core-ideals/nullability-avro.ts",
+        "src/core-ideals/nullability-parquet-projection.ts",
+        "src/core-ideals/nullability-parquet.ts",
+        "src/core-ideals/nullability-postgresql-projection.ts",
+        "src/core-ideals/nullability-postgresql.ts",
+        "src/core-ideals/nullability-sqlserver-projection.ts",
+        "src/core-ideals/nullability-sqlserver.ts",
+        "src/core-ideals/nullability-tablespec-projection.ts",
+        "src/core-ideals/nullability-tablespec.ts",
+        "src/core-ideals/parquet-cardinality-carrier.ts",
+        "src/core-ideals/parquet-cardinality-shape.ts",
+        "src/core-ideals/parquet-carriers.ts",
+        "src/core-ideals/parquet-facet-carrier.ts",
+        "src/core-ideals/parquet-field.ts",
+        "src/core-ideals/parquet-key-carrier.ts",
+        "src/core-ideals/parquet-record-type.ts",
+        "src/core-ideals/parquet-record.ts",
+        "src/core-ideals/postgresql-composite.ts",
+        "src/core-ideals/postgresql-ddl-kinds.ts",
+        "src/core-ideals/postgresql-field.ts",
+        "src/core-ideals/postgresql-record.ts",
+        "src/core-ideals/postgresql-syntax.ts",
+        "src/core-ideals/record-avro-projection.ts",
+        "src/core-ideals/record-parquet-projection.ts",
+        "src/core-ideals/record-postgresql-projection.ts",
+        "src/core-ideals/record-report.ts",
+        "src/core-ideals/record-sqlserver-projection.ts",
+        "src/core-ideals/record-tablespec-projection.ts",
+        "src/core-ideals/relationship-avro-carrier.ts",
+        "src/core-ideals/relationship-avro-projection.ts",
+        "src/core-ideals/relationship-avro.ts",
+        "src/core-ideals/relationship-extras.ts",
+        "src/core-ideals/relationship-parquet-carrier.ts",
+        "src/core-ideals/relationship-parquet-projection.ts",
+        "src/core-ideals/relationship-parquet.ts",
+        "src/core-ideals/relationship-postgresql.ts",
+        "src/core-ideals/relationship-sqlserver-projection.ts",
+        "src/core-ideals/relationship-sqlserver.ts",
+        "src/core-ideals/relationship-tablespec-projection.ts",
+        "src/core-ideals/relationship-tablespec.ts",
+        "src/core-ideals/sqlserver-field.ts",
+        "src/core-ideals/sqlserver-record.ts",
+        "src/core-ideals/sqlserver-syntax.ts",
+        "src/core-ideals/structured-report.ts",
+        "src/core-ideals/tablespec-facet-suite.ts",
+        "src/core-ideals/tablespec-field.ts",
+        "src/core-ideals/tablespec-record.ts",
+        "src/extensions/binding/index.ts",
+        "src/extensions/ddd/index.ts",
+        "src/extensions/security/authority-guard.ts",
+        "src/extensions/security/dependencies.ts",
+        "src/extensions/security/disclosure.ts",
+        "src/extensions/security/evaluate.ts",
+        "src/extensions/security/logic.ts",
+        "src/extensions/security/policy.ts",
+        "src/extensions/security/registration.ts",
+        "src/extensions/security/types.ts",
+        "src/extensions/security/write.ts",
+        "src/index.ts",
+        "src/model/cardinality-transition.ts",
+        "src/model/cardinality.ts",
+        "src/model/document.ts",
+        "src/model/facet-transition.ts",
+        "src/model/facets.ts",
+        "src/model/field-kind.ts",
+        "src/model/field-transition.ts",
+        "src/model/json.ts",
+        "src/model/key-transition.ts",
+        "src/model/key-tuple.ts",
+        "src/model/keys.ts",
+        "src/model/native-json.ts",
+        "src/model/nullability-transition.ts",
+        "src/model/nullability.ts",
+        "src/model/record-type.ts",
+        "src/model/relationship-selection.ts",
+        "src/model/relationship-transition.ts",
+        "src/model/relationships.ts",
+        "src/model/schema-literals.ts",
+        "src/model/schema-properties-transition-schema.ts",
+        "src/model/schema-properties-transition.ts",
+        "src/model/schema-properties.ts",
+        "src/model/selection-schemas.ts",
+        "src/model/selection.ts",
+        "src/model/serialization.ts",
+        "src/model/types.ts",
+        "src/projections/arrow-spark.ts",
+        "src/projections/avro-json-schema.ts",
+        "src/projections/avro-tablespec.ts",
+        "src/projections/binding-delta/index.ts",
+        "src/projections/binding-iceberg/index.ts",
+        "src/projections/binding-parquet/index.ts",
+        "src/projections/binding-postgresql/indexes.ts",
+        "src/projections/binding-sqlserver/index.ts",
+        "src/projections/binding-sqlserver/indexes.ts",
+        "src/projections/binding-sqlserver/relationship-layout.ts",
+        "src/projections/binding-sqlserver/tables-indexes.ts",
+        "src/projections/binding-sqlserver/tables.ts",
+        "src/projections/ddd-graphql/entities.ts",
+        "src/projections/ddd-graphql/index.ts",
+        "src/projections/ddd-json-schema.ts",
+        "src/projections/ddd-postgresql/index.ts",
+        "src/projections/ddd-postgresql/relationship-layout.ts",
+        "src/projections/ddd-postgresql/tables-indexes.ts",
+        "src/projections/ddd-postgresql/tables.ts",
+        "src/projections/graphql-input-json-schema.ts",
+        "src/projections/json-schema-protobuf.ts",
+        "src/projections/openapi-json-schema.ts",
+        "src/projections/parquet-avro.ts",
+        "src/projections/postgresql-avro.ts",
+        "src/projections/postgresql-json-schema.ts",
+        "src/projections/smithy-json-schema.ts",
+        "src/projections/spark-arrow.ts",
+        "src/projections/sqlserver-avro.ts",
+        "src/projections/sqlserver-ddl.ts",
+        "src/projections/tablespec-avro.ts",
+        "src/projections/tablespec-via-avro.ts",
+        "src/projections/typespec-json-schema.ts",
+        "src/registry/registry.ts",
+        "src/types/jsonld-browser.d.ts",
+        "src/types/n3-browser.d.ts",
+        "src/validation/catalog-integers.ts",
+        "src/validation/document.ts",
+        "src/validation/facets.ts",
+        "src/validation/keys.ts",
+        "src/validation/relationships.ts",
+        "src/validation/schema-properties.ts",
+        "src/validation/schema.ts"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B07"
+      ]
+    },
+    {
+      "id": "pg-raw.B08",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "mask-query-semantics",
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.B08"
+      ]
+    },
+    {
+      "id": "pg-raw.B09",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "unsupported-activation",
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.B09"
+      ]
+    },
+    {
+      "id": "pg-raw.B10",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC8"
+      ],
+      "name": "private-fact-observation",
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "required": true,
+      "layer": "native",
+      "status": "counterexample-found",
+      "command": null,
+      "evidence": "docs/helix/04-build/evidence/security/pg-private-diagnostics.json",
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.B10"
+      ]
+    },
+    {
+      "id": "pg-raw.B11",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC9"
+      ],
+      "name": "inventory-drift",
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B11.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql",
+        "tools/security/pg-inventory.py",
+        "tools/security/reviewed-python.py"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B11"
+      ]
+    },
+    {
+      "id": "pg-raw.B12",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "receipt-source-custody",
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.B12"
+      ]
+    },
+    {
+      "id": "pg-raw.B13",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC1"
+      ],
+      "name": "identity-carrier-collision",
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-identity-probe.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B13.json",
+      "testSource": "tools/security/pg-raw-identity-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-identity-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tests/security/native/pg-raw-composite-identity.sql",
+        "tests/security/native/pg-raw-hash-identity.sql",
+        "tools/security/pg-inventory.py",
+        "tools/security/pg-raw-identity-runtime.ts",
+        "tools/security/pg-runtime-dependencies.py",
+        "tests/security/native/pg-runtime-dependency-inventory.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/package.json"
+      ],
+      "timeoutMs": 120000,
+      "assertionIds": [
+        "pg-raw.B13"
+      ]
+    },
+    {
+      "id": "pg-raw.B14",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "privileged-negative-control",
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B14.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B14"
+      ]
+    },
+    {
+      "id": "pg-raw.B15",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "incomplete-collection",
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B15.json",
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.sql",
+        "tools/security/pg-authority-cut.py",
+        "tools/security/reviewed-python.py"
+      ],
+      "timeoutMs": 90000,
+      "assertionIds": [
+        "pg-raw.B15"
+      ]
+    },
+    {
+      "id": "pg-raw.B16",
+      "backend": "pg-raw",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "performance-resource-budget",
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "required": true,
+      "layer": "native",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-scale.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B16.json",
+      "testSource": "tests/security/native/pg-raw-scale.py",
+      "oracleSource": "tests/security/native/pg-raw-scale-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tools/security/pg-raw-B16-runtime.ts",
+        "tests/security/native/pg-runtime-dependency-inventory.json",
+        "tools/security/pg-runtime-dependencies.py",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js"
+      ],
+      "timeoutMs": 240000,
+      "assertionIds": [
+        "pg-raw.B16"
+      ]
+    },
+    {
+      "id": "pg-raw.L01",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "write-old-new-state",
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-write-probe.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L01.json",
+      "testSource": "tools/security/pg-raw-write-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-write-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tests/security/native/pg-raw-write.sql",
+        "tools/security/pg-inventory.py",
+        "tools/security/pg-write-inventory.py",
+        "tools/security/pg-raw-write-runtime.ts",
+        "tools/security/pg-raw-write-typecheck.json",
+        "tools/security/pg-runtime-dependencies.py",
+        "tests/security/native/pg-runtime-dependency-inventory.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/package.json"
+      ],
+      "timeoutMs": 120000,
+      "assertionIds": [
+        "pg-raw.L01"
+      ]
+    },
+    {
+      "id": "pg-raw.L02",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "field-write-authority",
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-field-write-probe.py"
+      ],
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L02.json",
+      "testSource": "tools/security/pg-raw-field-write-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-field-write-oracle.json",
+      "implementationSources": [
+        "tests/security/native/pg-raw-membership.py",
+        "tests/security/native/pg-raw-membership.sql",
+        "tests/security/native/pg-raw-membership-oracle.json",
+        "tests/security/native/pg-raw-write.sql",
+        "tests/security/native/pg-raw-field-write.sql",
+        "tools/security/pg-inventory.py",
+        "tools/security/pg-write-inventory.py",
+        "tools/security/pg-raw-field-write-runtime.ts",
+        "tools/security/pg-raw-field-write-typecheck.json",
+        "tools/security/pg-runtime-dependencies.py",
+        "tests/security/native/pg-runtime-dependency-inventory.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/empty.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-cloudflare@1.4.1/node_modules/pg-cloudflare/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-connection-string@2.14.1/node_modules/pg-connection-string/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-int8@1.0.1/node_modules/pg-int8/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-pool@3.14.0+635858982ab829dd/node_modules/pg-pool/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/b.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-reader.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/buffer-writer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/inbound-parser.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/messages.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/outbound-serializer.test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/parser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/dist/serializer.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/esm/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-protocol@1.16.1/node_modules/pg-protocol/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/arrayParser.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/binaryParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/builtins.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/lib/textParsers.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg-types@2.2.0/node_modules/pg-types/test/types.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/esm/index.mjs",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection-parameters.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/connection.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/cert-signatures.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/sasl.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-legacy.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils-webcrypto.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/crypto/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/defaults.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/client.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/native/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/query.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/result.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/stream.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/type-overrides.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/lib/utils.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pg@8.16.3+635858982ab829dd/node_modules/pg/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/helper.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/lib/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/pgpass@1.0.5/node_modules/pgpass/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-array@2.0.0/node_modules/postgres-array/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-bytea@1.0.1/node_modules/postgres-bytea/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-date@1.0.7/node_modules/postgres-date/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/postgres-interval@1.2.0/node_modules/postgres-interval/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/bench.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/index.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/split2@4.2.0/node_modules/split2/test.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/immutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/mutable.js",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/package.json",
+        "/private/tmp/ashlar-truss-runtime/node_modules/.bun/xtend@4.0.2/node_modules/xtend/test.js",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/index.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/native-query.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/wire.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/src/journal.ts",
+        "/Users/erik/Projects/truss/packages/pg-runtime/package.json"
+      ],
+      "timeoutMs": 120000,
+      "assertionIds": [
+        "pg-raw.L02"
+      ]
+    },
+    {
+      "id": "pg-raw.L03",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "revocation-drain-barrier",
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L03"
+      ]
+    },
+    {
+      "id": "pg-raw.L04",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "streaming-revocation",
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L04"
+      ]
+    },
+    {
+      "id": "pg-raw.L05",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "read-after-acknowledgment",
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L05"
+      ]
+    },
+    {
+      "id": "pg-raw.L06",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "old-snapshot-new-generation",
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L06"
+      ]
+    },
+    {
+      "id": "pg-raw.L07",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "historical-owner-current-authority",
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L07"
+      ]
+    },
+    {
+      "id": "pg-raw.L08",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "native-history-policy-eligibility",
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L08"
+      ]
+    },
+    {
+      "id": "pg-raw.L09",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC5"
+      ],
+      "name": "cursor-cache-rebinding",
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L09"
+      ]
+    },
+    {
+      "id": "pg-raw.L10",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC6"
+      ],
+      "name": "derived-copy-feed-propagation",
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L10"
+      ]
+    },
+    {
+      "id": "pg-raw.L11",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "missing-custody-or-guard",
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L11"
+      ]
+    },
+    {
+      "id": "pg-raw.L12",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC8"
+      ],
+      "name": "activation-rollback",
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L12"
+      ]
+    },
+    {
+      "id": "pg-raw.L13",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "authority-change-exhaustiveness",
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L13"
+      ]
+    },
+    {
+      "id": "pg-raw.L14",
+      "backend": "pg-raw",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "effective-date-boundary",
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "pg-raw.L14"
+      ]
+    },
+    {
+      "id": "truss.B01",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "name": "read-membership",
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B01"
+      ]
+    },
+    {
+      "id": "truss.B02",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "name": "association-endpoints",
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B02"
+      ]
+    },
+    {
+      "id": "truss.B03",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "name": "collection-operators",
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B03"
+      ]
+    },
+    {
+      "id": "truss.B04",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "direct-storage-bypass",
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B04"
+      ]
+    },
+    {
+      "id": "truss.B05",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "native-role-escalation",
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B05"
+      ]
+    },
+    {
+      "id": "truss.B06",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "definer-resolution",
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B06"
+      ]
+    },
+    {
+      "id": "truss.B07",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "logical-property-masking",
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B07"
+      ]
+    },
+    {
+      "id": "truss.B08",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "mask-query-semantics",
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B08"
+      ]
+    },
+    {
+      "id": "truss.B09",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "unsupported-activation",
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B09"
+      ]
+    },
+    {
+      "id": "truss.B10",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC8"
+      ],
+      "name": "private-fact-observation",
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B10"
+      ]
+    },
+    {
+      "id": "truss.B11",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC9"
+      ],
+      "name": "inventory-drift",
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B11"
+      ]
+    },
+    {
+      "id": "truss.B12",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "receipt-source-custody",
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B12"
+      ]
+    },
+    {
+      "id": "truss.B13",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC2"
+      ],
+      "name": "identity-carrier-collision",
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B13"
+      ]
+    },
+    {
+      "id": "truss.B14",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "privileged-negative-control",
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B14"
+      ]
+    },
+    {
+      "id": "truss.B15",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "incomplete-collection",
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B15"
+      ]
+    },
+    {
+      "id": "truss.B16",
+      "backend": "truss",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "performance-resource-budget",
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.B16"
+      ]
+    },
+    {
+      "id": "truss.L01",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "write-old-new-state",
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L01"
+      ]
+    },
+    {
+      "id": "truss.L02",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "field-write-authority",
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L02"
+      ]
+    },
+    {
+      "id": "truss.L03",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "revocation-drain-barrier",
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L03"
+      ]
+    },
+    {
+      "id": "truss.L04",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "streaming-revocation",
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L04"
+      ]
+    },
+    {
+      "id": "truss.L05",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "read-after-acknowledgment",
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L05"
+      ]
+    },
+    {
+      "id": "truss.L06",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "old-snapshot-new-generation",
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L06"
+      ]
+    },
+    {
+      "id": "truss.L07",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "historical-owner-current-authority",
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L07"
+      ]
+    },
+    {
+      "id": "truss.L08",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "native-history-policy-eligibility",
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L08"
+      ]
+    },
+    {
+      "id": "truss.L09",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC5"
+      ],
+      "name": "cursor-cache-rebinding",
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L09"
+      ]
+    },
+    {
+      "id": "truss.L10",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC6"
+      ],
+      "name": "derived-copy-feed-propagation",
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L10"
+      ]
+    },
+    {
+      "id": "truss.L11",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "missing-custody-or-guard",
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L11"
+      ]
+    },
+    {
+      "id": "truss.L12",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC8"
+      ],
+      "name": "activation-rollback",
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L12"
+      ]
+    },
+    {
+      "id": "truss.L13",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "authority-change-exhaustiveness",
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L13"
+      ]
+    },
+    {
+      "id": "truss.L14",
+      "backend": "truss",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "effective-date-boundary",
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "truss.L14"
+      ]
+    },
+    {
+      "id": "delta-raw.B01",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC3"
+      ],
+      "name": "read-membership",
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B01"
+      ]
+    },
+    {
+      "id": "delta-raw.B02",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC3"
+      ],
+      "name": "association-endpoints",
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B02"
+      ]
+    },
+    {
+      "id": "delta-raw.B03",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC3"
+      ],
+      "name": "collection-operators",
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B03"
+      ]
+    },
+    {
+      "id": "delta-raw.B04",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "direct-storage-bypass",
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B04"
+      ]
+    },
+    {
+      "id": "delta-raw.B05",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "native-role-escalation",
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B05"
+      ]
+    },
+    {
+      "id": "delta-raw.B06",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "definer-resolution",
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B06"
+      ]
+    },
+    {
+      "id": "delta-raw.B07",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "logical-property-masking",
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B07"
+      ]
+    },
+    {
+      "id": "delta-raw.B08",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "mask-query-semantics",
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B08"
+      ]
+    },
+    {
+      "id": "delta-raw.B09",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "unsupported-activation",
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B09"
+      ]
+    },
+    {
+      "id": "delta-raw.B10",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC8"
+      ],
+      "name": "private-fact-observation",
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B10"
+      ]
+    },
+    {
+      "id": "delta-raw.B11",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC9"
+      ],
+      "name": "inventory-drift",
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B11"
+      ]
+    },
+    {
+      "id": "delta-raw.B12",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "receipt-source-custody",
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B12"
+      ]
+    },
+    {
+      "id": "delta-raw.B13",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC3"
+      ],
+      "name": "identity-carrier-collision",
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B13"
+      ]
+    },
+    {
+      "id": "delta-raw.B14",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "privileged-negative-control",
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B14"
+      ]
+    },
+    {
+      "id": "delta-raw.B15",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "incomplete-collection",
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B15"
+      ]
+    },
+    {
+      "id": "delta-raw.B16",
+      "backend": "delta-raw",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "performance-resource-budget",
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.B16"
+      ]
+    },
+    {
+      "id": "delta-raw.L01",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "write-old-new-state",
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L01"
+      ]
+    },
+    {
+      "id": "delta-raw.L02",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "field-write-authority",
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L02"
+      ]
+    },
+    {
+      "id": "delta-raw.L03",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "revocation-drain-barrier",
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L03"
+      ]
+    },
+    {
+      "id": "delta-raw.L04",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "streaming-revocation",
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L04"
+      ]
+    },
+    {
+      "id": "delta-raw.L05",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "read-after-acknowledgment",
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L05"
+      ]
+    },
+    {
+      "id": "delta-raw.L06",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "old-snapshot-new-generation",
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L06"
+      ]
+    },
+    {
+      "id": "delta-raw.L07",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "historical-owner-current-authority",
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L07"
+      ]
+    },
+    {
+      "id": "delta-raw.L08",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "native-history-policy-eligibility",
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L08"
+      ]
+    },
+    {
+      "id": "delta-raw.L09",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC5"
+      ],
+      "name": "cursor-cache-rebinding",
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L09"
+      ]
+    },
+    {
+      "id": "delta-raw.L10",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC6"
+      ],
+      "name": "derived-copy-feed-propagation",
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L10"
+      ]
+    },
+    {
+      "id": "delta-raw.L11",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "missing-custody-or-guard",
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L11"
+      ]
+    },
+    {
+      "id": "delta-raw.L12",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC8"
+      ],
+      "name": "activation-rollback",
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L12"
+      ]
+    },
+    {
+      "id": "delta-raw.L13",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "authority-change-exhaustiveness",
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L13"
+      ]
+    },
+    {
+      "id": "delta-raw.L14",
+      "backend": "delta-raw",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "effective-date-boundary",
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "delta-raw.L14"
+      ]
+    },
+    {
+      "id": "ashlar.B01",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC4"
+      ],
+      "name": "read-membership",
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B01"
+      ]
+    },
+    {
+      "id": "ashlar.B02",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC4"
+      ],
+      "name": "association-endpoints",
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B02"
+      ]
+    },
+    {
+      "id": "ashlar.B03",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC4"
+      ],
+      "name": "collection-operators",
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B03"
+      ]
+    },
+    {
+      "id": "ashlar.B04",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "direct-storage-bypass",
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B04"
+      ]
+    },
+    {
+      "id": "ashlar.B05",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "native-role-escalation",
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B05"
+      ]
+    },
+    {
+      "id": "ashlar.B06",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "definer-resolution",
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B06"
+      ]
+    },
+    {
+      "id": "ashlar.B07",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "logical-property-masking",
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B07"
+      ]
+    },
+    {
+      "id": "ashlar.B08",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC6"
+      ],
+      "name": "mask-query-semantics",
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B08"
+      ]
+    },
+    {
+      "id": "ashlar.B09",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "unsupported-activation",
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B09"
+      ]
+    },
+    {
+      "id": "ashlar.B10",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC8"
+      ],
+      "name": "private-fact-observation",
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B10"
+      ]
+    },
+    {
+      "id": "ashlar.B11",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC9"
+      ],
+      "name": "inventory-drift",
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B11"
+      ]
+    },
+    {
+      "id": "ashlar.B12",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "receipt-source-custody",
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B12"
+      ]
+    },
+    {
+      "id": "ashlar.B13",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC4"
+      ],
+      "name": "identity-carrier-collision",
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B13"
+      ]
+    },
+    {
+      "id": "ashlar.B14",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC5"
+      ],
+      "name": "privileged-negative-control",
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B14"
+      ]
+    },
+    {
+      "id": "ashlar.B15",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC7"
+      ],
+      "name": "incomplete-collection",
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B15"
+      ]
+    },
+    {
+      "id": "ashlar.B16",
+      "backend": "ashlar",
+      "covers": [
+        "US-056-AC10"
+      ],
+      "name": "performance-resource-budget",
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "required": true,
+      "layer": "native",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.B16"
+      ]
+    },
+    {
+      "id": "ashlar.L01",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "write-old-new-state",
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L01"
+      ]
+    },
+    {
+      "id": "ashlar.L02",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC1"
+      ],
+      "name": "field-write-authority",
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L02"
+      ]
+    },
+    {
+      "id": "ashlar.L03",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "revocation-drain-barrier",
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L03"
+      ]
+    },
+    {
+      "id": "ashlar.L04",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC2"
+      ],
+      "name": "streaming-revocation",
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L04"
+      ]
+    },
+    {
+      "id": "ashlar.L05",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "read-after-acknowledgment",
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L05"
+      ]
+    },
+    {
+      "id": "ashlar.L06",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "old-snapshot-new-generation",
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L06"
+      ]
+    },
+    {
+      "id": "ashlar.L07",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "historical-owner-current-authority",
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L07"
+      ]
+    },
+    {
+      "id": "ashlar.L08",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC4"
+      ],
+      "name": "native-history-policy-eligibility",
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L08"
+      ]
+    },
+    {
+      "id": "ashlar.L09",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC5"
+      ],
+      "name": "cursor-cache-rebinding",
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L09"
+      ]
+    },
+    {
+      "id": "ashlar.L10",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC6"
+      ],
+      "name": "derived-copy-feed-propagation",
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L10"
+      ]
+    },
+    {
+      "id": "ashlar.L11",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "missing-custody-or-guard",
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L11"
+      ]
+    },
+    {
+      "id": "ashlar.L12",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC8"
+      ],
+      "name": "activation-rollback",
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L12"
+      ]
+    },
+    {
+      "id": "ashlar.L13",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC3"
+      ],
+      "name": "authority-change-exhaustiveness",
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L13"
+      ]
+    },
+    {
+      "id": "ashlar.L14",
+      "backend": "ashlar",
+      "covers": [
+        "US-057-AC7"
+      ],
+      "name": "effective-date-boundary",
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "required": true,
+      "layer": "native-concurrent",
+      "status": "not-run",
+      "command": null,
+      "evidence": null,
+      "testSource": null,
+      "oracleSource": null,
+      "implementationSources": [],
+      "timeoutMs": 60000,
+      "assertionIds": [
+        "ashlar.L14"
+      ]
+    }
+  ],
+  "runnerContract": "CONTRACT-063 fresh execution gate protocol; commands are argv arrays, not shell text"
+}

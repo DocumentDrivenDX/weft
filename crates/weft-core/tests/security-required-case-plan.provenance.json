@@ -1,0 +1,9 @@
+{
+  "sourceRepository": "https://github.com/DocumentDrivenDX/umf",
+  "sourceCommit": "ad59620aa7037838292c44ca40ec2f8c96c1406c",
+  "sourcePath": "docs/helix/03-test/security/cases.json",
+  "sha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+  "bytes": 147740,
+  "requiredCases": 132,
+  "scope": "Exact original planned requirement snapshot, not execution evidence or authenticated qualification. No command is executed by catalog admission."
+}

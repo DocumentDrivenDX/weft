@@ -33,6 +33,25 @@ pub(crate) struct Issued<'a,'d,'m,'c,'s> {
 impl Issued<'_, '_, '_, '_, '_> {
  pub(crate) fn required(&self)->&InstancePremise {&self.required}
 }
+/// Separate catalog-bound result; ordinary0.1 trusted-case issuance stays unchanged.
+#[allow(dead_code)]
+pub(crate) struct CatalogIssued<'a,'d,'m,'c,'s>{issued:Issued<'a,'d,'m,'c,'s>,catalog:&'a crate::security_case_catalog::CaseCatalog}
+#[allow(dead_code)]
+impl CatalogIssued<'_, '_, '_, '_, '_>{
+ pub(crate) fn required(&self)->&InstancePremise{self.issued.required()}
+ pub(crate) fn pending_cases(&self)->&BTreeSet<String>{self.catalog.required()}
+ pub(crate) fn original_case(&self,id:&str)->Result<&serde_json::Value>{self.catalog.original_case(id)}
+}
+/// Hash/source correspondence is conditional on the independently trusted pins.
+/// This does not authenticate either premise or verify a native case execution.
+#[allow(dead_code)]
+pub(crate) fn issue_catalog_bound<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,catalog:&'a crate::security_case_catalog::CaseCatalog)->Result<CatalogIssued<'a,'d,'m,'c,'s>>{
+ let actual=owner.coverage().declaration().manifest_json();
+ // Registry admission bounds this immutable source to one MiB. Refuse foreign
+ // profile strings before hashing; no caller-controlled unbounded hash work.
+ if actual.len()>1024*1024||profile.registration_json!=actual||crate::json::sha256(actual.as_bytes())!=catalog.registration_sha256()||profile.cases!=*catalog.required(){return Err(fail());}
+ Ok(CatalogIssued{issued:issue(owner,profile)?,catalog})
+}
 struct Budget{work:usize,text:usize}
 impl Budget {
  fn charge(&mut self,bytes:usize)->Result<()> {if self.work==0||self.text<bytes{return Err(fail());}self.work-=1;self.text-=bytes;Ok(())}

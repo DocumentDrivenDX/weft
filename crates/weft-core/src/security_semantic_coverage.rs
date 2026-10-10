@@ -1109,4 +1109,29 @@ mod tests{
    for atom in r.base.atoms.iter().filter(|a|a.origin=="also-complete"){let mut missing=r.clone();missing.base.atoms.remove(atom);assert!(crate::security_obligation_matching::match_instances(owner,custody,&missing).is_err());}
   });
  }
+
+ #[test]
+ fn catalog_bound_issuer_keeps_all_original_backend_assertions_pending(){
+  use crate::security_case_catalog::CaseCatalog;
+  use crate::security_requirement_templates::{issue_catalog_bound,Selector};
+  const RAW:&str=include_str!("../tests/security-required-case-plan.json");
+  const PIN:&str="37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9";
+  with_template_fixture(|owner,custody,profile|{
+   let registration=crate::json::sha256(profile.registration_json.as_bytes());
+   for backend in ["pg-raw","truss","delta-raw","ashlar"]{
+    let catalog=CaseCatalog::read(RAW,PIN,backend,&registration).unwrap();
+    assert!(issue_catalog_bound(owner,profile,&catalog).is_err()); // Original two-case fixture cannot masquerade as42-case catalog.
+    let mut full=profile.clone();full.cases=catalog.required().clone();
+    for t in full.templates.values_mut(){t.cases=if t.selector==Selector::Selected{full.cases.clone()}else{BTreeSet::from(["S01".into()])};}
+    let issued=issue_catalog_bound(owner,&full,&catalog).unwrap();assert_eq!(issued.pending_cases().len(),42);
+    assert_eq!(issued.required().base.atoms.len(),117);assert_eq!(issued.required().instances.len(),33);
+    assert!(crate::security_obligation_matching::match_instances(owner,custody,issued.required()).is_err()); // Changed case inventory cannot match the old two-case original declarations.
+    for cap in ["all","unused-staff"]{let actual=issued.required().base.atoms.iter().filter(|a|a.origin==cap&&matches!(a.subject,crate::security_obligation_matching::Subject::SelectedCapability{..})).map(|a|a.case.clone()).collect::<BTreeSet<_>>();assert_eq!(actual,*issued.pending_cases());}
+    assert_eq!(issued.original_case("S10").unwrap()["assertionIds"],json!(["S10","S10:disclosure"]));
+    let mut missing=full.clone();missing.cases.remove("S10");for t in missing.templates.values_mut(){t.cases.remove("S10");}assert!(issue_catalog_bound(owner,&missing,&catalog).is_err());
+    let wrong=CaseCatalog::read(RAW,PIN,backend,&"0".repeat(64)).unwrap();assert!(issue_catalog_bound(owner,&full,&wrong).is_err());
+    let mut oversized=full.clone();oversized.registration_json="x".repeat(1024*1024+1);assert!(issue_catalog_bound(owner,&oversized,&catalog).is_err());
+   }
+  });
+ }
 }

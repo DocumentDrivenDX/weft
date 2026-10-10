@@ -1,0 +1,15 @@
+{
+  "version": "weft.security.case-catalog-run/0.1.0",
+  "exitCode": 0,
+  "finishedAt": "2026-10-10T22:27:06.977810+00:00",
+  "sourcePinsUnchanged": true,
+  "changedInputs": [],
+  "testGroups": 44,
+  "passed": 573,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "measured": 0,
+  "workspaceLogSha256": "5f43811263cb0d5f1aec1911311ca129def0942b3924a317f0912af4e74f886b",
+  "declaredSources": 833
+}

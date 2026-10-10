@@ -315,3 +315,24 @@ subset. Specification checks pass for51 artifacts/31 schemas/30 compiler criteri
 636 fixtures, separately from security acceptance. Development failures and their
 corrections are retained; exact failed-attempt source snapshots were not captured,
 so those logs do not support source-qualified claims. The goal remains active.
+
+
+### B-008 original required-case catalog binding — 2026-10-10
+
+Under CONTRACT-006 and UMF CONTRACT-063, catalog custody now preserves the exact
+147,740-byte original132-case plan with explicit source SHA256 and selected
+backend/registration premises. Each selected backend retains all12 shared and30
+backend cases, their complete original assertions/procedures and unresolved
+metadata. Catalog-bound template expansion requires this exact42-case inventory,
+even for selected zero-edge deployment duties. S10's additional assertion and
+B10's counterexample/absent procedure stay intact. No command is executed and
+all native qualification remains pending. The ordinary private trusted-case path
+and historical receipts retain their original meaning.
+
+Expected plan/registration hashes and backend association are not authenticated.
+The test catalog's template-to-case assignments are synthetic, not independently
+qualified production mappings. Separate catalog, template and rule phase bounds
+do not prove native/Rust refinement or aggregate resource bounds. All original132
+cases remain binding, no acceptance case is promoted, and B-008 remains open.
+
+Validation checkpoint: the frozen workspace run passed 573 tests across 44 groups (230 core), with all 833 declared input pins unchanged and zero failed, ignored, measured, or filtered tests. Astra ultra independently audited the terminal receipts and four new test results with no blockers. See [retained checkpoint](evidence/security-case-catalog/checkpoint.json). All 42 selected backend cases remain pending; no authentication or native enforcement acceptance is promoted.

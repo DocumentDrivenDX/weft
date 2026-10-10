@@ -1542,3 +1542,34 @@ contracts and every required kind at one whole eligible capability per actual sc
 source completeness cannot authorize a fragmented codec/privacy result. This
 private boundary does not authenticate its profile, select a production backend,
 emit SQL, establish native cases or grant authorization/publication authority.
+
+
+#### Private original case catalog custody
+
+A separate catalog-bound template result retains the exact original UMF
+required-case-plan0.1 bytes under an independently supplied SHA256 pin and an
+explicit trusted backend-label/registration-hash association. Catalog admission
+requires all132 original IDs:12 shared semantic plus30 for each of pg-raw, Truss,
+delta-raw and Ashlar. A selected backend retains42 complete original case records,
+including assertion text/IDs, coverage, ordered command arguments and source lists,
+timeouts, absent procedures/evidence and counterexample status. S10's additional
+`S10:disclosure` assertion cannot disappear. Status and procedure presence do not
+remove a required case or supply execution evidence. Commands are never executed
+by this compiler boundary. The full original byte snapshot is preserved.
+
+The bridge requires exact registered-source correspondence and all42 profile case
+IDs before template expansion. It hashes only the immutable one-MiB-bounded owner
+registration; foreign/unbounded profile strings refuse before hashing. Existing
+private trusted-case issuance remains unchanged. Catalog-bound issuance retains
+pending cases and cannot match original declarations with a shorter case inventory.
+Its output is still conditional requirement custody, not native qualification.
+
+The reader has separate bounded JSON parsing and retention work (1m visits/16m
+text,4m input bytes,depth64). It rejects duplicate JSON keys, incomplete/duplicate/
+foreign IDs, nonrequired cases, missing original assertion IDs, unknown selected
+record fields and exhausted ledgers. Parsing temporaries are bounded separately;
+these ledgers are not total process memory/CPU bounds. Expected source pins and
+backend/registration association remain trusted host premises; an agreeing caller
+hash cannot authenticate a profile. Template sufficiency, live procedure source
+pins, native observations, installation/authority freshness and publication gates
+remain required. This implementation does not execute the132 acceptance cases.
