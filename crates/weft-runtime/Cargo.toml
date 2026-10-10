@@ -4,6 +4,7 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+ashlar-databricks-paths=["dep:weft-databricks"]
 ashlar-databricks-left-join=["dep:weft-databricks"]
 ashlar-databricks-count-distinct=["dep:weft-databricks"]
 ashlar-databricks-count-having=["dep:weft-databricks"]

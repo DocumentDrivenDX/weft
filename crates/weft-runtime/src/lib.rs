@@ -1,4 +1,6 @@
 //! Pure build-time composition. Hosts explicitly select trusted adapter versions.
+#[cfg(feature = "ashlar-databricks-paths")]
+pub mod paths;
 #[cfg(any(
     all(feature="ashlar-databricks-left-join", any(feature="ashlar-databricks-count-having", feature="ashlar-databricks-count-distinct",feature="ashlar-databricks-arithmetic",feature="ashlar-databricks-candidate",feature="ashlar-databricks-qualified",feature="ashlar-databricks-mathematical-integer")),
     all(
