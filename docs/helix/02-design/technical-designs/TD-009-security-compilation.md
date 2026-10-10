@@ -109,3 +109,59 @@ tables and implementation abstractions, negated UNSAT checks, SAT witnesses and
 deliberately broken permit/withheld counterexamples. Host-only dependencies
 remain outside the core. Retained evidence maps each stable property to its
 actual code, test and fixture fingerprints; no full FR19–22 acceptance is claimed.
+
+## Remaining protected-read realization — 2026-10-10
+
+The B-008 continuation in the implementation plan sequences remaining
+US-009-AC1–AC4 work. Existing original admission/query/handoff and separately
+typed candidate graph source/IR/dependency/composition/mixed-witness simulation
+are reusable foundation components. They remain conditional on supplied facts;
+no draft plan authenticates a subject or releases a protected result.
+
+S00 must reconcile exact upstream security contracts in the UMF security
+worktree, choose source/request/response/matching versions and update
+CONTRACT-001/002/003/005 and schemas before dependent implementation. The
+blocked-only0.3 response cannot silently become executable. Graph query bridging,
+closed semantic capability matching and compiled disclosure/result domains are
+open contract decisions; this design does not invent their normative payloads.
+
+Component ownership remains the reviewed architecture/module map. Core owns
+private-constructor requirements derived from the actual admitted plan/profile,
+complete scan-action-rule inventory and ordered resolved outputs. Backends own
+physical mappings, interpreted coverage and SQL/result carriers. Hosts own
+original actors, complete private-fact issuers/current cuts, installed inventory,
+publication and final release. Boundary changes precede feature code and run
+`bun run modules:check`; operational configuration follows CONTRACT-006 outside
+core. Existing B-009 scoped concern overrides require review on activation.
+
+The compiler must retain all selected requirements, including unsupported
+COUNT/SUM/relationship cases, and refuse incomplete coverage. Conservative
+possible-disposition envelopes never replace runtime evaluation of every scoped
+rule. Stored facts and trusted context remain distinct; exact transform/output
+identity and original/null/absent/withheld distinctions survive result admission.
+Candidate graph consumers require actual query/scan integration and whole-cut
+admission, not merely the existing single-rule simulator.
+
+Extend formal properties only with reviewed authority/bounds and independent
+Rust/SQL correspondence. New graph coverage, owner-derived result coverage,
+capability completeness and release ordering are separate obligations from the
+R5 finite truth/disposition model. Counterexamples include omitted rule/action/
+output occurrence, false-grant mapping, incomplete empty cuts, stale source and
+release before guard completion. Native concurrency evidence must use real
+barriers/observations and cannot be substituted by an abstract liveness claim.
+
+STP-009 allocates new positive/negative tests; B-008 S05–S12 qualify each physical
+profile separately. Rollback withdraws the changed capability/activation tuple,
+retains prior protection and refuses stale profiles. Public activation remains
+blocked until its exact source/result/native contract and all required evidence
+pass. Authentication, write execution and backend installation stay externally
+owned prerequisites rather than new compiler side effects.
+
+Capability admission requires coherent complete scan/action and whole-application
+bundles, compatibility across selected capabilities and refusal before backend
+invocation when coverage is fragmented or selected meaning is unknown. Native
+authority/query-carrier populations require bidirectional selected-Key and
+normalized-value correspondence before filtering; omitted/extra/duplicate rows,
+same-typed Key-component swaps and stale values are explicit refusal controls.
+Current main version/artifact-ID collisions are an integration prerequisite;
+checkpoint foundation claims do not qualify the reconciled composition.
