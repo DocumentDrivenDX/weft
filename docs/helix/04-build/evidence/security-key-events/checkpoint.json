@@ -40,8 +40,25 @@
     "key-address-formal.json": "ffa571fd7e912cba62017442e86b86581cd1586b82053ad796b4a1146058d18d",
     "pre-fixture-correction-formal.log": "4e413c2f163a63e9d7e0cb3d986311619a0df020ba166b64b1343a2015782769",
     "pre-fixture-correction-key-address-formal.json": "ce2ca2c78991ee71094c152b8dc9f033e316afab9e84e6f2d18c18a33350441c",
+    "spec-check.log": "4d7687d1dd58669070b91970c0d496d4ed2b3ad4ea55d92ffbf5bdb18c228f9a",
     "start.json": "c305623ba921ab4107da3e5c103dd82e6e3a2eed8f9491df4ed88646da8e0c12",
     "terminal.json": "378413dfe15439cf5a0caeee37cae8d4e407e502a7c842c7abbaeb769faf7ada",
     "workspace-release.log": "04755dfec37263ce762848234e65f8d048d7e9b29802befbfa537ec76e15cf11"
+  },
+  "specCheck": {
+    "command": "bun scripts/check-specs.ts",
+    "exitCode": 0,
+    "artifacts": 51,
+    "schemas": 31,
+    "plannedCriteria": 30,
+    "fixtureScenarios": 636,
+    "scope": "Governed artifacts/schema/corpus only, no compiler/native/embedding execution"
+  },
+  "postMerge": {
+    "mergeCommit": "cdd0fd9a16ad9047127e8727263ca969c1135156",
+    "incomingMain": "d83da1e",
+    "all823TestedInputsUnchanged": true,
+    "all4FormalInputsUnchanged": true,
+    "incomingScope": "Distribution CLI/boundary tooling, CI and retained evidence; no Cargo inputs changed. Incoming Python/distribution tools not independently qualified by Rust suite."
   }
 }
