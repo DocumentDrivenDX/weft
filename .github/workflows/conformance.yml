@@ -45,6 +45,7 @@ jobs:
           bun test tests/specification-scope/checker.test.ts
           python3 -m unittest discover -s tests/distribution-source-metadata -q
           python3 -m unittest discover -s tests/distribution-assembly -q
+          python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-paths-corpus -q
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance
