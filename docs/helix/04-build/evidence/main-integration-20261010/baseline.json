@@ -33,5 +33,7 @@
   "baselineSha256": "c6fb495551698317fde59ac216bf36a1cf0175c6ed12f1272e45f90d1fa1a490",
   "differencesSha256": "5f450ece85f1a8652f8d7732f4a6422c106c5261c9ebdbb100efba443c99a7b8",
   "sourceInputsSha256": "f2bb77b10168faf1231bae7d71b58002161f8523a07c1a6b6bc2cdcd14db9769",
-  "scope": "Independent clean pinned-main compiler reference for integration compatibility, not an independent native oracle. Unchanged outputs retain byte correspondence to historical native-qualified outputs. Changed outputs do not inherit native qualification. Fresh hosts and hosted CI remain separate gates."
+  "scope": "Independent clean pinned-main compiler reference for integration compatibility, not an independent native oracle. Unchanged complete response objects equal historical native-qualified receipt objects. Changed outputs do not inherit native qualification. Fresh hosts and hosted CI remain separate gates.",
+  "comparison": "complete parsed JSON response objects; historical raw wire bytes were not compared",
+  "reviewClarification": "Astra review corrected the original generator scope wording; observed comparisons, counts, artifacts and hashes remain unchanged."
 }
