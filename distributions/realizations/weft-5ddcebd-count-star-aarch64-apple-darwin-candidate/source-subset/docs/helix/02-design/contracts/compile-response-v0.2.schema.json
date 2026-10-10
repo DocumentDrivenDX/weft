@@ -1,0 +1,989 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.2.0"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^WFT-[A-Z0-9-]+$"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning",
+                  "info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "enum": [
+                  "input",
+                  "model",
+                  "parse",
+                  "resolve",
+                  "type",
+                  "capability",
+                  "lower",
+                  "emit",
+                  "host"
+                ]
+              },
+              "sourceSpan": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "additionalProperties": false
+              },
+              "identity": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "pointer": {
+                "type": "string"
+              },
+              "recoverability": {
+                "enum": [
+                  "correct-input",
+                  "change-profile",
+                  "host-action",
+                  "none"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "severity",
+              "message",
+              "phase",
+              "recoverability"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "status": {
+          "const": "blocked"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "diagnostics",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.2.0"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^WFT-[A-Z0-9-]+$"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning",
+                  "info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "enum": [
+                  "input",
+                  "model",
+                  "parse",
+                  "resolve",
+                  "type",
+                  "capability",
+                  "lower",
+                  "emit",
+                  "host"
+                ]
+              },
+              "sourceSpan": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "additionalProperties": false
+              },
+              "identity": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "pointer": {
+                "type": "string"
+              },
+              "recoverability": {
+                "enum": [
+                  "correct-input",
+                  "change-profile",
+                  "host-action",
+                  "none"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "severity",
+              "message",
+              "phase",
+              "recoverability"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "status": {
+          "const": "compiled"
+        },
+        "dialect": {
+          "const": "weft-sql/0.2.0"
+        },
+        "compilerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modelPins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "umfVersion": {
+                "enum": ["0.7.0", "0.8.0"]
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "umfVersion",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "backend": {
+          "type": "object",
+          "properties": {
+            "backendId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "backendVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "targetProfile": {
+              "type": "string",
+              "minLength": 1
+            },
+            "interfaceVersion": {
+              "const": "weft-backend/0.2.0"
+            }
+          },
+          "required": [
+            "backendId",
+            "backendVersion",
+            "targetProfile",
+            "interfaceVersion"
+          ],
+          "additionalProperties": false
+        },
+        "bindingSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "logicalPlan": {
+          "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "logicalType": {
+                "type": "object",
+                "properties": {
+                  "family": {
+                    "enum": [
+                      "boolean",
+                      "string",
+                      "integer",
+                      "decimal"
+                    ]
+                  },
+                  "facets": {
+                    "type": "object"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "family",
+                  "nullable"
+                ],
+                "additionalProperties": false
+              },
+              "value": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "position",
+              "logicalType",
+              "value",
+              "origin"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 1024
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "outputName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "representation": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "logicalType": {
+                        "type": "object",
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "boolean",
+                              "string",
+                              "integer",
+                              "decimal"
+                            ]
+                          },
+                          "facets": {
+                            "type": "object"
+                          },
+                          "nullable": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "family",
+                          "facets",
+                          "nullable"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "carrier": {
+                        "enum": [
+                          "text",
+                          "boolean"
+                        ]
+                      },
+                      "decoder": {
+                        "enum": [
+                          "text",
+                          "boolean",
+                          "exact-integer",
+                          "exact-decimal"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "logicalType",
+                      "carrier",
+                      "decoder"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "value"
+                      },
+                      "descriptor": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "element": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "element"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "nativeNull": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "descriptor",
+                      "nativeNull"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "relatedKeys"
+                      },
+                      "relationship": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "relationship": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "relationship"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "key": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "documentId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "revision": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "module": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "element": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "documentId",
+                                "revision",
+                                "module",
+                                "element"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          },
+                          "types": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "family": {
+                                  "enum": [
+                                    "boolean",
+                                    "string",
+                                    "integer",
+                                    "decimal"
+                                  ]
+                                },
+                                "facets": {
+                                  "type": "object"
+                                },
+                                "nullable": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "family",
+                                "facets",
+                                "nullable"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields",
+                          "types"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "relationship",
+                      "key",
+                      "bound"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "sourceIdentities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "documentId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "revision": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "module": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "documentId",
+                    "revision",
+                    "module",
+                    "element"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "nullable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "position",
+              "outputName",
+              "representation",
+              "sourceIdentities",
+              "nullable"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "obligations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "parameters": {
+                "type": "object"
+              },
+              "owner": {
+                "enum": [
+                  "host",
+                  "backend"
+                ]
+              },
+              "failureCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "parameters",
+              "owner",
+              "failureCode"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "qualification": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "candidate",
+                "conformance-verified"
+              ]
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "assumptions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "assessment": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "candidate",
+                          "unsupported"
+                        ]
+                      },
+                      "evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "uniqueItems": true
+                      },
+                      "obligations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "parameters": {
+                              "type": "object"
+                            },
+                            "owner": {
+                              "enum": [
+                                "host",
+                                "backend"
+                              ]
+                            },
+                            "failureCode": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "parameters",
+                            "owner",
+                            "failureCode"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "status",
+                      "evidence",
+                      "obligations"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "declaration": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "logicalDomain": {
+                        "type": "object",
+                        "minProperties": 1
+                      },
+                      "resultDomain": {
+                        "type": "object",
+                        "minProperties": 1
+                      },
+                      "constraints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 0,
+                        "uniqueItems": true
+                      },
+                      "obligations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "parameters": {
+                              "type": "object"
+                            },
+                            "owner": {
+                              "enum": [
+                                "host",
+                                "backend"
+                              ]
+                            },
+                            "failureCode": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "parameters",
+                            "owner",
+                            "failureCode"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 0
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "candidate",
+                          "unsupported"
+                        ]
+                      },
+                      "evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 0,
+                        "uniqueItems": true
+                      },
+                      "targetProfiles": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "languageProfiles": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "uniqueItems": true,
+                        "items": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "dialectProfile": {
+                                  "const": "weft-sql/0.1.0"
+                                },
+                                "irVersion": {
+                                  "const": "weft-ir/0.1.0"
+                                }
+                              },
+                              "required": [
+                                "dialectProfile",
+                                "irVersion"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "dialectProfile": {
+                                  "const": "weft-sql/0.2.0"
+                                },
+                                "irVersion": {
+                                  "const": "weft-ir/0.2.0"
+                                }
+                              },
+                              "required": [
+                                "dialectProfile",
+                                "irVersion"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "logicalDomain",
+                      "resultDomain",
+                      "constraints",
+                      "obligations",
+                      "status",
+                      "evidence",
+                      "targetProfiles",
+                      "languageProfiles"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "assessment",
+                  "declaration"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "status",
+            "evidence",
+            "assumptions"
+          ],
+          "additionalProperties": false
+        },
+        "targetContext": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "engine": {
+              "type": "string",
+              "minLength": 1
+            },
+            "engineVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sessionSettings": {
+              "type": "object"
+            },
+            "storageLayoutRevision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "publicationRevision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "engine",
+            "engineVersion",
+            "sessionSettings",
+            "storageLayoutRevision",
+            "publicationRevision"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "diagnostics",
+        "status",
+        "dialect",
+        "compilerVersion",
+        "modelPins",
+        "backend",
+        "bindingSha256",
+        "logicalPlan",
+        "sql",
+        "parameters",
+        "columns",
+        "obligations",
+        "qualification"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "binary": {
+    "bytes": 8532672,
+    "path": "/private/tmp/weft-count-star-build-20261010-b/weft-paths-keys",
+    "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80"
+  },
+  "commandSha256": "1fd5580d6f86a0b456414fcaf8305ed7f624928a504bc121134c1fe9a06cd5fa",
+  "environmentInherited": false,
+  "exitCode": 0,
+  "openingClosingCustody": true,
+  "phase": "cli-build",
+  "stderrBytes": 5642,
+  "stdoutBytes": 0
+}

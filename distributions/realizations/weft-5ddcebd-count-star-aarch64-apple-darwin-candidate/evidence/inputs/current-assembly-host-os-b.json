@@ -1,0 +1,20 @@
+{
+  "format": "weft-current-assembly-host-observation/0.1",
+  "argv": [
+    "/usr/bin/sw_vers",
+    "-productVersion"
+  ],
+  "observedProductVersion": "27.0.1",
+  "stdoutHex": "32372e302e310a",
+  "stderrHex": "",
+  "exitCode": 0,
+  "observedAfter": "2026-10-10T21:22:58Z",
+  "observedBefore": "2026-10-10T21:22:58Z",
+  "location": "Current local assembly host; macOS process hostname is not an authorization or identity principal.",
+  "openingClosingToolIdentity": {
+    "path": "/usr/bin/sw_vers",
+    "bytes": 217168,
+    "sha256": "b822969762f22f30bfdd9139e5188949ddbc75b5f0c8e58788d7bb88b3c11e25"
+  },
+  "scope": "Current assembly host OS observation only. Original G/H build recipes lack a retained build-time OS observation; this record does not supply one retroactively."
+}

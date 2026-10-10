@@ -1,0 +1,442 @@
+{
+  "format": "weft-count-star-placement-index-freeze/0.1",
+  "candidateSourceInventory": {
+    "path": "/private/tmp/weft-count-star-build-20261010-b/count-star-assembly-a-result-inventory.json",
+    "sha256": "3e6795214d1e5d97718ab870f61a0cff949d675b1f3637a4c1799ccaac6feff9"
+  },
+  "placement": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate",
+  "files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/assembly-custody.json",
+      "bytes": 12344,
+      "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/backend/backend-manifest.json",
+      "bytes": 53114,
+      "sha256": "075dc92c7ca08b37abd1ed003fcd80674f816353742b79fa3e3a98021826b273",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/bin/weft-paths-keys",
+      "bytes": 8532672,
+      "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80",
+      "mode": "0o555"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/authored-corpus.json.gz",
+      "bytes": 621947,
+      "sha256": "d5185357481b49e2c7000190406972264108801a6b99504e70bafee38995a5d9",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls-custody.json",
+      "bytes": 435,
+      "sha256": "ced8b1d8b78f6c22e300929f710f9c44abb0be91aaa9dc9f1a8171025bb5487e",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls-summary.json",
+      "bytes": 450,
+      "sha256": "f32b269fabc2e714a668f465db2de3eca4153dde0123b03b62e51475b46f0e70",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls.jsonl.gz",
+      "bytes": 123313,
+      "sha256": "00d0fc5146f032a1932901bde63fd7af0924ee6c8fd3526cddcacda34b3fd1e3",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus-custody.json",
+      "bytes": 435,
+      "sha256": "88a50d5a9277ab31c9d277ad8a92208f1024db5ae6d658dc2acf4d586c546eca",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus-summary.json",
+      "bytes": 451,
+      "sha256": "c9f5d1ce6ab86be57c8b14369495f73841e36344a94a79564e86134abdca9352",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus.jsonl.gz",
+      "bytes": 510876,
+      "sha256": "103a37de6ff7d3c6e059f90e92f7619eecf53c85e81e7e9456816708703a1f62",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/build-closure-inventory.json",
+      "bytes": 79935,
+      "sha256": "29528ce28cfe22f248bcee1a324434a1c211570a0cd5088b8497ea4bbbe837d3",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/cli-build-g-outcome.json",
+      "bytes": 439,
+      "sha256": "6289bf16689f4ca60c0c442e2cc5c0ae2e5f4e70efc284135e1377a63c9e6627",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/command-g.json",
+      "bytes": 20527,
+      "sha256": "1fd5580d6f86a0b456414fcaf8305ed7f624928a504bc121134c1fe9a06cd5fa",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/command-h.json",
+      "bytes": 23350,
+      "sha256": "f41c8206adfac46eb0f0fca8831ea0ff3a3bd39f0874ab194763809719c2e7c7",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/component-parity-evidence-ab.tar.gz",
+      "bytes": 1105219,
+      "sha256": "0e169b25969e92937e2f5994fd5a81ede0943098eeca4debc70e7aaea3a77ca7",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundaries-b-outcome.json",
+      "bytes": 621,
+      "sha256": "f0229bbeb325fc89ca4cbfb0c272d55c9de01942b9bd5e712a771239894f9606",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundaries-b.observations.jsonl",
+      "bytes": 2667,
+      "sha256": "cafd677534dcce6bc4a78e9034ee0080dc90d299e17f99cfd3321aeda07b05ed",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundary-command-b.json",
+      "bytes": 3689,
+      "sha256": "5885cdbf086ba1429df852d704e381ef886379d2533bd2123ee39614485086ba",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundary-evidence-b.tar.gz",
+      "bytes": 11079,
+      "sha256": "af8e2dcc2dd52b617c6a3e5ed584be1060fe9bbab130155b161fb2c0fe9731d0",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/current-assembly-host-os-b.json",
+      "bytes": 781,
+      "sha256": "dcdbb1b487be9dbcf715f2a64fdaf43d4e1c2dbca74be9a25b2dd056ce3dfbf4",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/current-exact-build-tool-versions-a.json",
+      "bytes": 2293,
+      "sha256": "67621722c99230a50cdce9eb7cd6995deea7f257d5b8a257e56866d547d87fcd",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-a/actual-80-cases-d.json.gz",
+      "bytes": 635113,
+      "sha256": "81cdac9213c064ccf78ff90cd8fa643b78ed245d11977bcb87b36439b3890f35",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-a/cli-d-outcome.json",
+      "bytes": 478,
+      "sha256": "b3ef1be1173f0a87598e6ce4f2daf755b84c7a2810e4b2be0ea3ebfa711f8796",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-command-d.json",
+      "bytes": 38338,
+      "sha256": "aef833ed297eb14d375b24edafbd5a19a8e5eed1ee507bbc07815f2532a391f5",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-corpus-component-evidence-dg.tar.gz",
+      "bytes": 3482923,
+      "sha256": "151a38c5558a446e380a916eaf9abc9314410cdb622ba355145d2b17621e464e",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embedding-command-g.json",
+      "bytes": 26762,
+      "sha256": "455a23de87899c4cc3311f1fa347bbe4169478a44d44fdd00a40a0c3d46b73ec",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/browser-g-outcome.json",
+      "bytes": 551,
+      "sha256": "aa3384a7d1aba57fc40d2759649657636b64ae90004eb0702f94cc21f8aa458a",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/browser-g.json",
+      "bytes": 3032731,
+      "sha256": "22783d75b2d403ee8bdcc9bad735b203cd2e478e4ba4c09e0f12897e8c74de6b",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/python-g-outcome.json",
+      "bytes": 550,
+      "sha256": "8966bab1843bfca07f0d9af9c535c5ae673ce2f24c28fb330dfbf8ff22ed03a3",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/python-g.json",
+      "bytes": 3032495,
+      "sha256": "585c426b3ddcb375ba8a46f54b91dc845ce900d1453e04a539b56b7bdf900544",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-inventory.json",
+      "bytes": 687929,
+      "sha256": "08e32444e85f71cb9e960d1731e41e7fe05d93d44d4b4f710c0c1dfbbe392c70",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-metadata-h-outcome.json",
+      "bytes": 250,
+      "sha256": "9b46e52f19e1f78960b0c2ec549c3bfd30afef59283c4d81fb00b65b490900e7",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-metadata-h.stdout.log",
+      "bytes": 53114,
+      "sha256": "075dc92c7ca08b37abd1ed003fcd80674f816353742b79fa3e3a98021826b273",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/source-inventory.json.gz",
+      "bytes": 172586,
+      "sha256": "55208593a603dbc1d91735838a56a263e1b19758835c0dd813147ae9c01fd754",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/tools.json",
+      "bytes": 4424,
+      "sha256": "bb1574efc1f0716014db10abbd4b3802348dac3e59c51910018a6c6a3fdb2946",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/transport.json",
+      "bytes": 2764,
+      "sha256": "66b265b6b127402d63bdd6a3a135471024d20cb357d7b713ce852d0324fb029e",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/manifest.json",
+      "bytes": 7733,
+      "sha256": "5ad944f609969e1183e8147b56141f0769a9cfd79b5dc65701fefe858713f743",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/producer/assemble-paths-distribution.py",
+      "bytes": 23381,
+      "sha256": "9b432126d76391cbe6e49a4b9a0b298a5f1613297f021ad823aa3ef3ad5e666e",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/producer/count_star_distribution.py",
+      "bytes": 23704,
+      "sha256": "1f39b4b020bcccf527ce50d7c251cee83e95d693277a0bbf1d3b8268f58fe3f9",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/Cargo.lock",
+      "bytes": 28372,
+      "sha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/application-result-v0.2.schema.json",
+      "bytes": 1636,
+      "sha256": "0e9fc7aa16d14a4e78027a70514d75476d1576f9625747e1b5f56b76147f8014",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/application-result-v0.4.schema.json",
+      "bytes": 2281,
+      "sha256": "ee87e4e845d670601a301701dc6109c7a37dadb96ccb1e7f75c8144c5bd8bc2a",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json",
+      "bytes": 7580,
+      "sha256": "b3b556d49b9c605e0c1ce1cad601905ba89008b67f5129f4bdbdbb8df0b55fc2",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "bytes": 18068,
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json",
+      "bytes": 18066,
+      "sha256": "655f2dea7b459b354af1f66ae1684f1ba2bce907a5c7355d34c9f9c461f9ea7a",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest.schema.json",
+      "bytes": 4006,
+      "sha256": "d18133db2b104714f78839aba458d62dffa79d969195df02582a87465a2ac4a1",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.2.schema.json",
+      "bytes": 3874,
+      "sha256": "2a9a4264a9d8926176aa3809d613e103f35c8f634b0d8839ddf2bbcf598cacde",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "bytes": 3511,
+      "sha256": "7345c424b1bbf8da15e6f7b4efb81da7eeb85a1e08fb91319eeb7b19ec129047",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "bytes": 3513,
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "bytes": 3511,
+      "sha256": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request.schema.json",
+      "bytes": 2851,
+      "sha256": "8916022eb698864f5580319848307a1e0e90699dbaac1dafd6b8f2e11119d3e5",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
+      "bytes": 30933,
+      "sha256": "8cce222e4031b5cf2e2aa6388b28e948e1d1408e60b3056a2c3c297e993af3dc",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "bytes": 34484,
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "bytes": 62090,
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "bytes": 62086,
+      "sha256": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response.schema.json",
+      "bytes": 23723,
+      "sha256": "234e439bca6ac06b783579005e3db086526b4f16a28267e0fdc92fe55abfb938",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/conformance-case.schema.json",
+      "bytes": 2261,
+      "sha256": "837197d5a3d7ef43b80ae50ef8d45caf14a42ce88d5d166492abf8247e791e99",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/distribution-index.schema.json",
+      "bytes": 2813,
+      "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/distribution-manifest.schema.json",
+      "bytes": 9259,
+      "sha256": "856d5103161b965db3eb1dc0198d08c13a65a2cd7367aab5caf345ba69722d66",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json",
+      "bytes": 17644,
+      "sha256": "17b650e2573b4274cfd8506cf02b963060c0d978ffc7f979d94a7d9eafea1316",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "bytes": 38838,
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "bytes": 43626,
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.4.schema.json",
+      "bytes": 42813,
+      "sha256": "a6f28858646e4795019037233ef0e8d6b0aeb45e7440cbcf4e7a477891a1b3d5",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan.schema.json",
+      "bytes": 8879,
+      "sha256": "ce9c7de12094ab840e4b483faed44a4ee5e122e47a4d4c9f9e46d8144541f9ff",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/rust-toolchain.toml",
+      "bytes": 113,
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/spec/upstream/umf-0.7.0.schema.json",
+      "bytes": 18941,
+      "sha256": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813",
+      "mode": "0o444"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/spec/upstream/umf-0.8.0.schema.json",
+      "bytes": 26793,
+      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+      "mode": "0o444"
+    }
+  ],
+  "index": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/index.json",
+    "bytes": 2730,
+    "sha256": "7eddc39661f6cb400afae897aa0a7d8cd5dee0aec026ed45a4e197fa7c9558a6"
+  },
+  "historicalIndex": {
+    "path": "/private/tmp/weft-count-star-build-20261010-b/count-star-index-before-placement-a.json",
+    "bytes": 2060,
+    "sha256": "bd541aa8cb261376f160661d3df67065b36fcba4f6caf4c0f42e33d710c4b9dc"
+  },
+  "newEntry": {
+    "realizationId": "weft-5ddcebd-count-star-aarch64-apple-darwin-candidate",
+    "manifest": {
+      "path": "manifest.json",
+      "sha256": "5ad944f609969e1183e8147b56141f0769a9cfd79b5dc65701fefe858713f743",
+      "bytes": 7733
+    },
+    "executable": {
+      "path": "bin/weft-paths-keys",
+      "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80",
+      "bytes": 8532672
+    },
+    "target": "aarch64-apple-darwin",
+    "assemblyCustody": {
+      "path": "assembly-custody.json",
+      "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca",
+      "bytes": 12344
+    }
+  },
+  "qualification": "Prepared durable Git-backed candidate bytes and additive index entry for independent admission review only; no index commit or trusted consumer constant yet, no native SQL claim."
+}

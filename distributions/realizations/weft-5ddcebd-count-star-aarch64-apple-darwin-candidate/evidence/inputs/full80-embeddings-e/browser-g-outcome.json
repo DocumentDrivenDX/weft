@@ -1,0 +1,11 @@
+{
+  "commandSha256": "455a23de87899c4cc3311f1fa347bbe4169478a44d44fdd00a40a0c3d46b73ec",
+  "derivedInputPins": [],
+  "environmentInherited": false,
+  "exitCode": 0,
+  "openingClosingCustody": true,
+  "phase": "full80-browser",
+  "qualification": "Actual full80 authored-corpus component parity with existing extracted native Python extension and real Chromium/WASM. CLI49 selected capability witnesses retained separately. No full boundary-transport suite, installed package, native SQL or index admission.",
+  "stderrBytes": 0,
+  "stdoutBytes": 50
+}
