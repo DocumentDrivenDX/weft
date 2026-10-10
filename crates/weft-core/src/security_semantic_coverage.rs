@@ -291,6 +291,16 @@ mod tests{
     use crate::security_obligation_sources::OwnerEventKind as E;
     for (tokens,event) in [(json!(["context","s0","read","domain","m","active"]),E::Context),(json!(["field","s0","read","domain","m","Assignment","domain","m","active"]),E::Field)] {
      let id=tokens.to_string();assert_eq!(issued.events().get(&id),Some(&event));
+     let retained = &issued.field_events()[&id];
+     assert_eq!(retained.reference.element_id, "active");
+     assert!(std::ptr::eq(retained.carrier, crate::security_ontology::locate(ctx.catalog(), retained.reference).unwrap()));
+     assert_eq!(retained.carrier["scalarType"], "boolean");
+     match (event, retained.channel) {
+         (E::Context, crate::security_obligation_sources::FieldChannel::Context) => assert!(retained.classification.is_none()),
+         (E::Field, crate::security_obligation_sources::FieldChannel::Stored { target }) => { assert_eq!(target.element_id, "Assignment"); assert_eq!(retained.classification.unwrap()["protection"], "unprotected"); },
+         _ => panic!("field channel alias"),
+     }
+
      assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s0","read")]));
     }
    });
@@ -319,6 +329,9 @@ mod tests{
     for (owner,member) in [("Staff","staffId2"),("Assignment","assignmentStaff2")] {
      elements.iter_mut().find(|e|e["id"]==owner).unwrap()["members"].as_array_mut().unwrap().push(json!({"module":"m","element":member}));
     }
+    let staff = elements.iter_mut().find(|e|e["id"]=="Staff").unwrap();
+    staff["keys"][0]["primary"]=json!(false);
+    staff["keys"].as_array_mut().unwrap().push(json!({"id":"other-primary","name":"Other primary","primary":true,"fields":[{"module":"m","element":"staffId"}]}));
     let fields=if reversed{vec!["staffId2","staffId"]}else{vec!["staffId","staffId2"]};
     elements.iter_mut().find(|e|e["id"]=="Staff").unwrap()["keys"][0]["fields"]=json!(fields.iter().map(|id|json!({"module":"m","element":id})).collect::<Vec<_>>());
     let ontology=&mut f["resolution"]["ontology"];
@@ -326,10 +339,32 @@ mod tests{
     ontology["associations"][1]["fields"].as_array_mut().unwrap().push(json!({"ref":{"documentId":"domain","moduleId":"m","elementId":"assignmentStaff2"},"protection":"unprotected"}));
     let fields=if reversed{vec!["assignmentStaff2","assignmentStaff"]}else{vec!["assignmentStaff","assignmentStaff2"]};
     ontology["associations"][1]["endpoints"][0]["fields"]=json!(fields.iter().map(|id|json!({"documentId":"domain","moduleId":"m","elementId":id})).collect::<Vec<_>>());
-   },|ctx,_|{
+   },|ctx,m|{
     let ids=crate::security_obligation_sources::derive(ctx).unwrap();
     let ordered=if reversed{["staffId2","staffId"]}else{["staffId","staffId2"]};
     for (position,field) in ordered.iter().enumerate(){assert!(ids.contains(&json!(["key-field","s0","read","domain","m","Staff","pk",(position+1).to_string(),"domain","m",field]).to_string()));}
+    with_registered_coverage(ctx,m,&["all".into()],|coverage|{
+     let issued=crate::security_obligation_sources::issue_demands(coverage).unwrap();
+     let source=json!(["key","s0","read","domain","m","Staff","pk"]).to_string();
+     let crate::security_obligation_sources::KeyPayload::Key(key)=issued.key_events()[&source] else{panic!()};
+     let inventory=ctx.requirements().scans()[0].actions()[0].inventory();
+     let (original_target,(original_id,original_members))=inventory.keys().iter().find(|(target,_)|target.element_id=="Staff").unwrap();
+     assert!(std::ptr::eq(key.target,original_target));assert!(std::ptr::eq(key.id,original_id.as_str()));assert!(std::ptr::eq(key.members,original_members.as_slice()));
+     let original_record=crate::security_ontology::locate(ctx.catalog(),original_target).unwrap();
+     assert!(std::ptr::eq(key.definition,&original_record["keys"][0]));
+     assert_eq!(key.definition["primary"],false);assert_eq!(original_record["keys"][1]["primary"],true);assert_eq!(key.id,"pk");
+     assert_eq!(key.members.iter().map(|m|m.element_id.as_str()).collect::<Vec<_>>(),ordered);
+     for (index,field) in ordered.iter().enumerate(){
+      let source=json!(["key-field","s0","read","domain","m","Staff","pk",(index+1).to_string(),"domain","m",field]).to_string();
+      let crate::security_obligation_sources::KeyPayload::Member{key:retained,index:position,reference,carrier,declaration}=issued.key_events()[&source] else{panic!()};
+      assert_eq!(position,index);assert!(std::ptr::eq(reference,&original_members[index]));assert!(std::ptr::eq(retained.definition,key.definition));
+      assert!(std::ptr::eq(carrier,crate::security_ontology::locate(ctx.catalog(),reference).unwrap()));
+      assert!(std::ptr::eq(declaration,&key.definition["fields"][index]));
+      assert_eq!(issued.demands()[&source].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s0","read")]));
+     }
+     let expected=issued.events().iter().filter(|(_,kind)|matches!(kind,crate::security_obligation_sources::OwnerEventKind::Key|crate::security_obligation_sources::OwnerEventKind::KeyField)).map(|(id,_)|id).collect::<BTreeSet<_>>();
+     assert_eq!(issued.key_events().keys().collect::<BTreeSet<_>>(),expected);
+    });
    });
   }
  }
@@ -447,6 +482,30 @@ mod tests{
     let kinds=BTreeMap::from([("primary-action",E::PrimaryAction),("policy",E::Policy),("ontology",E::Ontology),("query",E::Query),("model",E::Model),("module",E::Module),("scan",E::Scan),("projection",E::Projection),("query-field",E::QueryField),("action",E::Action),("rule",E::Rule),("key",E::Key),("key-field",E::KeyField),("field",E::Field),("context",E::Context),("association",E::Association),("operator",E::Operator),("output",E::Output)]);
     let expected_events:BTreeMap<_,_>=expected.keys().map(|id|{let golden:Vec<String>=serde_json::from_str(id).unwrap();(id.clone(),kinds[golden[0].as_str()])}).collect();
     assert_eq!(issued.events(),&expected_events);
+    // Independently authored selected stored-field inventory; no production ID decoding.
+    let mut golden_fields = BTreeMap::new();
+    for (owner, fields) in [("Staff",vec!["staffId"]),("Project",vec!["projectId"]),("Resource",vec!["resourceId"]),("Ownership",vec!["ownerId","ownerResource","ownerProject"]),("Assignment",vec!["assignmentId","assignmentStaff","assignmentProject","active"])] {
+        for field in fields {
+            let id = json!(["field","s0","read","domain","m",owner,"domain","m",field]).to_string();
+            golden_fields.insert(id, (owner, field));
+        }
+    }
+    assert_eq!(issued.field_events().keys().collect::<Vec<_>>(), golden_fields.keys().collect::<Vec<_>>());
+    for (source, (owner, field)) in golden_fields {
+        let event = &issued.field_events()[&source];
+        assert_eq!(event.reference.element_id, field);
+        let crate::security_obligation_sources::FieldChannel::Stored { target } = event.channel else { panic!() };
+        assert_eq!(target.element_id, owner);
+        let original_reference = ctx.requirements().scans()[0].actions()[0].inventory().fields()[target].iter().find(|f|f.element_id == field).unwrap();
+        let original_target = ctx.requirements().scans()[0].actions()[0].inventory().fields().get_key_value(target).unwrap().0;
+        assert!(std::ptr::eq(event.reference, original_reference));
+        assert!(std::ptr::eq(target, original_target));
+        assert!(std::ptr::eq(event.carrier, crate::security_ontology::locate(ctx.catalog(), original_reference).unwrap()));
+        let ontology = ctx.logical_plan().source().ontology();
+        let declaration = ontology["entities"].as_array().unwrap().iter().chain(ontology["associations"].as_array().unwrap()).find(|e| e["type"]["elementId"] == owner).unwrap()["fields"].as_array().unwrap().iter().find(|f| f["ref"]["elementId"] == field).unwrap();
+        assert!(std::ptr::eq(event.classification.unwrap(), declaration));
+    }
+
     let expected_rules:BTreeMap<_,_>=ctx.requirements().scans().iter().flat_map(|scan|scan.actions().iter().flat_map(move |action|action.rules().iter().map(move |rule|(serde_json::to_string(&["rule",scan.inventory().scan(),action.inventory().action(),&rule.id]).unwrap(),*rule)))).collect();
     assert_eq!(issued.rule_events().keys().collect::<Vec<_>>(),expected_rules.keys().collect::<Vec<_>>());
 
@@ -551,7 +610,19 @@ mod tests{
     assert_eq!(issued.demands()[&id].iter().map(|q|(*q).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
    }
    let output=json!(["output","1","chosen"]).to_string();assert_eq!(issued.demands()[&output].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope("s1","read"),CoverageScope::Application]));
-   for scan in ["s0","s1"]{let field=json!(["field",scan,"read","domain","m","Assignment","domain","m","active"]).to_string();assert_eq!(issued.demands()[&field].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));}
+   let mut active_occurrences = Vec::new();
+   for scan in ["s0","s1"] {
+    let field=json!(["field",scan,"read","domain","m","Assignment","domain","m","active"]).to_string();
+    assert_eq!(issued.demands()[&field].iter().map(|s|(*s).clone()).collect::<BTreeSet<_>>(),BTreeSet::from([scan_scope(scan,"read")]));
+    let retained = &issued.field_events()[&field];
+    assert!(std::ptr::eq(retained.carrier, crate::security_ontology::locate(ctx.catalog(), retained.reference).unwrap()));
+    let crate::security_obligation_sources::FieldChannel::Stored { target } = retained.channel else { panic!() };
+    assert_eq!(target.element_id, "Assignment");
+    assert_eq!(retained.classification.unwrap()["protection"], "unprotected");
+    active_occurrences.push(field);
+   }
+   assert_ne!(active_occurrences[0], active_occurrences[1]);
+   assert!(std::ptr::eq(issued.field_events()[&active_occurrences[0]].carrier, issued.field_events()[&active_occurrences[1]].carrier));
   });});
  }
 

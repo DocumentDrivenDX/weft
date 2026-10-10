@@ -132,6 +132,90 @@ weft-admission.json. This is a source-fidelity integration increment, not draft
 
 The security foundation is integrated against main14c5814 while preserving the incoming95991ee browser/evidence update. Main's CONTRACT-005 authored-path meaning and ordinary compile0.3/0.4 remain unchanged; the security contract and transports have an explicit [identity migration](evidence/security-main-integration/identity-migration.json). `cargo test --release --locked --workspace` passes all 556 tests across 44 groups, with none failed, ignored or filtered. The [checkpoint](evidence/security-main-integration/checkpoint.json) retains exact source/log hashes, scoped Astra ultra review, the corrected initial diagnostic failures and the intentionally interrupted debug attempt. Both security transports remain blocked before physical emission. B-008, installed Python/browser parity and the original native backend acceptance plan remain open.
 
+
+### B-008 typed field semantics — 2026-10-10
+
+Under CONTRACT-006 and UMF's independent requirement issuer design, private
+OwnerSourceDemands retains every selected Field/Context event's exact borrowed
+qualified field reference and original catalog field carrier. Stored events also
+retain the exact inventory owner reference and raw ontology field declaration,
+including protection/query-use settings. Context is a distinct typed channel
+without a stored-field classification. No domain normalization or model cloning
+is used to manufacture applicability; facets, allowed values and opaque content
+remain available through the original carrier. Catalog/ontology lookup visits and
+retained source-ID copies are charged. Source-only derivation keeps its prior
+ledger. Field/Context event-key projection must equal the payload inventory.
+
+Independent controls cover actual catalog/ontology pointers and authored fixture
+keys, stored/context uses of the same Boolean field, equal-but-foreign reference,
+carrier, owner and classification substitutions, exact/minus-one retention limits,
+and populated 4096/4097 entry boundaries. The [execution evidence](evidence/security-field-events/checkpoint.json)
+retains actual runs, declared source custody and scoped Astra review. Three
+conditional algebraic address laws preserve channel, stored owner and original
+occurrence; erasure controls and independent fresh-context replay accompany them.
+These laws do not prove Rust pointer/string representation or traversal refinement.
+
+This completes field payload custody for the existing Field/Context event subset.
+Key/member order, query projection/operator/output details, complete backend
+kind/template applicability, authenticated profiles and original native assertion
+mappings still require issuance work. B-008 and all132 original backend cases
+remain binding; no native acceptance or public security lowering is promoted.
+
+Final current-source `cargo test --release --locked --workspace` passes557 tests
+across44 groups with zero failures/ignored/filtered. All822 declared repository
+inputs were frozen before execution and verified unchanged at terminal exit0.
+External Cargo registry/build runtime dependencies are outside that inventory.
+Astra's read-only implementation review is clean after channel-only/self-join
+controls, and independently replays all9 current formulas in fresh Z3 contexts.
+The checkpoint preserves both pre-refinement successful runs and the corrected
+initial formal parser failure; stored receipts are not relabeled or repinned.
+
+
+### B-008 selected Key/member semantics — 2026-10-10
+
+Under CONTRACT-006 and the shared independent requirement issuer design, private
+owner Key/KeyField events now retain the original selected Key definition,
+qualified target and exact original key-ID/member-slice references. Member events
+retain their zero-based ordinal, original native member declaration, qualified
+inventory reference and catalog field carrier. Existing canonical source strings
+retain their one-based member positions; no source string is decoded to recover
+meaning. A selected nonprimary Key remains selected when another Key is primary.
+Raw definition metadata, member order and native carrier meaning remain borrowed.
+
+The dedicated private key-events module resolves exact selected IDs and complete
+ordered native member references, charging every candidate/member comparison.
+Retention checks identity rather than structural equality, with exact/minus-one
+visit/text controls and a populated4096/4097 cardinality boundary. Key/KeyField
+source-key projection equals the complete payload map. Assignments=None preserves
+the legacy source-only ledger and avoids this resolution/retention work.
+Independent actual compound fixtures cover both member orders, exact original
+pointers and selected-vs-primary identity. Isolated controls cover target, Key ID,
+member-slice, definition, ordinal, field-reference, carrier, native declaration
+and namespace substitutions; missing/duplicate/reordered/shortened/foreign selected
+Key definitions refuse. [Execution evidence](evidence/security-key-events/checkpoint.json)
+retains initial compiler integration errors and the fixture's mandatory-name
+admission failure, followed by actual corrected runs.
+
+Three conditional algebraic laws cover member ordinal, selected Key identity and
+original occurrence. Nine formulas retain pre-solve SMT and four declared source
+hashes frozen before construction/rechecked before publication. Astra ultra's
+read-only review is clean and independently replays all9 in fresh Z3 contexts.
+These are constructor/projection laws, not Rust representation/traversal refinement
+or native key enforcement; simplified erasure controls are not Rust mutants.
+
+Next retain typed query projection/operator/output semantics and complete
+independent backend kind/template/site/failure/prerequisite and original assertion
+mappings with authenticated exact profiles. Complete issuance, physical lowering,
+B10/admission-drift closure and integrated native qualification remain unfinished.
+All132 original cases remain binding; this checkpoint promotes none. B-008 and
+the active goal remain open.
+
+Final current-source `cargo test --release --locked --workspace` passes559tests
+across44groups, zero failed/ignored/filtered. All823 declared repository inputs
+are prefrozen and verified unchanged at terminal exit0. External Cargo registry
+and build-runtime dependencies remain outside that inventory. Both initial failed
+attempts and the prior source-specific formal receipt remain preserved. The current
+four formal source pins match; Astra independently replays all9 current formulas.
 ## B-009: Reliability remediation
 
 ### Scope and governing authority

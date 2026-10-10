@@ -1495,6 +1495,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_obligation_sources/key_events.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_ontology.rs",
           "publicDeclarations": [
             "struct:SecurityRef",
@@ -3070,6 +3075,7 @@
         "scripts/distribution/build-count-star-corpus.py",
         "scripts/distribution/check-cli-controls.py",
         "scripts/distribution/check-cli.py",
+        "scripts/distribution/check-count-star-cli-boundaries.py",
         "scripts/distribution/check-count-star-corpus.py",
         "scripts/distribution/check-paths-cli.py",
         "scripts/distribution/check-paths-embedding-browser.mjs",
@@ -3116,6 +3122,8 @@
         "scripts/run-b005-embeddings.sh",
         "scripts/run-b005-full-corpus.sh",
         "scripts/run-b006-embeddings.sh",
+        "scripts/security/prove-field-event-addresses.py",
+        "scripts/security/prove-key-event-addresses.py",
         "scripts/sign-site.mjs",
         "scripts/spec-allocation.test.ts",
         "scripts/spec-allocation.ts",

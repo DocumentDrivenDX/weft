@@ -1,0 +1,26 @@
+{
+  "version": "weft.security.key-events-astra-review/0.1.0",
+  "reviewer": "Authorized Astra ultra read-only agent /root/astra_security_review",
+  "outcome": "clean",
+  "implementationScope": "Exact borrowed selected Key and ordered member definitions/carriers, independent selected-vs-primary selection, phase charging/cardinality, legacy ledger preservation and event-key projection.",
+  "formalReceiptSha256": "ffa571fd7e912cba62017442e86b86581cd1586b82053ad796b4a1146058d18d",
+  "sourcePins": {
+    "scripts/security/prove-key-event-addresses.py": "3b82dace36cb3528ff3d9c6026dd2114ffc09a3fb3008ffc7e40bf902b9e2404",
+    "crates/weft-core/src/security_obligation_sources/key_events.rs": "37e0212b70266ac0ae4104cc53a8d56068e1cb73a7ffca310bf28d2cb7d65146",
+    "crates/weft-core/src/security_obligation_sources.rs": "411f911c1c0ab34dfac4645582ffca8f1fe7c444338019a1c374cb1a3835d32a",
+    "crates/weft-core/src/security_semantic_coverage.rs": "7c5582db71a39975f31858385033c938c168ade854e9abe08d374767a2f25776"
+  },
+  "independentReplay": {
+    "formulas": 9,
+    "unsat": 3,
+    "sat": 6,
+    "freshContexts": true,
+    "z3Version": "4.15.4"
+  },
+  "exclusions": [
+    "No independent Cargo/producer/native execution",
+    "No Rust/string/usize/Vec/pointer or traversal refinement proof",
+    "Erasure controls are projection sanity checks, not implementation mutants",
+    "No issuer/auth/backend acceptance promotion"
+  ]
+}

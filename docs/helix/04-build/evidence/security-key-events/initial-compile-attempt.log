@@ -1,0 +1,118 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+error[E0365]: `Payload` is private, and cannot be re-exported
+ --> crates/weft-core/src/security_obligation_sources.rs:2:16
+  |
+2 | pub(crate) use key_events::Payload as KeyPayload;
+  |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ re-export of private `Payload`
+  |
+  = note: consider declaring type or module `Payload` with `pub`
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+error[E0063]: missing field `key_events` in initializer of `security_obligation_sources::SourceIssuer<'_, '_>`
+   --> crates/weft-core/src/security_obligation_sources.rs:525:28
+    |
+525 | ...   let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTr...
+    |                      ^^^^^^^^^^^^ missing `key_events`
+
+error[E0063]: missing field `key_events` in initializer of `security_obligation_sources::SourceIssuer<'_, '_>`
+   --> crates/weft-core/src/security_obligation_sources.rs:530:24
+    |
+530 | ...   let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),demands:BTreeMap::new(),events:BTr...
+    |                      ^^^^^^^^^^^^ missing `key_events`
+
+error[E0063]: missing field `key_events` in initializer of `security_obligation_sources::SourceIssuer<'_, '_>`
+   --> crates/weft-core/src/security_obligation_sources.rs:545:58
+    |
+545 | ...   let mut ledger=Budget{work,text};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet::new(),d...
+    |                                                       ^^^^^^^^^^^^ missing `key_events`
+
+error[E0063]: missing field `key_events` in initializer of `security_obligation_sources::SourceIssuer<'_, '_>`
+   --> crates/weft-core/src/security_obligation_sources.rs:548:66
+    |
+548 | ...   let mut ledger=Budget{work:100,text:1000};let mut issuer=SourceIssuer{ledger:&mut ledger,assignments:Some(&scopes),current:BTreeSet...
+    |                                                                ^^^^^^^^^^^^ missing `key_events`
+
+Some errors have detailed explanations: E0063, E0365.
+For more information about an error, try `rustc --explain E0063`.
+warning: `weft-core` (lib test) generated 2 warnings
+error: could not compile `weft-core` (lib test) due to 5 previous errors; 2 warnings emitted

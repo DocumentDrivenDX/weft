@@ -1,0 +1,10 @@
+{
+  "decision": "approve-source3-and-bounded-evidence-landing",
+  "sourceFreezeSha256": "10c342283e972c0a8f3f4c6c3e5a37544df96e2b654a7177daccb1de0bd3515e",
+  "archiveSha256": "af8e2dcc2dd52b617c6a3e5ed584be1060fe9bbab130155b161fb2c0fe9731d0",
+  "inventorySha256": "7367be29876b947ff4e3b97fc2f5b3cf084574cac7efddce9e9a408f5b34299f",
+  "memberCount": 15,
+  "decodedBytes": 37819,
+  "compressedBytes": 11079,
+  "checks": "OriginalB source2 unchanged; CI diff exactly one focused inert unittest command. Every archive safe regular member and original source hash/size exact; no executable product/tool magic. No extraction. Actual B reviewed separately; original fixed5dd-only qualification unchanged."
+}
