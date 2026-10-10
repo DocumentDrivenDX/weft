@@ -4,19 +4,22 @@ if __package__ in (None,''):sys.path.insert(0,str(pathlib.Path(__file__).resolve
 from reliability.config import load_config
 from reliability.process import run
 ROOT=pathlib.Path(__file__).resolve().parents[2]
+def canonical_json(value):
+ return json.dumps(value,sort_keys=True,ensure_ascii=False,separators=(',',':'),allow_nan=False)
+
 def reconcile_main_baseline(historical,records,receipt,differences):
  if receipt.get('status')!='passed' or receipt.get('requests')!=2181 or receipt.get('requestsUnchanged') is not True:raise RuntimeError()
  if len(historical)!=2181 or len(records)!=2181 or len({r['id'] for r in records})!=2181:raise RuntimeError()
  changed=[]
  def diff(a,b,path=''):
-  if a==b:return []
+  if canonical_json(a)==canonical_json(b):return []
   if isinstance(a,dict) and isinstance(b,dict) and a.keys()==b.keys():return [x for key in sorted(a) for x in diff(a[key],b[key],path+'/'+key)]
   if isinstance(a,list) and isinstance(b,list) and len(a)==len(b):return [x for index,(left,right) in enumerate(zip(a,b)) for x in diff(left,right,path+'/'+str(index))]
   return [{'path':path,'historical':a,'main':b}]
  for old,current in zip(historical,records,strict=True):
   if old['id']!=current['id'] or json.dumps(old['request'],ensure_ascii=False)!=json.dumps(current['request'],ensure_ascii=False):raise RuntimeError()
-  if old['response']!=current['response']:changed.append({'id':old['id'],'differences':diff(old['response'],current['response']),'qualification':'Current main compatibility and fresh cross-host parity only; native requalification remains open.'})
- if changed!=differences or receipt.get('changedOutputs')!=len(changed) or receipt.get('historicalIdenticalOutputs')!=2181-len(changed):raise RuntimeError()
+  if canonical_json(old['response'])!=canonical_json(current['response']):changed.append({'id':old['id'],'differences':diff(old['response'],current['response']),'qualification':'Current main compatibility and fresh cross-host parity only; native requalification remains open.'})
+ if canonical_json(changed)!=canonical_json(differences) or receipt.get('changedOutputs')!=len(changed) or receipt.get('historicalIdenticalOutputs')!=2181-len(changed):raise RuntimeError()
  return records,receipt
 
 def load_main_baseline(root,historical_path,historical):

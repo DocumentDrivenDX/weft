@@ -5,8 +5,10 @@ from reliability.fresh_hosts import validate_reports
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 class FreshHostTests(unittest.TestCase):
  def test_optimized_helpers_refuse_before_qualification(self):
-  for name in ('prepare-qualified-host-corpus.py','qualified-host-python.py','host-resources.py'):
-   result=subprocess.run([sys.executable,'-O',str(ROOT/'tests/qualify-and-evolve'/name)],capture_output=True,text=True)
+  helpers=[ROOT/'tests/qualify-and-evolve'/name for name in ('prepare-qualified-host-corpus.py','qualified-host-python.py','host-resources.py')]
+  helpers.append(ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline-generator.py')
+  for helper in helpers:
+   result=subprocess.run([sys.executable,'-O',str(helper)],cwd=ROOT,capture_output=True,text=True)
    self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,'');self.assertIn('Qualification requires nonoptimized Python',result.stderr)
  def test_actual_isolated_helper_rejects_wrong_compiler_under_optimized_environment(self):
   with tempfile.TemporaryDirectory() as work:
@@ -44,12 +46,12 @@ class FreshHostTests(unittest.TestCase):
 class MainBaselineTests(unittest.TestCase):
  def test_main_compatibility_cannot_change_requests_or_hide_native_gaps(self):
   from reliability.fresh_hosts import reconcile_main_baseline
-  historical=[{'id':str(i),'request':{'sql':'SELECT'},'response':{'diagnostics':[{'phase':'sql'}]}} for i in range(2181)]
+  historical=[{'id':str(i),'request':{'sql':'SELECT'},'response':{'diagnostics':[{'phase':'sql'}],'nullable':False}} for i in range(2181)]
   current=copy.deepcopy(historical);current[0]['response']['diagnostics'][0]['phase']='input'
   receipt={'status':'passed','requests':2181,'requestsUnchanged':True,'changedOutputs':1,'historicalIdenticalOutputs':2180}
   differences=[{'id':'0','differences':[{'path':'/diagnostics/0/phase','historical':'sql','main':'input'}],'qualification':'Current main compatibility and fresh cross-host parity only; native requalification remains open.'}]
   reconcile_main_baseline(historical,current,receipt,differences)
-  for mode in ('request','identifier','duplicate','count','gap','missing-difference','wrong-difference'):
+  for mode in ('request','identifier','duplicate','count','gap','missing-difference','wrong-difference','boolean-number','missing-null-key'):
    records=copy.deepcopy(current);summary=copy.deepcopy(receipt);changes=copy.deepcopy(differences)
    if mode=='request':records[0]['request']['sql']='CHANGED'
    elif mode=='identifier':records[0]['id']='unowned'
@@ -57,6 +59,8 @@ class MainBaselineTests(unittest.TestCase):
    elif mode=='count':records.pop()
    elif mode=='gap':summary['changedOutputs']=0
    elif mode=='missing-difference':changes=[]
+   elif mode=='boolean-number':records[0]['response']['nullable']=0
+   elif mode=='missing-null-key':records[0]['response']['unaccounted']=None
    else:changes[0]['differences'][0]['main']='wrong'
    with self.assertRaises(RuntimeError):reconcile_main_baseline(historical,records,summary,changes)
 
