@@ -1,0 +1,89 @@
+{
+  "format": "weft-produced-cli-corpus/0.1",
+  "qualification": "Actual produced CLI transport/compiler comparison only. No native execution, distribution registration or fresh-install claim. Historical metadata migrations are explicit in summary; original receipts remain unchanged. Prior failed a/b/c and pre-custody d attempts remain retained separately.",
+  "sourceCommit": "362a9c6af85996a80ed4af6f68efecfe6eb22110",
+  "sourceTrackedFiles": 1588,
+  "sourceInventoryDecodedSha256": "db7a9f769688b34022fa2926e73be83d1aabba52b4c75c61422061da7c32a56a",
+  "sourceInventoryDecodedBytes": 366345,
+  "harness": {
+    "path": "scripts/distribution/check-cli.py",
+    "sha256": "b1b4d2759db1f064af76904852b2d0abda86eadcde8022f4a68964484e453cd5",
+    "bytes": 8278
+  },
+  "binarySha256": "ab899150d217a26368ab0c0954a627401d41031fc768f758247231ea513a3437",
+  "build": {
+    "command": [
+      "cargo",
+      "build",
+      "-j1",
+      "-p",
+      "weft-runtime",
+      "--bin",
+      "weft-runtime",
+      "--release",
+      "--no-default-features",
+      "--features",
+      "ashlar-databricks-candidate",
+      "--offline",
+      "--locked"
+    ],
+    "rust": "1.90.0",
+    "target": "aarch64-apple-darwin",
+    "effectiveEnvironment": {
+      "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+      "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+      "CARGO_TARGET_DIR": "/private/tmp/ashlar-f05-compiler-rebuild-20261009/target",
+      "PATHPrefix": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin"
+    },
+    "unknowns": [
+      "linker identity/version not independently observed",
+      "cache provenance not complete",
+      "build environment hermeticity and deterministic executable reproduction not established"
+    ]
+  },
+  "caseReportDecodedSha256": "dd6f277819d62ee6df6206c23bf3216b2e4106eb18bb4797e15a2ff3cfaf3b81",
+  "caseReportDecodedBytes": 12329007,
+  "reports": [
+    {
+      "path": "cases.jsonl.gz",
+      "sha256": "f795d6654583238bed68811f423bd70d1314c33b065ee9d69916e32f200acce5",
+      "bytes": 509704
+    },
+    {
+      "path": "io-controls.json",
+      "sha256": "2367a7d69bb1a621da77b9370267b78cb422b790eafb13a14c061c1bf3e09d50",
+      "bytes": 382
+    },
+    {
+      "path": "mismatches.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "bytes": 3
+    },
+    {
+      "path": "release.log",
+      "sha256": "7c4adb6a2d860db931b4a07a29d0887156f6e827d5d3c71c700b182fb8a52679",
+      "bytes": 4499
+    },
+    {
+      "path": "source-inventory.json.gz",
+      "sha256": "74eefe45b7c1722ed58bfc30a009e262a8e62f2b697e5e510bd30b525a4dae7f",
+      "bytes": 122429
+    },
+    {
+      "path": "summary.json",
+      "sha256": "08a6977a84f6fa8159d1b5f5235aed5de03ff9c6e2c649881f2244f0828ae099",
+      "bytes": 208645
+    },
+    {
+      "path": "unit.log",
+      "sha256": "2207b2124da759a9394a4fdb1f0bc11c9d88b9d7d5a5d7d44a684f3c59c73634",
+      "bytes": 5048
+    },
+    {
+      "path": "tool-versions.json",
+      "sha256": "95977c3cc21584694e115c7749ff66c0bc78317df26c1e62ed665a22ac987ffe",
+      "bytes": 387
+    }
+  ],
+  "review": "Independent Astra replay matched all 463 retained CLI stdout bytes and original source inventory. Final durable evidence requires its own exact-hash review."
+}

@@ -1,0 +1,24 @@
+{
+  "format": "weft-distribution-index/0.1",
+  "entries": [
+    {
+      "realizationId": "weft-362a9c6-ab899150-aarch64-apple-darwin-candidate",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "cc9e8ff5a4f9690258d6c4aaeb7c3fa53f7ffd6109797007bf5cd9883f1ca72d",
+        "bytes": 5636
+      },
+      "executable": {
+        "path": "bin/weft-runtime",
+        "sha256": "ab899150d217a26368ab0c0954a627401d41031fc768f758247231ea513a3437",
+        "bytes": 4494112
+      },
+      "target": "aarch64-apple-darwin",
+      "assemblyCustody": {
+        "path": "assembly-custody.json",
+        "sha256": "0f9b0df04e6f632e3310f2a5e2ef2825106015082d24128616e17d6fe3164927",
+        "bytes": 14573
+      }
+    }
+  ]
+}

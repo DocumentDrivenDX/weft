@@ -240,6 +240,17 @@ trusted distribution identity and local installation location outside compile
 requests. Requests retain ordinary fresh publication IDs, table UUIDs, versions
 and source bindings; registration cannot become a fixed-fixture request allowlist.
 
+The closed [index schema](distribution-index.schema.json) defines
+`weft-distribution-index/0.1` entries with a realization identity, relative manifest
+and executable descriptors (path, SHA-256 and byte length), target triple, and
+an assembly custody descriptor that binds every file in the realized package.
+All entry artifact paths resolve relative to the caller-selected realization
+package root, never the index file or repository directory.
+Consumer admission rejects duplicate realization identities, checks all selected
+descriptors against the record and actual bytes, and verifies the independently
+selected immutable index revision and digest before reading a caller record.
+Schema validity cannot establish index trust or artifact correspondence.
+
 The first composition is the release CLI with exactly
 `ashlar-databricks-candidate`, Rust 1.90.0 and one actually executed target triple.
 Every other composition/platform requires its own record and qualification.
