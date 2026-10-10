@@ -1,0 +1,868 @@
+{
+  "request": {
+    "interfaceVersion": "weft-compile/0.1.0",
+    "dialect": "weft-sql/0.1.0",
+    "sql": "SELECT t.name, SUM(t.rank) AS total FROM Thing t WHERE t.active = TRUE GROUP BY t.name",
+    "modules": [
+      {
+        "documentJson": "{\"umf\": \"0.7.0\", \"id\": \"column-fixture\", \"vocabularies\": {}, \"modules\": [{\"id\": \"main\", \"namespace\": \"columns\", \"elements\": [{\"id\": \"thing\", \"name\": \"Thing\", \"kind\": \"record\", \"members\": [{\"module\": \"types\", \"element\": \"name\"}, {\"module\": \"main\", \"element\": \"rank\"}, {\"module\": \"main\", \"element\": \"active\"}], \"extensions\": {}}, {\"id\": \"rank\", \"name\": \"rank\", \"kind\": \"field\", \"scalarType\": \"integer\", \"nullability\": \"required\", \"cardinality\": \"one\", \"extensions\": {}, \"facets\": {\"integerWidth\": {\"bits\": 64, \"signed\": true}}}, {\"id\": \"active\", \"name\": \"active\", \"kind\": \"field\", \"scalarType\": \"boolean\", \"nullability\": \"required\", \"cardinality\": \"one\", \"extensions\": {}}]}, {\"id\": \"types\", \"namespace\": \"types\", \"elements\": [{\"id\": \"name\", \"name\": \"name\", \"kind\": \"field\", \"scalarType\": \"string\", \"nullability\": \"required\", \"cardinality\": \"one\", \"extensions\": {}}]}], \"extensions\": {}}",
+        "pin": {
+          "documentId": "column-fixture",
+          "revision": "1",
+          "umfVersion": "0.7.0",
+          "sha256": "0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b"
+        },
+        "selectedModuleIds": [
+          "main"
+        ]
+      }
+    ],
+    "target": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-candidate",
+      "targetProfile": "dbsql-candidate",
+      "bindingJson": "{\"profile\": \"ashlar-databricks-candidate/0.1.0\", \"layoutRevision\": \"ashlar-delta/0.3\", \"layoutSha256\": \"ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e\", \"modelPins\": [{\"documentId\": \"column-fixture\", \"revision\": \"1\", \"umfVersion\": \"0.7.0\", \"sha256\": \"0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b\"}], \"publication\": {\"id\": \"weft-column-fixtures\", \"manifestUuid\": \"c70e3478-e8c2-46ee-a954-26a836f15bec\", \"tables\": [{\"name\": [\"client_dev\", \"weft_b006_20261008_columns\", \"node_type_a\"], \"uuid\": \"9a81f3a6-32d2-4d6c-afc6-28f90774a6b8\", \"version\": 1}]}, \"records\": [{\"logical\": {\"documentId\": \"column-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"thing\"}, \"table\": 0, \"kind\": \"nodeProjection\", \"sourceSystem\": \"weft-columns-64-exact\", \"typeId\": \"1\", \"schemaRevision\": \"fixture-schema-1\", \"properties\": [{\"logical\": {\"documentId\": \"column-fixture\", \"revision\": \"1\", \"module\": \"types\", \"element\": \"name\"}, \"home\": {\"kind\": \"column\", \"value\": \"group_value\", \"present\": \"group_present\", \"nativeType\": \"STRING\"}}, {\"logical\": {\"documentId\": \"column-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"rank\"}, \"home\": {\"kind\": \"column\", \"value\": \"rank_value\", \"present\": \"rank_present\", \"nativeType\": \"BIGINT\"}}, {\"logical\": {\"documentId\": \"column-fixture\", \"revision\": \"1\", \"module\": \"main\", \"element\": \"active\"}, \"home\": {\"kind\": \"props\", \"propertyId\": \"25\"}}]}]}",
+      "bindingSha256": "2232c266830c522bad2d48bf89f31a61513f112b6fd2ac91182404d52fdafe2a"
+    },
+    "options": {
+      "allowCandidate": true
+    }
+  },
+  "response": {
+    "backend": {
+      "backendId": "ashlar.databricks",
+      "backendVersion": "0.1.0-candidate",
+      "interfaceVersion": "weft-backend/0.2.0",
+      "targetProfile": "dbsql-candidate"
+    },
+    "bindingSha256": "2232c266830c522bad2d48bf89f31a61513f112b6fd2ac91182404d52fdafe2a",
+    "columns": [
+      {
+        "aggregate": null,
+        "carrier": "text",
+        "decoder": "text",
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "nullable": false,
+        "outputName": "name",
+        "position": 1,
+        "sourceIdentities": [
+          {
+            "documentId": "column-fixture",
+            "element": "name",
+            "module": "types",
+            "revision": "1"
+          }
+        ]
+      },
+      {
+        "aggregate": "sum",
+        "carrier": "text",
+        "decoder": "exact-integer",
+        "logicalType": {
+          "facets": {},
+          "family": "integer",
+          "nullable": false
+        },
+        "nullable": false,
+        "outputName": "total",
+        "position": 2,
+        "sourceIdentities": [
+          {
+            "documentId": "column-fixture",
+            "element": "rank",
+            "module": "main",
+            "revision": "1"
+          }
+        ]
+      }
+    ],
+    "compilerVersion": "weft/0.1.0",
+    "diagnostics": [],
+    "dialect": "weft-sql/0.1.0",
+    "interfaceVersion": "weft-compile/0.1.0",
+    "logicalPlan": {
+      "irVersion": "weft-ir/0.1.0",
+      "modulePins": [
+        {
+          "documentId": "column-fixture",
+          "revision": "1",
+          "sha256": "0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b",
+          "umfVersion": "0.7.0"
+        }
+      ],
+      "requiredCapabilities": [
+        "equal",
+        "filter",
+        "group",
+        "project",
+        "scan",
+        "sum",
+        "type.boolean",
+        "type.integer",
+        "type.string"
+      ],
+      "root": {
+        "input": {
+          "aggregates": [
+            {
+              "argument": {
+                "identity": {
+                  "documentId": "column-fixture",
+                  "element": "rank",
+                  "module": "main",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s0",
+                "span": {
+                  "end": 25,
+                  "start": 19
+                },
+                "type": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                }
+              },
+              "op": "sum",
+              "span": {
+                "end": 26,
+                "start": 15
+              },
+              "type": {
+                "facets": {},
+                "family": "integer",
+                "nullable": false
+              }
+            }
+          ],
+          "groups": [
+            {
+              "identity": {
+                "documentId": "column-fixture",
+                "element": "name",
+                "module": "types",
+                "revision": "1"
+              },
+              "op": "field",
+              "scan": "s0",
+              "span": {
+                "end": 86,
+                "start": 80
+              },
+              "type": {
+                "facets": {},
+                "family": "string",
+                "nullable": false
+              }
+            }
+          ],
+          "input": {
+            "input": {
+              "occurrence": "s0",
+              "op": "scan",
+              "pin": {
+                "documentId": "column-fixture",
+                "revision": "1",
+                "sha256": "0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b",
+                "umfVersion": "0.7.0"
+              },
+              "record": {
+                "documentId": "column-fixture",
+                "element": "thing",
+                "module": "main",
+                "revision": "1"
+              }
+            },
+            "op": "filter",
+            "predicate": {
+              "left": {
+                "identity": {
+                  "documentId": "column-fixture",
+                  "element": "active",
+                  "module": "main",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s0",
+                "span": {
+                  "end": 63,
+                  "start": 55
+                },
+                "type": {
+                  "facets": {},
+                  "family": "boolean",
+                  "nullable": false
+                }
+              },
+              "op": "equal",
+              "right": {
+                "op": "literal",
+                "span": {
+                  "end": 70,
+                  "start": 66
+                },
+                "type": {
+                  "facets": {},
+                  "family": "boolean",
+                  "nullable": false
+                },
+                "value": "true"
+              },
+              "span": {
+                "end": 70,
+                "start": 55
+              },
+              "type": {
+                "facets": {},
+                "family": "boolean",
+                "nullable": false
+              }
+            }
+          },
+          "op": "aggregate"
+        },
+        "op": "project",
+        "outputs": [
+          {
+            "expression": {
+              "identity": {
+                "documentId": "column-fixture",
+                "element": "name",
+                "module": "types",
+                "revision": "1"
+              },
+              "op": "field",
+              "scan": "s0",
+              "span": {
+                "end": 13,
+                "start": 7
+              },
+              "type": {
+                "facets": {},
+                "family": "string",
+                "nullable": false
+              }
+            },
+            "name": "name"
+          },
+          {
+            "expression": {
+              "argument": {
+                "identity": {
+                  "documentId": "column-fixture",
+                  "element": "rank",
+                  "module": "main",
+                  "revision": "1"
+                },
+                "op": "field",
+                "scan": "s0",
+                "span": {
+                  "end": 25,
+                  "start": 19
+                },
+                "type": {
+                  "facets": {
+                    "integerWidth": {
+                      "bits": 64,
+                      "signed": true
+                    }
+                  },
+                  "family": "integer",
+                  "nullable": false
+                }
+              },
+              "op": "sum",
+              "span": {
+                "end": 26,
+                "start": 15
+              },
+              "type": {
+                "facets": {},
+                "family": "integer",
+                "nullable": false
+              }
+            },
+            "name": "total"
+          }
+        ]
+      }
+    },
+    "modelPins": [
+      {
+        "documentId": "column-fixture",
+        "revision": "1",
+        "sha256": "0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b",
+        "umfVersion": "0.7.0"
+      }
+    ],
+    "obligations": [
+      {
+        "failureCode": "WFT-OBLIGATION",
+        "id": "ashlar.candidate.publication",
+        "owner": "host",
+        "parameters": {
+          "layoutRevision": "ashlar-delta/0.3",
+          "layoutSha256": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e",
+          "modelPins": [
+            {
+              "documentId": "column-fixture",
+              "revision": "1",
+              "sha256": "0684208810ab2d1dede182c995f79c9152e1ffe7adf4d379965b1be13ff39a3b",
+              "umfVersion": "0.7.0"
+            }
+          ],
+          "nativeProfile": {
+            "arithmetic": "ANSI exact-or-error",
+            "comparison": "UTF8_BINARY",
+            "versionReported": "4.2.0 zero build hash",
+            "warehouseRelease": "unqualified"
+          },
+          "payloadValidation": [
+            "exact validated JSON text with duplicate-key refusal",
+            "well-formed Unicode scalar strings with no NUL",
+            "registered fixed-base-ten numeric carrier; exponent/DOUBLE representations refuse",
+            "no rounding, coercion, missing/null substitution or hidden corrupt inputs"
+          ],
+          "publication": {
+            "id": "weft-column-fixtures",
+            "manifestUuid": "c70e3478-e8c2-46ee-a954-26a836f15bec",
+            "tables": [
+              {
+                "name": [
+                  "client_dev",
+                  "weft_b006_20261008_columns",
+                  "node_type_a"
+                ],
+                "uuid": "9a81f3a6-32d2-4d6c-afc6-28f90774a6b8",
+                "version": 1
+              }
+            ]
+          },
+          "publicationPhase": "after-complete-buffer-and-context-recheck",
+          "requirements": [
+            "authenticate effective caller and establish complete authorized input view",
+            "verify one complete immutable manifest with trusted UUID and all schema revisions/projection dependencies",
+            "verify every consumed native schema, table UUID, version and retained data-file custody",
+            "verify source/type/id uniqueness, typed endpoint integrity and complete serving projection coverage at this publication",
+            "check policy and pin custody before execution and again before buffered result publication",
+            "refuse unknown obligations or unavailable evidence; no latest version or broader principal fallback",
+            "validate original mapping correspondence independently; identifiers and physical IDs are not logical identity"
+          ],
+          "visibility": "hidden input is not evidence of absence or integrity"
+        }
+      },
+      {
+        "failureCode": "WFT-NUMERIC-DOMAIN",
+        "id": "ashlar.candidate.scalarIntegrity",
+        "owner": "host",
+        "parameters": {
+          "checks": [
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "column-fixture",
+                "element": "active",
+                "module": "main",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "column-fixture",
+                "element": "thing",
+                "module": "main",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_columns`.`node_type_a` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN (TRUE) AND (schema_of_variant(variant_get(parse_json(r.props_json), :p3)) = 'BOOLEAN') THEN FALSE ELSE TRUE END"
+            },
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "column-fixture",
+                "element": "rank",
+                "module": "main",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "column-fixture",
+                "element": "thing",
+                "module": "main",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_columns`.`node_type_a` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN (TRUE) AND (r.`rank_value` IS NOT NULL AND r.`rank_present` = TRUE AND try_cast(r.`rank_value` AS DECIMAL(38,0)) BETWEEN -9223372036854775808 AND 9223372036854775807) THEN FALSE ELSE TRUE END"
+            },
+            {
+              "failureCode": "WFT-NUMERIC-DOMAIN",
+              "field": {
+                "documentId": "column-fixture",
+                "element": "name",
+                "module": "types",
+                "revision": "1"
+              },
+              "record": {
+                "documentId": "column-fixture",
+                "element": "thing",
+                "module": "main",
+                "revision": "1"
+              },
+              "sql": "SELECT CAST(CASE WHEN MAX(1) IS NULL THEN CAST(0 AS DECIMAL(38,0)) WHEN TRY_SUM(CAST(1 AS DECIMAL(38,0))) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(CAST(1 AS DECIMAL(38,0))) END AS STRING) AS violations FROM `client_dev`.`weft_b006_20261008_columns`.`node_type_a` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT) AND CASE WHEN (TRUE) AND (r.`group_value` IS NOT NULL AND r.`group_present` = TRUE AND instr(r.`group_value`, char(0)) = 0) THEN FALSE ELSE TRUE END"
+            }
+          ],
+          "noPartialPublication": true,
+          "parameters": "same emitted ordered slots; values never interpolated",
+          "phase": "before-user-query",
+          "samePublicationRequired": true,
+          "success": "one exact STRING count equal to 0 per check"
+        }
+      }
+    ],
+    "parameters": [
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "sourceDiscriminator",
+          "record": {
+            "documentId": "column-fixture",
+            "element": "thing",
+            "module": "main",
+            "revision": "1"
+          }
+        },
+        "position": 1,
+        "value": "weft-columns-64-exact"
+      },
+      {
+        "logicalType": {
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": true
+            }
+          },
+          "family": "integer",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "typeDiscriminator",
+          "record": {
+            "documentId": "column-fixture",
+            "element": "thing",
+            "module": "main",
+            "revision": "1"
+          }
+        },
+        "position": 2,
+        "value": "1"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "string",
+          "nullable": false
+        },
+        "origin": {
+          "field": {
+            "documentId": "column-fixture",
+            "element": "active",
+            "module": "main",
+            "revision": "1"
+          },
+          "kind": "propertyPath"
+        },
+        "position": 3,
+        "value": "$.25"
+      },
+      {
+        "logicalType": {
+          "facets": {},
+          "family": "boolean",
+          "nullable": false
+        },
+        "origin": {
+          "kind": "literal",
+          "sourceSpan": {
+            "end": 70,
+            "start": 66
+          }
+        },
+        "position": 4,
+        "value": "true"
+      }
+    ],
+    "qualification": {
+      "assumptions": [],
+      "evidence": [],
+      "operations": [
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "equal",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "equal",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "filter",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "filter",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "group",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "group",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "project",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "project",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "scan",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "scan",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "sum",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "sum",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.boolean",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.boolean",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.integer",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.integer",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        },
+        {
+          "assessment": {
+            "evidence": [],
+            "id": "type.string",
+            "obligations": [],
+            "status": "candidate"
+          },
+          "declaration": {
+            "constraints": [
+              "Candidate requires native/schema/policy/publication host verification",
+              "No broader warehouse or production qualification"
+            ],
+            "evidence": [],
+            "id": "type.string",
+            "languageProfiles": [
+              {
+                "dialectProfile": "weft-sql/0.1.0",
+                "irVersion": "weft-ir/0.1.0"
+              },
+              {
+                "dialectProfile": "weft-sql/0.2.0",
+                "irVersion": "weft-ir/0.2.0"
+              }
+            ],
+            "logicalDomain": {
+              "subset": "required scalar relational/application operations with admitted exact homes"
+            },
+            "obligations": [],
+            "resultDomain": {
+              "carrier": "exact text",
+              "sumCount": "finite DECIMAL38 or error; empty count zero"
+            },
+            "status": "candidate",
+            "targetProfiles": [
+              "dbsql-candidate"
+            ]
+          }
+        }
+      ],
+      "status": "candidate"
+    },
+    "sql": "WITH `s0` AS (SELECT CAST(CAST(variant_get(parse_json(r.props_json), :p3) AS STRING) AS BOOLEAN) AS `f0`, CAST(r.`rank_value` AS DECIMAL(38,0)) AS `f1`, (CAST(r.`group_value` AS STRING) COLLATE UTF8_BINARY) AS `f2` FROM `client_dev`.`weft_b006_20261008_columns`.`node_type_a` VERSION AS OF 1 r WHERE (r.source_system COLLATE UTF8_BINARY) = (:p1 COLLATE UTF8_BINARY) AND r.type_id = CAST(:p2 AS BIGINT)) SELECT CAST((`s0`.`f2` COLLATE UTF8_BINARY) AS STRING) AS `name`, CAST(CASE WHEN MAX(1) IS NOT NULL AND TRY_SUM(`s0`.`f1`) IS NULL THEN raise_error('WFT-NUMERIC-DOMAIN') ELSE TRY_SUM(`s0`.`f1`) END AS STRING) AS `total` FROM `s0` WHERE (`s0`.`f0` = CAST(:p4 AS BOOLEAN)) GROUP BY (`s0`.`f2` COLLATE UTF8_BINARY)",
+    "status": "compiled",
+    "targetContext": {
+      "engine": "databricks-sql",
+      "engineVersion": "unqualified-warehouse-release",
+      "id": "dbsql-candidate",
+      "publicationRevision": "ashlar-resolver/0.1-candidate",
+      "sessionSettings": {
+        "arithmetic": "ANSI exact-or-error",
+        "comparison": "UTF8_BINARY",
+        "variantCarrier": "fixed-base-ten-exact-only"
+      },
+      "storageLayoutRevision": "ashlar-delta/0.3"
+    }
+  }
+}

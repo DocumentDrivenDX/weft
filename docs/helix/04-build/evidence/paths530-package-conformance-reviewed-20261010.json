@@ -1,0 +1,96 @@
+{
+  "caseCorrespondence": {
+    "blocked": 483,
+    "compiled": 29,
+    "controls": 19,
+    "legacyNamespace": 463,
+    "migrationEntries": 0,
+    "paths": 30,
+    "rawBytesUnchanged": true,
+    "responseSchemasValidated": 512,
+    "total": 512
+  },
+  "closingFilesUnchanged": 41,
+  "coverage": {
+    "declaredCapabilities": 47,
+    "exactOriginalMap": true,
+    "nativeSupportInference": false,
+    "selectedAcceptedEdges": 189
+  },
+  "gzip": [
+    {
+      "compressedBytes": 140992,
+      "compressedSha256": "26a7161b60156fac6543619cc7a13467f77cd68b6b45997fa4d379bbdc071af0",
+      "decodedBytes": 528773,
+      "decodedSha256": "2a1eed46946a4d623f2f8abc7e7592e6d74e3964585ce1c500600a7ea62d6896",
+      "path": "evidence/source-inventory.json.gz",
+      "singleMember": true
+    },
+    {
+      "compressedBytes": 2569562,
+      "compressedSha256": "98f33d3a1051db8da45e99f850253a546858b1412318346a44dd6ebfd5e6766f",
+      "decodedBytes": 47489682,
+      "decodedSha256": "7f80a87ac41d868a32d220fd5a5ec7f8998c264ec0eecc4455029ce3ba7caf68",
+      "path": "evidence/full-receipt.json.gz",
+      "singleMember": true
+    },
+    {
+      "compressedBytes": 2418867,
+      "compressedSha256": "46dca743e4531c7d02779fd0b857a12c39284ca8976e0f5665eddcc7d8f79594",
+      "decodedBytes": 35668072,
+      "decodedSha256": "fe06d3555c9f6f70cfccead0f1244059d448942021d97e56f3b812cfe60e345e",
+      "path": "evidence/corpus.jsonl.gz",
+      "singleMember": true
+    },
+    {
+      "compressedBytes": 148554,
+      "compressedSha256": "b48a73c748a3283faf40c6460fe2587028362965b5ed11d1eff075e6084cc8ac",
+      "decodedBytes": 11792526,
+      "decodedSha256": "4771f1bf862a4d05a852cb203a3b66fc27772a5a122e999ac7f57c8d9b6a3058",
+      "path": "evidence/controls.jsonl.gz",
+      "singleMember": true
+    }
+  ],
+  "manifest": {
+    "bytes": 7044,
+    "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e"
+  },
+  "manifestArtifactsVerified": 33,
+  "negativeControls": [
+    "gzip-second-member",
+    "gzip-trailing-byte",
+    "gzip-truncated-footer",
+    "gzip-decoded-over-limit",
+    "manifest-unknown-member",
+    "manifest-required-executable"
+  ],
+  "offlineRuntime": {
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0"
+  },
+  "originalExpectedCases": {
+    "bytes": 17032500,
+    "sha256": "1cf69c0dfbde7cb8f82e6653c67637157342374bd1ab4114050d93246f21000d"
+  },
+  "originalReceipt": {
+    "bytes": 47489682,
+    "sha256": "7f80a87ac41d868a32d220fd5a5ec7f8998c264ec0eecc4455029ce3ba7caf68"
+  },
+  "package": "/private/tmp/weft-paths-distribution-530ae35-20261010-a",
+  "pinnedDistributionSchema": {
+    "bytes": 9259,
+    "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source/docs/helix/02-design/contracts/distribution-manifest.schema.json",
+    "sha256": "856d5103161b965db3eb1dc0198d08c13a65a2cd7367aab5caf345ba69722d66"
+  },
+  "scope": "Independent offline assembled-package manifest schema, bounded single-member gzip and exact retained compiler-evidence correspondence only. No compiler, assembler, build, engine, database, install or index operation; no new native, trust, authority or hermetic-build qualification.",
+  "script": {
+    "bytes": 11636,
+    "path": "/private/tmp/astra-paths-actual-package-conformance-review-20261010-a.py",
+    "sha256": "2fcd5015480ce4695903fb216d0f27ccb1b8033637ba8b453a4adf6fb654e561"
+  },
+  "transport": {
+    "exactOriginalRecords": 8,
+    "sourceDefinedInputHashesAndOutputTuplesReconstructed": 8
+  },
+  "verdict": "PASS"
+}

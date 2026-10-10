@@ -1,0 +1,9 @@
+{
+  "commandSha256": "d7bec02e48c77842db160d3c34081a432e9a00b867d8547df11dd0de0dc45fa0",
+  "environmentInherited": false,
+  "exitCode": 0,
+  "openingClosingCustody": true,
+  "phase": "source-metadata",
+  "stderrBytes": 6364,
+  "stdoutBytes": 51125
+}

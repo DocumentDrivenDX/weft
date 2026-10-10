@@ -1,0 +1,14 @@
+{
+  "binary": {
+    "bytes": 8273840,
+    "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/weft-paths",
+    "sha256": "71ba88a07c27661413830d5a42e2ea5c4a8b071df965bb98dbbe8f3615a6c911"
+  },
+  "commandSha256": "d7bec02e48c77842db160d3c34081a432e9a00b867d8547df11dd0de0dc45fa0",
+  "environmentInherited": false,
+  "exitCode": 0,
+  "openingClosingCustody": true,
+  "phase": "cli-build",
+  "stderrBytes": 7450,
+  "stdoutBytes": 0
+}

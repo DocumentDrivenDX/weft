@@ -1,0 +1,177 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "-j1",
+        "--target",
+        "aarch64-apple-darwin",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths",
+        "--bin",
+        "weft-paths"
+      ],
+      "builtBinary": "/private/tmp/ashlar-weft-distribution-d2d/target/aarch64-apple-darwin/release/weft-paths",
+      "cwd": "/private/tmp/weft-paths-530ae35-build-20261010-a/source",
+      "log": "/private/tmp/weft-paths-530ae35-build-20261010-a/cli-build.log",
+      "phase": "cli-build",
+      "retainedBinary": "/private/tmp/weft-paths-530ae35-build-20261010-a/weft-paths"
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "run",
+        "--offline",
+        "--locked",
+        "--release",
+        "-j1",
+        "--target",
+        "aarch64-apple-darwin",
+        "--no-default-features"
+      ],
+      "cwd": "/private/tmp/weft-paths-530ae35-build-20261010-a/metadata-probe",
+      "phase": "source-metadata",
+      "stderr": "/private/tmp/weft-paths-530ae35-build-20261010-a/metadata-build.log",
+      "stdout": "/private/tmp/weft-paths-530ae35-build-20261010-a/backend-manifest.json"
+    }
+  ],
+  "environment": {
+    "CARGO_BUILD_JOBS": "1",
+    "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+    "CARGO_TARGET_DIR": "/private/tmp/ashlar-weft-distribution-d2d/target",
+    "MACOSX_DEPLOYMENT_TARGET": "11.0",
+    "PATH": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
+    "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+    "SDKROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "TMPDIR": "/private/tmp/weft-paths-530ae35-build-20261010-a/task-tmp"
+  },
+  "environmentPolicy": "Complete subprocess environment allowlist; start empty. No HOME override or inherited Rust/Cargo/linker/build flags, credentials or shell configuration; explicit CARGO_HOME/RUSTUP_HOME select reused caches.",
+  "expectedMetadata": {
+    "backendId": "ashlar.databricks.paths",
+    "backendVersion": "0.4.0-paths-candidate",
+    "capabilities": 47,
+    "interfaceVersion": "weft-backend/0.3.0",
+    "languagePair": [
+      "weft-sql/0.4.0",
+      "weft-ir/0.4.0"
+    ]
+  },
+  "format": "weft-paths-build-command/0.1",
+  "historical": "c6 source/binary/48metadata/evidence untouched; Gitarchive ignores foreign dirty common.rs; no release build or engines launched.",
+  "launcher": {
+    "bytes": 5591,
+    "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/launch-reviewed-build.py",
+    "sha256": "85fcbea3548b8e909e64869558bca2c6002c319378624ecd39c671e37bee52ca"
+  },
+  "launcherLimits": {
+    "maximumStreamBytes": 16777216,
+    "timeoutSeconds": 1800
+  },
+  "platformObservation": {
+    "clang": "/Library/Developer/CommandLineTools/usr/bin/clang",
+    "ld": "/Library/Developer/CommandLineTools/usr/bin/ld",
+    "observedOS": "27.0.1",
+    "scope": "Read-only tool selection/settings observation; full SDK content remains external reused resource, no hermetic claim.",
+    "sdkRoot": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "sdkVersion": "27.0"
+  },
+  "probeLockProvenance": {
+    "bytes": 22711,
+    "path": "/Users/erik/Projects/ashlar/docs/helix/04-build/evidence/weft-path-backend-metadata-20261010/probe-Cargo.lock",
+    "sha256": "ead5d49041cb9990d7ef05f302f2ba7b84301463d8d447f2eba9ac613813ad4e"
+  },
+  "requiredOpeningClosing": "All source-inventory original files/modes/Gitblob/SHA and explicit resources before/after each command; actual binary format/hash/size/tools/build outcome+metadata complete schema. No compiler corpus or index admission inferred. Root exclusive build grant after independent review/CI.",
+  "resources": [
+    {
+      "bytes": 30854216,
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6"
+    },
+    {
+      "bytes": 414776,
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+      "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea"
+    },
+    {
+      "bytes": 528773,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source-inventory.json",
+      "sha256": "2a1eed46946a4d623f2f8abc7e7592e6d74e3964585ce1c500600a7ea62d6896"
+    },
+    {
+      "bytes": 523,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/metadata-probe/Cargo.toml",
+      "sha256": "d5a0bca053f8511e193f98e50dcaeef3d1e69c72e33b364f89a341ee072f8e45"
+    },
+    {
+      "bytes": 22711,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/metadata-probe/Cargo.lock",
+      "sha256": "ead5d49041cb9990d7ef05f302f2ba7b84301463d8d447f2eba9ac613813ad4e"
+    },
+    {
+      "bytes": 556,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/metadata-probe/src/main.rs",
+      "sha256": "4d9141327cac82550a662043cbf371b4ee3a20336fca776dcd77d94219ca2964"
+    },
+    {
+      "bytes": 28372,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source/Cargo.lock",
+      "sha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e"
+    },
+    {
+      "bytes": 113,
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source/rust-toolchain.toml",
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    {
+      "bytes": 187261080,
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/lib/librustc_driver-53a3dd5be7cd01bd.dylib",
+      "sha256": "d78a34753b24f34b4b06be53d37e989b9ff7f9b54e51842fd84429f0584cc776"
+    },
+    {
+      "bytes": 124676976,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "sha256": "1590ac950a3d627817d09ade5cb60b2115f17a72182a3141e010b4bcc482a0c9"
+    },
+    {
+      "bytes": 2749664,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/ld",
+      "sha256": "374d9f0713bce2c8a9e1e82bde51615d5433516a10d99b63107eb6ee70542e4c"
+    },
+    {
+      "bytes": 199024,
+      "path": "/usr/bin/xcrun",
+      "sha256": "bbe7671518a3905f9d3fce54312fbc77c2876b0d62aca74a0688fa869d31a8a9"
+    },
+    {
+      "bytes": 7948,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json",
+      "sha256": "7b93ad7e534cc4b31c6a4e39d19b5e0288acf2168c2649479a796d1cb51939fb"
+    }
+  ],
+  "sourceBytes": 267288896,
+  "sourceCommit": "530ae3511a4a50364d3d7e26195d3883952601df",
+  "sourceExport": "/private/tmp/weft-paths-530ae35-build-20261010-a/source",
+  "sourceFiles": 1842,
+  "sourceInventory": {
+    "bytes": 528773,
+    "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source-inventory.json",
+    "sha256": "2a1eed46946a4d623f2f8abc7e7592e6d74e3964585ce1c500600a7ea62d6896"
+  },
+  "status": "REVIEW-CANDIDATE-NOT-EXECUTED",
+  "tools": {
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)"
+  },
+  "uncertainties": [
+    "Existing Cargo dependency and target caches reused explicitly, not inventoried completely; no hermetic/deterministic rebuild claim.",
+    "Clang/ld and SDKSettings are observed SDK entrypoints, not proof of actual linker invocation; complete SDK/dynamic library closure not inventoried.",
+    "Copied historical metadata probe lock is an exact explicit input; --locked refuses if current selected dependency graph needs updates."
+  ]
+}

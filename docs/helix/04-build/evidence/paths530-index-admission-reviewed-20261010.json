@@ -1,0 +1,104 @@
+{
+  "decision": "APPROVE exact additive index admission proposal for the reviewed compiler realization; publication and consumer availability remain separate actions",
+  "indexBefore": {
+    "path": "/private/tmp/weft-paths-index-proposal-20261010-a/index.before.json",
+    "sha256": "71e441ce80b36a50cb8fc668431fefddec71e5e83908eb7fe78abe40c41ba2de",
+    "bytes": 730
+  },
+  "indexAfter": {
+    "path": "/private/tmp/weft-paths-index-proposal-20261010-a/index.after.json",
+    "sha256": "a7571d2bd141bf182ce171acc16f64f1276cca29a855dbf4b49a92283fc71864",
+    "bytes": 1390
+  },
+  "proposalFreeze": {
+    "path": "/private/tmp/weft-paths-index-proposal-20261010-a/freeze.json",
+    "sha256": "465f2522d4f8efb015a275a0d926110734fe71016ce9d100f3945f66f31d8d52",
+    "bytes": 1083
+  },
+  "package": "/private/tmp/weft-paths-distribution-530ae35-20261010-a",
+  "entry": {
+    "realizationId": "weft-530ae35-paths-aarch64-apple-darwin-candidate",
+    "manifest": {
+      "path": "manifest.json",
+      "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e",
+      "bytes": 7044
+    },
+    "executable": {
+      "path": "bin/weft-paths",
+      "sha256": "71ba88a07c27661413830d5a42e2ea5c4a8b071df965bb98dbbe8f3615a6c911",
+      "bytes": 8273840
+    },
+    "target": "aarch64-apple-darwin",
+    "assemblyCustody": {
+      "path": "assembly-custody.json",
+      "sha256": "1cdbf9690a902c021f8450488e8b11d20903276efeec9c241502e1fe179edc95",
+      "bytes": 15284
+    }
+  },
+  "governingContract": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+    "sha256": "d586aec8a51e8c0f43a09b055e5d003f504f631e9e54d96b5ef191a11272dba0",
+    "bytes": 18407
+  },
+  "schema": {
+    "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source/docs/helix/02-design/contracts/distribution-index.schema.json",
+    "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d",
+    "bytes": 2813
+  },
+  "reviews": [
+    {
+      "path": "/private/tmp/astra-paths-actual-package-review-20261010-a.json",
+      "sha256": "962d54e14267fcf67c24bb97e8375fc22c2266c3133b74c1e50e1a72e9aed5f9",
+      "bytes": 2615
+    },
+    {
+      "path": "/private/tmp/astra-paths-full-corpus-result-review-20261010-c.json",
+      "sha256": "cc5c5e7b67ebc702a3df86e82237eb50a64927131c43d6f7caa3184ffb978923",
+      "bytes": 2767
+    },
+    {
+      "path": "/private/tmp/astra-paths-original21-expected-acceptance-20261010-a.json",
+      "sha256": "9af288c45cd38f39e7b237860d36efb8cca6b3c4f5ec5df56462d2938b86bd3d",
+      "bytes": 10570
+    },
+    {
+      "path": "/private/tmp/astra-paths-nine-expected-acceptance-20261010-a.json",
+      "sha256": "fad589e435be700a669aa1b3e2150960d1ba6df02b77654079048122d81bf983",
+      "bytes": 6924
+    },
+    {
+      "path": "/private/tmp/astra-paths-controls19-expected-acceptance-20261010-a.json",
+      "sha256": "ab441d7fd72d926dd92d5677f3c98818a0319112306aa1831cf7d128bf947f70",
+      "bytes": 12677
+    }
+  ],
+  "checks": [
+    "Exact old entry preserved; repository index remains unchanged during read-only review.",
+    "Offline closed schema plus semantic unique identity/package-root manifest, custody, executable and target correspondence verified.",
+    "All49 retained Paths/control expectations independently map byte-for-byte to their prior semantic acceptance receipts; no same-run expectation promotion.",
+    "Separate actual full-corpus result review binds512 complete produced responses:463 unchanged historical requests with exact04 WFT-VERSION refusals,30 Paths cases,19 controls including opt-out/refusals/fresh bindings,47 selected capabilities and8 transport controls.",
+    "Manifest corpus493=26 compiled+467 blocked; separate19 controls=3 compiled+16 blocked, aggregate512=29 compiled+483 blocked.",
+    "Reviewed package binds70 exact files, full1842 tracked-source inventory and selected51 copies, actual source530/binary71ba/backend47/schema/build/corpus identities."
+  ],
+  "negativeControls": [
+    "duplicate-realization",
+    "missing-assembly-custody",
+    "wrong-custody-sha",
+    "wrong-executable-sha",
+    "wrong-target",
+    "changed-original-entry",
+    "forged-self-trust"
+  ],
+  "limits": [
+    "Admission is based on prior independently accepted expectations and actual produced-byte corpus evidence, not schema validity or smoke tests alone.",
+    "This approval permits only the exact proposed index bytes and exact reviewed package; changed bytes require a new review.",
+    "After landing, consumers still need an independently selected immutable index revision/digest; no current caller record or this review can self-register.",
+    "Registration does not transfer historical c6 native support to this executable and discharges no source/authorization/publication/ACK/stored-value/host obligation.",
+    "No compiler, build, assembly, install, index mutation or native engine was run. No hermetic build, crash durability, universal platform or unconditional liveness claim."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-paths-index-admission-review-20261010-a.py",
+    "sha256": "d4871ad76c9d7808e0dbd3d8cff053254c5141f5d73f0fc24eb62f1b4cdca87b",
+    "bytes": 7282
+  }
+}

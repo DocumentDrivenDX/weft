@@ -1,0 +1,55 @@
+{
+  "decision": "APPROVE actual inert assembled package for exact subsequent independent index admission review",
+  "package": "/private/tmp/weft-paths-distribution-530ae35-20261010-a",
+  "manifest": {
+    "path": "/private/tmp/weft-paths-distribution-530ae35-20261010-a/manifest.json",
+    "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e",
+    "bytes": 7044
+  },
+  "assemblyCustody": {
+    "path": "/private/tmp/weft-paths-distribution-530ae35-20261010-a/assembly-custody.json",
+    "sha256": "1cdbf9690a902c021f8450488e8b11d20903276efeec9c241502e1fe179edc95",
+    "bytes": 15284
+  },
+  "reviews": [
+    {
+      "path": "/private/tmp/astra-paths-package-custody-review-20261010-a.json",
+      "sha256": "ea0c6949e63c5ee738bb250e18e0ea0bbac946ac6e5267703f26156fa2e48129",
+      "bytes": 3078
+    },
+    {
+      "path": "/private/tmp/astra-paths-actual-package-conformance-review-20261010-a.json",
+      "sha256": "b812b2a3a8b81f53a7972fda5a204e0019123c58a0cc24778516aeeae48f79d7",
+      "bytes": 3496
+    }
+  ],
+  "actualAssemblyObservation": {
+    "path": "/private/tmp/weft-paths-assembly-actual-20261010-a.json",
+    "sha256": "931c9fc16f0dd6acded2ac22e461d390ce4fe22b3e6a4644717bdd12a3e7ea8f",
+    "bytes": 15123
+  },
+  "verified": {
+    "files": 70,
+    "bytes": 44587566,
+    "sourceInventory": 1842,
+    "selectedSourceCopies": 51,
+    "contractSchemas": 20,
+    "singleMemberGzipFiles": 4,
+    "fullResponses": 512,
+    "legacyExactNamespaceFences": 463,
+    "pathsCases": 30,
+    "controls": 19,
+    "compiled": 29,
+    "blocked": 483,
+    "declaredCapabilities": 47,
+    "transportControls": 8
+  },
+  "scope": [
+    "Exact package copies, source/build/executable/backend/schema/corpus correspondence and read-only closing custody pass.",
+    "All four gzip payloads are bounded single-member streams and decode exactly to original retained evidence or independently reconstructed selected JSONL.",
+    "The separately reviewed actual produced-byte full-corpus receipt is retained losslessly; complete responses and original historical expectations remain distinct without migrations or normalization.",
+    "No compiler, assembler, installer, database or engine execution during this review. No public index mutation has occurred.",
+    "Historical native evidence does not qualify this new executable for native execution; source authorization, ACK, publication and stored-value obligations remain host responsibilities.",
+    "Selected source subset is not a complete rebuild checkout; cache/SDK/runtime and inherited assembly environment limitations remain explicit."
+  ]
+}

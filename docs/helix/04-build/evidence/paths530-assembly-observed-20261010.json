@@ -1,0 +1,378 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "scripts/distribution/assemble-paths-distribution.py",
+    "--source-root",
+    "/private/tmp/weft-paths-530ae35-build-20261010-a/source",
+    "--build-root",
+    "/private/tmp/weft-paths-530ae35-build-20261010-a",
+    "--corpus-root",
+    "/private/tmp/weft-paths-full-corpus-20261010-c",
+    "--output",
+    "/private/tmp/weft-paths-distribution-530ae35-20261010-a",
+    "--realization-id",
+    "weft-530ae35-paths-aarch64-apple-darwin-candidate"
+  ],
+  "cwd": "/private/tmp/ashlar-weft-distribution-d2d",
+  "environmentInherited": true,
+  "environmentQualification": "Explicit existing development interpreter; no hermetic execution claim.",
+  "execSession": 85745,
+  "exitCode": 0,
+  "files": [
+    {
+      "bytes": 15284,
+      "path": "assembly-custody.json",
+      "sha256": "1cdbf9690a902c021f8450488e8b11d20903276efeec9c241502e1fe179edc95"
+    },
+    {
+      "bytes": 51125,
+      "path": "backend/backend-manifest.json",
+      "sha256": "fc36ddbb6ca41309d25dadf1969bb27efb72debe0c6669b76a8a6a425ca35ec5"
+    },
+    {
+      "bytes": 8273840,
+      "path": "bin/weft-paths",
+      "sha256": "71ba88a07c27661413830d5a42e2ea5c4a8b071df965bb98dbbe8f3615a6c911"
+    },
+    {
+      "bytes": 7712,
+      "path": "evidence/build-command.json",
+      "sha256": "d7bec02e48c77842db160d3c34081a432e9a00b867d8547df11dd0de0dc45fa0"
+    },
+    {
+      "bytes": 437,
+      "path": "evidence/cli-build-outcome.json",
+      "sha256": "5b6112ae8f11efdfb05b2ee665d7317ea42324ae3b263032f9bbfff63454fe83"
+    },
+    {
+      "bytes": 425,
+      "path": "evidence/controls-custody.json",
+      "sha256": "592265545229c61995db6ef50a61b5e98dd6e408778682ddc049dce103f2378d"
+    },
+    {
+      "bytes": 446,
+      "path": "evidence/controls-summary.json",
+      "sha256": "25b91b04ba60a1151028f12709a75ed0070b8d44f344444d49f3fbacc4d5a97e"
+    },
+    {
+      "bytes": 148554,
+      "path": "evidence/controls.jsonl.gz",
+      "sha256": "b48a73c748a3283faf40c6460fe2587028362965b5ed11d1eff075e6084cc8ac"
+    },
+    {
+      "bytes": 425,
+      "path": "evidence/corpus-custody.json",
+      "sha256": "59118803899def38c94c3490129ed5f573ed5d2c66809b46b80bf8a3e111ee28"
+    },
+    {
+      "bytes": 449,
+      "path": "evidence/corpus-summary.json",
+      "sha256": "88249bbfbf4706a5bf10634e3463c82329281b73e3e8f25c97992a83abed0c61"
+    },
+    {
+      "bytes": 2418867,
+      "path": "evidence/corpus.jsonl.gz",
+      "sha256": "46dca743e4531c7d02779fd0b857a12c39284ca8976e0f5665eddcc7d8f79594"
+    },
+    {
+      "bytes": 17032500,
+      "path": "evidence/expected-cases.json",
+      "sha256": "1cf69c0dfbde7cb8f82e6653c67637157342374bd1ab4114050d93246f21000d"
+    },
+    {
+      "bytes": 2569562,
+      "path": "evidence/full-receipt.json.gz",
+      "sha256": "98f33d3a1051db8da45e99f850253a546858b1412318346a44dd6ebfd5e6766f"
+    },
+    {
+      "bytes": 250,
+      "path": "evidence/metadata-build-outcome.json",
+      "sha256": "31abfb03a83225abe86aa3a778d2298240b0260697bfca966160766c6c664f53"
+    },
+    {
+      "bytes": 140992,
+      "path": "evidence/source-inventory.json.gz",
+      "sha256": "26a7161b60156fac6543619cc7a13467f77cd68b6b45997fa4d379bbdc071af0"
+    },
+    {
+      "bytes": 94,
+      "path": "evidence/tools.json",
+      "sha256": "38429dcb2d11ce4f4a0fdfe1790356667be33e3c8ef82973edebd421ed202426"
+    },
+    {
+      "bytes": 2764,
+      "path": "evidence/transport.json",
+      "sha256": "72c672b6afed8949d37d173aba6d24a01e2fd55853928b970d4988e3923b54e5"
+    },
+    {
+      "bytes": 7044,
+      "path": "manifest.json",
+      "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e"
+    },
+    {
+      "bytes": 21926,
+      "path": "producer/assemble-paths-distribution.py",
+      "sha256": "4cc933ed3f652fb2c1dda49fe18cb934c8bed7b066c325b19a6a46bad232e7bd"
+    },
+    {
+      "bytes": 28372,
+      "path": "source-subset/Cargo.lock",
+      "sha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e"
+    },
+    {
+      "bytes": 17708,
+      "path": "source-subset/crates/weft-core/src/compile04.rs",
+      "sha256": "2c82da3f60c20776284ff97b4844e976edd4b8c12d5be016ec4a323ebc7196ac"
+    },
+    {
+      "bytes": 7992,
+      "path": "source-subset/crates/weft-databricks/src/paths.rs",
+      "sha256": "3c6ebc5f201c80256109a55e7acf9b9c1c31a045650d5cecc5e32cd096b98b6a"
+    },
+    {
+      "bytes": 1636,
+      "path": "source-subset/docs/helix/02-design/contracts/application-result-v0.2.schema.json",
+      "sha256": "0e9fc7aa16d14a4e78027a70514d75476d1576f9625747e1b5f56b76147f8014"
+    },
+    {
+      "bytes": 2281,
+      "path": "source-subset/docs/helix/02-design/contracts/application-result-v0.4.schema.json",
+      "sha256": "ee87e4e845d670601a301701dc6109c7a37dadb96ccb1e7f75c8144c5bd8bc2a"
+    },
+    {
+      "bytes": 7580,
+      "path": "source-subset/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json",
+      "sha256": "b3b556d49b9c605e0c1ce1cad601905ba89008b67f5129f4bdbdbb8df0b55fc2"
+    },
+    {
+      "bytes": 18066,
+      "path": "source-subset/docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json",
+      "sha256": "655f2dea7b459b354af1f66ae1684f1ba2bce907a5c7355d34c9f9c461f9ea7a"
+    },
+    {
+      "bytes": 4006,
+      "path": "source-subset/docs/helix/02-design/contracts/backend-manifest.schema.json",
+      "sha256": "d18133db2b104714f78839aba458d62dffa79d969195df02582a87465a2ac4a1"
+    },
+    {
+      "bytes": 3874,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-request-v0.2.schema.json",
+      "sha256": "2a9a4264a9d8926176aa3809d613e103f35c8f634b0d8839ddf2bbcf598cacde"
+    },
+    {
+      "bytes": 3511,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "sha256": "7345c424b1bbf8da15e6f7b4efb81da7eeb85a1e08fb91319eeb7b19ec129047"
+    },
+    {
+      "bytes": 3511,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "sha256": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932"
+    },
+    {
+      "bytes": 2851,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-request.schema.json",
+      "sha256": "8916022eb698864f5580319848307a1e0e90699dbaac1dafd6b8f2e11119d3e5"
+    },
+    {
+      "bytes": 30933,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
+      "sha256": "8cce222e4031b5cf2e2aa6388b28e948e1d1408e60b3056a2c3c297e993af3dc"
+    },
+    {
+      "bytes": 34484,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a"
+    },
+    {
+      "bytes": 62086,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "sha256": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140"
+    },
+    {
+      "bytes": 23723,
+      "path": "source-subset/docs/helix/02-design/contracts/compile-response.schema.json",
+      "sha256": "234e439bca6ac06b783579005e3db086526b4f16a28267e0fdc92fe55abfb938"
+    },
+    {
+      "bytes": 2261,
+      "path": "source-subset/docs/helix/02-design/contracts/conformance-case.schema.json",
+      "sha256": "837197d5a3d7ef43b80ae50ef8d45caf14a42ce88d5d166492abf8247e791e99"
+    },
+    {
+      "bytes": 2813,
+      "path": "source-subset/docs/helix/02-design/contracts/distribution-index.schema.json",
+      "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d"
+    },
+    {
+      "bytes": 9259,
+      "path": "source-subset/docs/helix/02-design/contracts/distribution-manifest.schema.json",
+      "sha256": "856d5103161b965db3eb1dc0198d08c13a65a2cd7367aab5caf345ba69722d66"
+    },
+    {
+      "bytes": 17644,
+      "path": "source-subset/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json",
+      "sha256": "17b650e2573b4274cfd8506cf02b963060c0d978ffc7f979d94a7d9eafea1316"
+    },
+    {
+      "bytes": 38838,
+      "path": "source-subset/docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297"
+    },
+    {
+      "bytes": 42813,
+      "path": "source-subset/docs/helix/02-design/contracts/logical-plan-v0.4.schema.json",
+      "sha256": "a6f28858646e4795019037233ef0e8d6b0aeb45e7440cbcf4e7a477891a1b3d5"
+    },
+    {
+      "bytes": 8879,
+      "path": "source-subset/docs/helix/02-design/contracts/logical-plan.schema.json",
+      "sha256": "ce9c7de12094ab840e4b483faed44a4ee5e122e47a4d4c9f9e46d8144541f9ff"
+    },
+    {
+      "bytes": 2458108,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-application-native/compile-artifacts.jsonl",
+      "sha256": "1890b061d48626fc8b253b64f320643bdf78036ccc3c076e991588274a083759"
+    },
+    {
+      "bytes": 955224,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-columns-native/compile-artifacts.jsonl",
+      "sha256": "652edb0bf4d5e275755201de6baaf088601521f8d006549404731a38a2742212"
+    },
+    {
+      "bytes": 2335992,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-compound-application-native/compile-artifacts.jsonl",
+      "sha256": "77a7f484c60916573cb9667695c056340ec4eed13d32963f4e700f3fce4d73f3"
+    },
+    {
+      "bytes": 204042,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-compound-boundaries-native/compile-artifacts.jsonl",
+      "sha256": "6250c001b0133ff34a6e7b7339fadb21c4797f792ae023c951b282ddf61c6197"
+    },
+    {
+      "bytes": 4050957,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-compound-native/compile-artifacts.jsonl",
+      "sha256": "46cbe6bd63669dc975b7ba9ed042ce8b957aed1c1cf139e229b1b3345b9086c9"
+    },
+    {
+      "bytes": 31389,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-cross-module-native/compile.json",
+      "sha256": "f8492391b65b717be213fbafb6fbdbcb8c8d9fe7cec9d77461ee420464bf0560"
+    },
+    {
+      "bytes": 22968,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-global-native/empty-compile.json",
+      "sha256": "7e2ffd6796d94c5cef6240dd7aa96bf2abe0d491cd3a1fbbbb455aec1944138c"
+    },
+    {
+      "bytes": 22968,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-global-native/exact-compile.json",
+      "sha256": "a63edaff21189070686056bb28a7d80a461d72f6a4e76a221911f324e721bcc7"
+    },
+    {
+      "bytes": 176688,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-key-refusal/compile-artifacts.jsonl",
+      "sha256": "89790e1dddbf25bd28e32cb084091219e02506deb6d6f31ccb7b59ed20a1fc5f"
+    },
+    {
+      "bytes": 472102,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-optional-native/compile-artifacts.jsonl",
+      "sha256": "888f33af3b2b4f998649f0343d56bafb23615db65f2a90cdbd0c94e3bd21455c"
+    },
+    {
+      "bytes": 2234669,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-relationship-native/compile-artifacts.jsonl",
+      "sha256": "2116aca797fc0257bd0d01dfdf5258751a37d26c73f24a48914bb5a26ba1a5c1"
+    },
+    {
+      "bytes": 40458,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/empty-compile.json",
+      "sha256": "49028e5b145b42fa658a33cb848a9586cb47279fce0db4b0d2c133cc6dde5223"
+    },
+    {
+      "bytes": 40458,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/exact-compile.json",
+      "sha256": "919e76703e2d331986111ff92ea5dbba5516c2dbf6001248b3a357983511c8d0"
+    },
+    {
+      "bytes": 40490,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-absent-compile.json",
+      "sha256": "2a9975a7a550fc43dfc3042be368451c4400c0c9e0379a8f9149b3c3fdc3fd07"
+    },
+    {
+      "bytes": 40522,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-decimal-domain-compile.json",
+      "sha256": "692388f4238c349f6475f2cc2082506b11dfafabd09976a2ccc5ed2222eb214e"
+    },
+    {
+      "bytes": 40518,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-decimal-scale-compile.json",
+      "sha256": "25096731e121df758e94235d6ffb1625b7cb827540275f1194e05f344126bd71"
+    },
+    {
+      "bytes": 40530,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-exponent-carrier-compile.json",
+      "sha256": "7cb3c305d740ed25f1a8e3c16e20f0d5c7effb85a982419e16deeef2961e69b6"
+    },
+    {
+      "bytes": 40522,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-foreign-domain-compile.json",
+      "sha256": "a6912ca81fdad96f52ebec603dec7c91c77db19544790c76ad280f2a1932995d"
+    },
+    {
+      "bytes": 40482,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-null-compile.json",
+      "sha256": "1f6cd52d39d9872a58dd2b6450eec467f7b34ebacc5efa3d5ec58366e3460965"
+    },
+    {
+      "bytes": 40518,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-number-string-compile.json",
+      "sha256": "49bf0c4bb8f3e6de21d759b36ddf93ba561209d4d793a1978e257fa3e47875dc"
+    },
+    {
+      "bytes": 40506,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-scalar-native/hidden-wrong-name-compile.json",
+      "sha256": "03f53796eee3e66f870fb8666df6c9298ef43d43b5d2fee0eb81a83bc2a87f94"
+    },
+    {
+      "bytes": 72760,
+      "path": "source-subset/docs/helix/04-build/evidence/B-006-unsigned-columns/compile-artifacts.jsonl",
+      "sha256": "3d15a23eec23885098e458e82ffa6505ebe8dd2ddd2ce122a2f1f4b4d1a0e915"
+    },
+    {
+      "bytes": 113,
+      "path": "source-subset/rust-toolchain.toml",
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    {
+      "bytes": 556,
+      "path": "source-subset/scripts/distribution/backend-paths-metadata.rs",
+      "sha256": "4d9141327cac82550a662043cbf371b4ee3a20336fca776dcd77d94219ca2964"
+    },
+    {
+      "bytes": 7388,
+      "path": "source-subset/scripts/distribution/check-cli-controls.py",
+      "sha256": "01dbe70e2428741a007b12e218da9c39fcef542fcae59e68e36fbb4cd0724854"
+    },
+    {
+      "bytes": 23087,
+      "path": "source-subset/scripts/distribution/check-paths-cli.py",
+      "sha256": "2cad04baacb843f22306d0ca1554bd375e70d77e3be0bc85123be56eb923c088"
+    },
+    {
+      "bytes": 18941,
+      "path": "source-subset/spec/upstream/umf-0.7.0.schema.json",
+      "sha256": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813"
+    },
+    {
+      "bytes": 26793,
+      "path": "source-subset/spec/upstream/umf-0.8.0.schema.json",
+      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+    }
+  ],
+  "producerCommit": "b5a46b147486c1fe7530b228965670b03a0a6572",
+  "producerSha256": "4cc933ed3f652fb2c1dda49fe18cb934c8bed7b066c325b19a6a46bad232e7bd",
+  "scope": "Root observed actual inert assembler execution only; independent output verification pending. No installation, index admission or native execution.",
+  "stdout": "{\"state\": \"inert-candidate-assembled\", \"realizationId\": \"weft-530ae35-paths-aarch64-apple-darwin-candidate\"}\n"
+}

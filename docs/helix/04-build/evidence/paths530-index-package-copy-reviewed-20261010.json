@@ -1,0 +1,101 @@
+{
+  "decision": "APPROVE exact76-file landing copy: reviewed70-file package, exact additive index and5 original observations/reviews",
+  "packageRoot": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-530ae35-paths-aarch64-apple-darwin-candidate",
+  "files": 70,
+  "bytes": 44587566,
+  "manifest": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-530ae35-paths-aarch64-apple-darwin-candidate/manifest.json",
+    "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e",
+    "bytes": 7044
+  },
+  "assemblyCustody": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-530ae35-paths-aarch64-apple-darwin-candidate/assembly-custody.json",
+    "sha256": "1cdbf9690a902c021f8450488e8b11d20903276efeec9c241502e1fe179edc95",
+    "bytes": 15284
+  },
+  "index": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/index.json",
+    "sha256": "a7571d2bd141bf182ce171acc16f64f1276cca29a855dbf4b49a92283fc71864",
+    "bytes": 1390
+  },
+  "oldIndexSha256": "71e441ce80b36a50cb8fc668431fefddec71e5e83908eb7fe78abe40c41ba2de",
+  "copiedReceipts": [
+    {
+      "copy": {
+        "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/paths530-actual-package-reviewed-20261010.json",
+        "sha256": "962d54e14267fcf67c24bb97e8375fc22c2266c3133b74c1e50e1a72e9aed5f9",
+        "bytes": 2615
+      },
+      "original": {
+        "path": "/private/tmp/astra-paths-actual-package-review-20261010-a.json",
+        "sha256": "962d54e14267fcf67c24bb97e8375fc22c2266c3133b74c1e50e1a72e9aed5f9",
+        "bytes": 2615
+      }
+    },
+    {
+      "copy": {
+        "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/paths530-index-admission-reviewed-20261010.json",
+        "sha256": "aba9af70b505e0daa91f0276852cc30879666778eb812c52d53eb471838ea0a5",
+        "bytes": 5242
+      },
+      "original": {
+        "path": "/private/tmp/astra-paths-index-admission-review-20261010-a.json",
+        "sha256": "aba9af70b505e0daa91f0276852cc30879666778eb812c52d53eb471838ea0a5",
+        "bytes": 5242
+      }
+    },
+    {
+      "copy": {
+        "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/paths530-assembly-observed-20261010.json",
+        "sha256": "931c9fc16f0dd6acded2ac22e461d390ce4fe22b3e6a4644717bdd12a3e7ea8f",
+        "bytes": 15123
+      },
+      "original": {
+        "path": "/private/tmp/weft-paths-assembly-actual-20261010-a.json",
+        "sha256": "931c9fc16f0dd6acded2ac22e461d390ce4fe22b3e6a4644717bdd12a3e7ea8f",
+        "bytes": 15123
+      }
+    },
+    {
+      "copy": {
+        "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/paths530-package-conformance-reviewed-20261010.json",
+        "sha256": "b812b2a3a8b81f53a7972fda5a204e0019123c58a0cc24778516aeeae48f79d7",
+        "bytes": 3496
+      },
+      "original": {
+        "path": "/private/tmp/astra-paths-actual-package-conformance-review-20261010-a.json",
+        "sha256": "b812b2a3a8b81f53a7972fda5a204e0019123c58a0cc24778516aeeae48f79d7",
+        "bytes": 3496
+      }
+    },
+    {
+      "copy": {
+        "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/paths530-package-custody-reviewed-20261010.json",
+        "sha256": "ea0c6949e63c5ee738bb250e18e0ea0bbac946ac6e5267703f26156fa2e48129",
+        "bytes": 3078
+      },
+      "original": {
+        "path": "/private/tmp/astra-paths-package-custody-review-20261010-a.json",
+        "sha256": "ea0c6949e63c5ee738bb250e18e0ea0bbac946ac6e5267703f26156fa2e48129",
+        "bytes": 3078
+      }
+    }
+  ],
+  "checks": [
+    "All70 original and destination file paths/lengths/hashes/full bytes equal; no symlinks or special files.",
+    "Approved compressed evidence/schema/source-subset/build/executable bytes are exact copies, so prior bounded decode and full correspondence findings apply without reinterpretation.",
+    "Old tracked index is original71e441 bytes; new index is exact approveda757 and retains the prior entry unchanged.",
+    "Five copied evidence/review receipts are exact originals, including historical pending scope preserved unchanged and separate actual approval.",
+    "Opening/closing source and destination vectors unchanged."
+  ],
+  "limits": [
+    "Pure read-only copy review; no assembly, compiler, native, index execution, install or semantic requalification.",
+    "Original external references remain external; no full checkout/cache/SDK bundling or crash-durability claim.",
+    "Foreign working-tree changes are outside this review."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-paths-index-package-copy-review-20261010-a.py",
+    "sha256": "95d75394f5160cd484ae6710a2ad16d61741d09d09ac2867fce9c35b3c98fb8e",
+    "bytes": 4055
+  }
+}

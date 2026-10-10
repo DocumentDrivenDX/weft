@@ -1,0 +1,53 @@
+{
+  "decision": "PASS actual inert package copy/source/build custody; offline schema/corpus check supplied separately",
+  "package": "/private/tmp/weft-paths-distribution-530ae35-20261010-a",
+  "manifest": {
+    "path": "/private/tmp/weft-paths-distribution-530ae35-20261010-a/manifest.json",
+    "sha256": "fa801113d214078f5bbccf6aee2d9acdf184ccd7be352b7fd55e84b794d5ac4e",
+    "bytes": 7044
+  },
+  "assemblyCustody": {
+    "path": "/private/tmp/weft-paths-distribution-530ae35-20261010-a/assembly-custody.json",
+    "sha256": "1cdbf9690a902c021f8450488e8b11d20903276efeec9c241502e1fe179edc95",
+    "bytes": 15284
+  },
+  "actualExecutionObservation": {
+    "path": "/private/tmp/weft-paths-assembly-actual-20261010-a.json",
+    "sha256": "931c9fc16f0dd6acded2ac22e461d390ce4fe22b3e6a4644717bdd12a3e7ea8f",
+    "bytes": 15123
+  },
+  "counts": {
+    "files": 70,
+    "bytes": 44587566,
+    "custodyEntries": 69,
+    "manifestArtifactDescriptors": 33,
+    "fullSourceInventoryEntries": 1842,
+    "selectedSourceCopies": 51,
+    "publicContractSchemas": 20
+  },
+  "producer": {
+    "commit": "b5a46b147486c1fe7530b228965670b03a0a6572",
+    "sourceSha256": "4cc933ed3f652fb2c1dda49fe18cb934c8bed7b066c325b19a6a46bad232e7bd",
+    "sourceReview": {
+      "path": "/private/tmp/astra-paths-assembly-source-review-20261010-b.json",
+      "sha256": "02cd1374fcf5bf44fce53939281a846ec102ba4cf7e1b4aa22a1b5f5e8bcd934",
+      "bytes": 4395
+    }
+  },
+  "checks": [
+    "Exact file/directory closure, unique safe relative descriptors and read-only444/executable555 modes; actual root70-file observation matches.",
+    "Every manifest artifact descriptor matches independently hashed bytes and69-entry assembly inventory.",
+    "Full1842-entry original inventory decoded byte-for-byte; all51 selected source copies match original immutable530 source, Git blob hashes, lengths and original source executable modes.",
+    "Exact20 contract schemas present, plus original0.7/0.8 upstream dependencies; complete compiler source remains a separate prerequisite.",
+    "Embedded producer matches approvedB and committedb5 Git blob; source530 compiler and b5 assembler identities stay separate.",
+    "Executable,47metadata,fullreceipt,expected cases,build command/outcomes retained exactly; manifest target/features/tools/environment/unknowns correspond to actual build command.",
+    "Actual Mach-O arm64/minimumOS11/SDK27 structure checked without execution.",
+    "Closing package/source copies remain unchanged after pure verification."
+  ],
+  "limits": [
+    "This is read-only output/copy verification; no compiler, package reassembly, installation, index entry or native engine invocation.",
+    "Root actual assembly observation is explicitly nonhermetic/inherited-environment evidence; no stronger transport/environment claim inferred.",
+    "Package/source checks do not transfer historicalc6 native results to Paths530 or grant source/ACK/runtime authority.",
+    "Independent offline schema and complete compressed corpus review is required separately before aggregate approval."
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan.schema.json",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "pin": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "umfVersion": {
+          "enum": ["0.7.0", "0.8.0"]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "umfVersion",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "facets": {
+          "type": "object"
+        },
+        "nullable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "family",
+        "nullable"
+      ],
+      "additionalProperties": false
+    },
+    "span": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "field"
+            },
+            "scan": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "op",
+            "scan",
+            "identity",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "literal"
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "op",
+            "value",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "enum": [
+                "equal",
+                "and"
+              ]
+            },
+            "left": {
+              "$ref": "#/$defs/expression"
+            },
+            "right": {
+              "$ref": "#/$defs/expression"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "sum"
+            },
+            "argument": {
+              "$ref": "#/$defs/expression"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "op",
+            "argument",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "node": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "scan"
+            },
+            "occurrence": {
+              "type": "string",
+              "minLength": 1
+            },
+            "record": {
+              "$ref": "#/$defs/identity"
+            },
+            "pin": {
+              "$ref": "#/$defs/pin"
+            }
+          },
+          "required": [
+            "op",
+            "occurrence",
+            "record",
+            "pin"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "innerJoin"
+            },
+            "left": {
+              "$ref": "#/$defs/node"
+            },
+            "right": {
+              "$ref": "#/$defs/node"
+            },
+            "on": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "on"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "filter"
+            },
+            "input": {
+              "$ref": "#/$defs/node"
+            },
+            "predicate": {
+              "$ref": "#/$defs/expression"
+            }
+          },
+          "required": [
+            "op",
+            "input",
+            "predicate"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "aggregate"
+            },
+            "input": {
+              "$ref": "#/$defs/node"
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              },
+              "minItems": 0
+            },
+            "aggregates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/expression"
+              },
+              "minItems": 0
+            }
+          },
+          "required": [
+            "op",
+            "input",
+            "groups",
+            "aggregates"
+          ],
+          "additionalProperties": false,
+          "anyOf": [
+            {
+              "properties": {
+                "groups": {
+                  "minItems": 1
+                }
+              }
+            },
+            {
+              "properties": {
+                "aggregates": {
+                  "minItems": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "project"
+            },
+            "input": {
+              "$ref": "#/$defs/node"
+            },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expression": {
+                    "$ref": "#/$defs/expression"
+                  }
+                },
+                "required": [
+                  "name",
+                  "expression"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "op",
+            "input",
+            "outputs"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "irVersion": {
+      "const": "weft-ir/0.1.0"
+    },
+    "modulePins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pin"
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "root": {
+      "$ref": "#/$defs/node"
+    }
+  },
+  "required": [
+    "irVersion",
+    "modulePins",
+    "requiredCapabilities",
+    "root"
+  ],
+  "additionalProperties": false
+}
