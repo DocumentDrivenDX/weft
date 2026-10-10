@@ -24,8 +24,8 @@ class AssemblyTests(unittest.TestCase):
         self.assertEqual(m.relative('source/é.json'), 'source/é.json')
 
     def test_bounded_read_never_requests_whole_oversized_file(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            p = Path(d) / 'giant'
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d).resolve() / 'giant'
             p.write_bytes(b'x' * 50)
             requests = []
             original = Path.open
@@ -64,8 +64,8 @@ class AssemblyTests(unittest.TestCase):
         with self.assertRaises(ValueError): m.source_entry(raw, {**entry, 'extra': 1})
 
     def test_snapshot_closing_drift_and_conflicting_destination(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             (root / 'a').write_bytes(b'original')
             (root / 'b').write_bytes(b'other')
             snapshot = m.Snapshot()
@@ -75,16 +75,16 @@ class AssemblyTests(unittest.TestCase):
             with self.assertRaises(ValueError): snapshot.close()
 
     def test_symlink_component_refuses(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             (root / 'actual').mkdir()
             (root / 'actual/a').write_bytes(b'a')
             (root / 'link').symlink_to(root / 'actual', target_is_directory=True)
             with self.assertRaises(ValueError): m.Snapshot().take(root, 'link/a', 'a')
 
     def test_output_exists_refuses_before_input_reads(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            p = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d).resolve()
             output = p / 'existing'; output.mkdir()
             config = m.Config(p, p, p, p / 'binary', output, 'candidate')
             with patch.object(m.Snapshot, 'take', side_effect=AssertionError('inputs reached')):
@@ -128,8 +128,8 @@ class PublicationTests(unittest.TestCase):
         return snap
 
     def test_atomic_copy_keeps_complete_bytes_and_modes(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             snap = self.fixture(root)
             m.publish(snap, root / 'output')
             self.assertEqual((root / 'output/proof/input').read_bytes(), b'exact')
@@ -137,8 +137,8 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(any(root.glob('.weft-distribution-*')))
 
     def test_rename_failure_leaves_no_candidate(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             snap = self.fixture(root)
             with patch.object(m.os, 'rename', side_effect=OSError('injected rename failure')):
                 with self.assertRaises(OSError): m.publish(snap, root / 'output')
@@ -146,8 +146,8 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(any(root.glob('.weft-distribution-*')))
 
     def test_closing_drift_after_copy_withholds_candidate(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             snap = self.fixture(root)
             original = snap.close
             calls = []
@@ -161,8 +161,8 @@ class PublicationTests(unittest.TestCase):
             self.assertFalse(any(root.glob('.weft-distribution-*')))
 
     def test_symlink_replacement_at_closing_refuses(self):
-        with tempfile.TemporaryDirectory(dir='/private/tmp') as d:
-            root = Path(d)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d).resolve()
             snap = self.fixture(root)
             (root / 'input').unlink()
             (root / 'other').write_bytes(b'exact')
