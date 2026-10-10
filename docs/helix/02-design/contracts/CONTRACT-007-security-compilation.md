@@ -31,8 +31,9 @@ UMF contracts before a security-enabled artifact can be emitted.
 This initial foundation validates the transport and exact model byte/identity/
 version/schema custody through a separate Catalog::prepare_security path. The
 canonical upstream schema is pinned from UMF; source correspondence is retained
-in the sibling integration evidence. Existing 0.1/0.2 requests and ordinary
-Catalog::prepare remain strictly core 0.7.0. Unknown versions never downgrade.
+in the sibling integration evidence. Ordinary Catalog::prepare retains main
+admission of core 0.7.0 and 0.8.0; prepare_security alone requires core 0.8.0.
+Unknown versions never downgrade.
 
 All well-formed 0.5 requests currently return WFT-SECURITY-UNSUPPORTED before
 backend composition/emission, with no partial SQL, parameters or logical plan.
@@ -956,3 +957,14 @@ expansion is included in the pre-allocation reservation.
 These are logical payload/work bounds, not a claim of total heap accounting or
 native memory sandboxing. B-009 retains exact boundary and repeated-resource
 controls; an old simulation pass does not cover this repaired path.
+
+
+## Explicit main integration migration
+
+At historical reliability checkpoint 2b88a9a this security contract had ID
+CONTRACT-005 and used compile 0.3 / SQL 0.2. Main already owns CONTRACT-005
+for authored two-hop paths and compile 0.3 / SQL 0.3 for ordinary nullable reads.
+The owner approved preserving main: this current security contract is
+CONTRACT-007, using blocked-only compile 0.5 / SQL 0.2. Historical receipts and
+schema hashes retain their original checkpoint meanings; fresh integrated
+qualification is required. Native security acceptance remains open.

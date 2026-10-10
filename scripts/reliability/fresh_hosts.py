@@ -9,8 +9,10 @@ def validate_reports(out,wheel,built=None):
  for name in ('cli-summary.json','python-summary.json','browser-summary.json'):
   value=summaries[name]
   if value.get('cases')!=2181 or (name!='browser-summary.json' and value.get('status')!='passed'):raise RuntimeError()
- for name in ('python-summary.json','browser-summary.json','security-summary.json','browser-resource-security-summary.json'):
+ for name in ('python-summary.json','browser-summary.json','browser-resource-security-summary.json'):
   if summaries[name].get('byteParity') is not True:raise RuntimeError()
+ security=summaries['security-summary.json']
+ if security.get('libraryByteParity') is not True or security.get('cliResponseParityCases')!=12 or security.get('cliInputLimitRefusals')!=1:raise RuntimeError()
  for name in ('resource-summary.json','security-summary.json','browser-resource-security-summary.json'):
   if summaries[name].get('status')!='passed' or summaries[name].get('cases')!=(7 if name=='resource-summary.json' else 13):raise RuntimeError()
  if summaries['security-summary.json'].get('securityCases')!=6 or summaries['security-summary.json'].get('resourceCases')!=7 or summaries['python-summary.json'].get('subprocessDisabled') is not True:raise RuntimeError()
@@ -78,7 +80,7 @@ def main():
    resource={'WEFT_RESOURCE_BINARY':str(target/'debug/weft-runtime'),'WEFT_RESOURCE_CASES':str(out/'resource-cases.json'),'WEFT_RESOURCE_SUMMARY':str(out/'resource-summary.json')}
    execute([sys.executable,'-I','tests/qualify-and-evolve/host-resources.py'],resource)
    execute([sys.executable,'-I','scripts/reliability/fresh_cases.py'],dict(resource,WEFT_FRESH_HOST_OUT=str(out)))
-   browser_resource={'WEFT_RESOURCE_CASES':str(out/'resource-security-cases.json'),'WEFT_RESOURCE_JS':str(out/'web/weft_wasm.js'),'WEFT_RESOURCE_WASM':str(out/'web/weft_wasm_bg.wasm'),'WEFT_RESOURCE_WRAPPER':str(ROOT/'packages/weft-browser/dist/index.js'),'WEFT_RESOURCE_SUMMARY':str(out/'browser-resource-security-summary.json'),'WEFT_RESOURCE_SCOPE':'Fresh qualified WASM/native/CLI byte parity for7resource and6blocked-security controls; no database/security enforcement.'}
+   browser_resource={'WEFT_RESOURCE_CASES':str(out/'resource-security-cases.json'),'WEFT_RESOURCE_JS':str(out/'web/weft_wasm.js'),'WEFT_RESOURCE_WASM':str(out/'web/weft_wasm_bg.wasm'),'WEFT_RESOURCE_WRAPPER':str(ROOT/'packages/weft-browser/dist/index.js'),'WEFT_RESOURCE_SUMMARY':str(out/'browser-resource-security-summary.json'),'WEFT_RESOURCE_SCOPE':'Fresh WASM/native library byte parity for7resource and6blocked-security controls; CLI parity covers6resource and6security responses, with1separate input-limit transport refusal. No database/security enforcement.'}
    if options.chromium:browser_resource['WEFT_CHROMIUM_EXECUTABLE']=options.chromium
    execute([bun,'tests/qualify-and-evolve/host-resources-browser.mjs'],browser_resource)
    summaries=validate_reports(out,wheels[0],built)
@@ -88,7 +90,7 @@ def main():
   except Exception:diagnostics.close(failed=True);raise
   if diagnostics.close()!='passed':raise RuntimeError()
   sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
-  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181ordinary native-qualified fixtures and7resource/6blocked-security controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
+  result={'version':'weft-fresh-hosts/1','status':'passed','toolIdentity':identity,'inputManifest':inputs,'historicalSourceCustody':history,'checks':checks,'summaries':summaries,'artifacts':artifact_hashes,'builtArtifacts':built,'cliExecutableSha256':built['cli'],'batchExecutableSha256':built['batch'],'diagnosticRunId':diagnostics.id,'scope':'Fresh local CLI, installed native wheel and actual Chromium WASM parity across2181ordinary native-qualified fixtures;12resource/security CLI response-parity controls,1CLI input-limit refusal and13Python/WASM library-parity controls. Retained native evidence custody only; no current database execution, released package or native security qualification.'}
   with open(diagnostics.directory/'qualification.json','x',opener=lambda name,flags:os.open(name,flags,0o600)) as f:json.dump(result,f,indent=2);f.write('\n')
   print(json.dumps({'version':result['version'],'status':'passed','ordinaryCases':2181,'refusalCases':13,'inputFiles':len(inputs['files'])}));return 0
  except Exception:print('weft-runner: fresh host qualification failed',file=sys.stderr);return 1

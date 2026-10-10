@@ -22,13 +22,13 @@ class FreshHostTests(unittest.TestCase):
    out=pathlib.Path(work);native=out/'weft.abi3.so';native.write_bytes(b'fresh-native');digest=hashlib.sha256(native.read_bytes()).hexdigest();wheel=out/'fresh.whl'
    with zipfile.ZipFile(wheel,'w') as package:package.writestr('weft/weft.abi3.so',native.read_bytes())
    raw='{}';response_sha=hashlib.sha256(raw.encode()).hexdigest();rows=[{'id':str(i),'actualSha256':response_sha,'expectedSha256':response_sha} for i in range(2181)]
-   values={'cli-summary.json':{'status':'passed','cases':2181},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':13,'securityCases':6,'resourceCases':7,'byteParity':True,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':13,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
+   values={'cli-summary.json':{'status':'passed','cases':2181},'python-summary.json':{'status':'passed','cases':2181,'byteParity':True,'subprocessDisabled':True,'nativeModule':str(native),'extensionSha256':digest},'browser-summary.json':{'cases':2181,'byteParity':True,'wasmSha256':'wasm'},'resource-summary.json':{'status':'passed','cases':7,'extensionSha256':digest},'security-summary.json':{'status':'passed','cases':13,'securityCases':6,'resourceCases':7,'libraryByteParity':True,'cliResponseParityCases':12,'cliInputLimitRefusals':1,'extensionSha256':digest},'browser-resource-security-summary.json':{'status':'passed','cases':13,'byteParity':True,'wasmSha256':'wasm'},'cli-reports.json':[{'id':str(i),'raw':raw} for i in range(2181)],'python-receipts.json':{'cases':copy.deepcopy(rows)},'browser-receipts.json':{'cases':copy.deepcopy(rows)}}
    def write(data):
     for name,value in data.items():(out/name).write_text(json.dumps(value))
    write(values)
    with patch.object(sys,'prefix',str(out)):
     self.assertEqual(validate_reports(out,wheel)['python-summary.json']['cases'],2181)
-    changes=[('python-summary.json','cases',0),('python-summary.json','byteParity',False),('security-summary.json','securityCases',0),('resource-summary.json','extensionSha256','stale'),('browser-summary.json','wasmSha256','stale')]
+    changes=[('python-summary.json','cases',0),('python-summary.json','byteParity',False),('security-summary.json','securityCases',0),('security-summary.json','cliInputLimitRefusals',0),('security-summary.json','libraryByteParity',False),('resource-summary.json','extensionSha256','stale'),('browser-summary.json','wasmSha256','stale')]
     for name,key,value in changes:
      corrupt=copy.deepcopy(values);corrupt[name][key]=value;write(corrupt)
      with self.assertRaises(RuntimeError):validate_reports(out,wheel)
