@@ -5,7 +5,8 @@
   "packageManager": "bun@1.4.2",
   "scripts": {
     "specs:check": "bun scripts/check-specs.ts",
-    "browser:build": "tsc -p packages/weft-browser/tsconfig.json"
+    "browser:build": "tsc -p packages/weft-browser/tsconfig.json",
+    "modules:check": "bun scripts/module-boundaries.ts && bun test scripts/module-boundaries.test.ts"
   },
   "devDependencies": {
     "ajv": "8.17.1",

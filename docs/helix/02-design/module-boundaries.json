@@ -1,0 +1,2435 @@
+{
+  "version": 1,
+  "scope": "All eleven Cargo workspace packages, canonical source/manifests and path dependencies, complete direct dependency identity (source/version/alias/target/features), all src Rust files and conservative lexical public declarations. No complete Rust name-resolution or intra-core dependency proof.",
+  "packages": [
+    {
+      "name": "weft-databricks",
+      "manifest": "crates/weft-databricks/Cargo.toml",
+      "responsibility": "Databricks backend",
+      "ownedTypes": "Databricks lowering and receipt replay",
+      "constructionAndIntegration": "runtime chooses this backend; no PostgreSQL dependency",
+      "dependencies": [
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-databricks/src/binding.rs",
+          "publicDeclarations": [
+            "const:PROFILE",
+            "const:LAYOUT_SHA256",
+            "struct:Binding",
+            "field:profile",
+            "field:layout_revision",
+            "field:layout_sha256",
+            "field:model_pins",
+            "field:publication",
+            "field:records",
+            "field:relationships",
+            "struct:Publication",
+            "field:id",
+            "field:manifest_uuid",
+            "field:tables",
+            "struct:Table",
+            "field:name",
+            "field:uuid",
+            "field:version",
+            "fn:sql",
+            "struct:Record",
+            "field:logical",
+            "field:table",
+            "field:kind",
+            "field:source_system",
+            "field:type_id",
+            "field:schema_revision",
+            "field:properties",
+            "enum:RecordKind",
+            "struct:Property",
+            "field:logical",
+            "field:home",
+            "enum:Home",
+            "struct:Relationship",
+            "field:logical",
+            "field:accepted_definition",
+            "field:table",
+            "field:kind",
+            "field:source_system",
+            "field:type_id",
+            "field:schema_revision",
+            "field:source",
+            "field:target",
+            "fn:quote",
+            "fn:admit"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate.rs",
+          "publicDeclarations": [
+            "struct:Candidate",
+            "struct:TargetPlan"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/application.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/compound.rs",
+          "publicDeclarations": [
+            "field:value",
+            "field:join",
+            "field:check"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/candidate/relationships.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/lib.rs",
+          "publicDeclarations": [
+            "mod:binding",
+            "mod:candidate",
+            "mod:native_profile",
+            "mod:qualified_profile"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/native_profile.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:NativeReview"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-databricks/src/qualified_profile.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "const:EVIDENCE",
+            "struct:Qualified"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-core",
+      "manifest": "crates/weft-core/Cargo.toml",
+      "responsibility": "Semantic compiler",
+      "ownedTypes": "Catalog, prepared documents, exact literals, atomic reports and blocked security simulation",
+      "constructionAndIntegration": "Runtime and backend implementations consume explicit pure-library ports; src/bin/frontend.rs is a scoped host-owned probe with stdin/stdout IO.",
+      "dependencies": [
+        {
+          "name": "jsonschema",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.56.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary-precision",
+            "macros"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
+          "name": "num-bigint",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.4.8",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "sha2",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.10.9",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "proptest",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.11.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-core/src/application_ir.rs",
+          "publicDeclarations": [
+            "enum:Subset",
+            "struct:ReadProfile",
+            "field:version",
+            "field:subset",
+            "struct:Field",
+            "field:scan",
+            "field:identity",
+            "field:logical_type",
+            "field:span",
+            "enum:Value",
+            "enum:Predicate",
+            "struct:Scan",
+            "field:occurrence",
+            "field:record",
+            "field:pin",
+            "struct:Join",
+            "field:right",
+            "field:on",
+            "enum:Expression",
+            "struct:Output",
+            "field:name",
+            "field:expression",
+            "struct:Plan",
+            "field:ir_version",
+            "field:module_pins",
+            "field:read_profile",
+            "field:required_capabilities",
+            "field:type_graph",
+            "field:source",
+            "field:page_key",
+            "field:joins",
+            "field:filters",
+            "field:groups",
+            "field:aggregate",
+            "field:outputs",
+            "field:order",
+            "field:limit"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_model.rs",
+          "publicDeclarations": [
+            "struct:Member",
+            "field:name",
+            "field:identity",
+            "enum:Shape",
+            "struct:Descriptor",
+            "field:identity",
+            "field:availability",
+            "field:shape",
+            "struct:EntityDescriptor",
+            "field:members",
+            "field:graph",
+            "struct:AuthoredKey",
+            "field:id",
+            "field:fields",
+            "field:types",
+            "fn:entity_descriptor",
+            "fn:member_descriptor",
+            "fn:member_descriptor_by_identity",
+            "fn:authored_key",
+            "struct:RelationshipIdentity",
+            "field:document_id",
+            "field:revision",
+            "field:module",
+            "field:relationship",
+            "struct:RelationshipRead",
+            "field:identity",
+            "field:inverse",
+            "field:from",
+            "field:to",
+            "field:source_key",
+            "field:target_key",
+            "field:source_multiplicity",
+            "field:target_multiplicity",
+            "field:target_lifecycle",
+            "fn:relationship_read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_resolve.rs",
+          "publicDeclarations": [
+            "struct:Parameter",
+            "field:family",
+            "field:value",
+            "type:Parameters",
+            "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_syntax.rs",
+          "publicDeclarations": [
+            "enum:Value",
+            "enum:Output",
+            "struct:Projection",
+            "field:output",
+            "field:alias",
+            "enum:Predicate",
+            "struct:Query",
+            "field:outputs",
+            "field:source",
+            "field:predicates",
+            "field:joins",
+            "field:groups",
+            "field:order",
+            "field:limit",
+            "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/backend.rs",
+          "publicDeclarations": [
+            "struct:LanguageProfile",
+            "field:dialect_profile",
+            "field:ir_version",
+            "struct:TargetProfile",
+            "field:id",
+            "field:engine",
+            "field:engine_version",
+            "field:session_settings",
+            "field:storage_layout_revision",
+            "field:publication_revision",
+            "enum:Status",
+            "enum:ObligationOwner",
+            "struct:Obligation",
+            "field:id",
+            "field:parameters",
+            "field:owner",
+            "field:failure_code",
+            "struct:Capability",
+            "field:id",
+            "field:target_profiles",
+            "field:language_profiles",
+            "field:logical_domain",
+            "field:result_domain",
+            "field:constraints",
+            "field:obligations",
+            "field:status",
+            "field:evidence",
+            "struct:Manifest",
+            "field:backend_id",
+            "field:backend_version",
+            "field:interface_version",
+            "field:language_profiles",
+            "field:binding_profile",
+            "field:target_profiles",
+            "field:capabilities",
+            "field:evidence",
+            "fn:validate_manifest_json",
+            "fn:validate_manifest",
+            "trait:Backend",
+            "enum:Plan",
+            "fn:language",
+            "fn:capabilities",
+            "fn:pins",
+            "struct:BindingInput",
+            "field:profile",
+            "field:json",
+            "field:sha256",
+            "struct:Target",
+            "field:backend_id",
+            "field:backend_version",
+            "field:profile_id",
+            "field:allow_candidate",
+            "struct:Selection",
+            "field:records",
+            "field:fields",
+            "field:types",
+            "field:relationships",
+            "struct:Context",
+            "field:catalog",
+            "field:plan",
+            "field:target",
+            "field:binding",
+            "field:binding_value",
+            "field:selection",
+            "struct:Validated",
+            "field:mapping",
+            "field:additional_capabilities",
+            "field:coverage",
+            "field:obligations",
+            "struct:Assessment",
+            "field:id",
+            "field:status",
+            "field:evidence",
+            "field:obligations",
+            "struct:ParameterSlot",
+            "field:position",
+            "field:logical_type",
+            "field:value",
+            "field:origin",
+            "enum:ScalarCarrier",
+            "enum:ScalarDecoder",
+            "enum:Representation",
+            "struct:Column",
+            "field:position",
+            "field:output_name",
+            "field:representation",
+            "field:source_identities",
+            "field:nullable",
+            "struct:Emission",
+            "field:sql",
+            "field:parameters",
+            "field:columns",
+            "field:obligations",
+            "struct:Qualification",
+            "field:assessment",
+            "field:declaration",
+            "struct:Compilation",
+            "field:backend_id",
+            "field:backend_version",
+            "field:target_profile",
+            "field:binding_profile",
+            "field:binding_sha256",
+            "field:qualifications",
+            "field:emission",
+            "struct:Registry",
+            "fn:register",
+            "fn:manifest",
+            "fn:compile"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/backend_emission.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/bin/frontend.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/compile.rs",
+          "publicDeclarations": [
+            "const:MAX_REQUEST_BYTES",
+            "struct:CompositionInput",
+            "field:backend_id",
+            "field:backend_version",
+            "field:target_profile",
+            "field:binding_json",
+            "field:binding_sha256",
+            "field:allow_candidate",
+            "type:RegistryFactory",
+            "struct:Compiler",
+            "field:registry",
+            "fn:compile_json",
+            "fn:compile_json_with_factory"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/error.rs",
+          "publicDeclarations": [
+            "struct:Diagnostic",
+            "field:code",
+            "field:severity",
+            "field:message",
+            "field:phase",
+            "field:source_span",
+            "fn:new",
+            "fn:at",
+            "type:Result"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/exact.rs",
+          "publicDeclarations": [
+            "fn:literal"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/ir.rs",
+          "publicDeclarations": [
+            "struct:Span",
+            "field:start",
+            "field:end",
+            "struct:Identity",
+            "field:document_id",
+            "field:revision",
+            "field:module",
+            "field:element",
+            "struct:ModelPin",
+            "field:document_id",
+            "field:revision",
+            "field:umf_version",
+            "field:sha256",
+            "enum:Family",
+            "struct:LogicalType",
+            "field:family",
+            "field:facets",
+            "field:nullable",
+            "enum:Expression",
+            "fn:logical_type",
+            "fn:span",
+            "fn:same_field",
+            "struct:Output",
+            "field:name",
+            "field:expression",
+            "enum:Node",
+            "struct:LogicalPlan",
+            "field:ir_version",
+            "field:module_pins",
+            "field:required_capabilities",
+            "field:root"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/json.rs",
+          "publicDeclarations": [
+            "fn:sha256",
+            "fn:checked_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/lib.rs",
+          "publicDeclarations": [
+            "mod:security_scan_obligations",
+            "mod:security_query_uses",
+            "mod:security_query_profile",
+            "mod:security_evaluation",
+            "mod:security_composition",
+            "mod:security_ir",
+            "mod:security_literals",
+            "mod:security_policy_types",
+            "mod:security_ontology",
+            "mod:security_candidate_ontology",
+            "mod:security_candidate_policy_types",
+            "mod:security_candidate_ir",
+            "mod:security_candidate_dependencies",
+            "mod:security_candidate_incidence",
+            "mod:security_association_ref",
+            "mod:security_source",
+            "mod:application_ir",
+            "mod:application_model",
+            "mod:application_resolve",
+            "mod:application_syntax",
+            "mod:backend",
+            "mod:compile",
+            "mod:error",
+            "mod:ir",
+            "mod:json",
+            "mod:model",
+            "mod:syntax",
+            "fn:prepare_and_resolve",
+            "fn:frontend_json",
+            "fn:prepare_and_resolve_application"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/model.rs",
+          "publicDeclarations": [
+            "struct:ModuleInput",
+            "field:document_json",
+            "field:pin",
+            "field:selected_module_ids",
+            "struct:Catalog",
+            "struct:Record",
+            "field:identity",
+            "field:pin",
+            "field:value",
+            "field:document",
+            "fn:inputs",
+            "fn:prepare",
+            "fn:prepare_security",
+            "fn:pins",
+            "fn:record_by_identity",
+            "fn:record",
+            "fn:field"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/resolve.rs",
+          "publicDeclarations": [
+            "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_association_ref.rs",
+          "publicDeclarations": [
+            "struct:SecurityRelationshipRef",
+            "field:document_id",
+            "field:module_id",
+            "field:relationship_id",
+            "enum:SecurityAssociationRef",
+            "fn:record",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_budget.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_candidate_dependencies.rs",
+          "publicDeclarations": [
+            "struct:CandidateIncidence",
+            "field:relationship",
+            "field:role",
+            "field:side",
+            "field:target",
+            "field:key_id",
+            "struct:SecurityCandidateDependencies",
+            "fn:keys",
+            "fn:fields",
+            "fn:context",
+            "fn:associations",
+            "fn:incidences",
+            "fn:derive"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_candidate_incidence.rs",
+          "publicDeclarations": [
+            "struct:CandidateIncidenceValue",
+            "fn:role",
+            "fn:side",
+            "fn:target",
+            "fn:key_id",
+            "fn:components",
+            "fn:component_domains",
+            "fn:require_catalog",
+            "fn:read",
+            "struct:CandidateIncidenceBundle",
+            "struct:CandidateIncidenceInput",
+            "field:role",
+            "field:side",
+            "field:target",
+            "field:key_id",
+            "field:components",
+            "fn:values",
+            "fn:association",
+            "fn:require_plan",
+            "fn:read",
+            "enum:SimulatedIncidenceCoverage",
+            "fn:simulate_incidence_exists",
+            "struct:CandidateEntityIdentity",
+            "fn:target",
+            "fn:key_id",
+            "fn:components",
+            "fn:component_domains",
+            "fn:read",
+            "fn:require_plan",
+            "struct:CandidateEntityFact",
+            "fn:read",
+            "struct:CandidateRecordWitness",
+            "fn:association",
+            "fn:identity",
+            "fn:endpoint",
+            "fn:require_plan",
+            "fn:read",
+            "struct:CandidateGraphRecordWitness",
+            "fn:association",
+            "fn:identity",
+            "fn:require_plan",
+            "fn:read",
+            "struct:CandidateGraphRecordPopulation",
+            "field:association",
+            "field:witnesses",
+            "field:coverage",
+            "struct:CandidateContextValues",
+            "fn:read",
+            "fn:require_plan",
+            "struct:CandidateRecordPopulation",
+            "field:association",
+            "field:witnesses",
+            "field:coverage",
+            "struct:CandidateGraphPopulation",
+            "field:association",
+            "field:bundles",
+            "field:coverage",
+            "fn:simulate_graph_rule",
+            "fn:simulate_graph_rule_with_identities",
+            "fn:simulate_graph_rule_with_facts",
+            "fn:simulate_graph_rule_with_context",
+            "fn:simulate_candidate_rule",
+            "fn:simulate_candidate_rule_with_graph_records"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_candidate_ir.rs",
+          "publicDeclarations": [
+            "enum:CandidateWitness",
+            "enum:CandidateSide",
+            "enum:CandidateEndpointCarrier",
+            "enum:CandidateTerm",
+            "enum:CandidateExpression",
+            "struct:CandidateRule",
+            "field:id",
+            "field:effect",
+            "field:actions",
+            "field:target",
+            "field:condition",
+            "field:disclosure",
+            "struct:SecurityCandidateLogicalPlan",
+            "fn:rules",
+            "fn:source",
+            "fn:require_catalog",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_candidate_ontology.rs",
+          "publicDeclarations": [
+            "struct:SecurityCandidateOntologyClosure",
+            "fn:type_count",
+            "fn:association_count",
+            "fn:subject",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_candidate_policy_types.rs",
+          "publicDeclarations": [
+            "struct:SecurityCandidatePolicyTypes",
+            "fn:checked_rules",
+            "fn:checked_nodes",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_composition.rs",
+          "publicDeclarations": [
+            "enum:Truth",
+            "fn:not",
+            "fn:and",
+            "fn:or",
+            "enum:Decision",
+            "struct:Composition",
+            "field:decision",
+            "field:disclosure",
+            "fn:compose",
+            "fn:compose_candidate"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_evaluation.rs",
+          "publicDeclarations": [
+            "fn:simulate_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_ir.rs",
+          "publicDeclarations": [
+            "enum:QueryOperator",
+            "enum:Effect",
+            "enum:Binding",
+            "enum:Term",
+            "enum:Expression",
+            "enum:Disposition",
+            "struct:Rule",
+            "field:id",
+            "field:effect",
+            "field:actions",
+            "field:target",
+            "field:condition",
+            "field:disclosure",
+            "struct:SecurityLogicalPlan",
+            "fn:rules",
+            "fn:source",
+            "fn:require_catalog",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_literals.rs",
+          "publicDeclarations": [
+            "enum:ScalarLiteral",
+            "fn:check_literal",
+            "fn:validate_field"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_ontology.rs",
+          "publicDeclarations": [
+            "struct:SecurityRef",
+            "field:document_id",
+            "field:module_id",
+            "field:element_id",
+            "field:source",
+            "field:fields",
+            "field:keys",
+            "struct:SecurityOntologyClosure",
+            "fn:subject",
+            "fn:type_count",
+            "fn:field_count",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_policy_types.rs",
+          "publicDeclarations": [
+            "struct:SecurityPolicyTypes",
+            "fn:checked_rules",
+            "fn:checked_nodes",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_query_profile.rs",
+          "publicDeclarations": [
+            "struct:SecurityQueryProfile",
+            "struct:SecurityProfiledQuery",
+            "fn:obligations",
+            "fn:query",
+            "fn:uses",
+            "fn:mapping_handoff_json",
+            "fn:require_sources",
+            "fn:id",
+            "fn:revision",
+            "fn:source_json",
+            "fn:binding_json",
+            "fn:read",
+            "fn:require_sources",
+            "fn:admit_resolved_query",
+            "fn:bind_request_json",
+            "fn:simulate_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_query_uses.rs",
+          "publicDeclarations": [
+            "struct:QueryUse",
+            "field:scan",
+            "field:target",
+            "field:field",
+            "field:operator",
+            "struct:Projection",
+            "field:scan",
+            "field:target",
+            "field:field",
+            "struct:SecurityResolvedQuery",
+            "fn:sql",
+            "fn:application_plan",
+            "fn:scans",
+            "fn:uses",
+            "fn:projections",
+            "fn:require_sources",
+            "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_scan_obligations.rs",
+          "publicDeclarations": [
+            "struct:ActionObligations",
+            "fn:action",
+            "fn:rule_ids",
+            "fn:keys",
+            "fn:fields",
+            "fn:context",
+            "fn:associations",
+            "struct:ScanObligations",
+            "fn:scan",
+            "fn:target",
+            "fn:actions",
+            "fn:projection_fields",
+            "fn:query_fields"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_source.rs",
+          "publicDeclarations": [
+            "struct:SecuritySourcePacket",
+            "fn:policy",
+            "fn:ontology",
+            "fn:policy_json",
+            "fn:ontology_json",
+            "fn:read",
+            "struct:SecurityCandidateSourcePacket",
+            "fn:read",
+            "fn:policy",
+            "fn:ontology",
+            "fn:policy_json",
+            "fn:ontology_json",
+            "fn:require_catalog"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/syntax.rs",
+          "publicDeclarations": [
+            "struct:Name",
+            "field:value",
+            "field:quoted",
+            "field:span",
+            "fn:matches",
+            "fn:key",
+            "struct:Column",
+            "field:alias",
+            "field:field",
+            "field:span",
+            "enum:LiteralKind",
+            "struct:Literal",
+            "field:value",
+            "field:kind",
+            "field:span",
+            "enum:Operand",
+            "struct:Predicate",
+            "field:left",
+            "field:right",
+            "field:span",
+            "struct:Projection",
+            "field:column",
+            "field:sum",
+            "field:span",
+            "field:alias",
+            "struct:Source",
+            "field:namespace",
+            "field:name",
+            "field:alias",
+            "struct:Query",
+            "field:outputs",
+            "field:source",
+            "field:joins",
+            "field:predicates",
+            "field:groups",
+            "fn:parse"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-postgresql",
+      "manifest": "crates/weft-postgresql/Cargo.toml",
+      "responsibility": "PostgreSQL backend",
+      "ownedTypes": "PostgreSQL lowering and receipt replay",
+      "constructionAndIntegration": "runtime chooses this backend; no Python/WASM dependency",
+      "dependencies": [
+        {
+          "name": "base64",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.22.1",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "jsonschema",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.56.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary-precision",
+            "macros"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        },
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-postgresql/src/access.rs",
+          "publicDeclarations": [
+            "struct:ScalarAccess",
+            "field:value",
+            "field:present",
+            "field:native_null",
+            "field:integrity",
+            "field:joins",
+            "struct:ObjectProperty",
+            "field:namespace",
+            "field:owner_alias",
+            "field:type_id",
+            "field:property_id",
+            "field:logical_type",
+            "fn:props",
+            "fn:row",
+            "fn:require_scalar_domain"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/binding.rs",
+          "publicDeclarations": [
+            "struct:Admission",
+            "field:value",
+            "field:original_json",
+            "field:artifacts",
+            "fn:parse",
+            "fn:decoded_json",
+            "enum:PropertyHome",
+            "fn:original_home_definition",
+            "fn:property_home"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/candidate.rs",
+          "publicDeclarations": [
+            "const:PROFILE",
+            "struct:Candidate",
+            "struct:Mapping",
+            "struct:TargetPlan"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/candidate/application.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/candidate/relationships.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/collection.rs",
+          "publicDeclarations": [
+            "enum:Kind",
+            "struct:CollectionProperty",
+            "field:namespace",
+            "field:owner",
+            "field:type_id",
+            "field:property_id",
+            "field:item",
+            "field:kind",
+            "fn:props",
+            "fn:row"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/comparator_requirements.rs",
+          "publicDeclarations": [
+            "struct:Requirement",
+            "field:owner",
+            "field:identity",
+            "field:logical_type",
+            "field:operations",
+            "fn:registration_key",
+            "fn:collect",
+            "fn:admit",
+            "fn:collect_reads",
+            "fn:admit_context",
+            "fn:admit_properties"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/conformance_original.rs",
+          "publicDeclarations": [
+            "fn:registry",
+            "fn:registry_with_configuration"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/expression.rs",
+          "publicDeclarations": [
+            "fn:render"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/json_codec.rs",
+          "publicDeclarations": [
+            "struct:Encoded",
+            "field:value",
+            "field:integrity",
+            "fn:encode"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/leaf_codec_definition.rs",
+          "publicDeclarations": [
+            "struct:OriginalArtifact",
+            "field:identity",
+            "field:bytes",
+            "struct:Selection",
+            "field:profile",
+            "field:source_profile",
+            "field:native_profile",
+            "field:original_artifacts",
+            "enum:Rule",
+            "struct:Definition",
+            "field:original_json",
+            "field:original_artifacts",
+            "field:rule",
+            "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/lib.rs",
+          "publicDeclarations": [
+            "mod:access",
+            "mod:binding",
+            "mod:candidate",
+            "mod:collection",
+            "mod:conformance_original",
+            "mod:original_admission",
+            "mod:presence_definition",
+            "mod:read_context_definition",
+            "mod:recursive_observation",
+            "mod:relationship_definition",
+            "mod:relationship_lowering",
+            "mod:row_tree_mapping",
+            "mod:row_value_traversal",
+            "mod:structured",
+            "mod:value_definition",
+            "struct:Identifier",
+            "fn:new",
+            "fn:sql",
+            "fn:qualified",
+            "struct:Parameters",
+            "fn:push",
+            "fn:into_slots",
+            "enum:CatalogDomain",
+            "fn:catalog",
+            "mod:leaf_codec_definition",
+            "mod:native_comparator_definition",
+            "mod:comparator_requirements",
+            "mod:row_join_definition",
+            "mod:property_definition",
+            "mod:numeric_correspondence",
+            "mod:registered_access",
+            "mod:expression",
+            "mod:relational",
+            "mod:record_definition",
+            "mod:result_definition",
+            "mod:select_definition",
+            "mod:row_custody",
+            "mod:value_traversal",
+            "mod:original_backend",
+            "mod:native_profile",
+            "mod:qualified_profile"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_comparator_definition.rs",
+          "publicDeclarations": [
+            "enum:Operation",
+            "struct:Selection",
+            "field:profile",
+            "field:native_profile",
+            "field:original_artifacts",
+            "field:operations",
+            "enum:Strategy",
+            "struct:Definition",
+            "field:original_json",
+            "field:original_artifacts",
+            "field:strategy",
+            "field:native_type",
+            "fn:parse",
+            "fn:numeric_domain_sql",
+            "fn:sum_sql",
+            "fn:require_type",
+            "fn:require"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/native_profile.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "struct:NativeReview"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/numeric_correspondence.rs",
+          "publicDeclarations": [
+            "struct:Parts",
+            "field:negative",
+            "field:digits",
+            "field:fraction_digits",
+            "field:exponent",
+            "struct:Budget",
+            "field:remaining_steps",
+            "field:max_digits",
+            "struct:Witness",
+            "field:negative",
+            "field:digits",
+            "field:exponent",
+            "fn:witness"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/original_admission.rs",
+          "publicDeclarations": [
+            "struct:RecordSelection",
+            "field:index",
+            "field:physical",
+            "struct:PropertySelection",
+            "field:index",
+            "field:value",
+            "field:physical",
+            "field:native_tree",
+            "fn:backend",
+            "struct:Configuration",
+            "field:binding_profile",
+            "field:records",
+            "field:properties",
+            "field:comparators",
+            "field:native",
+            "field:relationships",
+            "struct:OwnedRecordSelection",
+            "field:index",
+            "field:inventory",
+            "field:relation_identity",
+            "field:discriminator_identity",
+            "field:relations",
+            "field:columns",
+            "struct:OwnedPropertySelection",
+            "field:index",
+            "field:value_profile",
+            "field:presence_profile",
+            "field:leaf_codecs",
+            "field:record_presence",
+            "field:physical_profile",
+            "field:inventory",
+            "field:relations",
+            "field:columns",
+            "field:row_join",
+            "field:obligations",
+            "field:edge_association",
+            "field:native_tree",
+            "struct:OwnedRelationshipSelection",
+            "field:index",
+            "field:inverse",
+            "field:profile",
+            "field:inventory",
+            "field:relation_identity",
+            "field:relations",
+            "field:columns",
+            "field:relationship_type",
+            "field:source_id",
+            "field:source_type",
+            "field:target_id",
+            "field:target_type",
+            "fn:backend",
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/original_backend.rs",
+          "publicDeclarations": [
+            "type:Native",
+            "struct:OriginalBackend",
+            "struct:Mapping",
+            "struct:TargetPlan",
+            "fn:new",
+            "fn:with_relationships"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/presence_definition.rs",
+          "publicDeclarations": [
+            "struct:Definition",
+            "field:original_json",
+            "field:accepted_definition",
+            "enum:Presence",
+            "fn:parse",
+            "fn:observe"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/property_definition.rs",
+          "publicDeclarations": [
+            "struct:Selection",
+            "field:value_profile",
+            "field:presence_profile",
+            "field:leaf_codecs",
+            "field:record_presence",
+            "struct:ValueAdmission",
+            "field:definition_artifact",
+            "field:graph",
+            "field:presence",
+            "fn:descriptors",
+            "fn:props_scalar_storage",
+            "fn:props_node_storage",
+            "struct:ScalarStorage",
+            "field:carrier",
+            "field:storage_integrity",
+            "struct:PhysicalSelection",
+            "field:profile",
+            "field:inventory",
+            "field:relations",
+            "field:columns",
+            "field:row_join",
+            "field:obligations",
+            "field:edge_association",
+            "enum:HomeAdmission",
+            "struct:PropertyAdmission",
+            "field:owner",
+            "field:identity",
+            "field:owner_catalog_id",
+            "field:property_catalog_id",
+            "field:value",
+            "field:home",
+            "struct:PropsLocation",
+            "field:root",
+            "field:leaf",
+            "field:text",
+            "field:present",
+            "field:native_null",
+            "field:root_integrity",
+            "struct:OwnerMapping",
+            "field:record_kind",
+            "field:relation",
+            "field:discriminator_column",
+            "struct:OwnerSource",
+            "field:sql",
+            "field:discriminator",
+            "fn:owner_mapping",
+            "fn:source",
+            "fn:props_location",
+            "struct:LeafStorage",
+            "field:location",
+            "field:carrier",
+            "field:storage_integrity",
+            "fn:with_native_tree",
+            "fn:observe_props_presence",
+            "fn:verify_binding_basis",
+            "fn:row_root_location",
+            "fn:props_leaf_storage",
+            "fn:admit_home",
+            "fn:admit_property",
+            "fn:admit_value"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/qualified_profile.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "const:EVIDENCE",
+            "struct:Qualified"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/read_context_definition.rs",
+          "publicDeclarations": [
+            "enum:Consistency",
+            "struct:Definition",
+            "field:original_json",
+            "field:resource_bytes",
+            "struct:Requirements",
+            "field:original_binding_and_layout",
+            "field:current_authority",
+            "field:live_affine_transaction",
+            "field:snapshot_custody",
+            "field:publication_check",
+            "field:obligations",
+            "fn:parse",
+            "fn:requirements"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/record_definition.rs",
+          "publicDeclarations": [
+            "struct:Selection",
+            "field:inventory",
+            "field:relation_identity",
+            "field:discriminator_identity",
+            "field:relations",
+            "field:columns",
+            "struct:RecordAdmission",
+            "fn:admit",
+            "fn:verify_key_mapping",
+            "fn:identity",
+            "fn:verify_property",
+            "fn:lower"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/recursive_observation.rs",
+          "publicDeclarations": [
+            "struct:Encoded",
+            "field:integrity",
+            "field:body",
+            "fn:props",
+            "fn:encode",
+            "fn:props_owner"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/registered_access.rs",
+          "publicDeclarations": [
+            "struct:Request",
+            "field:scan",
+            "field:field",
+            "enum:Location",
+            "struct:Access",
+            "field:scan",
+            "field:field",
+            "field:owner",
+            "field:owner_alias",
+            "field:owner_source",
+            "field:location",
+            "field:scalar_storage",
+            "field:value_layout",
+            "fn:verify_property",
+            "fn:requests",
+            "fn:lower_plan",
+            "fn:lower",
+            "struct:Prepared",
+            "field:scans",
+            "field:accesses",
+            "fn:prepare",
+            "fn:prepare_relationship_target",
+            "struct:PhysicalScan",
+            "field:source",
+            "field:structural_integrity",
+            "field:structural_check_sql",
+            "fn:scan_source",
+            "fn:render_expression"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/relational.rs",
+          "publicDeclarations": [
+            "struct:Source",
+            "field:sql",
+            "field:filters",
+            "field:groups",
+            "field:aggregated",
+            "fn:assemble",
+            "fn:assemble_sources"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/relationship_definition.rs",
+          "publicDeclarations": [
+            "struct:Selection",
+            "field:profile",
+            "field:inventory",
+            "field:relation_identity",
+            "field:relations",
+            "field:columns",
+            "field:relationship_type",
+            "field:source_id",
+            "field:source_type",
+            "field:target_id",
+            "field:target_type",
+            "struct:RelationshipAdmission",
+            "fn:admit",
+            "fn:prepare_target",
+            "fn:integrity_checks",
+            "fn:correlate",
+            "struct:EdgeAccess",
+            "field:source",
+            "field:predicates",
+            "field:target_object_id",
+            "field:target_type",
+            "struct:PreparedTarget",
+            "field:plan",
+            "field:prepared",
+            "fn:registration_key"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/relationship_lowering.rs",
+          "publicDeclarations": [
+            "enum:Read",
+            "struct:Lowered",
+            "field:expression",
+            "field:structural_checks",
+            "field:payload_checks",
+            "fn:lower"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/result_definition.rs",
+          "publicDeclarations": [
+            "fn:property_column",
+            "struct:ScalarProjection",
+            "field:sql",
+            "field:column",
+            "field:payload_check_sql",
+            "field:codec_bytes",
+            "field:presence_bytes",
+            "struct:ReadPayloadObservation",
+            "field:scan",
+            "field:field",
+            "field:sql",
+            "field:codec_bytes",
+            "field:presence_bytes",
+            "fn:read_payload_observations",
+            "fn:read_payload_observations_with_parameters",
+            "fn:property_projection_with_parameters",
+            "fn:property_projection",
+            "fn:projection_columns",
+            "fn:native_tree_projection"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/row_codec.rs",
+          "publicDeclarations": [
+            "struct:Property",
+            "field:namespace",
+            "field:owner",
+            "field:type_id",
+            "field:property_id",
+            "fn:access"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/row_custody.rs",
+          "publicDeclarations": [
+            "struct:Budget",
+            "field:remaining_bytes",
+            "field:remaining_cells",
+            "enum:Payload",
+            "enum:Observation",
+            "struct:SelectedObservation",
+            "field:observation",
+            "field:presence_bytes",
+            "fn:admit_property",
+            "struct:TreeRow",
+            "field:cells",
+            "field:bytes",
+            "fn:admit_tree_rows",
+            "struct:TreeIndex",
+            "field:root",
+            "field:children",
+            "struct:TreeBudget",
+            "field:remaining_nodes",
+            "field:max_depth",
+            "fn:index_tree",
+            "fn:admit"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/row_join_definition.rs",
+          "publicDeclarations": [
+            "struct:Column",
+            "field:relation_identity",
+            "field:name",
+            "struct:Selection",
+            "field:profile",
+            "field:original_artifacts",
+            "field:relations",
+            "field:columns",
+            "enum:RecordKind",
+            "struct:Definition",
+            "field:original_json",
+            "field:original_artifacts",
+            "field:record_kind",
+            "struct:RootLocation",
+            "field:joins",
+            "field:structural_integrity",
+            "field:state_alias",
+            "field:node_alias",
+            "field:scalar_alias",
+            "struct:ScalarObservation",
+            "field:present",
+            "field:kind",
+            "field:text",
+            "field:boolean",
+            "field:native_numeric_text",
+            "field:original_numeric_token",
+            "field:codec_bytes_hex",
+            "field:source_bytes_hex",
+            "field:other_payloads_absent",
+            "fn:custody_projection",
+            "fn:payload_integrity",
+            "fn:tree_custody",
+            "fn:scalar_observation",
+            "fn:verify_home",
+            "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/row_tree_mapping.rs",
+          "publicDeclarations": [
+            "struct:Procedures",
+            "field:field_identity",
+            "field:scalar",
+            "field:node_source",
+            "struct:Mapping",
+            "field:topology_parameter",
+            "field:custody_sql",
+            "field:walk_sql",
+            "field:structural_integrity",
+            "fn:encode",
+            "struct:Body",
+            "field:storage_body",
+            "field:logical_body",
+            "field:logical_integrity",
+            "field:pairing",
+            "field:structural_integrity",
+            "fn:body",
+            "struct:NativeLeaf",
+            "field:value_sql",
+            "field:integrity_sql",
+            "struct:GuardedBody",
+            "field:body",
+            "field:native_integrity",
+            "fn:guarded_body"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/row_value_traversal.rs",
+          "publicDeclarations": [
+            "fn:decode_property",
+            "fn:decode_logical_property",
+            "fn:decode"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/select_definition.rs",
+          "publicDeclarations": [
+            "struct:Select",
+            "field:sql",
+            "field:columns",
+            "field:structural_checks",
+            "field:payload_checks",
+            "struct:Compilation",
+            "field:select",
+            "field:parameters",
+            "fn:compile_with_relationships",
+            "fn:compile_with_registry",
+            "fn:assemble"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/structured.rs",
+          "publicDeclarations": [
+            "struct:Member",
+            "field:name",
+            "field:identity",
+            "field:logical_type",
+            "field:optional",
+            "struct:StructuredProperty",
+            "field:namespace",
+            "field:owner",
+            "field:type_id",
+            "field:property_id",
+            "field:members",
+            "fn:props",
+            "fn:row"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/tree.rs",
+          "publicDeclarations": [
+            "fn:integrity"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/value_definition.rs",
+          "publicDeclarations": [
+            "struct:Graph",
+            "field:original_json",
+            "field:value",
+            "field:artifacts",
+            "field:root",
+            "field:references",
+            "struct:Layout",
+            "field:root",
+            "field:nodes",
+            "struct:LayoutNode",
+            "field:codec_bytes",
+            "field:shape",
+            "enum:LayoutShape",
+            "struct:MemberSlot",
+            "field:field_identity",
+            "field:stored_name",
+            "field:value_node",
+            "field:presence_bytes",
+            "fn:layout",
+            "fn:verify_model_sources",
+            "fn:verify_descriptors",
+            "fn:verify_leaf_codecs",
+            "fn:verify_record_presence",
+            "fn:parse"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/value_traversal.rs",
+          "publicDeclarations": [
+            "struct:Budget",
+            "field:remaining_nodes",
+            "field:remaining_key_bytes",
+            "field:remaining_members",
+            "field:max_depth",
+            "fn:decode_property",
+            "fn:decode_property_with_records",
+            "fn:decode_admitted_logical_property",
+            "fn:decode_logical_property",
+            "fn:decode",
+            "fn:decode_with_records"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-runtime",
+      "manifest": "crates/weft-runtime/Cargo.toml",
+      "responsibility": "Host-neutral composition",
+      "ownedTypes": "backend selection and compile entrypoint",
+      "constructionAndIntegration": "constructs backend implementations; CLI alone owns stdin/stdout",
+      "dependencies": [
+        {
+          "name": "weft-backend-probe",
+          "kind": "normal",
+          "optional": true,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "tests/register-backend/probe"
+        },
+        {
+          "name": "weft-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-core"
+        },
+        {
+          "name": "weft-databricks",
+          "kind": "normal",
+          "optional": true,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-databricks"
+        },
+        {
+          "name": "weft-postgresql",
+          "kind": "normal",
+          "optional": true,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-postgresql"
+        },
+        {
+          "name": "serde_json",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-runtime/src/lib.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:compile_json_with_conformance_configuration"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/main.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-backend-probe",
+      "manifest": "tests/register-backend/probe/Cargo.toml",
+      "responsibility": "Scoped probe or historical spike",
+      "ownedTypes": "probe transport or isolated B001 spike types",
+      "constructionAndIntegration": "test harness owns construction; never production composition",
+      "dependencies": [
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "wasm-bindgen",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.2.105",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "tests/register-backend/probe/src/lib.rs",
+          "publicDeclarations": [
+            "fn:backend_json",
+            "fn:fixture_registry",
+            "fn:compile_fixture_registry"
+          ],
+          "pathReferences": [
+            "tests/register-backend/fixture.rs"
+          ]
+        },
+        {
+          "path": "tests/register-backend/probe/src/main.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-python",
+      "manifest": "crates/weft-python/Cargo.toml",
+      "responsibility": "Python host",
+      "ownedTypes": "PyO3 transport",
+      "constructionAndIntegration": "calls runtime; no compiler semantics",
+      "dependencies": [
+        {
+          "name": "pyo3",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.27.1",
+          "rename": null,
+          "target": null,
+          "features": [
+            "abi3-py39",
+            "extension-module"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-runtime",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-runtime"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-python/src/lib.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-wasm",
+      "manifest": "crates/weft-wasm/Cargo.toml",
+      "responsibility": "WASM host",
+      "ownedTypes": "wasm-bindgen transport",
+      "constructionAndIntegration": "calls runtime; no compiler semantics",
+      "dependencies": [
+        {
+          "name": "wasm-bindgen",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.2.105",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-runtime",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-runtime"
+        }
+      ],
+      "sources": [
+        {
+          "path": "crates/weft-wasm/src/lib.rs",
+          "publicDeclarations": [
+            "fn:compile_json",
+            "fn:compile_json_with_conformance_configuration"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-frontend-probe",
+      "manifest": "tests/frontend/wasm-probe/Cargo.toml",
+      "responsibility": "Scoped probe or historical spike",
+      "ownedTypes": "probe transport or isolated B001 spike types",
+      "constructionAndIntegration": "test harness owns construction; never production composition",
+      "dependencies": [
+        {
+          "name": "wasm-bindgen",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.2.105",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "crates/weft-core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "tests/frontend/wasm-probe/src/lib.rs",
+          "publicDeclarations": [
+            "fn:resolve_json"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-spike-core",
+      "manifest": "spikes/b001/core/Cargo.toml",
+      "responsibility": "Scoped probe or historical spike",
+      "ownedTypes": "probe transport or isolated B001 spike types",
+      "constructionAndIntegration": "test harness owns construction; never production composition",
+      "dependencies": [
+        {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "sha2",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.10.9",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "sqlparser",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.63.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
+        }
+      ],
+      "sources": [
+        {
+          "path": "spikes/b001/core/src/bin/report.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "spikes/b001/core/src/lib.rs",
+          "publicDeclarations": [
+            "fn:sha256",
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-spike-python",
+      "manifest": "spikes/b001/python/Cargo.toml",
+      "responsibility": "Scoped probe or historical spike",
+      "ownedTypes": "probe transport or isolated B001 spike types",
+      "constructionAndIntegration": "test harness owns construction; never production composition",
+      "dependencies": [
+        {
+          "name": "pyo3",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.27.1",
+          "rename": null,
+          "target": null,
+          "features": [
+            "abi3-py39",
+            "extension-module"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-spike-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "spikes/b001/core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "spikes/b001/python/src/lib.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        }
+      ]
+    },
+    {
+      "name": "weft-spike-wasm",
+      "manifest": "spikes/b001/wasm/Cargo.toml",
+      "responsibility": "Scoped probe or historical spike",
+      "ownedTypes": "probe transport or isolated B001 spike types",
+      "constructionAndIntegration": "test harness owns construction; never production composition",
+      "dependencies": [
+        {
+          "name": "wasm-bindgen",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.2.105",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "weft-spike-core",
+          "kind": "normal",
+          "optional": false,
+          "source": null,
+          "req": "*",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": "spikes/b001/core"
+        }
+      ],
+      "sources": [
+        {
+          "path": "spikes/b001/wasm/src/lib.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        }
+      ]
+    }
+  ],
+  "hostAreas": [
+    {
+      "name": "browser-wrapper",
+      "responsibility": "Browser-compatible ESM transport and declarations",
+      "ownedTypes": "compile wrapper inputs, outputs and exports",
+      "constructionAndIntegration": "Consumers initialize fresh WASM then call wrapper; runtime owns semantics",
+      "coverage": "Checked file inventory; TypeScript import/export and semantic coupling reviewed manually",
+      "roots": [
+        "packages/weft-browser/src"
+      ],
+      "extensions": [
+        ".ts",
+        ".json"
+      ],
+      "sources": [
+        "packages/weft-browser/package.json",
+        "packages/weft-browser/src/index.ts",
+        "packages/weft-browser/tsconfig.json"
+      ],
+      "configs": [
+        "packages/weft-browser/tsconfig.json",
+        "packages/weft-browser/package.json"
+      ]
+    },
+    {
+      "name": "reliability-tooling",
+      "responsibility": "Host configuration, qualification orchestration, mutation, evidence and diagnostic tools",
+      "ownedTypes": "Host-only configuration, manifests, evidence and diagnostic records",
+      "constructionAndIntegration": "Runner constructs isolated processes and actual host probes; no compiler dependency on host configuration",
+      "coverage": "Checked source inventory; Python/TS/shell import and internal module coupling reviewed manually",
+      "roots": [
+        "scripts",
+        "tests/qualify-and-evolve"
+      ],
+      "extensions": [
+        ".py",
+        ".ts",
+        ".mjs",
+        ".sh"
+      ],
+      "sources": [
+        "scripts/build-site.mjs",
+        "scripts/check-site.mjs",
+        "scripts/check-specs.ts",
+        "scripts/module-boundaries.test.ts",
+        "scripts/module-boundaries.ts",
+        "scripts/run-b001.sh",
+        "scripts/run-b002.sh",
+        "scripts/run-b002a.sh",
+        "scripts/run-b003.sh",
+        "scripts/run-b004.sh",
+        "scripts/run-b005-embeddings.sh",
+        "scripts/run-b005-full-corpus.sh",
+        "scripts/run-b006-embeddings.sh",
+        "scripts/sign-site.mjs",
+        "scripts/spec-allocation.test.ts",
+        "scripts/spec-allocation.ts",
+        "tests/qualify-and-evolve/ashlar-count-controls.py",
+        "tests/qualify-and-evolve/ashlar-engine-controls.py",
+        "tests/qualify-and-evolve/ashlar-warehouse-controls.py",
+        "tests/qualify-and-evolve/audit-ashlar-count-hosts.py",
+        "tests/qualify-and-evolve/audit-ashlar-support-reports.py",
+        "tests/qualify-and-evolve/audit-current-hosts.py",
+        "tests/qualify-and-evolve/audit-embedding-metadata.py",
+        "tests/qualify-and-evolve/audit-native-profile-scopes.py",
+        "tests/qualify-and-evolve/audit-native-registration-join.py",
+        "tests/qualify-and-evolve/audit-qualified-hosts.py",
+        "tests/qualify-and-evolve/audit-qualified-registration-receipts.py",
+        "tests/qualify-and-evolve/audit-resolution.py",
+        "tests/qualify-and-evolve/audit-source-retention.py",
+        "tests/qualify-and-evolve/audit-truss-sessions.py",
+        "tests/qualify-and-evolve/audit-truss-support-reports.py",
+        "tests/qualify-and-evolve/check-retained-evidence.py",
+        "tests/qualify-and-evolve/compare-warehouse-metadata.py",
+        "tests/qualify-and-evolve/conjunction-native.py",
+        "tests/qualify-and-evolve/conjunction-reconcile-controls.py",
+        "tests/qualify-and-evolve/decimal-reconcile-controls.py",
+        "tests/qualify-and-evolve/evidence-check.py",
+        "tests/qualify-and-evolve/evidence_audit.py",
+        "tests/qualify-and-evolve/host-receipt-controls.py",
+        "tests/qualify-and-evolve/host-resources-browser.mjs",
+        "tests/qualify-and-evolve/host-resources.py",
+        "tests/qualify-and-evolve/inspect-packages.py",
+        "tests/qualify-and-evolve/join-native-registrations.py",
+        "tests/qualify-and-evolve/native-scope-controls.py",
+        "tests/qualify-and-evolve/prepare-current-host-corpus.py",
+        "tests/qualify-and-evolve/prepare-qualified-host-corpus.py",
+        "tests/qualify-and-evolve/qualified-host-controls.py",
+        "tests/qualify-and-evolve/qualified-host-python.py",
+        "tests/qualify-and-evolve/qualified-package-audit.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-application.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-compound-pages.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-engines.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-relationships.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-application.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-boundaries.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-compounds.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-counts.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-relationships.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-scalars.py",
+        "tests/qualify-and-evolve/reconcile-ashlar-warehouse-values.py",
+        "tests/qualify-and-evolve/reconcile-conjunction-native.py",
+        "tests/qualify-and-evolve/reconcile-controls.py",
+        "tests/qualify-and-evolve/reconcile-decimal-domains.py",
+        "tests/qualify-and-evolve/reconcile-signed-boundaries.py",
+        "tests/qualify-and-evolve/reconcile-truss-archive.py",
+        "tests/qualify-and-evolve/reconcile-truss-review-numerics.py",
+        "tests/qualify-and-evolve/reconcile-unsigned-all-widths.py",
+        "tests/qualify-and-evolve/reconcile-unsigned-boundaries.py",
+        "tests/qualify-and-evolve/reconcile-warehouse-settings.py",
+        "tests/qualify-and-evolve/relational.py",
+        "tests/qualify-and-evolve/signed-reconcile-controls.py",
+        "tests/qualify-and-evolve/source-mutations.py",
+        "tests/qualify-and-evolve/truss-review-numeric-controls.py",
+        "tests/qualify-and-evolve/truss-session-controls.py",
+        "tests/qualify-and-evolve/unsigned-reconcile-controls.py",
+        "tests/qualify-and-evolve/verify-qualified-registrations.py",
+        "tests/qualify-and-evolve/warehouse-capture-controls.py"
+      ]
+    }
+  ],
+  "javascriptDependencies": {
+    "package.json": {
+      "dependencies": {},
+      "devDependencies": {
+        "ajv": "8.17.1",
+        "playwright": "1.62.1",
+        "typescript": "5.9.3",
+        "yaml": "2.8.1"
+      },
+      "optionalDependencies": {},
+      "peerDependencies": {}
+    },
+    "packages/weft-browser/package.json": {
+      "dependencies": {},
+      "devDependencies": {},
+      "optionalDependencies": {},
+      "peerDependencies": {}
+    }
+  }
+}

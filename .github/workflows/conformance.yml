@@ -29,6 +29,8 @@ jobs:
         run: bun install --frozen-lockfile
       - name: Validate governed specifications
         run: bun run specs:check
+      - name: Enforce module boundaries and negative controls
+        run: bun run modules:check
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance
