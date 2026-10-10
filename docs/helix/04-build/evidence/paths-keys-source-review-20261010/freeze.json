@@ -1,0 +1,170 @@
+{
+  "format": "weft-paths-keys-source-freeze/0.1",
+  "baseCommit": "3fcfd37c2bd3b408cbed3d784fc9ec79fc22e679",
+  "files": [
+    {
+      "path": ".github/workflows/conformance.yml",
+      "sha256": "5f9e22b270c66af33787dcbc3d728d441b0bac2b6959f34306f8f806c2ec53ca",
+      "bytes": 5405
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "dafb2aabe4b4cdbc938f84fc50e3e48a050c3670273dfb28fec5eddc221d4802",
+      "bytes": 32161
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/path_lowering.rs",
+      "sha256": "80f5ea3cdaf195483af8a49d5815228b1a2a6fcdf072aca4152d492f5807a4a1",
+      "bytes": 42148
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/related_keys.rs",
+      "sha256": "ed99856f9044b77e2477764d9b1f136cc17a9ff0db6770d6164809f63c62fb13",
+      "bytes": 5908
+    },
+    {
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "9f8260e2a89c38e46a62d52164857307cc9f3b39c93edab324d7e46192d49008",
+      "bytes": 843
+    },
+    {
+      "path": "crates/weft-databricks/src/paths.rs",
+      "sha256": "f7e677df76ac697f72289b477e9d14159ac5a05f11467316282f31be4deaf72d",
+      "bytes": 7921
+    },
+    {
+      "path": "crates/weft-databricks/src/paths_keys.rs",
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b",
+      "bytes": 4001
+    },
+    {
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "a3b0fc075b80f58d30c2c003b99e225bcbffa3678b987ac705e8132a3fc4dd5a",
+      "bytes": 1572
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "4bd552789182caa13073c28aeb2a0ed0640ceb102fa347ebeda6865535497c6b",
+      "bytes": 21298
+    },
+    {
+      "path": "crates/weft-runtime/src/paths_keys.rs",
+      "sha256": "2b9404655b90efafea149aa99efc6924ea14b981f0bb8040c0b47abd7ac351de",
+      "bytes": 15375
+    },
+    {
+      "path": "crates/weft-runtime/src/paths_keys_cli.rs",
+      "sha256": "9859d5226a94d6e49b248d63688c1d6438dea7b78416fb3a2b7481df070f36ba",
+      "bytes": 4158
+    },
+    {
+      "path": "crates/weft-runtime/tests/paths_keys_cli.rs",
+      "sha256": "f118a65cae1d382384d95f5f141875a503898e7c0b178309e481f7027a48188c",
+      "bytes": 4066
+    }
+  ],
+  "reports": [
+    {
+      "path": "weft-paths-keys-runtime-final-20261010-a.log",
+      "sha256": "d8c637aba58c7817db2840e6a90f0f79f810f159b225662185f51910b0a4565e",
+      "bytes": 6656
+    },
+    {
+      "path": "weft-paths-keys-private-final-20261010-a.log",
+      "sha256": "0a50b9d41a03d0ab41d6db721eeb82eca74b24b587e4ea8dbbc4a84853da158e",
+      "bytes": 5473
+    },
+    {
+      "path": "weft-paths-keys-cli-final-20261010-a.log",
+      "sha256": "5c1c1e46f0d953c2911a3ce86af28b6da27b9f50e2b81ec3bdaa04a361a32c75",
+      "bytes": 6214
+    }
+  ],
+  "profile": {
+    "backendId": "ashlar.databricks.paths-keys",
+    "backendVersion": "0.4.0-paths-keys-candidate",
+    "target": "spark4-delta4-paths-keys-candidate",
+    "feature": "ashlar-databricks-paths-keys",
+    "binary": "weft-paths-keys",
+    "capabilities": 48
+  },
+  "verification": {
+    "runtime": {
+      "passed": 12,
+      "new": 10,
+      "historical": 2
+    },
+    "privateNameAllocation": {
+      "passed": 1
+    },
+    "cli": {
+      "unitPassed": 5,
+      "integrationPassed": 3
+    },
+    "cargoBoundaryCheck": true,
+    "diffCheck": true,
+    "scope": "Cached serial offline component/debug-CLI tests only; no release build/full qualification corpus/native execution/index admission"
+  },
+  "commands": [
+    [
+      "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-j1",
+      "-p",
+      "weft-runtime",
+      "--no-default-features",
+      "--features",
+      "ashlar-databricks-paths-keys,ashlar-databricks-paths",
+      "--lib",
+      "paths"
+    ],
+    [
+      "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-j1",
+      "-p",
+      "weft-databricks",
+      "--lib",
+      "related_keys::tests"
+    ],
+    [
+      "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-j1",
+      "-p",
+      "weft-runtime",
+      "--no-default-features",
+      "--features",
+      "ashlar-databricks-paths-keys",
+      "--bin",
+      "weft-paths-keys",
+      "--test",
+      "paths_keys_cli"
+    ]
+  ],
+  "environment": {
+    "construction": "empty allowlist; no HOME override or ambient Rust/Cargo flags",
+    "values": {
+      "PATH": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
+      "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+      "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+      "CARGO_BUILD_JOBS": "1",
+      "CARGO_TARGET_DIR": "/private/tmp/ashlar-weft-distribution-d2d/target",
+      "SDKROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "MACOSX_DEPLOYMENT_TARGET": "11.0",
+      "TMPDIR": "/private/tmp"
+    }
+  },
+  "unchanged": "Existing profile/manifest/runtime routing, public schemas, historical realizations, distributions/index, foreign common.rs bytes preserved",
+  "semanticLimits": [
+    "SQL/capacity/order/bag correspondence independently reviewable; native source schemas/ordinary ACK/public source and actual query results remain host qualification duties",
+    "Equal-key cells cannot independently reveal edge-ID tie order; retain actual native ordinal-to-original-edge witnesses for subsequent qualification",
+    "DECIMAL38 bound is a representation maximum, not operational fanout or machine-proof claim"
+  ]
+}

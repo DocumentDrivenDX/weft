@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-GROUPING","message":"RELATED_KEYS cannot be aggregated","phase":"resolve","recoverability":"correct-input","severity":"error"}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}

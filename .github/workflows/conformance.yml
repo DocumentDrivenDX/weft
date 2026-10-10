@@ -66,6 +66,12 @@ jobs:
         run: cargo test -p weft-runtime --features ashlar-databricks-paths paths::tests --locked
       - name: Test explicit path CLI transport
         run: cargo test -p weft-runtime --features ashlar-databricks-paths --bin weft-paths --test paths_cli --locked
+      - name: Test separate required-root keys and unchanged paths registrations
+        run: cargo test -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys,ashlar-databricks-paths --lib paths --locked
+      - name: Test related-key private name ownership
+        run: cargo test -p weft-databricks --lib related_keys::tests --locked
+      - name: Test separate paths-keys CLI transport
+        run: cargo test -p weft-runtime --no-default-features --features ashlar-databricks-paths-keys --bin weft-paths-keys --test paths_keys_cli --locked
       - name: Refuse conflicting runtime registrations
         shell: bash
         run: |

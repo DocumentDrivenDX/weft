@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-TYPE","message":"Selected field meaning is unsupported","phase":"type","recoverability":"correct-input","severity":"error","sourceSpan":{"end":0,"start":0}}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}

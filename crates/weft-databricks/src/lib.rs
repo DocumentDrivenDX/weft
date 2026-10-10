@@ -22,3 +22,6 @@ pub mod left_join;
 
 /// Explicit Backend03 candidate; native acceptance remains a host obligation.
 pub mod paths;
+
+/// Separate required-root bounded key candidate; no implicit upgrade.
+pub mod paths_keys;

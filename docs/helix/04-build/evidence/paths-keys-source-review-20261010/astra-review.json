@@ -1,0 +1,426 @@
+{
+  "actualArtifactInventory": [
+    {
+      "bytes": 55343,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/aggregate.request.json",
+      "sha256": "4db5ef3acdf073cd5dcf3175606e31324ce5e691897143b0d895fa5d66f42e1b"
+    },
+    {
+      "bytes": 217,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/aggregate.response.json",
+      "sha256": "152b79a0ba084507222839f4c2ff24b5a44d73873181467e2f655fcd48f8b496"
+    },
+    {
+      "bytes": 55365,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/arithmetic_and_collection.request.json",
+      "sha256": "858881744d40d28ffc7b86765aba7282ec34ea9ebb10bbf80ff0d60b76663d56"
+    },
+    {
+      "bytes": 56850,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/arithmetic_and_collection.response.json",
+      "sha256": "9082d8824f324e7dcc2420ddb7b856e24dfc808b689226285adf124aefd34cc9"
+    },
+    {
+      "bytes": 55339,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/bound0.request.json",
+      "sha256": "ec78daacd663ea373a4ada6bad1a95dc108a4299144724c341af12ff39bf5714"
+    },
+    {
+      "bytes": 270,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/bound0.response.json",
+      "sha256": "fa1a16bf5bfd37f63c98a64b0d909f07e5ae2ef0958ee280945372b2b1306920"
+    },
+    {
+      "bytes": 55342,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/bound1001.request.json",
+      "sha256": "a537bf8874bda8c4b895fc14889763f330c169187afb76a5fdeaf7547bc03c5b"
+    },
+    {
+      "bytes": 270,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/bound1001.response.json",
+      "sha256": "073f39ce27c1118bf9aace918411f09c6c2bd3a3900ca29d1fdc835aa400c4e7"
+    },
+    {
+      "bytes": 55340,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/candidate_off.request.json",
+      "sha256": "239626507cccb5e0ee8ee404fde80295bd2cedca9e9e6e00c922575815f43e28"
+    },
+    {
+      "bytes": 234,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/candidate_off.response.json",
+      "sha256": "87b9145e79540aa768a19252eec1f5b4829f78ad6758d6b4cea99893c2bf04b7"
+    },
+    {
+      "bytes": 42016,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/composite.request.json",
+      "sha256": "398bb696c9ad8bba157b5bbc0514b29b24ad2cd8c772896c63097a2f1141b960"
+    },
+    {
+      "bytes": 51836,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/composite.response.json",
+      "sha256": "772af197f4a6cbc0fed707ef9d69d7cc5057a06271f41b3f7af9a3cdc8aac333"
+    },
+    {
+      "bytes": 55390,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/empty_outer.request.json",
+      "sha256": "551d7ebbc3fa1d342b86f37a2b34d05904c7c8a961f3ea2aded8fac08b624580"
+    },
+    {
+      "bytes": 53780,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/empty_outer.response.json",
+      "sha256": "c0e9c0a4135c5dbd47228223979955ae61601713186323a84f33d520d49f4f23"
+    },
+    {
+      "bytes": 55422,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/expansion_mix.request.json",
+      "sha256": "caeabbec4a5a9ac9ccd9ca493e96ea7148923517d9c970773e0508882ed12652"
+    },
+    {
+      "bytes": 283,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/expansion_mix.response.json",
+      "sha256": "42c2baaf5c140e365225ce92a03f84d701dc8dabb075f832a33aee4c1d6149ee"
+    },
+    {
+      "bytes": 55353,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/group.request.json",
+      "sha256": "f73d1c2313915ff3f33565127d5e5c53e40ff8d31ded92b986720f95c6be3342"
+    },
+    {
+      "bytes": 217,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/group.response.json",
+      "sha256": "152b79a0ba084507222839f4c2ff24b5a44d73873181467e2f655fcd48f8b496"
+    },
+    {
+      "bytes": 41989,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/inverse.request.json",
+      "sha256": "0f8c0374c8436f5a124a42866fdd2ee3dfad0525f2222637d97af3a2dc5b8b8c"
+    },
+    {
+      "bytes": 44644,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/inverse.response.json",
+      "sha256": "c9165df836790fa31429f3c0c82a674adb938af4f74d1e2a62de8ca28c453434"
+    },
+    {
+      "bytes": 55380,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/left_root.request.json",
+      "sha256": "5e9d4cd0558abaeca82a1b67a114363ba4dc4c0c014368e61dfa0c09d73a6a33"
+    },
+    {
+      "bytes": 255,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/left_root.response.json",
+      "sha256": "fdbb4884897fb8ff17cccdfbd9c5861d7f0998fdc323b07a95cf412130e47767"
+    },
+    {
+      "bytes": 55494,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/mixed_reverse_order.request.json",
+      "sha256": "69a881d59940d9bfcd8a088a9e93d58deb5f32ac570e676983a051898ef92be6"
+    },
+    {
+      "bytes": 154375,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/mixed_reverse_order.response.json",
+      "sha256": "5314c26f98e81aa035b4cd8558e7617f7d7f533f9dfbd7b459695c294607559d"
+    },
+    {
+      "bytes": 41962,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/numeric_key.request.json",
+      "sha256": "403e7109f5aa0f07e75689f61bfd0cbe6f0701d508c19072ae5b7035b9c43112"
+    },
+    {
+      "bytes": 246,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/numeric_key.response.json",
+      "sha256": "6ee9f1d8b9ab24308f59a8cc5f766f6394d025ae410fa73d528579813a642e90"
+    },
+    {
+      "bytes": 41967,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/optional_key.request.json",
+      "sha256": "1b9817c6f3aa1bf8786b1bb1693b3e982e3d6458365de684af524cc9076fc934"
+    },
+    {
+      "bytes": 247,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/optional_key.response.json",
+      "sha256": "9dc6ea6473533f4c173d8eebbf9cca7913773445a52d3f562c7eaebf539aaa17"
+    },
+    {
+      "bytes": 55339,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/original.request.json",
+      "sha256": "e2a9a8ad5d3409ad46c5fc96ab500905d11774119f4aa12345aab5bbb4ef6a43"
+    },
+    {
+      "bytes": 48062,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/original.response.json",
+      "sha256": "26b92f879a256ecc5e4fe48cd68f3ceab9163e011ed82a5956a1eef134afd22f"
+    },
+    {
+      "bytes": 55378,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/repeated_expressions.request.json",
+      "sha256": "a6585c63a51abd41c1c5bf7cf897459e9e7b1a6975874add9a3199183b04dac2"
+    },
+    {
+      "bytes": 55625,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/repeated_expressions.response.json",
+      "sha256": "0ade985781d4ec82870922e7c924fc681d9c13f9f8debe81cac73447ee303cdb"
+    },
+    {
+      "bytes": 55380,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/required_root_with_left_other.request.json",
+      "sha256": "aae9452d2ae6552c269d22c59b24584aa742ea8f1abf384a7631c03cc418ab4a"
+    },
+    {
+      "bytes": 60391,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/required_root_with_left_other.response.json",
+      "sha256": "c8ee14b138e2816af12e8acfe67a8428622fdaaf796460bbd8b99f5e60b699cc"
+    },
+    {
+      "bytes": 10481,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/results.json",
+      "sha256": "d4ba60adc5645a46f6caa95df9c4ef9f8d2e7bbcd4a3414e21d78f481c669150"
+    },
+    {
+      "bytes": 55281,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/scalar_only.request.json",
+      "sha256": "189902c2cc7c3ecd38e562629cea96e137d14927cd2c93e42fddfa486f024537"
+    },
+    {
+      "bytes": 12009,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/scalar_only.response.json",
+      "sha256": "7adfcfbe8282c0ccaf658428b803ab9dd4af46da6f014aac70f8559b656f26d3"
+    },
+    {
+      "bytes": 55406,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/two_roots.request.json",
+      "sha256": "d9708825cce2ecedb5d3ee6163e29ce6d22a7b41ce24539e9bd3c4d2928cff04"
+    },
+    {
+      "bytes": 69467,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/two_roots.response.json",
+      "sha256": "8a0027b3536e12e376f42a9246dde498bfc8f5e9298e8ce5d4573336e273b67b"
+    },
+    {
+      "bytes": 55334,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/wrong_profile.request.json",
+      "sha256": "dcf11e9bdd6742767b5246f392090be8f5dbcf78756df01ed281f8b8834c0686"
+    },
+    {
+      "bytes": 217,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/wrong_profile.response.json",
+      "sha256": "d0d3fea3e62601431d8b906817fc33baf79e92d2a84fd28bde17fdf875c72ef8"
+    }
+  ],
+  "actualReviewerChecks": [
+    {
+      "details": "12 runtime (10 new, 2 historical), 1 private name-allocation, 5 CLI unit and 3 actual debug CLI process tests. Exact argv/environment recorded by frozen manifest; independent log descriptors below.",
+      "result": "passed",
+      "scope": "serial clean-environment cached offline Rust1.90 tests"
+    },
+    {
+      "blocked": 10,
+      "command": [
+        "python3",
+        "-B",
+        "/private/tmp/astra-weft-paths-keys-artifact-probe-20261010-b.py"
+      ],
+      "compiled": 10,
+      "details": "Original, empty-outer, repeated expressions with independent positions, reverse-ordered mixed one/two-hop outputs, two distinct root occurrences, required root with other LEFT scan, arithmetic plus collection, authored inverse, complete composite String key, scalar-only; isolated bounds 0/1001, LEFT root, aggregate, group, expansion mix, optional/numeric key, no candidate opt-in and wrong profile refuse without SQL.",
+      "result": "passed"
+    },
+    {
+      "details": "Closed complete collectionIntegrity and ordinalCapacity member sets; ordered one-based selected inventories; full RelationshipRead, native table/id/BIGINT declarations and target AuthoredKey exact; original record/key Field lineage, false column nullability, fixed failure codes and same-publication/no-partial flags. No collection obligation invented for scalar-only.",
+      "result": "passed",
+      "scope": "actual compiled artifact correspondence"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/private/tmp/astra-weft-paths-keys-slot-probe-20261010-a.py"
+      ],
+      "compiledArtifacts": 10,
+      "details": "Every emitted SQL placeholder references the same ordered parameter vector; full-source/capacity queries are not outer-LIMIT or missing-owner filtered.",
+      "result": "passed",
+      "sqlStatements": 155
+    },
+    {
+      "details": "Child 65 bag/bound combinations plus inverse/empty witnesses and five weakened-mechanism controls distinguish edge deduplication, lexical signed-edge order, prefix-only NULL/duplicate checks and lookahead-only capacity. Source-level reasoning, not Spark execution.",
+      "result": "passed",
+      "scope": "finite independent algorithm countermodels"
+    },
+    {
+      "details": "Executed with the exact frozen Rust toolchain allowlist. Actual allowed edges, forbidden core-to-backend edge and Rust private-symbol refusal pass.",
+      "result": "passed",
+      "scope": "actual Cargo module checker and three meaningful boundary controls"
+    }
+  ],
+  "baseCommit": "3fcfd37c2bd3b408cbed3d784fc9ec79fc22e679",
+  "evidence": [
+    {
+      "bytes": 1975,
+      "path": "/private/tmp/astra-weft-paths-keys-focused-results-20261010-a.json",
+      "sha256": "b52c356011cd5df1dad5376edd371ed005c727465c0eefa45e3370de69c367af"
+    },
+    {
+      "bytes": 6456,
+      "path": "/private/tmp/astra-weft-paths-keys-focused-0-20261010-a.log",
+      "sha256": "af81a7027108077f3e154dc539d5787c424277db716c520e6fed533d8950498e"
+    },
+    {
+      "bytes": 5370,
+      "path": "/private/tmp/astra-weft-paths-keys-focused-1-20261010-a.log",
+      "sha256": "043c7ef8d0f14b7e8156da40bd278bc2878c84b302ed0d573af31114be1f8310"
+    },
+    {
+      "bytes": 6117,
+      "path": "/private/tmp/astra-weft-paths-keys-focused-2-20261010-a.log",
+      "sha256": "3ad1aac4eb4d98bb8baa5aa2e41c42a5e9b38c7738d399b51ab8a45d97a810cc"
+    },
+    {
+      "bytes": 4682,
+      "path": "/private/tmp/astra-weft-paths-keys-registration-review-20261010-a.json",
+      "sha256": "85fb291242a5811664da2dcc5562b95103c2d4d07b760dab56a2f8d49f4b253f"
+    },
+    {
+      "bytes": 4033,
+      "path": "/private/tmp/astra-related-keys-sql-countermodel-review-20261010-a.json",
+      "sha256": "3c0fd0094e58e0030fc6e33f1b8e5002b478cb2e96bd2f4c7825cf7d4a587c87"
+    },
+    {
+      "bytes": 9339,
+      "path": "/private/tmp/astra-weft-paths-keys-artifact-probe-20261010-b.py",
+      "sha256": "f37da3c3243a8d78cab4cd49610682e2ba4f3601e2f090cd7030a5762c351620"
+    },
+    {
+      "bytes": 65,
+      "path": "/private/tmp/astra-weft-paths-keys-artifact-probe-20261010-b.log",
+      "sha256": "5e6a75d4643eeb3a3492815a0c9be7c75eacdf5a7eeeeca6695069a1ffd57da9"
+    },
+    {
+      "bytes": 10481,
+      "path": "/private/tmp/astra-weft-paths-keys-artifacts-20261010-b/results.json",
+      "sha256": "d4ba60adc5645a46f6caa95df9c4ef9f8d2e7bbcd4a3414e21d78f481c669150"
+    },
+    {
+      "bytes": 747,
+      "path": "/private/tmp/astra-weft-paths-keys-slot-probe-20261010-a.py",
+      "sha256": "b9c7e92006244cdc7f2819588a7d9f0de075db934a16a32c2e9db2689fcac409"
+    },
+    {
+      "bytes": 96,
+      "path": "/private/tmp/astra-weft-paths-keys-slot-probe-20261010-a.log",
+      "sha256": "b81a7235221ec20fc24ad01081c90ac09e835a89b20370ec469eff73cc2ee25f"
+    },
+    {
+      "bytes": 646,
+      "path": "/private/tmp/astra-weft-paths-keys-boundary-20261010-b.log",
+      "sha256": "bfbb02925bc2fff01e3029e78aa209a113f6173ef6072ba29395bd7328c0b655"
+    },
+    {
+      "bytes": 101,
+      "path": "/private/tmp/astra-weft-paths-keys-boundary-tests-20261010-b.log",
+      "sha256": "73e5d23c3dccda0feb09d3795f6f0d1b3c0decef776d1a5013f085153683a317"
+    }
+  ],
+  "findings": [],
+  "format": "astra-independent-source-review/0.1",
+  "freeze": {
+    "bytes": 5727,
+    "path": "/private/tmp/weft-paths-keys-source-freeze-20261010-a/manifest.json",
+    "sha256": "e08a07b7e79ceabcb49027b754a18778e26358601ef7137250a42536653d1150"
+  },
+  "helixPractices": {
+    "configuration": "Pure compiler paths consume typed request/configuration and fixed profile metadata, with explicit candidate opt-in and bounded input/output/IR controls inherited from reviewed transport/core. No environment, credential, installation or trust discovery added to the pure backend.",
+    "formal": "Evidence supports finite source correspondence for complete identity/bag, order/prefix/marker and preserved publication obligations. Countermodels are bounded review witnesses, not a mechanical/unbounded proof; native edge-to-ordinal witnesses and operational hold/ACK results remain separate qualification gates.",
+    "modularity": "Private related_keys lowering owns SQL and fresh-name allocation; existing binding/Catalog/typed core contracts are reused. Public composition is confined to explicitly selected backend/runtime entrypoints; actual Cargo boundaries remain enforced.",
+    "observability": "CLI I/O errors remain bounded constant payload-free codes; compiler result qualification remains candidate. No SDK or telemetry receiver integration and no OTel completion claim. External invoking host still owns deadline/process cleanup and successful-exit gating."
+  },
+  "limitations": [
+    "No Spark, Delta, database, native SQL execution, release build, package/index/install admission or full 512-case realization corpus was run or approved.",
+    "Existing historical compiler/native receipts remain pinned to their original realization; this approval transfers no native qualification.",
+    "Raw debug compiler artifacts are candidate source-review evidence only. The cached debug executable and inherited host build caches are not a released or hermetic realization.",
+    "Runtime host cancellation, public source authority, native schemas and all closed ordinary ACK/report intervals require separate installed-host review and execution evidence.",
+    "Initial reviewer probe incorrectly expected duplicate explicit computed aliases to compile; parser correctly refused WFT-OUTPUT-NAME. Corrected probe uses distinct labels while retaining repeated expressions. This was reviewer harness correction, not source mutation.",
+    "Initial boundary invocation omitted Cargo from PATH and failed before checking source; corrected exact toolchain environment passed. Initial logs remain under suffix a."
+  ],
+  "noSourceEditsOrGitMutation": true,
+  "openingClosingSourceHashesEqual": true,
+  "profile": {
+    "backendId": "ashlar.databricks.paths-keys",
+    "backendVersion": "0.4.0-paths-keys-candidate",
+    "binary": "weft-paths-keys",
+    "capabilities": 48,
+    "feature": "ashlar-databricks-paths-keys",
+    "target": "spark4-delta4-paths-keys-candidate"
+  },
+  "reviewedFiles": [
+    {
+      "bytes": 5405,
+      "path": ".github/workflows/conformance.yml",
+      "sha256": "5f9e22b270c66af33787dcbc3d728d441b0bac2b6959f34306f8f806c2ec53ca"
+    },
+    {
+      "bytes": 32161,
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "dafb2aabe4b4cdbc938f84fc50e3e48a050c3670273dfb28fec5eddc221d4802"
+    },
+    {
+      "bytes": 42148,
+      "path": "crates/weft-databricks/src/candidate/path_lowering.rs",
+      "sha256": "80f5ea3cdaf195483af8a49d5815228b1a2a6fcdf072aca4152d492f5807a4a1"
+    },
+    {
+      "bytes": 5908,
+      "path": "crates/weft-databricks/src/candidate/related_keys.rs",
+      "sha256": "ed99856f9044b77e2477764d9b1f136cc17a9ff0db6770d6164809f63c62fb13"
+    },
+    {
+      "bytes": 843,
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "9f8260e2a89c38e46a62d52164857307cc9f3b39c93edab324d7e46192d49008"
+    },
+    {
+      "bytes": 7921,
+      "path": "crates/weft-databricks/src/paths.rs",
+      "sha256": "f7e677df76ac697f72289b477e9d14159ac5a05f11467316282f31be4deaf72d"
+    },
+    {
+      "bytes": 4001,
+      "path": "crates/weft-databricks/src/paths_keys.rs",
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b"
+    },
+    {
+      "bytes": 1572,
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "a3b0fc075b80f58d30c2c003b99e225bcbffa3678b987ac705e8132a3fc4dd5a"
+    },
+    {
+      "bytes": 21298,
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "4bd552789182caa13073c28aeb2a0ed0640ceb102fa347ebeda6865535497c6b"
+    },
+    {
+      "bytes": 15375,
+      "path": "crates/weft-runtime/src/paths_keys.rs",
+      "sha256": "2b9404655b90efafea149aa99efc6924ea14b981f0bb8040c0b47abd7ac351de"
+    },
+    {
+      "bytes": 4158,
+      "path": "crates/weft-runtime/src/paths_keys_cli.rs",
+      "sha256": "9859d5226a94d6e49b248d63688c1d6438dea7b78416fb3a2b7481df070f36ba"
+    },
+    {
+      "bytes": 4066,
+      "path": "crates/weft-runtime/tests/paths_keys_cli.rs",
+      "sha256": "f118a65cae1d382384d95f5f141875a503898e7c0b178309e481f7027a48188c"
+    }
+  ],
+  "semanticAssessment": {
+    "bagAndOrder": "One-hop rows join each original edge occurrence to its target record without DISTINCT. Ordering is complete binary String key followed by original signed BIGINT edge ID. Correlation joins the per-owner collection back to the exact original scan occurrence; ordinary joins retain their multiplicity.",
+    "capacity": "Both new one-hop and selected two-hop collection outputs receive fullOccurrencePrefix checks over complete ranked populations. TRY_SUM DECIMAL(38,0) with ROWS prefix has no ROW_NUMBER or cast-based widening. Any null prefix refuses before lookahead; empty populations yield empty collections. Separate signed64 path-count capacities remain inherited.",
+    "fullSourceIntegrity": "collectionEncoding explicitly reads the complete scoped native edge CTE for id IS NULL and duplicate IDs, independently of endpoint joins, outer selection and bound-plus-one prefix. Reversible String-array encoding plus full per-owner total/size/marker correspondence supplement unchanged endpoint/key/source guards. Native schema observations remain a host prerequisite.",
+    "guardOwnership": "New profile emits the exact governed host obligations. Core response validation and component tests do not discharge these host duties. Future installed host admission must recognize/validate both closed inventories, obtain native schemas, run original/public source checks before dependent guards, and enforce held publication/ACK and report-release closure.",
+    "identity": "Existing original Catalog resolution and binding admission provide complete relationship/from/to/key identities; new required-root gate refuses aggregate/group/HAVING/expansion mix and nullable LEFT root. Every source/target key component must be required exact String with no facets. Inverse traversal swaps physical endpoints and retains authored orientation of multiplicity checks.",
+    "registration": "Distinct backend ID/version/profile, feature and console binary. Explicit candidate opt-in and old namespace fences. Historical Paths describe() 47 capabilities and old route bodies remain unchanged; common validation extraction is body-equivalent ignoring whitespace.",
+    "representation": "Exact inherited RelatedKeys representation remains descriptor-selected within response04; no reinterpretation as result-path-occurrences, no public IR/schema bump, no new generic absence carrier. Equal-key item values cannot alone expose edge tie order."
+  },
+  "sourceRoot": "/private/tmp/ashlar-weft-distribution-d2d",
+  "subject": "Weft required-root String RelatedKeys candidate source, separate Backend03 profile",
+  "verdict": "approved-source-only"
+}

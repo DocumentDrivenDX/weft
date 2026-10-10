@@ -1,0 +1,68 @@
+{
+  "freezeSha256": "e08a07b7e79ceabcb49027b754a18778e26358601ef7137250a42536653d1150",
+  "results": [
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-j1",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys,ashlar-databricks-paths",
+        "--lib",
+        "paths"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.068162208,
+      "log": "/private/tmp/astra-weft-paths-keys-focused-0-20261010-a.log",
+      "sha256": "af81a7027108077f3e154dc539d5787c424277db716c520e6fed533d8950498e",
+      "bytes": 6456
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-j1",
+        "-p",
+        "weft-databricks",
+        "--lib",
+        "related_keys::tests"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.24018650000000008,
+      "log": "/private/tmp/astra-weft-paths-keys-focused-1-20261010-a.log",
+      "sha256": "043c7ef8d0f14b7e8156da40bd278bc2878c84b302ed0d573af31114be1f8310",
+      "bytes": 5370
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "-j1",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-paths-keys",
+        "--bin",
+        "weft-paths-keys",
+        "--test",
+        "paths_keys_cli"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.0674753750000003,
+      "log": "/private/tmp/astra-weft-paths-keys-focused-2-20261010-a.log",
+      "sha256": "3ad1aac4eb4d98bb8baa5aa2e41c42a5e9b38c7738d399b51ab8a45d97a810cc",
+      "bytes": 6117
+    }
+  ],
+  "sourceClosing": true
+}

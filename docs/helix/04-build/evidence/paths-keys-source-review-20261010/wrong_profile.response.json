@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-BACKEND-VERSION","message":"Unknown target profile","phase":"capability","recoverability":"change-profile","severity":"error"}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}

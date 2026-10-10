@@ -1,4 +1,6 @@
 //! Pure build-time composition. Hosts explicitly select trusted adapter versions.
+#[cfg(feature = "ashlar-databricks-paths-keys")]
+pub mod paths_keys;
 #[cfg(feature = "ashlar-databricks-paths")]
 pub mod paths;
 #[cfg(any(

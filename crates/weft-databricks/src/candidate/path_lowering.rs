@@ -14,6 +14,7 @@ struct PathSql<'a> {
     bound: Option<u16>,
     rows: String,
     collection: Option<String>,
+    ranked: Option<String>,
 }
 fn exact_string(f: &app::Field) -> bool {
     f.logical_type.family == Family::String
@@ -164,8 +165,10 @@ fn enumerate<'a>(
         "intermediateIdentity",
         violations(lower, &bridge),
     ));
+    let mut ranked_name = None;
     let collection = if let Some(bound) = bound {
         let ranked = format!("{base}_ranked");
+        ranked_name = Some(ranked.clone());
         let encoded = format!("{base}_collection");
         let mk = key_columns("p", "m", &first.target_key);
         let tk = key_columns("p", "t", &second.target_key);
@@ -192,6 +195,7 @@ fn enumerate<'a>(
         bound,
         rows,
         collection,
+        ranked: ranked_name,
     })
 }
 
@@ -241,6 +245,21 @@ fn capacity(
 pub(crate) fn lower(
     c: &b03::Context<'_>,
     binding: &Binding,
+) -> Result<crate::paths::PathTargetPlan> {
+    lower_profile(c, binding, false)
+}
+
+pub(crate) fn lower_keys(
+    c: &b03::Context<'_>,
+    binding: &Binding,
+) -> Result<crate::paths::PathTargetPlan> {
+    lower_profile(c, binding, true)
+}
+
+fn lower_profile(
+    c: &b03::Context<'_>,
+    binding: &Binding,
+    keys_profile: bool,
 ) -> Result<crate::paths::PathTargetPlan> {
     let p = c.plan;
     let outputs = p.outputs().collect::<Vec<_>>();
@@ -326,6 +345,7 @@ pub(crate) fn lower(
                     scalar::collect_field(&mut lower, argument);
                 }
                 arithmetic::Expression::Count { .. } => {}
+                arithmetic::Expression::RelatedKeys { .. } if keys_profile => {}
                 _ => {
                     return Err(fail(
                         "WFT-CAPABILITY",
@@ -366,7 +386,7 @@ pub(crate) fn lower(
     if let Some(e) = p.expansion() {
         inventory.push((e.path, None));
     }
-    let reads = inventory
+    let mut reads = inventory
         .iter()
         .flat_map(|(path, _)| {
             path.hops()
@@ -374,6 +394,18 @@ pub(crate) fn lower(
                 .map(|h| (path.start_scan().to_string(), h.clone()))
         })
         .collect::<Vec<_>>();
+    if keys_profile {
+        for o in &outputs {
+            if let b03::ExpressionView::Legacy(arithmetic::Expression::RelatedKeys {
+                scan,
+                relationship,
+                ..
+            }) = o.expression
+            {
+                reads.push((scan.clone(), relationship.clone()));
+            }
+        }
+    }
     let traversals =
         relationships::Traversals::collect_reads(&mut lower, reads.iter().map(|(s, r)| (s, r)))?;
     lower.prepare()?;
@@ -389,6 +421,53 @@ pub(crate) fn lower(
             index,
             &mut path_checks,
         )?);
+    }
+    let mut key_collections = BTreeMap::new();
+    let mut key_inventory = vec![];
+    let mut key_schemas = vec![];
+    let mut key_checks = vec![];
+    let mut ordinal_inventory = vec![];
+    let mut ordinal_checks = vec![];
+    if keys_profile {
+        let mut path_index = 0;
+        for (i, o) in outputs.iter().enumerate() {
+            let position = i + 1;
+            match o.expression {
+                b03::ExpressionView::Legacy(arithmetic::Expression::RelatedKeys {
+                    scan,
+                    relationship,
+                    bound,
+                }) => {
+                    let collection = super::related_keys::collect(
+                        &mut lower,
+                        &traversals,
+                        scan,
+                        relationship,
+                        *bound,
+                        position,
+                    )?;
+                    let physical = binding
+                        .relationships
+                        .iter()
+                        .find(|r| r.logical == json!(relationship.identity))
+                        .ok_or_else(|| fail("WFT-BINDING", "RelatedKeys source missing"))?;
+                    key_inventory.push(json!({"outputPosition":position,"startScan":scan,"relationship":relationship,"bound":bound}));
+                    key_schemas.push(json!({"outputPosition":position,"relationship":relationship.identity,"table":binding.publication.tables[physical.table],"identityColumn":"id","nativeType":"BIGINT"}));
+                    key_checks.push(json!({"outputPosition":position,"kind":"collectionEncoding","sql":collection.encoding_check,"failureCode":"WFT-BINDING"}));
+                    ordinal_inventory.push(json!({"outputPosition":position,"kind":"relatedKeys"}));
+                    ordinal_checks.push(json!({"outputPosition":position,"kind":"fullOccurrencePrefix","sql":collection.capacity_check,"failureCode":"WFT-CAPABILITY"}));
+                    key_collections.insert(position, collection);
+                }
+                b03::ExpressionView::RelatedPaths { .. } => {
+                    let ranked = paths[path_index].ranked.as_ref().unwrap();
+                    path_index += 1;
+                    ordinal_inventory
+                        .push(json!({"outputPosition":position,"kind":"relatedPaths"}));
+                    ordinal_checks.push(json!({"outputPosition":position,"kind":"fullOccurrencePrefix","sql":violations(&lower,&format!("SELECT __root FROM {} WHERE __ordinal IS NULL",binding::quote(ranked))),"failureCode":"WFT-CAPABILITY"}));
+                }
+                _ => {}
+            }
+        }
     }
     let mut numeric_checks = vec![];
     let mut from = binding::quote(&p.source().occurrence);
@@ -430,6 +509,14 @@ pub(crate) fn lower(
                 binding::quote(path.path.start_scan())
             );
         }
+    }
+    for collection in key_collections.values() {
+        from = format!(
+            "({from} LEFT JOIN {} ON {}.__root={}.__id)",
+            binding::quote(&collection.name),
+            binding::quote(&collection.name),
+            binding::quote(&collection.scan)
+        );
     }
     let expansion = paths.iter().find(|p| p.bound.is_none());
     if let Some(path) = expansion {
@@ -540,6 +627,35 @@ pub(crate) fn lower(
                     std::iter::once(hop.to.clone())
                         .chain(hop.target_key.fields.iter().cloned())
                         .collect(),
+                )
+            }
+            b03::ExpressionView::Legacy(arithmetic::Expression::RelatedKeys {
+                scan: _,
+                relationship,
+                bound,
+            }) if keys_profile => {
+                let collection = &key_collections[&(i + 1)];
+                let name = binding::quote(&collection.name);
+                let sql=format!("to_json(named_struct('items',coalesce({name}.__items,CAST(array() AS ARRAY<ARRAY<STRING>>)),'truncated',coalesce({name}.__truncated,FALSE)))");
+                let mut ids = vec![relationship.from.clone(), relationship.to.clone()];
+                for id in relationship
+                    .source_key
+                    .fields
+                    .iter()
+                    .chain(&relationship.target_key.fields)
+                {
+                    if !ids.contains(id) {
+                        ids.push(id.clone());
+                    }
+                }
+                (
+                    sql,
+                    b03::Representation::Legacy(Representation::RelatedKeys {
+                        relationship: relationship.identity.clone(),
+                        key: relationship.target_key.clone(),
+                        bound: *bound,
+                    }),
+                    ids,
                 )
             }
             b03::ExpressionView::Legacy(e) => {
@@ -786,6 +902,12 @@ pub(crate) fn lower(
             })
             .collect::<Vec<_>>();
         obligations.push(Obligation{id:"ashlar.path.occurrenceIntegrity".into(),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into(),parameters:json!({"phase":"before-user-query","samePublicationRequired":true,"noPartialPublication":true,"paths":path_inventory,"edgeSchemas":schemas,"checks":path_checks,"success":"one exact STRING count equal to 0 per check"})});
+    }
+    if !key_inventory.is_empty() {
+        obligations.push(Obligation{id:"ashlar.relatedKeys.collectionIntegrity".into(),owner:ObligationOwner::Host,failure_code:"WFT-BINDING".into(),parameters:json!({"phase":"before-user-query","samePublicationRequired":true,"noPartialPublication":true,"collections":key_inventory,"edgeSchemas":key_schemas,"checks":key_checks,"success":"one exact STRING count equal to 0 per check"})});
+    }
+    if !ordinal_inventory.is_empty() {
+        obligations.push(Obligation{id:"ashlar.relatedKeys.ordinalCapacity".into(),owner:ObligationOwner::Host,failure_code:"WFT-CAPABILITY".into(),parameters:json!({"phase":"before-user-query","samePublicationRequired":true,"noPartialPublication":true,"nativeRepresentation":"decimal38","maximum":"99999999999999999999999999999999999999","collections":ordinal_inventory,"checks":ordinal_checks,"success":"one exact STRING count equal to 0 per check"})});
     }
     if !capacity_checks.is_empty() {
         obligations.push(Obligation{id:"ashlar.path.countCapacity".into(),owner:ObligationOwner::Host,failure_code:"WFT-CAPABILITY".into(),parameters:json!({"phase":"before-user-query","samePublicationRequired":true,"noPartialPublication":true,"nativeRepresentation":"signed64","checks":capacity_checks,"success":"one exact STRING count equal to 0 per check"})});

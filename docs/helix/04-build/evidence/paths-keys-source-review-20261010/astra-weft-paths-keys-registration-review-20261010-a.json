@@ -1,0 +1,86 @@
+{
+  "assessment": [
+    "New backend/version/target explicitly bound; manifest candidates inherit current constraints, add only boundedKeys and repoint only cloned target identities. No mutation of old registry or manifest.",
+    "validate_binding rejects wrong target and RelatedKeys aggregate/group/HAVING/expansion/LEFT-root or nonrequired/nonfacetless String source/target keys before lowering; shared original binding validation remains intact. Typed core owns complete original catalog/key resolution.",
+    "Runtime feature gates separate namespace and required-feature binary; factory registers only PathsKeys through explicit compile04 Compiler. Enabling new feature leaves old entrypoint04 refusal and Paths registration unchanged.",
+    "One-shot CLI reads at most16MiB+1 before UTF8 conversion, preserves original input text, emits compiler response plus one newline, and keeps transport failures constant on stderr/exit2. Output/flush failure may leave bytes in pipe: consumer must require successful exit and complete response; no atomic stdout guarantee is claimed.",
+    "CLI does not create descendant processes or native resources and defines no cancellation/retry/deadline mechanism; invoking host remains responsible for process deadline/cancellation/cleanup. This is the unchanged reviewed transport boundary, not a new cancellation guarantee.",
+    "Tests materially cover exact UTF8 byte limits, sentinel non-draining read, input/write/flush privacy failures, actual produced process output, original collection/count requests, old namespace/profile separation and opt-in. CI explicitly selects new feature and standalone transport suite; existing CI commands retained."
+  ],
+  "checks": {
+    "allFrozenLiveSourceFiles": 12,
+    "newCLITransportIdenticalExceptNamespace": true,
+    "newCapabilityIDs": 48,
+    "oldAssessmentAndEmissionExactSource": true,
+    "oldCapabilityIDs": 47,
+    "oldManifestDescribeExactSource": true,
+    "oldMappingExtractionWhitespaceEquivalent": true,
+    "oldPathsRuntimeAndCLIMainExact": true,
+    "oldRuntimeCompileRouteExact": true,
+    "openingClosingSourceUnchanged": true,
+    "publicSchema4AndIndexExactBase": true,
+    "retainedLogHashes": 3
+  },
+  "files": [
+    {
+      "bytes": 5405,
+      "path": ".github/workflows/conformance.yml",
+      "sha256": "5f9e22b270c66af33787dcbc3d728d441b0bac2b6959f34306f8f806c2ec53ca"
+    },
+    {
+      "bytes": 843,
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "9f8260e2a89c38e46a62d52164857307cc9f3b39c93edab324d7e46192d49008"
+    },
+    {
+      "bytes": 7921,
+      "path": "crates/weft-databricks/src/paths.rs",
+      "sha256": "f7e677df76ac697f72289b477e9d14159ac5a05f11467316282f31be4deaf72d"
+    },
+    {
+      "bytes": 4001,
+      "path": "crates/weft-databricks/src/paths_keys.rs",
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b"
+    },
+    {
+      "bytes": 1572,
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "a3b0fc075b80f58d30c2c003b99e225bcbffa3678b987ac705e8132a3fc4dd5a"
+    },
+    {
+      "bytes": 21298,
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "4bd552789182caa13073c28aeb2a0ed0640ceb102fa347ebeda6865535497c6b"
+    },
+    {
+      "bytes": 15375,
+      "path": "crates/weft-runtime/src/paths_keys.rs",
+      "sha256": "2b9404655b90efafea149aa99efc6924ea14b981f0bb8040c0b47abd7ac351de"
+    },
+    {
+      "bytes": 4158,
+      "path": "crates/weft-runtime/src/paths_keys_cli.rs",
+      "sha256": "9859d5226a94d6e49b248d63688c1d6438dea7b78416fb3a2b7481df070f36ba"
+    },
+    {
+      "bytes": 4066,
+      "path": "crates/weft-runtime/tests/paths_keys_cli.rs",
+      "sha256": "f118a65cae1d382384d95f5f141875a503898e7c0b178309e481f7027a48188c"
+    }
+  ],
+  "format": "astra-weft-paths-keys-registration-review/0.1",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-source-freeze-20261010-a/manifest.json",
+    "sha256": "e08a07b7e79ceabcb49027b754a18778e26358601ef7137250a42536653d1150"
+  },
+  "limits": [
+    "No cargo, compiler executable, build, release, installation, index mutation, engine or DB execution by this reviewer. Parent owns serial Cargo runs, SQL/lowering/obligation correspondence.",
+    "Retained logs checked for custody only; not independently rerun in this lane.",
+    "No native/full-corpus qualification inferred; new profile package/index/native proof remains separate."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-weft-paths-keys-registration-review-20261010-a.py",
+    "sha256": "850c0221c48eb8e33db20b884354491106d95fb3db8aaa85c1db78dc626b72d4"
+  },
+  "verdict": "approved within registration/runtime/CLI/CI source review scope"
+}

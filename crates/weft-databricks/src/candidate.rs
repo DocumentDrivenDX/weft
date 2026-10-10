@@ -5,6 +5,7 @@ pub(crate) fn lower_arithmetic(context: &Context<'_>, binding: &Binding, plan: &
 pub(crate) mod compound;
 mod relationships;
 pub(crate) mod path_lowering;
+mod related_keys;
 use crate::binding::{self, Binding, Home, RecordKind};
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};

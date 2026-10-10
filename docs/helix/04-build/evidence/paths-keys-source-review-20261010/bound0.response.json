@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-LIMIT","message":"Application bound must be an integer from 1 through 1000","phase":"parse","recoverability":"correct-input","severity":"error","sourceSpan":{"end":53,"start":52}}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}

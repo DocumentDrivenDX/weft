@@ -90,73 +90,7 @@ impl Backend for Paths {
         if c.target.id != PROFILE {
             return Err(fail("Explicit path target required"));
         }
-        let b = binding::admit03(c.catalog, c.binding_value)?;
-        for id in &c.selection.records {
-            if !b.records.iter().any(|r| &r.logical == id) {
-                return Err(fail("Selected original Record lacks mapping"));
-            }
-        }
-        for id in &c.selection.fields {
-            if !b
-                .records
-                .iter()
-                .any(|r| r.properties.iter().any(|p| &p.logical == id))
-            {
-                return Err(fail("Selected original Field lacks mapping"));
-            }
-        }
-        let mut edges = vec![];
-        for id in &c.selection.relationships {
-            let r = b
-                .relationships
-                .iter()
-                .find(|r| r.logical == json!(id))
-                .ok_or_else(|| fail("Selected original relationship lacks mapping"))?;
-            if r.kind != RecordKind::Edge {
-                return Err(fail(
-                    "Initial path profile requires original edge-current BIGINT identities",
-                ));
-            }
-            edges.push(NativeEdgeSource {
-                relationship: id.clone(),
-                table: table(&b.publication.tables[r.table]),
-                identity_column: "id".into(),
-                native_type: "BIGINT".into(),
-            });
-        }
-        let mut records = vec![];
-        for j in c
-            .plan
-            .joins()
-            .iter()
-            .filter(|j| j.kind == Some(weft_core::arithmetic_plan::JoinKind::Left))
-        {
-            let r = b
-                .records
-                .iter()
-                .find(|r| r.logical == j.right.record)
-                .ok_or_else(|| fail("LEFT Record lacks mapping"))?;
-            if r.kind != RecordKind::Object {
-                return Err(fail(
-                    "Initial LEFT path profile requires original object-current identities",
-                ));
-            }
-            records.push(NativeRecordSource {
-                scan: j.right.occurrence.clone(),
-                record: j.right.record.clone(),
-                table: table(&b.publication.tables[r.table]),
-                identity_column: "id".into(),
-                native_type: "BIGINT".into(),
-            });
-        }
-        Ok(Validated {
-            mapping: b,
-            additional_capabilities: vec![],
-            coverage: c.selection.clone(),
-            obligations: vec![],
-            edge_sources: edges,
-            record_sources: records,
-        })
+        validate_sources(c)
     }
     fn assess(&self, c: &Context<'_>, _: &Binding) -> Result<Vec<Assessment>> {
         Ok(c.plan
@@ -181,4 +115,75 @@ impl Backend for Paths {
             obligations: p.0.obligations.clone(),
         })
     }
+}
+
+/// Shared original mapping validation; profile admission remains each backend owner.
+pub(crate) fn validate_sources(c: &Context<'_>) -> Result<Validated<Binding>> {
+    let b = binding::admit03(c.catalog, c.binding_value)?;
+    for id in &c.selection.records {
+        if !b.records.iter().any(|r| &r.logical == id) {
+            return Err(fail("Selected original Record lacks mapping"));
+        }
+    }
+    for id in &c.selection.fields {
+        if !b
+            .records
+            .iter()
+            .any(|r| r.properties.iter().any(|p| &p.logical == id))
+        {
+            return Err(fail("Selected original Field lacks mapping"));
+        }
+    }
+    let mut edges = vec![];
+    for id in &c.selection.relationships {
+        let r = b
+            .relationships
+            .iter()
+            .find(|r| r.logical == json!(id))
+            .ok_or_else(|| fail("Selected original relationship lacks mapping"))?;
+        if r.kind != RecordKind::Edge {
+            return Err(fail(
+                "Initial path profile requires original edge-current BIGINT identities",
+            ));
+        }
+        edges.push(NativeEdgeSource {
+            relationship: id.clone(),
+            table: table(&b.publication.tables[r.table]),
+            identity_column: "id".into(),
+            native_type: "BIGINT".into(),
+        });
+    }
+    let mut records = vec![];
+    for j in c
+        .plan
+        .joins()
+        .iter()
+        .filter(|j| j.kind == Some(weft_core::arithmetic_plan::JoinKind::Left))
+    {
+        let r = b
+            .records
+            .iter()
+            .find(|r| r.logical == j.right.record)
+            .ok_or_else(|| fail("LEFT Record lacks mapping"))?;
+        if r.kind != RecordKind::Object {
+            return Err(fail(
+                "Initial LEFT path profile requires original object-current identities",
+            ));
+        }
+        records.push(NativeRecordSource {
+            scan: j.right.occurrence.clone(),
+            record: j.right.record.clone(),
+            table: table(&b.publication.tables[r.table]),
+            identity_column: "id".into(),
+            native_type: "BIGINT".into(),
+        });
+    }
+    Ok(Validated {
+        mapping: b,
+        additional_capabilities: vec![],
+        coverage: c.selection.clone(),
+        obligations: vec![],
+        edge_sources: edges,
+        record_sources: records,
+    })
 }

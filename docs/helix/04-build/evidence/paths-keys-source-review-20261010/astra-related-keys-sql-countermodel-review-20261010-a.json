@@ -1,0 +1,55 @@
+{
+  "files": [
+    {
+      "bytes": 42148,
+      "path": "crates/weft-databricks/src/candidate/path_lowering.rs",
+      "sha256": "80f5ea3cdaf195483af8a49d5815228b1a2a6fcdf072aca4152d492f5807a4a1"
+    },
+    {
+      "bytes": 5908,
+      "path": "crates/weft-databricks/src/candidate/related_keys.rs",
+      "sha256": "ed99856f9044b77e2477764d9b1f136cc17a9ff0db6770d6164809f63c62fb13"
+    },
+    {
+      "bytes": 4001,
+      "path": "crates/weft-databricks/src/paths_keys.rs",
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b"
+    }
+  ],
+  "finiteChecks": {
+    "bagsBounds": 65,
+    "forwardInverseAndEmpty": 3,
+    "weakenedMechanismsRejected": {
+      "deduplication_loses_parallel_occurrences": true,
+      "lexical_signed_edge_order_differs": true,
+      "lookahead_only_capacity_guard_misses_tail": true,
+      "prefix_only_duplicate_guard_misses_tail": true,
+      "prefix_only_null_guard_misses_tail": true
+    }
+  },
+  "format": "astra-related-keys-sql-countermodel-review/0.1",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-source-freeze-20261010-a/manifest.json",
+    "sha256": "e08a07b7e79ceabcb49027b754a18778e26358601ef7137250a42536653d1150"
+  },
+  "limits": [
+    "No Cargo/CLI/compiler/native/SQL/DB execution. Python finite reasoning is not a Spark interpreter or mechanical proof of generated SQL.",
+    "Reduced capacity3 is an abstract negative mechanism control, not evidence of DECIMAL38 overflow execution or huge population enumeration.",
+    "Assumes exact required String key/source integrity and actual BIGINT native identity checks have passed under one original held context; full runtime semantics remain separately qualified.",
+    "Immutable530 existing two-hop DECIMAL prefix is not alleged to have a ROW_NUMBER defect."
+  ],
+  "reasoning": [
+    "related_keys.rs:51-60 enumerates each edge joined to its exact resolved target; no DISTINCT/GROUP collapse in the occurrence relation. Reused relationship guards must first reject orphan/duplicate-key/type/source/revision defects.",
+    "Lines72-80 rank by every complete String key component UTF8_BINARY then native BIGINT edge ascending, using positive DECIMAL38 prefix over the full physical owner partition. Only the bounded collection CTE applies bound+1, so no outer filter/limit or lookahead constrains rank capacity checks.",
+    "Line82 NULL and uniqueness checks scan all admitted relationship-scoped edges, including bad rows outside prefix or with no outer result. Full ranked roundtrip/total-versus-prefix checks remain independent of the selected user rows. Separate lines87-92 NULL-prefix guard prevents an overflowing suffix from being ignored by MAX or <=lookahead.",
+    "Given successful guards and finite nonoverflowing bag, ordinals are unique1..N; sort_array on retained ordinal/item structures reconstructs original order, slice selects first bound, and observed bound+1 makes truncated iff N>bound. Empty owner has no collection row and projection coalesces to empty items/false.",
+    "relationships.raw uses original from/to direction: inverse swaps source/target physical IDs and chooses the original source Record target key. Original scan.__id join correlates collection to required root; ordinary joins duplicate outer rows without changing per-owner collection.",
+    "PathsKeys rejects potentially unmatched LEFT roots and grouped/aggregate/HAVING/expansion mixing before lowering; source/target keys are required facetless String. A required source after unrelated joins retains its own identity.",
+    "Equal-key carrier rows cannot reveal signed edge tie order; that requires separate retained native ordinal-to-edge witnesses. Full native schema/source/policy/guard truth remains host qualification."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-related-keys-sql-countermodel-review-20261010-a.py",
+    "sha256": "6927e4ed6ebbc8ada727eb03a69d6764267b8e4738961e27b68f8188dcc8aa68"
+  },
+  "verdict": "no semantic flaw found within finite source-level lowering review"
+}

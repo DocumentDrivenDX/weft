@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-CAPABILITY","message":"RelatedKeys requires complete required exact String keys","phase":"capability","recoverability":"change-profile","severity":"error"}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}
