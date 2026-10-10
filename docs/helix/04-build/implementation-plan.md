@@ -149,7 +149,7 @@ ledger. Field/Context event-key projection must equal the payload inventory.
 Independent controls cover actual catalog/ontology pointers and authored fixture
 keys, stored/context uses of the same Boolean field, equal-but-foreign reference,
 carrier, owner and classification substitutions, exact/minus-one retention limits,
-and populated 4096/4097 entry boundaries. The [execution evidence](evidence/security-field-events/)
+and populated 4096/4097 entry boundaries. The [execution evidence](evidence/security-field-events/checkpoint.json)
 retains actual runs, declared source custody and scoped Astra review. Three
 conditional algebraic address laws preserve channel, stored owner and original
 occurrence; erasure controls and independent fresh-context replay accompany them.

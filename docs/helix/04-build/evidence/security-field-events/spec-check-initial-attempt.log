@@ -1,0 +1,7 @@
+EISDIR: illegal operation on a directory, read
+ syscall: "read",
+   errno: -21,
+    code: "EISDIR"
+
+
+Bun v1.4.2 (macOS arm64)
