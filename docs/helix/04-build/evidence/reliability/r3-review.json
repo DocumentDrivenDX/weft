@@ -1,0 +1,19 @@
+{
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra"
+  },
+  "baseCommit": "679555c",
+  "disposition": "approved for commit/push; no remaining material findings",
+  "reviewedInputs": {
+    "r3-tests.json": "0aeab6e452aff0e13c49409e7d06e70df8ed25d3e3f7a240b0b483ee05eb78cf",
+    "r3-mutations.json": "176bfe2a0c46f2dd859c623728279299a024f50a90bf8d3ffbc19d01abab7ab0"
+  },
+  "verification": [
+    "13 source fingerprints and six log digests match",
+    "Frozen report copy and7clean baseline/7detected original/mutant hashes match",
+    "Independent14normal/14optimized controls pass",
+    "Compiler overrides, oversized probe, overlap, already-failing baseline and malformed-path reproductions repaired"
+  ],
+  "limits": "Unix configuration/process and exact mutation qualification only. R4 diagnostics, R6 full qualification and security/native activation are outside approval."
+}

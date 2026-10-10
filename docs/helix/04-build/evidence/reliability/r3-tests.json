@@ -1,0 +1,149 @@
+{
+  "chunk": "R3",
+  "baseCommit": "679555c",
+  "checks": [
+    {
+      "name": "typed_configuration_and_process",
+      "argv": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/reliability",
+        "-p",
+        "test_config.py",
+        "-v"
+      ],
+      "pythonExecutable": "/private/tmp/weft-toolchain/venv/bin/python",
+      "environment": {
+        "PYTHONPATH": "scripts"
+      },
+      "exitCode": 0,
+      "passed": 14,
+      "logSha256": "ea06debf1334113f563eea45900cdb85e08afeb31c77322861299dd088e8a189"
+    },
+    {
+      "name": "optimized_configuration_and_process",
+      "argv": [
+        "python",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts/reliability",
+        "-p",
+        "test_config.py",
+        "-v"
+      ],
+      "pythonExecutable": "/private/tmp/weft-toolchain/venv/bin/python",
+      "environment": {
+        "PYTHONPATH": "scripts"
+      },
+      "exitCode": 0,
+      "passed": 14,
+      "logSha256": "77fbccf7c0e90c75c89e44847f4d3798244563026dd70a102cbbd067a340d339"
+    },
+    {
+      "name": "configured_mutations",
+      "argv": [
+        "python",
+        "-O",
+        "tests/qualify-and-evolve/source-mutations.py",
+        "--cargo",
+        "/private/tmp/weft-toolchain/cargo/bin/cargo",
+        "--rustup-home",
+        "/private/tmp/weft-toolchain/rustup",
+        "--cargo-home",
+        "/private/tmp/weft-toolchain/cargo",
+        "--temp-root",
+        "/private/tmp/weft-reliability-r3-frozen-temp",
+        "--output-root",
+        "/private/tmp/weft-reliability-r3-frozen-output"
+      ],
+      "pythonExecutable": "/private/tmp/weft-toolchain/venv/bin/python",
+      "environment": {},
+      "exitCode": 0,
+      "passed": 7,
+      "logSha256": "f85ea76954b968910063fe8b2f3d0a462ee644debc5d5de516fc18c179ad7e77",
+      "baselinePassed": 7
+    },
+    {
+      "name": "pinned_wrapper",
+      "argv": [
+        "python",
+        "scripts/reliability/cargo.py",
+        "--cargo",
+        "/private/tmp/weft-toolchain/cargo/bin/cargo",
+        "--rustup-home",
+        "/private/tmp/weft-toolchain/rustup",
+        "--cargo-home",
+        "/private/tmp/weft-toolchain/cargo",
+        "--temp-root",
+        "/private/tmp/weft-reliability-r3-work",
+        "--output-root",
+        "/private/tmp/weft-reliability-r3-output",
+        "--",
+        "test",
+        "-p",
+        "weft-core",
+        "--doc",
+        "--locked",
+        "--offline",
+        "--target-dir",
+        "/private/tmp/weft-reliability-target"
+      ],
+      "pythonExecutable": "/private/tmp/weft-toolchain/venv/bin/python",
+      "environment": {},
+      "exitCode": 0,
+      "passed": 2,
+      "logSha256": "9c1129f0e8761ec215c72473a24d46335a9faaa316931b33d4411fd3a1c252f5"
+    }
+  ],
+  "files": {
+    "scripts/reliability/__init__.py": "932128b2ca6508e232b91b3e01b32169d6e1bf479153caba82f21028898fcb4d",
+    "scripts/reliability/cargo.py": "e39516c95ae47e28cdb4d52c1137fe13ec7d197431aa4d692a4c335f7b5a7ce4",
+    "scripts/reliability/config.py": "4d7af8946f5caf2e3e8193e8c055650cfffcc4e2b1b3aaa3547da2dbfac89b43",
+    "scripts/reliability/mutations.py": "ec33d30b734e09d92214f3926baad314a05b3872528313db30b90cc9605481c1",
+    "scripts/reliability/process.py": "64892a356a85639983069cb9524cf82316be698585ecefde27513b849bbd4ac4",
+    "scripts/reliability/test_config.py": "dba245532d43a76c0af03d5044900ee0261223f7e6abf173ce7119c52de71c40",
+    "tests/qualify-and-evolve/source-mutations.py": "82a26f2df09cc32086b2a7419b2bb8ce0416b009420b61c519704298762d0690",
+    "scripts/module-boundaries.ts": "ff2bb1a13fa7007bf91ecc8f5a3e6499ff3817e039f09df2e1b6df579aa43f81",
+    "docs/helix/02-design/module-boundaries.json": "06579cfdaed607134150b81341944dd7c3b5fce361e4a20371edd01696a97c10",
+    "docs/helix/02-design/contracts/CONTRACT-006-reliability-runner.md": "953ce4162f21de27937a7782313a1f5103ed7dc8db4e0f9e717652d333a8f955",
+    "docs/helix/02-design/technical-designs/TD-008-reliability.md": "e51b46b141f042fb3377df49e8175b75a141b2f57aec197f442577bf7e865958",
+    "docs/helix/README.md": "174f5891a2aa27848758d200af9718cb3544f82cc49bb9dadec3043ab0247c2d",
+    ".github/workflows/conformance.yml": "2e6476e53c94b4d1b375a6e69f8706420db6815291fb9fa0cb2a0fd0bab1b260"
+  },
+  "toolIdentity": {
+    "cargoVersion": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustcVersion": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargoExecutableSha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+    "rustToolchainSha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+  },
+  "mutationReport": "r3-mutations.json",
+  "mutationReportSha256": "176bfe2a0c46f2dd859c623728279299a024f50a90bf8d3ffbc19d01abab7ab0",
+  "limits": "Unix runner configuration/process and exact mutation detection. Lifecycle/retention/export/retrieval not yet qualified; R4 remains pending. Full current host qualification is R6.",
+  "resolvedFindings": [
+    "Canonical temp/output overlap and symlink aliases refuse before filesystem effects",
+    "Explicit effective RUSTC and disabled wrappers override ambient/Cargo build settings",
+    "Bounded process-group version probes; exact full version grammar; streamed executable hashing",
+    "Each selected baseline passes before mutation; separate per-case fresh target prevents cross-copy artifact reuse",
+    "NUL paths and Unicode decode errors reach fixed safe CLI failure",
+    "Raw source bytes preserve CRLF custody; wrong-version control actually reaches probe; empty endpoint userinfo refused"
+  ],
+  "additionalChecks": [
+    {
+      "name": "module_boundaries",
+      "exitCode": 0,
+      "passed": 15,
+      "logSha256": "90e24d8ba9cb4996d8c1a819fad31948343eea4025af813efb159389d96426de"
+    },
+    {
+      "name": "governed_specs",
+      "exitCode": 0,
+      "logSha256": "e74bd11e10fbc1495e0e3ff21d003d73f4b66af834415f9ac0193ac6382ae1dd"
+    }
+  ]
+}

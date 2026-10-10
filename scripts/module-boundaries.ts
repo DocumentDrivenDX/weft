@@ -155,6 +155,6 @@ export async function checkRepository(root:string,cargo:string) {
   return map.packages.length;
 }
 if(import.meta.main) {
-  try {const count=await checkRepository(resolve(import.meta.dir,'..'),process.env.WEFT_CARGO ?? 'cargo'); console.log(`Module boundaries: ${count} workspace packages checked`);}
+  try {const count=await checkRepository(resolve(import.meta.dir,'..'),process.env.WEFT_CARGO ?? ''); console.log(`Module boundaries: ${count} workspace packages checked`);}
   catch {console.error('Module boundary check failed');process.exitCode=1;}
 }

@@ -30,7 +30,19 @@ jobs:
       - name: Validate governed specifications
         run: bun run specs:check
       - name: Enforce module boundaries and negative controls
-        run: bun run modules:check
+        run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
+      - name: Runner configuration and fail-closed controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_config.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_config.py -v
+      - name: Configured optimized source mutation qualification
+        run: >-
+          python -O tests/qualify-and-evolve/source-mutations.py
+          --cargo "$(command -v cargo)"
+          --rustup-home "$(rustup show home)"
+          --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")"
+          --temp-root "$RUNNER_TEMP/weft-mutations"
+          --output-root "$RUNNER_TEMP/weft-mutation-evidence"
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance
