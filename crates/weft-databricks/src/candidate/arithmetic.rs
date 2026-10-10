@@ -653,9 +653,17 @@ pub(super) fn lower(
             .order
             .iter()
             .map(|f| {
-                lower
-                    .expression(&field_expression(f))
-                    .map(|e| format!("{e} ASC"))
+                if p.distinct {
+                    // DISTINCT makes only projected carriers visible to ORDER BY.
+                    // Match original scan/Field identity; repeated positions use the first.
+                    let index = p.outputs.iter().position(|o| matches!(&o.expression,
+                        plan::Expression::Field { scan, identity } if scan == &f.scan && identity == &f.identity))
+                        .ok_or_else(|| fail("WFT-CAPABILITY", "DISTINCT ordering requires an exact projected Field"))?;
+                    let column = &columns[index];
+                    Ok(format!("{} ASC", binding::quote(column.carrier_name.as_deref().unwrap_or(&column.output_name))))
+                } else {
+                    lower.expression(&field_expression(f)).map(|e| format!("{e} ASC"))
+                }
             })
             .collect::<Result<Vec<_>>>()?;
         sql.push_str(&format!(" ORDER BY {}", order.join(", ")))

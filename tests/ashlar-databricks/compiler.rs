@@ -750,3 +750,18 @@ fn distinct03_leaves_older_language_profiles_refusing_before_binding() {
         assert!(response.get("sql").is_none());
     }
 }
+
+#[test]
+fn distinct_order_uses_visible_physical_projection_not_hidden_input_field() {
+    for (sql,alias) in [("SELECT DISTINCT c.name FROM Customer c ORDER BY c.name LIMIT 2","`name`"),("SELECT DISTINCT c.name,c.name FROM Customer c ORDER BY c.name LIMIT 2","`_weft_output_1`")] {
+        let response=arithmetic_compile(&arithmetic_request(sql));assert_eq!(response["status"],"compiled","{response}");
+        let emitted=response["sql"].as_str().unwrap();
+        assert!(emitted.ends_with(&format!("ORDER BY {alias} ASC LIMIT 2")),"{emitted}");
+        let field=&response["logicalPlan"]["order"][0];
+        assert_eq!(field["scan"],response["logicalPlan"]["outputs"][0]["expression"]["scan"]);
+        assert_eq!(field["identity"],response["logicalPlan"]["outputs"][0]["expression"]["identity"]);
+    }
+    let response=arithmetic_compile(&arithmetic_request("SELECT c.name FROM Customer c ORDER BY c.name LIMIT 2"));
+    assert_eq!(response["status"],"compiled");assert!(response["sql"].as_str().unwrap().contains("ORDER BY"));
+    assert!(!response["sql"].as_str().unwrap().ends_with("ORDER BY `name` ASC LIMIT 2"));
+}
