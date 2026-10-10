@@ -1,5 +1,5 @@
 //! Bounded logical evaluation of explicit simulated facts. No native admission or credentials.
-use crate::{error::{Diagnostic,Result},json::checked_json,model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,QueryOperator},security_composition::{Truth,Composition,Decision,not,and,or,compose},security_ontology::{SecurityOntologyClosure,SecurityRef,locate},security_literals::{normalized_literal,ScalarLiteral}};
+use crate::{error::{Diagnostic,Result},json::checked_json,model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,QueryOperator},security_composition::{Truth,Composition,Decision,not,and,or,compose_with_budget},security_ontology::{SecurityOntologyClosure,SecurityRef,locate},security_literals::ScalarLiteral,security_budget::PayloadBudget};
 use serde::Deserialize;
 use serde_json::Value;
 use std::collections::{BTreeMap,BTreeSet};
@@ -72,17 +72,14 @@ struct Identity{target:SecurityRef,key_id:String,components:Vec<ScalarLiteral>}
 struct NormalFact{identity:Identity,fields:BTreeMap<SecurityRef,Option<ScalarLiteral>>,absent:BTreeSet<SecurityRef>}
 #[derive(Debug,PartialEq)]
 enum TermValue{Identity(Identity),Scalar(Option<ScalarLiteral>)}
-struct Budget{steps:usize,limit:usize,normalized:usize,work_bytes:usize}
+struct Budget{steps:usize,limit:usize,payload:PayloadBudget}
 impl Budget{
  fn charge(&mut self,count:usize)->Result<()>{self.steps=self.steps.checked_add(count).ok_or_else(fail)?;if self.steps>self.limit{return Err(fail());}Ok(())}
  fn step(&mut self)->Result<()>{self.charge(1)}
- fn value_cost(value:&ScalarLiteral)->usize{match value{ScalarLiteral::String(v)|ScalarLiteral::Binary(v)=>v.len(),ScalarLiteral::Number(v)=>v.magnitude().bits().div_ceil(8) as usize,_=>1}}
- fn copy_scalar(&mut self,value:&ScalarLiteral)->Result<()>{self.work_bytes=self.work_bytes.checked_add(Self::value_cost(value)).ok_or_else(fail)?;if self.work_bytes>16_000_000{return Err(fail());}Ok(())}
+ fn copy_scalar(&mut self,value:&ScalarLiteral)->Result<()>{self.payload.copy_scalar(value)}
  fn copy_identity(&mut self,value:&Identity)->Result<()>{for part in &value.components{self.copy_scalar(part)?;}Ok(())}
  fn literal(&mut self,catalog:&Catalog,r:&SecurityRef,v:&Value)->Result<Option<ScalarLiteral>>{
-  self.step()?;let result=normalized_literal(locate(catalog,r)?,v)?;
-  self.normalized+=match &result{Some(ScalarLiteral::String(v)|ScalarLiteral::Binary(v))=>v.len(),Some(ScalarLiteral::Number(v))=>(v.magnitude().bits().div_ceil(8)) as usize,_=>1};
-  if self.normalized>4_000_000{return Err(fail());}Ok(result)
+  self.step()?;self.payload.literal(locate(catalog,r)?,v)
  }
 }
 fn fact(input:Fact,closure:&SecurityOntologyClosure,catalog:&Catalog,budget:&mut Budget)->Result<NormalFact>{
@@ -157,9 +154,9 @@ pub fn simulate_json(plan:&SecurityLogicalPlan,catalog:&Catalog,cut_json:&str,re
  if !cut.trusted||cut.generation.is_empty()||cut.generation!=cut.expected_generation||cut.policy_id!=plan.source().policy()["id"]||cut.policy_revision!=plan.source().policy()["revision"]||cut.ontology_document_id!=plan.source().ontology()["documentId"]||cut.ontology_revision!=plan.source().ontology()["revision"]||cut.max_facts==0||cut.max_facts>10000||cut.max_steps==0||cut.max_steps>1_000_000||cut.subjects.len()!=1||cut.subjects.len()+cut.facts.len()+request.resources.len()>cut.max_facts||cut.coverage.len()>512||cut.context.len()>256{return Err(fail());}
  let closure=SecurityOntologyClosure::read(plan.source(),catalog)?;
  if !plan.source().ontology()["actions"].as_array().ok_or_else(fail)?.iter().any(|a|a==&request.action){return Err(fail());}
- let mut budget=Budget{steps:0,limit:cut.max_steps,normalized:0,work_bytes:0};
+ let mut budget=Budget{steps:0,limit:cut.max_steps,payload:PayloadBudget::new("WFT-SECURITY-EVALUATION")};
  let subject=fact(cut.subjects.into_iter().next().ok_or_else(fail)?,&closure,catalog,&mut budget)?;if subject.identity.target!=closure.subject{return Err(fail());}
- let mut facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>=BTreeMap::new();let mut identities=BTreeSet::new();for input in cut.facts{let row=fact(input,&closure,catalog,&mut budget)?;if !identities.insert(row.identity.clone()){return Err(fail());}facts.entry(row.identity.target.clone()).or_default().push(Arc::new(row));}
+ let mut facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>=BTreeMap::new();let mut identities=BTreeSet::new();for input in cut.facts{let row=fact(input,&closure,catalog,&mut budget)?;budget.copy_identity(&row.identity)?;if !identities.insert(row.identity.clone()){return Err(fail());}facts.entry(row.identity.target.clone()).or_default().push(Arc::new(row));}
  let resources=request.resources.into_iter().map(|r|fact(r,&closure,catalog,&mut budget)).collect::<Result<Vec<_>>>()?;
  let mut coverage=BTreeMap::new();let mut seen=BTreeSet::new();for entry in cut.coverage{budget.step()?;let b=closure.types.get(&entry.type_ref).ok_or_else(fail)?;let fields:BTreeSet<_>=entry.fields.iter().cloned().collect();if !seen.insert(entry.type_ref.clone())||entry.fields.len()>4096||fields.len()!=entry.fields.len()||!fields.is_subset(&b.fields){return Err(fail());}if entry.complete{coverage.insert(entry.type_ref,fields);}}
  let mut context=BTreeMap::new();for entry in cut.context{if !closure.context.contains(&entry.field)||context.contains_key(&entry.field){return Err(fail());}context.insert(entry.field.clone(),budget.literal(catalog,&entry.field,&entry.value)?);}
@@ -182,12 +179,12 @@ pub fn simulate_json(plan:&SecurityLogicalPlan,catalog:&Catalog,cut_json:&str,re
  let mut results=Vec::new();for resource in &resources{
   let mut truths=BTreeMap::new();for rule in plan.rules().iter().filter(|r|r.target==resource.identity.target&&r.actions.contains(&request.action)){truths.insert(rule.id.clone(),evaluator.expression(&rule.condition,resource,&BTreeMap::new())?);}
   let mut selected=request.output.clone();for q in &queries{if query_mode(&evaluator.closure,&resource.identity.target,q)?=="disclosed"&&!selected.contains(&q.field){selected.push(q.field.clone());}}
-  let mut result=compose(plan,catalog,&resource.identity.target,&request.action,&selected,&truths)?;
+  let mut result=compose_with_budget(plan,catalog,&resource.identity.target,&request.action,&selected,&truths,&mut evaluator.budget.payload)?;
   if matches!(result.decision,Decision::Indeterminate|Decision::Conflict){return Err(fail());}if result.decision==Decision::Permit{
    for q in &queries{
     evaluator.budget.step()?;if query_mode(&evaluator.closure,&resource.identity.target,q)?=="original-authorized"{
      let action=q.original_action.as_ref().ok_or_else(fail)?;let mut original_truths=BTreeMap::new();for rule in plan.rules().iter().filter(|r|r.target==resource.identity.target&&r.actions.contains(action)){original_truths.insert(rule.id.clone(),evaluator.expression(&rule.condition,resource,&BTreeMap::new())?);}
-     if compose(plan,catalog,&resource.identity.target,action,&[],&original_truths)?.decision!=Decision::Permit{return Err(fail());}
+     if compose_with_budget(plan,catalog,&resource.identity.target,action,&[],&original_truths,&mut evaluator.budget.payload)?.decision!=Decision::Permit{return Err(fail());}
     }else if result.disclosure.iter().any(|(field,d)|field==&q.field&&matches!(d,crate::security_ir::Disposition::Withheld)){return Err(fail());}
    }
    for (field,disposition) in &result.disclosure{if matches!(disposition,crate::security_ir::Disposition::Original)&&(!evaluator.coverage[&resource.identity.target].contains(field)||!resource.fields.contains_key(field)&&!resource.absent.contains(field)){return Err(fail());}}
@@ -207,7 +204,7 @@ mod tests{
   let row=NormalFact{identity:Identity{target:target.clone(),key_id:"pk".into(),components:vec![ScalarLiteral::String("s".into())]},fields:BTreeMap::from([(reference("staffId"),Some(ScalarLiteral::String("s".into())))]),absent:BTreeSet::new()};
   let assignment=Arc::new(NormalFact{identity:Identity{target:reference("Assignment"),key_id:"pk".into(),components:vec![ScalarLiteral::String("a".into())]},fields:BTreeMap::from([(reference("assignmentId"),Some(ScalarLiteral::String("a".into()))),(reference("assignmentStaff"),Some(ScalarLiteral::String("s".into()))),(reference("assignmentProject"),Some(ScalarLiteral::String("p".into()))),(reference("active"),Some(ScalarLiteral::Boolean(true)))]),absent:BTreeSet::new()});
   let coverage=closure.types.iter().map(|(r,b)|(r.clone(),b.fields.clone())).collect();
-  let mut evaluator=Evaluator{catalog:&catalog,closure,subject:NormalFact{identity:row.identity.clone(),fields:row.fields.clone(),absent:BTreeSet::new()},facts:BTreeMap::from([(reference("Assignment"),vec![assignment.clone()])]),coverage,context:BTreeMap::new(),budget:Budget{steps:0,limit:100,normalized:0,work_bytes:0}};
+  let mut evaluator=Evaluator{catalog:&catalog,closure,subject:NormalFact{identity:row.identity.clone(),fields:row.fields.clone(),absent:BTreeSet::new()},facts:BTreeMap::from([(reference("Assignment"),vec![assignment.clone()])]),coverage,context:BTreeMap::new(),budget:Budget{steps:0,limit:100,payload:PayloadBudget::new("WFT-SECURITY-EVALUATION")}};
   let record=crate::security_association_ref::SecurityAssociationRef::Record(reference("Assignment"));
   let graph=crate::security_association_ref::SecurityAssociationRef::read(&serde_json::json!({"documentId":"domain","moduleId":"m","relationshipId":"Assignment"})).unwrap();
   let variables=BTreeMap::from([(0,reference("Assignment"))]);let rows=BTreeMap::from([(0,assignment.as_ref())]);
@@ -260,7 +257,21 @@ mod tests{
   let corpus:Value=serde_json::from_str(include_str!("../tests/security-evaluation-oracle.json")).unwrap();let case=&corpus["cases"][0];let mut policy=case["policy"].clone();
   policy["rules"][1]["condition"]=serde_json::json!({"op":"exists","association":{"documentId":"domain","moduleId":"m","elementId":"Assignment"},"as":"a","where":{"op":"eq","left":{"kind":"variable","name":"a","identity":true},"right":{"kind":"variable","name":"a","identity":true}}});
   let (catalog,plan)=plan(&policy);let mut cut=case["cut"].clone();let token="x".repeat(1_000_000);let assignment=cut["facts"].as_array_mut().unwrap().iter_mut().find(|f|f["type"]["elementId"]=="Assignment").unwrap();assignment["key"][0]=serde_json::json!({"string":token});assignment["fields"].as_array_mut().unwrap().iter_mut().find(|f|f["field"]["elementId"]=="assignmentId").unwrap()["value"]=serde_json::json!({"string":token});
-  for count in [1,8,9]{let mut request=case["request"].clone();request["resources"]=Value::Array(vec![request["resources"][0].clone();count]);let result=simulate_json(&plan,&catalog,&cut.to_string(),&request.to_string());if count<=8{assert_eq!(result.unwrap().len(),count);}else{assert!(result.is_err());}}
+  for count in [1,7,8]{let mut request=case["request"].clone();request["resources"]=Value::Array(vec![request["resources"][0].clone();count]);let result=simulate_json(&plan,&catalog,&cut.to_string(),&request.to_string());if count<=7{assert_eq!(result.unwrap().len(),count);}else{assert!(result.is_err());}}
+ }
+
+ // @covers US-008-AC2
+ #[test]
+ fn transformed_disclosures_share_the_collection_normalization_budget(){
+  let corpus:Value=serde_json::from_str(include_str!("../tests/security-evaluation-oracle.json")).unwrap();let case=&corpus["cases"][0];let mut policy=case["policy"].clone();
+  let mut output=policy["rules"][0]["disclosure"][0]["field"].clone();output["elementId"]=serde_json::json!("resourceId");
+  policy["rules"][0]["disclosure"][0]["disposition"]=serde_json::json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":output,"value":{"string":"x".repeat(1_000_000)}});
+  let (catalog,plan)=plan(&policy);
+  for count in [1,3,4,17]{let mut request=case["request"].clone();request["resources"]=Value::Array(vec![request["resources"][0].clone();count]);
+   let result=simulate_json(&plan,&catalog,&case["cut"].to_string(),&request.to_string());
+   if count<=3{let rows=result.unwrap();assert_eq!(rows.len(),count);assert!(rows.iter().all(|r|r.disclosure.iter().any(|(_,d)|matches!(d,crate::security_ir::Disposition::Transformed{literal,..} if literal["string"].as_str().unwrap().len()==1_000_000))));}
+   else{assert_eq!(result.unwrap_err().code,"WFT-SECURITY-EVALUATION");}
+  }
  }
 
 }
@@ -297,9 +308,9 @@ pub(crate) fn check_owner_rows(ctx:&crate::security_backend::SecurityBackendCont
  let resource_count=request.rows.iter().try_fold(0usize,|n,row|n.checked_add(row.len()).ok_or_else(fail))?;
  if !cut.trusted||cut.generation.is_empty()||cut.generation!=cut.expected_generation||cut.policy_id!=plan.source().policy()["id"]||cut.policy_revision!=plan.source().policy()["revision"]||cut.ontology_document_id!=plan.source().ontology()["documentId"]||cut.ontology_revision!=plan.source().ontology()["revision"]||cut.max_facts==0||cut.max_facts>10000||cut.max_steps==0||cut.max_steps>1_000_000||cut.subjects.len()!=1||cut.subjects.len()+cut.facts.len()+resource_count>cut.max_facts||cut.coverage.len()>512||cut.context.len()>256{return Err(fail());}
  let closure=SecurityOntologyClosure::read(plan.source(),catalog)?;
- let mut budget=Budget{steps:0,limit:cut.max_steps,normalized:0,work_bytes:0};
+ let mut budget=Budget{steps:0,limit:cut.max_steps,payload:PayloadBudget::new("WFT-SECURITY-EVALUATION")};
  let subject=fact(cut.subjects.into_iter().next().ok_or_else(fail)?,&closure,catalog,&mut budget)?;if subject.identity.target!=closure.subject{return Err(fail());}
- let mut facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>=BTreeMap::new();let mut identities=BTreeSet::new();for input in cut.facts{let row=fact(input,&closure,catalog,&mut budget)?;if !identities.insert(row.identity.clone()){return Err(fail());}facts.entry(row.identity.target.clone()).or_default().push(Arc::new(row));}
+ let mut facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>=BTreeMap::new();let mut identities=BTreeSet::new();for input in cut.facts{let row=fact(input,&closure,catalog,&mut budget)?;budget.copy_identity(&row.identity)?;if !identities.insert(row.identity.clone()){return Err(fail());}facts.entry(row.identity.target.clone()).or_default().push(Arc::new(row));}
  let mut coverage=BTreeMap::new();let mut seen=BTreeSet::new();for entry in cut.coverage{budget.step()?;let b=closure.types.get(&entry.type_ref).ok_or_else(fail)?;let fields:BTreeSet<_>=entry.fields.iter().cloned().collect();if !seen.insert(entry.type_ref.clone())||entry.fields.len()>4096||fields.len()!=entry.fields.len()||!fields.is_subset(&b.fields){return Err(fail());}if entry.complete{coverage.insert(entry.type_ref,fields);}}
  let mut context=BTreeMap::new();for entry in cut.context{if !closure.context.contains(&entry.field)||context.contains_key(&entry.field){return Err(fail());}context.insert(entry.field.clone(),budget.literal(catalog,&entry.field,&entry.value)?);}
  let mut rows=Vec::new();for input in request.rows{
@@ -377,8 +388,8 @@ mod faithful_fact_tests {
    let cut=read_cut(json!({"trusted":true,"generation":"one","expectedGeneration":"one","policyId":"policy","policyRevision":"one","ontologyDocumentId":"ontology","ontologyRevision":"one","subjects":[f.clone()],"facts":[f],"coverage":[],"context":[{"field":reference,"value":literal.clone()}],"maxFacts":10,"maxSteps":100})).unwrap();
    assert_eq!(cut.subjects[0].key[0],literal);assert_eq!(cut.facts[0].fields[0].value,literal);assert_eq!(cut.context[0].value,literal);
    let domain=json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required","facets":{"integerWidth":{"bits":64,"signed":true}}});
-   assert!(normalized_literal(&domain,&json!({"integerToken":"1"})).is_ok());
-   assert!(normalized_literal(&domain,&literal).is_err());
+   assert!(crate::security_literals::normalized_literal(&domain,&json!({"integerToken":"1"})).is_ok());
+   assert!(crate::security_literals::normalized_literal(&domain,&literal).is_err());
   }
  }
 }

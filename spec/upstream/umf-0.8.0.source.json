@@ -1,5 +1,7 @@
 {
   "revision": "c7c95e1c4ea5b72541f47fa0350ca467ff02f395",
   "path": "spec/core/schema-properties-document.schema.json",
-  "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+  "source": "/Users/erik/.codex/worktrees/1598/umf/spec/core/schema-properties-document.schema.json",
+  "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+  "purpose": "Canonical core08 envelope custody; ordinary profile and separate security source admission retain their distinct meaning/activation gates."
 }

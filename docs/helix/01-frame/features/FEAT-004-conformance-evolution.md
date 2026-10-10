@@ -42,7 +42,7 @@ change a query's identity, exact values or observed results.
 
 ## User Stories
 
-US-006 govern the observable journeys; their acceptance criteria
+US-006 and US-008 govern the observable journeys; their acceptance criteria
 own the story-level outcomes and are mapped to planned tests in STP artifacts.
 
 ## Edge Cases and Error Handling

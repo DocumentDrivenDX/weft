@@ -1,0 +1,389 @@
+{
+  "chunk": "current-main-integration-final-local-qualification",
+  "qualifiedSourceCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "priorReceiptsAtCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "status": "local-passed-final-hosted-CI-required",
+  "checks": {
+    "coreLibPassed": 253,
+    "securityAdmissionPassed": 64,
+    "moduleControlsPassed": 16,
+    "diagnosticsNormalPassed": 18,
+    "diagnosticsOptimizedPassed": 18,
+    "hostControlsNormalPassed": 5,
+    "hostControlsOptimizedPassed": 5,
+    "assemblyControlsPassed": 5
+  },
+  "workspaces": {
+    "earlierEd2CandidatePassed": 599,
+    "earlierEd2QualifiedPassed": 574,
+    "scope": "Preceding reconciliations; current source-specific core and final hosted full workspace gates are distinct"
+  },
+  "hostEvidence": "r6-hosts.json",
+  "hostEvidenceSha256": "a0dac4c46bf7667f0fccfb40f04ceea8e2b5cb4ca302f2fcdd3f127922b362fe",
+  "inputEvidence": "r6-inputs.json",
+  "inputEvidenceSha256": "d9af1d9a203699d47ca62b77e3f263feab803d62181081222cdf4484127b7353",
+  "currentFormalQualification": {
+    "version": "weft-formal/1",
+    "solver": "z3-solver4.15.4.0",
+    "status": "passed",
+    "properties": {
+      "WFT-FM-002": {
+        "result": "unsat",
+        "witness": null
+      },
+      "WFT-FM-003": {
+        "result": "unsat",
+        "witness": null
+      },
+      "bounded_specification_correspondence": {
+        "result": "unsat",
+        "witness": null
+      },
+      "WFT-FM-004": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_0": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_1": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_2": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_3": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_4": {
+        "result": "unsat",
+        "witness": null
+      },
+      "disposition_order_5": {
+        "result": "unsat",
+        "witness": null
+      }
+    },
+    "witnesses": {
+      "allowed": {
+        "result": "sat",
+        "witness": {
+          "permit_truth": "0",
+          "require_truth": "0",
+          "forbid_truth": "1"
+        }
+      },
+      "denied": {
+        "result": "sat",
+        "witness": {
+          "permit_truth": "1",
+          "require_truth": "1",
+          "forbid_truth": "1"
+        }
+      },
+      "unknown": {
+        "result": "sat",
+        "witness": {
+          "permit_truth": "2",
+          "require_truth": "0",
+          "forbid_truth": "0"
+        }
+      },
+      "broken_permit_gate": {
+        "result": "sat",
+        "witness": {
+          "permit_truth": "1",
+          "require_truth": "0",
+          "forbid_truth": "1"
+        }
+      },
+      "withheld_dominates_conflict": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "2",
+          "disposition_1": "3",
+          "disposition_2": "4",
+          "protected": "False"
+        }
+      },
+      "transform_conflict": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "3",
+          "disposition_1": "4",
+          "disposition_2": "5",
+          "protected": "False"
+        }
+      },
+      "broken_withheld_precedence": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "3",
+          "disposition_1": "2",
+          "disposition_2": "1",
+          "protected": "True"
+        }
+      },
+      "missing_protected_disposition": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "0",
+          "disposition_1": "0",
+          "disposition_2": "0",
+          "protected": "True"
+        }
+      },
+      "unprotected_original": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "0",
+          "disposition_1": "0",
+          "disposition_2": "0",
+          "protected": "False"
+        }
+      },
+      "compatible_transform": {
+        "result": "sat",
+        "witness": {
+          "disposition_0": "3",
+          "disposition_1": "3",
+          "disposition_2": "3",
+          "protected": "False"
+        }
+      }
+    },
+    "oracleSha256": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e",
+    "oracleTuples": 27,
+    "dispositionOracleCases": 432,
+    "dispositionOracleSha256": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+    "queryCounts": {
+      "unsat": 469,
+      "sat": 10
+    },
+    "dispositionPrecondition": "Truth gate already permits; slot0 is no selected-field disclosure from an active true permit, not an absent grant. Rust oracle uses3true permit rules and1true require.",
+    "limits": "One permit/require/forbid,27truth tuples; one selected field,three abstract disposition slots/three distinct exact normalized transform equivalence classes. Actual Rust correspondence is separately mandatory. No arbitrary AST/hash/arithmetic/native/liveness proof.",
+    "actualRustCorrespondence": {
+      "lib:security_composition::tests::all_permit_require_forbid_truths_and_rule_order": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 24684
+      },
+      "lib:security_composition::tests::bounded_disposition_oracle_correspondence": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 6010
+      },
+      "lib:security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 283
+      },
+      "lib:security_composition::tests::portable_typescript_truth_corpus_correspondence": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 343
+      },
+      "lib:security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 333
+      },
+      "security_admission:core08_source_custody_never_activates_uninterpreted_security": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 10370
+      },
+      "security_admission:invalid_source_digest_refuses_before_security_gate": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 426
+      },
+      "security_admission:rehashed_catalog_input_cannot_substitute_for_prepared_definitions": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 382
+      },
+      "security_admission:security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 516
+      },
+      "security_admission:security04_owner_refusals_never_dispatch_registration": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 475
+      },
+      "security_admission:separate_security_protocols_preserve_callback_and_blocked_response_boundaries": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 456
+      },
+      "security_admission:source_packet_cannot_be_reused_with_changed_model_bytes": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 365
+      },
+      "security_admission:unsupported_security_does_not_invoke_backend_factory": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "durationMs": 385
+      }
+    },
+    "propertyTests": {
+      "WFT-FM-001": [
+        [
+          "security_admission",
+          "core08_source_custody_never_activates_uninterpreted_security"
+        ],
+        [
+          "security_admission",
+          "unsupported_security_does_not_invoke_backend_factory"
+        ],
+        [
+          "security_admission",
+          "separate_security_protocols_preserve_callback_and_blocked_response_boundaries"
+        ],
+        [
+          "security_admission",
+          "security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output"
+        ],
+        [
+          "security_admission",
+          "security04_owner_refusals_never_dispatch_registration"
+        ]
+      ],
+      "WFT-FM-002": [
+        [
+          "lib",
+          "security_composition::tests::all_permit_require_forbid_truths_and_rule_order"
+        ],
+        [
+          "lib",
+          "security_composition::tests::portable_typescript_truth_corpus_correspondence"
+        ]
+      ],
+      "WFT-FM-003": [
+        [
+          "lib",
+          "security_composition::tests::all_permit_require_forbid_truths_and_rule_order"
+        ]
+      ],
+      "WFT-FM-004": [
+        [
+          "lib",
+          "security_composition::tests::bounded_disposition_oracle_correspondence"
+        ],
+        [
+          "lib",
+          "security_composition::tests::missing_protected_disposition_false_permit_and_mask_conflict"
+        ],
+        [
+          "lib",
+          "security_composition::tests::transform_identity_uses_exact_value_and_qualified_output_domain"
+        ]
+      ],
+      "WFT-FM-005": [
+        [
+          "security_admission",
+          "source_packet_cannot_be_reused_with_changed_model_bytes"
+        ],
+        [
+          "security_admission",
+          "rehashed_catalog_input_cannot_substitute_for_prepared_definitions"
+        ],
+        [
+          "security_admission",
+          "invalid_source_digest_refuses_before_security_gate"
+        ]
+      ]
+    },
+    "toolIdentity": {
+      "cargoVersion": "cargo 1.90.0 (840b83a10 2025-07-30)",
+      "rustcVersion": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+      "cargoExecutableSha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+      "rustToolchainSha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    "diagnosticRunId": "9d117c00877e406ead8d421324d66b3a",
+    "inputs": {
+      "crates/weft-core/src/compile.rs": "af6ade33982d823a13e5097c8b94ce36fa1d5c8a90deb3685d403a344cea0999",
+      "crates/weft-core/src/model.rs": "ddf8b851462c8f2da6bbae6d70b560c9a144a691c82ea1102578880be7b085c5",
+      "crates/weft-core/src/security_source.rs": "04656ce56aa905217e9217afac55d61a7748cb1ba3e2f8ddfbcffae613a8df41",
+      "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+      "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+      "crates/weft-core/src/security_backend.rs": "630ed24f24a6481fc5c5a1cb92cb1fc5abf3b76ed4781e935808d10bef26a254",
+      "crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+      "crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+      "crates/weft-core/src/security_budget.rs": "a96d32840b01dce893ce181c0fed6109a45e4e1b0f3d9b6d1f2f551b756e7322",
+      "crates/weft-core/tests/security_admission.rs": "4734220224799df71e8b31cb9321ea848ca3d4021761bffe9cbbf0c7c6dba3fb",
+      "crates/weft-core/tests/security-source-fixture.json": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150",
+      "crates/weft-core/tests/security-composition-oracle.json": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e",
+      "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+      "scripts/reliability/formal.py": "c84510c2bd19719b9ac394144b1baa3e6f45ec4e8322435cc91f0da57334455c",
+      "scripts/reliability/gate.py": "92a45cd886579a3ec5bbb44551bbd3fbfcaef50667b1f345e0316bc55900bbef",
+      "scripts/reliability/requirements.txt": "0884383734d31e9dcdabe732d5de94b0cb6baf06f9269859b71568b4034e309f",
+      "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "2639ac6b82759baf773d428c48bb8e7eb2008296a20eed5fe38f40fa8a2d85e6",
+      "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "5729a807753be5ed2f754887e795b871dfb8de85d0fc2763349bbf85052ca9d7",
+      "docs/helix/02-design/contracts/security-compile-response-v0.1.schema.json": "01022aa9742bbc51e8004055845af50c194cffb469f7158d7461e94a70533787",
+      "docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json": "0ba4f4c36e9e646ba9f649da37edaca920da8a8982f2df20cec5c20f3823e473",
+      "docs/helix/03-test/fixtures/cases.json": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
+      "docs/helix/02-design/contracts/compile-response-v0.5.schema.json": "6dcbfa453b72ed92a8153873584425193311c0b99640bd31db82a26fda3dcfc8",
+      "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "c5a5491896236ecf5fe9ba218898fc43d7efdb00c280f0316c08d216a4c56570",
+      "Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+      "Cargo.lock": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+      "rust-toolchain.toml": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    "compilerAndHostRevision": {
+      "kind": "sha256",
+      "value": "06ff9ba591b0f825e4e70c54f680e24990767adacad6228270ef9f347d706068",
+      "scope": "compiler-and-host-source"
+    }
+  },
+  "originalFormalReceiptSha256": "b053ccc46417d4311dd832be21fc857c733affc77b21a7a8322b3846f153cdfc",
+  "compilerAndHostRevision": {
+    "kind": "sha256",
+    "value": "06ff9ba591b0f825e4e70c54f680e24990767adacad6228270ef9f347d706068",
+    "scope": "compiler-and-host-source"
+  },
+  "historicalResponseObjectsIdentical": 2128,
+  "nativeRequalificationOpen": 53,
+  "limits": "Local rebuilt public-host parity and retained historical custody; no current database execution, native security enforcement or package release. Final exact-head hosted CI remains required.",
+  "reviewedLocalLogs": [
+    {
+      "path": "/private/tmp/weft-5120c54-core.log",
+      "sha256": "75a52a930749d1a98eed5fe8a94495e08576c05787e0191f3f7a8e5b2c5ec439",
+      "scope": "Current5120c54integration:253core and64admission"
+    },
+    {
+      "path": "/private/tmp/weft-5120c54-checks.log",
+      "sha256": "055a8c0f83dba47cd23d63b97e464f9878e8148271768ea1866148444ae424b2",
+      "scope": "Current module16 and governed-specification checks"
+    },
+    {
+      "path": "/private/tmp/weft-reader-diagnostics-tests.log",
+      "sha256": "01c084c47ff6de650d07786284aae30c895efe97db465879c360150e1adcb459",
+      "scope": "Preceding614 diagnostic reader source unchanged"
+    },
+    {
+      "path": "/private/tmp/weft-final-host-controls.log",
+      "sha256": "2f146e795f4ab0888c9688d394674a1f7a24a88879dce92449b2fcb30bf0d949",
+      "scope": "Preceding4fcc fresh-host control source unchanged"
+    }
+  ]
+}

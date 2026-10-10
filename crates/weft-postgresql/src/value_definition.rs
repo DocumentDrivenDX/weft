@@ -142,7 +142,7 @@ impl Graph {
                 serde_json::from_value(node["authoredIdentity"].clone())
                     .map_err(|_| fail("Invalid authored node identity"))?;
             let input = catalog
-                .inputs
+                .inputs()
                 .iter()
                 .find(|input| {
                     input.pin.document_id == identity.document_id
@@ -529,7 +529,7 @@ mod tests {
         let inputs: Vec<ModuleInput> =
             serde_json::from_value(cases[0]["request"]["modules"].clone()).unwrap();
         let catalog = Catalog::prepare(inputs).unwrap();
-        let input = &catalog.inputs[0];
+        let input = &catalog.inputs()[0];
         let document = checked_json(&input.document_json).unwrap();
         let module = &document["modules"][0];
         let element = &module["elements"][0];

@@ -16,8 +16,22 @@ pub struct ModuleInput {
     pub selected_module_ids: Vec<String>,
 }
 #[derive(Debug, Clone)]
+/// A prepared snapshot retains exact source and parsed meaning together.
+/// Direct mutation is inaccessible:
+/// ```compile_fail
+/// fn tamper(catalog: &mut weft_core::model::Catalog) {
+///     catalog.inputs[0].document_json.clear();
+/// }
+/// ```
+/// The public accessor also cannot mutate retained source:
+/// ```compile_fail
+/// fn tamper(catalog: &mut weft_core::model::Catalog) {
+///     catalog.inputs()[0].document_json.clear();
+/// }
+/// ```
+
 pub struct Catalog {
-    pub inputs: Vec<ModuleInput>,
+    inputs: Vec<ModuleInput>,
     pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
@@ -63,14 +77,18 @@ struct Envelope;
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
 struct Envelope08;
 impl Catalog {
+    /// Read-only original inputs. Clone and prepare a new Catalog to change them.
+    pub fn inputs(&self) -> &[ModuleInput] {
+        &self.inputs
+    }
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
-        Self::prepare_version(inputs, "0.7.0")
+        Self::prepare_version(inputs, None)
     }
     /// Source custody only; security activation remains independently gated.
     pub fn prepare_security(inputs: Vec<ModuleInput>) -> Result<Self> {
-        Self::prepare_version(inputs, "0.8.0")
+        Self::prepare_version(inputs, Some("0.8.0"))
     }
-    fn prepare_version(inputs: Vec<ModuleInput>, version: &str) -> Result<Self> {
+    fn prepare_version(inputs: Vec<ModuleInput>, required_version: Option<&str>) -> Result<Self> {
         if inputs.is_empty() || inputs.len() > 32 {
             return Err(fail(
                 "WFT-LIMIT",
@@ -92,9 +110,9 @@ impl Catalog {
             if doc["id"] != input.pin.document_id {
                 return Err(fail("WFT-PIN", "Owning document identity mismatch"));
             }
-            if (version == "0.8.0" && input.pin.umf_version != "0.8.0")
-                || !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
+            if !matches!(input.pin.umf_version.as_str(), "0.7.0" | "0.8.0")
                 || doc["umf"] != input.pin.umf_version
+                || required_version.is_some_and(|version| input.pin.umf_version != version)
             {
                 return Err(fail("WFT-MODEL-VERSION", "Unsupported UMF profile"));
             }

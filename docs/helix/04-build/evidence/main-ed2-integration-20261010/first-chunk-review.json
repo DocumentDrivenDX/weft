@@ -1,0 +1,13 @@
+{
+  "reviewer": "Astra Ultra",
+  "status": "approved",
+  "scope": "ed2b677 main reconciliation, protocol/callback matrix, private Catalog, shared budgets and contract migration",
+  "repairedFinding": "Preserve WFT-LIMIT/result for shared composition exhaustion; public normalization and escaped-copy aggregate regressions passed",
+  "tests": {
+    "coreDebugPassed": 377,
+    "candidateWorkspacePassed": 599,
+    "qualifiedWorkspacePassed": 574,
+    "newPublicRegressionsPassed": 2
+  },
+  "limits": "Later main merge, fresh hosts and exact final SHA hosted CI remain separate gates"
+}

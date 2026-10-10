@@ -1,5 +1,5 @@
 //! Pure cell correspondence, not policy selection or release authorization.
-use crate::{error::{Diagnostic,Result},json::{checked_json_bounded,sha256},security_backend::SecurityBackendContext,security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityResultDomain,SecurityTransform},security_ontology::{SecurityRef,locate},security_literals::normalized_literal};
+use crate::{error::{Diagnostic,Result},json::{checked_json_bounded,sha256},security_backend::SecurityBackendContext,security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityResultDomain,SecurityTransform},security_ontology::{SecurityRef,locate}};
 use serde_json::Value;
 fn fail()->Diagnostic {Diagnostic::new("WFT-SECURITY-RESULT","result","Security cell correspondence refused")}
 fn limit()->Diagnostic {Diagnostic::new("WFT-LIMIT","result","Security cell resource limit exceeded")}
@@ -32,8 +32,8 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
     let SecurityResultDomain::Model{field}=domain else{return Err(fail());};
     let reference=SecurityRef{document_id:field.document_id.clone(),module_id:field.module.clone(),element_id:field.element.clone()};
     let source=locate(ctx.catalog(),&reference).map_err(|_|fail())?;
-    budget.literal(value).map_err(|_|limit())?;let normalized=normalized_literal(source,value).map_err(|_|fail())?;budget.normalized(&normalized).map_err(|_|limit())?;
-    if let Some(literal)=literal {budget.literal(literal).map_err(|_|limit())?;let constant=normalized_literal(source,literal).map_err(|_|fail())?;budget.normalized(&constant).map_err(|_|limit())?;if normalized!=constant{return Err(fail());}}
+    budget.literal(value).map_err(|_|limit())?;let normalized=budget.normalize(source,value).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;
+    if let Some(literal)=literal {budget.literal(literal).map_err(|_|limit())?;let constant=budget.normalize(source,literal).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;if normalized!=constant{return Err(fail());}}
    }
   }
  }

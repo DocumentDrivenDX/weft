@@ -48,7 +48,7 @@ impl RecordAdmission {
         let owner: Identity = serde_json::from_value(entity["logical"].clone())
             .map_err(|_| fail("Malformed entity identity"))?;
         let input = catalog
-            .inputs
+            .inputs()
             .iter()
             .find(|input| {
                 input.pin.document_id == owner.document_id
@@ -108,7 +108,7 @@ impl RecordAdmission {
                 pin: input.pin.clone(),
                 value: record.clone(),
                 document: catalog
-                    .inputs
+                    .inputs()
                     .iter()
                     .position(|candidate| candidate.pin == input.pin)
                     .ok_or_else(|| fail("Record document index missing"))?,
@@ -139,7 +139,7 @@ impl RecordAdmission {
             return Err(fail("Key binding cut differs from admitted Record"));
         }
         let input = catalog
-            .inputs
+            .inputs()
             .get(self.original_record.document)
             .ok_or_else(|| fail("Key original model input missing"))?;
         if input.pin != self.model_pin
@@ -296,7 +296,7 @@ pub(crate) fn lower_scoped(
         if record.owner != owner
             || record.model_pin != pin
             || record.binding_sha256 != context.binding.sha256
-            || !context.catalog.inputs.iter().any(|input| {
+            || !context.catalog.inputs().iter().any(|input| {
                 input.pin == pin
                     && sha256(input.document_json.as_bytes()) == pin.sha256
                     && input.selected_module_ids.contains(&owner.module)

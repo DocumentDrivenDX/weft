@@ -48,8 +48,8 @@ struct OwnerIndex<'a>{revisions:BTreeMap<String,String>,elements:BTreeMap<Securi
 impl<'a> OwnerIndex<'a>{
  fn build(ctx:&'a SecurityBackendContext<'_>,b:&mut Budget)->Result<Self>{
   let mut revisions=BTreeMap::new();let mut elements=BTreeMap::new();
-  for input in &ctx.catalog().inputs{b.text(&input.document_json)?;b.text(&input.pin.document_id)?;b.text(&input.pin.revision)?;if revisions.insert(input.pin.document_id.clone(),input.pin.revision.clone()).is_some(){return Err(fail());}}
-  for (doc,input) in ctx.catalog().documents.iter().zip(&ctx.catalog().inputs){b.step()?;let document=doc["id"].as_str().ok_or_else(fail)?;
+  for input in ctx.catalog().inputs(){b.text(&input.document_json)?;b.text(&input.pin.document_id)?;b.text(&input.pin.revision)?;if revisions.insert(input.pin.document_id.clone(),input.pin.revision.clone()).is_some(){return Err(fail());}}
+  for (doc,input) in ctx.catalog().documents.iter().zip(ctx.catalog().inputs()){b.step()?;let document=doc["id"].as_str().ok_or_else(fail)?;
    let mut selected=BTreeSet::new();for id in &input.selected_module_ids{b.text(id)?;selected.insert(id.as_str());}
    for module in doc["modules"].as_array().ok_or_else(fail)?{b.step()?;let mid=module["id"].as_str().ok_or_else(fail)?;b.text(mid)?;if !selected.contains(mid){continue;}
     for element in module["elements"].as_array().ok_or_else(fail)?{b.step()?;let eid=element["id"].as_str().ok_or_else(fail)?;b.text(document)?;b.text(mid)?;b.text(eid)?;
@@ -228,7 +228,7 @@ mod tests{
    let mut put=|tokens:&[&str]|{expected.insert(serde_json::to_string(tokens).unwrap());};
    put(&["primary-action","read"]);
    for (kind,raw) in [("policy",ctx.logical_plan().source().policy_json()),("ontology",ctx.logical_plan().source().ontology_json()),("query",ctx.query().sql())]{put(&[kind,&crate::json::sha256(raw.as_bytes())]);}
-   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs[0].pin.sha256]);put(&["module","domain","m"]);
+   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256]);put(&["module","domain","m"]);
    put(&["scan","s0","domain","m","Resource"]);put(&["action","s0","read"]);
    for rule in ["reader","membership"]{put(&["rule","s0","read",rule]);}
    for (owner,key_field) in [("Staff","staffId"),("Project","projectId"),("Resource","resourceId"),("Ownership","ownerId"),("Assignment","assignmentId")]{
@@ -481,7 +481,7 @@ mod tests{
     let mut put=|tokens:&[&str],scopes:Vec<CoverageScope>|{expected.insert(serde_json::to_string(tokens).unwrap(),scopes.into_iter().collect::<BTreeSet<_>>());};
     put(&["primary-action","read"],vec![read.clone(),app.clone()]);
     for (kind,raw) in [("policy",ctx.logical_plan().source().policy_json()),("ontology",ctx.logical_plan().source().ontology_json()),("query",ctx.query().sql())]{put(&[kind,&crate::json::sha256(raw.as_bytes())],vec![read.clone(),app.clone()]);}
-    put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs[0].pin.sha256],vec![read.clone(),app.clone()]);put(&["module","domain","m"],vec![read.clone(),app.clone()]);
+    put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256],vec![read.clone(),app.clone()]);put(&["module","domain","m"],vec![read.clone(),app.clone()]);
     put(&["scan","s0","domain","m","Resource"],vec![read.clone(),app.clone()]);put(&["action","s0","read"],vec![read.clone()]);
     for rule in ["reader","membership"]{put(&["rule","s0","read",rule],vec![read.clone()]);}
     for (owner,key_field) in [("Staff","staffId"),("Project","projectId"),("Resource","resourceId"),("Ownership","ownerId"),("Assignment","assignmentId")]{
@@ -1009,7 +1009,7 @@ mod tests{
    let mut put=|tokens:&[&str],kind:E,scopes:Vec<CoverageScope>|{golden.insert(serde_json::to_string(tokens).unwrap(),(kind,scopes.into_iter().collect()));};
    put(&["primary-action","read"],E::PrimaryAction,vec![read.clone(),app.clone()]);
    for (tag,kind,raw) in [("policy",E::Policy,ctx.logical_plan().source().policy_json()),("ontology",E::Ontology,ctx.logical_plan().source().ontology_json()),("query",E::Query,ctx.query().sql())]{put(&[tag,&crate::json::sha256(raw.as_bytes())],kind,vec![read.clone(),app.clone()]);}
-   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs[0].pin.sha256],E::Model,vec![read.clone(),app.clone()]);put(&["module","domain","m"],E::Module,vec![read.clone(),app.clone()]);
+   put(&["model","domain","schema-1","0.8.0",&ctx.catalog().inputs()[0].pin.sha256],E::Model,vec![read.clone(),app.clone()]);put(&["module","domain","m"],E::Module,vec![read.clone(),app.clone()]);
    put(&["scan","s0","domain","m","Resource"],E::Scan,vec![read.clone(),app.clone()]);
    put(&["action","s0","read"],E::Action,vec![read.clone()]);put(&["rule","s0","read","reader"],E::Rule,vec![read.clone()]);
    for (owner,field) in [("Staff","staffId"),("Resource","resourceId")]{put(&["key","s0","read","domain","m",owner,"pk"],E::Key,vec![read.clone()]);put(&["key-field","s0","read","domain","m",owner,"pk","1","domain","m",field],E::KeyField,vec![read.clone()]);put(&["field","s0","read","domain","m",owner,"domain","m",field],E::Field,vec![read.clone()]);}

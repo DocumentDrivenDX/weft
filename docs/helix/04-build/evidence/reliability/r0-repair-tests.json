@@ -1,0 +1,34 @@
+{
+  "command": "cargo test -p weft-core --lib --test security_admission --test security_literals --locked --offline",
+  "toolchain": "Rust1.90.0",
+  "exitCode": 0,
+  "passed": 110,
+  "suites": {
+    "library": 65,
+    "security_admission": 42,
+    "security_literals": 3
+  },
+  "ignored": 0,
+  "filteredOut": 0,
+  "inputManifest": "r0-repaired-inputs.json",
+  "inputManifestSha256": "23f2a64cc34c812880e4c8df9cc59c25c71cb60a15255ab49fd47d1cafae19f5",
+  "logSha256": "4c1fc8d95212e0bd081e868628b9872299813c3f71dff73567f695e319fb5149",
+  "controls": [
+    "Aggregate repeated transformed disclosures refuse without prefix",
+    "Normalized bytes just below/at/above4M",
+    "Actual retained JSON copies just below/at/above16M",
+    "Composition at copy budget and one byte over",
+    "Short numeric exponent reservation before normalization",
+    "Existing withheld dominance/transform conflict correspondence",
+    "Duplicate-index identity copies included in collection work budget; seven comparisons pass/eight refuse",
+    "Admitted zero with huge exponent stays exact at normalized limit"
+  ],
+  "specs": {
+    "artifacts": 54,
+    "schemas": 13,
+    "allocatedCriteria": 41,
+    "fixtureCases": 636,
+    "allocationTestsPassed": 11
+  },
+  "limits": "Scoped Rust foundation and structural allocation only. No full native/security or current whole-host qualification."
+}

@@ -26,4 +26,6 @@ As an application host, I need complete entities, ordered pages, counts and rela
 
 ## Requirements and Boundaries
 
-FR-13 through FR-18. Weft SQL 0.2 introduces the application-read profile; 0.1 preserves existing acceptance/refusals. A fixture-only mapping cannot close native adapter acceptance. Unknown selected member or relationship meaning blocks.
+**PRD Requirements:** FR-13, FR-14, FR-15, FR-16, FR-17, FR-18.
+
+Weft SQL 0.2 introduces the application-read profile; 0.1 preserves existing acceptance/refusals. A fixture-only mapping cannot close native adapter acceptance. Unknown selected member or relationship meaning blocks.

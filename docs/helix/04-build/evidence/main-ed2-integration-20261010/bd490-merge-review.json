@@ -1,0 +1,14 @@
+{
+  "reviewer": "Astra Ultra",
+  "status": "approved",
+  "main": "bd490ab",
+  "scope": "Exact incoming distribution/index/archive custody, additive assembler profile, contract limits, CI union and module inventory",
+  "checks": {
+    "moduleControls": 16,
+    "assemblyControls": 5,
+    "custodyArtifacts": 66,
+    "archiveMembers": 25
+  },
+  "compilerImplementationChanged": false,
+  "limits": "Packaged binary was not executed; fresh source-host qualification and final hosted CI remain required"
+}

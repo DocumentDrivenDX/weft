@@ -1,0 +1,20 @@
+{
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra"
+  },
+  "baseCommit": "605d2b6",
+  "disposition": "approved for commit/push; no remaining material findings",
+  "reviewedInputs": {
+    "r5-tests.json": "15c7df510a3efca02c14cb3d2a0c1ff57ac858a69958d4e3642f082dc37c73ed",
+    "r5-formal.json": "d87d5dbf2f5cb98b6c26ae298bf9b44de602153547a0a37e2e9c41ee5ad412c2"
+  },
+  "verification": [
+    "Independent7normal/7optimized controls",
+    "Original oracle substitution and unlisted compiler source changes now refuse with failed manifest/no qualification",
+    "Missing solver/SDK site package refusal before outputs",
+    "469UNSATchecks/10SATwitnesses and10exactRusttests",
+    "Actual report,19explicit inputs and compiler/host revision match frozen evidence"
+  ],
+  "limits": "Bounded foundation assurance only. Full security/native acceptance remains open; public activation blocked."
+}

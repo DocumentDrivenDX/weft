@@ -296,7 +296,7 @@ fn traverse<'a>(ctx: &'a SecurityBackendContext<'_>, assignments: Option<&'a BTr
         let hash = crate::json::sha256(raw.as_bytes());
         b.event(event, &[kind, &hash], &mut out)?;
     }
-    for input in &ctx.catalog().inputs {
+    for input in ctx.catalog().inputs() {
         let p = &input.pin;
         b.event(OwnerEventKind::Model,
             &[

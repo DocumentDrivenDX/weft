@@ -220,5 +220,83 @@
         "state": "planned"
       }
     ]
+  },
+  {
+    "story": "US-008",
+    "testPrefix": "reliability",
+    "criteria": [
+      {
+        "id": "US-008-AC1",
+        "plannedTest": "current_qualification",
+        "assertion": "Given retained historical receipts and a changed revision, when a maintainer qualifies support, then complete input custody and fresh binary/artifact evidence distinguish historical observations from current qualification.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC2",
+        "plannedTest": "bounded_host_inputs",
+        "assertion": "Given hostile or malformed input, when CLI or library hosts admit it, then bounded reads and immutable prepared-source custody prevent unbounded allocation, stale parsed meaning and partial artifacts.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC3",
+        "plannedTest": "module_boundaries",
+        "assertion": "Given changed package dependencies or private access, when boundaries are checked, then actual forbidden edges/cycles refuse and ownership/construction/integration responsibilities are inspectable.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC4",
+        "plannedTest": "configured_mutations",
+        "assertion": "Given a configured toolchain and mutation experiment, when the harness runs, then validated configuration and fail-closed detection distinguish actual killed mutations from missing tests, unapplied edits and optimized Python.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC5",
+        "plannedTest": "safe_diagnostics",
+        "assertion": "Given runner success, failure, timeout or diagnostic outage, when evidence is captured and retrieved, then bounded safe events identify outcomes/loss without exposing raw source, credentials or subprocess output.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC6",
+        "plannedTest": "exhaustive_formal_allocation",
+        "assertion": "Given governed requirements and security foundations, when allocation/formal assurance is checked, then omitted requirements/criteria fail and precise bounded properties, witnesses and correspondence remain distinct from deferred native acceptance.",
+        "state": "planned"
+      },
+      {
+        "id": "US-008-AC7",
+        "plannedTest": "fresh_host_ci",
+        "assertion": "Given the final pushed compiler revision, when CI qualifies the ordinary subset, then fresh Python and Chromium artifacts match the full reference artifact corpus and every required job completes successfully at that revision.",
+        "state": "planned"
+      }
+    ]
+  },
+  {
+    "story": "US-009",
+    "testPrefix": "security-compilation",
+    "criteria": [
+      {
+        "id": "US-009-AC1",
+        "plannedTest": "security_transport",
+        "assertion": "Given pinned supported security sources, when the separate versioned transport is admitted, then exact custody and previous ordinary transport behavior survive without relabeling or fallback.",
+        "state": "open"
+      },
+      {
+        "id": "US-009-AC2",
+        "plannedTest": "security_admission",
+        "assertion": "Given selected policy and ontology meaning, when admission and composition run, then complete qualified identity and private-fact semantics are preserved or refused before emission.",
+        "state": "open"
+      },
+      {
+        "id": "US-009-AC3",
+        "plannedTest": "security_lowering",
+        "assertion": "Given a protected read, when logical and physical lowering run, then disclosure, replacement and protected predicate/order/group/join/aggregate semantics preserve null, absent and withheld distinctions.",
+        "state": "open"
+      },
+      {
+        "id": "US-009-AC4",
+        "plannedTest": "security_host_release",
+        "assertion": "Given a security artifact, when a native host executes it, then authenticated custody, current authority and guarded final release satisfy mandatory versioned obligations without inferred credentials or qualification.",
+        "state": "open"
+      }
+    ]
   }
 ]
