@@ -469,7 +469,7 @@ impl<B: Backend> Registered for Adapter<B> {
         // Retain the ordering of older operations; do not retroactively preflight them.
         if matches!(plan, Plan::V03(_)) {
             let distinct_count=plan.capabilities().iter().any(|id|id=="aggregate.countDistinct");
-            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "project.distinct", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull", "predicate.stringIn", "aggregate.countDistinct"].contains(&id.as_str()) || (distinct_count && ["aggregate","group"].contains(&id.as_str()))) {
+            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "project.distinct", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull", "predicate.stringIn", "aggregate.countDistinct", "aggregate.countDistinct.optional", "aggregate.havingCountDistinctGreater"].contains(&id.as_str()) || (distinct_count && ["aggregate","group"].contains(&id.as_str()))) {
                 if !self.manifest.capabilities.iter().any(|c| &c.id == id
                     && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
                     && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {

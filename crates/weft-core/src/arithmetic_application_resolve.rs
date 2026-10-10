@@ -325,7 +325,11 @@ pub(crate) fn resolve(
                 )
             }
             ast::Output::CountDistinct(c) => {
-                let argument=s.field(c)?;
+                let optional=s.optional_field03(c)?;
+                let argument=if optional {
+                    let f=s.presence_field03(c)?;
+                    if f.logical_type.family!=Family::String {s.field(c)?} else {s.caps.insert("aggregate.countDistinct.optional".into());s.caps.insert("value.nativeNull".into());f}
+                } else {s.field(c)?};
                 if argument.logical_type.family!=Family::String || argument.logical_type.nullable || argument.logical_type.facets!=json!({}) {return Err(fail("WFT-TYPE","COUNT DISTINCT requires an exact required String Field"));}
                 s.caps.insert("aggregate.countDistinct".into());
                 ("count".into(),vec![("count".into(),ir::Expression::CountDistinct{argument,logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}})])
@@ -466,6 +470,15 @@ pub(crate) fn resolve(
         }
         s.caps.insert("project.distinct".into());
     }
+    let mut having=Vec::new();
+    for h in &q.having {
+        let argument=if s.optional_field03(&h.argument)? {s.presence_field03(&h.argument)?} else {s.field(&h.argument)?};
+        let count=outputs.iter().find_map(|o|match &o.expression {ir::Expression::CountDistinct{argument:projected,..} if same(projected,&argument)=>Some(ir::Expression::CountDistinct{argument:argument.clone(),logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}}),_=>None})
+            .ok_or_else(||fail("WFT-GROUPING","HAVING count must match an explicitly projected COUNT DISTINCT scan and Field"))?;
+        let threshold=s.value(&old_ast::Value::Literal(h.threshold.clone()),&LogicalType{family:Family::Integer,facets:json!({}),nullable:false})?;
+        s.caps.insert("aggregate.havingCountDistinctGreater".into());
+        having.push(ir::Having{count,threshold});
+    }
     let page_key = None;
     if s.used.len() != s.parameters.len() {
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
@@ -484,6 +497,7 @@ pub(crate) fn resolve(
         joins,
         filters,
         groups,
+        having,
         aggregate,
         outputs,
         order,
@@ -517,6 +531,17 @@ mod tests {
             serde_json::from_value(parameters).unwrap(),
             None,
         )
+    }
+    #[test]
+    fn having_count_closed_schema_and_original_spans() {
+        let p=run("join-count","SELECT c.name,COUNT(DISTINCT c.name) FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>1",json!({})).unwrap();
+        let value=serde_json::to_value(&p).unwrap();assert!(PlanSchema03::is_valid(&value));
+        assert_ne!(value["having"][0]["count"]["argument"]["span"],value["outputs"][1]["expression"]["argument"]["span"]);
+        for (pointer,replacement) in [("/having/0/threshold/kind",json!("parameter")),("/having/0/threshold/value",json!("1.0")),("/having/0/threshold/type/facets",json!({"integerWidth":{"bits":64,"signed":true}})),("/having/0/count/op",json!("sum"))] {
+            let mut bad=value.clone();*bad.pointer_mut(pointer).unwrap()=replacement;assert!(!PlanSchema03::is_valid(&bad),"{pointer}");
+        }
+        let mut empty=value.clone();empty["having"]=json!([]);assert!(!PlanSchema03::is_valid(&empty));
+        let ordinary=run("join-count","SELECT COUNT(DISTINCT c.name) FROM Customer c",json!({})).unwrap();assert!(serde_json::to_value(ordinary).unwrap().get("having").is_none());
     }
     #[test]
     fn arithmetic_join_projection_and_exact_domain() {

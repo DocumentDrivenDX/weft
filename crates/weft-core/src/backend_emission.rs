@@ -66,7 +66,7 @@ pub(crate) fn validate(
             ));
         }
         let unbounded=p.logical_type.family==Family::Integer && p.logical_type.facets==serde_json::json!({});
-        let admitted=assessments.iter().any(|a| (a.id=="type.integer.unbounded" || (matches!(plan,Plan::V03(_)) && a.id=="arithmetic.exact.integer")) && a.status!=crate::backend::Status::Unsupported);
+        let admitted=assessments.iter().any(|a| (a.id=="type.integer.unbounded" || (matches!(plan,Plan::V03(_)) && (a.id=="arithmetic.exact.integer" || a.id=="aggregate.havingCountDistinctGreater"))) && a.status!=crate::backend::Status::Unsupported);
         if unbounded && !admitted { return Err(fail("Unbounded integer parameter requires explicit capability admission")); }
         if p.logical_type.family == Family::Decimal && p.logical_type.facets.get("precision").is_none() {
             let admitted = matches!(plan, Plan::V03(_)) && assessments.iter().any(|a| a.id == "arithmetic.exact.decimal" && a.status != crate::backend::Status::Unsupported);

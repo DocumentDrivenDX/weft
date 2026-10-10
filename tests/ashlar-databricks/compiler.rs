@@ -817,3 +817,90 @@ fn distinct_count_target_is_explicit_and_old_arithmetic_refuses_new_capabilities
     let mut req=count_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c");req["target"]["targetProfile"]=json!(weft_databricks::arithmetic::PROFILE);assert_eq!(count_compile(&req)["status"],"blocked");
     let mut req=count_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c");let mut b:Value=serde_json::from_str(req["target"]["bindingJson"].as_str().unwrap()).unwrap();b["profile"]=json!("future");let raw=b.to_string();req["target"]["bindingJson"]=json!(raw);req["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));assert_eq!(count_compile(&req)["diagnostics"][0]["code"],"WFT-BINDING");
 }
+
+fn media_request(sql:&str,optional:bool)->Value {
+    let mut r=if optional {nullable_request(sql,"name")}else{arithmetic_request(sql)};
+    r["target"]["backendId"]=json!(weft_databricks::count_having::ID);r["target"]["backendVersion"]=json!(weft_databricks::count_having::VERSION);r["target"]["targetProfile"]=json!(weft_databricks::count_having::PROFILE);r
+}
+fn media_compile(r:&Value)->Value {
+    let mut registry=Registry::default();registry.register(weft_databricks::arithmetic::Arithmetic).unwrap();registry.register(weft_databricks::count_distinct::CountDistinct).unwrap();registry.register(weft_databricks::count_having::CountHaving).unwrap();
+    serde_json::from_str(&Compiler{registry}.compile_json(&r.to_string())).unwrap()
+}
+#[test]
+fn optional_count_preserves_descriptor_and_null_excluded_capacity() {
+    let r=media_compile(&media_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c",true));assert_eq!(r["status"],"compiled","{r}");
+    assert!(r["logicalPlan"]["requiredCapabilities"].as_array().unwrap().contains(&json!("aggregate.countDistinct.optional")));
+    assert!(r["logicalPlan"]["requiredCapabilities"].as_array().unwrap().contains(&json!("value.nativeNull")));
+    assert!(r["logicalPlan"]["typeGraph"].as_array().unwrap().iter().any(|d|d["availability"]=="absent-allowed"));
+    assert_eq!(r["columns"][0]["representation"]["logicalType"],json!({"family":"integer","facets":{},"nullable":false}));
+    let exact=r["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();
+    assert!(exact["parameters"]["checks"][0]["sql"].as_str().unwrap().contains("IS NOT NULL"));
+    assert!(!r["sql"].as_str().unwrap().contains("IS NOT NULL")); // Null exclusion cannot remove the logical all-null group.
+}
+#[test]
+fn projected_count_having_exact_threshold_and_pre_having_guard() {
+    let r=media_compile(&media_request("SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>1",false));assert_eq!(r["status"],"compiled","{r}");
+    assert_eq!(r["logicalPlan"]["having"][0]["threshold"]["value"],"1");
+    assert_eq!(r["logicalPlan"]["having"][0]["count"]["argument"]["identity"],r["logicalPlan"]["outputs"][1]["expression"]["argument"]["identity"]);
+    assert!(r["sql"].as_str().unwrap().contains(" HAVING COUNT(DISTINCT "));
+    let exact=r["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();assert!(!exact["parameters"]["checks"][0]["sql"].as_str().unwrap().contains(" HAVING "));
+    for threshold in ["0","9223372036854775807"] {assert_eq!(media_compile(&media_request(&format!("SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>{threshold}"),false))["status"],"compiled");}
+    let wide=media_compile(&media_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c HAVING COUNT(DISTINCT c.name)>9223372036854775808",false));assert_eq!(wide["diagnostics"][0]["code"],"WFT-CAPABILITY");assert!(wide.get("sql").is_none());
+}
+#[test]
+fn optional_count_and_having_refuse_old_profiles_and_unknown_forms() {
+    let r=media_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c",true);
+    for (id,version,profile) in [("ashlar.databricks","0.3.0-arithmetic-candidate",weft_databricks::arithmetic::PROFILE),(weft_databricks::count_distinct::ID,weft_databricks::count_distinct::VERSION,weft_databricks::count_distinct::PROFILE)] {
+        let mut old=r.clone();old["target"]["backendId"]=json!(id);old["target"]["backendVersion"]=json!(version);old["target"]["targetProfile"]=json!(profile);let result=media_compile(&old);assert_eq!(result["diagnostics"][0]["code"],"WFT-CAPABILITY");assert!(result.get("sql").is_none());
+    }
+    for sql in ["SELECT COUNT(DISTINCT c.name) FROM Customer c HAVING COUNT(DISTINCT c.id)>1","SELECT COUNT(DISTINCT c.name) FROM Customer c HAVING COUNT(DISTINCT c.name)>=1","SELECT COUNT(DISTINCT c.name) FROM Customer c HAVING COUNT(DISTINCT c.name)>:n","SELECT COUNT(DISTINCT c.name) FROM Customer c HAVING COUNT(DISTINCT c.name)>1.0","SELECT COUNT(DISTINCT c.name) FROM Customer c HAVING COUNT(DISTINCT c.name)>1 OR COUNT(DISTINCT c.name)>2"] {assert_eq!(media_compile(&media_request(sql,false))["status"],"blocked","{sql}");}
+}
+
+#[test]
+fn optional_count_and_having_gate_before_any_binding_callback() {
+    use weft_core::{backend::*,error::Result};use std::sync::{Arc,atomic::{AtomicUsize,Ordering}};
+    struct Probe {id:&'static str,mode:&'static str,calls:Arc<AtomicUsize>}
+    impl Backend for Probe {
+        type Mapping=();type TargetPlan=();
+        fn describe(&self)->Result<Manifest>{
+            let mut m=weft_databricks::count_having::CountHaving.describe()?;
+            if self.mode=="missing"{m.capabilities.retain(|c|c.id!=self.id);}
+            if self.mode=="unsupported"{m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().status=Status::Unsupported;}
+            if self.mode=="target"{let mut t=m.target_profiles[0].clone();t.id="other".into();m.target_profiles.push(t);m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().target_profiles=vec!["other".into()];}
+            if self.mode=="language"{let other=LanguageProfile{dialect_profile:"weft-sql/0.2.0".into(),ir_version:"weft-ir/0.2.0".into()};m.language_profiles.push(other.clone());m.capabilities.iter_mut().find(|c|c.id==self.id).unwrap().language_profiles=vec![other];}
+            Ok(m)
+        }
+        fn validate_binding(&self,_:&Context<'_>)->Result<Validated<()>>{self.calls.fetch_add(1,Ordering::SeqCst);panic!("new capabilities must be admitted first")}
+        fn assess(&self,_:&Context<'_>,_:&())->Result<Vec<Assessment>>{panic!()}
+        fn lower(&self,_:&Context<'_>,_:&())->Result<()>{panic!()}
+        fn emit(&self,_:&Context<'_>,_:&())->Result<Emission>{panic!()}
+    }
+    for (id,sql,optional) in [("aggregate.countDistinct.optional","SELECT COUNT(DISTINCT c.name) FROM Customer c",true),("value.nativeNull","SELECT COUNT(DISTINCT c.name) FROM Customer c",true),("aggregate.havingCountDistinctGreater","SELECT c.name,COUNT(DISTINCT c.name) FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>1",false)] {
+        for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
+            let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();let mut request=media_request(sql,optional);if mode=="candidate-no-opt-in"{request["options"]["allowCandidate"]=json!(false);}
+            let r:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();assert_eq!(r["diagnostics"][0]["code"],"WFT-CAPABILITY","{id}/{mode}: {r}");assert_eq!(calls.load(Ordering::SeqCst),0);assert!(r.get("sql").is_none());
+        }
+    }
+}
+
+#[test]
+fn count_having_wrong_binding_profile_retains_public_diagnostic_phase() {
+    let mut request=media_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c",true);
+    let mut binding:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["profile"]=json!("future-binding-profile");
+    let raw=binding.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+    let result=media_compile(&request);
+    assert_eq!(result["status"],"blocked");assert_eq!(result["diagnostics"][0]["code"],"WFT-BINDING");
+    assert_eq!(result["diagnostics"][0]["phase"],"lower");assert!(result.get("sql").is_none());
+}
+
+#[test]
+fn count_having_numeric_literal_uses_existing_expression_byte_budget() {
+    for (length,admitted) in [(1024,true),(1025,false)] {
+        let literal=format!("{}1","0".repeat(length-1));
+        let request=media_request(&format!("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c HAVING COUNT(DISTINCT c.name)>{literal}"),false);
+        let result=media_compile(&request);
+        if admitted {assert_eq!(result["status"],"compiled");assert_eq!(result["parameters"].as_array().unwrap().last().unwrap()["value"],literal);}
+        else {assert_eq!(result["diagnostics"][0]["code"],"WFT-LIMIT");assert_eq!(result["diagnostics"][0]["phase"],"parse");assert!(result.get("sql").is_none());}
+    }
+}

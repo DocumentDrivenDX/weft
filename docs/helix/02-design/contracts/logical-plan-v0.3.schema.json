@@ -124,6 +124,109 @@
           "type": "null"
         }
       ]
+    },
+    "having": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "object",
+            "properties": {
+              "op": {
+                "const": "countDistinct"
+              },
+              "argument": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/field"
+                  },
+                  {
+                    "properties": {
+                      "type": {
+                        "type": "object",
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          },
+                          "facets": {
+                            "const": {}
+                          },
+                          "nullable": {
+                            "const": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "type": {
+                "const": {
+                  "family": "integer",
+                  "facets": {},
+                  "nullable": false
+                }
+              }
+            },
+            "required": [
+              "op",
+              "argument",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          "threshold": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "literal"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "family": {
+                    "const": "integer"
+                  },
+                  "facets": {
+                    "const": {}
+                  },
+                  "nullable": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "family",
+                  "facets",
+                  "nullable"
+                ],
+                "additionalProperties": false
+              },
+              "span": {
+                "$ref": "#/$defs/span"
+              }
+            },
+            "required": [
+              "kind",
+              "value",
+              "type",
+              "span"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "count",
+          "threshold"
+        ],
+        "additionalProperties": false
+      }
     }
   },
   "required": [

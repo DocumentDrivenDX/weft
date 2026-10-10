@@ -14,3 +14,5 @@ pub mod arithmetic;
 
 /// Explicit required String set/count composition; preserves prior arithmetic profile.
 pub mod count_distinct;
+
+pub mod count_having;

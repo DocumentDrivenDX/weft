@@ -43,6 +43,8 @@ jobs:
         run: cargo test --workspace --features weft-runtime/truss-postgresql-qualified,weft-runtime/ashlar-databricks-qualified,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original --locked
       - name: Build explicit distinct-count runtime
         run: cargo build -p weft-runtime --features ashlar-databricks-count-distinct --locked
+      - name: Build explicit optional count HAVING composition
+        run: cargo build -p weft-runtime --features ashlar-databricks-count-having --locked
       - name: Refuse conflicting runtime registrations
         shell: bash
         run: |
@@ -54,6 +56,12 @@ jobs:
             cat conflict.log
             grep -F 'Choose either candidate or qualified registration for each backend' conflict.log
           done
+          if cargo check -p weft-runtime --features ashlar-databricks-count-having,ashlar-databricks-count-distinct --locked > conflict.log 2>&1; then
+            cat conflict.log
+            exit 1
+          fi
+          cat conflict.log
+          grep -F 'Choose either candidate or qualified registration for each backend' conflict.log
           if cargo check -p weft-runtime --features ashlar-databricks-count-distinct,ashlar-databricks-arithmetic --locked > conflict.log 2>&1; then
             cat conflict.log
             exit 1

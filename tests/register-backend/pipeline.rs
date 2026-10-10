@@ -540,7 +540,7 @@ fn old_backend_refuses_arithmetic_before_binding_or_lowering() {
         ir_version: "weft-ir/0.3.0".into(), module_pins:p.module_pins,
         read_profile:None, required_capabilities:p.required_capabilities,
         type_graph:p.type_graph, source:p.source, page_key:p.page_key,
-        joins:vec![], filters:vec![], groups:p.groups, aggregate:p.aggregate,
+        joins:vec![], filters:vec![], groups:p.groups, having:vec![], aggregate:p.aggregate,
         outputs:vec![], order:p.order, limit:p.limit,
     };
     let mut input = binding(&catalog);

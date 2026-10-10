@@ -72,6 +72,12 @@ pub struct Output {
 }
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct Having {
+    pub count: Expression,
+    pub threshold: crate::application_ir::Value,
+}
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Plan {
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub distinct: bool,
@@ -85,6 +91,8 @@ pub struct Plan {
     pub joins: Vec<Join>,
     pub filters: Vec<Predicate>,
     pub groups: Vec<Field>,
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub having: Vec<Having>,
     pub aggregate: bool,
     pub outputs: Vec<Output>,
     pub order: Vec<Field>,

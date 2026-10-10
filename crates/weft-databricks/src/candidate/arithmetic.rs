@@ -458,6 +458,9 @@ pub(super) fn lower(
     binding: &Binding,
     p: &plan::Plan,
 ) -> Result<TargetPlan> {
+    if (!p.having.is_empty() || p.required_capabilities.iter().any(|c|c=="aggregate.countDistinct.optional")) && _context.target.id!=crate::count_having::PROFILE {
+        return Err(fail("WFT-CAPABILITY","Optional counts/HAVING require the exact separate target profile"));
+    }
     if p.aggregate && !p.outputs.iter().any(|o|matches!(o.expression,plan::Expression::CountDistinct{..})) {
         return Err(fail(
             "WFT-CAPABILITY",
@@ -659,8 +662,10 @@ pub(super) fn lower(
     for output in &p.outputs {
         if let plan::Expression::CountDistinct{argument,..}=&output.expression {
             let arg=lower.expression(&field_expression(argument))?;
-            let mut tuple=grouping.clone();tuple.push(arg);
-            let where_sql=filter.as_ref().map(|f|format!(" WHERE {f}")).unwrap_or_default();
+            let mut tuple=grouping.clone();tuple.push(arg.clone());
+            let where_sql=if lower.native_null.contains(&(argument.scan.clone(),serde_json::to_string(&argument.identity).unwrap())) {
+                format!(" WHERE {}{arg} IS NOT NULL",filter.as_ref().map(|f|format!("({f}) AND ")).unwrap_or_default())
+            } else {filter.as_ref().map(|f|format!(" WHERE {f}")).unwrap_or_default()};
             let distinct=format!("SELECT DISTINCT {} FROM {from}{where_sql}",tuple.iter().enumerate().map(|(i,e)|format!("{e} AS `_count_key_{i}`")).collect::<Vec<_>>().join(", "));
             let group_aliases=(0..grouping.len()).map(|i|format!("`_count_key_{i}`")).collect::<Vec<_>>();
             let group_sql=if group_aliases.is_empty(){String::new()}else{format!(" GROUP BY {}",group_aliases.join(", "))};
@@ -678,6 +683,19 @@ pub(super) fn lower(
         sql.push_str(&format!(" WHERE {filter}"))
     }
     if !grouping.is_empty(){sql.push_str(&format!(" GROUP BY {}",grouping.join(", ")))}
+    if !p.having.is_empty() {
+        let mut predicates=Vec::new();
+        for h in &p.having {
+            let plan::Expression::CountDistinct{argument,..}=&h.count else {return Err(fail("WFT-CAPABILITY","Only exact projected-count HAVING admitted"));};
+            let app::Value::Literal{value,logical_type,span}=&h.threshold else {return Err(fail("WFT-CAPABILITY","Only original literal HAVING thresholds admitted"));};
+            let n=value.parse::<u64>().ok().filter(|n|*n<=9223372036854775807).ok_or_else(||fail("WFT-CAPABILITY","Exact HAVING threshold exceeds finite native signed64 representation"))?;
+            let _=n;
+            let slot=lower.slot(logical_type.clone(),value.clone(),json!({"kind":"literal","sourceSpan":span}))?;
+            let arg=lower.expression(&field_expression(argument))?;
+            predicates.push(format!("COUNT(DISTINCT {arg}) > CAST({slot} AS BIGINT)"));
+        }
+        sql.push_str(&format!(" HAVING {}",predicates.join(" AND ")));
+    }
     if !p.order.is_empty() {
         let order = p
             .order

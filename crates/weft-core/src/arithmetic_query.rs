@@ -47,6 +47,11 @@ pub enum Predicate {
     },
 }
 #[derive(Debug, Clone)]
+pub struct Having {
+    pub argument: Column,
+    pub threshold: Literal,
+}
+#[derive(Debug, Clone)]
 pub struct Query {
     pub distinct: bool,
     pub outputs: Vec<Projection>,
@@ -54,6 +59,7 @@ pub struct Query {
     pub predicates: Vec<Predicate>,
     pub joins: Vec<(Source, Vec<Predicate>)>,
     pub groups: Vec<Column>,
+    pub having: Vec<Having>,
     pub order: Vec<Column>,
     pub limit: Option<u16>,
 }
@@ -365,6 +371,21 @@ pub fn parse(sql: &str) -> Result<Query> {
     } else {
         vec![]
     };
+    let mut having=Vec::new();
+    if p.peek_word("having") {
+        budget.reserve(&p)?;
+        p.word("having")?;p.word("count")?;p.symbol('(')?;p.word("distinct")?;
+        let argument=p.column03()?;p.symbol(')')?;p.symbol('>')?;
+        budget.reserve(&p)?;
+        let threshold=p.literal()?;
+        if threshold.value.len()>crate::arithmetic_syntax::MAX_LITERAL_BYTES {
+            return Err(Diagnostic::new("WFT-LIMIT","parse","Numeric literal exceeds expression limit").at(&threshold.span));
+        }
+        if !matches!(threshold.kind,LiteralKind::Number) || threshold.value.is_empty() || !threshold.value.bytes().all(|b|b.is_ascii_digit()) {
+            return Err(fail(&p,"HAVING admits COUNT DISTINCT > a nonnegative exact Integer literal only"));
+        }
+        having.push(Having{argument,threshold});
+    }
     let mut order = Vec::new();
     if p.peek_word("order") {
         p.word("order")?;
@@ -394,6 +415,7 @@ pub fn parse(sql: &str) -> Result<Query> {
         predicates,
         joins,
         groups,
+        having,
         order,
         limit,
     })

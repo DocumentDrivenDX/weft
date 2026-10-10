@@ -11,6 +11,7 @@
     all(feature = "ashlar-databricks-arithmetic", feature = "ashlar-databricks-candidate"),
     all(feature = "ashlar-databricks-arithmetic", feature = "ashlar-databricks-qualified"),
     all(feature = "ashlar-databricks-arithmetic", feature = "ashlar-databricks-mathematical-integer"),
+    all(feature = "ashlar-databricks-count-having", any(feature = "ashlar-databricks-count-distinct",feature = "ashlar-databricks-arithmetic",feature = "ashlar-databricks-candidate",feature = "ashlar-databricks-qualified",feature = "ashlar-databricks-mathematical-integer")),
     all(feature = "ashlar-databricks-count-distinct", any(feature = "ashlar-databricks-arithmetic",feature = "ashlar-databricks-candidate",feature = "ashlar-databricks-qualified",feature = "ashlar-databricks-mathematical-integer"))
 ))]
 compile_error!("Choose either candidate or qualified registration for each backend; versions never silently override or fall back");
@@ -70,6 +71,17 @@ pub fn compile_json(request: &str) -> String {
         let mut registry=registry;
         registry.register(weft_databricks::arithmetic::Arithmetic).expect("prior explicit arithmetic version remains unique");
         registry.register(weft_databricks::count_distinct::CountDistinct).expect("explicit distinct-count version remains unique");
+        registry
+    };
+
+    #[cfg(feature = "ashlar-databricks-count-having")]
+    let registry = {
+        let mut registry=registry;
+        registry.register(weft_databricks::arithmetic::Arithmetic).expect("prior explicit arithmetic version remains unique");
+        registry.register(weft_databricks::count_distinct::CountDistinct)
+            .expect("explicit required-count backend registration must be unique");
+        registry
+            .register(weft_databricks::count_having::CountHaving).expect("explicit distinct-count version remains unique");
         registry
     };
     #[cfg(feature = "test-original")]
