@@ -1,0 +1,41 @@
+{
+  "format": "weft-current-exact-build-tool-version-observation/0.1",
+  "sourceBuildCommandSha256": "1fd5580d6f86a0b456414fcaf8305ed7f624928a504bc121134c1fe9a06cd5fa",
+  "observations": [
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+        "-Vv"
+      ],
+      "openingClosingIdentity": {
+        "bytes": 414776,
+        "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+        "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea"
+      },
+      "observedAfter": "2026-10-10T21:22:58Z",
+      "observedBefore": "2026-10-10T21:22:58Z",
+      "exitCode": 0,
+      "stdout": "rustc 1.90.0 (1159e78c4 2025-09-14)\nbinary: rustc\ncommit-hash: 1159e78c4747b02ef996e55082b704c09b970588\ncommit-date: 2025-09-14\nhost: aarch64-apple-darwin\nrelease: 1.90.0\nLLVM version: 20.1.8\n",
+      "stdoutHex": "727573746320312e39302e30202831313539653738633420323032352d30392d3134290a62696e6172793a2072757374630a636f6d6d69742d686173683a20313135396537386334373437623032656639393665353530383262373034633039623937303538380a636f6d6d69742d646174653a20323032352d30392d31340a686f73743a20616172636836342d6170706c652d64617277696e0a72656c656173653a20312e39302e300a4c4c564d2076657273696f6e3a2032302e312e380a",
+      "stderrHex": ""
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "-V"
+      ],
+      "openingClosingIdentity": {
+        "bytes": 30854216,
+        "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6"
+      },
+      "observedAfter": "2026-10-10T21:22:58Z",
+      "observedBefore": "2026-10-10T21:22:58Z",
+      "exitCode": 0,
+      "stdout": "cargo 1.90.0 (840b83a10 2025-07-30)\n",
+      "stdoutHex": "636172676f20312e39302e30202838343062383361313020323032352d30372d3330290a",
+      "stderrHex": ""
+    }
+  ],
+  "scope": "Current version observations of byte-identical rustc/cargo identities retained by G. Tool-version identification is derived from same executable bytes; no build-environment replay, linker/cache/OS reconstruction or rebuild."
+}

@@ -3081,6 +3081,7 @@
         "scripts/distribution/check-paths-embedding-browser.mjs",
         "scripts/distribution/check-paths-embedding-cli.py",
         "scripts/distribution/check-paths-embedding-python.py",
+        "scripts/distribution/count_star_distribution.py",
         "scripts/distribution/describe-backend.py",
         "scripts/distribution/paths_keys_distribution.py",
         "scripts/distribution/test_paths_assembly.py",

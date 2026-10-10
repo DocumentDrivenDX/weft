@@ -1,0 +1,31 @@
+{
+  "format": "weft-count-star-assembly-landing-source-freeze/0.1",
+  "files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/count_star_distribution.py",
+      "bytes": 23704,
+      "sha256": "1f39b4b020bcccf527ce50d7c251cee83e95d693277a0bbf1d3b8268f58fe3f9"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/assemble-paths-distribution.py",
+      "bytes": 23381,
+      "sha256": "9b432126d76391cbe6e49a4b9a0b298a5f1613297f021ad823aa3ef3ad5e666e"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/distribution-count-star-assembly/test_assembly.py",
+      "bytes": 2872,
+      "sha256": "88439d934cfc4564bf64720d7ddc7fc9d533f9eac71b8394bfd6ab4588edc39b"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+      "bytes": 19784,
+      "sha256": "da17de824665b762847d38051186a01b0cb230276ba013cdb4a7a9f2f8a1b02d"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/.github/workflows/conformance.yml",
+      "bytes": 6163,
+      "sha256": "97ac70d871a8d7b49da4e53d877eee71d1d35cd0fbea2d84bbf7ab246a7f8ada"
+    }
+  ],
+  "scope": "Exact original four source A preserved; focused workflow integration amendment is fifth source. Actual candidate remains exact source A67 files."
+}

@@ -1,0 +1,83 @@
+{
+  "sourceCommit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688",
+  "resources": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-count-star-cli-boundaries.py",
+      "bytes": 8602,
+      "sha256": "3aa0033acea737d97038aefbf264a98f457771b34f10d3253202ed988d768629"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/distribution-count-star-boundaries/test_boundaries.py",
+      "bytes": 2066,
+      "sha256": "6b6d8fef69b3bf73c6d6b1751a77e95c5952706ee810100813678f700c42afa9"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-parity-g.py",
+      "bytes": 2541,
+      "sha256": "0b238f4b0cb5544f93cf669f9839562292d518c43fdb4ed52fdee84ee507bb9e"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-build.py",
+      "bytes": 6275,
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/weft-paths-keys",
+      "bytes": 8532672,
+      "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80"
+    },
+    {
+      "path": "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 18058560,
+      "sha256": "4158f03e1bae2b759f25a1ba1fbdab8bfb7161eba4caf22e28f0915986625bbc"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/source/crates/weft-runtime/src/paths_keys.rs",
+      "bytes": 15856,
+      "sha256": "67e797a7971e0dff95206f898e0b925a50b6faca5d4365529ef3c92a65058d51"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/source-inventory.json",
+      "bytes": 687929,
+      "sha256": "08e32444e85f71cb9e960d1731e41e7fe05d93d44d4b4f710c0c1dfbbe392c70"
+    },
+    {
+      "path": "/private/tmp/weft-count-star-build-20261010-b/cli-build-g-outcome.json",
+      "bytes": 439,
+      "sha256": "6289bf16689f4ca60c0c442e2cc5c0ae2e5f4e70efc284135e1377a63c9e6627"
+    }
+  ],
+  "captureModule": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-build.py",
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "LANG": "C",
+    "LC_ALL": "C",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TZ": "UTC"
+  },
+  "commands": [
+    {
+      "phase": "count-star-boundaries",
+      "argv": [
+        "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "-S",
+        "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-count-star-cli-boundaries.py",
+        "--binary",
+        "/private/tmp/weft-count-star-build-20261010-b/weft-paths-keys",
+        "--output",
+        "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.observations.jsonl"
+      ],
+      "cwd": "/private/tmp/weft-count-star-build-20261010-b",
+      "stdout": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.stdout.log",
+      "stderr": "/private/tmp/weft-count-star-build-20261010-b/count-star-boundaries-b.stderr.log",
+      "timeoutSeconds": 135
+    }
+  ],
+  "qualification": "Eight fresh fixed5dd CLI transport boundaries, raw outcomes retained before expected comparison. No build, package installation, native SQL or index authority. Child environment closed. Per-case deadline15s response4MiB stderr4KiB; outer capture16MiB. Input probes sequential <=16MiB+1; at most8 observations <=9MiB each.",
+  "uncertainties": [
+    "OS dynamic libraries are not hermetic.",
+    "Cooperating custody opening/closing pins, not adversarial filesystem protection.",
+    "Invalid JSON cannot select041, expected rejection uses original040 envelope."
+  ]
+}

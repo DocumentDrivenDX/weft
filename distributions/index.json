@@ -57,6 +57,25 @@
         "sha256": "03e897e9d9e0b849e3a480710a9a3cc440537d439e3ba1a25385c48c9fef2f27",
         "bytes": 34922
       }
+    },
+    {
+      "realizationId": "weft-5ddcebd-count-star-aarch64-apple-darwin-candidate",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "5ad944f609969e1183e8147b56141f0769a9cfd79b5dc65701fefe858713f743",
+        "bytes": 7733
+      },
+      "executable": {
+        "path": "bin/weft-paths-keys",
+        "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80",
+        "bytes": 8532672
+      },
+      "target": "aarch64-apple-darwin",
+      "assemblyCustody": {
+        "path": "assembly-custody.json",
+        "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca",
+        "bytes": 12344
+      }
     }
   ]
 }

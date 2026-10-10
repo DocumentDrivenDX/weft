@@ -1,0 +1,348 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/distribution-manifest.schema.json",
+  "$comment": "Closed inert distribution metadata only. Schema validity does not register or trust a realization, verify artifact bytes, establish full inventory/corpus coverage or discharge host/native obligations. Exact target/features/backend/schema/corpus correspondence and counts equations are independently admitted. Relative lexical paths do not establish symlink containment. Unknown build properties remain explicitly declared; no hermetic/deterministic build is inferred.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "weft-distribution/0.1"
+    },
+    "realizationId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "inventory": {
+          "type": "object",
+          "properties": {
+            "artifact": {
+              "$ref": "#/$defs/artifact"
+            },
+            "decodedSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "decodedBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "trackedFiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "artifact",
+            "decodedSha256",
+            "decodedBytes",
+            "trackedFiles"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "commit",
+        "inventory"
+      ],
+      "additionalProperties": false
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "release": {
+          "const": true
+        },
+        "target": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9_]+(?:-[A-Za-z0-9_.]+){2,}$"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9_][A-Za-z0-9_-]*$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "command": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096,
+            "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+          }
+        },
+        "tools": {
+          "$ref": "#/$defs/artifact"
+        },
+        "lockfiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifact"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "toolchain": {
+          "$ref": "#/$defs/artifact"
+        },
+        "effectiveEnvironment": {
+          "type": "object",
+          "properties": {
+            "observed": {
+              "type": "object",
+              "properties": {
+                "CARGO_HOME": {
+                  "type": "string",
+                  "maxLength": 4096,
+                  "pattern": "^[^\\u0000-\\u001f\\u007f]*$"
+                },
+                "RUSTUP_HOME": {
+                  "type": "string",
+                  "maxLength": 4096,
+                  "pattern": "^[^\\u0000-\\u001f\\u007f]*$"
+                },
+                "CARGO_TARGET_DIR": {
+                  "type": "string",
+                  "maxLength": 4096,
+                  "pattern": "^[^\\u0000-\\u001f\\u007f]*$"
+                },
+                "PATHPrefix": {
+                  "type": "string",
+                  "maxLength": 4096,
+                  "pattern": "^[^\\u0000-\\u001f\\u007f]*$"
+                }
+              },
+              "additionalProperties": false
+            },
+            "unknowns": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "minItems": 0,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "observed",
+            "unknowns"
+          ],
+          "additionalProperties": false
+        },
+        "platform": {
+          "type": "object",
+          "properties": {
+            "binaryFormat": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+            },
+            "machine": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+            },
+            "minimumOS": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+            },
+            "sdk": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+            },
+            "observedOS": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+            }
+          },
+          "required": [
+            "binaryFormat",
+            "machine",
+            "minimumOS",
+            "sdk",
+            "observedOS"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "release",
+        "target",
+        "features",
+        "command",
+        "tools",
+        "lockfiles",
+        "toolchain",
+        "effectiveEnvironment",
+        "platform"
+      ],
+      "additionalProperties": false
+    },
+    "executable": {
+      "$ref": "#/$defs/artifact"
+    },
+    "backendManifests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "publicSchemas": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "conformance": {
+      "type": "object",
+      "properties": {
+        "corpus": {
+          "type": "object",
+          "properties": {
+            "cases": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "compiled": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "blocked": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "responses": {
+              "$ref": "#/$defs/artifact"
+            },
+            "summary": {
+              "$ref": "#/$defs/artifact"
+            },
+            "custody": {
+              "$ref": "#/$defs/artifact"
+            }
+          },
+          "required": [
+            "cases",
+            "compiled",
+            "blocked",
+            "responses",
+            "summary",
+            "custody"
+          ],
+          "additionalProperties": false
+        },
+        "controls": {
+          "type": "object",
+          "properties": {
+            "cases": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "responses": {
+              "$ref": "#/$defs/artifact"
+            },
+            "summary": {
+              "$ref": "#/$defs/artifact"
+            },
+            "custody": {
+              "$ref": "#/$defs/artifact"
+            }
+          },
+          "required": [
+            "cases",
+            "responses",
+            "summary",
+            "custody"
+          ],
+          "additionalProperties": false
+        },
+        "transport": {
+          "$ref": "#/$defs/artifact"
+        }
+      },
+      "required": [
+        "corpus",
+        "controls",
+        "transport"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "format",
+    "realizationId",
+    "source",
+    "build",
+    "executable",
+    "backendManifests",
+    "publicSchemas",
+    "conformance"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\\/$)[^\\u0000-\\u001f\\u007f\\\\:]+$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
