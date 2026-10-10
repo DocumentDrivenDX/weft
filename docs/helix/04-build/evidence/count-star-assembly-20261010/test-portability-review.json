@@ -1,0 +1,10 @@
+{
+  "decision": "approve-test-only-portability-fix",
+  "freezeSha256": "149b906e4472a52f6246abf8dfd0ffe68d1cd08954c6afe1144244e055031140",
+  "ownedFiles": {
+    "tests/distribution-count-star-assembly/test_assembly.py": "4ddb58d1e6a538c1b7c11d1b8c51fee9fe054b7d821ded7816d72d6e66c17e93"
+  },
+  "independentCheckChunk": "fc2dc7",
+  "testsPassed": 5,
+  "review": "Exactly three TemporaryDirectory roots changed from macOS-specific /private/tmp to resolved platform temp root. Existing no-symlink guard and all five controls preserved. Source compiler, package67bytes, index and prior evidence unchanged; Linux CI validation awaits next owning run. Failed CI38087909418 retained."
+}
