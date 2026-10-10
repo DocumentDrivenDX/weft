@@ -701,14 +701,15 @@ pub(super) fn lower(
             .order
             .iter()
             .map(|f| {
-                if p.distinct {
-                    // DISTINCT makes only projected carriers visible to ORDER BY.
+                if p.distinct || (_context.target.id == crate::count_having::PROFILE && !p.groups.is_empty()) {
+                    // DISTINCT and this grouped count profile expose only projected carriers.
                     // Match original scan/Field identity; repeated positions use the first.
                     let index = p.outputs.iter().position(|o| matches!(&o.expression,
                         plan::Expression::Field { scan, identity } if scan == &f.scan && identity == &f.identity))
-                        .ok_or_else(|| fail("WFT-CAPABILITY", "DISTINCT ordering requires an exact projected Field"))?;
+                        .ok_or_else(|| fail("WFT-CAPABILITY", if p.distinct { "DISTINCT ordering requires an exact projected Field" } else { "Count-group ordering requires an exact projected Field" }))?;
                     let column = &columns[index];
-                    Ok(format!("{} ASC", binding::quote(column.carrier_name.as_deref().unwrap_or(&column.output_name))))
+                    let alias=binding::quote(column.carrier_name.as_deref().unwrap_or(&column.output_name));
+                    Ok(if p.distinct {format!("{alias} ASC")} else {format!("COLLATE({alias}, UTF8_BINARY) ASC")})
                 } else {
                     lower.expression(&field_expression(f)).map(|e| format!("{e} ASC"))
                 }

@@ -924,3 +924,28 @@ fn malformed_binding_refusals_use_public_phase_in_all_compile_versions() {
         }
     }
 }
+
+#[test]
+fn count_having_group_order_uses_exact_projected_carrier() {
+    for sql in [
+        "SELECT c.name AS group_name,COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>1 ORDER BY c.name",
+        "SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name ORDER BY c.name",
+    ] {
+        let r=media_compile(&media_request(sql,false));assert_eq!(r["status"],"compiled","{r}");
+        let query=r["sql"].as_str().unwrap();let suffix=query.split(" ORDER BY ").last().unwrap();
+        assert!(!suffix.contains("s0."),"{query}");
+        assert_eq!(suffix,if sql.contains("AS group_name"){ "COLLATE(`group_name`, UTF8_BINARY) ASC" }else{ "COLLATE(`name`, UTF8_BINARY) ASC" });
+    }
+}
+
+#[test]
+fn count_having_order_retains_quoted_alias_and_multiple_scan_identity() {
+    let quoted=media_compile(&media_request(r#"SELECT c.name AS "group name",COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name HAVING COUNT(DISTINCT c.name)>1 ORDER BY c.name"#,false));
+    assert_eq!(quoted["status"],"compiled","{quoted}");
+    assert!(quoted["sql"].as_str().unwrap().ends_with(" ORDER BY COLLATE(`group name`, UTF8_BINARY) ASC"));
+    let joined=media_compile(&media_request("SELECT c.name AS first_name,d.name AS second_name,COUNT(DISTINCT c.name) AS n FROM Customer c JOIN Customer d ON c.name=d.name GROUP BY c.name,d.name HAVING COUNT(DISTINCT c.name)>1 ORDER BY d.name,c.name",false));
+    assert_eq!(joined["status"],"compiled","{joined}");
+    assert!(joined["sql"].as_str().unwrap().ends_with(" ORDER BY COLLATE(`second_name`, UTF8_BINARY) ASC, COLLATE(`first_name`, UTF8_BINARY) ASC"));
+    let missing=media_compile(&media_request("SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c JOIN Customer d ON c.name=d.name GROUP BY c.name,d.name HAVING COUNT(DISTINCT c.name)>1 ORDER BY d.name",false));
+    assert_eq!(missing["status"],"blocked");assert!(missing.get("sql").is_none());
+}
