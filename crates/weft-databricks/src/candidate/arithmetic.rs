@@ -709,7 +709,7 @@ pub(super) fn lower(
                         .ok_or_else(|| fail("WFT-CAPABILITY", if p.distinct { "DISTINCT ordering requires an exact projected Field" } else { "Count-group ordering requires an exact projected Field" }))?;
                     let column = &columns[index];
                     let alias=binding::quote(column.carrier_name.as_deref().unwrap_or(&column.output_name));
-                    Ok(if p.distinct {format!("{alias} ASC")} else {format!("COLLATE({alias}, UTF8_BINARY) ASC")})
+                    Ok(if p.distinct {format!("{alias} ASC")} else {format!("{alias} COLLATE UTF8_BINARY ASC")})
                 } else {
                     lower.expression(&field_expression(f)).map(|e| format!("{e} ASC"))
                 }
