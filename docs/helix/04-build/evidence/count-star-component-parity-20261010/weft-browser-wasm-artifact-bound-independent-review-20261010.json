@@ -1,0 +1,15 @@
+{
+  "profile": "weft-browser-wasm-artifact-bound-independent-review/0.1",
+  "decision": "approve source delta only",
+  "base": "14c58146dad2e3aeb755c8035e91754a150be74c",
+  "owned_path": "scripts/distribution/check-paths-embedding-browser.mjs",
+  "sha256": "ebc2779bf86b533f83a0639c119a1204ba3c519de968f17c1fca19f5d877a377",
+  "checks": [
+    "Exact single WASM local artifact read bound4MiB\u219216MiB",
+    "Compiler response bound4MiB unchanged",
+    "Cases/request bound32MiB/16MiB unchanged",
+    "JS/wrapper4MiB unchanged",
+    "Node syntax check passed"
+  ],
+  "scope": "Sourceharness artifact cap only; no parity execution approval, no protocol/native/index/full49qualification claim"
+}
