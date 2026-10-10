@@ -1641,3 +1641,33 @@ nullable SUM output. Template0.1 keeps its earlier experimental behavior and
 refuses payload selectors; DeploymentIssued still denotes deployment catalog
 provenance, not payload or native qualification. Public security lowering remains
 closed; all original acceptance cases and the full goal remain binding.
+
+
+#### Rule domain/literal obligation candidate — template0.3
+
+The separate private template0.3 experiment includes template0.2 dispatch plus
+borrowed typed rule operand/disclosure dispatch. Each stored/context/constant
+operand domain and constant-transform output domain emits mandatory role/scalar/
+nullability/refinement-family duties. Constant operands and transforms also emit
+exact scalar-wrapper-family and typed absence/nonabsence verification duties.
+Only the selected source subset's constant transform revision0.1.0 is admitted
+by this dispatcher; unknown transform names/revisions refuse before expansion.
+Identity/endpoint terms retain their existing structural and actual key duties.
+
+Rule duty addresses frame the exact already-charged RulePath under rule-payload
+and include the individual payload address. Equal sides, populated false branches
+and identical disclosures at different ordered positions remain distinct. The
+fixed five-token stack buffer bounds address assembly before downstream charged
+encoding. Direct rule/literal visits, wrapper text, transform/revision text and
+all generated duty copies consume the existing issuer ledger. No payload JSON or
+normalized literal is copied or reparsed by the dispatcher. Original source/type
+admission remains responsible for exact values and refinements. Earlier
+template0.1/0.2 paths remain unchanged and reject new rule-only selectors.
+
+This closes occurrence-specific verification-demand extraction only. The exact
+original domain/literal remains in immutable typed owner custody; a family/absence
+selector is not a numeric-value equality proof or physical backend compatibility
+check. Native interpretation, complete authenticated profiles, original case
+procedure adequacy and complete backend qualification remain open. The existing
+conditional requirement-matching laws are not a Rust or database refinement
+proof. No public lowering or required acceptance promotion follows.

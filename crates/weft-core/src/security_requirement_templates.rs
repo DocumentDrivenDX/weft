@@ -97,13 +97,15 @@ fn path(p:&RulePath,b:&mut Budget)->Result<String> {
  for i in indices.iter().copied().chain(operand){b.charge(20)?;tokens.push(i.to_string());}
  b.encode(&tokens.iter().map(String::as_str).collect::<Vec<_>>())
 }
+fn profile_rule_selector_forbidden(p:&Profile,selector:Selector)->bool{p.version!="weft.security.requirement-templates/0.3.0"&&matches!(selector,Selector::Payload(s) if crate::security_payload_applicability::rule_only(s))}
 fn validate(p:&Profile,b:&mut Budget)->Result<()> {
  b.id(&p.version)?;b.id(&p.id)?;b.id(&p.target)?;b.charge(p.registration_json.len())?;
- if !matches!(p.version.as_str(),"weft.security.requirement-templates/0.1.0"|"weft.security.requirement-templates/0.2.0")||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
+ if !matches!(p.version.as_str(),"weft.security.requirement-templates/0.1.0"|"weft.security.requirement-templates/0.2.0"|"weft.security.requirement-templates/0.3.0")||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
  for case in &p.cases{b.id(case)?;}
  for (id,t) in &p.templates{
   b.id(id)?;b.id(&t.kind)?;b.id(&t.site)?;b.id(&t.failure)?;
   if p.version=="weft.security.requirement-templates/0.1.0"&&matches!(t.selector,Selector::Payload(_)){return Err(fail());}
+  if profile_rule_selector_forbidden(p,t.selector){return Err(fail());}
   if t.cases.is_empty()||t.cases.len()>4096||t.prerequisites.len()>4096{return Err(fail());}
   for c in &t.cases{b.id(c)?;if !p.cases.contains(c){return Err(fail());}}
   for dependency in &t.prerequisites{b.id(dependency)?;if p.templates.get(dependency).is_none_or(|d|d.selector!=t.selector){return Err(fail());}}
@@ -190,8 +192,10 @@ fn issue_budget_deployment<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c
  }
  // Structural rules expand all nodes, including false/empty branches and disclosures.
  let rules=crate::security_rule_occurrences::issue(owner)?;
- for ((source,address),payload) in rules.entries(){let occurrence=path(address,&mut b.budget)?;for scope in owner.demands().get(*source).ok_or_else(fail)?{b.emit(node(payload),source,scope,&occurrence,owner.candidates(scope).ok_or_else(fail)?)?;}}
- if profile.version=="weft.security.requirement-templates/0.2.0"{crate::security_payload_applicability::visit(owner,&mut PayloadDispatcher{owner,builder:&mut b})?;}
+ for ((source,address),payload) in rules.entries(){let occurrence=path(address,&mut b.budget)?;for scope in owner.demands().get(*source).ok_or_else(fail)?{b.emit(node(payload),source,scope,&occurrence,owner.candidates(scope).ok_or_else(fail)?)?;}
+  if profile.version=="weft.security.requirement-templates/0.3.0"{crate::security_payload_applicability::rule(source,payload,&occurrence,&mut PayloadDispatcher{owner,builder:&mut b})?;}
+ }
+ if matches!(profile.version.as_str(),"weft.security.requirement-templates/0.2.0"|"weft.security.requirement-templates/0.3.0"){crate::security_payload_applicability::visit(owner,&mut PayloadDispatcher{owner,builder:&mut b})?;}
  for cap in coverage.selected_capabilities(){b.budget.id(cap)?;b.emit(Selector::Selected,cap,&CoverageScope::Application,"deployment",&BTreeSet::from([cap.clone()]))?;}
  let remaining=(b.budget.work,b.budget.text);Ok((Issued{owner,profile,required:b.result},remaining.0,remaining.1))
 }

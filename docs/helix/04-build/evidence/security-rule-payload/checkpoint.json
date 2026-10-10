@@ -1,0 +1,29 @@
+{
+  "status": "qualified-rule-payload-demand-extraction-component",
+  "templateVersion": "weft.security.requirement-templates/0.3.0",
+  "covers": [
+    "US-056-AC7",
+    "US-056-AC10"
+  ],
+  "componentEvidenceOnly": true,
+  "testsPassed": 588,
+  "groups": 44,
+  "coreTestsPassed": 245,
+  "newControls": 4,
+  "sourcePins": 842,
+  "independentRuleDutyGolden": 28,
+  "selectedBackendCasesPending": 42,
+  "requiredAcceptanceProgress": "26/132 historical; unchanged",
+  "acceptancePromotion": false,
+  "receipts": {
+    "astra-review.json": "b7aa794a4e942946055881dcf59d1eb92dc666ffa897e5d70b125c5bb22682d0",
+    "development-attempts.json": "cb28822f3ae2e66ebcf5da4faceb034ea3ff88eb5d9c11669ab32f81f9b1f3d6",
+    "development-controls.log": "9d8e1cf1330e1793b72c7749566f4100b1ffae3d63965f806671138f6009b995",
+    "development-corrected.log": "72a9429176de167dca4c2b7eccfd5ef8f9c3adc856a72c5a2abba7732a0f6e1f",
+    "development-development.log": "5b3ace1c1089291af0c9ffadb4c517fe6e69b7a132a9d101a26a9d20ad180973",
+    "spec-check.log": "4d7687d1dd58669070b91970c0d496d4ed2b3ad4ea55d92ffbf5bdb18c228f9a",
+    "start.json": "e41b4ae27e90fb42fdc9aa64f8a869ac73f6d8bb286964c52bda391562555937",
+    "terminal.json": "dc437f999983037fa7c9099e4d959506c159af40ce98d1d67a424c72e88a376e",
+    "workspace.log": "5ed2e1dac1922c235b4651e1ac9f6d3d296a4333bbfd92985a09c3ae2323957e"
+  }
+}

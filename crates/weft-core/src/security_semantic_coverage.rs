@@ -1286,4 +1286,33 @@ mod tests{
 
  }
 
+ #[test]
+ fn rule_payload_v3_matches_independent_operand_disclosure_golden_and_all_omissions_refuse(){
+  use crate::security_payload_applicability::{Selector as P,Role,Scalar,Nullability,Facet};
+  use crate::security_requirement_templates::{Profile,Template,Selector,issue};
+  use crate::security_obligation_sources::OwnerEventKind as E;
+  with_mutated_context("SELECT r.salary FROM Resource r",|f|{
+   f["policy"]["rules"].as_array_mut().unwrap().truncate(1);let active=json!({"documentId":"domain","moduleId":"m","elementId":"active"});let salary=json!({"documentId":"domain","moduleId":"m","elementId":"salary"});f["resolution"]["ontology"]["context"]=json!([active.clone()]);
+   f["policy"]["rules"][0]["condition"]=json!({"op":"and","args":[{"op":"literal","value":false},{"op":"eq","left":{"kind":"context","field":active},"right":{"kind":"constant","field":active,"value":{"boolean":false}}},{"op":"eq","left":{"kind":"resource","field":salary},"right":{"kind":"constant","field":salary,"value":{"integerToken":"9007199254740993"}}}]});
+   f["policy"]["rules"][0]["disclosure"]=json!([{"field":salary,"disposition":{"kind":"transformed","transform":"constant","version":"0.1.0","field":salary,"value":{"integerToken":"0"}}},{"field":{"documentId":"domain","moduleId":"m","elementId":"resourceId"},"disposition":{"kind":"transformed","transform":"constant","version":"0.1.0","field":salary,"value":{"integerToken":"0"}}}]);
+  },|ctx,m|{with_registered_coverage(ctx,m,&["all".into()],|coverage|{
+   let owner=crate::security_obligation_sources::issue_demands(coverage).unwrap();let mut templates=BTreeMap::new();
+   let mut insert=|selector:Selector|{let id=format!("{selector:?}");templates.insert(id,Template{selector,kind:format!("{selector:?}"),owner:crate::backend::ObligationOwner::Host,site:"host".into(),failure:"WFT-FIXTURE-RULE-PAYLOAD".into(),cases:BTreeSet::from(["semantic-case".into()]),prerequisites:BTreeSet::new()});};
+   for e in [E::PrimaryAction,E::Policy,E::Ontology,E::Query,E::Model,E::Module,E::Scan,E::Projection,E::QueryField,E::Action,E::Rule,E::Key,E::KeyField,E::Field,E::Context,E::Association,E::Operator,E::Output]{insert(Selector::Event(e));}
+   for selector in [Selector::Selected,Selector::Permit,Selector::False,Selector::And,Selector::Equal,Selector::ContextOperand,Selector::Constant,Selector::StoredOperand,Selector::Transformed]{insert(selector);}
+   // Authored source applicability inventory, never inferred from issued duties.
+   for p in [P::Role(Role::Stored),P::Role(Role::Context),P::Role(Role::KeyMember),P::Role(Role::Projection),P::Role(Role::ContextOperand),P::Role(Role::ConstantOperand),P::Role(Role::FieldOperand),P::Role(Role::TransformOutput),P::Scalar(Scalar::Boolean),P::Scalar(Scalar::String),P::Scalar(Scalar::Integer),P::Nullability(Nullability::Required),P::Facet(Facet::IntegerWidth),P::Protection(false),P::Protection(true),P::KeyPrimary(None),P::OrderedKeyMember,P::Output(crate::security_payload_applicability::Output::Field),P::OutputScalar(Scalar::Integer),P::OutputAvailability(crate::security_payload_applicability::Availability::Required),P::OutputNullable(false),P::OutputFacet(Facet::IntegerWidth),P::Literal(Scalar::Boolean,false),P::Literal(Scalar::Integer,false),P::ConstantTransformV1]{insert(Selector::Payload(p));}
+   let mut profile=Profile{version:"weft.security.requirement-templates/0.3.0".into(),id:"rule-payload".into(),registration_json:coverage.declaration().manifest_json().into(),target:"fixture".into(),capabilities:BTreeMap::from([("all".into(),templates.keys().cloned().collect())]),templates,cases:BTreeSet::from(["semantic-case".into()])};
+   let source=json!(["rule","s0","read","reader"]).to_string();let mut golden=BTreeSet::new();let mut wanted=BTreeSet::new();
+   for (path,role,family,integer,literal,transform) in [(json!(["operand","1","0"]),Role::ContextOperand,Scalar::Boolean,false,false,false),(json!(["operand","1","1"]),Role::ConstantOperand,Scalar::Boolean,false,true,false),(json!(["operand","2","0"]),Role::FieldOperand,Scalar::Integer,true,false,false),(json!(["operand","2","1"]),Role::ConstantOperand,Scalar::Integer,true,true,false),(json!(["disclosure","0"]),Role::TransformOutput,Scalar::Integer,true,true,true),(json!(["disclosure","1"]),Role::TransformOutput,Scalar::Integer,true,true,true)]{
+    let path=path.to_string();let mut duties=vec![(P::Role(role),vec!["payload","role"]),(P::Scalar(family),vec!["payload","scalar"]),(P::Nullability(Nullability::Required),vec!["payload","nullability"])];if integer{duties.push((P::Facet(Facet::IntegerWidth),vec!["payload","facet","integerWidth"]));}if literal{duties.push((P::Literal(family,false),vec!["payload","literal"]));}if transform{duties.push((P::ConstantTransformV1,vec!["payload","transform-revision"]));}
+    for (p,a) in duties{wanted.insert(p);let mut address=vec!["rule-payload",path.as_str()];address.extend(a);let address=json!(address).to_string();let template=format!("{:?}",Selector::Payload(p));golden.insert((source.clone(),scan_scope("s0","read"),template.clone(),json!([template,address]).to_string()));}
+   }
+   assert_eq!(golden.len(),28);let issued=issue(&owner,&profile).unwrap();let actual=issued.required().instances.keys().filter(|i|i.source==source&&i.kind.starts_with("Payload(")).map(|i|(i.source.clone(),i.scope.clone(),i.kind.clone(),i.occurrence.clone())).collect::<BTreeSet<_>>();assert_eq!(actual,golden);
+   let (rw,rt)=crate::security_requirement_templates::test_budget(&owner,&profile,1_000_000,16_000_000).unwrap();let (w,t)=(1_000_000-rw,16_000_000-rt);assert!(crate::security_requirement_templates::test_budget(&owner,&profile,w,t).is_ok());assert!(crate::security_requirement_templates::test_budget(&owner,&profile,w-1,t).is_err());assert!(crate::security_requirement_templates::test_budget(&owner,&profile,w,t-1).is_err());
+   for p in wanted{let id=format!("{:?}",Selector::Payload(p));let mut missing=profile.clone();missing.templates.remove(&id);missing.capabilities.get_mut("all").unwrap().remove(&id);assert!(issue(&owner,&missing).is_err());let mut no_origin=profile.clone();no_origin.capabilities.get_mut("all").unwrap().remove(&id);assert!(issue(&owner,&no_origin).is_err());}
+   for old in ["weft.security.requirement-templates/0.1.0","weft.security.requirement-templates/0.2.0"]{profile.version=old.into();assert!(issue(&owner,&profile).is_err());}
+  });});
+ }
+
 }

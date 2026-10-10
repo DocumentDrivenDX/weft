@@ -1,0 +1,42 @@
+{
+  "scope": "Diagnostic logs only. Failed-attempt source snapshots were not captured; only the final fresh frozen workspace run qualifies exact sources.",
+  "correction": "Keep original duplicate target disclosure refusal; actual admitted fixture uses distinct target Fields with identical output Field/value. Primitive repeated-target test does not qualify source admission.",
+  "attempts": [
+    {
+      "log": "development-development.log",
+      "sha256": "5b3ace1c1089291af0c9ffadb4c517fe6e69b7a132a9d101a26a9d20ad180973",
+      "summaries": [
+        {
+          "status": "ok",
+          "passed": 241,
+          "failed": 0
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-controls.log",
+      "sha256": "9d8e1cf1330e1793b72c7749566f4100b1ffae3d63965f806671138f6009b995",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 244,
+          "failed": 1
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-corrected.log",
+      "sha256": "72a9429176de167dca4c2b7eccfd5ef8f9c3adc856a72c5a2abba7732a0f6e1f",
+      "summaries": [
+        {
+          "status": "ok",
+          "passed": 245,
+          "failed": 0
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    }
+  ]
+}

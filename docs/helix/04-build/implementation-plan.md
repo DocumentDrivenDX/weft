@@ -398,3 +398,35 @@ Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures.
 Development logs retain corrections as diagnostics without failed-attempt source
 snapshots; only the final fresh frozen run supports source-qualified test claims.
 No original required acceptance case is promoted and the full goal stays active.
+
+
+#### B-008 typed rule domain/literal demand extraction
+
+Template0.3 adds actual borrowed Field/Context/Constant operand and constant0.1.0
+transform domain/literal duties under CONTRACT-006. Earlier template experiments
+retain their meaning. Three direct controls cover all five wrapper families and
+typed absence, required-null/wrapper/transform refusal, independent Boolean
+4-visit/7-text and null3-visit/0-text pre-encoding ledgers, and identical disclosure
+values at distinct ordered addresses. An actual-owner golden authors28 exact
+source/scope/kind/address duties across both Equal operands and two repeated
+constant transforms (distinct disclosed target Fields, identical output Field/value)
+despite a populated false condition. Duplicate target disclosure in one source
+rule remains refused by original type admission; the direct repeated-target
+primitive test does not widen source admission. Every applicable
+selector and origin omission refuses, as do legacy rule selectors and whole0.3
+ledger minus-one limits. These tests qualify demand extraction, not literal
+normalization or native representability. Frozen workspace execution and
+independent review are required before landing. All132 acceptance cases remain
+binding; historical required acceptance stays26/132 and the full goal stays active.
+
+Final [retained checkpoint](evidence/security-rule-payload/checkpoint.json):588
+release workspace tests across44 groups,245 core, all four new controls passing,
+all842 freshly frozen inputs unchanged, zero failed/ignored/measured/filtered.
+Astra ultra independently audited source/pin/log custody,184 Rust/Cargo paths
+and all terminal results with no remaining landing blocker in the conditional
+demand-extraction scope. The original duplicate target admission guard remains
+unchanged. Specification checks passed51 artifacts/31 schemas/30 criteria/636
+fixtures. Development correction logs are diagnostic only without failed-source
+snapshots; the final fresh run provides source-qualified evidence. No numeric/native
+compatibility, authenticated profile, Rust/database refinement or original required
+acceptance case is promoted; the full goal remains active.

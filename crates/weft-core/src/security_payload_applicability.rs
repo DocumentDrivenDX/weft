@@ -8,7 +8,7 @@ pub(crate) enum Scalar{Boolean,String,Integer,Decimal,Binary}
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
 pub(crate) enum Nullability{Required,AbsentAllowed,Unspecified}
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
-pub(crate) enum Role{Stored,Context,KeyMember,Projection,QueryField,Operator}
+pub(crate) enum Role{Stored,Context,KeyMember,Projection,QueryField,Operator,FieldOperand,ContextOperand,ConstantOperand,TransformOutput}
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
 pub(crate) enum Facet{Length,Precision,Scale,IntegerWidth,Range,CollectionSize,AllowedValues}
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
@@ -21,7 +21,7 @@ pub(crate) enum Selector{
  Role(Role),Scalar(Scalar),Nullability(Nullability),Facet(Facet),Protection(bool),
  KeyPrimary(Option<bool>),OrderedKeyMember,Operator(QueryOperator,bool),
  Output(Output),OutputScalar(Scalar),OutputNullable(bool),OutputAvailability(Availability),OutputFacet(Facet),
- AssociationEndpoint,AssociationEndpointMember,
+ AssociationEndpoint,AssociationEndpointMember,Literal(Scalar,bool),ConstantTransformV1,
 }
 pub(crate) trait Sink{
  fn charge(&mut self,bytes:usize)->Result<()>;
@@ -59,6 +59,42 @@ pub(crate) fn output(source:&str,selected:&crate::application_ir::Output,plan:&c
    sink.duty(source,Selector::Output(kind),&["payload","output-kind"])?;
    let family=match t.family{Family::Boolean=>Scalar::Boolean,Family::String=>Scalar::String,Family::Integer=>Scalar::Integer,Family::Decimal=>Scalar::Decimal};sink.duty(source,Selector::OutputScalar(family),&["payload","output-scalar"])?;sink.duty(source,Selector::OutputNullable(t.nullable),&["payload","output-nullable"])?;facets(source,Some(&t.facets),true,sink)?;
  Ok(())
+}
+
+/// New selectors are reserved for the separate rule-payload template0.3 experiment.
+pub(crate) fn rule_only(selector:Selector)->bool{matches!(selector,Selector::Role(Role::FieldOperand|Role::ContextOperand|Role::ConstantOperand|Role::TransformOutput)|Selector::Literal(..)|Selector::ConstantTransformV1)}
+struct At<'a,S>{address:&'a str,sink:&'a mut S}
+impl<S:Sink> Sink for At<'_,S>{
+ fn charge(&mut self,bytes:usize)->Result<()>{self.sink.charge(bytes)}
+ fn duty(&mut self,source:&str,selector:Selector,address:&[&str])->Result<()>{
+  if address.len()>3{return Err(fail());}let mut tokens=["";5];tokens[0]="rule-payload";tokens[1]=self.address;tokens[2..2+address.len()].copy_from_slice(address);
+  self.sink.duty(source,selector,&tokens[..2+address.len()])
+ }
+}
+fn literal(source:&str,domain:&Value,value:&Value,sink:&mut impl Sink)->Result<()> {
+ sink.charge(0)?;let family=scalar(&domain["scalarType"])?;
+ if value.is_null(){if domain["nullability"]!="absent-allowed"{return Err(fail());}return sink.duty(source,Selector::Literal(family,true),&["payload","literal"]);}
+ let object=value.as_object().ok_or_else(fail)?;if object.len()!=1{return Err(fail());}
+ let (name,value)=object.iter().next().ok_or_else(fail)?;sink.charge(name.len())?;
+ let wrapper=match family{Scalar::Boolean=>"boolean",Scalar::String=>"string",Scalar::Integer=>"integerToken",Scalar::Decimal=>"decimalToken",Scalar::Binary=>"binaryHex"};
+ if name!=wrapper{return Err(fail());}
+ if family==Scalar::Boolean{if !value.is_boolean(){return Err(fail());}}else{sink.charge(value.as_str().ok_or_else(fail)?.len())?;}
+ // Exact literal interpretation/refinements were checked by logical source admission.
+ // This visitor does not renormalize or assert native representation compatibility.
+ sink.duty(source,Selector::Literal(family,false),&["payload","literal"])
+}
+pub(crate) fn rule(source:&str,payload:&crate::security_rule_occurrences::RulePayload<'_>,address:&str,sink:&mut impl Sink)->Result<()> {
+ use crate::{security_rule_occurrences::RulePayload as R,security_ir::{Term,Disposition}};
+ let mut at=At{address,sink};at.charge(0)?;
+ match payload{
+  R::Operand(Term::Field{domain:d,..})=>domain(source,d,Role::FieldOperand,&mut at)?,
+  R::Operand(Term::Context{domain:d,..})=>domain(source,d,Role::ContextOperand,&mut at)?,
+  R::Operand(Term::Constant{domain:d,literal:v,..})=>{domain(source,d,Role::ConstantOperand,&mut at)?;literal(source,d,v,&mut at)?;},
+  R::Disclosure{disposition:Disposition::Transformed{transform,version,domain:d,literal:v,..},..}=>{
+   at.charge(transform.len())?;at.charge(version.len())?;if transform!="constant"||version!="0.1.0"{return Err(fail());}
+   domain(source,d,Role::TransformOutput,&mut at)?;literal(source,d,v,&mut at)?;at.duty(source,Selector::ConstantTransformV1,&["payload","transform-revision"])?;
+  },_=>{}
+ }Ok(())
 }
 /// Sources/borrowed payloads come exclusively from the actual owner. Facet values,
 /// action names, ordered members, transforms and full types remain there intact.
@@ -110,4 +146,32 @@ mod tests{
   for v in [json!({"scalarType":"floating","nullability":"required","cardinality":"one"}),json!({"scalarType":"string","nullability":"nullable","cardinality":"one"}),json!({"scalarType":"integer","nullability":"required","cardinality":"one","facets":{"nativeGuess":true}}),json!({"scalarType":"integer","nullability":"required","cardinality":"one","allowedValues":{}})]{assert!(domain("s",&v,Role::Stored,&mut Collected::default()).is_err());}
   assert!(protection("s",&json!({"protection":"inferred"}),&mut Collected::default()).is_err());
  }
+ #[test]
+ fn rule_literals_keep_all_wrappers_typed_absence_and_independent_small_ledger(){
+  use crate::{security_ir::Term,security_rule_occurrences::RulePayload as R,security_ontology::SecurityRef};
+  let field=SecurityRef{document_id:"d".into(),module_id:"m".into(),element_id:"f".into()};
+  for (name,family,value) in [("boolean",Scalar::Boolean,json!({"boolean":false})),("string",Scalar::String,json!({"string":"𝄞"})),("integer",Scalar::Integer,json!({"integerToken":"9007199254740993"})),("decimal",Scalar::Decimal,json!({"decimalToken":"1.2300e2"})),("binary",Scalar::Binary,json!({"binaryHex":"00Ab"}))]{
+   let d=json!({"cardinality":"one","scalarType":name,"nullability":"required","facets":{},"allowedValues":null});let t=Term::Constant{field:field.clone(),domain:d,literal:value};let mut out=Collected::default();rule("s",&R::Operand(&t),"operand-address",&mut out).unwrap();
+   assert_eq!(out.duties.iter().map(|(s,_)|*s).collect::<Vec<_>>(),vec![Selector::Role(Role::ConstantOperand),Selector::Scalar(family),Selector::Nullability(Nullability::Required),Selector::Literal(family,false)]);
+   assert!(out.duties.iter().all(|(_,a)|a[0]=="rule-payload"&&a[1]=="operand-address"));
+   if family==Scalar::Boolean{assert_eq!((out.visits,out.text),(4,7));}
+   let t=Term::Constant{field:field.clone(),domain:json!({"cardinality":"one","scalarType":name,"nullability":"absent-allowed","facets":{},"allowedValues":null}),literal:Value::Null};let mut out=Collected::default();rule("s",&R::Operand(&t),"operand-address",&mut out).unwrap();assert_eq!(out.duties.last().unwrap().0,Selector::Literal(family,true));assert_eq!((out.visits,out.text),(3,0));
+  }
+ }
+ #[test]
+ fn rule_literals_refuse_wrong_wrappers_required_absence_and_unknown_transform_revision(){
+  use crate::{security_ir::Disposition,security_rule_occurrences::RulePayload as R,security_ontology::SecurityRef};
+  let d=json!({"cardinality":"one","scalarType":"integer","nullability":"required","facets":{},"allowedValues":null});
+  for value in [Value::Null,json!({"string":"1"}),json!({"integerToken":1}),json!({"integerToken":"1","other":true})]{assert!(literal("s",&d,&value,&mut Collected::default()).is_err());}
+  let f=SecurityRef{document_id:"d".into(),module_id:"m".into(),element_id:"f".into()};
+  for (transform,version) in [("redact","0.1.0"),("constant","0.2.0")]{let v=Disposition::Transformed{transform:transform.into(),version:version.into(),output_field:f.clone(),domain:d.clone(),literal:json!({"integerToken":"1"})};let mut out=Collected::default();assert!(rule("s",&R::Disclosure{field:&f,disposition:&v},"disclosure-address",&mut out).is_err());assert!(out.duties.is_empty());}
+ }
+ #[test]
+ fn rule_occurrence_frames_keep_equal_values_at_distinct_disclosures_separate(){
+  use crate::{security_ir::Disposition,security_rule_occurrences::RulePayload as R,security_ontology::SecurityRef};
+  let f=SecurityRef{document_id:"d".into(),module_id:"m".into(),element_id:"f".into()};let v=Disposition::Transformed{transform:"constant".into(),version:"0.1.0".into(),output_field:f.clone(),domain:json!({"cardinality":"one","scalarType":"boolean","nullability":"required","facets":{},"allowedValues":null}),literal:json!({"boolean":false})};
+  let mut out=Collected::default();for path in ["[\"disclosure\",\"0\"]","[\"disclosure\",\"1\"]"]{rule("s",&R::Disclosure{field:&f,disposition:&v},path,&mut out).unwrap();}
+  let addresses=out.duties.iter().map(|(_,a)|a.clone()).collect::<std::collections::BTreeSet<_>>();assert_eq!(addresses.len(),10);assert_eq!(out.duties.iter().filter(|(p,_)|*p==Selector::ConstantTransformV1).count(),2);
+ }
+
 }
