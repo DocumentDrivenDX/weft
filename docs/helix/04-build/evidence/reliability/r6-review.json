@@ -1,33 +1,32 @@
 {
-  "chunk": "R6",
-  "reviewer": "Astra Ultra (gpt-6-astra, ultra)",
-  "verdict": "approved for commit and push; final hosted CI required",
-  "materialFindingsRemaining": [],
+  "chunk": "current-main-integration-final-local-qualification",
+  "reviewer": "Astra Ultra",
+  "verdict": "approved-local-qualification",
+  "materialFindingsRemaining": 0,
+  "qualifiedSourceCommit": "858323b24749533b38c890d329599851cb9b4d3c",
+  "priorReceiptsAtCommit": "858323b24749533b38c890d329599851cb9b4d3c",
+  "hostQualificationSha256": "8326924556ad739c236a41fc37b5e088639d897d36a554032db157912a66ae35",
+  "originalFormalQualificationSha256": "14a670dc245211fb9785408fee4d428b645431befa363043d7bc7eb729c9bf96",
+  "verified": {
+    "currentInputs": 2620,
+    "historicalSourceBlobs": 111,
+    "ordinaryCases": 2181,
+    "libraryResourceSecurityControls": 17,
+    "cliResponseControls": 16,
+    "cliInputLimitRefusals": 1,
+    "formalProperties": 10,
+    "actualExactRustCorrespondenceTests": 13
+  },
+  "compilerAndHostRevision": {
+    "kind": "sha256",
+    "value": "419b5cef7210d4bd848efb02b669814a2b479950a507ac2bf203d769539191e8",
+    "scope": "compiler-and-host-source"
+  },
   "evidence": {
-    "r6-hosts.json": "b4198cee64cd884b5bb09e98ddd1187158c36230a94dac9414bc1f9ae451140a",
-    "r6-inputs.json": "3794911a7da5cc19b350437045123e82191a21aa20465a73cb18d680b55f2b69",
-    "r6-tests.json": "1f535deba6db6f79a3e3f701a2d32c5bd5c4f0d113b5513a223a3fc7b53b3875"
+    "host": "r6-hosts.json",
+    "inputs": "r6-inputs.json",
+    "tests": "r6-tests.json"
   },
-  "verified": [
-    "1639 current inputs and111 anchored historical source blobs",
-    "2181 CLI/native Python/actual Chromium full response joins and artifact identities",
-    "Independent13-case CLI/native/Chromium refusal replay",
-    "354 candidate and355 qualified workspace tests, no failures/ignored/filtered",
-    "469UNSAT/10SAT and10 actual Rust correspondence tests,19 explicit frozen inputs",
-    "11normal/optimized custody controls;3normal/optimized host controls;15module controls;governed allocation;feature conflicts;45retained components/136references"
-  ],
-  "workspaceScope": {
-    "compilerInputs": "Rust/Cargo inputs unchanged from7ae097a; workspace runs overlapped host-only tooling repairs and do not claim exercise of final host scripts",
-    "candidate": {
-      "runId": "750f8a3f54c7480c8acb1d62c37a7117",
-      "diagnosticRevision": "a7f374db83cbce816d554184ec95974aa50ed7a499bf29669e6a7dfd1321d860"
-    },
-    "qualified": {
-      "runId": "5d27cb5cc51440609131964db0d0a80d",
-      "diagnosticRevision": "112ce83e5839420a3b12ce187a1b36444ad1df32fda9df2bc506c09bcf7bca79"
-    }
-  },
-  "failedAttempt": "e481b02ad05f448f89d1d19bacfbffd9 failed isolated pip install; no qualification issued; separate from passing fresh run0373015f4f4e43288d6a3d5808216e6d",
-  "finalGate": "Terminal successful required compiler-and-evidence hosted job at final pushed head SHA. Final task completion records URL/SHA without recursive receipt commit.",
-  "limits": "Native database execution/released packages/fullsecurity acceptance not qualified. FR19\u201322 open;public security activation blocked."
+  "finalGate": "Exact new-head hosted CI and ancestry-preserving main merge remain required. These generated outputs are excluded from the qualified source closure; source and input identities must remain unchanged.",
+  "limits": "Local rebuilt public-host parity and retained historical custody; no current database execution, native security enforcement or package release. Final exact-head hosted CI remains required."
 }
