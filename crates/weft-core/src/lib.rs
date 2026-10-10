@@ -102,3 +102,5 @@ pub fn prepare_and_resolve_application(
     let plan = application_resolve::resolve(&catalog, query, parameters, profile)?;
     Ok((catalog, plan))
 }
+
+mod path_ir;
