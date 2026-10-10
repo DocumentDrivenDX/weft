@@ -31,6 +31,12 @@ jobs:
         run: bun run specs:check
       - name: Enforce module boundaries and negative controls
         run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
+      - name: Install pinned host diagnostics dependencies
+        run: python -m pip install -r scripts/reliability/requirements.txt
+      - name: Actual SDK diagnostics, receiver and failure controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_diagnostics.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_diagnostics.py -v
       - name: Runner configuration and fail-closed controls
         run: |
           PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_config.py -v

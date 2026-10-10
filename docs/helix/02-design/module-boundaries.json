@@ -2341,9 +2341,14 @@
         "scripts/reliability/__init__.py",
         "scripts/reliability/cargo.py",
         "scripts/reliability/config.py",
+        "scripts/reliability/diagnostics.py",
         "scripts/reliability/mutations.py",
         "scripts/reliability/process.py",
+        "scripts/reliability/requirements.txt",
+        "scripts/reliability/retrieve.py",
         "scripts/reliability/test_config.py",
+        "scripts/reliability/test_diagnostics.py",
+        "scripts/reliability/transport.py",
         "scripts/run-b001.sh",
         "scripts/run-b002.sh",
         "scripts/run-b002a.sh",
@@ -2416,6 +2421,9 @@
         "tests/qualify-and-evolve/unsigned-reconcile-controls.py",
         "tests/qualify-and-evolve/verify-qualified-registrations.py",
         "tests/qualify-and-evolve/warehouse-capture-controls.py"
+      ],
+      "configs": [
+        "scripts/reliability/requirements.txt"
       ]
     }
   ],

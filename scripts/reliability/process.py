@@ -17,14 +17,15 @@ class Result:
     duration_ms: int
     captured: bytes = b""
 
-def run(command:list[str], cwd:pathlib.Path, env:dict[str,str], timeout:float, needles:tuple[str,...]=(), filters:tuple[str,...]=(), capture_limit:int=0) -> Result:
+def run(command:list[str], cwd:pathlib.Path, env:dict[str,str], timeout:float, needles:tuple[str,...]=(), filters:tuple[str,...]=(), capture_limit:int=0, input_data:bytes|None=None, cancel=None) -> Result:
     if os.name!='posix':raise RuntimeError('unsupported host')
     max_tail=max([len(n.encode()) for n in needles]+[1])-1
     if max_tail>4096:raise ValueError('invalid scanner signature')
     if not 0<=capture_limit<=256:raise ValueError('invalid capture limit')
     captured=b''
+    if input_data is not None and (type(input_data)!=bytes or len(input_data)>8192):raise ValueError('invalid process input')
     start=time.monotonic(); deadline=start+timeout
-    process=subprocess.Popen(command,cwd=cwd,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True)
+    process=subprocess.Popen(command,cwd=cwd,env=env,stdin=subprocess.PIPE if input_data is not None else None,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True)
     selector=selectors.DefaultSelector();selector.register(process.stdout,selectors.EVENT_READ)
     os.set_blocking(process.stdout.fileno(),False)
     tail=b'';line=b'';found=set();failed_filters=set();selected=passed=failed=ignored=filtered=total=0
@@ -40,9 +41,12 @@ def run(command:list[str], cwd:pathlib.Path, env:dict[str,str], timeout:float, n
         if match:
             a,b,c,d=map(int,match.groups());passed+=a;failed+=b;ignored+=c;filtered+=d
     try:
+        if input_data is not None:
+            try:process.stdin.write(input_data);process.stdin.close()
+            except BrokenPipeError:pass
         while selector.get_map() or process.poll() is None:
             now=time.monotonic()
-            if now>=deadline and kill_deadline is None:
+            if (now>=deadline or (cancel is not None and cancel.is_set())) and kill_deadline is None:
                 timed_out=True;kill_deadline=now+1
                 try:os.killpg(process.pid,signal.SIGTERM)
                 except ProcessLookupError:pass

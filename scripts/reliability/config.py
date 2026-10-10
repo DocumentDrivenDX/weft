@@ -27,6 +27,9 @@ class Config:
         result['PATH'] = str(self.cargo.parent) + os.pathsep + result.get('PATH','')
         return result
 
+    def validate_diagnostics_environment(self) -> None:
+        if any(key.startswith('OTEL_') for key in os.environ):raise ConfigurationError()
+
     def validate_repository(self, root:pathlib.Path) -> None:
         try:
             source=root.resolve()
@@ -61,7 +64,7 @@ class Config:
 _FIELDS={f.name for f in dataclasses.fields(Config)}
 _REQUIRED={'cargo','rustup_home','cargo_home','temp_root','output_root'}
 _PATHS=_REQUIRED
-_INTS={'record_limit':(4,4096),'queue_limit':(1,256),'retained_runs':(1,32)}
+_INTS={'record_limit':(4,256),'queue_limit':(1,256),'retained_runs':(1,32)}
 _FLOATS={'timeout_seconds':(1,3600),'export_timeout_seconds':(.05,10),'shutdown_timeout_seconds':(.1,15)}
 class SafeParser(argparse.ArgumentParser):
     def error(self,message):raise ConfigurationError()

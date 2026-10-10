@@ -121,3 +121,21 @@ The mutation catalog is repository-owned in `scripts/reliability/mutations.py`. 
 R4 adds the governed lifecycle/retention/export/retrieval behavior. R3 does not claim that a failed runner has complete durable capture yet; it returns nonzero and never writes a passed summary after a mutation failure. Existing raw B007 mutation logs remain immutable historical evidence.
 
 Astra R3 review exposed source-root recursive copies, effective compiler overrides, unbounded unsafe version probes and already-failing baseline false detection. Canonical overlap refusal, explicit RUSTC/disabled wrappers, bounded exact version probing and clean baseline gates repair those cases. Evidence records the repaired executions separately from earlier exploratory runs.
+
+## R4 host diagnostics implementation
+
+`diagnostics.py` owns the safe Python logger bridge, actual OTel SDK records,
+version-pinned OTLP JSON encoding, bounded local capture and export queue, lifecycle
+manifest and closed-run retention. `retrieve.py` exposes read-only snapshot pages
+with authenticated owner-scoped cursors. `source-mutations.py` and `cargo.py`
+construct diagnostics only after typed configuration/tool identity admission and
+record actual operation outcomes; incomplete capture/export refuses qualification.
+Compiler and browser libraries do not import these host modules or SDK packages.
+
+The receiver pilot decodes actual HTTP requests with the pinned official OTLP
+protobuf messages. It checks real SDK span/log context, an out-of-span event,
+wire enum/int64/hex representation, unsampled attempt counts, duplicate sequences,
+privacy at all projections and failed-attempt retrieval. Failure controls exercise
+local capture denial/gaps, queue/record overflow, outage, bounded shutdown,
+retention, malformed/symlink input, cursor integrity/expiry and replacement.
+Recorded pilot timing is a scoped local observation, without a production SLO.

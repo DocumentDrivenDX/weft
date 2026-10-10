@@ -1,6 +1,6 @@
 """@covers US-008-AC4 Fail-closed source mutation qualification."""
 from __future__ import annotations
-import dataclasses, hashlib, json, pathlib, shutil, tempfile
+import contextlib, dataclasses, hashlib, json, pathlib, shutil, tempfile
 from .process import run, Result
 class MutationError(Exception):pass
 cases=[
@@ -35,7 +35,7 @@ def detected(result:Result, name:str, selected:str) -> bool:
 def baseline_clean(result:Result) -> bool:
     return not result.timed_out and result.exit_code==0 and result.selected_tests==1 and result.passed==1 and result.failed==0 and result.ignored==0
 
-def execute(config,root:pathlib.Path) -> dict:
+def execute(config,root:pathlib.Path,diagnostics=None) -> dict:
     config.validate_repository(root)
     identity=config.tool_identity(root) # before any output/temp side effect
     config.temp_root.mkdir(parents=True,exist_ok=True)
@@ -44,21 +44,22 @@ def execute(config,root:pathlib.Path) -> dict:
     with tempfile.TemporaryDirectory(prefix='weft-mutants-',dir=config.temp_root) as temporary:
         work=pathlib.Path(temporary)
         for name,file,before,after,test,selected in cases:
-            dest=work/name;target=work/(name+'-target')
-            shutil.copytree(root,dest,ignore=shutil.ignore_patterns('.git','target','node_modules','dist','__pycache__'))
-            path=dest/file;original=path.read_bytes().decode("utf8");mutated=apply_mutation(original,before,after);# mutation is written only after a clean selected-test baseline
-            env=config.command_environment();env['CARGO_TARGET_DIR']=str(target)
-            command=[str(config.cargo),'test','-p']
-            if test=='postgresql-original':command+=['weft-postgresql','--lib','--features','conformance-original']
-            elif test=='postgresql-lib':command+=['weft-postgresql','--lib']
-            elif test=='postgresql-candidate':command+=['weft-postgresql','--test','candidate-compiler']
-            else:command+=['weft-core','--test',test]
-            command+=['--locked','--offline',selected,'--','--nocapture']
-            needles=tuple(signatures[name]+['test result: FAILED.','panicked at'])
-            baseline=run(command,dest,env,config.timeout_seconds,(),(selected,))
-            if not baseline_clean(baseline):raise MutationError()
-            path.write_text(mutated)
-            result=run(command,dest,env,config.timeout_seconds,needles,(selected,))
-            if not detected(result,name,selected):raise MutationError()
-            reports.append({'mutation':name,'source':file,'originalSha256':hashlib.sha256(original.encode()).hexdigest(),'mutantSha256':hashlib.sha256(mutated.encode()).hexdigest(),'test':test,'filter':selected,'baseline':{'exitCode':baseline.exit_code,'selected':baseline.selected_tests,'passed':baseline.passed,'failed':baseline.failed,'ignored':baseline.ignored,'durationMs':baseline.duration_ms},'exitCode':result.exit_code,'status':'detected','durationMs':result.duration_ms})
+            with diagnostics.operation_context(name) if diagnostics else contextlib.nullcontext():
+                dest=work/name;target=work/(name+'-target')
+                shutil.copytree(root,dest,ignore=shutil.ignore_patterns('.git','target','node_modules','dist','__pycache__'))
+                path=dest/file;original=path.read_bytes().decode("utf8");mutated=apply_mutation(original,before,after);# mutation is written only after a clean selected-test baseline
+                env=config.command_environment();env['CARGO_TARGET_DIR']=str(target)
+                command=[str(config.cargo),'test','-p']
+                if test=='postgresql-original':command+=['weft-postgresql','--lib','--features','conformance-original']
+                elif test=='postgresql-lib':command+=['weft-postgresql','--lib']
+                elif test=='postgresql-candidate':command+=['weft-postgresql','--test','candidate-compiler']
+                else:command+=['weft-core','--test',test]
+                command+=['--locked','--offline',selected,'--','--nocapture']
+                needles=tuple(signatures[name]+['test result: FAILED.','panicked at'])
+                baseline=run(command,dest,env,config.timeout_seconds,(),(selected,))
+                if not baseline_clean(baseline):raise MutationError()
+                path.write_text(mutated)
+                result=run(command,dest,env,config.timeout_seconds,needles,(selected,))
+                if not detected(result,name,selected):raise MutationError()
+                reports.append({'mutation':name,'source':file,'originalSha256':hashlib.sha256(original.encode()).hexdigest(),'mutantSha256':hashlib.sha256(mutated.encode()).hexdigest(),'test':test,'filter':selected,'baseline':{'exitCode':baseline.exit_code,'selected':baseline.selected_tests,'passed':baseline.passed,'failed':baseline.failed,'ignored':baseline.ignored,'durationMs':baseline.duration_ms},'exitCode':result.exit_code,'status':'detected','durationMs':result.duration_ms})
     return {'version':'weft-runner/1','status':'passed','detected':len(reports),'toolIdentity':identity,'mutations':reports,'scope':'Exact source guards and selected test failure signatures. No native mutated-result qualification; raw subprocess output is omitted.'}

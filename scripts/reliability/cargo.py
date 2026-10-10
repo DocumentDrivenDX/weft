@@ -10,9 +10,17 @@ def main():
   separator=sys.argv.index('--');config=load_config(sys.argv[1:separator]);args=sys.argv[separator+1:]
   if not args or args[0] not in ('test','build','check','metadata','run'):raise ConfigurationError()
   identity=config.tool_identity(ROOT)
-  result=run([str(config.cargo)]+args,ROOT,config.command_environment(),config.timeout_seconds)
+  from reliability.diagnostics import Run,source_revision
+  diagnostics=Run(config,'cargo',source_revision(ROOT))
+  try:
+   with diagnostics.operation_context('cargo'):
+    result=run([str(config.cargo)]+args,ROOT,config.command_environment(),config.timeout_seconds)
+    if result.timed_out or result.exit_code:raise RuntimeError()
+  except Exception:
+   diagnostics.close(failed=True);raise
+  if diagnostics.close()!='passed':raise RuntimeError()
   print(json.dumps({'version':'weft-runner/1','toolIdentity':identity,'exitCode':result.exit_code,'timedOut':result.timed_out,'passed':result.passed,'failed':result.failed,'ignored':result.ignored,'filtered':result.filtered,'durationMs':result.duration_ms}))
   return 1 if result.timed_out or result.exit_code else 0
- except (ConfigurationError,ValueError,OSError,RuntimeError,subprocess.SubprocessError):
+ except (Exception):
   print('weft-runner: configuration or operation failed',file=sys.stderr);return 1
 if __name__=='__main__':sys.exit(main())
