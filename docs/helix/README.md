@@ -60,3 +60,12 @@ planned AC coverage. This is planning only. Native resources/version decisions
 remain explicit prerequisites; FR19–22 full acceptance and public activation stay
 open. B-009 completed at `2b88a9a`; its qualification receipts retain that exact
 checkpoint and are not refreshed by these documentation edits.
+
+
+The 2026-10-10 main integration preserves ordinary main versions and assigns
+blocked security compile 0.5 / CONTRACT-007. Its independently built main
+reference covers all 2,181 unchanged retained fixture requests: 2,128 outputs
+retain historical native byte correspondence; 53 changed outputs require native
+requalification. [Baseline and exact differences](04-build/evidence/main-integration-20261010/baseline.json)
+record that distinction. Fresh integrated host and CI qualification are separate
+merge gates; historical R6 receipts remain pinned to 2b88a9a.

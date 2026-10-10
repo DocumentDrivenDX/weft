@@ -33,6 +33,9 @@ def validate_reports(out,wheel,built=None):
  for name in ('cli-summary.json','python-summary.json','browser-summary.json'):
   value=summaries[name]
   if value.get('cases')!=2181 or (name!='browser-summary.json' and value.get('status')!='passed'):raise RuntimeError()
+ baseline=json.loads((ROOT/'docs/helix/04-build/evidence/main-integration-20261010/baseline.json').read_bytes())
+ cli_summary=summaries['cli-summary.json']
+ if cli_summary.get('historicalIdenticalOutputs')!=baseline['historicalIdenticalOutputs'] or cli_summary.get('nativeRequalificationOpen')!=baseline['changedOutputs'] or cli_summary.get('mainCheckpoint')!=baseline['checkpoint']:raise RuntimeError()
  for name in ('python-summary.json','browser-summary.json','browser-resource-security-summary.json'):
   if summaries[name].get('byteParity') is not True:raise RuntimeError()
  security=summaries['security-summary.json']
