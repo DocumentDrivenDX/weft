@@ -307,23 +307,3 @@ counts. Old schemas, historical artifacts and immutable distribution realization
 remain unchanged. Hosts must decode the new typed descriptor and discharge every
 required obligation before releasing results; wrapper coercion or SQL repair
 cannot provide compatibility.
-
-## R1 CLI byte admission and prepared-source ownership
-
-The CLI MUST read at most sixteen MiB plus one sentinel byte before UTF-8
-conversion or compiler invocation. An exact-limit request is admitted to normal
-validation; overflow stops after one sentinel without draining the suffix.
-The current CLI byte-transport contract above governs failures: no stdout,
-exit 2, and the fixed WEFT_CLI_INPUT_LIMIT / WEFT_CLI_UTF8 /
-WEFT_CLI_INPUT_IO / WEFT_CLI_OUTPUT_IO stderr code. The historical R1
-structured-error protocol was superseded during main integration; library
-compile_json refusals retain their existing structured versioned responses.
-Input wait/cancellation remains host-owned.
-
-Rust Catalog owns retained inputs privately; inputs() returns a read-only slice.
-Changes require cloning inputs and preparing a new snapshot, with renewed exact
-pins. Source-bound plans/packets MUST refuse a different prepared snapshot. This
-is an intentional source API migration for unreleased Rust callers; it does not
-change compile request/response schemas or permit version relabeling.
-
-The CLI reads a cloned, unbuffered OS stdin handle on Unix and Windows; it does not use Rust stdin read-ahead. Unix shared-offset evidence verifies the unread suffix after the sentinel. Windows is an implemented branch without execution evidence in R1; other target families refuse host input. Handle-clone failures follow the safe host I/O refusal.

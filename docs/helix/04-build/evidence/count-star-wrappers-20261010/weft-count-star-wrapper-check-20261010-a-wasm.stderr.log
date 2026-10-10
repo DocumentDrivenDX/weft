@@ -1,0 +1,155 @@
+   Compiling syn v2.0.119
+   Compiling serde_derive v1.0.228
+    Checking serde v1.0.228
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+   Compiling wasm-bindgen-shared v0.2.105
+    Checking ahash v0.8.12 (/private/tmp/ashlar-weft-distribution-d2d/vendor/ahash)
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling strum_macros v0.28.0
+    Checking fluent-uri v0.4.1
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling rustversion v1.0.23
+    Checking referencing v0.56.0
+    Checking jsonschema-value v0.56.0
+   Compiling jsonschema-macros v0.56.0
+    Checking strum v0.28.0
+    Checking email_address v0.2.9
+    Checking jsonschema v0.56.0
+   Compiling bumpalo v3.20.3
+   Compiling wasm-bindgen-macro-support v0.2.105
+   Compiling wasm-bindgen v0.2.105
+    Checking weft-core v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:828:8
+    |
+828 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:117:12
+    |
+ 52 | impl PathRead {
+    | ------------- methods in this implementation
+...
+117 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+120 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:238:12
+    |
+237 | impl Plan {
+    | --------- associated function in this implementation
+238 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 7 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+    Checking unicode-ident v1.0.26
+    Checking weft-databricks v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks)
+   Compiling wasm-bindgen-macro v0.2.105
+    Checking weft-runtime v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime)
+    Checking weft-wasm v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-wasm)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 37.49s

@@ -2642,7 +2642,8 @@
           "path": "crates/weft-wasm/src/lib.rs",
           "publicDeclarations": [
             "fn:compile_json",
-            "fn:compile_json_with_conformance_configuration"
+            "fn:compile_json_with_conformance_configuration",
+            "fn:compile_paths_keys_json"
           ],
           "pathReferences": []
         }
