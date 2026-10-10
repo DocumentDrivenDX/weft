@@ -1,0 +1,11 @@
+{
+  "scope": "Independent desired-state design review only; no implementation/compiler/native qualification",
+  "files": [
+    {
+      "original": "/private/tmp/astra-weft-count-star-having-design-review-20261010-a.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-design-20261010/astra-weft-count-star-having-design-review-20261010-a.json",
+      "sha256": "1f35ed0a092d758451a32d350a58982584bf3252bd6c13e5af29a0eb6f12dc4b",
+      "bytes": 5171
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "status": "approved-desired-state-two-document-slice",
+  "scope": "Grouped projected COUNT(*) > Integer literal HAVING proposal only; no implementation, compiler, package/index, native or production qualification.",
+  "repository_head": "6d82b7e89e43319c2a175b9895527298ff66ef36",
+  "files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "bytes": 35055,
+      "sha256": "75e843ba9e6d12ec643223e25d78bfc57a7f12c4ae300b8a0500e79960d80c32",
+      "prior_head_sha256": "915294bfff1539e123f9407c84caa3805eef2a050942370f2a7bc29c0a70bc65",
+      "append_only": true,
+      "frontmatter_and_links_unchanged": true
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "bytes": 19207,
+      "sha256": "c4a2224482bc370090b09c4795cd6776df78bd119fe597af1738c0e5015a5505",
+      "prior_head_sha256": "3bb393c692f58847b8f3b0e747b9df166fd970532616fee14e36b4b4afe76f44",
+      "append_only": true,
+      "frontmatter_and_links_unchanged": true
+    }
+  ],
+  "resolved_findings": [
+    {
+      "id": "COUNT-HAVING-DOC-001",
+      "resolution": "Byte-identical distinct-count snapshots apply to existing version/profile requests. New0.4.1 required version/realization markers may differ while prior distinct expression shape and semantics remain."
+    },
+    {
+      "id": "COUNT-HAVING-DOC-002",
+      "resolution": "Plain grouped counts retain ashlar.arithmetic.exact with checks[*].phase aggregate-candidates and outer before-user-query. ashlar.path.countCapacity remains selected-expansion-specific; no invented plain-count inventory."
+    }
+  ],
+  "semantic_review": [
+    "Exact original replay SQL retained, with no rewrite, model conversion or substitute query.",
+    "Nonempty exact required String groups; projected row count; duplicate joined/WHERE occurrences counted independently; empty input creates no group.",
+    "Nonnullable mathematical Integer remains distinct from selected signed64 native capacity and threshold admission.",
+    "Complete pre-HAVING count/source checks precede excluding HAVING, ORDER BY and LIMIT; invalid or overflowing excluded groups still refuse.",
+    "Only explicit new dialect/IR/compile0.4.1 and PathsKeys candidate capability admit the addition; old versions/profiles retain behavior, and no fallback or qualification transfer is allowed.",
+    "Core owns typed parse/resolve/schema discrimination; backend consumes typed views and owns native lowering; runtime/package owners supply immutable explicit registration.",
+    "Schema/version implementation, original replay and negative controls, compiler transport parity and actual native correspondence remain required future work."
+  ],
+  "helix_mapping": {
+    "modularity": "Explicit core/backend/runtime owner table and typed boundary; no host SQL repair or parser-internal backend dependency.",
+    "configuration": "Trusted immutable registration and separately owned deployment/publication config; no ambient settings, mutable registration or credentials added.",
+    "observability": "Reuse existing bounded stage/code/span diagnostics; raw query values are not log attributes and no new exporter claim is made.",
+    "formal": "HC-S1\u2013HC-S3 give precise safety statements and implementation/guard correspondence; finite-bag/held-publication/termination assumptions are explicit. No analyzer proof or arbitrary-scale liveness claim."
+  },
+  "guideline_refs": [
+    {
+      "path": "/Users/erik/.codex/plugins/cache/helix/helix/0.15.4/workflows/concerns/modularity-and-encapsulation/practices.md",
+      "bytes": 4078,
+      "sha256": "ac0ba86836f318a443e404053e9018e9165e367077307a1746cc2b2306d04fcb"
+    },
+    {
+      "path": "/Users/erik/.codex/plugins/cache/helix/helix/0.15.4/workflows/concerns/twelve-factor/practices.md",
+      "bytes": 9329,
+      "sha256": "afdca17008e3299838b2aebf8aa76ef91906cd8baa82f08cc41f07e637396d8c"
+    },
+    {
+      "path": "/Users/erik/.codex/plugins/cache/helix/helix/0.15.4/workflows/concerns/o11y-otel/practices.md",
+      "bytes": 8161,
+      "sha256": "af3a6cf39fe5ab641fc52f3e59645e1261e9396531549cf54453ffa5c4930eba"
+    },
+    {
+      "path": "/Users/erik/.codex/plugins/cache/helix/helix/0.15.4/workflows/concerns/formal-methods/practices.md",
+      "bytes": 4666,
+      "sha256": "f9c3e143176e2f0e9f9d02a8e44e48b29891b1e0e33a578ca0d09d67d5e83410"
+    }
+  ],
+  "correspondence_source": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/candidate/path_lowering.rs",
+    "bytes": 42148,
+    "sha256": "80f5ea3cdaf195483af8a49d5815228b1a2a6fcdf072aca4152d492f5807a4a1"
+  },
+  "checks": {
+    "exact_two_hashes": true,
+    "prior_bodies_preserved": true,
+    "frontmatter_traceability_preserved": true,
+    "git_diff_check_exit": 0
+  },
+  "remaining_findings": [],
+  "limits": [
+    "Desired-state review is not source implementation approval.",
+    "No compiler or native process executed by reviewer.",
+    "Existing foreign tests/ashlar-databricks/common.rs change was not reviewed or modified."
+  ]
+}

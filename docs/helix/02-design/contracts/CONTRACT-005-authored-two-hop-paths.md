@@ -502,3 +502,68 @@ ordinary protected ACK. Buffer bounded cells; validate carrier/key order and
 bag multiplicity; close publication/resource checks, reader and engine before
 report release. No profile fallback, SQL repair, source policy grant or transfer
 of another realization's native evidence is permitted.
+
+
+## Grouped projected row-count HAVING extension
+
+This extension admits the unchanged original supply-chain replay query:
+
+```sql
+SELECT upstream_event_id,COUNT(*) FROM events
+GROUP BY upstream_event_id HAVING COUNT(*)>1
+```
+
+The version proposal is `weft-sql/0.4.1`, `weft-ir/0.4.1` and
+`weft-compile/0.4.1`; existing result/carrier meanings remain unchanged. The
+explicit PathsKeys backend realization advances to
+`0.4.1-count-star-having-candidate`. Its manifest MUST declare the new capability
+`aggregate.havingCountStarGreater`. Trusted registration selects that exact
+realization and immutable distribution index; a SQL request MUST NOT select an
+older realization through fallback. Older language versions and backend
+realizations MUST retain their existing refusal and artifact behavior. This
+proposal makes no native execution or production support claim.
+
+The only added predicate is one `HAVING COUNT(*) > N`, where N is an original
+nonnegative base-ten Integer literal within the existing 1,024-byte literal
+budget. GROUP BY MUST be nonempty and retain the existing exact required String
+Field rules. COUNT(*) MUST appear explicitly in the projection. General HAVING,
+alias references, COUNT(field), parameters, negative/fractional literals,
+arithmetic, other operators and compound predicates remain refused. Existing
+COUNT DISTINCT semantics and expression shape MUST remain unchanged. Byte-for-byte
+artifact compatibility applies to requests selecting existing versions and
+profiles. New 0.4.1 artifacts MAY differ in required version and realization
+markers while retaining those prior distinct-count semantics and shape.
+
+The typed HAVING count expression is the existing row-count expression with
+nonnullable mathematical Integer logical type. Its threshold retains original
+text, source span and literal parameter slot separately from WHERE. The new
+versioned logical-plan schema admits this expression as an alternative to the
+existing distinct-count expression; the v0.3 schema MUST NOT change. Selected
+capability/descriptor validation MUST establish the row-count kind and projected
+count correspondence before backend lowering.
+
+For each exact group g in the complete joined/WHERE occurrence bag B, let
+C(g)=|B(g)|. Duplicate occurrences count independently. The predicate retains g
+iff C(g)>N; it cannot create a group from empty input. Capacity and source-validity
+checks MUST cover the complete pre-HAVING bag before HAVING, ORDER BY or LIMIT can
+conceal an invalid row or overflowing count. The selected native representation
+requires 0<=N<=9223372036854775807 and each complete group count within signed64
+capacity, or WFT-CAPABILITY refusal. This capacity MUST NOT become an invented
+logical Integer width. For plain grouped COUNT(*) without path expansion, the emitted
+`ashlar.arithmetic.exact` obligation with `checks[*].phase`
+`aggregate-candidates` (outer phase `before-user-query`) owns the
+complete pre-HAVING overflow checks. `ashlar.path.countCapacity` applies only
+when a path expansion is selected; its inventory MUST NOT be invented for plain
+scalar grouped counts. These exact obligation inventories, parameter correspondence,
+held publication, source/schema guards, bounded decoder and closure/release
+obligations remain mandatory and unchanged.
+
+Malformed or excluded syntax returns WFT-UNSUPPORTED with original spans;
+missing grouping/projected-count correspondence returns WFT-GROUPING. An
+unselected capability/profile or excessive native threshold returns
+WFT-CAPABILITY. No error permits SQL rewriting, a partial result or transfer of
+another profile's qualification. Conformance MUST include exact original SQL,
+duplicate and empty bags, boundary thresholds, pre-HAVING overflow hidden by an
+excluding predicate, old-version/profile refusal, and unchanged distinct-count
+artifact snapshots for requests selecting existing versions and profiles. Compiler transport parity and actual native execution require their
+own retained evidence.

@@ -239,3 +239,55 @@ The required RelatedKeys case must pass under the new realization; another
 profile's collection/property-join result cannot substitute. Recheck PATH-S1–S6
 where shared prefix/access changes affect two-hop behavior. Native claims retain
 exact compiler/source/backend/runtime/publication/ACK identities.
+
+
+## Grouped projected row-count HAVING implementation slice
+
+Apply CONTRACT-005's grouped row-count extension through the existing pure core
+and registered PathsKeys boundary. No Ashlar query repair, source conversion or
+new backend dependency belongs in this slice.
+
+| Owner | Narrow change |
+| --- | --- |
+| Core `arithmetic_query.rs` | Represent HAVING argument as distinct Field or row-count token/span; parse the selected new dialect without widening old versions |
+| Core `arithmetic_application_resolve.rs` | Resolve nonempty exact groups and explicitly projected row count; retain distinct resolution and original literal/span meaning |
+| Core `backend03_emission.rs`, version routing and v0.4.1 schemas | Validate new capability/expression correspondence; isolate versioned schema additions from v0.3 and older emitted artifacts |
+| Databricks `paths_keys.rs` | Own new candidate version/capability selection; other registered profiles refuse the addition |
+| Databricks `candidate/path_lowering.rs` | Lower typed row-count HAVING using a bound BIGINT threshold and existing complete pre-HAVING count guards; distinct lowering remains unchanged |
+| Runtime/Python/WASM distribution owners | Build the same Rust core, refresh explicit registration/manifest/index hashes and verify immutable public admission |
+
+Keep AST discrimination inside the core; the backend consumes typed views rather
+than importing parser internals. Construction remains trusted runtime registration;
+operators/hosts retain deployment and publication ownership. No ambient settings,
+mutable plugin registration, credential access, new telemetry field or exporter
+is introduced. Existing bounded diagnostic stage/code/span projections suffice;
+raw query values are not new log attributes.
+
+The precise semantic review uses state `unreleased` initially and transitions
+parse -> resolve -> assess -> lower -> source/capacity guards -> query -> decode
+-> closure -> release. HC-S1: every released group has exact original key and
+count C(g), and C(g)>N. HC-S2: every selected source row and pre-HAVING count is
+validated before predicate filtering; an overflowing excluded group still
+refuses. HC-S3: unsupported versions/profiles and every failed guard withhold
+release. Map HC-S1 to resolver/lowering and duplicate/empty oracle cases, HC-S2 to
+the actual `ashlar.arithmetic.exact` / `aggregate-candidates` inventory for
+plain grouped COUNT(*) and overflow-exclusion negative controls.
+`ashlar.path.countCapacity` remains expansion-specific and is checked only when
+the plan actually selects expansion. Map HC-S3 to
+registered capability/version checks and host closure obligations. Assumptions
+are finite admitted bags, established exact String equality, one held complete
+publication and terminating native/cleanup operations. This is a precise semantic
+specification and bounded implementation correspondence review, not a machine
+proof or arbitrary-scale liveness claim. Recheck if grouping, count representation,
+join bag semantics, capability routing or release guards change.
+
+Implement only after contract/schema/version review. Add original replay SQL and
+boundary/refusal controls before parser/resolver changes; then validate lowering
+and complete guard correspondence. Verify Rust, native Python and browser WASM
+public compiler parity with fresh packages and retain byte-identical old distinct/artifact
+snapshots for requests selecting existing versions and profiles. New 0.4.1
+artifacts may carry required version/realization marker changes while preserving
+prior distinct semantics and expression shape. Native tests are a later independent qualification: compiler acceptance
+alone cannot establish host custody or engine results. Rollback selects the
+previous immutable distribution/version and restores its explicit refusal;
+no data migration or publication/ACK authority change is required.
