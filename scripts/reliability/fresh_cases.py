@@ -27,6 +27,6 @@ def main():
  for case in cases:
   if weft.compile_json(case['raw'])!=case['response']:raise RuntimeError()
  (out/'resource-security-cases.json').write_text(json.dumps(cases)+'\n')
- summary={'status':'passed','resourceCases':7,'securityCases':len(vectors),'cases':len(cases),'byteParity':True,'subprocessDisabled':True,'extensionSha256':hashlib.sha256(pathlib.Path(extension.__file__).read_bytes()).hexdigest(),'scope':'Fresh exact whole-response ABI parity for raw resource controls and blocked security0.5 admission/refusals. No native security enforcement or database execution.'}
+ summary={'status':'passed','resourceCases':7,'securityCases':len(vectors),'cases':len(cases),'libraryByteParity':True,'cliResponseParityCases':len(cases)-1,'cliInputLimitRefusals':1,'subprocessDisabled':True,'extensionSha256':hashlib.sha256(pathlib.Path(extension.__file__).read_bytes()).hexdigest(),'scope':'Fresh exact whole-response ABI parity for raw resource controls and blocked security0.5 admission/refusals. No native security enforcement or database execution.'}
  (out/'security-summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary))
 if __name__=='__main__':main()

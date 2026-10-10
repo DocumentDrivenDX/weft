@@ -48,3 +48,15 @@ run must succeed at the pushed branch head. Ordinary qualification remains
 scoped to retained native-tested fixtures and versions. Native databases are
 not re-executed, released packages are not claimed, and FR19–22 security
 acceptance stays open with public activation blocked.
+
+## Next security work
+
+The [B-008 continuation plan](04-build/implementation-plan.md#b-008-continuation-protected-read-security-completion-plan--2026-10-10)
+sequences S00–S12 from upstream contract/version reconciliation through graph
+query integration, owner-derived coverage, physical lowering, native custody and
+guarded release, binding parity and per-profile activation. [TD-009](02-design/technical-designs/TD-009-security-compilation.md)
+and [STP-009](03-test/test-plans/STP-009-security-compilation.md) retain design and
+planned AC coverage. This is planning only. Native resources/version decisions
+remain explicit prerequisites; FR19–22 full acceptance and public activation stay
+open. B-009 completed at `2b88a9a`; its qualification receipts retain that exact
+checkpoint and are not refreshed by these documentation edits.

@@ -62,3 +62,40 @@ accept a missing gate. Selected unknown security meaning remains blocked.
 Follow B-009 dependency order and independent Astra Ultra review per chunk.
 Done requires named executable tests, citations, observed passes and no unresolved
 blocking review. Deferred full security/native acceptance remains open.
+
+## Planned executable expansion for B-008 — 2026-10-10
+
+The following suites are planned, not observed passes. Implement their exact
+commands, fixtures and parseable citations before claiming coverage. Existing
+foundation evidence remains partial; every full acceptance row above stays open.
+The implementation plan owns S00–S12 ordering, not additional acceptance IDs.
+
+| AC | Planned suites / slices | Additional positive and failure assertions |
+| --- | --- | --- |
+| US-009-AC1 | `security_binding_parity`, S00/S11/S12 | Exact selected source/request/response versions and source bytes; new security corpus through fresh CLI/native Python/Chromium; prior ordinary transport/parity; unknown/mixed version, stale pins, malformed/over-budget/corrupt whole envelope and no fallback. |
+| US-009-AC2 | `security_graph_query_bridge`, `security_owner_requirements`, `security_capability_coverage`, S01–S04 | Original/candidate type separation; Record/Relationship namespaces, logical Keys and witness restrictions; correlated occurrences; complete rules/actions/context/facts at one cut; unknown or missing coverage on empty collections blocks; removed rule/action/constraint, fragmented primitive-feature capability unions, incompatible scan/action/application bundles and unknown extra selected meaning must refuse before backend invocation. |
+| US-009-AC3 | `security_disclosure_codec`, `security_pgraw_lowering`, `security_truss_lowering`, `security_deltaraw_lowering`, `security_ashlar_lowering`, S03–S08 | All5 protected operator modes, eligibilityCOUNT/paging andSUM lineage; exact replacement domains, null/absence/withheld, ordered aliases/repeated outputs, bags and joins; bidirectional authority/query-carrier selected-Key populations and normalized values agree before filtering; extra/missing/duplicate carriers, same-typed component swaps and stale fields refuse; native rows/fields match independent oracle; unsupported transforms/domains and raw-value leaks refuse. |
+| US-009-AC4 | `security_native_custody`, `security_authority_release`, S09/S10/S12 | Ordinary actor and excluded admin proof; source/inventory/fact/current-cut drift; direct/role/definer/retained-file/history/feed bypass controls; revocation acknowledgment follows guarded final release; old snapshots/cursors/publication leases refuse; cancellation/crash/timeout keeps uncertain custody and leaks no prefix. |
+
+Every implementing test must cite its row using `@covers US-009-AC1` through
+`@covers US-009-AC4` as applicable. Compiler tests and native tests are separately
+identified. A positive internal lowering experiment never counts as public
+activation/native authority proof. Privacy controls cover private facts and
+derived diagnostics/count estimates across every selected host/native sink.
+
+S00 maps the authoritative shared132-case ledger to actual owners and required
+profile subsets; no local test renames or deletes a shared obligation. Native
+profiles require actual original actors, reviewed independent oracles and
+CONTRACT-053 fresh-execution/assertion/source/inventory evidence. Stored receipt
+replay, synthetic graph tables and observer flags cannot substitute for real
+Truss/Ashlar execution. Shared write/effective-date/history/feed cases remain
+host/backend prerequisites where required; Weft protected-read tests do not
+claim to implement those writes.
+
+Final qualification retains both ordinary workspace compositions, module/spec
+checks, seven source mutation controls and original2,181-case host regression,
+plus a separately authored positive security corpus and all mandatory native
+cases. Missing executable, missing citation/assertion, skip, timeout, stale
+source, incomplete inventory or unresolved review means open/failed. A changed
+formula requires new witnesses, broken controls and actual implementation
+correspondence; B-009 R5 does not certify new physical behavior.
