@@ -16,8 +16,22 @@ pub struct ModuleInput {
     pub selected_module_ids: Vec<String>,
 }
 #[derive(Debug, Clone)]
+/// A prepared snapshot retains exact source and parsed meaning together.
+/// Direct mutation is inaccessible:
+/// ```compile_fail
+/// fn tamper(catalog: &mut weft_core::model::Catalog) {
+///     catalog.inputs[0].document_json.clear();
+/// }
+/// ```
+/// The public accessor also cannot mutate retained source:
+/// ```compile_fail
+/// fn tamper(catalog: &mut weft_core::model::Catalog) {
+///     catalog.inputs()[0].document_json.clear();
+/// }
+/// ```
+
 pub struct Catalog {
-    pub inputs: Vec<ModuleInput>,
+    inputs: Vec<ModuleInput>,
     pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
@@ -35,6 +49,10 @@ struct Envelope;
 #[jsonschema::validator(path = "../../spec/upstream/umf-0.8.0.schema.json")]
 struct SecurityEnvelope;
 impl Catalog {
+    /// Read-only original inputs. Clone and prepare a new Catalog to change them.
+    pub fn inputs(&self) -> &[ModuleInput] {
+        &self.inputs
+    }
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, "0.7.0")
     }

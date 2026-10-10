@@ -131,8 +131,21 @@ fn correlated_declared_term_types_are_checked_without_activation(){
 }
 #[test]
 fn source_packet_cannot_be_reused_with_changed_model_bytes(){
- use weft_core::{model::{Catalog,ModuleInput},security_source::SecuritySourcePacket,security_policy_types::SecurityPolicyTypes};
- let r=request();let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let mut catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog).unwrap();catalog.inputs[0].document_json.push(' ');assert_eq!(SecurityPolicyTypes::read(&packet,&catalog).unwrap_err().code,"WFT-SECURITY-PIN");
+ use weft_core::{model::{Catalog,ModuleInput},
+security_policy_types::SecurityPolicyTypes,
+security_source::SecuritySourcePacket,};
+ let r=request();let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let  catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog
+,
+).unwrap();
+let mut changed_inputs =
+catalog.inputs
+().to_vec();
+    changed_inputs
+[0].document_json.push(' '
+);
+    changed_inputs[0].pin.sha256 = sha256(changed_inputs[0].document_json.as_bytes());
+    let catalog = Catalog::prepare_security(changed_inputs).unwrap(
+);assert_eq!(SecurityPolicyTypes::read(&packet,&catalog).unwrap_err().code,"WFT-SECURITY-PIN");
 }
 #[test]
 fn scalar_operand_domains_and_endpoint_roles_refuse(){
@@ -144,9 +157,19 @@ fn scalar_operand_domains_and_endpoint_roles_refuse(){
 }
 
 #[test]
-fn rehashed_catalog_input_cannot_substitute_for_prepared_definitions(){
- use weft_core::{model::{Catalog,ModuleInput},security_source::SecuritySourcePacket};
- let r=request();let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let mut catalog=Catalog::prepare_security(inputs).unwrap();let mut doc:Value=serde_json::from_str(&catalog.inputs[0].document_json).unwrap();doc["modules"][0]["elements"][0]["description"]=json!("substituted source");catalog.inputs[0].document_json=doc.to_string();catalog.inputs[0].pin.sha256=sha256(catalog.inputs[0].document_json.as_bytes());let error=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog).unwrap_err();assert_eq!(error.code,"WFT-SECURITY-PIN");
+fn rehashed_catalog_input_cannot_substitute_for_prepared_definitions() {
+ use weft_core::{model::{Catalog,ModuleInput},security_source::SecuritySourcePacket,security_policy_types::SecurityPolicyTypes};
+ let r=request(); let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();
+ let catalog=Catalog::prepare_security(inputs).unwrap();
+ let packet=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog).unwrap();
+ let mut inputs=catalog.inputs().to_vec();
+ let mut doc:Value=serde_json::from_str(&inputs[0].document_json).unwrap();
+ doc["modules"][0]["elements"][0]["description"]=json!("substituted source");
+ inputs[0].document_json=doc.to_string();
+ assert!(Catalog::prepare_security(inputs.clone()).is_err());
+ inputs[0].pin.sha256=sha256(inputs[0].document_json.as_bytes());
+ let fresh=Catalog::prepare_security(inputs).unwrap();
+ assert_eq!(SecurityPolicyTypes::read(&packet,&fresh).unwrap_err().code,"WFT-SECURITY-PIN");
 }
 
 #[test]
@@ -201,7 +224,7 @@ fn original_boolean_primary_metadata_preserves_explicit_key_selection_and_refusa
   let mut r=request();let mut document:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
   for record in document["modules"][0]["elements"].as_array_mut().unwrap(){if record["kind"]=="record"{record["keys"][0]["primary"]=json!(primary);}}
   let text=document.to_string();r["modules"][0]["documentJson"]=json!(text);r["modules"][0]["pin"]["sha256"]=json!(sha256(text.as_bytes()));
-  let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog).unwrap();let closure=SecurityOntologyClosure::read(&packet,&catalog).unwrap();assert_eq!(closure.type_count(),5);assert_eq!(closure.field_count(),11);assert_eq!(catalog.inputs[0].document_json,text);assert_eq!(serde_json::from_str::<Value>(&catalog.inputs[0].document_json).unwrap(),document);
+  let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let catalog=Catalog::prepare_security(inputs).unwrap();let packet=SecuritySourcePacket::read(r["security"]["policyJson"].as_str().unwrap(),r["security"]["ontologyJson"].as_str().unwrap(),&catalog).unwrap();let closure=SecurityOntologyClosure::read(&packet,&catalog).unwrap();assert_eq!(closure.type_count(),5);assert_eq!(closure.field_count(),11);assert_eq!(catalog.inputs()[0].document_json,text);assert_eq!(serde_json::from_str::<Value>(&catalog.inputs()[0].document_json).unwrap(),document);
   refused(response(&r),"WFT-SECURITY-UNSUPPORTED");
  }
  let mut r=request();let mut document:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();let staff=document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="Resource").unwrap();let mut secondary=staff["keys"][0].clone();secondary["id"]=json!("secondary");secondary["name"]=json!("Secondary");secondary["primary"]=json!(true);secondary["fields"]=json!([{"module":"m","element":"salary"}]);staff["keys"][0]["primary"]=json!(false);staff["keys"].as_array_mut().unwrap().push(secondary.clone());
@@ -340,32 +363,98 @@ fn draft_policy_checks_raw_correlated_terms_and_intrinsic_types(){
 }
 #[test]
 fn draft_graph_policy_endpoint_terms_do_not_invent_opaque_identity_or_attributes(){
- use weft_core::{model::{Catalog,ModuleInput},security_source::SecurityCandidateSourcePacket,security_candidate_policy_types::SecurityCandidatePolicyTypes};
+ use weft_core::{model::{Catalog,ModuleInput},
+security_candidate_policy_types::SecurityCandidatePolicyTypes,
+security_source::SecurityCandidateSourcePacket,};
  let (r,mut policy,mut ontology)=candidate_sources();let mut inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let mut doc:Value=serde_json::from_str(&inputs[0].document_json).unwrap();
  doc["modules"][0]["relationships"]=json!([{"id":"WorksOn","name":"WorksOn","source":[{"module":"m","element":"Staff"}],"target":[{"module":"m","element":"Project","key":"pk"}],"sourceMultiplicity":{"min":0,"max":"*"},"targetMultiplicity":{"min":0,"max":"*"},"targetLifecycle":"independent","directed":true}]);inputs[0].document_json=doc.to_string();inputs[0].pin.sha256=sha256(inputs[0].document_json.as_bytes());let catalog=Catalog::prepare_security(inputs.clone()).unwrap();
  let reference=json!({"documentId":"domain","moduleId":"m","relationshipId":"WorksOn"});ontology["associations"][1]=json!({"kind":"core-relationship","relationship":reference,"witness":{"kind":"opaque-existential"},"endpoints":[{"role":"staff","side":"source","target":{"documentId":"domain","moduleId":"m","elementId":"Staff"},"keyId":"pk"},{"role":"project","side":"target","target":{"documentId":"domain","moduleId":"m","elementId":"Project"},"keyId":"pk"}]});
  policy["rules"][1]["condition"]=json!({"op":"exists","association":reference,"as":"edge","where":{"op":"eq","left":{"kind":"variable","name":"edge","endpoint":"staff"},"right":{"kind":"subject","identity":true}}});
  let check=|p:&Value|{let packet=SecurityCandidateSourcePacket::read(&p.to_string(),&ontology.to_string(),&catalog)?;SecurityCandidatePolicyTypes::read(&packet,&catalog)};
  assert!(check(&policy).is_ok());
- {use weft_core::security_candidate_ir::{SecurityCandidateLogicalPlan,CandidateExpression,CandidateTerm,CandidateEndpointCarrier,CandidateSide,CandidateWitness};use weft_core::security_ir::Binding;
- let packet=SecurityCandidateSourcePacket::read(&policy.to_string(),&ontology.to_string(),&catalog).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();
- let CandidateExpression::Exists{slot,association,witness,condition}=&plan.rules()[1].condition else{panic!()};assert_eq!(*slot,0);assert_eq!(serde_json::to_value(association).unwrap(),reference);assert_eq!(*witness,CandidateWitness::OpaqueExistential);
- let CandidateExpression::Equal(CandidateTerm::Endpoint{binding,association:a,role,target,key_id,carrier},_)=condition.as_ref() else{panic!()};assert_eq!(*binding,Binding::Variable(0));assert_eq!(a,association);assert_eq!(role,"staff");assert_eq!(target.element_id,"Staff");assert_eq!(key_id,"pk");assert_eq!(*carrier,CandidateEndpointCarrier::Incidence{side:CandidateSide::Source});assert_eq!(plan.source().policy(),&policy);
- {use weft_core::security_candidate_incidence::CandidateIncidenceValue;let value=CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]).unwrap();assert_eq!(value.target(),target);assert_eq!(value.key_id(),"pk");assert_eq!(value.components().len(),1);assert_eq!(value.component_domains()[0]["scalarType"],"string");assert!(value.require_catalog(&catalog).is_ok());for (role,side,values) in [("staff",CandidateSide::Target,vec![json!({"string":"s1"})]),("missing",CandidateSide::Source,vec![json!({"string":"s1"})]),("staff",CandidateSide::Source,vec![]),("staff",CandidateSide::Source,vec![json!({"integerToken":"1"})]),("staff",CandidateSide::Source,vec![json!({"string":{"nested":true}})])]{assert!(CandidateIncidenceValue::read(&plan,&catalog,association,role,side,target,"pk",&values).is_err());}assert!(CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,target,"other",&[json!({"string":"s1"})]).is_err());let mut wrong_target=target.clone();wrong_target.module_id="other".into();assert!(CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,&wrong_target,"pk",&[json!({"string":"s1"})]).is_err());let record=weft_core::security_association_ref::SecurityAssociationRef::Record(weft_core::security_ontology::SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:"WorksOn".into()});assert!(CandidateIncidenceValue::read(&plan,&catalog,&record,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]).is_err());let mut stale=catalog.clone();stale.inputs[0].document_json.push(' ');assert!(value.require_catalog(&stale).is_err());assert_eq!(CandidateIncidenceValue::read(&plan,&stale,association,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]).unwrap_err().code,"WFT-SECURITY-PIN");}
+ {use weft_core::security_candidate_ir::{CandidateEndpointCarrier,CandidateExpression,
+CandidateSide,
+CandidateTerm,CandidateWitness,SecurityCandidateLogicalPlan,};use weft_core::security_ir::Binding;
+ let packet=SecurityCandidateSourcePacket::read(&policy.to_string(),&ontology.to_string(),&catalog
+,
+).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();
+ let CandidateExpression::Exists{slot,association,witness,condition
+,
+}=&plan.rules()[1].condition else{panic!()};assert_eq!(*slot,0);assert_eq!(serde_json::to_value(association).unwrap(),reference);assert_eq!(*witness,CandidateWitness::OpaqueExistential);
+ let CandidateExpression::Equal(CandidateTerm::Endpoint{binding,association:a,role,target,key_id,carrier
+,
+},_
+,
+)=condition.as_ref() else{panic!()};assert_eq!(*binding,Binding::Variable(0));assert_eq!(a,association);assert_eq!(role,"staff");assert_eq!(target.element_id,"Staff");assert_eq!(key_id,"pk");assert_eq!(*carrier,CandidateEndpointCarrier::Incidence{side:CandidateSide::Source});assert_eq!(plan.source().policy(),&policy);
+ {use weft_core::security_candidate_incidence::CandidateIncidenceValue;let value=CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]
+,
+).unwrap();assert_eq!(value.target(),target);assert_eq!(value.key_id(),"pk");assert_eq!(value.components().len(),1);assert_eq!(value.component_domains()[0]["scalarType"],"string");assert!(value.require_catalog(&catalog).is_ok());for (role,side,values) in [("staff",CandidateSide::Target,vec![json!({"string":"s1"})]),("missing",CandidateSide::Source,vec![json!({"string":"s1"})]
+,
+),("staff",CandidateSide::Source,vec![]),("staff",CandidateSide::Source,vec![json!({"integerToken":"1"})]
+,
+),("staff",CandidateSide::Source,vec![json!({"string":{"nested":true}})]
+,
+)
+,
+]{assert!(CandidateIncidenceValue::read(&plan,&catalog,association,role,side,target,"pk",&values).is_err());}assert!(CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,target,"other",&[json!({"string":"s1"})]).is_err());let mut wrong_target=target.clone();wrong_target.module_id="other".into();assert!(CandidateIncidenceValue::read(&plan,&catalog,association,"staff",CandidateSide::Source,&wrong_target,"pk",&[json!({"string":"s1"})]).is_err());let record=weft_core::security_association_ref::SecurityAssociationRef::Record(weft_core::security_ontology::SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:"WorksOn".into()
+,
+}
+,
+);assert!(CandidateIncidenceValue::read(&plan,&catalog,&record,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]).is_err());let mut stale_inputs=catalog.inputs().to_vec();stale_inputs[0].document_json.push(' '
+);
+            stale_inputs[0].pin.sha256 =
+                weft_core::json::sha256(stale_inputs[0].document_json.as_bytes());
+            let stale = Catalog::prepare_security(stale_inputs).unwrap(
+);assert!(value.require_catalog(&stale).is_err());assert_eq!(CandidateIncidenceValue::read(&plan,&stale,association,"staff",CandidateSide::Source,target,"pk",&[json!({"string":"s1"})]).unwrap_err().code,"WFT-SECURITY-PIN");}
 
- let dependencies=weft_core::security_candidate_dependencies::SecurityCandidateDependencies::derive(&plan,&catalog,&plan.rules()[1].target,"read").unwrap();assert_eq!(dependencies.incidences().len(),2);assert_eq!(dependencies.associations().len(),1);assert!(!dependencies.keys().keys().any(|r|r.element_id=="Assignment"||r.element_id=="WorksOn"));assert!(!dependencies.fields().keys().any(|r|r.element_id=="Assignment"||r.element_id=="WorksOn"));
- {use weft_core::security_composition::{compose_candidate,Truth,Decision};use std::collections::BTreeMap;let truths=BTreeMap::from([("reader".into(),Truth::True),("membership".into(),Truth::True)]);let output=weft_core::security_ontology::SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:"salary".into()};let result=compose_candidate(&plan,&catalog,&plan.rules()[1].target,"read",std::slice::from_ref(&output),&truths).unwrap();assert_eq!(result.decision,Decision::Permit);assert!(matches!(result.disclosure[0].1,weft_core::security_ir::Disposition::Withheld));let mut unknown=truths.clone();unknown.insert("membership".into(),Truth::Unknown);let result=compose_candidate(&plan,&catalog,&plan.rules()[1].target,"read",&[output],&unknown).unwrap();assert_eq!(result.decision,Decision::Indeterminate);assert!(result.disclosure.is_empty());}
+ let dependencies=weft_core::security_candidate_dependencies::SecurityCandidateDependencies::derive(&plan,&catalog,&plan.rules()[1].target,"read"
+,
+).unwrap();assert_eq!(dependencies.incidences().len(),2);assert_eq!(dependencies.associations().len(),1);assert!(!dependencies.keys().keys().any(|r|r.element_id=="Assignment"||r.element_id=="WorksOn"));assert!(!dependencies.fields().keys().any(|r|r.element_id=="Assignment"||r.element_id=="WorksOn"));
+ {use
+std::collections::BTreeMap;
+            use
+weft_core::security_composition::{compose_candidate,
+Decision,
+Truth};let truths=BTreeMap::from([("reader".into(),Truth::True),("membership".into(),Truth::True)
+,
+]);let output=weft_core::security_ontology::SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:"salary".into()
+,
+};let result=compose_candidate(&plan,&catalog,&plan.rules()[1].target,"read",std::slice::from_ref(&output),&truths
+,
+).unwrap();assert_eq!(result.decision,Decision::Permit);assert!(matches!(result.disclosure[0].1,weft_core::security_ir::Disposition::Withheld));let mut unknown=truths.clone();unknown.insert("membership".into(),Truth::Unknown);let result=compose_candidate(&plan,&catalog,&plan.rules()[1].target,"read",&[output],&unknown
+,
+).unwrap();assert_eq!(result.decision,Decision::Indeterminate);assert!(result.disclosure.is_empty());}
 
- let mut target_policy=policy.clone();let operand=json!({"kind":"variable","name":"edge","endpoint":"project"});target_policy["rules"][1]["condition"]["where"]=json!({"op":"eq","left":operand,"right":operand});let packet=SecurityCandidateSourcePacket::read(&target_policy.to_string(),&ontology.to_string(),&catalog).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();let CandidateExpression::Exists{condition,..}=&plan.rules()[1].condition else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{role,target,carrier,..},_)=condition.as_ref() else{panic!()};assert_eq!(role,"project");assert_eq!(target.element_id,"Project");assert_eq!(*carrier,CandidateEndpointCarrier::Incidence{side:CandidateSide::Target});
+ let mut target_policy=policy.clone();let operand=json!({"kind":"variable","name":"edge","endpoint":"project"});target_policy["rules"][1]["condition"]["where"]=json!({"op":"eq","left":operand,"right":operand});let packet=SecurityCandidateSourcePacket::read(&target_policy.to_string(),&ontology.to_string(),&catalog
+,
+).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();let CandidateExpression::Exists{condition,..}=&plan.rules()[1].condition else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{role,target,carrier,..},_
+,
+)=condition.as_ref() else{panic!()};assert_eq!(role,"project");assert_eq!(target.element_id,"Project");assert_eq!(*carrier,CandidateEndpointCarrier::Incidence{side:CandidateSide::Target});
  }
  for mutation in ["identity","attribute","role","namespace","unbound"]{let mut p=policy.clone();match mutation{
-  "identity"=>p["rules"][1]["condition"]["where"]["left"]=json!({"kind":"variable","name":"edge","identity":true}),
-  "attribute"=>p["rules"][1]["condition"]["where"]["left"]=json!({"kind":"variable","name":"edge","field":{"documentId":"domain","moduleId":"m","elementId":"active"}}),
+  "identity"=>
+{
+p["rules"][1]["condition"]["where"]["left"]=json!({"kind":"variable","name":"edge","identity":true})}
+  "attribute"=>
+{
+p["rules"][1]["condition"]["where"]["left"]=json!({"kind":"variable","name":"edge","field":{"documentId":"domain","moduleId":"m","elementId":"active"}})}
   "role"=>p["rules"][1]["condition"]["where"]["left"]["endpoint"]=json!("missing"),
-  "namespace"=>p["rules"][1]["condition"]["association"]=json!({"documentId":"domain","moduleId":"m","elementId":"WorksOn"}),
-  _=>p["rules"][1]["condition"]["where"]["left"]["name"]=json!("other")};if matches!(mutation,"identity"|"attribute"){p["rules"][1]["condition"]["where"]["right"]=p["rules"][1]["condition"]["where"]["left"].clone();}assert!(check(&p).is_err(),"{mutation}");}
+  "namespace"=>
+{
+p["rules"][1]["condition"]["association"]=json!({"documentId":"domain","moduleId":"m","elementId":"WorksOn"})}
+  _=>p["rules"][1]["condition"]["where"]["left"]["name"]=json!("other")
+,
+};if matches!(mutation,"identity"|"attribute"){p["rules"][1]["condition"]["where"]["right"]=p["rules"][1]["condition"]["where"]["left"].clone();}assert!(check(&p).is_err(),"{mutation}");}
  let mut record_doc=doc.clone();record_doc["modules"][0]["relationships"][0]["associationRecord"]=json!({"module":"m","element":"Assignment"});let mut record_inputs=inputs.clone();record_inputs[0].document_json=record_doc.to_string();record_inputs[0].pin.sha256=sha256(record_inputs[0].document_json.as_bytes());let record_catalog=Catalog::prepare_security(record_inputs).unwrap();let mut record_ontology=ontology.clone();record_ontology["associations"][1]["witness"]=json!({"kind":"record-key","type":{"documentId":"domain","moduleId":"m","elementId":"Assignment"},"keyId":"pk"});
- for operand in [json!({"kind":"variable","name":"edge","identity":true}),json!({"kind":"variable","name":"edge","field":{"documentId":"domain","moduleId":"m","elementId":"active"}})]{let mut p=policy.clone();p["rules"][1]["condition"]["where"]=json!({"op":"eq","left":operand,"right":operand});assert!(check(&p).is_err());let packet=SecurityCandidateSourcePacket::read(&p.to_string(),&record_ontology.to_string(),&record_catalog).unwrap();assert!(SecurityCandidatePolicyTypes::read(&packet,&record_catalog).is_ok());let plan=weft_core::security_candidate_ir::SecurityCandidateLogicalPlan::read(packet,&record_catalog).unwrap();let deps=weft_core::security_candidate_dependencies::SecurityCandidateDependencies::derive(&plan,&record_catalog,&plan.rules()[1].target,"read").unwrap();assert_eq!(deps.incidences().len(),2);assert!(deps.keys().keys().any(|r|r.element_id=="Assignment"));assert!(deps.fields().iter().find(|(r,_)|r.element_id=="Assignment").unwrap().1.iter().any(|f|f.element_id=="active"));}
+ for operand in [json!({"kind":"variable","name":"edge","identity":true}),json!({"kind":"variable","name":"edge","field":{"documentId":"domain","moduleId":"m","elementId":"active"}})
+,
+]{let mut p=policy.clone();p["rules"][1]["condition"]["where"]=json!({"op":"eq","left":operand,"right":operand});assert!(check(&p).is_err());let packet=SecurityCandidateSourcePacket::read(&p.to_string(),&record_ontology.to_string(),&record_catalog
+,
+).unwrap();assert!(SecurityCandidatePolicyTypes::read(&packet,&record_catalog).is_ok());let plan=weft_core::security_candidate_ir::SecurityCandidateLogicalPlan::read(packet,&record_catalog
+,
+).unwrap();let deps=weft_core::security_candidate_dependencies::SecurityCandidateDependencies::derive(&plan,&record_catalog,&plan.rules()[1].target,"read"
+,
+).unwrap();assert_eq!(deps.incidences().len(),2);assert!(deps.keys().keys().any(|r|r.element_id=="Assignment"));assert!(deps.fields().iter().find(|(r,_)|r.element_id=="Assignment").unwrap().1.iter().any(|f|f.element_id=="active"));}
 }
 
 #[test]
@@ -386,13 +475,29 @@ fn draft_constants_and_result_declarations_require_classified_required_operands(
 
 #[test]
 fn draft_raw_ir_retains_nested_witness_slots_ordered_carriers_and_source_custody(){
- use weft_core::{model::{Catalog,ModuleInput},security_source::SecurityCandidateSourcePacket,security_candidate_ir::{SecurityCandidateLogicalPlan,CandidateExpression,CandidateTerm,CandidateWitness,CandidateEndpointCarrier},security_ir::Binding};
- let (r,policy,ontology)=candidate_sources();let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let mut catalog=Catalog::prepare_security(inputs).unwrap();let source=format!("\n{}\n",policy);let packet=SecurityCandidateSourcePacket::read(&source,&ontology.to_string(),&catalog).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();assert_eq!(plan.source().policy_json(),source);
+ use weft_core::{model::{Catalog,ModuleInput},security_candidate_ir::{CandidateEndpointCarrier,CandidateExpression,CandidateTerm,CandidateWitness,SecurityCandidateLogicalPlan,},security_ir::Binding
+,
+        security_source::SecurityCandidateSourcePacket,
+};
+ let (r,policy,ontology)=candidate_sources();let inputs:Vec<ModuleInput>=serde_json::from_value(r["modules"].clone()).unwrap();let  catalog=Catalog::prepare_security(inputs).unwrap();let source=format!("\n{}\n",policy);let packet=SecurityCandidateSourcePacket::read(&source,&ontology.to_string(),&catalog).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();assert_eq!(plan.source().policy_json(),source);
  let CandidateExpression::Exists{slot,witness,condition,..}=&plan.rules()[1].condition else{panic!()};assert_eq!(*slot,0);let CandidateWitness::RecordKey{owner,key_id,key}=witness else{panic!()};assert_eq!(owner.element_id,"Ownership");assert_eq!(key_id,"pk");assert_eq!(key["fields"][0]["element"],"ownerId");
- let CandidateExpression::And(args)=condition.as_ref() else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{binding,carrier,..},_)=&args[0] else{panic!()};assert_eq!(*binding,Binding::Variable(0));let CandidateEndpointCarrier::Members{fields}=carrier else{panic!()};assert_eq!(fields[0].element_id,"ownerResource");
- let CandidateExpression::Exists{slot,condition,..}=&args[1] else{panic!()};assert_eq!(*slot,1);let CandidateExpression::And(inner)=condition.as_ref() else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{binding:left,..},CandidateTerm::Endpoint{binding:right,..})=&inner[1] else{panic!()};assert_eq!(*left,Binding::Variable(1));assert_eq!(*right,Binding::Variable(0));
+ let CandidateExpression::And(args)=condition.as_ref() else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{binding,carrier,..},_
+,
+)=&args[0] else{panic!()};assert_eq!(*binding,Binding::Variable(0));let CandidateEndpointCarrier::Members{fields}=carrier else{panic!()};assert_eq!(fields[0].element_id,"ownerResource");
+ let CandidateExpression::Exists{slot,condition,..}=&args[1] else{panic!()};assert_eq!(*slot,1);let CandidateExpression::And(inner)=condition.as_ref() else{panic!()};let CandidateExpression::Equal(CandidateTerm::Endpoint{binding:left,..},CandidateTerm::Endpoint{binding:right,..}
+,
+)=&inner[1] else{panic!()};assert_eq!(*left,Binding::Variable(1));assert_eq!(*right,Binding::Variable(0));
  let mut siblings=policy.clone();let condition=policy["rules"][1]["condition"].clone();siblings["rules"][1]["condition"]=json!({"op":"and","args":[condition,condition]});let packet=SecurityCandidateSourcePacket::read(&siblings.to_string(),&ontology.to_string(),&catalog).unwrap();let sibling_plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();let CandidateExpression::And(branches)=&sibling_plan.rules()[1].condition else{panic!()};for (branch,expected) in branches.iter().zip([0,2]){let CandidateExpression::Exists{slot,..}=branch else{panic!()};assert_eq!(*slot,expected);}
- catalog.inputs[0].document_json.push(' ');assert_eq!(plan.require_catalog(&catalog).unwrap_err().code,"WFT-SECURITY-PIN");
+
+let mut changed_inputs =
+catalog.inputs
+().to_vec();
+    changed_inputs
+[0].document_json.push(' '
+);
+    changed_inputs[0].pin.sha256 = sha256(changed_inputs[0].document_json.as_bytes());
+    let catalog = Catalog::prepare_security(changed_inputs).unwrap(
+);assert_eq!(plan.require_catalog(&catalog).unwrap_err().code,"WFT-SECURITY-PIN");
 }
 
 #[test]

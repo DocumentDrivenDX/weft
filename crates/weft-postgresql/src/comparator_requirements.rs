@@ -618,7 +618,7 @@ mod tests {
         let catalog = Catalog::prepare(inputs).unwrap();
         let query_text = "SELECT c.name FROM Customer c";
         let (_, plan) =
-            weft_core::prepare_and_resolve(&query_text, catalog.inputs.clone()).unwrap();
+            weft_core::prepare_and_resolve(&query_text, catalog.inputs().to_vec()).unwrap();
         assert!(collect(Plan::V01(&plan)).unwrap().is_empty());
         let reads = collect_reads(Plan::V01(&plan)).unwrap();
         assert_eq!(reads.len(), 1);
@@ -626,7 +626,7 @@ mod tests {
         assert_eq!(reads[0].1.element, "customer-name");
         let query_text = "SELECT c.name, SUM(o.total) AS total FROM Customer c JOIN Orders o ON o.customer_id = c.id GROUP BY c.name";
         let (_, plan) =
-            weft_core::prepare_and_resolve(&query_text, catalog.inputs.clone()).unwrap();
+            weft_core::prepare_and_resolve(&query_text, catalog.inputs().to_vec()).unwrap();
         let requirements = collect(Plan::V01(&plan)).unwrap();
         assert_eq!(
             requirements

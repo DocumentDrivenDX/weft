@@ -65,7 +65,7 @@ impl RelationshipAdmission {
             ));
         }
         let input = catalog
-            .inputs
+            .inputs()
             .iter()
             .find(|i| {
                 i.pin.document_id == read.identity.document_id

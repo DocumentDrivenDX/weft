@@ -361,7 +361,7 @@ impl Catalog {
             .as_array()
             .unwrap()
         {
-            if !self.inputs[source.document]
+            if !self.inputs()[source.document]
                 .selected_module_ids
                 .iter()
                 .any(|id| module["id"] == id.as_str())

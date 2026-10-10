@@ -85,12 +85,12 @@ pub fn frontend_json(request: &str) -> String {
             let (catalog, plan) =
                 prepare_and_resolve_application(sql, modules, parameters, profile)?;
             return Ok(
-                serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs,"diagnostics":[]}),
+                serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs(),"diagnostics":[]}),
             );
         }
         let (catalog, plan) = prepare_and_resolve(sql, modules)?;
         Ok(
-            serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs,"diagnostics":[]}),
+            serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs(),"diagnostics":[]}),
         )
     }
     let output = match run(request) {

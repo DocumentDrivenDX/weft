@@ -1,4 +1,6 @@
 //! Public, pure compile transport. Hosts own backend registration and execution.
+/// Maximum UTF-8 request bytes admitted by the compiler and CLI.
+pub const MAX_REQUEST_BYTES: usize = 16 * 1024 * 1024;
 use crate::{
     backend::{BindingInput, Plan, Registry, Representation, Status, Target},
     error::{Diagnostic, Result},
@@ -79,7 +81,7 @@ impl Compiler {
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
-            if raw.len() > 16 * 1024 * 1024 {
+            if raw.len() > MAX_REQUEST_BYTES {
                 return Err(Diagnostic::new(
                     "WFT-LIMIT",
                     "input",

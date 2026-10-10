@@ -72,7 +72,7 @@ pub fn backend_json(raw: &str) -> String {
             };
             let compilation = registry.compile(catalog, plan, target, &binding)?;
             Ok(
-                json!({"status":"emitted","probeVersion":"weft-backend-probe/0.1.0","compilation":compilation,"manifest":registry.manifest("test.third"),"retainedModules":catalog.inputs}),
+                json!({"status":"emitted","probeVersion":"weft-backend-probe/0.1.0","compilation":compilation,"manifest":registry.manifest("test.third"),"retainedModules":catalog.inputs()}),
             )
         }
         match request["dialect"].as_str() {

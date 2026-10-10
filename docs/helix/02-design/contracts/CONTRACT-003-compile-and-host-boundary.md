@@ -174,3 +174,28 @@ re-entering WASM. The fatal envelope uses interface 0.1 because a damaged host
 cannot reliably determine the active request version; hosts must create a fresh
 module context/realm to recover. Ordinary compiler refusals retain the selected
 request interface version and do not poison the instance.
+
+
+## R1 CLI byte admission and prepared-source ownership
+
+The CLI MUST read at most sixteen MiB plus one sentinel byte before UTF-8
+conversion or compiler invocation. An exact-limit request is admitted to normal
+validation; overflow returns the canonical input-phase WFT-LIMIT response without
+draining a suffix. Invalid UTF-8 returns WFT-UTF8. Before outer transport version
+admission these refusals use weft-compile/0.1.0, matching the common early limit
+boundary. They contain no SQL/artifact and no original input or OS error text.
+
+Stdin read failure returns WFT-IO, phase host, recoverability host-action, fixed
+message "Request input could not be read", status blocked and exit code 1.
+Input/semantic refusals retain exit code 0 and their structured outcome. Every
+normal stdout response has one trailing LF. Stdout write/flush failure exits 1
+with only a fixed safe WFT-IO stderr message; transport cannot promise an atomic
+OS write to a disconnected consumer. Input wait/cancellation remains host-owned.
+
+Rust Catalog owns retained inputs privately; inputs() returns a read-only slice.
+Changes require cloning inputs and preparing a new snapshot, with renewed exact
+pins. Source-bound plans/packets MUST refuse a different prepared snapshot. This
+is an intentional source API migration for unreleased Rust callers; it does not
+change compile request/response schemas or permit version relabeling.
+
+The CLI reads a cloned, unbuffered OS stdin handle on Unix and Windows; it does not use Rust stdin read-ahead. Unix shared-offset evidence verifies the unread suffix after the sentinel. Windows is an implemented branch without execution evidence in R1; other target families refuse host input. Handle-clone failures follow the safe host I/O refusal.

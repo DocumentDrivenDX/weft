@@ -247,7 +247,7 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
                 return Err(fail("Duplicate or foreign property mapping"));
             }
             let input = catalog
-                .inputs
+                .inputs()
                 .iter()
                 .find(|i| i.pin == authored.pin)
                 .unwrap();
@@ -371,7 +371,7 @@ pub fn admit(catalog: &Catalog, value: &Value) -> Result<Binding> {
         }
         let authored = catalog.record_by_identity(&physical.source)?;
         let input = catalog
-            .inputs
+            .inputs()
             .iter()
             .find(|i| i.pin == authored.pin)
             .unwrap();
