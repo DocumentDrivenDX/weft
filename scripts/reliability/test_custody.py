@@ -71,4 +71,21 @@ class CustodyTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as work:
    base=pathlib.Path(work);root=base/'repo';source=root/'crates/c/src';source.mkdir(parents=True);(source.parent/'Cargo.toml').write_text('[package]\nname="c"\nversion="0.1.0"\n');(root/'outside.json').write_text('owned decoy');(base/'outside.json').write_text('unowned actual');(source/'lib.rs').write_text('use jsonschema::validator as schema; #[schema(path="../../../outside.json")] struct S;')
    with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_archived_excerpt_bytes_remain_bound_without_current_build_interpretation(self):
+  with tempfile.TemporaryDirectory() as work:
+   root=pathlib.Path(work);archive=root/'distributions/realizations/control/source-subset/src/a.rs';archive.parent.mkdir(parents=True);archive.write_text('include_str!("absent-historical-input.json")')
+   current=root/'src/a.rs';current.parent.mkdir();current.write_text('pub struct Current;')
+   manifest=custody.snapshot(root);self.assertIn(str(archive.relative_to(root)),manifest['files'])
+   archive.write_text('changed historical bytes')
+   with self.assertRaises(custody.CustodyError):custody.verify(root,manifest)
+   current.write_text('include_str!("absent-current-input.json")')
+   with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
+ def test_active_build_cannot_enter_byte_only_archive(self):
+  for source,manifest in [('include!("../distributions/realizations/control/nested.txt")',''),('#[path="../distributions/realizations/control/nested.txt"] mod nested;',''),('', '[lib]\npath="distributions/realizations/control/nested.txt"\n'),('', '[package]\nname="control"\nversion="0.1.0"\nbuild="distributions/realizations/control/nested.txt"\n')]:
+   with tempfile.TemporaryDirectory() as work:
+    root=pathlib.Path(work);archive=root/'distributions/realizations/control/nested.txt';archive.parent.mkdir(parents=True);archive.write_text('include!("../../../../unowned.rs")');(root/'src').mkdir();(root/'src/lib.rs').write_text(source);(root/'Cargo.toml').write_text(manifest)
+    with self.assertRaises(custody.CustodyError):custody.snapshot(root)
+
 if __name__=='__main__':unittest.main()

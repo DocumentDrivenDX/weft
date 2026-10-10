@@ -6,6 +6,7 @@ OUTPUTS=tuple('docs/helix/04-build/evidence/reliability/'+name for name in ('r6-
 BUILD_OUTPUTS={'.git','node_modules','target','dist','.venv','packages/weft-browser/dist','scripts/reliability/__pycache__','tests/qualify-and-evolve/__pycache__','tests/ashlar-databricks/__pycache__','tests/truss-postgresql/__pycache__','docs/helix/04-build/evidence/B-007-ashlar-warehouse-count-native/__pycache__'}
 CHECKPOINT='f81565a1addaa6d2c83561f62d3805d1167233ee'
 HISTORICAL_MANIFEST_SHA='5ea7ed12913b9e12def63411e80793a6327257b8621986bcc82ad280af5edfda'
+ARCHIVE_ROOTS=('docs/helix/04-build/evidence/','distributions/realizations/')
 class CustodyError(Exception):pass
 
 def rust_tokens(source):
@@ -47,18 +48,19 @@ def rust_tokens(source):
 def embedded_inputs(root,path,entries):
  root=root.resolve();path=path.resolve()
  tokens,literals=rust_tokens(path.read_text())
- def owned(base,index):
+ def owned(base,index,executable=False):
   value=literals.get(index)
   if type(value)!=str or not value or '\x00' in value:raise CustodyError()
   target=(base/value).resolve()
   if not target.is_relative_to(root) or target.relative_to(root).as_posix() not in entries:raise CustodyError()
+  if executable and any(target.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
  for i,token in enumerate(tokens):
   if token in ('include_str','include_bytes','include') and tokens[i+1:i+2]==['as']:raise CustodyError()
   if token in ('include_str','include_bytes','include') and tokens[i+1:i+2]==['!']:
    end=i+4
    if tokens[end:end+1]==[',']:end+=1
    if tokens[i+2:i+4]!=['(','LITERAL'] or tokens[end:end+1]!=[')']:raise CustodyError()
-   owned(path.parent,i+3)
+   owned(path.parent,i+3,token=='include')
   if token=='#' and tokens[i+1:i+2]==['[']:
    depth=1;end=i+2
    while end<len(tokens) and depth:
@@ -86,7 +88,7 @@ def embedded_inputs(root,path,entries):
       elif part==',' and depth==0:comma=index;break
      conditional=comma is not None and attribute[comma+1:-1]==['path','=','LITERAL']
     if not direct and not conditional:raise CustodyError()
-   for k in path_keys:owned(base,k+2)
+   for k in path_keys:owned(base,k+2,not schema)
 
 def snapshot(root):
  root=root.resolve()
@@ -105,6 +107,8 @@ def snapshot(root):
  for name in FILES:add(root/name)
  for name in ROOTS:walk(root/name)
  for name in list(entries):
+  # Frozen source excerpts remain byte-bound inputs, not current build graphs.
+  if any(name.startswith(prefix) for prefix in ARCHIVE_ROOTS):continue
   if name.endswith('.rs'):embedded_inputs(root,root/name,entries)
   if pathlib.PurePosixPath(name).name=='Cargo.toml':
    manifest=tomllib.loads((root/name).read_text());targets=([manifest['lib']] if 'lib' in manifest else [])+[v for kind in ('bin','example','test','bench') for v in manifest.get(kind,[])]
@@ -114,7 +118,8 @@ def snapshot(root):
     if 'path' in target:
      path=((root/name).parent/target['path']).resolve()
      if not path.is_relative_to(root) or path.relative_to(root).as_posix() not in entries:raise CustodyError()
- return {'version':'weft-inputs/1','scope':'Complete compiler/binding/schema/corpus/oracle/test/host/build/lock/config/checker and governing HELIX input closure, including vendor and embedded inputs. Named generated qualification outputs/build products excluded.','roots':list(ROOTS),'rootFiles':list(FILES),'excludedOutputFiles':list(OUTPUTS),'excludedBuildDirectories':sorted(BUILD_OUTPUTS),'excludedGeneratedSuffixes':['.pyc'],'excludedGeneratedFiles':['.DS_Store'],'files':entries}
+     if any(path.relative_to(root).as_posix().startswith(prefix) for prefix in ARCHIVE_ROOTS):raise CustodyError()
+ return {'version':'weft-inputs/1','scope':'Complete compiler/binding/schema/corpus/oracle/test/host/build/lock/config/checker and governing HELIX input closure, including vendor and embedded inputs. Archived evidence/distribution realizations are byte-hashed, not reinterpreted as current build trees. Named generated qualification outputs/build products excluded.','archivalByteOnlyRoots':list(ARCHIVE_ROOTS),'roots':list(ROOTS),'rootFiles':list(FILES),'excludedOutputFiles':list(OUTPUTS),'excludedBuildDirectories':sorted(BUILD_OUTPUTS),'excludedGeneratedSuffixes':['.pyc'],'excludedGeneratedFiles':['.DS_Store'],'files':entries}
 
 def verify(root,manifest):
  actual=snapshot(root)
