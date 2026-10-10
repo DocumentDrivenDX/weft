@@ -1,0 +1,722 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:security:spike:record-homes:0.1.0",
+  "title": "Proposed PostgreSQL Record home declaration; shape only, no owner/native admission",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.record-homes/0.1.0"
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "backendId": {
+          "$ref": "#/$defs/identity"
+        },
+        "backendVersion": {
+          "$ref": "#/$defs/identity"
+        },
+        "targetProfile": {
+          "$ref": "#/$defs/identity"
+        }
+      },
+      "required": [
+        "backendId",
+        "backendVersion",
+        "targetProfile"
+      ],
+      "additionalProperties": false
+    },
+    "modelPins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pin"
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "subject": {
+      "$ref": "#/$defs/subject"
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/type"
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    },
+    "queryCarriers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/carrier"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "context": {
+      "type": "array",
+      "maxItems": 0
+    },
+    "nativeSemantics": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "const": "UTF8"
+        },
+        "textCollation": {
+          "const": "C"
+        }
+      },
+      "required": [
+        "encoding",
+        "textCollation"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "version",
+    "selection",
+    "modelPins",
+    "subject",
+    "types",
+    "queryCarriers",
+    "context",
+    "nativeSemantics"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "identity": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096,
+      "pattern": "^[^\\u0000]+$(?![\\s\\S])"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 63,
+      "pattern": "^[^\\u0000]+$(?![\\s\\S])",
+      "description": "Necessary character bound only; owner interpreter MUST independently enforce <=63 UTF8 bytes before identifier quoting."
+    },
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/identity"
+        },
+        "revision": {
+          "$ref": "#/$defs/identity"
+        },
+        "module": {
+          "$ref": "#/$defs/identity"
+        },
+        "element": {
+          "$ref": "#/$defs/identity"
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "pin": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/identity"
+        },
+        "revision": {
+          "$ref": "#/$defs/identity"
+        },
+        "umfVersion": {
+          "const": "0.8.0"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "umfVersion",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "textLiteral": {
+      "type": "object",
+      "required": [
+        "string"
+      ],
+      "properties": {
+        "string": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "boolLiteral": {
+      "type": "object",
+      "required": [
+        "boolean"
+      ],
+      "properties": {
+        "boolean": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "integerLiteral": {
+      "type": "object",
+      "required": [
+        "integerToken"
+      ],
+      "properties": {
+        "integerToken": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?([eE][+-]?[0-9]+)?$(?![\\s\\S])"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadataTextLiteral": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "maxLength": 4096,
+          "pattern": "^[^\\u0000]*$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "string"
+      ],
+      "additionalProperties": false
+    },
+    "metadataIntegerLiteral": {
+      "type": "object",
+      "properties": {
+        "integerToken": {
+          "type": "string",
+          "maxLength": 20,
+          "pattern": "^(0|[1-9][0-9]*|-[1-9][0-9]*)$(?![\\s\\S])"
+        }
+      },
+      "required": [
+        "integerToken"
+      ],
+      "additionalProperties": false
+    },
+    "textDomain": {
+      "type": "object",
+      "properties": {
+        "scalarType": {
+          "const": "string"
+        },
+        "cardinality": {
+          "const": "one"
+        },
+        "nullability": {
+          "const": "required"
+        },
+        "facets": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 9007199254740991
+                },
+                "unit": {
+                  "const": "unicode-scalar"
+                }
+              },
+              "required": [
+                "unit"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "allowedValues": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/textLiteral"
+              },
+              "minItems": 0,
+              "maxItems": 4096
+            }
+          ]
+        }
+      },
+      "required": [
+        "scalarType",
+        "cardinality",
+        "nullability",
+        "facets",
+        "allowedValues"
+      ],
+      "additionalProperties": false
+    },
+    "boolDomain": {
+      "type": "object",
+      "properties": {
+        "scalarType": {
+          "const": "boolean"
+        },
+        "cardinality": {
+          "const": "one"
+        },
+        "nullability": {
+          "const": "required"
+        },
+        "facets": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "allowedValues": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/boolLiteral"
+              },
+              "minItems": 0,
+              "maxItems": 4096
+            }
+          ]
+        }
+      },
+      "required": [
+        "scalarType",
+        "cardinality",
+        "nullability",
+        "facets",
+        "allowedValues"
+      ],
+      "additionalProperties": false
+    },
+    "intDomain": {
+      "type": "object",
+      "properties": {
+        "scalarType": {
+          "const": "integer"
+        },
+        "cardinality": {
+          "const": "one"
+        },
+        "nullability": {
+          "const": "required"
+        },
+        "facets": {
+          "type": "object",
+          "properties": {
+            "integerWidth": {
+              "type": "object",
+              "properties": {
+                "bits": {
+                  "const": 64
+                },
+                "signed": {
+                  "const": true
+                }
+              },
+              "required": [
+                "bits",
+                "signed"
+              ],
+              "additionalProperties": false
+            },
+            "range": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "$ref": "#/$defs/integerLiteral"
+                },
+                "max": {
+                  "$ref": "#/$defs/integerLiteral"
+                },
+                "minInclusive": {
+                  "type": "boolean"
+                },
+                "maxInclusive": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "integerWidth"
+          ],
+          "additionalProperties": false
+        },
+        "allowedValues": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/integerLiteral"
+              },
+              "minItems": 0,
+              "maxItems": 4096
+            }
+          ]
+        }
+      },
+      "required": [
+        "scalarType",
+        "cardinality",
+        "nullability",
+        "facets",
+        "allowedValues"
+      ],
+      "additionalProperties": false
+    },
+    "field": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-text-c-utf8/0.1.0"
+            },
+            "sourceDomain": {
+              "$ref": "#/$defs/textDomain"
+            }
+          },
+          "required": [
+            "field",
+            "column",
+            "codec",
+            "sourceDomain"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-bool/0.1.0"
+            },
+            "sourceDomain": {
+              "$ref": "#/$defs/boolDomain"
+            }
+          },
+          "required": [
+            "field",
+            "column",
+            "codec",
+            "sourceDomain"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "field": {
+              "$ref": "#/$defs/ref"
+            },
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-int8-lexical/0.1.0"
+            },
+            "sourceDomain": {
+              "$ref": "#/$defs/intDomain"
+            }
+          },
+          "required": [
+            "field",
+            "column",
+            "codec",
+            "sourceDomain"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "discriminator": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-text-c-utf8/0.1.0"
+            },
+            "literal": {
+              "$ref": "#/$defs/metadataTextLiteral"
+            }
+          },
+          "required": [
+            "column",
+            "codec",
+            "literal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-bool/0.1.0"
+            },
+            "literal": {
+              "$ref": "#/$defs/boolLiteral"
+            }
+          },
+          "required": [
+            "column",
+            "codec",
+            "literal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-int8-lexical/0.1.0"
+            },
+            "literal": {
+              "$ref": "#/$defs/metadataIntegerLiteral"
+            }
+          },
+          "required": [
+            "column",
+            "codec",
+            "literal"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/$defs/identifier"
+        },
+        "name": {
+          "$ref": "#/$defs/identifier"
+        },
+        "kind": {
+          "enum": [
+            "table",
+            "view"
+          ]
+        },
+        "discriminator": {
+          "$ref": "#/$defs/discriminator"
+        }
+      },
+      "required": [
+        "schema",
+        "name",
+        "kind",
+        "discriminator"
+      ],
+      "additionalProperties": false
+    },
+    "key": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/identity"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "id",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "endpoint": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "$ref": "#/$defs/identity"
+        },
+        "target": {
+          "$ref": "#/$defs/ref"
+        },
+        "targetKeyId": {
+          "$ref": "#/$defs/identity"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "role",
+        "target",
+        "targetKeyId",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "key": {
+          "$ref": "#/$defs/key"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/endpoint"
+          },
+          "minItems": 0,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "type",
+        "source",
+        "key",
+        "fields",
+        "endpoints"
+      ],
+      "additionalProperties": false
+    },
+    "carrier": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "type",
+        "source",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "mechanism": {
+          "const": "weft.security.pg-session-user/0.1.0"
+        },
+        "login": {
+          "type": "object",
+          "properties": {
+            "column": {
+              "$ref": "#/$defs/identifier"
+            },
+            "codec": {
+              "const": "weft.security.pg-text-c-utf8/0.1.0"
+            }
+          },
+          "required": [
+            "column",
+            "codec"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "mechanism",
+        "login"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

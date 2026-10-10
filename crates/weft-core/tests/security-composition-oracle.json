@@ -1,0 +1,1981 @@
+{
+  "scope": "Pure truth/composition correspondence; no trusted facts or native authorization",
+  "truthVectors": [
+    {
+      "args": [
+        "T"
+      ],
+      "and": "T",
+      "or": "T",
+      "not": [
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F"
+      ],
+      "and": "F",
+      "or": "F",
+      "not": [
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U"
+      ],
+      "and": "U",
+      "or": "U",
+      "not": [
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T"
+      ],
+      "and": "T",
+      "or": "T",
+      "not": [
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "F",
+      "not": [
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "U",
+      "not": [
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "T"
+      ],
+      "and": "T",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "F",
+      "not": [
+        "T",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "T",
+        "T"
+      ],
+      "and": "T",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "T",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "F",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "F",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "T",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "T",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "T",
+        "U",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "F",
+        "U",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "T",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "F",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "F",
+      "not": [
+        "T",
+        "T",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "T",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "T",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "T",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "F",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "T",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "T",
+        "U",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "F",
+        "U",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "T",
+        "U",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "T",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "T",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "F",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "T",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "T",
+        "U"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "U",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "T",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "F",
+        "U",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "T",
+        "U",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "T",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "F",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "T",
+        "F"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "F",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "T",
+        "U"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "F",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "F",
+        "T"
+      ],
+      "and": "F",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "T",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "F",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "T",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "F",
+        "U"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "T",
+        "U"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "U",
+        "T"
+      ],
+      "and": "U",
+      "or": "T",
+      "not": [
+        "U",
+        "U",
+        "U",
+        "F"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "U",
+        "F"
+      ],
+      "and": "F",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "U",
+        "T"
+      ]
+    },
+    {
+      "args": [
+        "U",
+        "U",
+        "U",
+        "U"
+      ],
+      "and": "U",
+      "or": "U",
+      "not": [
+        "U",
+        "U",
+        "U",
+        "U"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "permit": "T",
+      "require": "T",
+      "forbid": "T",
+      "decision": "deny"
+    },
+    {
+      "permit": "T",
+      "require": "T",
+      "forbid": "F",
+      "decision": "permit"
+    },
+    {
+      "permit": "T",
+      "require": "T",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "T",
+      "require": "F",
+      "forbid": "T",
+      "decision": "deny"
+    },
+    {
+      "permit": "T",
+      "require": "F",
+      "forbid": "F",
+      "decision": "deny"
+    },
+    {
+      "permit": "T",
+      "require": "F",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "T",
+      "require": "U",
+      "forbid": "T",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "T",
+      "require": "U",
+      "forbid": "F",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "T",
+      "require": "U",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "F",
+      "require": "T",
+      "forbid": "T",
+      "decision": "deny"
+    },
+    {
+      "permit": "F",
+      "require": "T",
+      "forbid": "F",
+      "decision": "deny"
+    },
+    {
+      "permit": "F",
+      "require": "T",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "F",
+      "require": "F",
+      "forbid": "T",
+      "decision": "deny"
+    },
+    {
+      "permit": "F",
+      "require": "F",
+      "forbid": "F",
+      "decision": "deny"
+    },
+    {
+      "permit": "F",
+      "require": "F",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "F",
+      "require": "U",
+      "forbid": "T",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "F",
+      "require": "U",
+      "forbid": "F",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "F",
+      "require": "U",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "T",
+      "forbid": "T",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "T",
+      "forbid": "F",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "T",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "F",
+      "forbid": "T",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "F",
+      "forbid": "F",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "F",
+      "forbid": "U",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "U",
+      "forbid": "T",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "U",
+      "forbid": "F",
+      "decision": "indeterminate"
+    },
+    {
+      "permit": "U",
+      "require": "U",
+      "forbid": "U",
+      "decision": "indeterminate"
+    }
+  ]
+}

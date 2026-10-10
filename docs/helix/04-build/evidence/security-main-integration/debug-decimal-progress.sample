@@ -1,0 +1,201 @@
+Analysis of sampling weft_postgresql-d313a4db918e7ef2 (pid 18261) every 1 millisecond
+Process:         weft_postgresql-d313a4db918e7ef2 [18261]
+Path:            /private/tmp/*/weft_postgresql-d313a4db918e7ef2
+Load Address:    0x104e74000
+Identifier:      weft_postgresql-d313a4db918e7ef2
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  cargo [11015]
+Target Type:     live task
+
+Date/Time:       2026-10-10 16:51:52.871 -0400
+Launch Time:     2026-10-10 16:43:25.116 -0400
+OS Version:      macOS 27.0.1 (26A434)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         26.2M
+Physical footprint (peak):  173.8M
+Idle exit:                  untracked
+----
+
+Call graph:
+    2 Thread_30733106   DispatchQueue_1: com.apple.main-thread  (serial)
+    + 2 start  (in dyld) + 6688  [0x193847e80]
+    +   2 main  (in weft_postgresql-d313a4db918e7ef2) + 36  [0x10552b170]
+    +     2 std::rt::lang_start::h2d57ddfe96e78b94  (in weft_postgresql-d313a4db918e7ef2) + 84  [0x104f97d38]  rt.rs:205
+    +       2 std::rt::lang_start_internal::hdb28e94b6865fa11  (in weft_postgresql-d313a4db918e7ef2) + 940  [0x105b8c850]
+    +         2 std::rt::lang_start::_$u7b$$u7b$closure$u7d$$u7d$::h056da572f7bff9a4  (in weft_postgresql-d313a4db918e7ef2) + 28  [0x104f97d60]  rt.rs:206
+    +           2 std::sys::backtrace::__rust_begin_short_backtrace::h2c7a16728b749136  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x104f97d90]  backtrace.rs:158
+    +             2 core::ops::function::FnOnce::call_once::h8b6dc143b404f52d  (in weft_postgresql-d313a4db918e7ef2) + 20  [0x104f1c7a0]  function.rs:253
+    +               2 weft_postgresql::main::h7e1283f96e67b675  (in weft_postgresql-d313a4db918e7ef2) + 28  [0x10552b144]  lib.rs:0
+    +                 2 test::test_main_static::hee4a370f7f829fc8  (in weft_postgresql-d313a4db918e7ef2) + 88  [0x10564a780]
+    +                   2 test::test_main::h962dfb5142dd95f5  (in weft_postgresql-d313a4db918e7ef2) + 316  [0x10564a0ec]
+    +                     2 test::console::run_tests_console::hf349806be08eacc8  (in weft_postgresql-d313a4db918e7ef2) + 6364  [0x10563383c]
+    +                       2 std::sync::mpmc::list::Channel$LT$T$GT$::recv::h3506e9fcf8e28e8b  (in weft_postgresql-d313a4db918e7ef2) + 464  [0x10561ece0]
+    +                         2 std::sync::mpmc::list::Channel$LT$T$GT$::recv::_$u7b$$u7b$closure$u7d$$u7d$::h9e87d4357f06beba  (in weft_postgresql-d313a4db918e7ef2) + 148  [0x10561f074]
+    +                           2 std::thread::Thread::park::h5fd5e5acf205c486  (in weft_postgresql-d313a4db918e7ef2) + 48  [0x105b8d5e8]
+    +                             2 _dispatch_semaphore_wait_slow  (in libdispatch.dylib) + 132  [0x193a5eb28]
+    +                               2 _dispatch_sema4_wait  (in libdispatch.dylib) + 28  [0x193a5e49c]
+    +                                 2 semaphore_wait_trap  (in libsystem_kernel.dylib) + 8  [0x193bd8b9c]
+    2 Thread_30733278: property_definition::tests::original_decimal_domains_compile_bo
+      2 thread_start  (in libsystem_pthread.dylib) + 8  [0x193c18cec]
+        2 _pthread_start  (in libsystem_pthread.dylib) + 136  [0x193c1dd00]
+          2 std::sys::pal::unix::thread::Thread::new::thread_start::h87df50f049a92661  (in weft_postgresql-d313a4db918e7ef2) + 52  [0x105b97bf4]
+            2 core::ops::function::FnOnce::call_once$u7b$$u7b$vtable.shim$u7d$$u7d$::h52f54303a4ded4fa  (in weft_postgresql-d313a4db918e7ef2) + 124  [0x105620d44]
+              2 std::sys::backtrace::__rust_begin_short_backtrace::h8a4c21eca3783310  (in weft_postgresql-d313a4db918e7ef2) + 132  [0x10561dd04]
+                2 test::run_test::_$u7b$$u7b$closure$u7d$$u7d$::h8df0f092ae8f2883  (in weft_postgresql-d313a4db918e7ef2) + 744  [0x10564dd60]
+                  2 test::__rust_begin_short_backtrace::hcdd3bec749c6c0db  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x10564eafc]
+                    2 core::ops::function::FnOnce::call_once::h5fabc8a57a248cf2  (in weft_postgresql-d313a4db918e7ef2) + 20  [0x104f1bec8]  function.rs:253
+                      2 weft_postgresql::property_definition::tests::original_decimal_domains_compile_both_storage_homes::_$u7b$$u7b$closure$u7d$$u7d$::h6f1f4d7f55be9af4  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x104e82b2c]  property_definition.rs:800
+                        2 weft_postgresql::property_definition::tests::original_decimal_domains_compile_both_storage_homes::h649a52fe19739d61  (in weft_postgresql-d313a4db918e7ef2) + 2048  [0x105593a2c]  property_definition.rs:802
+                          2 weft_postgresql::property_definition::tests::original_numeric_property_fixture::h1f1e091680e57f11  (in weft_postgresql-d313a4db918e7ef2) + 122304  [0x105584b24]  property_definition.rs:2246
+                            2 weft_postgresql::original_admission::Configuration::compile_json::h1278736f5aec92ec  (in weft_postgresql-d313a4db918e7ef2) + 96  [0x10552042c]  original_admission.rs:232
+                              2 weft_core::compile::Compiler::compile_json_with_factory::h0adabf245389a52d  (in weft_postgresql-d313a4db918e7ef2) + 56  [0x1056a5658]
+                                2 weft_core::compile::Compiler::compile_json_internal::h2d29a303c8b50e4c  (in weft_postgresql-d313a4db918e7ef2) + 208  [0x1056a5734]
+                                  2 weft_core::compile::Compiler::compile_json_internal::_$u7b$$u7b$closure$u7d$$u7d$::hb732be58263adca4  (in weft_postgresql-d313a4db918e7ef2) + 9068  [0x105709a5c]
+                                    2 weft_core::compile::Compiler::emit::h68df173b03802a24  (in weft_postgresql-d313a4db918e7ef2) + 1280  [0x1056a62d4]
+                                      2 weft_core::backend::Registry::compile::hfe00384950da1f63  (in weft_postgresql-d313a4db918e7ef2) + 272  [0x10575e6f4]
+                                        2 std::panic::catch_unwind::hf265430b2ae2c4f0  (in weft_postgresql-d313a4db918e7ef2) + 100  [0x105756984]
+                                          2 __rust_try  (in weft_postgresql-d313a4db918e7ef2) + 32  [0x105756a1c]
+                                            2 std::panicking::catch_unwind::do_call::h0bba9c3a551077cc  (in weft_postgresql-d313a4db918e7ef2) + 84  [0x10572b230]
+                                              2 _$LT$core..panic..unwind_safe..AssertUnwindSafe$LT$F$GT$$u20$as$u20$core..ops..function..FnOnce$LT$$LP$$RP$$GT$$GT$::call_once::hcf9af9370c791a26  (in weft_postgresql-d313a4db918e7ef2) + 52  [0x105876fbc]
+                                                2 core::ops::function::FnOnce::call_once::h3dab0820a63790c9  (in weft_postgresql-d313a4db918e7ef2) + 16  [0x1057eda78]
+                                                  2 weft_core::backend::Registry::compile::_$u7b$$u7b$closure$u7d$$u7d$::ha670c058283dea2d  (in weft_postgresql-d313a4db918e7ef2) + 64  [0x1056aac78]
+                                                    2 _$LT$weft_core..backend..Adapter$LT$B$GT$$u20$as$u20$weft_core..backend..Registered$GT$::compile::h1082c3a56eb93557  (in weft_postgresql-d313a4db918e7ef2) + 4016  [0x1054db948]  backend.rs:614
+                                                      2 _$LT$weft_postgresql..original_backend..OriginalBackend$u20$as$u20$weft_core..backend..Backend$GT$::lower::h42078eff589da3a7  (in weft_postgresql-d313a4db918e7ef2) + 280  [0x105231914]  original_backend.rs:239
+                                                        2 weft_postgresql::select_definition::compile_with_relationships::hdb592cb197bbed22  (in weft_postgresql-d313a4db918e7ef2) + 132  [0x105252f98]  select_definition.rs:134
+                                                          2 weft_postgresql::select_definition::compile_registry::h180a216fbb83633c  (in weft_postgresql-d313a4db918e7ef2) + 396  [0x10525b474]  select_definition.rs:172
+                                                            2 weft_postgresql::registered_access::prepare::hb8e4db7c07aa3240  (in weft_postgresql-d313a4db918e7ef2) + 60  [0x105564ca0]  registered_access.rs:416
+                                                              2 weft_postgresql::registered_access::prepare_scoped::he116028f69300e9e  (in weft_postgresql-d313a4db918e7ef2) + 544  [0x105564fac]  registered_access.rs:466
+                                                                2 weft_postgresql::record_definition::lower_scoped::h35f93ea99b3b55be  (in weft_postgresql-d313a4db918e7ef2) + 344  [0x104f77d00]  record_definition.rs:237
+                                                                  2 weft_core::json::checked_json::h269d12d99eb5ca7c  (in weft_postgresql-d313a4db918e7ef2) + 72  [0x1057be3d0]
+                                                                    2 weft_core::json::inspect_json::hb1addd0751b72a44  (in weft_postgresql-d313a4db918e7ef2) + 1120  [0x1057bd9d0]
+                                                                      1 weft_core::json::inspect_json::hb1addd0751b72a44  (in weft_postgresql-d313a4db918e7ef2) + 380  [0x1057bd6ec]
+                                                                      ! 1 serde_json::de::from_str::he5d868c333e4875b  (in weft_postgresql-d313a4db918e7ef2) + 52  [0x10568dad4]
+                                                                      !   1 serde_json::de::from_trait::he766f78c135fb01c  (in weft_postgresql-d313a4db918e7ef2) + 44  [0x10568d7d4]
+                                                                      !     1 _$LT$weft_core..json..RawObject$u20$as$u20$serde_core..de..Deserialize$GT$::deserialize::h4881aa6179d547b9  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x1056d1860]
+                                                                      !       1 _$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$::deserialize_map::h565b0fb7e74765a4  (in weft_postgresql-d313a4db918e7ef2) + 524  [0x10568def8]
+                                                                      !         1 _$LT$$LT$weft_core..json..RawObject$u20$as$u20$serde_core..de..Deserialize$GT$..deserialize..ObjectVisitor$u20$as$u20$serde_core..de..Visitor$GT$::visit_map::hd285851379e64631  (in weft_postgresql-d313a4db918e7ef2) + 88  [0x1056d18c4]
+                                                                      !           1 serde_core::de::MapAccess::next_entry::h5dd6fcde798b2172  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x10568d290]
+                                                                      !             1 serde_core::de::MapAccess::next_entry_seed::h4f943c4e20c3a7a6  (in weft_postgresql-d313a4db918e7ef2) + 220  [0x10568d378]
+                                                                      !               1 _$LT$serde_json..de..MapAccess$LT$R$GT$$u20$as$u20$serde_core..de..MapAccess$GT$::next_value_seed::hf08580f6ff65377d  (in weft_postgresql-d313a4db918e7ef2) + 156  [0x10568db7c]
+                                                                      !                 1 _$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$::deserialize::h9d82883d0a28dd1b  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x1057eb360]
+                                                                      !                   1 serde_json::raw::_$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..boxed..Box$LT$serde_json..raw..RawValue$GT$$GT$::deserialize::h34995c06270fb057  (in weft_postgresql-d313a4db918e7ef2) + 40  [0x10569d744]
+                                                                      !                     1 _$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$::deserialize_newtype_struct::h4dee757cb8f602ef  (in weft_postgresql-d313a4db918e7ef2) + 148  [0x10568ed28]
+                                                                      !                       1 serde_json::de::Deserializer$LT$R$GT$::deserialize_raw_value::hf1aaa6397de5deb7  (in weft_postgresql-d313a4db918e7ef2) + 156  [0x10568d9ac]
+                                                                      !                         1 serde_json::de::Deserializer$LT$R$GT$::ignore_value::hf1562d1f97640f28  (in weft_postgresql-d313a4db918e7ef2) + 528  [0x105b5e6f4]
+                                                                      !                           1 _$LT$serde_json..read..StrRead$u20$as$u20$serde_json..read..Read$GT$::ignore_str::hf530e7b0ad3f7dec  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x105b46f24]
+                                                                      !                             1 _$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$::ignore_str::ha96766c4d3010d7e  (in weft_postgresql-d313a4db918e7ef2) + 40  [0x105b46aa4]
+                                                                      !                               1 serde_json::read::SliceRead::skip_to_escape::h662787d9dff46541  (in weft_postgresql-d313a4db918e7ef2) + 440  [0x105b4578c]
+                                                                      !                                 1 _$LT$core..slice..iter..ChunksExact$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::next::h0ba65b7b17954557  (in weft_postgresql-d313a4db918e7ef2) + 244  [0x105b59144]
+                                                                      !                                   1 core::slice::_$LT$impl$u20$$u5b$T$u5d$$GT$::split_at_unchecked::hbc7bcc383edfff36  (in weft_postgresql-d313a4db918e7ef2) + 112  [0x105b622dc]
+                                                                      !                                     1 core::slice::raw::from_raw_parts::precondition_check::h8a8693b6a67d70e6  (in weft_postgresql-d313a4db918e7ef2) + 228  [0x105b62648]
+                                                                      1 weft_core::json::inspect_json::hb1addd0751b72a44  (in weft_postgresql-d313a4db918e7ef2) + 456  [0x1057bd738]
+                                                                        1 serde_json::de::from_str::h3c8f4b8d5820a92d  (in weft_postgresql-d313a4db918e7ef2) + 52  [0x10568da54]
+                                                                          1 serde_json::de::from_trait::h16c8a5fdca327e16  (in weft_postgresql-d313a4db918e7ef2) + 44  [0x10568d504]
+                                                                            1 serde_core::de::impls::_$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$::deserialize::he12978ec117a2b47  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x10565b428]
+                                                                              1 _$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$::deserialize_seq::hbea5dd3e61d33084  (in weft_postgresql-d313a4db918e7ef2) + 524  [0x10568e430]
+                                                                                1 _$LT$serde_core..de..impls..$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..vec..Vec$LT$T$GT$$GT$..deserialize..VecVisitor$LT$T$GT$$u20$as$u20$serde_core..de..Visitor$GT$::visit_seq::h0df0c8da1cd5eee8  (in weft_postgresql-d313a4db918e7ef2) + 136  [0x10567cd60]
+                                                                                  1 serde_core::de::SeqAccess::next_element::hf085da566f0b3344  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x10568d4b8]
+                                                                                    1 _$LT$serde_json..de..SeqAccess$LT$R$GT$$u20$as$u20$serde_core..de..SeqAccess$GT$::next_element_seed::he5ddd26098eb9f9d  (in weft_postgresql-d313a4db918e7ef2) + 188  [0x10568dc58]
+                                                                                      1 _$LT$core..marker..PhantomData$LT$T$GT$$u20$as$u20$serde_core..de..DeserializeSeed$GT$::deserialize::h9d82883d0a28dd1b  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x1057eb360]
+                                                                                        1 serde_json::raw::_$LT$impl$u20$serde_core..de..Deserialize$u20$for$u20$alloc..boxed..Box$LT$serde_json..raw..RawValue$GT$$GT$::deserialize::h34995c06270fb057  (in weft_postgresql-d313a4db918e7ef2) + 40  [0x10569d744]
+                                                                                          1 _$LT$$RF$mut$u20$serde_json..de..Deserializer$LT$R$GT$$u20$as$u20$serde_core..de..Deserializer$GT$::deserialize_newtype_struct::h4dee757cb8f602ef  (in weft_postgresql-d313a4db918e7ef2) + 148  [0x10568ed28]
+                                                                                            1 serde_json::de::Deserializer$LT$R$GT$::deserialize_raw_value::hf1aaa6397de5deb7  (in weft_postgresql-d313a4db918e7ef2) + 156  [0x10568d9ac]
+                                                                                              1 serde_json::de::Deserializer$LT$R$GT$::ignore_value::hf1562d1f97640f28  (in weft_postgresql-d313a4db918e7ef2) + 1616  [0x105b5eb34]
+                                                                                                1 _$LT$serde_json..read..StrRead$u20$as$u20$serde_json..read..Read$GT$::ignore_str::hf530e7b0ad3f7dec  (in weft_postgresql-d313a4db918e7ef2) + 24  [0x105b46f24]
+                                                                                                  1 _$LT$serde_json..read..SliceRead$u20$as$u20$serde_json..read..Read$GT$::ignore_str::ha96766c4d3010d7e  (in weft_postgresql-d313a4db918e7ef2) + 40  [0x105b46aa4]
+                                                                                                    1 serde_json::read::SliceRead::skip_to_escape::h662787d9dff46541  (in weft_postgresql-d313a4db918e7ef2) + 440  [0x105b4578c]
+                                                                                                      1 _$LT$core..slice..iter..ChunksExact$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::next::h0ba65b7b17954557  (in weft_postgresql-d313a4db918e7ef2) + 92  [0x105b590ac]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+
+Binary Images:
+       0x104e74000 -        0x10b2bce77 +weft_postgresql-d313a4db918e7ef2 (0) <9BDFC71E-8F8A-3951-9AF9-F49C020F6938> /tmp/*/weft_postgresql-d313a4db918e7ef2
+       0x193794000 -        0x1937e35f7  libobjc.A.dylib (973.1) <C0680DF6-9900-3C29-A071-95A031686EF8> /usr/lib/libobjc.A.dylib
+       0x1937e4000 -        0x1937ee23f  libsharedcache.dylib (0) <BBF95357-BEBF-3D89-8900-2BBB14A667C5> /usr/lib/libsharedcache.dylib
+       0x1937ef000 -        0x193815d3b  libdyld.dylib (27062) <62863BCA-DD60-3D32-A9DB-89099BA6F3D7> /usr/lib/system/libdyld.dylib
+       0x193816000 -        0x1938d56e3  dyld (1.0.0 - 27062) <D341DDCB-7969-3A9C-8E03-0CF4751398A9> /usr/lib/dyld
+       0x1938d6000 -        0x1938d901f  libsystem_blocks.dylib (98.1) <6F304731-D95D-3501-B4AD-F2934F7F2446> /usr/lib/system/libsystem_blocks.dylib
+       0x1938da000 -        0x19392f0df  libxpc.dylib (3298.1.1) <0791121F-B5FC-3F84-BF04-115E86D2D882> /usr/lib/system/libxpc.dylib
+       0x193930000 -        0x19394fc13  libsystem_trace.dylib (1966.1.1) <B48A8E3E-A12A-3342-8321-428B555E965E> /usr/lib/system/libsystem_trace.dylib
+       0x193950000 -        0x193a04f27  libcorecrypto.dylib (2109.0.22) <807AA6C9-5D8A-3CA5-B4CE-FACE5296EF6A> /usr/lib/system/libcorecrypto.dylib
+       0x193a05000 -        0x193a5ac5f  libsystem_malloc.dylib (886.0.8) <2339CB57-FE5A-3154-A206-A76059C749EB> /usr/lib/system/libsystem_malloc.dylib
+       0x193a5b000 -        0x193aa119f  libdispatch.dylib (1605.0.2) <022BF08F-0B3A-3225-9E65-16D1553CE90D> /usr/lib/system/libdispatch.dylib
+       0x193aa2000 -        0x193aa4d2b  libsystem_featureflags.dylib (108) <20C1CAB2-1F13-3426-8146-9CAE9FF2A33D> /usr/lib/system/libsystem_featureflags.dylib
+       0x193aa5000 -        0x193b27ca3  libsystem_c.dylib (1786.0.3) <FBA7B23E-AA60-3A90-9AA4-A7A2E0AD63EE> /usr/lib/system/libsystem_c.dylib
+       0x193b28000 -        0x193bbd033  libc++.1.dylib (2200.27) <1E9BA4AA-B5DA-3CF3-80AC-4B880049573F> /usr/lib/libc++.1.dylib
+       0x193bbe000 -        0x193bd7eff  libc++abi.dylib (2200.27) <A21743EE-6E1C-3E74-97EA-7AF793DE4BDF> /usr/lib/libc++abi.dylib
+       0x193bd8000 -        0x193c169ab  libsystem_kernel.dylib (13432.1.9) <F63BF418-8F75-34A4-AAF1-8CAF2B9B6A05> /usr/lib/system/libsystem_kernel.dylib
+       0x193c17000 -        0x193c2391b  libsystem_pthread.dylib (553.0.1) <5A1828C3-CBC2-3B85-BD07-C8ED10021A41> /usr/lib/system/libsystem_pthread.dylib
+       0x193c24000 -        0x193c2d4f3  libsystem_platform.dylib (402.0.1.0.1) <080E4444-A0FB-3913-9756-4E470015F32F> /usr/lib/system/libsystem_platform.dylib
+       0x193c2e000 -        0x193c5c903  libsystem_info.dylib (603) <BC387AEB-1CEF-3513-92D7-D7F913596711> /usr/lib/system/libsystem_info.dylib
+       0x197d86000 -        0x197d8fb13  libsystem_darwin.dylib (1786.0.3) <4E66C888-993C-3E6A-A8DA-A949C01C5B67> /usr/lib/system/libsystem_darwin.dylib
+       0x1981e0000 -        0x1981f1b8b  libsystem_notify.dylib (368) <58FD36D8-37A7-311C-80F2-8E64DD8710CF> /usr/lib/system/libsystem_notify.dylib
+       0x19a33d000 -        0x19a357d93  libsystem_networkextension.dylib (2340.1.2) <22E1D190-486F-324F-ABA4-F36AB841BFE9> /usr/lib/system/libsystem_networkextension.dylib
+       0x19a3e5000 -        0x19a3fc247  libsystem_asl.dylib (409) <B4D449B7-A821-3A9A-8019-E917B291F10A> /usr/lib/system/libsystem_asl.dylib
+       0x19b390000 -        0x19b390f2f  libobjcMsgSend.dylib (973.1) <41179EDE-DC97-3BBE-8848-6400D12C1436> /usr/lib/objc/libobjcMsgSend.dylib
+       0x19c4dc000 -        0x19c4e3edf  libsystem_symptoms.dylib (2394.0.4) <60EE7884-9F4E-3184-A6AC-FA40A7A0297D> /usr/lib/system/libsystem_symptoms.dylib
+       0x1a0874000 -        0x1a08aeaeb  libsystem_containermanager.dylib (833.0.8.0.1) <08A57205-555D-3792-8931-9D5B585AF326> /usr/lib/system/libsystem_containermanager.dylib
+       0x1a1ec7000 -        0x1a1ecb317  libsystem_configuration.dylib (1446) <F3EB66A7-7A24-3AE5-B6E8-9A37BB00F119> /usr/lib/system/libsystem_configuration.dylib
+       0x1a1ecc000 -        0x1a1ed2e03  libsystem_sandbox.dylib (3051.0.52) <1E892B56-092E-3832-BDE3-DCE356D7A4FA> /usr/lib/system/libsystem_sandbox.dylib
+       0x1a3390000 -        0x1a3390f2f  libobjcMsgSend1.dylib (973.1) <B40D9B2A-E1EE-37ED-8004-711A1F263DE1> /usr/lib/objc/libobjcMsgSend1.dylib
+       0x1a3ab0000 -        0x1a3ab2f93  libquarantine.dylib (217.0.4) <7FD4AE22-86EF-382B-83F5-ADF9336C1160> /usr/lib/system/libquarantine.dylib
+       0x1a41c2000 -        0x1a41c81e7  libsystem_coreservices.dylib (203) <57248E07-11A5-3857-918E-4A3A63B69FE8> /usr/lib/system/libsystem_coreservices.dylib
+       0x1a478a000 -        0x1a47c7b27  libsystem_m.dylib (3326.0.1) <A3FB340F-3ED5-30F4-8B64-9D5860F64D35> /usr/lib/system/libsystem_m.dylib
+       0x1a47c8000 -        0x1a47c8b47  libcharset.1.dylib (121) <3C9B584E-740A-3664-A1B0-52E561EA4B0B> /usr/lib/libcharset.1.dylib
+       0x1a47c9000 -        0x1a47cc4f7  libmacho.dylib (27062) <50DEADEC-3E99-3519-AFC3-4A3FEB3F14C3> /usr/lib/system/libmacho.dylib
+       0x1a47e6000 -        0x1a47f2707  libcommonCrypto.dylib (600041) <41C99F45-C5E6-39DB-B1F2-A1BEA9D242A4> /usr/lib/system/libcommonCrypto.dylib
+       0x1a47f3000 -        0x1a47fcc87  libunwind.dylib (2200.5) <3070AB81-B082-39E8-8A00-EF88DDE9AC47> /usr/lib/system/libunwind.dylib
+       0x1a4804000 -        0x1a480e7eb  libcopyfile.dylib (260.0.3) <72D95AF9-BF5E-3A84-81A6-BCC5BDB99857> /usr/lib/system/libcopyfile.dylib
+       0x1a480f000 -        0x1a48128bf  libcompiler_rt.dylib (103.4) <DFB5CE7F-A36E-36AA-BECE-1392D3D43607> /usr/lib/system/libcompiler_rt.dylib
+       0x1a4813000 -        0x1a4818077  libsystem_collections.dylib (1786.0.3) <1E8022D4-5A37-3A7A-8936-603E6FA88358> /usr/lib/system/libsystem_collections.dylib
+       0x1a4819000 -        0x1a481bf1f  libsystem_secinit.dylib (182) <DE037464-4C5D-3E96-A33F-2A4557CC6A20> /usr/lib/system/libsystem_secinit.dylib
+       0x1a481c000 -        0x1a481e97f  libremovefile.dylib (96) <E6E6DFCF-6B2C-3F30-A59D-816CAB1190CE> /usr/lib/system/libremovefile.dylib
+       0x1a481f000 -        0x1a481fe27  libkeymgr.dylib (31) <5EC997EF-3ADA-360B-9FCD-5F940C83FA4E> /usr/lib/system/libkeymgr.dylib
+       0x1a4820000 -        0x1a4828af7  libsystem_dnssd.dylib (3111.0.5.0.1) <DE22096F-1E5B-3D6E-8164-771582DD6391> /usr/lib/system/libsystem_dnssd.dylib
+       0x1a4829000 -        0x1a482df1b  libcache.dylib (95) <80BAE197-E285-3F6E-A1EE-B77FE37D7E5D> /usr/lib/system/libcache.dylib
+       0x1a482e000 -        0x1a482f8f3  libSystem.B.dylib (1359) <4FDC9AA6-B344-37FE-B8C6-A4C94A038F57> /usr/lib/libSystem.B.dylib
+       0x1a4868000 -        0x1a486f0a3  libiconv.2.dylib (121) <C343D6F7-6932-30E8-8E8F-F756946D8413> /usr/lib/libiconv.2.dylib
+       0x1ab390000 -        0x1ab390f2f  libobjcMsgSend2.dylib (973.1) <BD27A84B-C9AE-3282-BBEA-3B6119837B5A> /usr/lib/objc/libobjcMsgSend2.dylib
+       0x1b3390000 -        0x1b3390f2f  libobjcMsgSend3.dylib (973.1) <C0860D68-DDFC-3BD7-8B06-DB0645CBBED4> /usr/lib/objc/libobjcMsgSend3.dylib
+       0x1bb390000 -        0x1bb390f2f  libobjcMsgSend4.dylib (973.1) <A6153BF5-622B-3B01-81B6-F64A365EF613> /usr/lib/objc/libobjcMsgSend4.dylib
+       0x1c3390000 -        0x1c3390f2f  libobjcMsgSend5.dylib (973.1) <3913A71C-B29A-3AEA-820B-BEC40AC1861A> /usr/lib/objc/libobjcMsgSend5.dylib
+       0x1cb390000 -        0x1cb390f2f  libobjcMsgSend6.dylib (973.1) <9BC523A3-E167-3F6C-8CAE-0F3EBA671791> /usr/lib/objc/libobjcMsgSend6.dylib
+       0x1d3390000 -        0x1d3390f2f  libobjcMsgSend7.dylib (973.1) <248B7BCE-5B4C-34C7-A340-43D5228628C5> /usr/lib/objc/libobjcMsgSend7.dylib
+       0x1db390000 -        0x1db390f2f  libobjcMsgSend8.dylib (973.1) <3E041BAD-A8E8-3069-B741-78CD1A45B176> /usr/lib/objc/libobjcMsgSend8.dylib
+       0x1e3390000 -        0x1e3390f2f  libobjcMsgSend9.dylib (973.1) <34A67969-21A0-39D6-BB81-8FDA5A2409DB> /usr/lib/objc/libobjcMsgSend9.dylib
+       0x1eb390000 -        0x1eb390f2f  libobjcMsgSend10.dylib (973.1) <678186C0-8EAD-3B35-8CBB-00285B41E4A0> /usr/lib/objc/libobjcMsgSend10.dylib
+       0x1f3390000 -        0x1f3390f2f  libobjcMsgSend11.dylib (973.1) <E05CB08C-E956-36FA-8967-AE8E346A8D2C> /usr/lib/objc/libobjcMsgSend11.dylib
+       0x21b390000 -        0x21b390f2f  libobjcMsgSend12.dylib (973.1) <10AB03AA-FF1F-3FDC-9DFB-BFC40042C501> /usr/lib/objc/libobjcMsgSend12.dylib
+       0x223390000 -        0x223390f2f  libobjcMsgSend13.dylib (973.1) <ABF53427-FA6F-3D0D-8F9D-7AD795CA5C92> /usr/lib/objc/libobjcMsgSend13.dylib
+       0x22b390000 -        0x22b390f2f  libobjcMsgSend14.dylib (973.1) <9A844C46-A6DA-34D4-8EBF-2AD775C30684> /usr/lib/objc/libobjcMsgSend14.dylib
+       0x233390000 -        0x233390f2f  libobjcMsgSend15.dylib (973.1) <7C995666-2B2D-3284-AA0A-EBF7C922838E> /usr/lib/objc/libobjcMsgSend15.dylib
+       0x23b390000 -        0x23b390f2f  libobjcMsgSend16.dylib (973.1) <B6C0E14B-53AE-3E22-9ED5-1729C49F46F2> /usr/lib/objc/libobjcMsgSend16.dylib
+       0x243390000 -        0x243390f2f  libobjcMsgSend17.dylib (973.1) <07B4CF85-251B-301B-832B-20B315A59E19> /usr/lib/objc/libobjcMsgSend17.dylib
+       0x24b390000 -        0x24b390f2f  libobjcMsgSend18.dylib (973.1) <43E575B7-04DB-3999-A633-1A3B638BA6E3> /usr/lib/objc/libobjcMsgSend18.dylib
+       0x253390000 -        0x253390f2f  libobjcMsgSend19.dylib (973.1) <736F4D85-76F7-3B28-8D87-C07E8F7A0EF4> /usr/lib/objc/libobjcMsgSend19.dylib
+       0x25b390000 -        0x25b390f2f  libobjcMsgSend20.dylib (973.1) <74E67C8B-6BCA-3184-A18E-A97F370052C6> /usr/lib/objc/libobjcMsgSend20.dylib
+       0x263390000 -        0x263390f2f  libobjcMsgSend21.dylib (973.1) <CC0D732F-98E7-3888-9E15-70984DA2FB04> /usr/lib/objc/libobjcMsgSend21.dylib
+       0x26b390000 -        0x26b390f2f  libobjcMsgSend22.dylib (973.1) <85A60286-5DE3-32BA-B18C-2A498B065C88> /usr/lib/objc/libobjcMsgSend22.dylib
+       0x273390000 -        0x273390f2f  libobjcMsgSend23.dylib (973.1) <5452A0D2-6B19-39BE-ADDD-80B7BCDE3A98> /usr/lib/objc/libobjcMsgSend23.dylib
+       0x27b390000 -        0x27b390f2f  libobjcMsgSend24.dylib (973.1) <94BBF2D6-722B-350D-8557-4D25A8E8D53A> /usr/lib/objc/libobjcMsgSend24.dylib
+       0x283390000 -        0x283390f2f  libobjcMsgSend25.dylib (973.1) <35481387-5A8E-3AE4-86A6-94CEB3CC8726> /usr/lib/objc/libobjcMsgSend25.dylib
+       0x29b390000 -        0x29b390f2f  libobjcMsgSend26.dylib (973.1) <9E0C8664-E7F4-39D1-AAFC-BD92B255E4E8> /usr/lib/objc/libobjcMsgSend26.dylib
+       0x2a3390000 -        0x2a3390f2f  libobjcMsgSend27.dylib (973.1) <FD424935-55A9-3650-955A-EED3441A1D19> /usr/lib/objc/libobjcMsgSend27.dylib
+       0x2ab390000 -        0x2ab390f2f  libobjcMsgSend28.dylib (973.1) <09BA7B97-7DF7-3C7F-932A-B6847662FC49> /usr/lib/objc/libobjcMsgSend28.dylib
+       0x2b3390000 -        0x2b3390f2f  libobjcMsgSend29.dylib (973.1) <36D5BA3F-2139-30B0-8558-556764BE9813> /usr/lib/objc/libobjcMsgSend29.dylib
+       0x2bb390000 -        0x2bb390f2f  libobjcMsgSend30.dylib (973.1) <9F05564A-9D12-372C-98FC-E9F0E6BE4F04> /usr/lib/objc/libobjcMsgSend30.dylib
+       0x2c00aa000 -        0x2c00b0fe5  libRosetta.dylib (385) <E359944B-D230-33F9-A04E-0C3B17C3326E> /usr/lib/libRosetta.dylib
+       0x2c0a99000 -        0x2c0a9c75b  libsystem_darwindirectory.dylib (129.0.1) <61264923-2AA5-3658-B8C4-550C71E9D4B3> /usr/lib/system/libsystem_darwindirectory.dylib
+       0x2c0a9d000 -        0x2c0aa7d9b  libsystem_eligibility.dylib (446.1.3) <EDDE8E9C-A2CF-3931-BBB3-321CB852EB30> /usr/lib/system/libsystem_eligibility.dylib
+       0x2c0aa8000 -        0x2c0ab142b  libsystem_sanitizers.dylib (32) <7138ED99-7AA0-34EA-B35B-20EF6ADB1EED> /usr/lib/system/libsystem_sanitizers.dylib
+       0x2c0ab2000 -        0x2c0ab2a13  libsystem_trial.dylib (511) <6AE48824-EC44-3A8C-B501-BE57DBE892E7> /usr/lib/system/libsystem_trial.dylib
+       0x2c3390000 -        0x2c3390f2f  libobjcMsgSend31.dylib (973.1) <0985E20F-78C3-3466-A2B2-DBB95F7104A3> /usr/lib/objc/libobjcMsgSend31.dylib
+       0x2cb390000 -        0x2cb390f2f  libobjcMsgSend32.dylib (973.1) <0D309D58-D576-3E5D-AD4B-6D55AB491702> /usr/lib/objc/libobjcMsgSend32.dylib
+       0x2d3390000 -        0x2d3390f2f  libobjcMsgSend33.dylib (973.1) <346E0484-48FA-369B-8A64-93B5F5341CFE> /usr/lib/objc/libobjcMsgSend33.dylib
+       0x2db390000 -        0x2db390f2f  libobjcMsgSend34.dylib (973.1) <6A31F809-BCBE-3E01-A367-E91FDACCE324> /usr/lib/objc/libobjcMsgSend34.dylib

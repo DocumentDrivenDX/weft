@@ -18,6 +18,7 @@ struct Request {
     options: Options,
     parameters: Option<crate::application_resolve::Parameters>,
     read_profile: Option<crate::application_ir::ReadProfile>,
+    security: Option<Value>,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -42,6 +43,10 @@ struct Request01;
 struct Request02;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
 struct Request03;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json")]
+struct RequestSecurity01;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.2.schema.json")]
+struct RequestSecurity02;
 /// Validated request target supplied to trusted host composition code.
 /// Binding bytes/digest, modules and SQL/plan have passed transport admission.
 pub struct CompositionInput<'a> {
@@ -62,19 +67,27 @@ pub struct Compiler {
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None)
+        self.compile_json_internal(raw, None, None)
     }
     pub fn compile_json_with_factory(
         &self,
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory))
+        self.compile_json_internal(raw, Some(factory), None)
+    }
+    pub fn compile_json_with_security_factory(
+        &self,
+        raw: &str,
+        factory: &mut crate::security_backend::SecurityRegistryFactory<'_>,
+    ) -> String {
+        self.compile_json_internal(raw, None, Some(factory))
     }
     fn compile_json_internal(
         &self,
         raw: &str,
         factory: Option<&mut RegistryFactory<'_>>,
+        security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
@@ -94,8 +107,11 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if matches!(input["interfaceVersion"].as_str(), Some("weft-compile/0.2.0" | "weft-compile/0.3.0")) {
-                version = input["interfaceVersion"].as_str().unwrap().into();
+            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0")) = input["interfaceVersion"].as_str() {
+                version = v.into();
+            }
+            if security_factory.is_some() && version != "weft-security-compile/0.2.0" {
+                return Err(Diagnostic::new("WFT-VERSION", "input", "Security registration entrypoint requires weft-security-compile/0.2.0"));
             }
             if !matches!(
                 (
@@ -105,6 +121,8 @@ impl Compiler {
                 (Some("weft-compile/0.1.0"), Some("weft-sql/0.1.0"))
                     | (Some("weft-compile/0.2.0"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
+                    | (Some("weft-security-compile/0.1.0"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-security-compile/0.2.0"), Some("weft-sql/0.2.0"))
             ) {
                 return Err(Diagnostic::new(
                     "WFT-VERSION",
@@ -114,6 +132,10 @@ impl Compiler {
             }
             if !(if version == "weft-compile/0.1.0" {
                 Request01::is_valid(&input)
+            } else if version == "weft-security-compile/0.2.0" {
+                RequestSecurity02::is_valid(&input)
+            } else if version == "weft-security-compile/0.1.0" {
+                RequestSecurity01::is_valid(&input)
             } else if version == "weft-compile/0.2.0" {
                 Request02::is_valid(&input)
             } else {
@@ -147,7 +169,34 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
-            let catalog = crate::model::Catalog::prepare(req.modules)?;
+            let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0") {
+                crate::model::Catalog::prepare_security(req.modules)?
+            } else {
+                crate::model::Catalog::prepare(req.modules)?
+            };
+            if let Some(source)=req.security.as_ref() {
+                let packet=crate::security_source::SecuritySourcePacket::read(
+                    source["policyJson"].as_str().expect("security request schema"),
+                    source["ontologyJson"].as_str().expect("security request schema"),&catalog)?;
+                let security_plan=crate::security_ir::SecurityLogicalPlan::read(packet,&catalog)?;
+                if let Some(profile)=source.get("queryProfileJson"){
+                    let profile=crate::security_query_profile::SecurityQueryProfile::read(profile.as_str().expect("security request schema"),&security_plan,&catalog,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                    let query=crate::security_query_uses::SecurityResolvedQuery::resolve(&req.sql,&catalog,&security_plan,req.parameters.clone().unwrap_or_default(),req.read_profile.clone())?;
+                    let uses=profile.admit_resolved_query(&query,&security_plan,&catalog,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                    if req.interface_version == "weft-security-compile/0.2.0" {
+                        let factory=security_factory.ok_or_else(|| Diagnostic::new("WFT-SECURITY-BACKEND-REQUIRED", "capability", "Explicit security registration is required"))?;
+                        let context=crate::security_backend::SecurityBackendContext::new(&catalog,&security_plan,&query,&uses,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                        let registry=factory(&context).map_err(|d| crate::security_backend::callback_error(d,req.sql.len()))?;
+                        registry.select(&context)?;
+                        uses.require_sources(&security_plan,&catalog,&req.target.binding_json,&req.target.backend_id,&req.target.backend_version,&req.target.target_profile)?;
+                        // Registration does not admit returned SQL or a native installation.
+                        // Keep pure lowering closed until independently complete coverage,
+                        // source-domain and result-contract validation is implemented.
+                        return Err(Diagnostic::new("WFT-SECURITY-LOWERING-UNSUPPORTED", "capability", "Security physical/result/dependency coverage validation is not implemented"));
+                    }
+                }
+                return Err(Diagnostic::new("WFT-SECURITY-UNSUPPORTED", "capability", "Security policy lowering and native host obligations are not implemented"));
+            }
             if req.interface_version == "weft-compile/0.1.0" {
                 let query = crate::syntax::parse(&req.sql)?;
                 let plan = crate::resolve::resolve(&catalog, query)?;

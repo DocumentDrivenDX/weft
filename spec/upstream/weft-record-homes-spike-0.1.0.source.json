@@ -1,0 +1,6 @@
+{
+  "profile": "weft.security.record-homes/0.1.0",
+  "source": "/Users/erik/.codex/worktrees/1598/umf/docs/helix/02-design/spikes/security/record-homes-v0.1.schema.json",
+  "sha256": "ede23e1a814b1e2bfe1b1e06758f20a2cdf7f1a71cdeb68e690ec2e04cacde91",
+  "scope": "Weft-owned proposed declaration shape retained in the UMF security design spike; not UMF core or native/authorization admission"
+}

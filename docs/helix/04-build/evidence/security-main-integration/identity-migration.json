@@ -1,0 +1,145 @@
+{
+  "version": "weft.security-main-identity-migration/0.1.0",
+  "base": "14c5814",
+  "scope": "Explicit security-only identifiers; ordinary main meanings unchanged. Historical evidence remains original-source qualified and is not repinned.",
+  "aliases": [
+    {
+      "old": "CONTRACT-005",
+      "new": "CONTRACT-006",
+      "scope": "Only CONTRACT-005-security-compilation.md pending source, distinguished by path/hash; main authored paths CONTRACT-005 unchanged."
+    },
+    {
+      "old": "weft-compile/0.3.0",
+      "new": "weft-security-compile/0.1.0",
+      "scope": "Pending blocked security transport only; ordinary main arithmetic unchanged."
+    },
+    {
+      "old": "weft-compile/0.4.0",
+      "new": "weft-security-compile/0.2.0",
+      "scope": "Pending security registration transport only; ordinary main authored paths unchanged."
+    }
+  ],
+  "artifacts": [
+    {
+      "oldPath": "docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "newPath": "docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json",
+      "originalSha256": "716f27d21aaa98de29e87aba4ffb9885e2ee77e00aaf3d1cedcba583e935f175",
+      "newSha256": "40ea3be31de4e4d8013f6cf558e497f4fac2d420e202ff76de26a50363147f7e",
+      "preimage": "preimages/compile-request-v0.3.schema.json.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "newPath": "docs/helix/02-design/contracts/security-compile-response-v0.1.schema.json",
+      "originalSha256": "f7a67a742bbc645d68209edd80fec8d63fbe9886bd9d94b289b060c094365612",
+      "newSha256": "01022aa9742bbc51e8004055845af50c194cffb469f7158d7461e94a70533787",
+      "preimage": "preimages/compile-response-v0.3.schema.json.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "newPath": "docs/helix/02-design/contracts/security-compile-request-v0.2.schema.json",
+      "originalSha256": "1e9fdf07b8bea744fa1408eae33e7c1663f2a85206c198560a5d98f2ed6c38fb",
+      "newSha256": "2087847a3c318923d55355cf9e87135503d44493fb578de3bf2673c26aa14c13",
+      "preimage": "preimages/compile-request-v0.4.schema.json.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "newPath": "docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json",
+      "originalSha256": "8a79dab6a5eae1523f6245c65f73aeafc6a00fedc8c799ffd6cf9376cd00b026",
+      "newSha256": "0ba4f4c36e9e646ba9f649da37edaca920da8a8982f2df20cec5c20f3823e473",
+      "preimage": "preimages/compile-response-v0.4.schema.json.original.txt"
+    },
+    {
+      "oldPath": "docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md",
+      "newPath": "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md",
+      "originalSha256": "bcacdc84de19ba38e32abd86413bbc067f98e017bde9baf054839c8794ddb4f2",
+      "newSha256": "7664ebe98731350ae9ac9e70f1257b588644ba4a725220fdc932b781e872a086",
+      "preimage": "preimages/CONTRACT-005-security-compilation.md.original.txt"
+    }
+  ],
+  "protectedMainPins": {
+    "docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md": "c6b6f420946787c5cd06a2e17f5973ea468c800c050e9cdc88e98669ccc2faf4",
+    "docs/helix/02-design/contracts/compile-request-v0.3.schema.json": "7345c424b1bbf8da15e6f7b4efb81da7eeb85a1e08fb91319eeb7b19ec129047",
+    "docs/helix/02-design/contracts/compile-request-v0.4.schema.json": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932",
+    "docs/helix/02-design/contracts/compile-response-v0.3.schema.json": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a",
+    "docs/helix/02-design/contracts/compile-response-v0.4.schema.json": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140",
+    "crates/weft-core/src/compile04.rs": "2c82da3f60c20776284ff97b4844e976edd4b8c12d5be016ec4a323ebc7196ac",
+    "crates/weft-core/src/compile041.rs": "e2e76957f836dafc47fb3ca480be94dd5ea603c0e5f9db79dcc79e1ea4f2f238"
+  },
+  "copyInventory": {
+    "copied": [
+      "crates/weft-core/examples/security_candidate_ir.rs",
+      "crates/weft-core/examples/security_cell_inspection.rs",
+      "crates/weft-core/examples/security_fact_inspection.rs",
+      "crates/weft-core/examples/security_mapping_handoff.rs",
+      "crates/weft-core/src/security_association_ref.rs",
+      "crates/weft-core/src/security_backend.rs",
+      "crates/weft-core/src/security_candidate_dependencies.rs",
+      "crates/weft-core/src/security_candidate_incidence.rs",
+      "crates/weft-core/src/security_candidate_ir.rs",
+      "crates/weft-core/src/security_candidate_ontology.rs",
+      "crates/weft-core/src/security_candidate_policy_types.rs",
+      "crates/weft-core/src/security_composition.rs",
+      "crates/weft-core/src/security_evaluation.rs",
+      "crates/weft-core/src/security_ir.rs",
+      "crates/weft-core/src/security_literals.rs",
+      "crates/weft-core/src/security_lowering.rs",
+      "crates/weft-core/src/security_obligation_custody.rs",
+      "crates/weft-core/src/security_obligation_matching.rs",
+      "crates/weft-core/src/security_obligation_sources.rs",
+      "crates/weft-core/src/security_ontology.rs",
+      "crates/weft-core/src/security_policy_types.rs",
+      "crates/weft-core/src/security_query_profile.rs",
+      "crates/weft-core/src/security_query_uses.rs",
+      "crates/weft-core/src/security_record_homes.rs",
+      "crates/weft-core/src/security_requirements.rs",
+      "crates/weft-core/src/security_result_cells.rs",
+      "crates/weft-core/src/security_result_check.rs",
+      "crates/weft-core/src/security_result_selection.rs",
+      "crates/weft-core/src/security_rule_occurrences.rs",
+      "crates/weft-core/src/security_scan_obligations.rs",
+      "crates/weft-core/src/security_semantic_coverage.rs",
+      "crates/weft-core/src/security_source.rs",
+      "crates/weft-core/tests/security-composition-oracle.json",
+      "crates/weft-core/tests/security-evaluation-oracle.json",
+      "crates/weft-core/tests/security-source-fixture.json",
+      "crates/weft-core/tests/security_admission.rs",
+      "crates/weft-core/tests/security_literals.rs",
+      "docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md",
+      "docs/helix/02-design/contracts/security-backend-manifest-v0.1.schema.json",
+      "docs/helix/02-design/contracts/security-cells-v0.1.schema.json",
+      "docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json",
+      "spec/upstream/umf-security-ontology-0.1.0-selected.schema.json",
+      "spec/upstream/umf-security-ontology-0.1.0.schema.json",
+      "spec/upstream/umf-security-ontology-0.2.0-draft-selected.schema.json",
+      "spec/upstream/umf-security-ontology-0.2.0-draft.schema.json",
+      "spec/upstream/umf-security-policy-0.1.0-selected.schema.json",
+      "spec/upstream/umf-security-policy-0.1.0.schema.json",
+      "spec/upstream/umf-security-policy-0.2.0-draft-selected.schema.json",
+      "spec/upstream/umf-security-policy-0.2.0-draft.schema.json",
+      "spec/upstream/weft-record-homes-spike-0.1.0.schema.json",
+      "spec/upstream/weft-record-homes-spike-0.1.0.source.json"
+    ],
+    "collisions": [
+      "docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "spec/upstream/umf-0.8.0.source.json"
+    ]
+  },
+  "schemaCustody": {
+    "path": "spec/upstream/umf-0.8.0.schema.json",
+    "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "resolution": "Main source manifest retained; pending manifest had identical schema digest and a different source-location annotation."
+  },
+  "upstreamIdentityResolution": {
+    "repository": "https://github.com/DocumentDrivenDX/umf",
+    "revision": "cd4cc93769925d11b8480a0c2be4f009a4c737ac",
+    "manifest": "docs/helix/04-build/evidence/security/main-integration/identity-migration.json",
+    "securityContractAliases": {
+      "CONTRACT-052": "CONTRACT-062",
+      "CONTRACT-053": "CONTRACT-063"
+    },
+    "scope": "Only the source-qualified security artifacts; current references updated, historical receipts unchanged."
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+  "type": "object",
+  "properties": {
+    "interfaceVersion": {
+      "const": "weft-compile/0.3.0"
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^WFT-[A-Z0-9-]+$"
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "phase": {
+            "enum": [
+              "input",
+              "model",
+              "parse",
+              "resolve",
+              "type",
+              "capability",
+              "lower",
+              "emit",
+              "host"
+            ]
+          },
+          "sourceSpan": {
+            "type": "object",
+            "properties": {
+              "start": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "start",
+              "end"
+            ],
+            "additionalProperties": false
+          },
+          "identity": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "module",
+              "element"
+            ],
+            "additionalProperties": false
+          },
+          "pointer": {
+            "type": "string"
+          },
+          "recoverability": {
+            "enum": [
+              "correct-input",
+              "change-profile",
+              "host-action",
+              "none"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "severity",
+          "message",
+          "phase",
+          "recoverability"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "status": {
+      "const": "blocked"
+    }
+  },
+  "required": [
+    "interfaceVersion",
+    "diagnostics",
+    "status"
+  ],
+  "additionalProperties": false
+}

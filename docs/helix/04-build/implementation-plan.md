@@ -70,3 +70,64 @@ B-002 establishes the unchanged 0.1 frontend. The next separately reviewed slice
 ## Compiler/storage ownership correction (2026-10-07)
 
 The user clarified that UMF owns logical and physical schema meaning, Truss supplies its storage realization and mapping, and Weft owns query lowering, target SQL and result decoding. Truss runtime implementation, public decoder adoption, authorization procedures and installed-production qualification are not prerequisites for compiler implementation or completion of the compiler slice. Hosts execute SQL and enforce the emitted obligations. B-005 uses exact pinned draft storage descriptions plus independent PostgreSQL fixtures; production compatibility remains separately qualified. This supersedes earlier runtime/adoption blocking interpretations without weakening exact type, presence, storage-home or unknown-meaning refusal requirements. Full recursive and scalar query coverage, public backend integration and actual native/compiler evidence remain required B-005 work. The goal resumes in B-005; B-006 follows its merge.
+
+
+## B-008: Shared security compiler integration
+
+Owner-directed UMF security work adds CONTRACT-006 and the namespaced security 0.1 request
+foundation. Main ordinary transports retain core07/core08 source admission. The separate core08
+source-custody path and required security source transport refuse activation
+until semantic admission, logical/physical lowering, disclosure result domains
+and authenticated native host obligations are implemented. B-008 is open;
+foundation refusal tests cannot close security/native acceptance. Rust/Python/
+browser parity and all four UMF backend plans remain required.
+
+
+### B-008 immutable compiler mapping handoff — 2026-10-08
+
+Implemented the actual Rust owner's private-constructor profiled-query export,
+`weft.security.mapping-handoff/0.1.0`, under CONTRACT-006. It preserves the
+original resolved application plan and complete source/field-use/scan-action
+obligations, with exact reuse refusal and deterministic bounded JSON. The owner
+test validates retained resolved-plan meaning, derived protected-field action,
+separate action obligations, source-byte/backend-version refusal and repeat
+export equality. Current-source Rust admission replay passes, with canonical
+UMF overlays and ordinary compiler regressions intact. UMF evidence resides at
+`/Users/erik/.codex/worktrees/1598/umf/docs/helix/04-build/evidence/security/weft-admission.json`.
+
+This implements a concrete backend-mapping handoff component, not physical
+lowering or host authority. Public compiler security activation, Python/browser
+transport, native field-use enforcement, physical fact issuer and final-release
+qualification remain open. No acceptance criterion is credited by packet shape.
+
+
+### Actual Rust handoff inspection transport — 2026-10-08
+
+Added the offline-buildable `weft-core` example `security_mapping_handoff` under
+CONTRACT-006. UMF's `tools/security/weft-handoff-probe.py` retains two actual
+compiler packets and nine execution observations, including seven refusals for
+protected query use, stale backend/model sources, unknown version/member,
+duplicate JSON and over-budget input. Refusals have no stdout packet. Exact
+source/schema inputs and binary digest are retained in UMF evidence
+`docs/helix/04-build/evidence/security/weft-handoff.json`. This gives physical
+mapping tests an executable original-owner source, not fabricated annotations.
+No backend is activated, no data query runs and no trusted host issuer is claimed.
+
+
+### Preserved core primary-Key metadata — 2026-10-09
+
+SecurityOntologyClosure accepts the supported core Boolean primary annotation,
+checks carriers and at-most-one primary, and keeps explicit ontology keyId
+selection. Original source bytes/trees retain true and false. A distinct Resource
+secondary Key over integer salary cannot replace explicit string resourceId pk;
+IR endpoint and Resource identities remain pk. Null/string/numeric primary
+carriers on selected and unselected Keys refuse at WFT-MODEL; duplicate primary
+annotations refuse ontology closure. Rust source admission and unsupported
+activation remain separate. UMF retains actual original compiler evidence in
+weft-admission.json. This is a source-fidelity integration increment, not draft
+0.2 admission, native Key enforcement, or protected execution qualification.
+
+
+### B-008 main integration — 2026-10-10
+
+The security foundation is integrated against main14c5814 while preserving the incoming95991ee browser/evidence update. Main's CONTRACT-005 authored-path meaning and ordinary compile0.3/0.4 remain unchanged; the security contract and transports have an explicit [identity migration](evidence/security-main-integration/identity-migration.json). `cargo test --release --locked --workspace` passes all 556 tests across 44 groups, with none failed, ignored or filtered. The [checkpoint](evidence/security-main-integration/checkpoint.json) retains exact source/log hashes, scoped Astra ultra review, the corrected initial diagnostic failures and the intentionally interrupted debug attempt. Both security transports remain blocked before physical emission. B-008, installed Python/browser parity and the original native backend acceptance plan remain open.
