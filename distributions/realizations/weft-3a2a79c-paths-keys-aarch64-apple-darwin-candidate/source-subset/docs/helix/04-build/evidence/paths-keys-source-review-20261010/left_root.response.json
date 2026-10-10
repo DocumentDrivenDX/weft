@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-CAPABILITY","message":"RelatedKeys requires nonaggregate required root without expansion","phase":"capability","recoverability":"change-profile","severity":"error"}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}

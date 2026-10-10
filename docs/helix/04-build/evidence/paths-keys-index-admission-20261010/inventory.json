@@ -1,0 +1,39 @@
+{
+  "files": [
+    {
+      "bytes": 1453,
+      "original": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/freeze.json",
+      "path": "candidate-freeze.json",
+      "sha256": "45c542fec6b281af60ec947c289c3f350da754664eff0fa8d7ea8358b0dcebd1"
+    },
+    {
+      "bytes": 1390,
+      "original": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/base-index.json",
+      "path": "base-index.json",
+      "sha256": "a7571d2bd141bf182ce171acc16f64f1276cca29a855dbf4b49a92283fc71864"
+    },
+    {
+      "bytes": 4251,
+      "original": "/private/tmp/astra-paths-keys-index-review-20261010-a.json",
+      "path": "index-review.json",
+      "sha256": "5ab1bb34a05308910ff169e7103c6cee6c00a9a684c8968db3b521b3c89c17fd"
+    },
+    {
+      "bytes": 45266,
+      "original": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/output-review.json",
+      "path": "output-review.json",
+      "sha256": "c58445b06f18e7181ffc0ff531cfa8daee39fde2bb666d98fa5b9d8f86f2229c"
+    },
+    {
+      "bytes": 4559,
+      "original": "/private/tmp/astra-paths-keys-assembly-command-review-20261010-a.json",
+      "path": "command-review.json",
+      "sha256": "16e8ef617fe30a078e7a31b9ca19dbd38648e8ac68a90649b2265bcf689d89af"
+    }
+  ],
+  "format": "weft-index-admission-evidence/0.1",
+  "indexSha256": "bd541aa8cb261376f160661d3df67065b36fcba4f6caf4c0f42e33d710c4b9dc",
+  "packageBytes": 47778857,
+  "packageFiles": 127,
+  "scope": "Independently reviewed append-only index registration and exact127file localcopy; compiler/schema/protocol qualification only, no installation/native/source/publication/ACK authority."
+}

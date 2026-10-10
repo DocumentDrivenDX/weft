@@ -1,0 +1,62 @@
+#!/private/tmp/ashlar-spark311/bin/python -I
+"""Explicit offline schema bridge; shape validation only."""
+import hashlib
+import os
+import stat
+import types
+from pathlib import Path
+import sys
+
+MODULE = Path('/private/tmp/weft-paths-keys-qualification-20261010-d/checker.py')
+MODULE_SHA256 = 'bf9523f086466fd485d1cb90b54da9d02677585f015216ad90b236daa9acc276'
+DEPENDENCIES = '/private/tmp/truss-python-report-schema-env/lib/python3.11/site-packages'
+SCHEMAS = Path('/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source/docs/helix/02-design/contracts')
+MAXIMUM_INPUT_BYTES = 64 * 1024 * 1024
+MAXIMUM_DOCUMENT_BYTES = 16 * 1024 * 1024
+
+def module_read():
+    if any(p.is_symlink() for p in (MODULE, *MODULE.parents)):
+        raise ValueError('module symlink')
+    fd = os.open(MODULE, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+    try:
+        if not stat.S_ISREG(os.fstat(fd).st_mode):
+            raise ValueError('module regular file')
+        result = bytearray()
+        while len(result) <= 7368:
+            chunk = os.read(fd, min(4096, 7369 - len(result)))
+            if not chunk:
+                break
+            result.extend(chunk)
+        if len(result) != 7368:
+            raise ValueError('module length')
+    except BaseException:
+        try:
+            os.close(fd)
+        except BaseException:
+            pass
+        raise
+    else:
+        os.close(fd)
+    return bytes(result)
+
+try:
+    if len(sys.argv) != 1 or MODULE.is_symlink():
+        raise ValueError('bridge configuration')
+    before = module_read()
+    if hashlib.sha256(before).hexdigest() != MODULE_SHA256:
+        raise ValueError('module pin')
+    sys.path.insert(0, DEPENDENCIES)
+    checker = types.ModuleType('qualified_schema_checker')
+    checker.__file__ = str(MODULE)
+    sys.modules[checker.__name__] = checker
+    exec(compile(before, str(MODULE), 'exec'), checker.__dict__)
+    config = checker.Config(SCHEMAS, MAXIMUM_INPUT_BYTES, MAXIMUM_DOCUMENT_BYTES)
+    raw = sys.stdin.buffer.read(MAXIMUM_INPUT_BYTES + 1)
+    schemas = checker.OfflineSchemas(config)
+    checker.validate_envelope(raw, config, schemas.validate)
+    schemas.close_check()
+    if module_read() != before:
+        raise ValueError('module drift')
+except Exception:
+    sys.stderr.write('WEFT_CORPUS_SCHEMA_REFUSED\n')
+    raise SystemExit(2)

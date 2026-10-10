@@ -1,0 +1,11 @@
+[package]
+name="weft-paths-keys-source-metadata"
+version="0.0.0"
+edition="2021"
+[workspace]
+[dependencies]
+weft-core={path="/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source/crates/weft-core",default-features=false}
+weft-databricks={path="/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source/crates/weft-databricks",default-features=false}
+serde_json={version="=1.0.145",features=["arbitrary_precision","raw_value"]}
+[patch.crates-io]
+ahash={path="/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source/vendor/ahash"}

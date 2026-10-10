@@ -1,0 +1,40 @@
+{
+  "baseCommit": "6a42631f1e0e68796747e666e8043e9e4b91e8aa",
+  "baseIndex": {
+    "bytes": 1390,
+    "path": "base-index.json",
+    "sha256": "a7571d2bd141bf182ce171acc16f64f1276cca29a855dbf4b49a92283fc71864"
+  },
+  "candidateIndex": {
+    "bytes": 2060,
+    "path": "index.json",
+    "sha256": "bd541aa8cb261376f160661d3df67065b36fcba4f6caf4c0f42e33d710c4b9dc"
+  },
+  "entry": {
+    "assemblyCustody": {
+      "bytes": 34922,
+      "path": "assembly-custody.json",
+      "sha256": "03e897e9d9e0b849e3a480710a9a3cc440537d439e3ba1a25385c48c9fef2f27"
+    },
+    "executable": {
+      "bytes": 8330656,
+      "path": "bin/weft-paths-keys",
+      "sha256": "471fc5dedc8f8eba3156444d19cc2161fac7a06833672dd5621ed49ead8b522c"
+    },
+    "manifest": {
+      "bytes": 7066,
+      "path": "manifest.json",
+      "sha256": "414d343f917bffa5eca34b6d9d87a4fd2234486c6351b95879f1061afb17302d"
+    },
+    "realizationId": "weft-3a2a79c-paths-keys-aarch64-apple-darwin-candidate",
+    "target": "aarch64-apple-darwin"
+  },
+  "format": "weft-index-admission-candidate/0.1",
+  "package": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/package",
+  "packageReview": {
+    "bytes": 45266,
+    "path": "output-review.json",
+    "sha256": "c58445b06f18e7181ffc0ff531cfa8daee39fde2bb666d98fa5b9d8f86f2229c"
+  },
+  "scope": "One append-only candidate index entry, no native/host authority or index promotion until independent review; existing two entries exact."
+}

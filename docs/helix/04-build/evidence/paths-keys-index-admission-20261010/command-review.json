@@ -1,0 +1,115 @@
+{
+  "actualControlCommand": [
+    "/usr/bin/python3",
+    "-B",
+    "-S",
+    "/private/tmp/astra-paths-keys-assembly-command-review-20261010-a.py"
+  ],
+  "actualControls": [
+    "Successful inert Python child is reaped and exact bounded stdout retained",
+    "Shared finite deadline refuses and cleans sleeping inert child",
+    "Output cap refuses excess bytes before retaining them",
+    "Setup cancellation retains exact primary identity and executes process/stream cleanup"
+  ],
+  "command": {
+    "bytes": 91894,
+    "path": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/command.json",
+    "sha256": "432dbaffecf712d0139e4c5e958f6596c0ce0e373c627cb35ab530939c3bf6ed"
+  },
+  "copiedSourceFreeze": {
+    "bytes": 811,
+    "path": "/private/tmp/weft-paths-keys-assembly-source-freeze-20261010-c/manifest.json",
+    "sha256": "da609d5fddc10fdb6f21c8b642685e80a6f68581c946a20b0cb758768a8cc4ae"
+  },
+  "decision": "approved-for-root-inert-assembly-only",
+  "format": "independent-command-review/0.1",
+  "freeze": {
+    "bytes": 1336,
+    "path": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/freeze.json",
+    "sha256": "abd64e14b5642f6780cf7be26033b81fdb29e1bacd1f30326ddc8b30132de069"
+  },
+  "freshOutputsVerifiedAbsent": [
+    "/private/tmp/weft-paths-keys-package-assembly-20261010-a/package",
+    "/private/tmp/weft-paths-keys-package-assembly-20261010-a/assembly.stdout",
+    "/private/tmp/weft-paths-keys-package-assembly-20261010-a/assembly.stderr",
+    "/private/tmp/weft-paths-keys-package-assembly-20261010-a/outcome.json"
+  ],
+  "limits": {
+    "assembly": {
+      "decodedFileBytes": 67108864,
+      "packageFileBytes": 33554432,
+      "packageTotalBytes": 100663296
+    },
+    "capture": {
+      "maximumStreamBytes": 262144,
+      "timeoutSeconds": 180
+    }
+  },
+  "remainingBlockers": [],
+  "resources": {
+    "bytes": 80157376,
+    "openingClosingExact": true,
+    "uniqueFiles": 374
+  },
+  "reviewedLauncher": {
+    "byteIdenticalTo": "/private/tmp/weft-paths-keys-qualification-20261010-d/bounded-launcher.py",
+    "file": {
+      "bytes": 6214,
+      "path": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/bounded-launcher.py",
+      "sha256": "1b3ddad1de8da44d2af9593bab1be96361a7167f807b7f1fab01b1d901382892"
+    }
+  },
+  "rootExecution": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "/private/tmp/weft-paths-keys-package-assembly-20261010-a/run.py",
+      "--command",
+      "/private/tmp/weft-paths-keys-package-assembly-20261010-a/command.json",
+      "--sha256",
+      "432dbaffecf712d0139e4c5e958f6596c0ce0e373c627cb35ab530939c3bf6ed"
+    ],
+    "cwd": "/private/tmp/weft-paths-keys-package-assembly-20261010-a",
+    "environment": {
+      "PATH": "/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE": "1"
+    }
+  },
+  "scope": [
+    "Root may execute this exact finite inert assembly once with fresh listed outputs and unchanged opening resource/source checks.",
+    "No compiler, Cargo, native engine, installation or index mutation is part of the command.",
+    "Source/resource hashing is outside the subprocess capture deadline; cooperating local custody and actual fixed regular resources are assumed. Full host/runtime/hermetic closure is not claimed.",
+    "Successful assembly output still requires independent full package/schema/descriptors/provenance/mode/copy review; this is not index admission."
+  ],
+  "script": {
+    "bytes": 7048,
+    "path": "/private/tmp/astra-paths-keys-assembly-command-review-20261010-a.py",
+    "sha256": "353e4d99d0c22cfb1aa3744a6a6062bc3d6f4ccdbf1aab3b3714cce93b53f516"
+  },
+  "source": {
+    "bytes": 312239178,
+    "commit": "3a2a79ccc19d636f20d31116662d61365c1b4ff7",
+    "completePathSetGitBlobsModesAndHashes": true,
+    "files": 1987,
+    "inventory": {
+      "bytes": 577199,
+      "path": "/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source-inventory.json",
+      "sha256": "e9f1e0ac01d7b9dc1b2d61148c74274c1fed5a5593726487aa4562f2e4bf3512"
+    }
+  },
+  "sourceReview": {
+    "bytes": 4979,
+    "path": "/private/tmp/astra-paths-keys-assembly-source-review-20261010-c.json",
+    "sha256": "d739bb925f00c0b14d00c44e23bf67725d6dd2da5e54cb9bb23a8004eaca282f"
+  },
+  "verificationSeconds": 1.189,
+  "wrapper": {
+    "file": {
+      "bytes": 2395,
+      "path": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/run.py",
+      "sha256": "840c3258220a58f415f4ded3247979270f3ca7340b0f681306c145eebcf168fe"
+    },
+    "onlyChangeFromPreviouslyReviewedQualification": "Human-readable receipt scope literal"
+  }
+}

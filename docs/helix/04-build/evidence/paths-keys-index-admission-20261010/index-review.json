@@ -1,0 +1,101 @@
+{
+  "format": "independent-weft-paths-keys-index-review/0.1",
+  "decision": "approved-exact-append-only-index-content",
+  "scope": "Pure schema, descriptors, old-entry preservation and exact accepted-package custody. No index promotion, installation, compiler, native or package mutation.",
+  "candidateFreeze": {
+    "path": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/freeze.json",
+    "sha256": "45c542fec6b281af60ec947c289c3f350da754664eff0fa8d7ea8358b0dcebd1",
+    "bytes": 1453
+  },
+  "candidateIndex": {
+    "path": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/index.json",
+    "sha256": "bd541aa8cb261376f160661d3df67065b36fcba4f6caf4c0f42e33d710c4b9dc",
+    "bytes": 2060
+  },
+  "baseIndex": {
+    "path": "/private/tmp/weft-paths-keys-index-candidate-20261010-a/base-index.json",
+    "sha256": "a7571d2bd141bf182ce171acc16f64f1276cca29a855dbf4b49a92283fc71864",
+    "bytes": 1390
+  },
+  "baseGitCommit": "6a42631f1e0e68796747e666e8043e9e4b91e8aa",
+  "baseMatchesGit": true,
+  "oldEntryCount": 2,
+  "oldEntryObjectsAndRawTextUnchanged": true,
+  "newEntry": {
+    "realizationId": "weft-3a2a79c-paths-keys-aarch64-apple-darwin-candidate",
+    "manifest": {
+      "path": "manifest.json",
+      "sha256": "414d343f917bffa5eca34b6d9d87a4fd2234486c6351b95879f1061afb17302d",
+      "bytes": 7066
+    },
+    "executable": {
+      "bytes": 8330656,
+      "path": "bin/weft-paths-keys",
+      "sha256": "471fc5dedc8f8eba3156444d19cc2161fac7a06833672dd5621ed49ead8b522c"
+    },
+    "target": "aarch64-apple-darwin",
+    "assemblyCustody": {
+      "path": "assembly-custody.json",
+      "sha256": "03e897e9d9e0b849e3a480710a9a3cc440537d439e3ba1a25385c48c9fef2f27",
+      "bytes": 34922
+    }
+  },
+  "uniqueRealizationIds": true,
+  "schema": {
+    "path": "/private/tmp/weft-paths-keys-package-assembly-20261010-a/package/source-subset/docs/helix/02-design/contracts/distribution-index.schema.json",
+    "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d",
+    "bytes": 2813
+  },
+  "schemaMatchesCompiledSourceGit": true,
+  "runtime": {
+    "python": "3.11.17",
+    "jsonschema": "4.23.0",
+    "referencing": "0.35.1"
+  },
+  "positiveSchemaChecks": 2,
+  "externalRetrievals": [],
+  "negativeControls": [
+    "unknown-entry-field",
+    "missing-custody",
+    "absolute-artifact-path",
+    "wrong-executable-bytes",
+    "wrong-executable-digest",
+    "wrong-target",
+    "duplicate-realization-identity",
+    "changed-old-entry"
+  ],
+  "packageReview": {
+    "path": "/private/tmp/astra-paths-keys-assembly-output-review-20261010-a.json",
+    "sha256": "c58445b06f18e7181ffc0ff531cfa8daee39fde2bb666d98fa5b9d8f86f2229c",
+    "bytes": 45266
+  },
+  "packageFilesRechecked": 127,
+  "packageBytes": 47778857,
+  "custodyInventoryMatchesAcceptedPackage": true,
+  "profile": {
+    "source": "3a2a79ccc19d636f20d31116662d61365c1b4ff7",
+    "feature": "ashlar-databricks-paths-keys",
+    "target": "aarch64-apple-darwin",
+    "cases": 74,
+    "historical463": "retained-not-replayed",
+    "capabilities": 48,
+    "transportControls": 8
+  },
+  "contract": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+    "sha256": "d586aec8a51e8c0f43a09b055e5d003f504f631e9e54d96b5ef191a11272dba0",
+    "bytes": 18407
+  },
+  "remainingBlockers": [],
+  "metadataNote": "freeze.packageReview.path names output-review.json, absent in candidate directory; exact provided original review path was resolved explicitly and verified by bytes/digest. Entry content is unaffected.",
+  "limits": [
+    "Candidate content approval does not establish a trusted published revision; consumer composition still must independently select immutable index revision and digest before caller package inputs.",
+    "Package qualification and semantics are reused from the exact parent output review; this task did not replay or requalify them.",
+    "Registration discharges no native/source/authorization/publication/ACK obligation and does not relax prior profiles."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-paths-keys-index-review-20261010-a.py",
+    "sha256": "cc89d2c4d36b7b1b0c84b97235dab8b564c3c034b3a0f453dedb26170b2a5d7d",
+    "bytes": 9212
+  }
+}

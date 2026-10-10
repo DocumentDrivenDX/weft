@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-GROUPING","message":"Bounded related collections cannot be mixed with path expansion","phase":"resolve","recoverability":"correct-input","severity":"error","sourceSpan":{"end":157,"start":93}}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}
