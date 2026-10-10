@@ -95,6 +95,12 @@ impl PathRead {
             hop_spans,
         })
     }
+    pub(crate) fn span(&self) -> &Span {
+        &self.span
+    }
+    pub(crate) fn hop_spans(&self) -> &[Span; 2] {
+        &self.hop_spans
+    }
     pub fn start_scan(&self) -> &str {
         &self.start_scan
     }
@@ -382,6 +388,36 @@ impl Plan {
     }
     pub fn capabilities(&self) -> &[String] {
         &self.required_capabilities
+    }
+    pub(crate) fn joins(&self) -> &[Join] {
+        &self.joins
+    }
+    pub(crate) fn filters(&self) -> &[Predicate] {
+        &self.filters
+    }
+    pub(crate) fn groups(&self) -> &[Field] {
+        &self.groups
+    }
+    pub(crate) fn having(&self) -> &[Having] {
+        &self.having
+    }
+    pub(crate) fn order(&self) -> &[Field] {
+        &self.order
+    }
+    pub(crate) fn limit(&self) -> Option<u16> {
+        self.limit
+    }
+    pub(crate) fn distinct(&self) -> bool {
+        self.distinct
+    }
+    pub(crate) fn aggregate(&self) -> bool {
+        self.aggregate
+    }
+    pub(crate) fn outer_join_scans(&self) -> &[String] {
+        &self.outer_join_scans
+    }
+    pub(crate) fn type_graph(&self) -> &[Descriptor] {
+        &self.type_graph
     }
     pub fn source(&self) -> &Scan {
         &self.source
