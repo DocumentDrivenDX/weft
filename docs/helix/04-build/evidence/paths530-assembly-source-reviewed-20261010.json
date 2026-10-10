@@ -1,0 +1,86 @@
+{
+  "decision": "APPROVE exact two-file Paths530 inert assembler source B",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-assembly-source-freeze-20261010-b/manifest.json",
+    "sha256": "c94e59f60a424334b995efd74b6033ee81072744cc315f29e937f27feb247a2e",
+    "bytes": 777
+  },
+  "files": [
+    {
+      "bytes": 21926,
+      "path": "scripts/distribution/assemble-paths-distribution.py",
+      "sha256": "4cc933ed3f652fb2c1dda49fe18cb934c8bed7b066c325b19a6a46bad232e7bd"
+    },
+    {
+      "bytes": 6925,
+      "path": "scripts/distribution/test_paths_assembly.py",
+      "sha256": "2cee7232f5480cb2f427cbdc7a8e97c5dd201dcf4857590cb517403fd6005ced"
+    }
+  ],
+  "tests": {
+    "ownerTestsIndependentlyReproduced": 12,
+    "additionalActualReceiptAndLifecycleRefusals": [
+      "paths-request",
+      "missing-case",
+      "transport-code",
+      "source-revision",
+      "capability-count",
+      "read-close-only",
+      "read-primary-annotation-refusal",
+      "publish-primary-annotation-refusal"
+    ],
+    "actual512RowsVerified": 512,
+    "legacyOriginalRequestAndExpectedBytesReproduced": 463,
+    "declaredCapabilities": 47,
+    "transportControls": 8
+  },
+  "actualInputs": {
+    "sourceInventory": {
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/source-inventory.json",
+      "sha256": "2a1eed46946a4d623f2f8abc7e7592e6d74e3964585ce1c500600a7ea62d6896",
+      "bytes": 528773
+    },
+    "binary": {
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/weft-paths",
+      "sha256": "71ba88a07c27661413830d5a42e2ea5c4a8b071df965bb98dbbe8f3615a6c911",
+      "bytes": 8273840
+    },
+    "backend": {
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/backend-manifest.json",
+      "sha256": "fc36ddbb6ca41309d25dadf1969bb27efb72debe0c6669b76a8a6a425ca35ec5",
+      "bytes": 51125
+    },
+    "fullReceipt": {
+      "path": "/private/tmp/weft-paths-full-corpus-20261010-c/producer-output/receipt.json",
+      "sha256": "7f80a87ac41d868a32d220fd5a5ec7f8998c264ec0eecc4455029ce3ba7caf68",
+      "bytes": 47489682
+    },
+    "expectedCases": {
+      "path": "/private/tmp/weft-paths-full-corpus-20261010-c/cases.json",
+      "sha256": "1cf69c0dfbde7cb8f82e6653c67637157342374bd1ab4114050d93246f21000d",
+      "bytes": 17032500
+    },
+    "buildCommand": {
+      "path": "/private/tmp/weft-paths-530ae35-build-20261010-a/command-c.json",
+      "sha256": "d7bec02e48c77842db160d3c34081a432e9a00b867d8547df11dd0de0dc45fa0",
+      "bytes": 7712
+    }
+  },
+  "resolvedFindings": [
+    "Bounded O_NONBLOCK/O_NOFOLLOW/fstat regular-file reader refuses file-to-FIFO replacement and preserves original primary through close failure.",
+    "Historical extractor executes the already SHA-verified byte snapshot; replacement cannot change executed source.",
+    "Temporary-directory cleanup preserves original BaseException even if safe-marker annotation is refused; cleanup-only failures remain visible."
+  ],
+  "helixScope": [
+    "Modularity: separate Paths producer, immutable legacy assembler/installer/profile interfaces untouched; source extractor is a pinned pure port.",
+    "Configuration: explicit absolute roots/output/realization identity, fixed32MiB artifact/64MiB decoded/96MiB package caps and exact source/binary/backend/receipt/build pins.",
+    "Observability: inert manifest/assembly custody and bounded outcome; no diagnostic data promotes trust or native authority; no OTel integration claim.",
+    "Correspondence: actual530 source inventory,71ba binary,47 public metadata,512 full cases and8 transport receipts bind the composition; actual historical request/expected bytes preserved without migration."
+  ],
+  "limitations": [
+    "No full package assembly, compiler, engine, installation or index admission executed by reviewer. Tiny temporary synthetic publish controls only.",
+    "Atomic directory publication assumes the stated cooperating single writer and trusted parent; no cross-principal fencing or crash-durability proof.",
+    "Assembly binds full tracked-source inventory and selected copied sources, not bundled267MB source/cache/SDK closure; actual command/input closing verification remains required for the resulting package.",
+    "Compiler-qualified candidate metadata does not transfer c6 native evidence or establish Paths530 native support, source/ACK authority, hermetic rebuild or registered index trust."
+  ]
+}
