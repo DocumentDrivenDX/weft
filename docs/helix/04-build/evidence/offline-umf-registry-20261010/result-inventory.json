@@ -1,0 +1,16 @@
+{
+  "scope": "Offline governed-specification validation only; no compiler, database or installed package qualification.",
+  "failed_ci": {
+    "run": 38086122368,
+    "head": "ed2b6777d3a1d63850af4bac8bc0180e3820ed01",
+    "conclusion": "failure",
+    "url": "https://github.com/DocumentDrivenDX/weft/actions/runs/38086122368",
+    "failure": "Unregistered urn:umf:core:0.8.0#/$defs/literal referenced by security contracts",
+    "verified_tool_chunk": "0e2806"
+  },
+  "fix": "Verify existing local UMF 0.8 source pin and register schema in offline Ajv before exhaustive contract compilation",
+  "files": {
+    "source-freeze.json": "53ab8f8445133c956676ccce18185dd8c96465003bd2bcbc24830090ee27cfa1",
+    "independent-review.json": "d5b56d88ecc2ff6dbbc4db973ffff15ac51fad053b9e7d704495d47169f1a90c"
+  }
+}

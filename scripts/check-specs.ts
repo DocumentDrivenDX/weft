@@ -57,6 +57,12 @@ for (const story of allocation) {
 assert(criteria.size === 30, 'Expected 30 criteria after the application-read input');
 const schemaDir = 'docs/helix/02-design/contracts';
 const ajv = new Ajv2020({ allErrors: true, strict: false });
+// Security contract literals reference the separately pinned UMF 0.8 envelope.
+const core08Text = await read('spec/upstream/umf-0.8.0.schema.json');
+const core08Pin = await json('spec/upstream/umf-0.8.0.source.json');
+assert(createHash('sha256').update(core08Text, 'utf8').digest('hex') === core08Pin.sha256,
+  'Pinned UMF 0.8 schema bytes differ');
+ajv.addSchema(JSON.parse(core08Text));
 const schemas = [];
 for (const file of files.filter(f => f.endsWith('.schema.json'))) {
   const schema = await json(file);

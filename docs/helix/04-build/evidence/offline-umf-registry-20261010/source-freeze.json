@@ -1,0 +1,16 @@
+{
+  "head": "ed2b6777d3a1d63850af4bac8bc0180e3820ed01",
+  "files": {
+    "scripts/check-specs.ts": "d83ef59d7a4eb0ab64b3c4f2a4dd4520c23ffd2df0afec293be2848aebaf1449"
+  },
+  "prior_check": {
+    "session": 87761,
+    "chunk": "4536bc",
+    "exit_code": 0,
+    "commands": [
+      "bun run specs:check",
+      "bun tests/compile/schema-v0.4-check.ts",
+      "bun tests/two-hop-schemas/check.ts"
+    ]
+  }
+}
