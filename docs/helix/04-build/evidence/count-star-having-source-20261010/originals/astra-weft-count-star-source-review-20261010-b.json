@@ -1,0 +1,363 @@
+{
+  "format": "astra-weft-count-star-source-review/0.1",
+  "verdict": "approved-source-only",
+  "freeze": {
+    "path": "/private/tmp/weft-count-star-source-freeze-20261010-b.json",
+    "bytes": 15712,
+    "sha256": "f1e9c498e4f1805562f02afd9da6b6bc517069c7e117318436a591fecded9b04"
+  },
+  "source_files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/.github/workflows/conformance.yml",
+      "bytes": 5824,
+      "sha256": "8401fa7abfe9dc915ee96c956b0e6e20fbc3b50926818e126106fcaa5d4fe420"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41456,
+      "sha256": "12b3212a08c71f91089b8244670da7d04b8498f9ba7630d7cbae5eda343d4742"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19505,
+      "sha256": "49813365325d578cf6966a160fe2bde7326e46b642b06092fd6beb22c4e88370"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 32397,
+      "sha256": "a6e23308fb9320803dffa5278a6955d2371cc1c5e42dafb14125b35571ab0b16"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3483,
+      "sha256": "bd793c04346cb6e9f314877fd46b796e5596434fcfc119204963de20cbc41c1e"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 10986,
+      "sha256": "271df204b75cda84f0f6fd85634352d1d516c0b26cf48fd0fe3b1ef965d40f91"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_view.rs",
+      "bytes": 4115,
+      "sha256": "6c94b9b726dbe74bb0d25c451f4872f6a82dcdcc5e2c10f87cfa5af49e00a500"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/compile.rs",
+      "bytes": 12452,
+      "sha256": "d4c1090c7c333e8d63421e94d0c5e929b8c3e9ad44ded99cbe4b50bed2e26aec"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/compile041.rs",
+      "bytes": 8762,
+      "sha256": "e2e76957f836dafc47fb3ca480be94dd5ea603c0e5f9db79dcc79e1ea4f2f238"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26471,
+      "sha256": "fe75e5b3a71a9b3dcef54daa6e8dcd874944ba66ce316351ab77d0b494169798"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_ir.rs",
+      "bytes": 27604,
+      "sha256": "6121b3515a2f56ed2502cb47f00bfaa8a32a9bdec130f62664a52941102108f5"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_query.rs",
+      "bytes": 19210,
+      "sha256": "5d77efc034ae0852d91a192e47d6f8ef42ab25946a70f58105c5a1b8303a43db"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42265,
+      "sha256": "e09086918dca53006e515e9ff2c979c9ff994d6ed82299ceb8087d14f3690af3"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/lib.rs",
+      "bytes": 871,
+      "sha256": "4ac8962d8eb6df6e61ee921289653d76c13c49514d87069b9f28967581b9bdcf"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/paths_keys_having.rs",
+      "bytes": 2497,
+      "sha256": "0f721a706f527a9d60d5d75eb2ec768281f2157fbfbcc904a15ee9ad61a0a809"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime/src/paths_keys.rs",
+      "bytes": 15856,
+      "sha256": "67e797a7971e0dff95206f898e0b925a50b6faca5d4365529ef3c92a65058d51"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime/tests/paths_keys_having.rs",
+      "bytes": 12083,
+      "sha256": "ad1613e37efa13f4f4a767bd552f9998f6c9ce7c27f429d67e037473b7a4815a"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "bytes": 35095,
+      "sha256": "c6b6f420946787c5cd06a2e17f5973ea468c800c050e9cdc88e98669ccc2faf4"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "bytes": 18068,
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "bytes": 3513,
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "bytes": 62090,
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "bytes": 43626,
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "bytes": 19281,
+      "sha256": "cd853a24db9c7b975482448a216a3000f2b7628ab49863da010fd73e94306e38"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-distinct-request.json",
+      "bytes": 55267,
+      "sha256": "b58f7790c0f71103dbfae62b3e6eb3e1835fb67c749999c7e03a96fb8fdd15ed"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-distinct-response.json",
+      "bytes": 20564,
+      "sha256": "b5953ac4f061f6eab808dc882cfe92940f1ed582d63964f2be130fc1a2aa8a74"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-request.json",
+      "bytes": 55327,
+      "sha256": "41be129090c12b8b525e023f63c038d571b993161e4c276cc50553fdfec9ace8"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-response.json",
+      "bytes": 47111,
+      "sha256": "dd8733556ee61fcaddaf7480e1f07dfdcdeafef32b4ac5869272bab6e4e4c709"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/request.json",
+      "bytes": 55216,
+      "sha256": "4c16096f86a309d109a6c1e6358c5ca9135fca5484bc0f662e8a3053deab628c"
+    }
+  ],
+  "resolved_findings": [
+    "HC-INPUT-001 raw UTF8 byte size guard precedes dispatch JSON parsing and delegates oversized input to existing bounded compiler",
+    "HC-CI-001 exact feature-enabled integration target added without changing existing jobs",
+    "HC-TYPE-001 closed HavingArgument enum owns DistinctColumn versus StarSpan",
+    "HC-ERROR-001 new manifest lookup,041 schema validation and041 response serialization have nonpanicking refusal paths"
+  ],
+  "evidence": [
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/Cargo.toml",
+      "bytes": 327,
+      "sha256": "f169e4e924d8e2fb6edbc56a6b0d2c41fff21359bda9a2e9feea2f4f665c423e"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/Cargo.lock",
+      "bytes": 22959,
+      "sha256": "f29ee95bfa41dd83ece751901b33846df21bea684c341233a9273d189ba5fee4"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/src/main.rs",
+      "bytes": 6295,
+      "sha256": "f9d0c3bca427d07ebeb03d875fc6a768db76045ec1444112a5864b5572180b20"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/source-opening.json",
+      "bytes": 6099,
+      "sha256": "51880cca7bcbd6c4da18913b277f9eb6c9f33ee6187680fe81bb2a7ae40e0e32"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/source-closing.json",
+      "bytes": 6099,
+      "sha256": "51880cca7bcbd6c4da18913b277f9eb6c9f33ee6187680fe81bb2a7ae40e0e32"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/lock.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/lock.stderr.log",
+      "bytes": 55,
+      "sha256": "37012ccc56a072bbc9bfb94de19b7a86f8484c0dcb2ef0fa81ef104caf5967fe"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/run.stdout.json",
+      "bytes": 760867,
+      "sha256": "86957764923106daa2599717ce9fcf8cca221bee9c3517f5919e1c99516b9359"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/run.stderr.log",
+      "bytes": 3454,
+      "sha256": "ba433a4278a1fb95f616881ba480e1bf16809fb0030680005434575eae109e3e"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/schema-controls.mjs",
+      "bytes": 2375,
+      "sha256": "3872993b5cf16e39480d974ff40ec3db1f5d44ec46551aebba94143fc5111d93"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/schema.stdout.json",
+      "bytes": 2392,
+      "sha256": "558f7a3a4cf2a9a12d2b219ae7f5522893000104d85680fd0deff5ef24bf71a3"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/schema.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/rustfmt.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/rustfmt.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "observed_commands": [
+    {
+      "argv": [
+        "cargo",
+        "generate-lockfile",
+        "--offline",
+        "--manifest-path",
+        "/private/tmp/astra-count-star-independent-20261010-b/Cargo.toml"
+      ],
+      "terminal": "8947bd",
+      "exitCode": 0
+    },
+    {
+      "argv": [
+        "cargo",
+        "run",
+        "--offline",
+        "--locked",
+        "-j1",
+        "--manifest-path",
+        "/private/tmp/astra-count-star-independent-20261010-b/Cargo.toml"
+      ],
+      "env": {
+        "PATH": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/usr/bin:/bin",
+        "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+        "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+        "CARGO_TARGET_DIR": "/private/tmp/ashlar-weft-distribution-d2d/target",
+        "CARGO_BUILD_JOBS": "1"
+      },
+      "environment_inherited": false,
+      "cargo": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "cwd": "/private/tmp/astra-count-star-independent-20261010-b",
+      "terminal": "50fce0",
+      "exitCode": 0,
+      "controls": 14
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/bun",
+        "/private/tmp/astra-count-star-independent-20261010-b/schema-controls.mjs"
+      ],
+      "terminal": "01eab0",
+      "exitCode": 0,
+      "offline_schema_controls": 23
+    },
+    {
+      "argv": [
+        "rustfmt",
+        "--edition",
+        "2021",
+        "--check",
+        "--config",
+        "skip_children=true",
+        "crates/weft-core/src/compile041.rs",
+        "crates/weft-databricks/src/paths_keys_having.rs"
+      ],
+      "terminal": "0bc3e5",
+      "exitCode": 0
+    }
+  ],
+  "public_compiler_cases": [
+    "original-replay",
+    "joined-filtered-full-bag",
+    "expansion-count-owner",
+    "old-dialect-new-interface",
+    "new-dialect-old-interface",
+    "new-language-old-backend",
+    "old-language-new-backend",
+    "candidate-optout",
+    "unprojected-count",
+    "no-groups",
+    "output-alias-not-source-field",
+    "old-exact-response-parity",
+    "old-distinct-exact-response-parity",
+    "oversized-valid-json-runtime"
+  ],
+  "old_schema_files_unchanged": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "bytes": 3511,
+      "sha256": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "bytes": 62086,
+      "sha256": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/logical-plan-v0.4.schema.json",
+      "bytes": 42813,
+      "sha256": "a6f28858646e4795019037233ef0e8d6b0aeb45e7440cbcf4e7a477891a1b3d5"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json",
+      "bytes": 18066,
+      "sha256": "655f2dea7b459b354af1f66ae1684f1ba2bce907a5c7355d34c9f9c461f9ea7a"
+    }
+  ],
+  "reviewed_author_observation": {
+    "tests": "91 core,10 runtime,9 new integration",
+    "stdout": {
+      "path": "/private/tmp/weft-count-star-successor-b-frozen.stdout.log",
+      "bytes": 10092,
+      "sha256": "e51675e020a6f7cc6c180ab277a1ce57fc874060e184d1bb32f082cd2a4b4069"
+    },
+    "stderr": {
+      "path": "/private/tmp/weft-count-star-successor-b-frozen.stderr.log",
+      "bytes": 6156,
+      "sha256": "f7b2b0d15a1a99c3a026ee2a8239ad52cbe550814bf303f3301173c9a6be7384"
+    },
+    "scope": "Retained author observations; not repeated by reviewer"
+  },
+  "semantic_correspondence": [
+    "Original SQL preserved; new exact compile/dialect/IR041 and backend version govern row-count HAVING; old040 two complete response bytes retained unchanged",
+    "Projected count with nonempty required String grouping, original literal and exact slot; unsupported alias/group/projection/version and candidate cases refuse without SQL",
+    "Many-to-many finite bag oracle preserves repeated occurrences; compiler joined WHERE guard retains full joined bag and excludes HAVING/ORDER/LIMIT",
+    "Plain count uses arithmetic.exact aggregate-candidates DECIMAL38 TRY_SUM/nonempty NULL overflow guard; expansion uses path.countCapacity pathRows",
+    "Capacity threshold remains native signed64 limitation, not mathematical Integer width; source guards remain required before query and result release"
+  ],
+  "helix_scope": [
+    "Modularity: core owns closed AST/IR; backend owns SQL and obligations; runtime owns explicit registration; no execution authority added",
+    "Configuration: existing explicit request and registry selection; no ambient environment, credentials or runtime discovery",
+    "Diagnostics: fixed structured refusal envelopes retained, no operational/logging subsystem added",
+    "Formal: HC-S1/S2/S3 precise source/guard and finite countermodel correspondence only; no analyzer/model or native overflow proof"
+  ],
+  "limits": [
+    "No native query execution, publication, ACK, installed new profile or result-semantics qualification",
+    "No new release artifact/package/index promotion, Python or WASM parity",
+    "No full workspace rerun, whole-project formatting or whole dependency/OS closure assertion; only new two modules formatting verified",
+    "Legacy library expect sites retained, new owned paths corrected",
+    "Four public old schema files unchanged; all28 selected source pins opening=closing",
+    "External harness dependency versions equal repository lock except harness package itself"
+  ],
+  "findings": []
+}

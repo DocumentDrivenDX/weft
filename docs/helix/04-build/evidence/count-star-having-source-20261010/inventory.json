@@ -1,0 +1,664 @@
+{
+  "scope": "Versioned source compiler extension with original replay SQL, finite conformance, old-version byte parity and module controls. No distribution/index/Python/WASM/native/production qualification.",
+  "sourcePins": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/.github/workflows/conformance.yml",
+      "bytes": 5824,
+      "sha256": "8401fa7abfe9dc915ee96c956b0e6e20fbc3b50926818e126106fcaa5d4fe420"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41456,
+      "sha256": "12b3212a08c71f91089b8244670da7d04b8498f9ba7630d7cbae5eda343d4742"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19505,
+      "sha256": "49813365325d578cf6966a160fe2bde7326e46b642b06092fd6beb22c4e88370"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 32397,
+      "sha256": "a6e23308fb9320803dffa5278a6955d2371cc1c5e42dafb14125b35571ab0b16"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3483,
+      "sha256": "bd793c04346cb6e9f314877fd46b796e5596434fcfc119204963de20cbc41c1e"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 10986,
+      "sha256": "271df204b75cda84f0f6fd85634352d1d516c0b26cf48fd0fe3b1ef965d40f91"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/backend03_view.rs",
+      "bytes": 4115,
+      "sha256": "6c94b9b726dbe74bb0d25c451f4872f6a82dcdcc5e2c10f87cfa5af49e00a500"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/compile.rs",
+      "bytes": 12452,
+      "sha256": "d4c1090c7c333e8d63421e94d0c5e929b8c3e9ad44ded99cbe4b50bed2e26aec"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/compile041.rs",
+      "bytes": 8762,
+      "sha256": "e2e76957f836dafc47fb3ca480be94dd5ea603c0e5f9db79dcc79e1ea4f2f238"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26471,
+      "sha256": "fe75e5b3a71a9b3dcef54daa6e8dcd874944ba66ce316351ab77d0b494169798"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_ir.rs",
+      "bytes": 27604,
+      "sha256": "6121b3515a2f56ed2502cb47f00bfaa8a32a9bdec130f62664a52941102108f5"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core/src/path_query.rs",
+      "bytes": 19210,
+      "sha256": "5d77efc034ae0852d91a192e47d6f8ef42ab25946a70f58105c5a1b8303a43db"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42265,
+      "sha256": "e09086918dca53006e515e9ff2c979c9ff994d6ed82299ceb8087d14f3690af3"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/lib.rs",
+      "bytes": 871,
+      "sha256": "4ac8962d8eb6df6e61ee921289653d76c13c49514d87069b9f28967581b9bdcf"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks/src/paths_keys_having.rs",
+      "bytes": 2497,
+      "sha256": "0f721a706f527a9d60d5d75eb2ec768281f2157fbfbcc904a15ee9ad61a0a809"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime/src/paths_keys.rs",
+      "bytes": 15856,
+      "sha256": "67e797a7971e0dff95206f898e0b925a50b6faca5d4365529ef3c92a65058d51"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime/tests/paths_keys_having.rs",
+      "bytes": 12083,
+      "sha256": "ad1613e37efa13f4f4a767bd552f9998f6c9ce7c27f429d67e037473b7a4815a"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "bytes": 35095,
+      "sha256": "c6b6f420946787c5cd06a2e17f5973ea468c800c050e9cdc88e98669ccc2faf4"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "bytes": 18068,
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "bytes": 3513,
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "bytes": 62090,
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "bytes": 43626,
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "bytes": 19281,
+      "sha256": "cd853a24db9c7b975482448a216a3000f2b7628ab49863da010fd73e94306e38"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-distinct-request.json",
+      "bytes": 55267,
+      "sha256": "b58f7790c0f71103dbfae62b3e6eb3e1835fb67c749999c7e03a96fb8fdd15ed"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-distinct-response.json",
+      "bytes": 20564,
+      "sha256": "b5953ac4f061f6eab808dc882cfe92940f1ed582d63964f2be130fc1a2aa8a74"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-request.json",
+      "bytes": 55327,
+      "sha256": "41be129090c12b8b525e023f63c038d571b993161e4c276cc50553fdfec9ace8"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/old-response.json",
+      "bytes": 47111,
+      "sha256": "dd8733556ee61fcaddaf7480e1f07dfdcdeafef32b4ac5869272bab6e4e4c709"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/tests/fixtures/original-supply-chain-having/request.json",
+      "bytes": 55216,
+      "sha256": "4c16096f86a309d109a6c1e6358c5ca9135fca5484bc0f662e8a3053deab628c"
+    }
+  ],
+  "files": [
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/Cargo.lock",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/Cargo.lock",
+      "bytes": 22959,
+      "sha256": "f29ee95bfa41dd83ece751901b33846df21bea684c341233a9273d189ba5fee4"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/Cargo.toml",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/Cargo.toml",
+      "bytes": 327,
+      "sha256": "f169e4e924d8e2fb6edbc56a6b0d2c41fff21359bda9a2e9feea2f4f665c423e"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/lock.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/lock.stderr.log",
+      "bytes": 55,
+      "sha256": "37012ccc56a072bbc9bfb94de19b7a86f8484c0dcb2ef0fa81ef104caf5967fe"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/lock.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/lock.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/run.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/run.stderr.log",
+      "bytes": 3454,
+      "sha256": "ba433a4278a1fb95f616881ba480e1bf16809fb0030680005434575eae109e3e"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/run.stdout.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/run.stdout.json",
+      "bytes": 760867,
+      "sha256": "86957764923106daa2599717ce9fcf8cca221bee9c3517f5919e1c99516b9359"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/rustfmt.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/rustfmt.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/rustfmt.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/rustfmt.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/schema-controls.mjs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/schema-controls.mjs",
+      "bytes": 2375,
+      "sha256": "3872993b5cf16e39480d974ff40ec3db1f5d44ec46551aebba94143fc5111d93"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/schema.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/schema.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/schema.stdout.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/schema.stdout.json",
+      "bytes": 2392,
+      "sha256": "558f7a3a4cf2a9a12d2b219ae7f5522893000104d85680fd0deff5ef24bf71a3"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/source-closing.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/source-closing.json",
+      "bytes": 6099,
+      "sha256": "51880cca7bcbd6c4da18913b277f9eb6c9f33ee6187680fe81bb2a7ae40e0e32"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/source-opening.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/source-opening.json",
+      "bytes": 6099,
+      "sha256": "51880cca7bcbd6c4da18913b277f9eb6c9f33ee6187680fe81bb2a7ae40e0e32"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-independent-20261010-b/src/main.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-independent-20261010-b/src/main.rs",
+      "bytes": 6295,
+      "sha256": "f9d0c3bca427d07ebeb03d875fc6a768db76045ec1444112a5864b5572180b20"
+    },
+    {
+      "original": "/private/tmp/astra-count-star-static-source-review-20261010-a.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-count-star-static-source-review-20261010-a.json",
+      "bytes": 3305,
+      "sha256": "6896887bcca79c457cb75d4028bfe99c808f7ee69aa45e5449c268aaf2771117"
+    },
+    {
+      "original": "/private/tmp/astra-weft-count-star-having-design-review-20261010-a.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-weft-count-star-having-design-review-20261010-a.json",
+      "bytes": 5171,
+      "sha256": "1f35ed0a092d758451a32d350a58982584bf3252bd6c13e5af29a0eb6f12dc4b"
+    },
+    {
+      "original": "/private/tmp/astra-weft-count-star-source-findings-20261010-a.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-weft-count-star-source-findings-20261010-a.json",
+      "bytes": 9484,
+      "sha256": "71973e9584413c17f04cc7ae74ace0387d8c40429549f20843744ed79f86b6e3"
+    },
+    {
+      "original": "/private/tmp/astra-weft-count-star-source-review-20261010-b.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/astra-weft-count-star-source-review-20261010-b.json",
+      "bytes": 15745,
+      "sha256": "e84ec5f1a69d03ad878c59b0bff951200aca456312a7def45c6a39bd9615a6e2"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-boundary-final-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-boundary-final-a.stderr.log",
+      "bytes": 110,
+      "sha256": "2a13af67601624cb4924e88c89583b6d14c362a01c585716097d241c0a47bd61"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-boundary-final-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-boundary-final-a.stdout.log",
+      "bytes": 646,
+      "sha256": "bfbb02925bc2fff01e3029e78aa209a113f6173ef6072ba29395bd7328c0b655"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-boundary-negative-a.py",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-boundary-negative-a.py",
+      "bytes": 1037,
+      "sha256": "75f60d396229ce904915cfac95efe792653b5e6b3616557386f1eddbd14d8cd9"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-boundary-negative-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-boundary-negative-a.stderr.log",
+      "bytes": 110,
+      "sha256": "2a13af67601624cb4924e88c89583b6d14c362a01c585716097d241c0a47bd61"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-boundary-negative-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-boundary-negative-a.stdout.log",
+      "bytes": 96,
+      "sha256": "3af1e3312b49e37045f1fc56b1b0b40da7e632ad66eb5752507a65aff87537b7"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-core-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-core-a.stderr.log",
+      "bytes": 4321,
+      "sha256": "f9e1f854335689f97cb6a937b0ba64ea3d1a8a30f7983adb0b637bf4c01271d0"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-core-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-core-a.stdout.log",
+      "bytes": 8130,
+      "sha256": "8aabf070d04878b7c5d7a7c22f6be27866d458bd61f5549c2f947a1f3b1e7b44"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-distinct-baseline.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-distinct-baseline.json",
+      "bytes": 420,
+      "sha256": "f9dc03be86c58124655ffd1ca8c5a73c589db8b348a51733b83f2b4e6bf9c1ff"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-distinct-baseline.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-distinct-baseline.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-edit-a.py",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-edit-a.py",
+      "bytes": 3048,
+      "sha256": "cffe419c4e997ec259d3bdf648a4a330cc1abe7a3060bfe9f3c1d300215788b7"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-a.stderr.log",
+      "bytes": 5818,
+      "sha256": "cd7b1051e4e415e61b9972705a25db05dc708c4333942fe1021f39542d62ed42"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-a.stdout.log",
+      "bytes": 1343,
+      "sha256": "6920667c8447ed1f49060660a397e96c1a3e52537a515ee1b7eff80a3d11cedb"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-b.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-b.stderr.log",
+      "bytes": 5741,
+      "sha256": "aed65e1d847519d3f471133d27528a98bdeea9f9cf493616fa636773b7493927"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-b.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-b.stdout.log",
+      "bytes": 315,
+      "sha256": "d585154465dfd24915c702cd589d47163ed3fc1ade9d61f6af59e7ee32a591ca"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-c.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-c.stderr.log",
+      "bytes": 6256,
+      "sha256": "9f4db5ef6f540c9409c1ef459732bccf592d230b038f52156e463b67569b7bd7"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-c.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-c.stdout.log",
+      "bytes": 959,
+      "sha256": "4c41ff0de3607464e41d60b4490bb33d40a63549038d4c945a28e9ebce5bf5aa"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-d.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-d.stderr.log",
+      "bytes": 5985,
+      "sha256": "beacb77243156e3c012e8e44282b81910277b664172b62ed057caabc27737f4c"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-after-d.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-after-d.stdout.log",
+      "bytes": 518,
+      "sha256": "1b2dae7a819023cf7ff0fd5a70218801e4bff6f0666eedd216a0e9d86bd32bc4"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-before-b.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-before-b.stderr.log",
+      "bytes": 5344,
+      "sha256": "5c7739f24da606d990fab115e53359e388c266b07aa935851ca390c9e2942b6f"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-before-b.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-before-b.stdout.log",
+      "bytes": 1358,
+      "sha256": "870e46405cef11832052523c6fb5a9ebae9e5680532589f1591a5e27f6ffdb35"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-before.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-before.stderr.log",
+      "bytes": 33,
+      "sha256": "cf31a0c5e0ea1992de51586dec96edadc03e65c5a0927740d413bd27c01522fd"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-before.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-before.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-final-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-final-a.stderr.log",
+      "bytes": 5520,
+      "sha256": "9dc150cdfc13be2d0a9c202fa00b7aade78e58a1a91b398747ea2274aa387e53"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-final-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-final-a.stdout.log",
+      "bytes": 518,
+      "sha256": "4e209dcbf4403701b34e58ea1c438e80ad4492c23752e79324f6e57f16f4aab2"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-final-b.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-final-b.stderr.log",
+      "bytes": 5714,
+      "sha256": "16192a663ff40111321c103eacfeb846bdde0fdec2d992d25e42880964a8472b"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-having-final-b.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-having-final-b.stdout.log",
+      "bytes": 598,
+      "sha256": "ff4527398244049012ae55b6fe3f4f78b17b8d9186661fd3aa643bd31eb78aca"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-libraries-final-a.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-libraries-final-a.stderr.log",
+      "bytes": 6164,
+      "sha256": "33f20b9cdefe80c8038b5e9502f061da4380978aedffb305edf2e37114548618"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-libraries-final-a.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-libraries-final-a.stdout.log",
+      "bytes": 9239,
+      "sha256": "cae66360bc188f7994fae71711966c5c30e8d339d971765fd954858b17c7f22e"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-libraries-final-b.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-libraries-final-b.stderr.log",
+      "bytes": 6164,
+      "sha256": "d8e1f8aec1e4a2062ff4932564e6bf115ceadc9f9fd36f4e883412899bb11989"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-libraries-final-b.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-libraries-final-b.stdout.log",
+      "bytes": 9333,
+      "sha256": "2dfda533ff31752b01bd2021abb6c8454585964ede181c9cf253c949985c41ca"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-freeze-20261010-a.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-freeze-20261010-a.json",
+      "bytes": 12612,
+      "sha256": "14e4c29cbe0c68dacf54313c47ae2972be7070fc4ac001e04356bee67c3b9ac1"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-freeze-20261010-b.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-freeze-20261010-b.json",
+      "bytes": 15712,
+      "sha256": "f1e9c498e4f1805562f02afd9da6b6bc517069c7e117318436a591fecded9b04"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41304,
+      "sha256": "e0bff5c9f93e4fcfd7d298bf823e9e2f479f31263127ccd072a297cad8ef1fe5"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/arithmetic_query.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19528,
+      "sha256": "858a5ee63cf2ea0ee18de55e3e7bf91061df07c861167566146582f0f54f676f"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_emission.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 32541,
+      "sha256": "09a5d734d515b9380f56ebc4c6ad4ef9ef40197fdee22b8c816a6564de9e6201"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_manifest.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3483,
+      "sha256": "bd793c04346cb6e9f314877fd46b796e5596434fcfc119204963de20cbc41c1e"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_registry.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 10986,
+      "sha256": "271df204b75cda84f0f6fd85634352d1d516c0b26cf48fd0fe3b1ef965d40f91"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_view.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/backend03_view.rs",
+      "bytes": 4115,
+      "sha256": "6c94b9b726dbe74bb0d25c451f4872f6a82dcdcc5e2c10f87cfa5af49e00a500"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/compile.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/compile.rs",
+      "bytes": 12452,
+      "sha256": "d4c1090c7c333e8d63421e94d0c5e929b8c3e9ad44ded99cbe4b50bed2e26aec"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/compile041.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/compile041.rs",
+      "bytes": 8384,
+      "sha256": "534594fee957f1f583dcd16155e643b048f70df45cccc2d55888e756901a7fa1"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_application_resolve.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26471,
+      "sha256": "fe75e5b3a71a9b3dcef54daa6e8dcd874944ba66ce316351ab77d0b494169798"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_ir.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_ir.rs",
+      "bytes": 27604,
+      "sha256": "6121b3515a2f56ed2502cb47f00bfaa8a32a9bdec130f62664a52941102108f5"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_query.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-core/src/path_query.rs",
+      "bytes": 19044,
+      "sha256": "c819d58b9e0c3f8026a50abcd8ab06378c6976f7a013eeba6e601bc99de2abab"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42265,
+      "sha256": "e09086918dca53006e515e9ff2c979c9ff994d6ed82299ceb8087d14f3690af3"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/lib.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/lib.rs",
+      "bytes": 871,
+      "sha256": "4ac8962d8eb6df6e61ee921289653d76c13c49514d87069b9f28967581b9bdcf"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/paths_keys_having.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-databricks/src/paths_keys_having.rs",
+      "bytes": 2289,
+      "sha256": "b079b4bc109fa9a059459ae2edb9e5163695ab28450cc7edfccf5ef76a1b2cbc"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-runtime/src/paths_keys.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-runtime/src/paths_keys.rs",
+      "bytes": 15770,
+      "sha256": "41bf229a629b0f979b9bfcf434ded9afdf6d530a2d3b2caca3953a0bc4380180"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/crates/weft-runtime/tests/paths_keys_having.rs",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/crates/weft-runtime/tests/paths_keys_having.rs",
+      "bytes": 9067,
+      "sha256": "8616d19d3bdf34e3300e36d3a849313c07a97ebc2daccbfe72a6a2d005b48451"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/CONTRACT-005-authored-two-hop-paths.md",
+      "bytes": 35095,
+      "sha256": "c6b6f420946787c5cd06a2e17f5973ea468c800c050e9cdc88e98669ccc2faf4"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "bytes": 18068,
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "bytes": 3513,
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "bytes": 62090,
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "bytes": 43626,
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/docs/helix/02-design/technical-designs/TD-007-authored-two-hop-paths.md",
+      "bytes": 19281,
+      "sha256": "cd853a24db9c7b975482448a216a3000f2b7628ab49863da010fd73e94306e38"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-distinct-request.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-distinct-request.json",
+      "bytes": 55267,
+      "sha256": "b58f7790c0f71103dbfae62b3e6eb3e1835fb67c749999c7e03a96fb8fdd15ed"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-distinct-response.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-distinct-response.json",
+      "bytes": 20564,
+      "sha256": "b5953ac4f061f6eab808dc882cfe92940f1ed582d63964f2be130fc1a2aa8a74"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-request.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-request.json",
+      "bytes": 55327,
+      "sha256": "41be129090c12b8b525e023f63c038d571b993161e4c276cc50553fdfec9ace8"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-response.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/old-response.json",
+      "bytes": 47111,
+      "sha256": "dd8733556ee61fcaddaf7480e1f07dfdcdeafef32b4ac5869272bab6e4e4c709"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/request.json",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-source-snapshot-20261010-a/tests/fixtures/original-supply-chain-having/request.json",
+      "bytes": 55216,
+      "sha256": "4c16096f86a309d109a6c1e6358c5ca9135fca5484bc0f662e8a3053deab628c"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-ci.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-ci.stderr.log",
+      "bytes": 5520,
+      "sha256": "d173dab2504a530dc3b41f80c2a180f14a910161cd0f996bbd3393aa0bcb0f72"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-ci.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-ci.stdout.log",
+      "bytes": 759,
+      "sha256": "0ab9a514883bbb34b76ef58a7e5da253c3c91897464229ef3b394bf893243c31"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-final.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-final.stderr.log",
+      "bytes": 5714,
+      "sha256": "b564f90a5d0e79ef335a58d90476762c9486c4daf33b268c8181836fc2c17003"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-final.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-final.stdout.log",
+      "bytes": 759,
+      "sha256": "feaadf1d0460afd04623c10605a77f45fc3cc564503646a43a13aee7d8882af8"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-frozen.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-frozen.stderr.log",
+      "bytes": 6156,
+      "sha256": "f7b2b0d15a1a99c3a026ee2a8239ad52cbe550814bf303f3301173c9a6be7384"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b-frozen.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b-frozen.stdout.log",
+      "bytes": 10092,
+      "sha256": "e51675e020a6f7cc6c180ab277a1ce57fc874060e184d1bb32f082cd2a4b4069"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b.stderr.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b.stderr.log",
+      "bytes": 6260,
+      "sha256": "5e96504cb405a9ea563b1f8cb5e5812057689c4b0470f7b069c68c1411e6d4d7"
+    },
+    {
+      "original": "/private/tmp/weft-count-star-successor-b.stdout.log",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-count-star-successor-b.stdout.log",
+      "bytes": 10020,
+      "sha256": "1d4f60d8a3f1a19773482bd644028d4966491698e81a3825d2a8c28693b13cba"
+    },
+    {
+      "original": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "copy": "docs/helix/04-build/evidence/count-star-having-source-20261010/originals/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "bytes": 30854216,
+      "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6"
+    }
+  ],
+  "counterexamples": "Predecessor A review found pre-routing raw input bound, missing CI suite, open HAVING state and new library panic paths; B fixes all and preserves actual A snapshots/results."
+}

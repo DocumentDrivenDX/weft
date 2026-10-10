@@ -1,0 +1,125 @@
+
+running 91 tests
+test arithmetic_syntax::tests::precedence_association_tokens_and_spans ... ok
+test arithmetic_syntax::tests::nesting_and_tree_depth_boundaries ... ok
+test arithmetic_query::tests::operator_free_comparisons_preserve_existing_semantics ... ok
+test arithmetic_query::tests::aggregate_and_order_positions_remain_field_only ... ok
+test arithmetic_syntax::tests::unsupported_constructs_and_old_profile_isolation ... ok
+test arithmetic_resolve::tests::mathematical_integer_and_original_field_facets ... ok
+test arithmetic_query::tests::commerce_arithmetic_in_projection_filter_and_join ... ok
+test arithmetic_resolve::tests::invalid_and_unavailable_numeric_meaning_refuses ... ok
+test arithmetic_query::tests::new_comparison_tokens_are_closed_and_old_tuples_remain ... ok
+test arithmetic_syntax::tests::common_budget_and_literal_boundaries ... ok
+test arithmetic_resolve::tests::exact_scale_and_token_retention ... ok
+test backend03::tests::obligation_conflicts_and_bounded_metadata_refuse ... ok
+test arithmetic_query::tests::one_budget_for_entire_query_and_old_profile_isolation ... ok
+test backend03::tests::view_retains_full_original_identity_and_binding_digest_gate ... ok
+test backend::tests::obligations_are_retained_sorted_and_conflicts_refuse ... ok
+test backend03::tests::closed_manifest_and_old_interface_refuse ... ok
+test backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes ... ok
+test backend_emission::tests::initial_plan_requires_projection_root_before_output_validation ... ok
+test backend_emission::tests::numeric_results_require_exact_text_decoders ... ok
+test backend03::tests::all_declared_path_capabilities_refuse_before_binding ... ok
+test backend_emission::tests::parameter_domain_guards_have_exact_diagnostics ... ok
+test backend03::tests::manifest_identifiers_and_obligation_codes_preserve_original_rejection_rules ... ok
+test backend03::tests::repeated_fields_require_the_exact_positioned_custody_obligation ... ok
+test backend03::tests::registry_success_and_edge_source_refusals_before_assessment ... ok
+test backend_emission::tests::scalar_carriers_preserve_family_nullability_and_facets ... ok
+test backend03::tests::expansion_counts_require_complete_target_identity_and_both_capacities ... ok
+test backend03::tests::left_match_integrity_requires_exact_immutable_record_source ... ok
+test arithmetic_application_resolve::tests::arithmetic_join_projection_and_exact_domain ... ok
+test arithmetic_application_resolve::tests::count_distinct_and_string_in_closed_ir_refuse_domain_and_slot_mutations ... ok
+test backend03::tests::ordinary_type_and_exact_parameter_domains_remain_closed ... ok
+test backend03::tests::full_path_emission_and_exact_hop_schema_inventory ... ok
+test compile::v04::tests::old_transport_keeps_refusing_new_pair ... ok
+test backend::tests::arithmetic_selection_retains_original_operands_and_versions ... ok
+test backend_emission::tests::arithmetic_output_retains_exact_derived_domains ... ok
+test backend_emission::tests::positioned_metadata_refuses_incomplete_colliding_or_reordered_cells ... ok
+test path_application_resolve::tests::old_version_entrypoints_still_refuse_new_path_queries ... ok
+test backend_emission::tests::outer_join_metadata_binds_scan_record_and_unprojected_match_guards ... ok
+test compile::v04::tests::malformed_json_and_foreign_diagnostics_have_closed_refusals ... ok
+test path_application_resolve::tests::left_join_roots_keep_original_scan_and_outer_join_metadata ... ok
+test backend_emission::tests::presence_and_native_null_require_qualified_descriptors ... ok
+test path_ir::tests::alternative_intermediate_keys_and_parallel_path_structure_survive ... ok
+test path_application_resolve::tests::legacy_only_queries_keep_the_same_resolved_members ... ok
+test path_ir::tests::collection_and_count_schema_correspondence ... ok
+test path_ir::tests::endpoint_key_and_paging_metadata_refuse ... ok
+test path_ir::tests::impossible_paths_and_spans_refuse ... ok
+test path_ir::tests::legacy_aggregates_are_not_opaque ... ok
+test compile::v04::tests::explicit_candidate_fixture_preserves_original_path_metadata ... ok
+test path_ir::tests::pin_only_mutation_refuses_before_root_correspondence ... ok
+test path_ir::tests::stage_root_count_and_collision_refuse ... ok
+test path_query::tests::escaped_unicode_names_and_optional_as_keep_original_byte_offsets ... ok
+test path_ir::tests::original_catalog_cross_module_key_is_preserved ... ok
+test path_query::tests::expansion_follows_ordinary_joins_and_keeps_legacy_tail ... ok
+test path_query::tests::expansion_placement_arity_alias_and_trailing_tokens_are_closed ... ok
+test path_application_resolve::tests::ordinary_join_filter_group_legacy_having_order_and_parameters_share_semantics ... ok
+test path_query::tests::new_having_forms_are_not_silently_admitted ... ok
+test path_query::tests::old_entrypoints_continue_to_refuse_new_query_forms ... ok
+test path_query::tests::original_commerce_collection_preserves_function_and_operand_spans ... ok
+test path_query::tests::original_commerce_expansion_and_both_counts_retain_occurrence_spans ... ok
+test path_query::tests::row_count_having_is_version_gated_and_keeps_original_star_span ... ok
+test path_query::tests::syntax_does_not_claim_resolver_admission ... ok
+test path_application_resolve::tests::separately_declared_inverse_and_optional_count_fixture_keeps_own_semantics ... ok
+test path_query::tests::shared_limits_cover_all_query_segments ... ok
+test path_application_resolve::tests::grouped_and_global_counts_use_one_complete_expansion_and_exact_integer ... ok
+test path_resolve::tests::alias_case_quoting_and_ambiguity_follow_existing_scope ... ok
+test path_application_resolve::tests::original_commerce_collection_keeps_pins_relationships_keys_and_spans ... ok
+test path_syntax::tests::bound_endpoints_and_invalid_literal_domains ... ok
+test path_syntax::tests::distinct_target_alias_has_its_original_name_span ... ok
+test path_syntax::tests::fragments_leave_surrounding_query_tokens_to_the_existing_parser ... ok
+test path_syntax::tests::function_arity_aliases_and_trailing_syntax_refuse ... ok
+test path_syntax::tests::original_commerce_collection_operands_and_spans ... ok
+test path_syntax::tests::qualified_first_and_single_second_names_are_required ... ok
+test path_syntax::tests::quoted_escaping_unicode_bytes_and_case_folding ... ok
+test path_syntax::tests::shared_lexer_limits_and_existing_frontend_refusals_remain ... ok
+test arithmetic_application_resolve::tests::distinct03_closed_member_is_true_only_and_absent_on_old_plans ... ok
+test arithmetic_application_resolve::tests::null03_closed_ir_preserves_nonnullable_ideal_and_boolean_operator ... ok
+test arithmetic_application_resolve::tests::having_count_closed_schema_and_original_spans ... ok
+test backend_emission::tests::related_result_metadata_preserves_authored_key_and_bound ... ok
+test path_ir::tests::complete_local_schema_and_pin_refusals ... ok
+test path_resolve::tests::separately_declared_inverse_fixture_preserves_orientation ... ok
+test path_resolve::tests::missing_alias_relationship_and_stale_root_refuse ... ok
+test path_resolve::tests::unchanged_original_commerce_and_name_spans ... ok
+test path_application_resolve::tests::scalar_parameter_occurrences_and_surplus_rules_remain_shared ... ok
+test path_resolve::tests::equal_local_names_remain_scoped_to_original_document_revision ... ok
+test path_application_resolve::tests::aggregate_classification_collection_composition_and_labels_are_closed ... ok
+test path_application_resolve::tests::alias_binding_is_separate_from_record_and_field_scope ... ok
+test compile::v04::tests::exact_envelope_and_resolution_precede_composition ... ok
+test path_query::tests::legacy_fixture_asts_and_diagnostics_keep_original_spans ... ok
+test resolve::tests::typed_ast_resolver_literal_boundary_and_empty_join_refusal ... ok
+test arithmetic_application_resolve::tests::grouped_leaves_and_parameter_occurrences ... ok
+test arithmetic_application_resolve::tests::additive_comparisons_retain_scope_constraints_and_closed_ir ... ok
+test compile::v04::tests::transport_byte_budgets_precede_composition ... ok
+
+test result: ok. 91 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.75s
+
+
+running 10 tests
+test ashlar_tests::ashlar_feature_controls_registration_and_retains_public_artifact ... ok
+test paths_keys::tests::registration_is_explicit_candidate_optin_and_namespace_stays04 ... ok
+test paths_keys::tests::optional_and_numeric_key_variants_refuse_before_lowering ... ok
+test paths_keys::tests::original_required_onehop_emits_exact_wide_collection_and_standalone_schema ... ok
+test paths_keys::tests::twohop_collection_retains_original_obligations_and_adds_full_prefix_capacity ... ok
+test paths_keys::tests::explicitly_authored_inverse_and_composite_string_key_variants_preserve_lineage ... ok
+test paths_keys::tests::repeated_and_mixed_collections_keep_output_order_and_complete_capacity_inventory ... ok
+test paths_keys::tests::bound_and_unsupported_composition_controls_are_independent ... ok
+test paths_keys::tests::authored_alias_collisions_allocate_fresh_private_collection_names ... ok
+test paths_keys::tests::scalar_arithmetic_join_and_expanded_grouped_counts_remain_selected ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.49s
+
+
+running 9 tests
+test oversized_valid_json_routes_to_original_bounded_refusal_before_version_parse ... ok
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+test complete_group_bag_guard_expression_and_bound_slot_are_retained ... ok
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... ok
+test exact_old_public_response_bytes_stay_unchanged ... ok
+test original_model_binding_pins_and_cross_profile_refusals_are_explicit ... ok
+test exact_old_distinct_public_artifact_bytes_stay_unchanged ... ok
+test joined_where_bag_and_expansion_guard_owners_remain_distinct ... ok
+test exact_threshold_boundaries_and_excluded_syntax ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+

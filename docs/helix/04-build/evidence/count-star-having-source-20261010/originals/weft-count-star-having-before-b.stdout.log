@@ -1,0 +1,30 @@
+
+running 3 tests
+test exact_threshold_boundaries_and_excluded_syntax ... FAILED
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... FAILED
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+
+failures:
+
+---- exact_threshold_boundaries_and_excluded_syntax stdout ----
+
+thread 'exact_threshold_boundaries_and_excluded_syntax' panicked at crates/weft-runtime/tests/paths_keys_having.rs:17:43:
+assertion `left == right` failed
+  left: String("blocked")
+ right: "compiled"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- original_replay_preserves_grouped_count_and_pre_having_capacity stdout ----
+
+thread 'original_replay_preserves_grouped_count_and_pre_having_capacity' panicked at crates/weft-runtime/tests/paths_keys_having.rs:11:44:
+assertion `left == right` failed: {"diagnostics":[{"code":"WFT-VERSION","message":"This entrypoint requires the exact 0.4 compile and dialect pair","phase":"input","recoverability":"correct-input","severity":"error"}],"interfaceVersion":"weft-compile/0.4.0","status":"blocked"}
+  left: String("blocked")
+ right: "compiled"
+
+
+failures:
+    exact_threshold_boundaries_and_excluded_syntax
+    original_replay_preserves_grouped_count_and_pre_having_capacity
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+

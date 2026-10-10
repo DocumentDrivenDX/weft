@@ -1,0 +1,120 @@
+{
+  "scope": "offline public request/response/plan schema controls; no native execution",
+  "checks": [
+    {
+      "id": "original-replay-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "original-replay-plan",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "joined-filtered-full-bag-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "joined-filtered-full-bag-plan",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "expansion-count-owner-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "expansion-count-owner-plan",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "old-dialect-new-interface-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "new-dialect-old-interface-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "new-language-old-backend-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "old-language-new-backend-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "candidate-optout-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "unprojected-count-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "no-groups-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "output-alias-not-source-field-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "oversized-valid-json-runtime-response",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "original041-request",
+      "expected": true,
+      "passed": true
+    },
+    {
+      "id": "extra-target-interface",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "mixed-dialect",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "unknown-setting",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "mixed-ir",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "count-unknown-member",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "count-nullable",
+      "expected": false,
+      "passed": true
+    },
+    {
+      "id": "count-unknown-operation",
+      "expected": false,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "format": "astra-count-star-static-source-review/0.1",
+  "sourceFreeze": {
+    "path": "/private/tmp/weft-count-star-source-freeze-20261010-a.json",
+    "sha256": "14e4c29cbe0c68dacf54313c47ae2972be7070fc4ac001e04356bee67c3b9ac1",
+    "files": 27
+  },
+  "currentPinMismatches": [],
+  "scope": "Read-only static source and pure finite mathematical controls; no Cargo/compiler/native/SQL execution. Old exact artifact compatibility tests inspected but not independently executed in this lane.",
+  "verdict": "BLOCKED on runtime routing byte budget; core COUNTstar/group/HAVING capacity design otherwise consistent in static review.",
+  "finding": {
+    "file": "crates/weft-runtime/src/paths_keys.rs",
+    "line": 13,
+    "severity": "material",
+    "summary": "Version routing parses request via checked_json before either bounded core Compiler. checked_json has no byte-length guard; direct runtime API may copy/parse arbitrarily oversized valid JSON before returning WFT-LIMIT.",
+    "required": "Enforce 16MiB UTF8 byte gate before routing JSON parsing and test direct runtime API over-bound valid JSON, preserving closed response/version policy."
+  },
+  "nonblockingNotes": [
+    "Source-owned manifest capability .expect cannot be triggered by current request input; fallible lookup is preferable under registry error policy.",
+    "Private Having argument/count_star_span Options permit invalid internal states but parser currently constructs exactly one; a closed enum removes this representational gap."
+  ],
+  "staticChecks": [
+    "Explicit compile/dialect041 and new selected backend version required; old parser tail version flag remains false.",
+    "Projected Count and nonempty groups required by resolver and selection; required exact String grouping and absent-LEFT grouping refusal retained.",
+    "Threshold retains original literal text/span/slot; rejects native threshold beyond signed64 capacity without narrowing mathematical Integer logical type.",
+    "Plain COUNT capacity counts full ordinary joined WHERE bag via DECIMAL38 TRY_SUM, preserves duplicates, detects nonempty NULL overflow, and excludes HAVING/ORDER/LIMIT from guard input.",
+    "Expansion COUNT uses existing pathRows capacity inventory rather than inventing path capacity for plain count."
+  ],
+  "finiteControls": {
+    "manyToManyJoinCounts": {
+      "g": 4,
+      "single": 1
+    },
+    "whereSurvivorCounts": {
+      "g": 2,
+      "single": 1
+    },
+    "havingGreater1": [
+      [
+        "g",
+        2
+      ]
+    ],
+    "emptyGroups": 0,
+    "signed64Boundaries": true,
+    "limitHiddenOverflow": true
+  },
+  "recommendedCompilerControls": [
+    "Many-to-many ordinary join with GROUP/WHERE/COUNT/HAVING: verify bag multiplication, complete guard joins/predicates and original slots.",
+    "Grouped expansion COUNT HAVING: require pathRows countCapacity; no plain-count aggregate-candidates substitute.",
+    "Source-invalid row whose group HAVING excludes it still present in source-integrity checks.",
+    "Version040/041 and old/new backend cross-pair matrix, candidate opt-out, missing projected count/nonempty groups/alias misuse.",
+    "Actual old040 distinct and blocked COUNTstar response byte snapshots.",
+    "Direct runtime 16MiB+1 valid JSON string rejected before version parsing."
+  ]
+}

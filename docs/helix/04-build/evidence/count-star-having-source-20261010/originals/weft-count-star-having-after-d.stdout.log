@@ -1,0 +1,11 @@
+
+running 6 tests
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... ok
+test complete_group_bag_guard_expression_and_bound_slot_are_retained ... ok
+test exact_old_public_response_bytes_stay_unchanged ... ok
+test exact_old_distinct_public_artifact_bytes_stay_unchanged ... ok
+test exact_threshold_boundaries_and_excluded_syntax ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s
+

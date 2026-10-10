@@ -1,0 +1,7 @@
+{
+  "binarySha256": "471fc5dedc8f8eba3156444d19cc2161fac7a06833672dd5621ed49ead8b522c",
+  "requestSha256": "b58f7790c0f71103dbfae62b3e6eb3e1835fb67c749999c7e03a96fb8fdd15ed",
+  "responseSha256": "b5953ac4f061f6eab808dc882cfe92940f1ed582d63964f2be130fc1a2aa8a74",
+  "exitCode": 0,
+  "scope": "Exact retained pre-extension public compiler, one finite original-model candidate distinct-count query; no native execution."
+}

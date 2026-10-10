@@ -1,0 +1,8 @@
+[package]
+name = "astra-count-star-independent"
+version = "0.0.0"
+edition = "2021"
+
+[dependencies]
+weft-runtime = { path = "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime", default-features = false, features = ["ashlar-databricks-paths-keys"] }
+serde_json = { version = "1", features = ["arbitrary_precision"] }

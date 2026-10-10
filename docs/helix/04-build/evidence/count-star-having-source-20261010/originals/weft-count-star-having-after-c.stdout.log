@@ -1,0 +1,22 @@
+
+running 5 tests
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+test complete_group_bag_guard_expression_and_bound_slot_are_retained ... FAILED
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... ok
+test exact_old_public_response_bytes_stay_unchanged ... ok
+test exact_threshold_boundaries_and_excluded_syntax ... ok
+
+failures:
+
+---- complete_group_bag_guard_expression_and_bound_slot_are_retained stdout ----
+
+thread 'complete_group_bag_guard_expression_and_bound_slot_are_retained' panicked at crates/weft-runtime/tests/paths_keys_having.rs:41:92:
+assertion failed: guard.contains("WHERE (__nonempty IS NOT NULL AND __n IS NULL) OR __n>9223372036854775807")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    complete_group_bag_guard_expression_and_bound_slot_are_retained
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+

@@ -1,0 +1,8 @@
+
+running 3 tests
+test old_versions_and_mismatched_realizations_remain_closed ... ok
+test original_replay_preserves_grouped_count_and_pre_having_capacity ... ok
+test exact_threshold_boundaries_and_excluded_syntax ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
