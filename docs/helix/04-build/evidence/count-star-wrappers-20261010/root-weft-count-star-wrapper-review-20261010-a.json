@@ -1,0 +1,44 @@
+{
+  "verdict": "approved-source-only",
+  "reviewer": "root, independent of wrapper author",
+  "freeze_sha256": "68a34c887f1c0c2a01f8bddbbaab341459779ba0de3bc5842fcb0408549faf68",
+  "files": [
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-python/Cargo.toml",
+      "bytes": 1026,
+      "sha256": "7e14adc0c9726c780174dc8c96301b5651ad6cc2d61e1bad7a46dba8dfaba36a"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-python/src/lib.rs",
+      "bytes": 1068,
+      "sha256": "15fc77f52ca54a37b1acdde40391a4dac1fbe7abf3868e8a03555421899095c8"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-wasm/Cargo.toml",
+      "bytes": 969,
+      "sha256": "54216221669904eb684e27be991647e9d8ad50f06b8ed7aecf44e259cd3fc5f8"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/crates/weft-wasm/src/lib.rs",
+      "bytes": 679,
+      "sha256": "3bce88847ab1bd75071694c5799b30d17a19c57e274004652f7af0533f6b5a12"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/architecture.md",
+      "bytes": 9475,
+      "sha256": "636764eb62964a392eebcdc3637f4349cd7da27e18acb64e3c4aa3a3d65ab712"
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+      "bytes": 19206,
+      "sha256": "b2d59685f8818a306543201bd738c24b9b14eaf86867728b93079870875ba57c"
+    }
+  ],
+  "checks": [
+    "Exact six hashes verified",
+    "Feature forwarding and separate cfg-gated named exports inspected",
+    "Generic public entrypoint unchanged; direct core/adapters dependency absent",
+    "Governing contract separates fresh native/browser qualification from source correspondence"
+  ],
+  "limits": "No Rust build, fresh Python import, WASM execution or package qualification proven by this source review."
+}

@@ -1,0 +1,1 @@
+{"format":"weft-wrapper-source-check/0.1","python":{"exitCode":0,"session":2162},"wasmHost":{"exitCode":0,"session":54261},"rustfmt":{"exitCode":0},"moduleBoundaries":{"exitCode":0},"scope":"Actual selected host Rust wrapper checks only; no built extension, WASM target, browser, package or native SQL qualification."}
