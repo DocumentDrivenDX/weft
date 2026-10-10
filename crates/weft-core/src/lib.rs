@@ -16,6 +16,7 @@ mod exact;
 pub mod ir;
 pub mod json;
 pub mod model;
+mod path_syntax;
 mod resolve;
 pub mod syntax;
 use error::{Diagnostic, Result};
