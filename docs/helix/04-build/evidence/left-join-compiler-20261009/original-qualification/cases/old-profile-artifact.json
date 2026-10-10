@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-CAPABILITY","message":"Selected backend profile does not admit the new comparison operator","phase":"capability","recoverability":"change-profile","severity":"error"}],"interfaceVersion":"weft-compile/0.3.0","status":"blocked"}

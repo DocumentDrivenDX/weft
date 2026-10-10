@@ -1,0 +1,37 @@
+[
+  {
+    "case": "original",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "unselected-right",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "self-join",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "inner",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "unmatched-order",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "missing-null-permission",
+    "requestValid": true,
+    "responseValid": true
+  },
+  {
+    "case": "old-profile",
+    "requestValid": true,
+    "responseValid": true
+  }
+]

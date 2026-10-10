@@ -1,0 +1,11 @@
+file:///private/tmp/ashlar-weft-left-a71/tests/compile/browser-check.mjs:54
+  responses.forEach((r,i)=>{if(r!==expected[checked+i])throw new Error('WASM/native byte mismatch: '+cases[i].id);receipts.push({id:cases[i].id,requestSha256:createHash('sha256').update(cases[i].request).digest('hex'),actualSha256:createHash('sha256').update(r).digest('hex'),expectedSha256:createHash('sha256').update(expected[checked+i]).digest('hex')})});
+                                                             ^
+
+Error: WASM/native byte mismatch: inner
+    at file:///private/tmp/ashlar-weft-left-a71/tests/compile/browser-check.mjs:54:62
+    at Array.forEach (<anonymous>)
+    at verifyBatch (file:///private/tmp/ashlar-weft-left-a71/tests/compile/browser-check.mjs:54:13)
+    at file:///private/tmp/ashlar-weft-left-a71/tests/compile/browser-check.mjs:81:2
+
+Node.js v26.10.0

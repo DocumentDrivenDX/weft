@@ -1,0 +1,120 @@
+{
+  "files": [
+    {
+      "path": "abi.log",
+      "sha256": "ba2c8fae65a8469d73cebb2024c0e8042216fd42152227640bb36a1d8c2e6c8a"
+    },
+    {
+      "path": "boundary-controls.log",
+      "sha256": "70476d498ec48a1d78cfb61f688c7c2770466580c3b97916fe92ab7e0b97ce5f"
+    },
+    {
+      "path": "bounded-main.rs",
+      "sha256": "3c4a2232a0b23af6fa4cbc611d7a9c5452a81a3e2e66c7ea7aaa83b0d39d67ab"
+    },
+    {
+      "path": "bounded.log",
+      "sha256": "b28e3c1704d13c4d491c6f7a7509da594098ab46567d2f9b3d06f91a4ce74e55"
+    },
+    {
+      "path": "build.log",
+      "sha256": "6d36a6135faafba26b3f6de40343f5fe72148534abbc13b1d75364190307dc96"
+    },
+    {
+      "path": "cases/inner-browser-input.json",
+      "sha256": "1f39b97e3db9d9ab294c46ceec8f61d37cdfddf8f514d4c243df7052ce258a88"
+    },
+    {
+      "path": "cases/inner-browser-native.json",
+      "sha256": "ee34d07bc6f69689110b74923e18daeb854e9c79d4317c3168af2366650168f1"
+    },
+    {
+      "path": "cases/missing-null-permission-browser-input.json",
+      "sha256": "fd64a91e796d7fe69bf3a90c30afcf33c0fa037877d13f5892991ba5647068a9"
+    },
+    {
+      "path": "cases/missing-null-permission-browser-native.json",
+      "sha256": "3ea7ad022c9fdd5535ed50239d7c5cf1f4b980a491983c2f9fc9d29da3e795b7"
+    },
+    {
+      "path": "cases/old-profile-browser-input.json",
+      "sha256": "64a824bd8a3ab79ef828636495549d2da9a64520f67af7c59d3519e6a0188892"
+    },
+    {
+      "path": "cases/old-profile-browser-native.json",
+      "sha256": "10ce2d20cae309656364e11fadcffbd52bf1bcf82910d6348fef2290776e6728"
+    },
+    {
+      "path": "cases/original-browser-input.json",
+      "sha256": "ab940fce8faa4c730b48636eef96cc585e907deb5a3b3c642df6f03ecf265b09"
+    },
+    {
+      "path": "cases/original-browser-native.json",
+      "sha256": "12d4db884adb0a99a7c579b82b24b8e8636cfa0b94a5fae90469fec2b63a6c77"
+    },
+    {
+      "path": "cases/self-join-browser-input.json",
+      "sha256": "5997d9e9031fa2cdb4ef1e56e082c512d4f7b6380f8df116533f4c2de8fc27e5"
+    },
+    {
+      "path": "cases/self-join-browser-native.json",
+      "sha256": "e8b468435abd3b530b1fdb4c7e75524345b3f2a3436347139a8367fb1713fb89"
+    },
+    {
+      "path": "cases/unmatched-order-browser-input.json",
+      "sha256": "7f39f4264b3c05f539175f6b6a29458eb3896e3ebd4dd8145b5016471beda491"
+    },
+    {
+      "path": "cases/unmatched-order-browser-native.json",
+      "sha256": "09d23372722d78330b1bd3b687d6ccabf1095e0c5f7fd28e54b69565b149f18d"
+    },
+    {
+      "path": "cases/unselected-right-browser-input.json",
+      "sha256": "a16281b7b731ae878099216d0f53e004190a21940e40bb51c0e5823352f62240"
+    },
+    {
+      "path": "cases/unselected-right-browser-native.json",
+      "sha256": "df2870f39f5fd4c2df46f7f369547a9a95260897f2c50d92be6c772649d298fe"
+    },
+    {
+      "path": "cases-replay.json",
+      "sha256": "c9c3492da940d3cc5fd14e48f015c5343fea4f09813a95a42b0fd0fb5b93883a"
+    },
+    {
+      "path": "collision.log",
+      "sha256": "18df3a4be839e4f50ac438531f8b1ac07090e5f37af4d5295f4375e954f16627"
+    },
+    {
+      "path": "compatibility.json",
+      "sha256": "03e79c9203599bc37ddfeaae04dd4ab4364b7bde12355cb674eda328508432a0"
+    },
+    {
+      "path": "compiler.log",
+      "sha256": "59f83dd80de5cdf7e9118db3e844064216c7a2adefce2b09021c2f9cf9faf90b"
+    },
+    {
+      "path": "conformance.yml",
+      "sha256": "f6e784d1d5b5dc717c6cbc2ecc6d135b50baa35a5bc4fb597ab4270ba8664c1f"
+    },
+    {
+      "path": "core.log",
+      "sha256": "754b914dce1f6d23f14f9a123e5dd374061fd41997fe9650bce919dff3062740"
+    },
+    {
+      "path": "integration-custody.json",
+      "sha256": "7faab500dc9ba88a5576bceb144b1dc3e9017f61183b435fca33715729e58e72"
+    },
+    {
+      "path": "reviewed-source-manifest.json",
+      "sha256": "8b60ac82f3f730471adde8f2c54a0e42c9210d19fe7ea94a4948f2020235e0dd"
+    },
+    {
+      "path": "schema.json",
+      "sha256": "1dc33a028f7c8d504721ef6f32fe2eaf84224c8ab68b1c2866fd2eb30d28a091"
+    },
+    {
+      "path": "weft-runtime",
+      "sha256": "a8bade61ddaf8062de21103e0f290d88669606c1f3466f78cb45c3a24f6942d0"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "format": "weft-source-backend-metadata/0.1",
+  "sourceCommit": "362a9c6af85996a80ed4af6f68efecfe6eb22110",
+  "sourceInventoryDecodedSha256": "db7a9f769688b34022fa2926e73be83d1aabba52b4c75c61422061da7c32a56a",
+  "sourceInventoryDecodedBytes": 366345,
+  "sourceTrackedFiles": 1588,
+  "exporterSha256": "b7c3f225d8da09dc62924be73a7492cb191b65a83777d980be2aa4b42844afde",
+  "harnessSha256": "8d9f05b0c81b8aa288236ff09b29608151c3ef0b06e8c9269663ab66622b931b",
+  "sourceInventoryCompressedSha256": "74eefe45b7c1722ed58bfc30a009e262a8e62f2b697e5e510bd30b525a4dae7f",
+  "metadataSha256": "c385c963bb3ba128a839b2d53a841b986aaab27680efca7c210144e44181a32d",
+  "metadataBytes": 17170,
+  "command": [
+    "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+    "run",
+    "-j1",
+    "--offline",
+    "--release"
+  ],
+  "toolVersions": {
+    "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)\n",
+    "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)\nbinary: rustc\ncommit-hash: 1159e78c4747b02ef996e55082b704c09b970588\ncommit-date: 2025-09-14\nhost: aarch64-apple-darwin\nrelease: 1.90.0\nLLVM version: 20.1.8\n"
+  },
+  "producerInvocation": {
+    "argv": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "scripts/distribution/describe-backend.py",
+      "--source-root",
+      "/private/tmp/ashlar-weft-distribution-source-362a-20261009-a",
+      "--source-repository",
+      "/private/tmp/ashlar-weft-distribution-d2d",
+      "--source-commit",
+      "362a9c6af85996a80ed4af6f68efecfe6eb22110",
+      "--source-inventory",
+      "docs/helix/04-build/evidence/cli-produced-corpus-20261009/source-inventory.json.gz",
+      "--toolchain-bin",
+      "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin",
+      "--cargo-home",
+      "/private/tmp/weft-toolchain/cargo",
+      "--rustup-home",
+      "/private/tmp/weft-toolchain/rustup",
+      "--target-dir",
+      "/private/tmp/ashlar-f05-compiler-rebuild-20261009/target",
+      "--output",
+      "/private/tmp/ashlar-weft-source-backend-metadata-20261009-e"
+    ],
+    "workingDirectory": "/private/tmp/ashlar-weft-distribution-d2d",
+    "sourceRoot": "/private/tmp/ashlar-weft-distribution-source-362a-20261009-a",
+    "sourceRepository": "/private/tmp/ashlar-weft-distribution-d2d",
+    "sourceInventory": "/private/tmp/ashlar-weft-distribution-d2d/docs/helix/04-build/evidence/cli-produced-corpus-20261009/source-inventory.json.gz",
+    "effectiveEnvironment": {
+      "PATH": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/usr/bin:/bin",
+      "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+      "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+      "CARGO_TARGET_DIR": "/private/tmp/ashlar-f05-compiler-rebuild-20261009/target"
+    }
+  },
+  "qualification": "Public Registry validates source-owned Candidate metadata. This is not executable self-description, index admission, native support or a hermetic build."
+}

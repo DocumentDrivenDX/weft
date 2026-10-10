@@ -1,0 +1,507 @@
+{
+  "baseCommit": "ee90571a5aa67b6d2e6069220f6e1cc0eec3822c",
+  "reviewedSourceManifestSha256": "8b60ac82f3f730471adde8f2c54a0e42c9210d19fe7ea94a4948f2020235e0dd",
+  "reviewed23SourceFiles": [
+    {
+      "path": "crates/weft-core/src/arithmetic_application_resolve.rs",
+      "sha256": "5c31cdd90a2c0f94dbde951ac30617ae34ba602544529ba338a6530cfc01c778"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_plan.rs",
+      "sha256": "41bf6deab05a49b61966b8e690002702d1c3e1018cae4083be97e90e2739a72b"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_query.rs",
+      "sha256": "eab75ff3389180cb7c432890679ae9f4210c804d6e3a6c11c4e8b5ff36239a1a"
+    },
+    {
+      "path": "crates/weft-core/src/backend.rs",
+      "sha256": "90cd4de56c7a31b626a0097700f4aa44f31c1c3edbe5c913427a884176ffaf4c"
+    },
+    {
+      "path": "crates/weft-core/src/backend_emission.rs",
+      "sha256": "6fbe584a4de038a5278b7d40a6c0f4adb2161ee2cc08da8c5faea15796998b32"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "fb8270f97b51377fe0edab09d5f6daddc5078bd18ceb76cdb0575ecbdb969c38"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/application.rs",
+      "sha256": "f6f6269996c49c3f7acb4b9ed13c0e80e25d6c24f0e163eff2cef4339cd3f660"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
+      "sha256": "5945ec28f7c7653e0068ebe6bac7dc02900063b43c0676bc296983dfe45c245b"
+    },
+    {
+      "path": "crates/weft-databricks/src/left_join.rs",
+      "sha256": "f89a0e9358ead34344ed88cc957932f1a84bbdcf6217463ff8d8d4158a2218ff"
+    },
+    {
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "3e03979bc64203ccd5033aa1a94b84b2120cca2f9ba6cda4d9ba10fa6347a2df"
+    },
+    {
+      "path": "crates/weft-postgresql/src/candidate/application.rs",
+      "sha256": "45b7f9187e47dcf0f3ff84deee72323a0d473453ba357e6eba09e0f353ca4cf6"
+    },
+    {
+      "path": "crates/weft-postgresql/src/result_definition.rs",
+      "sha256": "53c8102b2c916cecaa8f7e1cdc65c52cf95585f5f87be91d89fa60eb0f979155"
+    },
+    {
+      "path": "crates/weft-python/Cargo.toml",
+      "sha256": "50990f42c58e569e65f2876c4e5c0e27b6b536ba6d0ddda35ee2e7bf9b60ad6d"
+    },
+    {
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "aee8351e7c8eaab0646b5dfb0117de899ce534e6175713aa81496c861b579d57"
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "a477a5e6226d30902e222c0094034f1b28097e6357dee6d9dc4be5b43bedb1c9"
+    },
+    {
+      "path": "crates/weft-wasm/Cargo.toml",
+      "sha256": "7e55a908cf04b8fb92fd0cc02e3b468ffbab05b6356de4c0675d7e14205fd234"
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "55b000b8d835561b865c8bb88c58f56aafac75378de3b6f349d53013d44323fa"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/left-join-v0.3.md",
+      "sha256": "890f5c4e18c23150b75140dfae48ad14490362a1be37770543f24a5cb0d9f617"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297"
+    },
+    {
+      "path": "tests/ashlar-databricks/compiler.rs",
+      "sha256": "7d1bbcc272a49fe2ecce319b8d5fbe97c07597d6a66f28902988b566c24f517a"
+    },
+    {
+      "path": "tests/ashlar-databricks/fixtures/original-archaeology-left-request.json",
+      "sha256": "ab940fce8faa4c730b48636eef96cc585e907deb5a3b3c642df6f03ecf265b09"
+    },
+    {
+      "path": "tests/register-backend/pipeline.rs",
+      "sha256": "0d865509936981fe50a12e108caadbf8620acf8c56220f4ff15fde0269cee20c"
+    }
+  ],
+  "compiledRustFiles": [
+    {
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "fee97599e261ef413b9850a03f45130308e87eeaa7b73ea393f4f3b359fbb549"
+    },
+    {
+      "path": "crates/weft-core/src/application_ir.rs",
+      "sha256": "6653d07a2eeeb632cbbff53419590f1a950240fa8934e3ffd52a1d9eae232a1c"
+    },
+    {
+      "path": "crates/weft-core/src/application_model.rs",
+      "sha256": "d16308110339ea6eede58470c7ea3d58c465668100c8eb7d25cf997ddfdae67d"
+    },
+    {
+      "path": "crates/weft-core/src/application_resolve.rs",
+      "sha256": "5c272ef21eadf10a2192095e03b82442b74deb81935e4a016f9a632043c48be1"
+    },
+    {
+      "path": "crates/weft-core/src/application_scope.rs",
+      "sha256": "89fbb5d278b0e32a97ea2199d4a6b281a87df7cfb7c1280447dac3c086953e65"
+    },
+    {
+      "path": "crates/weft-core/src/application_syntax.rs",
+      "sha256": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_application_resolve.rs",
+      "sha256": "5c31cdd90a2c0f94dbde951ac30617ae34ba602544529ba338a6530cfc01c778"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_plan.rs",
+      "sha256": "41bf6deab05a49b61966b8e690002702d1c3e1018cae4083be97e90e2739a72b"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_query.rs",
+      "sha256": "eab75ff3389180cb7c432890679ae9f4210c804d6e3a6c11c4e8b5ff36239a1a"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_resolve.rs",
+      "sha256": "8d4f6da3fc807935b52e2415604583af4d8f53bc0ee337775a5b28c1f4986440"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_syntax.rs",
+      "sha256": "24620970982bc738e4abf01093771707adf35eaadc3320852210c7db2661577d"
+    },
+    {
+      "path": "crates/weft-core/src/backend.rs",
+      "sha256": "90cd4de56c7a31b626a0097700f4aa44f31c1c3edbe5c913427a884176ffaf4c"
+    },
+    {
+      "path": "crates/weft-core/src/backend_emission.rs",
+      "sha256": "6fbe584a4de038a5278b7d40a6c0f4adb2161ee2cc08da8c5faea15796998b32"
+    },
+    {
+      "path": "crates/weft-core/src/bin/frontend.rs",
+      "sha256": "95469b6c18c6e50832f5beb8038fce512e58415676a84278630fcb6494392050"
+    },
+    {
+      "path": "crates/weft-core/src/compile.rs",
+      "sha256": "5975e7c955d9634a1404819cc381a6b1e3f30f88c30a4b8a309f1ef70a6d1882"
+    },
+    {
+      "path": "crates/weft-core/src/error.rs",
+      "sha256": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa"
+    },
+    {
+      "path": "crates/weft-core/src/exact.rs",
+      "sha256": "315ada2fb97f307b506b09a8a9f02cad4383597d1ab9b1c0200c8d3c3f8e7780"
+    },
+    {
+      "path": "crates/weft-core/src/ir.rs",
+      "sha256": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f"
+    },
+    {
+      "path": "crates/weft-core/src/json.rs",
+      "sha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4"
+    },
+    {
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "db5d67fc621e7cf1d2a401b2ab44c9ba1b082068b133ffe8b7410c82e7570782"
+    },
+    {
+      "path": "crates/weft-core/src/model.rs",
+      "sha256": "bd461122697e480dc87931bc0bf39fae46c28b10e457f03e4ec4861bf8b09cf0"
+    },
+    {
+      "path": "crates/weft-core/src/resolve.rs",
+      "sha256": "db56e29f39d9de3a682fbb917e11cf2144fa83ad48b5cc3fcf539b60b6e7fa4c"
+    },
+    {
+      "path": "crates/weft-core/src/syntax.rs",
+      "sha256": "092c75a9012659bdedba98af5ba4c48fe1299266a294156ef44ac6db570be95e"
+    },
+    {
+      "path": "crates/weft-core/tests/frontend.rs",
+      "sha256": "4e24cdff14d6253447fce48b7b8545c2818db4e5d1219e7d841b2eb90b722bf5"
+    },
+    {
+      "path": "crates/weft-core/tests/mathematical08.rs",
+      "sha256": "c95559d7ef5f8f3ffe817d19b7b47aebfe587bdf74f5a79adac60f5400fffc9d"
+    },
+    {
+      "path": "crates/weft-core/tests/original08.rs",
+      "sha256": "f948c58d3731cecf12a4a3cdc7a41628176fb07cef759afc90b32fdaa063e556"
+    },
+    {
+      "path": "crates/weft-databricks/Cargo.toml",
+      "sha256": "03e6fb9fb2b7132c8cc9dd2c110a4544978a856dc41eca1fd91648fefa4ceed8"
+    },
+    {
+      "path": "crates/weft-databricks/examples/compile.rs",
+      "sha256": "40c0d585cb90792fd6f0d96bf3e7cdd389279515ea4e3ed0e8aef16ae8f74cdf"
+    },
+    {
+      "path": "crates/weft-databricks/src/arithmetic.rs",
+      "sha256": "de4f8539e782b50a506cfdf50be3ad32ec54f9f522fc9e77556fbc94929b2ed0"
+    },
+    {
+      "path": "crates/weft-databricks/src/binding.rs",
+      "sha256": "0d4ca3b8fd15973309be6b5b04949956dd29fdd49d15282569a52717904fdd76"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/application.rs",
+      "sha256": "f6f6269996c49c3f7acb4b9ed13c0e80e25d6c24f0e163eff2cef4339cd3f660"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
+      "sha256": "5945ec28f7c7653e0068ebe6bac7dc02900063b43c0676bc296983dfe45c245b"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/compound.rs",
+      "sha256": "2fb9b3b7a6cfadb77a5f50ff89a9979b0ee8606b52d4127251665952bc10d44e"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/relationships.rs",
+      "sha256": "86248fe44bb5ecef67bf1f2fdb006329f14067f20baf10c8286c516e7564cc31"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "fb8270f97b51377fe0edab09d5f6daddc5078bd18ceb76cdb0575ecbdb969c38"
+    },
+    {
+      "path": "crates/weft-databricks/src/count_distinct.rs",
+      "sha256": "4d8e8dd391f7f2670705fdd611204b4c19942a237996d4f2c59ff6be72bf2548"
+    },
+    {
+      "path": "crates/weft-databricks/src/count_having.rs",
+      "sha256": "e835313d8ae870e7b19dac8086f8f888e0a0d99c79e33766a1ff495fea10bd17"
+    },
+    {
+      "path": "crates/weft-databricks/src/left_join.rs",
+      "sha256": "f89a0e9358ead34344ed88cc957932f1a84bbdcf6217463ff8d8d4158a2218ff"
+    },
+    {
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "3e03979bc64203ccd5033aa1a94b84b2120cca2f9ba6cda4d9ba10fa6347a2df"
+    },
+    {
+      "path": "crates/weft-databricks/src/mathematical_integer.rs",
+      "sha256": "8bafcb244b3685f84b7c9c146912ebf21dd93bdbf0b44351c6141a0e8866b546"
+    },
+    {
+      "path": "crates/weft-databricks/src/native_profile.rs",
+      "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+    },
+    {
+      "path": "crates/weft-databricks/src/qualified_profile.rs",
+      "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+    },
+    {
+      "path": "crates/weft-postgresql/Cargo.toml",
+      "sha256": "cabbe952912a16ca40695f46425a41bac13a1a4d327ede9ed4303e2d7537178c"
+    },
+    {
+      "path": "crates/weft-postgresql/examples/compile_probe.rs",
+      "sha256": "5b2defabf62ea5059c371e2176aecb8abb85f7ad909aa6c46c3298af7d126cb5"
+    },
+    {
+      "path": "crates/weft-postgresql/examples/home_probe.rs",
+      "sha256": "d9cab573615454afa287d3653181836a2a7e74a17286c600640aa1fea3c8c221"
+    },
+    {
+      "path": "crates/weft-postgresql/examples/parameter_probe.rs",
+      "sha256": "e2dc94738d4dfa78cc6de859ee9539863e6adb066ca99de9ab6f5cc9a1abac5e"
+    },
+    {
+      "path": "crates/weft-postgresql/src/access.rs",
+      "sha256": "99824efbaf7e0878f8a38f7df673560edf281d603f4ddb17fb02ef1c28a1f822"
+    },
+    {
+      "path": "crates/weft-postgresql/src/binding.rs",
+      "sha256": "d5ac1297816451f484f5823ef68f0bb5da0e62cd4e0f0005907fbbc7075810bf"
+    },
+    {
+      "path": "crates/weft-postgresql/src/candidate/application.rs",
+      "sha256": "45b7f9187e47dcf0f3ff84deee72323a0d473453ba357e6eba09e0f353ca4cf6"
+    },
+    {
+      "path": "crates/weft-postgresql/src/candidate/relationships.rs",
+      "sha256": "bd4ce13693e7a3a5f81e3b83fa37a9300f92d437fd3cf947f081baacd9163b10"
+    },
+    {
+      "path": "crates/weft-postgresql/src/candidate.rs",
+      "sha256": "2102791e1e76ebcc99d2fac6392ec9d9172bdab6f0665b328ed45c6cf77b2687"
+    },
+    {
+      "path": "crates/weft-postgresql/src/collection.rs",
+      "sha256": "a7d15d50dd98094cddcde5292c69afda0266bfba30fe4c3a80225e076bf0bf6b"
+    },
+    {
+      "path": "crates/weft-postgresql/src/comparator_requirements.rs",
+      "sha256": "52c6f81b746fda493a03ab0a2367a4470389676c46d3092f779bd93198beac70"
+    },
+    {
+      "path": "crates/weft-postgresql/src/conformance_original.rs",
+      "sha256": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63"
+    },
+    {
+      "path": "crates/weft-postgresql/src/expression.rs",
+      "sha256": "b2867d312f9aafc1651a709ceea0e215af6206b6cb8ebbba74472685e8fdacd5"
+    },
+    {
+      "path": "crates/weft-postgresql/src/json_codec.rs",
+      "sha256": "04771c4bd7b750e26d4f3e8368b8379904eeec58ba3bc84de4fe3ae08ae9cbb8"
+    },
+    {
+      "path": "crates/weft-postgresql/src/leaf_codec_definition.rs",
+      "sha256": "1502bd78e6f368e94b5ce8ed8fe379c46a67aeaee8a10aba0de619ac21fe8d6a"
+    },
+    {
+      "path": "crates/weft-postgresql/src/lib.rs",
+      "sha256": "07ece0a57e10ccbf6279e88f90bc9a4ac07ec56c1605d96d8335db407a669b8b"
+    },
+    {
+      "path": "crates/weft-postgresql/src/native_comparator_definition.rs",
+      "sha256": "a4f19e1041ba29416aab9764da7b61bd4f9a9c779e4a282efdf697a5e45398fb"
+    },
+    {
+      "path": "crates/weft-postgresql/src/native_profile.rs",
+      "sha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
+    },
+    {
+      "path": "crates/weft-postgresql/src/numeric_correspondence.rs",
+      "sha256": "45adadb6ab68f8c0cff909285f7998fa76c6373332a0395d6208cbd38a5d4440"
+    },
+    {
+      "path": "crates/weft-postgresql/src/original_admission.rs",
+      "sha256": "adb96451b616ad9b366386cd40eed41fb80160f743a2b78529bae54f868dba24"
+    },
+    {
+      "path": "crates/weft-postgresql/src/original_backend.rs",
+      "sha256": "35d86ce923afc039d6524c7dd41b58ea37d029365e13fdc8a88352572f2cfdee"
+    },
+    {
+      "path": "crates/weft-postgresql/src/presence_definition.rs",
+      "sha256": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75"
+    },
+    {
+      "path": "crates/weft-postgresql/src/property_definition.rs",
+      "sha256": "02155e22cb3006f7c8295da59816489ba11f0f8c2a26308d3b73cef6850bd788"
+    },
+    {
+      "path": "crates/weft-postgresql/src/qualified_profile.rs",
+      "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+    },
+    {
+      "path": "crates/weft-postgresql/src/read_context_definition.rs",
+      "sha256": "8dbabd1eed12da7add0ebb039c806512f3ded3bd8eba3ea7ba3ede5360b57e70"
+    },
+    {
+      "path": "crates/weft-postgresql/src/record_definition.rs",
+      "sha256": "c15db2fedebf28b3d7a34b9f02aa09a1ceefde0bdc24ae374edd88bd17f5b06a"
+    },
+    {
+      "path": "crates/weft-postgresql/src/recursive_observation.rs",
+      "sha256": "335d00b42f2f3296704ea8c78494dc890f244f9c9e03d629813c7e5142adff50"
+    },
+    {
+      "path": "crates/weft-postgresql/src/registered_access.rs",
+      "sha256": "784f82e5a6bf3a970e4797e2842b45ac12945da4dc105d6b120ba44f7dea8845"
+    },
+    {
+      "path": "crates/weft-postgresql/src/relational.rs",
+      "sha256": "b0e7f5851317b03a678f0ce4eaeda6d2b1030a3ec803ebf6ca6a14dc9883b022"
+    },
+    {
+      "path": "crates/weft-postgresql/src/relationship_definition.rs",
+      "sha256": "ce1c9cf445afa105fcdb87260053bdf89bea3091054efe6fc100d5e3430652ca"
+    },
+    {
+      "path": "crates/weft-postgresql/src/relationship_lowering.rs",
+      "sha256": "713547f9e491542b912b6544176c05bb532fa8dffc0a821c004075abf1a58295"
+    },
+    {
+      "path": "crates/weft-postgresql/src/result_definition.rs",
+      "sha256": "53c8102b2c916cecaa8f7e1cdc65c52cf95585f5f87be91d89fa60eb0f979155"
+    },
+    {
+      "path": "crates/weft-postgresql/src/row_codec.rs",
+      "sha256": "26553ad206c4813f309c3ececcae73fe861638967f1b41d80229d9d67ee34931"
+    },
+    {
+      "path": "crates/weft-postgresql/src/row_custody.rs",
+      "sha256": "172cb81bd5c303ffdcd0cdc4825759bc578d1129f88d2a83b79e3ea6eea95d7e"
+    },
+    {
+      "path": "crates/weft-postgresql/src/row_join_definition.rs",
+      "sha256": "83c1d8747213e87badc4cef5209c636347eaa6acc14becab5fc4e509e83dd65e"
+    },
+    {
+      "path": "crates/weft-postgresql/src/row_tree_mapping.rs",
+      "sha256": "5e33720066bdda4612d73143a5e143b5aa3d86a6cbbab12ded84f0b9a1bb9b8c"
+    },
+    {
+      "path": "crates/weft-postgresql/src/row_value_traversal.rs",
+      "sha256": "578bb1774307b6e193f8e5c7eb7269d5ffd115666869e686278f8c500611ca3f"
+    },
+    {
+      "path": "crates/weft-postgresql/src/select_definition.rs",
+      "sha256": "978baab8919bdca2f90c97add4e7bea0cff158cabef81b17d04bec18b3307346"
+    },
+    {
+      "path": "crates/weft-postgresql/src/structured.rs",
+      "sha256": "a12a4794a4ce81c2fc1c8dd396a2e366615bcbadb3da6cb425f8dd33404bdce6"
+    },
+    {
+      "path": "crates/weft-postgresql/src/tree.rs",
+      "sha256": "bf11d86110799a9e0c548dc1b626e21a104ab0d249971cb6cb2566b9e880ad1c"
+    },
+    {
+      "path": "crates/weft-postgresql/src/value_definition.rs",
+      "sha256": "e2f9b3671f6659aecef602e7b7c50b2d3f743d45e60ca5d2b42d912904d042e9"
+    },
+    {
+      "path": "crates/weft-postgresql/src/value_traversal.rs",
+      "sha256": "7799fcadbabbcd8c9aaa9883ce2bcc678a987622dc844eb9bd652570bbfc6165"
+    },
+    {
+      "path": "crates/weft-python/Cargo.toml",
+      "sha256": "50990f42c58e569e65f2876c4e5c0e27b6b536ba6d0ddda35ee2e7bf9b60ad6d"
+    },
+    {
+      "path": "crates/weft-python/pyproject.toml",
+      "sha256": "e61c33fdc35b192e848111dc810e5aae8e053d43f14b1f10ea8a9bdeddc86c7a"
+    },
+    {
+      "path": "crates/weft-python/src/lib.rs",
+      "sha256": "4a348481922988a364ab280b6f3fb4fae1a9940afa447e4282f4a704b6905366"
+    },
+    {
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "aee8351e7c8eaab0646b5dfb0117de899ce534e6175713aa81496c861b579d57"
+    },
+    {
+      "path": "crates/weft-runtime/examples/compile_initial.rs",
+      "sha256": "4f28351bd1e22c01294ba8f0d2ee429f302664df729131d294b1d76c3c861e04"
+    },
+    {
+      "path": "crates/weft-runtime/examples/compile_native_review.rs",
+      "sha256": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d"
+    },
+    {
+      "path": "crates/weft-runtime/examples/compile_public_batch.rs",
+      "sha256": "3a824696d4ce43c29b0ce12c9d60d22824e5b9af83d195a26b8a17730e4a1280"
+    },
+    {
+      "path": "crates/weft-runtime/examples/compile_qualified.rs",
+      "sha256": "5fe9736c413ed246e17b7516fadb87046cd7b1d9bd535a64b306cedf22c4ea49"
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "a477a5e6226d30902e222c0094034f1b28097e6357dee6d9dc4be5b43bedb1c9"
+    },
+    {
+      "path": "crates/weft-runtime/src/main.rs",
+      "sha256": "3c4a2232a0b23af6fa4cbc611d7a9c5452a81a3e2e66c7ea7aaa83b0d39d67ab"
+    },
+    {
+      "path": "crates/weft-wasm/Cargo.toml",
+      "sha256": "7e55a908cf04b8fb92fd0cc02e3b468ffbab05b6356de4c0675d7e14205fd234"
+    },
+    {
+      "path": "crates/weft-wasm/src/lib.rs",
+      "sha256": "0afb607c939e226ab1f55494ff68e6e58ca0f1c806a3095a03ac527ab7855ee3"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5"
+    },
+    {
+      "path": "Cargo.lock",
+      "sha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e"
+    },
+    {
+      "path": "rust-toolchain.toml",
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    {
+      "path": "crates/weft-runtime/src/main.rs",
+      "sha256": "3c4a2232a0b23af6fa4cbc611d7a9c5452a81a3e2e66c7ea7aaa83b0d39d67ab"
+    },
+    {
+      "path": ".github/workflows/conformance.yml",
+      "sha256": "f6e784d1d5b5dc717c6cbc2ecc6d135b50baa35a5bc4fb597ab4270ba8664c1f"
+    }
+  ],
+  "feature": "ashlar-databricks-left-join",
+  "cliSha256": "a8bade61ddaf8062de21103e0f290d88669606c1f3466f78cb45c3a24f6942d0",
+  "scope": "New-base native compiler realization and compatibility; exact source23 unchanged, bounded CLI retained; no native query qualification"
+}

@@ -1,0 +1,160 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:515:8
+    |
+515 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: `weft-core` (lib) generated 4 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+   Compiling weft-databricks v0.1.0 (/private/tmp/ashlar-weft-left-a71/crates/weft-databricks)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.71s
+     Running ../../tests/ashlar-databricks/compiler.rs (/private/tmp/ashlar-weft-left-build/debug/deps/ashlar_compiler-8e05be2b440dacef)
+
+running 53 tests
+test candidate_presence_declaration_includes_compound_availability ... ok
+test bare_field_ambiguity_precedes_unsupported_matching_member_meaning ... ok
+test application_page_retains_authored_key_and_named_cursor ... ok
+test bare_quoted_fields_preserve_case_punctuation_and_source_identity ... ok
+test count_having_wrong_binding_profile_retains_public_diagnostic_phase ... ok
+test bare_field_extension_does_not_expand_relationship_name_positions ... ok
+test arithmetic_cancellation_and_where_conjuncts_keep_all_intermediate_checks ... ok
+test count_having_numeric_literal_uses_existing_expression_byte_budget ... ok
+test arithmetic_outputs_retain_all_field_identities_across_joined_scans ... ok
+test distinct03_leaves_older_language_profiles_refusing_before_binding ... ok
+test arithmetic_capacity_refuses_without_partial_artifacts ... ok
+test count_having_group_order_uses_exact_projected_carrier ... ok
+test different_fields_with_same_authored_name_keep_distinct_original_identities ... ok
+test count_distinct_and_in_old_profiles_and_resource_budget_refuse ... ok
+test global_sum_retains_nullable_exact_type_and_empty_input_branch ... ok
+test arithmetic_coefficients_preserve_tokens_domains_and_every_guard_phase ... ok
+test count_having_order_retains_quoted_alias_and_multiple_scan_identity ... ok
+test application_entity_and_count_keep_logical_metadata ... ok
+test missing_mapping_and_candidate_optout_return_no_sql ... ok
+test compound_encoding_is_explicit_and_selected_dependency_meaning_refuses ... ok
+test distinct_count_target_is_explicit_and_old_arithmetic_refuses_new_capabilities ... ok
+test distinct_order_uses_visible_physical_projection_not_hidden_input_field ... ok
+test nullable03_boolean_and_decimal_outputs_remain_tagged_ideal_domains ... ok
+test nullable03_preserves_original_availability_and_tagged_exact_outputs ... ok
+test nullable03_explicit_selected_home_permission_is_closed_and_old_binding_refuses ... ok
+test native_scan_names_preserve_distinct_case_and_unicode_logical_occurrences ... ok
+test new_comparison_capacity_and_families_refuse_atomically ... ok
+test new_boolean_operators_do_not_widen_existing_ordering_or_parameter_domains ... ok
+test optional_count_preserves_descriptor_and_null_excluded_capacity ... ok
+test count_distinct_string_and_literal_in_are_exact_and_guarded ... ok
+test distinct03_exact_required_string_tuple_and_closed_ir ... ok
+test compound_generated_cte_names_do_not_collide_with_logical_scan_aliases ... ok
+test malformed_binding_refusals_use_public_phase_in_all_compile_versions ... ok
+test nullable03_string_join_retains_null_nonmatch_and_optional_arithmetic_refusal ... ok
+test optional_scalar_preserves_presence_envelope_in_both_owner_homes ... ok
+test arithmetic_bare_fields_resolve_original_members_without_expanding_old_profiles ... ok
+test authored_relationships_compile_forward_inverse_and_existential_without_deduplication ... ok
+test optional_count_and_having_refuse_old_profiles_and_unknown_forms ... ok
+test sales_compiles_with_pins_exact_carriers_and_prequery_integrity ... ok
+test selected_page_key_extension_meaning_is_not_silently_ignored ... ok
+test unicode_quotes_literal_and_boolean_are_bound_in_typed_slots ... ok
+test structured_json_member_names_require_unique_non_nul_meaning ... ok
+test positioned_field_outputs_preserve_duplicate_labels_scan_lineage_and_unique_carriers ... ok
+test projected_count_having_exact_threshold_and_pre_having_guard ... ok
+test optional_count_and_having_gate_before_any_binding_callback ... ok
+test relationship_binding_refuses_missing_changed_or_unknown_authored_meaning ... ok
+test new_scalar_comparisons_preserve_exact_tokens_collation_and_candidates ... ok
+test repeated_implicit_complex_members_refuse_before_backend_admission ... ok
+test recursive_compounds_have_explicit_encoding_and_value_metadata ... ok
+test new_comparison_capabilities_refuse_before_binding_callback ... ok
+test left03_keeps_old_language_refusals_and_inner_wire_omission ... ok
+test original_left_query_retains_required_descriptors_and_full_match_provenance ... ok
+test left_query_capability_encoding_and_subset_refuse_explicitly ... ok
+
+test result: ok. 53 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.93s
+

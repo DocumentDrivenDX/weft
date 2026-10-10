@@ -1,0 +1,99 @@
+{
+  "baseCommit": "a71cf7cbb9de5387d3763cfd781419440a11adf2",
+  "feature": "ashlar-databricks-left-join",
+  "sourceFiles": [
+    {
+      "path": "crates/weft-core/src/arithmetic_application_resolve.rs",
+      "sha256": "5c31cdd90a2c0f94dbde951ac30617ae34ba602544529ba338a6530cfc01c778"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_plan.rs",
+      "sha256": "41bf6deab05a49b61966b8e690002702d1c3e1018cae4083be97e90e2739a72b"
+    },
+    {
+      "path": "crates/weft-core/src/arithmetic_query.rs",
+      "sha256": "eab75ff3389180cb7c432890679ae9f4210c804d6e3a6c11c4e8b5ff36239a1a"
+    },
+    {
+      "path": "crates/weft-core/src/backend.rs",
+      "sha256": "90cd4de56c7a31b626a0097700f4aa44f31c1c3edbe5c913427a884176ffaf4c"
+    },
+    {
+      "path": "crates/weft-core/src/backend_emission.rs",
+      "sha256": "6fbe584a4de038a5278b7d40a6c0f4adb2161ee2cc08da8c5faea15796998b32"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "fb8270f97b51377fe0edab09d5f6daddc5078bd18ceb76cdb0575ecbdb969c38"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/application.rs",
+      "sha256": "f6f6269996c49c3f7acb4b9ed13c0e80e25d6c24f0e163eff2cef4339cd3f660"
+    },
+    {
+      "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
+      "sha256": "5945ec28f7c7653e0068ebe6bac7dc02900063b43c0676bc296983dfe45c245b"
+    },
+    {
+      "path": "crates/weft-databricks/src/left_join.rs",
+      "sha256": "f89a0e9358ead34344ed88cc957932f1a84bbdcf6217463ff8d8d4158a2218ff"
+    },
+    {
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "3e03979bc64203ccd5033aa1a94b84b2120cca2f9ba6cda4d9ba10fa6347a2df"
+    },
+    {
+      "path": "crates/weft-postgresql/src/candidate/application.rs",
+      "sha256": "45b7f9187e47dcf0f3ff84deee72323a0d473453ba357e6eba09e0f353ca4cf6"
+    },
+    {
+      "path": "crates/weft-postgresql/src/result_definition.rs",
+      "sha256": "53c8102b2c916cecaa8f7e1cdc65c52cf95585f5f87be91d89fa60eb0f979155"
+    },
+    {
+      "path": "crates/weft-python/Cargo.toml",
+      "sha256": "50990f42c58e569e65f2876c4e5c0e27b6b536ba6d0ddda35ee2e7bf9b60ad6d"
+    },
+    {
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "aee8351e7c8eaab0646b5dfb0117de899ce534e6175713aa81496c861b579d57"
+    },
+    {
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "a477a5e6226d30902e222c0094034f1b28097e6357dee6d9dc4be5b43bedb1c9"
+    },
+    {
+      "path": "crates/weft-wasm/Cargo.toml",
+      "sha256": "7e55a908cf04b8fb92fd0cc02e3b468ffbab05b6356de4c0675d7e14205fd234"
+    },
+    {
+      "path": "docs/helix/02-design/architecture.md",
+      "sha256": "55b000b8d835561b865c8bb88c58f56aafac75378de3b6f349d53013d44323fa"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/left-join-v0.3.md",
+      "sha256": "890f5c4e18c23150b75140dfae48ad14490362a1be37770543f24a5cb0d9f617"
+    },
+    {
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297"
+    },
+    {
+      "path": "tests/ashlar-databricks/compiler.rs",
+      "sha256": "7d1bbcc272a49fe2ecce319b8d5fbe97c07597d6a66f28902988b566c24f517a"
+    },
+    {
+      "path": "tests/ashlar-databricks/fixtures/original-archaeology-left-request.json",
+      "sha256": "ab940fce8faa4c730b48636eef96cc585e907deb5a3b3c642df6f03ecf265b09"
+    },
+    {
+      "path": "tests/register-backend/pipeline.rs",
+      "sha256": "0d865509936981fe50a12e108caadbf8620acf8c56220f4ff15fde0269cee20c"
+    }
+  ],
+  "scope": "Compiler source engineering freeze; native qualification and independent final review pending"
+}

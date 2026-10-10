@@ -1,0 +1,122 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/ashlar-weft-left-a71/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: `weft-core` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-core --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.90s
+     Running unittests src/lib.rs (/private/tmp/ashlar-weft-left-build/debug/deps/weft_core-ab4f3977477b01ad)
+
+running 32 tests
+test arithmetic_syntax::tests::nesting_and_tree_depth_boundaries ... ok
+test arithmetic_query::tests::commerce_arithmetic_in_projection_filter_and_join ... ok
+test arithmetic_syntax::tests::common_budget_and_literal_boundaries ... ok
+test arithmetic_query::tests::operator_free_comparisons_preserve_existing_semantics ... ok
+test arithmetic_syntax::tests::precedence_association_tokens_and_spans ... ok
+test arithmetic_query::tests::aggregate_and_order_positions_remain_field_only ... ok
+test arithmetic_resolve::tests::invalid_and_unavailable_numeric_meaning_refuses ... ok
+test arithmetic_resolve::tests::mathematical_integer_and_original_field_facets ... ok
+test arithmetic_syntax::tests::unsupported_constructs_and_old_profile_isolation ... ok
+test arithmetic_resolve::tests::exact_scale_and_token_retention ... ok
+test backend_emission::tests::exact_numeric_slots_refuse_invalid_domains_and_lexemes ... ok
+test backend_emission::tests::numeric_results_require_exact_text_decoders ... ok
+test arithmetic_query::tests::new_comparison_tokens_are_closed_and_old_tuples_remain ... ok
+test backend::tests::obligations_are_retained_sorted_and_conflicts_refuse ... ok
+test backend_emission::tests::parameter_domain_guards_have_exact_diagnostics ... ok
+test backend_emission::tests::scalar_carriers_preserve_family_nullability_and_facets ... ok
+test arithmetic_query::tests::one_budget_for_entire_query_and_old_profile_isolation ... ok
+test backend_emission::tests::initial_plan_requires_projection_root_before_output_validation ... ok
+test arithmetic_application_resolve::tests::count_distinct_and_string_in_closed_ir_refuse_domain_and_slot_mutations ... ok
+test backend_emission::tests::related_result_metadata_preserves_authored_key_and_bound ... ok
+test backend::tests::arithmetic_selection_retains_original_operands_and_versions ... ok
+test backend_emission::tests::positioned_metadata_refuses_incomplete_colliding_or_reordered_cells ... ok
+test backend_emission::tests::outer_join_metadata_binds_scan_record_and_unprojected_match_guards ... ok
+test backend_emission::tests::presence_and_native_null_require_qualified_descriptors ... ok
+test arithmetic_application_resolve::tests::arithmetic_join_projection_and_exact_domain ... ok
+test backend_emission::tests::arithmetic_output_retains_exact_derived_domains ... ok
+test resolve::tests::typed_ast_resolver_literal_boundary_and_empty_join_refusal ... ok
+test arithmetic_application_resolve::tests::null03_closed_ir_preserves_nonnullable_ideal_and_boolean_operator ... ok
+test arithmetic_application_resolve::tests::distinct03_closed_member_is_true_only_and_absent_on_old_plans ... ok
+test arithmetic_application_resolve::tests::having_count_closed_schema_and_original_spans ... ok
+test arithmetic_application_resolve::tests::grouped_leaves_and_parameter_occurrences ... ok
+test arithmetic_application_resolve::tests::additive_comparisons_retain_scope_constraints_and_closed_ir ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.22s
+

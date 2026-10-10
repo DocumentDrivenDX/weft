@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-BINDING","message":"Selected optional Field requires explicit original native-null property encoding","phase":"lower","recoverability":"correct-input","severity":"error"}],"interfaceVersion":"weft-compile/0.3.0","status":"blocked"}

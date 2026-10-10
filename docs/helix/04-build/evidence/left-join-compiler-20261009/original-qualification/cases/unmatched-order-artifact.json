@@ -1,0 +1,1 @@
+{"diagnostics":[{"code":"WFT-CAPABILITY","message":"LEFT profile ordering requires required original base-scan String Fields","phase":"lower","recoverability":"change-profile","severity":"error"}],"interfaceVersion":"weft-compile/0.3.0","status":"blocked"}

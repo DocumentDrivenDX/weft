@@ -1,0 +1,43 @@
+{
+  "feature": "ashlar-databricks-left-join",
+  "rust": "1.90.0",
+  "wasmBindgen": "0.2.105",
+  "realizations": [
+    {
+      "path": "/private/tmp/ashlar-weft-left-source-20261009-a/weft-runtime",
+      "sha256": "dbecf2ea33094807ee17473c03829df92e759c3328fde00e53570dabf218ccb7",
+      "bytes": 13337808
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-wheel/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "e4d329d20fd058603785dabf82e7ceb9a69fec9f7467c6b5feb60520118a6313",
+      "bytes": 3537495
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-web/weft_bg.wasm",
+      "sha256": "fadd7c59c724c14e79f86d68275eeee11c2974e67ecc3869f8501ce10e38a007",
+      "bytes": 11700507
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-web/weft.js",
+      "sha256": "bb9e020b1f15c8e24e78fa8f0f278d315a0b094cedcc7c8fba14d5ac077c4f94",
+      "bytes": 6554
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-web/wrapper.js",
+      "sha256": "a1ab5c00b11d7b615330b29c567f05ce5a2666ec2c542935cce0b08cba48a6db",
+      "bytes": 1218
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-a71/packages/weft-browser/src/index.ts",
+      "sha256": "ff575c5e5866cb33cc3ec949bf25f3d94a3414a486a8507173902ac852044a11",
+      "bytes": 1554
+    },
+    {
+      "path": "/private/tmp/ashlar-weft-left-a71/tests/compile/browser-check.mjs",
+      "sha256": "147ef519bb36a52ebe2803362dd3bfde9a7ed99185cda5e872d6550154fe59c3",
+      "bytes": 7819
+    }
+  ],
+  "qualification": "Compiler source/schema/transports only; no native LEFT query claim"
+}

@@ -1,0 +1,249 @@
+   Compiling unicode-ident v1.0.26
+   Compiling once_cell v1.21.4
+   Compiling proc-macro2 v1.0.107
+   Compiling target-lexicon v0.13.5
+   Compiling wasm-bindgen-shared v0.2.105
+   Compiling rustversion v1.0.23
+   Compiling bumpalo v3.20.3
+   Compiling log v0.4.34
+   Compiling base64 v0.22.1
+   Compiling memoffset v0.9.1
+   Compiling unindent v0.2.4
+   Compiling indoc v2.0.7
+   Compiling ahash v0.8.12 (/private/tmp/ashlar-weft-distribution-d2d/vendor/ahash)
+   Compiling quote v1.0.47
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling sqlparser v0.63.0
+   Compiling syn v2.0.119
+   Compiling syn v3.0.6
+warning: `ahash` (lib) generated 4 warnings
+   Compiling wasm-bindgen v0.2.105
+   Compiling pyo3-build-config v0.27.1
+   Compiling ref-cast-impl v1.0.27
+   Compiling ref-cast v1.0.27
+   Compiling fluent-uri v0.4.1
+   Compiling wasm-bindgen-macro-support v0.2.105
+   Compiling referencing v0.56.0
+   Compiling serde_derive v1.0.228
+   Compiling strum_macros v0.28.0
+   Compiling jsonschema-macros-core v0.56.0
+   Compiling pyo3-macros-backend v0.27.1
+   Compiling pyo3-ffi v0.27.1
+   Compiling pyo3 v0.27.1
+   Compiling strum v0.28.0
+   Compiling wasm-bindgen-macro v0.2.105
+   Compiling serde v1.0.228
+   Compiling email_address v0.2.9
+   Compiling jsonschema-value v0.56.0
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling jsonschema-macros v0.56.0
+   Compiling jsonschema v0.56.0
+   Compiling weft-spike-core v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/spikes/b001/core)
+   Compiling pyo3-macros v0.27.1
+   Compiling weft-spike-wasm v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/spikes/b001/wasm)
+   Compiling weft-spike-python v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/spikes/b001/python)
+   Compiling weft-core v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:515:8
+    |
+515 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+   Compiling weft-runtime v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-runtime)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-postgresql)
+   Compiling weft-databricks v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-databricks)
+warning: `weft-core` (lib) generated 4 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+   Compiling weft-backend-probe v0.0.0 (/private/tmp/ashlar-weft-distribution-d2d/tests/register-backend/probe)
+   Compiling weft-wasm v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-wasm)
+   Compiling weft-python v0.1.0 (/private/tmp/ashlar-weft-distribution-d2d/crates/weft-python)
+warning: variants `MissingColumns`, `UnknownSource`, `WrongNullable`, `Upgrade`, and `Panics` are never constructed
+  --> tests/register-backend/probe/src/../../fixture.rs:12:5
+   |
+ 9 | pub(crate) enum Behavior {
+   |                 -------- variants in this enum
+...
+12 |     MissingColumns,
+   |     ^^^^^^^^^^^^^^
+...
+17 |     UnknownSource,
+   |     ^^^^^^^^^^^^^
+18 |     WrongNullable,
+   |     ^^^^^^^^^^^^^
+...
+21 |     Upgrade,
+   |     ^^^^^^^
+22 |     Panics,
+   |     ^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `modules` is never used
+   --> tests/register-backend/probe/src/../../fixture.rs:292:15
+    |
+292 | pub(crate) fn modules() -> Vec<weft_core::model::ModuleInput> {
+    |               ^^^^^^^
+
+warning: variant `Upgrade` is never constructed
+  --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:21:5
+   |
+ 9 | pub(crate) enum Behavior {
+   |                 -------- variant in this enum
+...
+21 |     Upgrade,
+   |     ^^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `target` is never used
+   --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:297:15
+    |
+297 | pub(crate) fn target(candidate: bool) -> Target {
+    |               ^^^^^^
+
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1025:39
+     |
+1025 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: `weft-backend-probe` (lib test) generated 2 warnings (2 duplicates)
+   Compiling weft-frontend-probe v0.0.0 (/private/tmp/ashlar-weft-distribution-d2d/tests/frontend/wasm-probe)
+warning: `weft-core` (test "compile-envelope") generated 2 warnings
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:842:13
+    |
+842 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: `weft-backend-probe` (lib) generated 2 warnings
+warning: `weft-core` (lib test) generated 2 warnings (2 duplicates)
+warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.83s
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_backend_probe-38a2ea2e2c311293)
+  Executable unittests src/main.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_backend_probe-55432cdb6f926ba4)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_core-91a38c9691bc2e94)
+  Executable unittests src/bin/frontend.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/frontend-ff0fcefe8d3a988f)
+  Executable ../../tests/application/model.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/application_model-e6660ee8edf74f65)
+  Executable ../../tests/application/resolve.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/application_resolve-c25ad5d05b1c3c7e)
+  Executable ../../tests/application/syntax.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/application_syntax-d2af4fd825b6c6c7)
+  Executable ../../tests/register-backend/pipeline.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/backend_pipeline-ad9290ec9173ea6f)
+  Executable ../../tests/register-backend/registry.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/backend_registry-c7a9b76ba6c9cd71)
+  Executable ../../tests/compile/envelope.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/compile_envelope-dcb7ddc391b9afbc)
+  Executable tests/frontend.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/frontend-da00509721db9c97)
+  Executable tests/mathematical08.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/mathematical08-ca2b0440bb2c5f71)
+  Executable tests/original08.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/original08-45fabaa3a1776fc8)
+  Executable ../../tests/qualify-and-evolve/properties.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/qualification_properties-8fea613eba85b978)
+  Executable ../../tests/qualify-and-evolve/resources.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/qualification_resources-47be94f0a2e0d378)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_databricks-9c4c1372f61d45cb)
+  Executable ../../tests/ashlar-databricks/binding.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/ashlar_binding-40ff8013a01d8b6e)
+  Executable ../../tests/ashlar-databricks/compiler.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/ashlar_compiler-f6ec35c2c4c211a4)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_frontend_probe-af24d3e00820d422)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_postgresql-87d91e4c5759c9d5)
+  Executable ../../tests/truss-postgresql/binding.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/candidate_binding-fa4788bfbc948ff6)
+  Executable ../../tests/truss-postgresql/compiler.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/candidate_compiler-1ea87c9bc7909296)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft-da70bd8eeb01e3df)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_runtime-d23d9fb9e21b6bc8)
+  Executable unittests src/main.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_runtime-bb10137af3c5c03f)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_spike_core-de148b6e6ceaf904)
+  Executable unittests src/bin/report.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/report-d39a16b5f44be905)
+  Executable tests/boundary.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/boundary-a65146787a90d7d8)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_spike-22ca45a8b8009b09)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_spike_wasm-c412e52de8397097)
+  Executable unittests src/lib.rs (/private/tmp/ashlar-weft-left-integration-build/debug/deps/weft_wasm-8c0ab4102f666286)

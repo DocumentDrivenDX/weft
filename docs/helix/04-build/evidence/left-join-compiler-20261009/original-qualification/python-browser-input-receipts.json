@@ -1,0 +1,44 @@
+[
+  {
+    "id": "inner",
+    "requestSha256": "1f39b97e3db9d9ab294c46ceec8f61d37cdfddf8f514d4c243df7052ce258a88",
+    "responseSha256": "05506c64b3aafc6038239825e81189bca7eedc488c700e8ed3970b82188e4732",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "missing-null-permission",
+    "requestSha256": "fd64a91e796d7fe69bf3a90c30afcf33c0fa037877d13f5892991ba5647068a9",
+    "responseSha256": "8c080b394cb5940953b460ef0dde8a6076e76414cc1f511491e7e49079f29b3a",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "old-profile",
+    "requestSha256": "64a824bd8a3ab79ef828636495549d2da9a64520f67af7c59d3519e6a0188892",
+    "responseSha256": "59cd201e6c91c2dc4e009dc6e9437263da7852b43e0322693d47e50a883e7b74",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "original",
+    "requestSha256": "ab940fce8faa4c730b48636eef96cc585e907deb5a3b3c642df6f03ecf265b09",
+    "responseSha256": "fa351f659da79a86dfc9517f3c5b556450bcf44338fa8ef76ac1b74d3de4eea7",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "self-join",
+    "requestSha256": "5997d9e9031fa2cdb4ef1e56e082c512d4f7b6380f8df116533f4c2de8fc27e5",
+    "responseSha256": "e055ce08a385a936ff4947192cb73eec6f384b9e9b00a41ae0cdd2974a6516f4",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "unmatched-order",
+    "requestSha256": "7f39f4264b3c05f539175f6b6a29458eb3896e3ebd4dd8145b5016471beda491",
+    "responseSha256": "b4688d7236c99c582995ce0d59becafb2a199b79cbfa2283b03817bf7442377d",
+    "rawByteIdentical": true
+  },
+  {
+    "id": "unselected-right",
+    "requestSha256": "a16281b7b731ae878099216d0f53e004190a21940e40bb51c0e5823352f62240",
+    "responseSha256": "7351193e727fed236e55483cd457529a1dd3ab458e21b793551f4805a0797b47",
+    "rawByteIdentical": true
+  }
+]
