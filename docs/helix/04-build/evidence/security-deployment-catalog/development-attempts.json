@@ -1,0 +1,27 @@
+{
+  "scope": "Development diagnostics only; exact sources were not snapshotted for these earlier runs",
+  "attempts": [
+    {
+      "log": "development-first-targeted.log",
+      "exit": 0,
+      "scope": "Two new unit controls; other tests filtered"
+    },
+    {
+      "log": "development-core233.log",
+      "exit": 0,
+      "coreTestsPassed": 233
+    },
+    {
+      "log": "development-core235.log",
+      "exit": 0,
+      "coreTestsPassed": 235
+    }
+  ],
+  "reviewFixes": [
+    "Independent authored golden42mapping",
+    "Same issuer charged preflight/ledger; no comparison map from incoming IDs",
+    "Separate DeploymentIssued version provenance",
+    "Coherent manifest/profile weakening control"
+  ],
+  "acceptancePromotion": false
+}

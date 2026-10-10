@@ -1397,6 +1397,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_deployment_catalog.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_evaluation.rs",
           "publicDeclarations": [
             "fn:simulate_json"
@@ -1530,6 +1535,11 @@
             "fn:field_count",
             "fn:read"
           ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_payload_applicability.rs",
+          "publicDeclarations": [],
           "pathReferences": []
         },
         {
@@ -3147,6 +3157,9 @@
         "scripts/security/prove-field-event-addresses.py",
         "scripts/security/prove-key-event-addresses.py",
         "scripts/security/run-case-catalog-checkpoint.py",
+        "scripts/security/run-deployment-catalog-checkpoint.py",
+        "scripts/security/run-payload-applicability-checkpoint.py",
+        "scripts/security/run-rule-payload-checkpoint.py",
         "scripts/security/run-template-checkpoint.py",
         "scripts/sign-site.mjs",
         "scripts/spec-allocation.test.ts",

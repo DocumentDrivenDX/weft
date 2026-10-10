@@ -1,0 +1,15 @@
+{
+  "version": "weft.security.rule-payload-run/0.1.0",
+  "exitCode": 0,
+  "finishedAt": "2026-10-10T23:13:14.922516+00:00",
+  "sourcePinsUnchanged": true,
+  "changedInputs": [],
+  "testGroups": 44,
+  "passed": 588,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "measured": 0,
+  "workspaceLogSha256": "5ed2e1dac1922c235b4651e1ac9f6d3d296a4333bbfd92985a09c3ae2323957e",
+  "declaredSources": 842
+}

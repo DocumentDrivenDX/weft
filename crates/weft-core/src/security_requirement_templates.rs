@@ -5,11 +5,11 @@ fn fail()->Diagnostic {Diagnostic::new("WFT-SECURITY-LOWERING-UNSUPPORTED","capa
 /// Structural applicability is dispatched on actual typed payloads, never source text.
 #[derive(Clone,Copy,Debug,PartialEq,Eq,PartialOrd,Ord)]
 pub(crate) enum Selector {
- Event(OwnerEventKind), Selected,
+ Event(OwnerEventKind), Selected, Payload(crate::security_payload_applicability::Selector),
  Permit,Require,Forbid,True,False,Equal,And,Or,Not,Exists,
  Identity,Endpoint,StoredOperand,ContextOperand,Constant,Original,Withheld,Transformed,
 }
-#[derive(Clone)]
+#[derive(Clone,PartialEq,Eq)]
 pub(crate) struct Template {
  pub(crate) selector:Selector,pub(crate) kind:String,pub(crate) owner:ObligationOwner,
  pub(crate) site:String,pub(crate) failure:String,pub(crate) cases:BTreeSet<String>,
@@ -46,11 +46,30 @@ impl CatalogIssued<'_, '_, '_, '_, '_>{
 /// This does not authenticate either premise or verify a native case execution.
 #[allow(dead_code)]
 pub(crate) fn issue_catalog_bound<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,catalog:&'a crate::security_case_catalog::CaseCatalog)->Result<CatalogIssued<'a,'d,'m,'c,'s>>{
- let actual=owner.coverage().declaration().manifest_json();
- // Registry admission bounds this immutable source to one MiB. Refuse foreign
- // profile strings before hashing; no caller-controlled unbounded hash work.
- if actual.len()>1024*1024||profile.registration_json!=actual||crate::json::sha256(actual.as_bytes())!=catalog.registration_sha256()||profile.cases!=*catalog.required(){return Err(fail());}
+ catalog_preflight(owner,profile,catalog)?;
  Ok(CatalogIssued{issued:issue(owner,profile)?,catalog})
+}
+fn catalog_preflight(owner:&OwnerSourceDemands<'_, '_, '_, '_>,profile:&Profile,catalog:&crate::security_case_catalog::CaseCatalog)->Result<()> {
+ let actual=owner.coverage().declaration().manifest_json();
+ // Hash only bounded registered source; exact case IDs remain trusted premises.
+ if actual.len()>1024*1024||profile.registration_json!=actual||crate::json::sha256(actual.as_bytes())!=catalog.registration_sha256()||profile.cases!=*catalog.required(){return Err(fail());}Ok(())
+}
+/// Stricter independent deployment-duty boundary; earlier experimental issuance
+/// remains unchanged. All deployment duties stay pending without native evidence.
+#[allow(dead_code)]
+pub(crate) struct DeploymentIssued<'a,'d,'m,'c,'s>{catalog:CatalogIssued<'a,'d,'m,'c,'s>}
+#[allow(dead_code)]
+impl DeploymentIssued<'_, '_, '_, '_, '_>{
+ pub(crate) fn deployment_version(&self)->&'static str{crate::security_deployment_catalog::VERSION}
+ pub(crate) fn required(&self)->&InstancePremise{self.catalog.required()}
+ pub(crate) fn pending_cases(&self)->&BTreeSet<String>{self.catalog.pending_cases()}
+ pub(crate) fn original_case(&self,id:&str)->Result<&serde_json::Value>{self.catalog.original_case(id)}
+}
+#[allow(dead_code)]
+pub(crate) fn issue_deployment_bound<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,catalog:&'a crate::security_case_catalog::CaseCatalog)->Result<DeploymentIssued<'a,'d,'m,'c,'s>>{
+ catalog_preflight(owner,profile,catalog)?;
+ let issued=issue_budget_deployment(owner,profile,1_000_000,16_000_000,Some(catalog))?.0;
+ Ok(DeploymentIssued{catalog:CatalogIssued{issued,catalog}})
 }
 struct Budget{work:usize,text:usize}
 impl Budget {
@@ -78,12 +97,15 @@ fn path(p:&RulePath,b:&mut Budget)->Result<String> {
  for i in indices.iter().copied().chain(operand){b.charge(20)?;tokens.push(i.to_string());}
  b.encode(&tokens.iter().map(String::as_str).collect::<Vec<_>>())
 }
+fn profile_rule_selector_forbidden(p:&Profile,selector:Selector)->bool{p.version!="weft.security.requirement-templates/0.3.0"&&matches!(selector,Selector::Payload(s) if crate::security_payload_applicability::rule_only(s))}
 fn validate(p:&Profile,b:&mut Budget)->Result<()> {
  b.id(&p.version)?;b.id(&p.id)?;b.id(&p.target)?;b.charge(p.registration_json.len())?;
- if p.version!="weft.security.requirement-templates/0.1.0"||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
+ if !matches!(p.version.as_str(),"weft.security.requirement-templates/0.1.0"|"weft.security.requirement-templates/0.2.0"|"weft.security.requirement-templates/0.3.0")||p.templates.is_empty()||p.templates.len()>4096||p.cases.is_empty()||p.cases.len()>4096||p.capabilities.is_empty()||p.capabilities.len()>4096{return Err(fail());}
  for case in &p.cases{b.id(case)?;}
  for (id,t) in &p.templates{
   b.id(id)?;b.id(&t.kind)?;b.id(&t.site)?;b.id(&t.failure)?;
+  if p.version=="weft.security.requirement-templates/0.1.0"&&matches!(t.selector,Selector::Payload(_)){return Err(fail());}
+  if profile_rule_selector_forbidden(p,t.selector){return Err(fail());}
   if t.cases.is_empty()||t.cases.len()>4096||t.prerequisites.len()>4096{return Err(fail());}
   for c in &t.cases{b.id(c)?;if !p.cases.contains(c){return Err(fail());}}
   for dependency in &t.prerequisites{b.id(dependency)?;if p.templates.get(dependency).is_none_or(|d|d.selector!=t.selector){return Err(fail());}}
@@ -138,10 +160,23 @@ impl Builder<'_>{
   if !applicable{return Err(fail());}Ok(())
  }
 }
+struct PayloadDispatcher<'a,'d,'m,'c,'s,'b,'p>{owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,builder:&'b mut Builder<'p>}
+impl crate::security_payload_applicability::Sink for PayloadDispatcher<'_, '_, '_, '_, '_, '_, '_>{
+ fn charge(&mut self,bytes:usize)->Result<()>{self.builder.budget.charge(bytes)}
+ fn duty(&mut self,source:&str,selector:crate::security_payload_applicability::Selector,address:&[&str])->Result<()>{
+  let occurrence=self.builder.budget.encode(address)?;
+  for scope in self.owner.demands().get(source).ok_or_else(fail)?{self.builder.emit(Selector::Payload(selector),source,scope,&occurrence,self.owner.candidates(scope).ok_or_else(fail)?)?;}Ok(())
+ }
+}
 #[allow(dead_code)]
 pub(crate) fn issue<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile)->Result<Issued<'a,'d,'m,'c,'s>>{issue_budget(owner,profile,1_000_000,16_000_000).map(|(out,_,_)|out)}
 fn issue_budget<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,work:usize,text:usize)->Result<(Issued<'a,'d,'m,'c,'s>,usize,usize)> {
+ issue_budget_deployment(owner,profile,work,text,None)
+}
+fn issue_budget_deployment<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profile:&'a Profile,work:usize,text:usize,deployment:Option<&crate::security_case_catalog::CaseCatalog>)->Result<(Issued<'a,'d,'m,'c,'s>,usize,usize)> {
  let mut budget=Budget{work,text};validate(profile,&mut budget)?;
+ // The same charged preflight bounds all IDs/maps before deployment comparison.
+ if let Some(catalog)=deployment{crate::security_deployment_catalog::validate_charged(profile,catalog,&mut |bytes|budget.charge(bytes))?;}
  let coverage=owner.coverage();budget.charge(coverage.declaration().manifest_json().len())?;
  if profile.registration_json!=coverage.declaration().manifest_json()||profile.target!=coverage.declaration().target().id{return Err(fail());}
  for cap in coverage.selected_capabilities(){budget.id(cap)?;if !profile.capabilities.contains_key(cap){return Err(fail());}}
@@ -157,7 +192,10 @@ fn issue_budget<'a,'d,'m,'c,'s>(owner:&'a OwnerSourceDemands<'d,'m,'c,'s>,profil
  }
  // Structural rules expand all nodes, including false/empty branches and disclosures.
  let rules=crate::security_rule_occurrences::issue(owner)?;
- for ((source,address),payload) in rules.entries(){let occurrence=path(address,&mut b.budget)?;for scope in owner.demands().get(*source).ok_or_else(fail)?{b.emit(node(payload),source,scope,&occurrence,owner.candidates(scope).ok_or_else(fail)?)?;}}
+ for ((source,address),payload) in rules.entries(){let occurrence=path(address,&mut b.budget)?;for scope in owner.demands().get(*source).ok_or_else(fail)?{b.emit(node(payload),source,scope,&occurrence,owner.candidates(scope).ok_or_else(fail)?)?;}
+  if profile.version=="weft.security.requirement-templates/0.3.0"{crate::security_payload_applicability::rule(source,payload,&occurrence,&mut PayloadDispatcher{owner,builder:&mut b})?;}
+ }
+ if matches!(profile.version.as_str(),"weft.security.requirement-templates/0.2.0"|"weft.security.requirement-templates/0.3.0"){crate::security_payload_applicability::visit(owner,&mut PayloadDispatcher{owner,builder:&mut b})?;}
  for cap in coverage.selected_capabilities(){b.budget.id(cap)?;b.emit(Selector::Selected,cap,&CoverageScope::Application,"deployment",&BTreeSet::from([cap.clone()]))?;}
  let remaining=(b.budget.work,b.budget.text);Ok((Issued{owner,profile,required:b.result},remaining.0,remaining.1))
 }

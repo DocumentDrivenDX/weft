@@ -1,0 +1,32 @@
+{
+  "reviewer": "Astra ultra",
+  "outcome": "passed",
+  "scope": "Read-only independent source and parent-run receipt audit; no reviewer execution",
+  "testsPassed": 578,
+  "groups": 44,
+  "coreTestsPassed": 235,
+  "newControls": 5,
+  "sourcePins": 837,
+  "rustCargoPathsCovered": 183,
+  "failed": 0,
+  "ignored": 0,
+  "measured": 0,
+  "filtered": 0,
+  "findings": [],
+  "selectedBackendCasesPending": 42,
+  "acceptancePromotion": false,
+  "candidateMap": {
+    "duties": 42,
+    "edges": 81,
+    "maxDepth": 9,
+    "maxCopiedAuthoredTextBytes": 264,
+    "fixedPerDutyTextReservation": 512
+  },
+  "remaining": [
+    "Semantic payload applicability",
+    "Authenticated profile selection",
+    "Original assertion/procedure adequacy",
+    "Native backend implementations and current evidence",
+    "Public lowering"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "reviewer": "Astra ultra",
+  "outcome": "passed",
+  "scope": "Read-only independent source/pin/log audit of parent-executed tests; no reviewer Cargo/native execution",
+  "testsPassed": 588,
+  "groups": 44,
+  "coreTestsPassed": 245,
+  "newControls": 4,
+  "sourcePins": 842,
+  "rustCargoPathsCovered": 184,
+  "failed": 0,
+  "ignored": 0,
+  "measured": 0,
+  "filtered": 0,
+  "findingsApplied": [
+    "Preserve original duplicate target disclosure refusal; actual-owner golden uses distinct disclosed Fields with identical transform output Field/domain/value",
+    "Keep repeated-target direct typed control qualified as framing primitive only"
+  ],
+  "remainingFindings": [],
+  "acceptancePromotion": false,
+  "remaining": [
+    "Exact native numeric/literal representability",
+    "Authenticated complete semantic profiles",
+    "Physical/native backend qualification",
+    "Original assertion/procedure sufficiency",
+    "All original acceptance obligations and public lowering"
+  ]
+}

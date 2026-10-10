@@ -338,6 +338,101 @@ cases remain binding, no acceptance case is promoted, and B-008 remains open.
 
 Validation checkpoint: the frozen workspace run passed 573 tests across 44 groups (230 core), with all 833 declared input pins unchanged and zero failed, ignored, measured, or filtered tests. Astra ultra independently audited the terminal receipts and four new test results with no blockers. See [retained checkpoint](evidence/security-case-catalog/checkpoint.json). All 42 selected backend cases remain pending; no authentication or native enforcement acceptance is promoted.
 
+
+#### B-008 authored deployment qualification duties
+
+The next private catalog revision replaces the test-only42-case catch-all with an
+explicit independently authored qualification interface for each original required
+case. All42 distinct duties, exact owner/site/failure/case/prerequisite tuples and
+all authored capability assignments are checked before the stricter versioned
+DeploymentIssued result is created. This includes unchosen and zero-edge capabilities.
+The original-case record supplies the full assertion; catalog membership alone
+cannot discharge it. The four backend homes retain separate qualified IDs and
+implementations despite shared assertion interfaces.
+
+Five new controls compare the complete map to a separately authored42-row golden
+fixture, remove every duty and every capability assignment, substitute each contract
+component, retain actual owner source/scope/kind inventory and test a coherent
+manifest/profile catch-all that passes weaker instance matching but refuses the
+strict gate. Exact169-visit/21504-reserved-text and minus-one controls isolate the
+shared deployment comparison ledger. Development core execution passed235 tests;
+full source-frozen workspace validation and independent review must be retained
+before landing. Semantic payload applicability, trusted profile authentication,
+native bodies/evidence and public lowering remain required. Historical required
+acceptance remains26/132; no selected case is promoted by this catalog.
+
+Final [retained checkpoint](evidence/security-deployment-catalog/checkpoint.json):578 release workspace tests across44 groups,235 core, all five new controls passing, all837 declared input pins unchanged, zero failed/ignored/measured/filtered. Astra ultra independently checked the source mapping, bounded gate and terminal receipts with no remaining blocker in the candidate-duty scope. Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures. The distinct strict result remains private and all42 cases remain pending.
+
+
+#### B-008 typed payload applicability candidate
+
+Template0.2 now derives mandatory scalar/nullability/refinement-family/protection,
+key, query/output and ordered association duties directly from actual borrowed
+payloads under CONTRACT-006. Independently authored source/address/scope golden
+expectations check33 payload occurrences and48 extra scoped requirements in the
+repeated-output fixture. Each applicable selector and its eligible origin is
+omitted in turn; every omission refuses. Legacy template0.1 rejects payload
+selectors. Whole0.2 exact/minus-one visit/text controls remain conditional bounded
+execution checks, not a formal implementation refinement proof. Astra's output
+availability finding was applied before freezing: required and absent-allowed
+values remain distinct; unestablished values refuse.
+
+Scalar/facet families and occurrence presence are qualified by these component
+checks only. Numeric refinement compatibility, constant/transform literal and
+domain meaning, complete authenticated template profiles, optional/nullable result
+admission, physical/native implementation and original acceptance qualification
+remain open. Historical required acceptance stays26/132; the goal remains active.
+Frozen workspace receipts and independent review must be retained before landing.
+
+Additional controls execute actual-owner context/operator/ordered-association
+dispatch across two scans and two actions. Authentic resolved source-plan helpers
+check COUNT/SUM and optional Field output typing before result admission. An exact
+direct-original result contract passes for a required Field and refuses for the
+otherwise equivalent absent-allowed Field; this does not forbid all withheld
+optional-output source plans or establish aggregate result admission.
+
+Final [retained checkpoint](evidence/security-payload-applicability/checkpoint.json):
+584 release workspace tests across44 groups,241 core, all six new controls passing,
+all840 freshly frozen declared input pins unchanged, zero failed/ignored/measured/
+filtered. Astra ultra independently audited source semantics,184 Rust/Cargo path
+coverage and all terminal receipts with no landing blocker in the stated subset.
+Specification checks passed51 artifacts/31 schemas/30 criteria/636 fixtures.
+Development logs retain corrections as diagnostics without failed-attempt source
+snapshots; only the final fresh frozen run supports source-qualified test claims.
+No original required acceptance case is promoted and the full goal stays active.
+
+
+#### B-008 typed rule domain/literal demand extraction
+
+Template0.3 adds actual borrowed Field/Context/Constant operand and constant0.1.0
+transform domain/literal duties under CONTRACT-006. Earlier template experiments
+retain their meaning. Three direct controls cover all five wrapper families and
+typed absence, required-null/wrapper/transform refusal, independent Boolean
+4-visit/7-text and null3-visit/0-text pre-encoding ledgers, and identical disclosure
+values at distinct ordered addresses. An actual-owner golden authors28 exact
+source/scope/kind/address duties across both Equal operands and two repeated
+constant transforms (distinct disclosed target Fields, identical output Field/value)
+despite a populated false condition. Duplicate target disclosure in one source
+rule remains refused by original type admission; the direct repeated-target
+primitive test does not widen source admission. Every applicable
+selector and origin omission refuses, as do legacy rule selectors and whole0.3
+ledger minus-one limits. These tests qualify demand extraction, not literal
+normalization or native representability. Frozen workspace execution and
+independent review are required before landing. All132 acceptance cases remain
+binding; historical required acceptance stays26/132 and the full goal stays active.
+
+Final [retained checkpoint](evidence/security-rule-payload/checkpoint.json):588
+release workspace tests across44 groups,245 core, all four new controls passing,
+all842 freshly frozen inputs unchanged, zero failed/ignored/measured/filtered.
+Astra ultra independently audited source/pin/log custody,184 Rust/Cargo paths
+and all terminal results with no remaining landing blocker in the conditional
+demand-extraction scope. The original duplicate target admission guard remains
+unchanged. Specification checks passed51 artifacts/31 schemas/30 criteria/636
+fixtures. Development correction logs are diagnostic only without failed-source
+snapshots; the final fresh run provides source-qualified evidence. No numeric/native
+compatibility, authenticated profile, Rust/database refinement or original required
+acceptance case is promoted; the full goal remains active.
+
 ## B-009: Reliability remediation
 
 ### Scope and governing authority
@@ -739,3 +834,19 @@ formal checks, rebuilt CLI/Python/Chromium parity and full new input custody,
 Astra Ultra review, and terminal hosted CI at the final pushed head are required
 before main integration. The fixed independent ordinary baseline and the 53
 open native-requalification outputs retain their original scope.
+
+
+### B-009 typed deployment and payload reconciliation
+
+Main commits `60e8255`, `c6d8c53` and `5120c54` add private exact authored
+deployment duties, typed payload applicability and typed rule domain/literal
+verification duties. Their sources, catalogs, qualification limits and historical
+checkpoint receipts are preserved. The module map owns both new private modules
+and all three checkpoint runners. Existing immutable Catalog access, aggregate
+result-phase ledgers and blocked public security protocols remain in place.
+
+Both workflows passed at preceding head `0db5a32`; they cannot qualify this new
+source. Astra Ultra review, fresh source-bound formal and host/full-input custody
+checks, and final-head hosted CI are required for the reconciled source. Native
+security enforcement, authentication, full acceptance and the 53 historical
+output requalification gaps remain open.

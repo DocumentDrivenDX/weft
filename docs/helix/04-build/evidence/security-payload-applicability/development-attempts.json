@@ -1,0 +1,95 @@
+{
+  "scope": "Diagnostic logs only; failed-attempt source snapshots were not captured. Source qualification belongs only to the final fresh frozen workspace run.",
+  "attempts": [
+    {
+      "log": "development-development.log",
+      "sha256": "0ff00119f7a010ff5466b58124a224c3d320b91b11d4d62f1b8e09e026862f15",
+      "summaries": [
+        {
+          "status": "ok",
+          "passed": 237,
+          "failed": 0
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-second.log",
+      "sha256": "4080bfa3f9de49c8e3cfc34e0cce9ec6da55d56850fa4f1e0900269296bc6c9a",
+      "summaries": [],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-third.log",
+      "sha256": "1f4042117e90222cf628f8cebf42b1d3f34abee7135cc82d5f170cfd90d8156f",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 237,
+          "failed": 1
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-fourth.log",
+      "sha256": "f6b30ccc37e4ec2517d34f35f6fc2cee670ce3ea8bc39e1b506557ff739663d1",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 238,
+          "failed": 1
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-fifth.log",
+      "sha256": "e94ba8a83861b9f6b6d570463058cd45e37f9e668565d9fe8115d49cfbf3b8bd",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 239,
+          "failed": 2
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-sixth.log",
+      "sha256": "9594ddd0ce745942515e7d6ba71047d96e7bf43e2fd5090a4708ff6f2c592eb9",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 240,
+          "failed": 1
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-seventh.log",
+      "sha256": "6caf6df47ec37371939c599f9c27f9c115f6411f244956e64f93b0e65f9506b4",
+      "summaries": [
+        {
+          "status": "FAILED",
+          "passed": 240,
+          "failed": 1
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    },
+    {
+      "log": "development-eighth.log",
+      "sha256": "04d3a583ebea82e43bc102805292acb932797bd66e7f816293262953fff606b4",
+      "summaries": [
+        {
+          "status": "ok",
+          "passed": 241,
+          "failed": 0
+        }
+      ],
+      "exactAttemptedSourcesCaptured": false
+    }
+  ]
+}
