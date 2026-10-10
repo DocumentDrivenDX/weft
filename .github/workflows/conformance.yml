@@ -48,6 +48,7 @@ jobs:
           python3 -S -W error::ResourceWarning -m unittest discover -s scripts/distribution -p test_paths_assembly.py -q
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-paths-assembly -q
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-paths-corpus -q
+          python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-count-star-corpus -q
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance

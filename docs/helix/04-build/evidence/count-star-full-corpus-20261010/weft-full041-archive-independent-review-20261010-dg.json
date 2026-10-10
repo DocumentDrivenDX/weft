@@ -1,0 +1,9 @@
+{
+  "decision": "approve-bounded-evidence-archive",
+  "archiveSha256": "151a38c5558a446e380a916eaf9abc9314410cdb622ba355145d2b17621e464e",
+  "inventorySha256": "dfa67282befcf17f3927d326153f56f4513e6a2e22114dd1c77e0ee175a87ec4",
+  "regularSafeUniqueMembers": 65,
+  "decodedBytes": 22362653,
+  "compressedBytes": 3482923,
+  "checks": "All decoded member hashes/sizes exact; no tool/product executable magic; final actual/source approvals separate and included. No extraction performed."
+}

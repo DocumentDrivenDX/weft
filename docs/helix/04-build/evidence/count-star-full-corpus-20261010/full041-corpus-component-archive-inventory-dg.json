@@ -1,0 +1,336 @@
+{
+  "bytes": 3482923,
+  "files": [
+    {
+      "bytes": 635113,
+      "path": "actual/full041-a/actual-80-cases-d.json.gz",
+      "sha256": "81cdac9213c064ccf78ff90cd8fa643b78ed245d11977bcb87b36439b3890f35"
+    },
+    {
+      "bytes": 1293614,
+      "path": "actual/full041-a/actual-80-cases-d.json.gz.observations.jsonl.gz",
+      "sha256": "dcedc9f82fb9eb2039db67ff4707edb510bbc43a8c48d8644b3bb87000138526"
+    },
+    {
+      "bytes": 478,
+      "path": "actual/full041-a/cli-c-outcome.json",
+      "sha256": "f7503bd69d9019d6a1b5653ca852e7d2360b7ca25096ffe846370366a590db16"
+    },
+    {
+      "bytes": 435,
+      "path": "actual/full041-a/cli-c.stderr.log",
+      "sha256": "2bb0f907ff6877b591465b0d42bf3dd2cc7acc7cb1d34f2cf6ff84e55a158798"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full041-a/cli-c.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 478,
+      "path": "actual/full041-a/cli-d-outcome.json",
+      "sha256": "b3ef1be1173f0a87598e6ce4f2daf755b84c7a2810e4b2be0ea3ebfa711f8796"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full041-a/cli-d.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 109,
+      "path": "actual/full041-a/cli-d.stdout.log",
+      "sha256": "bd53881fe3353095f3df0619e75c6c0a6214d34cf1273e4e8c239f11f7c51f7d"
+    },
+    {
+      "bytes": 551,
+      "path": "actual/full80-embeddings-e/browser-g-outcome.json",
+      "sha256": "aa3384a7d1aba57fc40d2759649657636b64ae90004eb0702f94cc21f8aa458a"
+    },
+    {
+      "bytes": 3032731,
+      "path": "actual/full80-embeddings-e/browser-g.json",
+      "sha256": "22783d75b2d403ee8bdcc9bad735b203cd2e478e4ba4c09e0f12897e8c74de6b"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full80-embeddings-e/browser-g.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 50,
+      "path": "actual/full80-embeddings-e/browser-g.stdout.log",
+      "sha256": "3e1f7dd13143651352b5914caa33ba391e84d8fc7a35df57fdd87423c6c28a5f"
+    },
+    {
+      "bytes": 11874047,
+      "path": "actual/full80-embeddings-e/cases.json",
+      "sha256": "b7707cc60208baac9d1c74110a56750b84a60ebee38bb5c812800ed68b7d4605"
+    },
+    {
+      "bytes": 449,
+      "path": "actual/full80-embeddings-e/conversion-outcome.json",
+      "sha256": "816299af8578ea71b42fb54c4a81078602ebd59c6932afdcb72a32515559c0d8"
+    },
+    {
+      "bytes": 421,
+      "path": "actual/full80-embeddings-e/conversion.json",
+      "sha256": "cc3b84f53cd6af529ad0b8b30e8c444e46de146c723df7da25d5740167830cd5"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full80-embeddings-e/conversion.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full80-embeddings-e/conversion.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 550,
+      "path": "actual/full80-embeddings-e/python-g-outcome.json",
+      "sha256": "8966bab1843bfca07f0d9af9c535c5ae673ce2f24c28fb330dfbf8ff22ed03a3"
+    },
+    {
+      "bytes": 3032495,
+      "path": "actual/full80-embeddings-e/python-g.json",
+      "sha256": "585c426b3ddcb375ba8a46f54b91dc845ce900d1453e04a539b56b7bdf900544"
+    },
+    {
+      "bytes": 0,
+      "path": "actual/full80-embeddings-e/python-g.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 57,
+      "path": "actual/full80-embeddings-e/python-g.stdout.log",
+      "sha256": "4ddbd408e96ea506f0f46a9e5c7ceefc54eb9449bf03abfe2f88d5fb07de2b83"
+    },
+    {
+      "bytes": 79935,
+      "path": "command-and-custody/build-closure-inventory.json",
+      "sha256": "29528ce28cfe22f248bcee1a324434a1c211570a0cd5088b8497ea4bbbe837d3"
+    },
+    {
+      "bytes": 439,
+      "path": "command-and-custody/cli-build-g-outcome.json",
+      "sha256": "6289bf16689f4ca60c0c442e2cc5c0ae2e5f4e70efc284135e1377a63c9e6627"
+    },
+    {
+      "bytes": 1957,
+      "path": "command-and-custody/convert-full80-parity-e.py",
+      "sha256": "485e42fa62318e338775b6ca8cfb6c3a4e32d0b6909007dedbade728ae8d2b1c"
+    },
+    {
+      "bytes": 3365,
+      "path": "command-and-custody/full041-actual-cli-result-inventory-d.json",
+      "sha256": "892795c4141239a08fd4312f3b0c2f5a929501cce1f472cadd680b0d35520bfd"
+    },
+    {
+      "bytes": 30731,
+      "path": "command-and-custody/full041-command-a.json",
+      "sha256": "0539c64e8bc9830ca18478203e19b5845abe932f922bbb1ec858765f3cd9822c"
+    },
+    {
+      "bytes": 32151,
+      "path": "command-and-custody/full041-command-b.json",
+      "sha256": "2c50ab2e801afc3b1e2cf92d36e4c6b724d540cc64523b7c7124cae1ccb14719"
+    },
+    {
+      "bytes": 32771,
+      "path": "command-and-custody/full041-command-c.json",
+      "sha256": "835c2d25ae0ccb29696fe731fa1fce0b4a09381fda0d39b0c73dff221c618bff"
+    },
+    {
+      "bytes": 38338,
+      "path": "command-and-custody/full041-command-d.json",
+      "sha256": "aef833ed297eb14d375b24edafbd5a19a8e5eed1ee507bbc07815f2532a391f5"
+    },
+    {
+      "bytes": 2626,
+      "path": "command-and-custody/full041-source-freeze-d.json",
+      "sha256": "30728007b27b90ff8d5245ba3ba1dd180a9b8327510a5fd47cb3259870f1830f"
+    },
+    {
+      "bytes": 24546,
+      "path": "command-and-custody/full80-conversion-command-e.json",
+      "sha256": "029e927ee7b5c45165a3f58fe5ae59898d10707191aa424e35c95c0ab40f484b"
+    },
+    {
+      "bytes": 3253,
+      "path": "command-and-custody/full80-embedding-actual-result-inventory-g.json",
+      "sha256": "8107ece574d73b18c728c6ce75dfc3f550ea6dbccdcabd7d6ae3614eb61f0fa0"
+    },
+    {
+      "bytes": 26139,
+      "path": "command-and-custody/full80-embedding-command-f.json",
+      "sha256": "2404aa14dc52674a326631a50567d41f0204da12918fc74dacc0b33818cc25e5"
+    },
+    {
+      "bytes": 26762,
+      "path": "command-and-custody/full80-embedding-command-g.json",
+      "sha256": "455a23de87899c4cc3311f1fa347bbe4169478a44d44fdd00a40a0c3d46b73ec"
+    },
+    {
+      "bytes": 6275,
+      "path": "command-and-custody/launch-reviewed-build.py",
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "bytes": 1338,
+      "path": "command-and-custody/launch-reviewed-full041-c.py",
+      "sha256": "1945e95d374815298925f22c37b1df9fc747f1fe95719672ffdb934ed88cf0a5"
+    },
+    {
+      "bytes": 1071,
+      "path": "command-and-custody/launch-reviewed-full041.py",
+      "sha256": "20a8858199a6b659efde157da6c08f803849392a7fffd7ba95ed6903632a3147"
+    },
+    {
+      "bytes": 2541,
+      "path": "command-and-custody/launch-reviewed-parity-g.py",
+      "sha256": "0b238f4b0cb5544f93cf669f9839562292d518c43fdb4ed52fdee84ee507bb9e"
+    },
+    {
+      "bytes": 2253,
+      "path": "command-and-custody/launch-reviewed-parity.py",
+      "sha256": "b270fca94206a7a6d2cb8256c9929af1290b509f46adbb881c773560259b031d"
+    },
+    {
+      "bytes": 687929,
+      "path": "command-and-custody/source-inventory.json",
+      "sha256": "08e32444e85f71cb9e960d1731e41e7fe05d93d44d4b4f710c0c1dfbbe392c70"
+    },
+    {
+      "bytes": 53114,
+      "path": "command-and-custody/source-metadata-h.stdout.log",
+      "sha256": "075dc92c7ca08b37abd1ed003fcd80674f816353742b79fa3e3a98021826b273"
+    },
+    {
+      "bytes": 980,
+      "path": "command-and-custody/test-interpreter-guard-c.py",
+      "sha256": "b8c39e7cae58a97b7a5fb05580c469dc93ee2c7254c011035f71fbfaf4e4a8d0"
+    },
+    {
+      "bytes": 979,
+      "path": "command-and-custody/test-parity-guard-g.py",
+      "sha256": "69fe149374b366ce14976e2faa1a65aeefa8f268da7a3f6c6f59f1617b9ce2e9"
+    },
+    {
+      "bytes": 2417,
+      "path": "prior-c-source/inventory.json",
+      "sha256": "56d6df6d3c89eb923dc3ed37e8eb6d3f2ffed5c21072e6825ba57c8e40b9c661"
+    },
+    {
+      "bytes": 6385,
+      "path": "prior-c-source/scripts/distribution/build-count-star-corpus.py",
+      "sha256": "1f7f980c809f910d523de5c698ea0b6b019af92048bd0aa44f689e316fd78957"
+    },
+    {
+      "bytes": 5305,
+      "path": "prior-c-source/scripts/distribution/check-count-star-corpus.py",
+      "sha256": "3f5a97e3ecb70fd599c626e1bece5793aa17b64c9ff52c15e2be9f1d6d923c25"
+    },
+    {
+      "bytes": 621881,
+      "path": "prior-c-source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-corpus.json.gz",
+      "sha256": "96552bcfc3a59402acc7e76b076faad19b6a3e7350185b9db6d9a3df5bc70806"
+    },
+    {
+      "bytes": 49203,
+      "path": "prior-c-source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-expected-witnesses.json",
+      "sha256": "0fa5576b41afc586beafcce18cfc9ae85e758d8017b975f1850a0c3cbc54acdb"
+    },
+    {
+      "bytes": 18747,
+      "path": "prior-c-source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-migrations.json.gz",
+      "sha256": "11c4d6aa2ca31cf4c5f1f911189d1362b5da3a600e125a8ff571472c4437b2d2"
+    },
+    {
+      "bytes": 1934,
+      "path": "prior-c-source/tests/distribution-count-star-corpus/test_migration.py",
+      "sha256": "b05e7ef98f41bbb8c82677ba361cb61d854e1f98300e0dcaae93e9b21437b179"
+    },
+    {
+      "bytes": 1420,
+      "path": "reviews/weft-additive041-corpus-freeze-20261010-a.json",
+      "sha256": "e18941b914074fd38b296776a31ddb20b1131b0e5b3be1ff8d168b456b16a5e7"
+    },
+    {
+      "bytes": 3028,
+      "path": "reviews/weft-additive041-corpus-source-command-independent-review-20261010-d.json",
+      "sha256": "b0daa90401360872f19d6846d6f9874d666b4fa888015ba2f616ee113abd5bf2"
+    },
+    {
+      "bytes": 1851,
+      "path": "reviews/weft-additive041-corpus-source-independent-review-20261010-a.json",
+      "sha256": "83d8e5b5f5f4ae56fb8474c3d2f9045c3f7f11e84e0f0b9c6a2a08a20e1af93d"
+    },
+    {
+      "bytes": 1750,
+      "path": "reviews/weft-additive041-full-cli-actual-result-independent-review-20261010-d.json",
+      "sha256": "01c8f6b43a51b537c6602834fcf999e9ef0f7b57a54d20bb62523dcfd22cfb41"
+    },
+    {
+      "bytes": 2037,
+      "path": "reviews/weft-additive041-full-cli-command-independent-review-20261010-c.json",
+      "sha256": "2d8c2201c14f3a6d931082f505e6ff0811079c52c4f3eba40bd613e03a235c48"
+    },
+    {
+      "bytes": 1508,
+      "path": "reviews/weft-full80-component-parity-actual-result-independent-review-20261010-dg.json",
+      "sha256": "c02695bab54167f56cf9f7bc02fa1ca773c1df9049f5435be6a56d0fc3b42db0"
+    },
+    {
+      "bytes": 895,
+      "path": "reviews/weft-full80-conversion-command-independent-review-20261010-e.json",
+      "sha256": "f5cf631eb145c7dd73a91f51427b373f471af1f6fce48c042e233b4a0bce3f87"
+    },
+    {
+      "bytes": 624,
+      "path": "reviews/weft-full80-embedding-command-independent-review-20261010-g.json",
+      "sha256": "77087583292db5a2291410bb88b3c33a57c313d88861ca44e108bc2b94a1b239"
+    },
+    {
+      "bytes": 5935,
+      "path": "source/.github/workflows/conformance.yml",
+      "sha256": "cbea5b8453a0637ccbd4ec44890380d222dc002da685407fe209ce2c67bdc823"
+    },
+    {
+      "bytes": 7066,
+      "path": "source/scripts/distribution/build-count-star-corpus.py",
+      "sha256": "cd9c6cab09d8a88fdc3f3d1e9f890f959dec3078ed37e1aabaa4b43fc65190ea"
+    },
+    {
+      "bytes": 6127,
+      "path": "source/scripts/distribution/check-count-star-corpus.py",
+      "sha256": "de9e79ae3bf3fd91c758598fa72a9400b7c2f253046f626cfaf47c853d0da53f"
+    },
+    {
+      "bytes": 621947,
+      "path": "source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-corpus.json.gz",
+      "sha256": "d5185357481b49e2c7000190406972264108801a6b99504e70bafee38995a5d9"
+    },
+    {
+      "bytes": 49203,
+      "path": "source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-expected-witnesses.json",
+      "sha256": "0fa5576b41afc586beafcce18cfc9ae85e758d8017b975f1850a0c3cbc54acdb"
+    },
+    {
+      "bytes": 18930,
+      "path": "source/tests/distribution-count-star-corpus/fixtures/count-star-having-041-migrations.json.gz",
+      "sha256": "6f8a3e0b9c87b9333267ccf3f0e16c19299447c5cc4bebbdf394c8191f7714d4"
+    },
+    {
+      "bytes": 3389,
+      "path": "source/tests/distribution-count-star-corpus/test_migration.py",
+      "sha256": "656551f4e70e715b43ce379cafeb733ad1790432509812cfe734871e1fcb4442"
+    }
+  ],
+  "noToolOrProductExecutableCopies": true,
+  "path": "/private/tmp/weft-count-star-build-20261010-b/full041-corpus-component-evidence-dg.tar.gz",
+  "qualification": "Full authored80-case actual CLI/extracted Python/real Chromium WASM correspondence and49 actually selected CLI capabilities with accepted witnesses. Cfailure retained; raw partialC responses unavailable and not reconstructed. No native SQL, full transport boundary suite, installed package or index admission.",
+  "sha256": "151a38c5558a446e380a916eaf9abc9314410cdb622ba355145d2b17621e464e",
+  "sourceCompilerCommit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688",
+  "uncompressedBytes": 22362653
+}
