@@ -232,6 +232,15 @@ manifest identities, public schemas, and conformance receipts. Record unknown
 linker, cache and environment properties explicitly; the same source revision does
 not imply identical executable bytes or a hermetic build.
 
+`build.platform.observedOS` MAY identify a separately observed current
+qualification or assembly host. Its retained observation MUST state when and
+where it was obtained and distinguish that scope from the original build host.
+If the build-time OS was not retained, `build.effectiveEnvironment.unknowns` MUST
+say so explicitly; a later host observation MUST NOT reconstruct a build-time
+fact. This distinction does not relax the required observed build command,
+features, target, tool versions or executable custody, and does not change prior
+realizations' observation claims.
+
 A build record is inert data. Only an independently reviewed entry in a public
 Weft distribution index selected from a trusted release/package revision can
 register the record and executable digests. A caller-supplied manifest, local

@@ -1,0 +1,2070 @@
+{
+  "files": [
+    {
+      "bytes": 250,
+      "gitBlob": "fd353ba58318de2605c928954554e098301dec31",
+      "mode": "100644",
+      "path": ".cargo/config.toml",
+      "sha256": "6e87ded1a3f6228bb0aee5f62f89e72f87c1f9281d882ef7ac1dd8844315a64f"
+    },
+    {
+      "bytes": 28372,
+      "gitBlob": "f1a4ddf602e4a727c8ff9c0a6058932efdf42280",
+      "mode": "100644",
+      "path": "Cargo.lock",
+      "sha256": "08d3d30468be6bbde701be72c4e070f60c0706b54898e8e3a0432ea0cfbe0e9e"
+    },
+    {
+      "bytes": 682,
+      "gitBlob": "ba6e7b485a24d49d0fb145963e3cd1b0a31a2102",
+      "mode": "100644",
+      "path": "Cargo.toml",
+      "sha256": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5"
+    },
+    {
+      "bytes": 1098,
+      "gitBlob": "282a4b4e30cbd1bc16ca21bb871b8ac9ce75c40b",
+      "mode": "100644",
+      "path": "crates/weft-core/Cargo.toml",
+      "sha256": "fee97599e261ef413b9850a03f45130308e87eeaa7b73ea393f4f3b359fbb549"
+    },
+    {
+      "bytes": 3032,
+      "gitBlob": "73ba77b5fbf9325960ea3a81d4b68572a54336ec",
+      "mode": "100644",
+      "path": "crates/weft-core/src/application_ir.rs",
+      "sha256": "6653d07a2eeeb632cbbff53419590f1a950240fa8934e3ffd52a1d9eae232a1c"
+    },
+    {
+      "bytes": 20594,
+      "gitBlob": "687d4f96584046ef5e67390bed3450668e683d63",
+      "mode": "100644",
+      "path": "crates/weft-core/src/application_model.rs",
+      "sha256": "d16308110339ea6eede58470c7ea3d58c465668100c8eb7d25cf997ddfdae67d"
+    },
+    {
+      "bytes": 14652,
+      "gitBlob": "1c80c65e016c766297ad378aca233ce09834fb3c",
+      "mode": "100644",
+      "path": "crates/weft-core/src/application_resolve.rs",
+      "sha256": "5c272ef21eadf10a2192095e03b82442b74deb81935e4a016f9a632043c48be1"
+    },
+    {
+      "bytes": 11904,
+      "gitBlob": "26eb20c44d357f8d21f5d9cc9f043989ea9f3bb2",
+      "mode": "100644",
+      "path": "crates/weft-core/src/application_scope.rs",
+      "sha256": "89fbb5d278b0e32a97ea2199d4a6b281a87df7cfb7c1280447dac3c086953e65"
+    },
+    {
+      "bytes": 7763,
+      "gitBlob": "4534316a844054264d817106a40e25d330325dd1",
+      "mode": "100644",
+      "path": "crates/weft-core/src/application_syntax.rs",
+      "sha256": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7"
+    },
+    {
+      "bytes": 41456,
+      "gitBlob": "7eb2ebe71ca3cb964020146043e85965b739e585",
+      "mode": "100644",
+      "path": "crates/weft-core/src/arithmetic_application_resolve.rs",
+      "sha256": "12b3212a08c71f91089b8244670da7d04b8498f9ba7630d7cbae5eda343d4742"
+    },
+    {
+      "bytes": 3784,
+      "gitBlob": "80cc145a3efa9fec4392e407cdbfea4310de864d",
+      "mode": "100644",
+      "path": "crates/weft-core/src/arithmetic_plan.rs",
+      "sha256": "41bf6deab05a49b61966b8e690002702d1c3e1018cae4083be97e90e2739a72b"
+    },
+    {
+      "bytes": 19505,
+      "gitBlob": "6858a8ea0c1008ed80f99a4ea9136013bd229b62",
+      "mode": "100644",
+      "path": "crates/weft-core/src/arithmetic_query.rs",
+      "sha256": "49813365325d578cf6966a160fe2bde7326e46b642b06092fd6beb22c4e88370"
+    },
+    {
+      "bytes": 10240,
+      "gitBlob": "201f75a5de3283f9a31abf7885a3bb232d24e81d",
+      "mode": "100644",
+      "path": "crates/weft-core/src/arithmetic_resolve.rs",
+      "sha256": "8d4f6da3fc807935b52e2415604583af4d8f53bc0ee337775a5b28c1f4986440"
+    },
+    {
+      "bytes": 8098,
+      "gitBlob": "1d662f2d724e9b1b47bbaa2b49bd4d3269395e28",
+      "mode": "100644",
+      "path": "crates/weft-core/src/arithmetic_syntax.rs",
+      "sha256": "24620970982bc738e4abf01093771707adf35eaadc3320852210c7db2661577d"
+    },
+    {
+      "bytes": 35608,
+      "gitBlob": "8b32a254a7652a0e7280041937ad1b91ed97c74e",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend.rs",
+      "sha256": "90cd4de56c7a31b626a0097700f4aa44f31c1c3edbe5c913427a884176ffaf4c"
+    },
+    {
+      "bytes": 6841,
+      "gitBlob": "020e7ca84aee38b310b4d2c48ef33d3743a5ed52",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03.rs",
+      "sha256": "fcfa161b4381d5938dc7e96d9b0a13be9d68b4177a2e5cba3d2811a7c2f4d242"
+    },
+    {
+      "bytes": 32397,
+      "gitBlob": "ee669281f8743cf722cae1832db82b3dea0e1071",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03_emission.rs",
+      "sha256": "a6e23308fb9320803dffa5278a6955d2371cc1c5e42dafb14125b35571ab0b16"
+    },
+    {
+      "bytes": 3483,
+      "gitBlob": "e6632f8661d42e4c531aea44e7a846b827d4bd67",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03_manifest.rs",
+      "sha256": "bd793c04346cb6e9f314877fd46b796e5596434fcfc119204963de20cbc41c1e"
+    },
+    {
+      "bytes": 10986,
+      "gitBlob": "1333d6040736a535f0cf57ca094a4941898dc88f",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03_registry.rs",
+      "sha256": "271df204b75cda84f0f6fd85634352d1d516c0b26cf48fd0fe3b1ef965d40f91"
+    },
+    {
+      "bytes": 30728,
+      "gitBlob": "71c51420fc3ae69eed1209917da159c080849f85",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03_tests.rs",
+      "sha256": "e10178a8eb4fe10a06b0286ff56325a36984854f51e227dbbfab002944abd90f"
+    },
+    {
+      "bytes": 4115,
+      "gitBlob": "305e66f53f2095733bda296dc31adfe4f60b86f8",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend03_view.rs",
+      "sha256": "6c94b9b726dbe74bb0d25c451f4872f6a82dcdcc5e2c10f87cfa5af49e00a500"
+    },
+    {
+      "bytes": 44469,
+      "gitBlob": "4b25d720c669082fd55a02a62740f07d5898ab1d",
+      "mode": "100644",
+      "path": "crates/weft-core/src/backend_emission.rs",
+      "sha256": "6fbe584a4de038a5278b7d40a6c0f4adb2161ee2cc08da8c5faea15796998b32"
+    },
+    {
+      "bytes": 183,
+      "gitBlob": "98fe2735c9bd0a7187abdab45fdd6539f3d5ae79",
+      "mode": "100644",
+      "path": "crates/weft-core/src/bin/frontend.rs",
+      "sha256": "95469b6c18c6e50832f5beb8038fce512e58415676a84278630fcb6494392050"
+    },
+    {
+      "bytes": 12452,
+      "gitBlob": "c46e74dd47d729fb2ed0653b1c91810c459739a3",
+      "mode": "100644",
+      "path": "crates/weft-core/src/compile.rs",
+      "sha256": "d4c1090c7c333e8d63421e94d0c5e929b8c3e9ad44ded99cbe4b50bed2e26aec"
+    },
+    {
+      "bytes": 17708,
+      "gitBlob": "294367c1b377256e973ea0ca78555405462cbe01",
+      "mode": "100644",
+      "path": "crates/weft-core/src/compile04.rs",
+      "sha256": "2c82da3f60c20776284ff97b4844e976edd4b8c12d5be016ec4a323ebc7196ac"
+    },
+    {
+      "bytes": 8762,
+      "gitBlob": "29a1c555129ca91d2b48eb442b6ec68a6659a1df",
+      "mode": "100644",
+      "path": "crates/weft-core/src/compile041.rs",
+      "sha256": "e2e76957f836dafc47fb3ca480be94dd5ea603c0e5f9db79dcc79e1ea4f2f238"
+    },
+    {
+      "bytes": 780,
+      "gitBlob": "a28ca7bdf141d2f537b37d7dbf8b233602644dee",
+      "mode": "100644",
+      "path": "crates/weft-core/src/error.rs",
+      "sha256": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa"
+    },
+    {
+      "bytes": 3059,
+      "gitBlob": "624c09fbc820566c7dad0d8b54ef1a6279d6028f",
+      "mode": "100644",
+      "path": "crates/weft-core/src/exact.rs",
+      "sha256": "315ada2fb97f307b506b09a8a9f02cad4383597d1ab9b1c0200c8d3c3f8e7780"
+    },
+    {
+      "bytes": 3764,
+      "gitBlob": "f72b78b2fad6eb9cda6ff929920b9b7c109196e5",
+      "mode": "100644",
+      "path": "crates/weft-core/src/ir.rs",
+      "sha256": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f"
+    },
+    {
+      "bytes": 2429,
+      "gitBlob": "9b6d7707128cacc4764765aa2f626722ab5383d7",
+      "mode": "100644",
+      "path": "crates/weft-core/src/json.rs",
+      "sha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4"
+    },
+    {
+      "bytes": 3986,
+      "gitBlob": "cd2644ffdd7a7702bf456ce333936e08c4f1bb7a",
+      "mode": "100644",
+      "path": "crates/weft-core/src/lib.rs",
+      "sha256": "a64262ea8862f7b496b1ab0d3ed717e7aadb31795177dfed354d3861272775fa"
+    },
+    {
+      "bytes": 14467,
+      "gitBlob": "cfeeaaa57cdd465b84dac79f83e44e95404d79ea",
+      "mode": "100644",
+      "path": "crates/weft-core/src/model.rs",
+      "sha256": "bd461122697e480dc87931bc0bf39fae46c28b10e457f03e4ec4861bf8b09cf0"
+    },
+    {
+      "bytes": 26471,
+      "gitBlob": "50555aff5bdd02422d80833e09915e05456164d4",
+      "mode": "100644",
+      "path": "crates/weft-core/src/path_application_resolve.rs",
+      "sha256": "fe75e5b3a71a9b3dcef54daa6e8dcd874944ba66ce316351ab77d0b494169798"
+    },
+    {
+      "bytes": 27604,
+      "gitBlob": "0cc12ca348904eef9a67929d265157cced92795f",
+      "mode": "100644",
+      "path": "crates/weft-core/src/path_ir.rs",
+      "sha256": "6121b3515a2f56ed2502cb47f00bfaa8a32a9bdec130f62664a52941102108f5"
+    },
+    {
+      "bytes": 19210,
+      "gitBlob": "1393a601481c43a0a11a81e55685bb6a9ba1898d",
+      "mode": "100644",
+      "path": "crates/weft-core/src/path_query.rs",
+      "sha256": "5d77efc034ae0852d91a192e47d6f8ef42ab25946a70f58105c5a1b8303a43db"
+    },
+    {
+      "bytes": 10830,
+      "gitBlob": "619253435b25bde833bb306b5cec9dc47ec1eb72",
+      "mode": "100644",
+      "path": "crates/weft-core/src/path_resolve.rs",
+      "sha256": "1fffaf46129c0451eaf72fe3d832a0147d6a8db650211c059a0f2aebb77026e6"
+    },
+    {
+      "bytes": 11196,
+      "gitBlob": "cd938b7b7e88301fb9820cd4bce314d60ed97948",
+      "mode": "100644",
+      "path": "crates/weft-core/src/path_syntax.rs",
+      "sha256": "87e8e0183f95b708151bc9f62c515c063879aba78b815296927da1a6846f9e96"
+    },
+    {
+      "bytes": 10230,
+      "gitBlob": "3ce5a51ea4667043226ed82dba190e9d13a78426",
+      "mode": "100644",
+      "path": "crates/weft-core/src/resolve.rs",
+      "sha256": "db56e29f39d9de3a682fbb917e11cf2144fa83ad48b5cc3fcf539b60b6e7fa4c"
+    },
+    {
+      "bytes": 16055,
+      "gitBlob": "3ae9524238c3b7645b258cebaec12b207f30c39b",
+      "mode": "100644",
+      "path": "crates/weft-core/src/syntax.rs",
+      "sha256": "092c75a9012659bdedba98af5ba4c48fe1299266a294156ef44ac6db570be95e"
+    },
+    {
+      "bytes": 4539,
+      "gitBlob": "76aa01beb911b036ae31b8823dc898ed959d8072",
+      "mode": "100644",
+      "path": "crates/weft-core/tests/frontend.rs",
+      "sha256": "4e24cdff14d6253447fce48b7b8545c2818db4e5d1219e7d841b2eb90b722bf5"
+    },
+    {
+      "bytes": 1175,
+      "gitBlob": "ff54c7246cd11d22a7d10e9518ec65fb5371fd2b",
+      "mode": "100644",
+      "path": "crates/weft-core/tests/mathematical08.rs",
+      "sha256": "c95559d7ef5f8f3ffe817d19b7b47aebfe587bdf74f5a79adac60f5400fffc9d"
+    },
+    {
+      "bytes": 5780,
+      "gitBlob": "eacac63d0dcff33c82b48e1dff95830660620ce6",
+      "mode": "100644",
+      "path": "crates/weft-core/tests/original08.rs",
+      "sha256": "f948c58d3731cecf12a4a3cdc7a41628176fb07cef759afc90b32fdaa063e556"
+    },
+    {
+      "bytes": 385,
+      "gitBlob": "3ca2457b712a82a28fe18e15b6d8e9b8d7395ad1",
+      "mode": "100644",
+      "path": "crates/weft-databricks/Cargo.toml",
+      "sha256": "03e6fb9fb2b7132c8cc9dd2c110a4544978a856dc41eca1fd91648fefa4ceed8"
+    },
+    {
+      "bytes": 458,
+      "gitBlob": "26e87e5a6ba98ac7e1e02e88f7bac87ac537145e",
+      "mode": "100644",
+      "path": "crates/weft-databricks/examples/compile.rs",
+      "sha256": "40c0d585cb90792fd6f0d96bf3e7cdd389279515ea4e3ed0e8aef16ae8f74cdf"
+    },
+    {
+      "bytes": 7558,
+      "gitBlob": "961f8ac25bdc64442815db9efbb7e6941987ff0c",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/arithmetic.rs",
+      "sha256": "de4f8539e782b50a506cfdf50be3ad32ec54f9f522fc9e77556fbc94929b2ed0"
+    },
+    {
+      "bytes": 19296,
+      "gitBlob": "823ae64563c35b5ac50b70b71daa32638ae18923",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/binding.rs",
+      "sha256": "0d4ca3b8fd15973309be6b5b04949956dd29fdd49d15282569a52717904fdd76"
+    },
+    {
+      "bytes": 32161,
+      "gitBlob": "fde1a055d05ca3780ad8889c51cda11bf6f5da64",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate.rs",
+      "sha256": "dafb2aabe4b4cdbc938f84fc50e3e48a050c3670273dfb28fec5eddc221d4802"
+    },
+    {
+      "bytes": 16858,
+      "gitBlob": "7b2601b26a5a804904cf411138a474a191be52d5",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/application.rs",
+      "sha256": "f6f6269996c49c3f7acb4b9ed13c0e80e25d6c24f0e163eff2cef4339cd3f660"
+    },
+    {
+      "bytes": 34589,
+      "gitBlob": "214017b31681ebebbee95e2c8c1e4fb552cdb39c",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/arithmetic.rs",
+      "sha256": "39b9ecef419730095681529419c1d80a830705dee06ea9ed64ebf572eb53a622"
+    },
+    {
+      "bytes": 8948,
+      "gitBlob": "575c23901ffab75fb30a5a40f76acbc26a2473c7",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/compound.rs",
+      "sha256": "2fb9b3b7a6cfadb77a5f50ff89a9979b0ee8606b52d4127251665952bc10d44e"
+    },
+    {
+      "bytes": 42265,
+      "gitBlob": "e959a0de0c2143ab51df7e170e89f318c120bb0a",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/path_lowering.rs",
+      "sha256": "e09086918dca53006e515e9ff2c979c9ff994d6ed82299ceb8087d14f3690af3"
+    },
+    {
+      "bytes": 5908,
+      "gitBlob": "589a208b019e776cd09afc81ba58088540eb574c",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/related_keys.rs",
+      "sha256": "ed99856f9044b77e2477764d9b1f136cc17a9ff0db6770d6164809f63c62fb13"
+    },
+    {
+      "bytes": 13451,
+      "gitBlob": "d881969f7add9771c5edd53470234ba680d4ac17",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/candidate/relationships.rs",
+      "sha256": "9bdc758bf9e8e2edf13cef776d9b79257ec6095ab659c0fa555f10a7acca112e"
+    },
+    {
+      "bytes": 2841,
+      "gitBlob": "84ec29b40bdd170dc39d817a1b6eb09b72d07806",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/count_distinct.rs",
+      "sha256": "4d8e8dd391f7f2670705fdd611204b4c19942a237996d4f2c59ff6be72bf2548"
+    },
+    {
+      "bytes": 3199,
+      "gitBlob": "40ae03fd310413e464d1ff018a6633c9d9fb6214",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/count_having.rs",
+      "sha256": "e835313d8ae870e7b19dac8086f8f888e0a0d99c79e33766a1ff495fea10bd17"
+    },
+    {
+      "bytes": 3292,
+      "gitBlob": "c3bfe356d91d6d426539874473382fd6a6d3e309",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/left_join.rs",
+      "sha256": "f89a0e9358ead34344ed88cc957932f1a84bbdcf6217463ff8d8d4158a2218ff"
+    },
+    {
+      "bytes": 871,
+      "gitBlob": "010f9157cafb17827d198f932315c0617c1bb163",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/lib.rs",
+      "sha256": "4ac8962d8eb6df6e61ee921289653d76c13c49514d87069b9f28967581b9bdcf"
+    },
+    {
+      "bytes": 12353,
+      "gitBlob": "cb284b234908ae15de5298ad459ee634b9f3c50b",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/mathematical_integer.rs",
+      "sha256": "8bafcb244b3685f84b7c9c146912ebf21dd93bdbf0b44351c6141a0e8866b546"
+    },
+    {
+      "bytes": 7307,
+      "gitBlob": "503e53a8e93411018707e85cfad0fafcdeeb468f",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/native_profile.rs",
+      "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+    },
+    {
+      "bytes": 7921,
+      "gitBlob": "ffa2207546838d4f3e8dc44e0a1ce53edf6c6b89",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/paths.rs",
+      "sha256": "f7e677df76ac697f72289b477e9d14159ac5a05f11467316282f31be4deaf72d"
+    },
+    {
+      "bytes": 4001,
+      "gitBlob": "9d413c9120da0a73057ba65fc8b8466713e47f84",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/paths_keys.rs",
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b"
+    },
+    {
+      "bytes": 2497,
+      "gitBlob": "a2f43b19d1cac1d2b581f611b6c50bbd633a520a",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/paths_keys_having.rs",
+      "sha256": "0f721a706f527a9d60d5d75eb2ec768281f2157fbfbcc904a15ee9ad61a0a809"
+    },
+    {
+      "bytes": 4497,
+      "gitBlob": "35a9e9d1bb582265da236e27a7f84fced7a24386",
+      "mode": "100644",
+      "path": "crates/weft-databricks/src/qualified_profile.rs",
+      "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+    },
+    {
+      "bytes": 18427,
+      "gitBlob": "dc2f14917e58e84c07d3fe43604eacd8cc761bc8",
+      "mode": "100644",
+      "path": "crates/weft-databricks/tests/paths.rs",
+      "sha256": "501ec02b19ac86b945ffcf80b6d33e9aa19f5a5a1b10de952513afe7021594ac"
+    },
+    {
+      "bytes": 4705,
+      "gitBlob": "f0d5756e7948a239daf0500485639e4d07a22247",
+      "mode": "100644",
+      "path": "crates/weft-databricks/tests/relationship_degree.rs",
+      "sha256": "ae2ebfbea870a3a78df0f58740f10f3eedbc7524919d08cf4124213443647cbf"
+    },
+    {
+      "bytes": 550,
+      "gitBlob": "1a187cd1246b336efe59d1c5208da622d4ca4131",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/Cargo.toml",
+      "sha256": "cabbe952912a16ca40695f46425a41bac13a1a4d327ede9ed4303e2d7537178c"
+    },
+    {
+      "bytes": 473,
+      "gitBlob": "1e0fbf0f90c6219ea8d0240c17ae8998a59cdf98",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/examples/compile_probe.rs",
+      "sha256": "5b2defabf62ea5059c371e2176aecb8abb85f7ad909aa6c46c3298af7d126cb5"
+    },
+    {
+      "bytes": 1395,
+      "gitBlob": "c913c392a684c38e8aa71e354f4d20c9c7ac9f4e",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/examples/home_probe.rs",
+      "sha256": "d9cab573615454afa287d3653181836a2a7e74a17286c600640aa1fea3c8c221"
+    },
+    {
+      "bytes": 1522,
+      "gitBlob": "c4169536fbd91cc667484c8a7e513fc95b39e56d",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/examples/parameter_probe.rs",
+      "sha256": "e2dc94738d4dfa78cc6de859ee9539863e6adb066ca99de9ab6f5cc9a1abac5e"
+    },
+    {
+      "bytes": 8433,
+      "gitBlob": "d073feba06ec512a3f8bce14f5b9e85238051b2b",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/access.rs",
+      "sha256": "99824efbaf7e0878f8a38f7df673560edf281d603f4ddb17fb02ef1c28a1f822"
+    },
+    {
+      "bytes": 12960,
+      "gitBlob": "9db6771758424b1bf3176896f804f8a098e83221",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/binding.rs",
+      "sha256": "d5ac1297816451f484f5823ef68f0bb5da0e62cd4e0f0005907fbbc7075810bf"
+    },
+    {
+      "bytes": 27582,
+      "gitBlob": "bd28264d9386ebe6c71fe472d17f9a43993e268f",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/candidate.rs",
+      "sha256": "2102791e1e76ebcc99d2fac6392ec9d9172bdab6f0665b328ed45c6cf77b2687"
+    },
+    {
+      "bytes": 36549,
+      "gitBlob": "0bee4c9c3ac218f29eb6d526be50381a9cd5101a",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/candidate/application.rs",
+      "sha256": "45b7f9187e47dcf0f3ff84deee72323a0d473453ba357e6eba09e0f353ca4cf6"
+    },
+    {
+      "bytes": 3475,
+      "gitBlob": "addc8651e56ee5edc31c3a6f23d78890fa82b334",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/candidate/relationships.rs",
+      "sha256": "bd4ce13693e7a3a5f81e3b83fa37a9300f92d437fd3cf947f081baacd9163b10"
+    },
+    {
+      "bytes": 7304,
+      "gitBlob": "ca1ef47c29ca4bca6a0022e4757106a845c39090",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/collection.rs",
+      "sha256": "a7d15d50dd98094cddcde5292c69afda0266bfba30fe4c3a80225e076bf0bf6b"
+    },
+    {
+      "bytes": 30904,
+      "gitBlob": "034b23939f9bcc24f9b609693b0a2c85d351933c",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/comparator_requirements.rs",
+      "sha256": "52c6f81b746fda493a03ab0a2367a4470389676c46d3092f779bd93198beac70"
+    },
+    {
+      "bytes": 71379,
+      "gitBlob": "b06e36e49a7485a0b0b34aa0d0dff84867d5537b",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/conformance_original.rs",
+      "sha256": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63"
+    },
+    {
+      "bytes": 4288,
+      "gitBlob": "0622aab071a7b6e28b5e66d5807cec64933d4d93",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/expression.rs",
+      "sha256": "b2867d312f9aafc1651a709ceea0e215af6206b6cb8ebbba74472685e8fdacd5"
+    },
+    {
+      "bytes": 10106,
+      "gitBlob": "f66f3e4943451a4f753629d54ba9703f8f1997a2",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/json_codec.rs",
+      "sha256": "04771c4bd7b750e26d4f3e8368b8379904eeec58ba3bc84de4fe3ae08ae9cbb8"
+    },
+    {
+      "bytes": 11845,
+      "gitBlob": "d6b32c090e1705c67a6851179f9917e8b766560a",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/leaf_codec_definition.rs",
+      "sha256": "1502bd78e6f368e94b5ce8ed8fe379c46a67aeaee8a10aba0de619ac21fe8d6a"
+    },
+    {
+      "bytes": 7990,
+      "gitBlob": "cf003b4043bd7d0dc6b38fe0d7527b4a96309890",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/lib.rs",
+      "sha256": "07ece0a57e10ccbf6279e88f90bc9a4ac07ec56c1605d96d8335db407a669b8b"
+    },
+    {
+      "bytes": 21445,
+      "gitBlob": "da32cd2f98e6f878b254a3bf9101a611239e3abc",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/native_comparator_definition.rs",
+      "sha256": "a4f19e1041ba29416aab9764da7b61bd4f9a9c779e4a282efdf697a5e45398fb"
+    },
+    {
+      "bytes": 8520,
+      "gitBlob": "01a447df32fa2b2c043b63f2a09da6c2d5db8332",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/native_profile.rs",
+      "sha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
+    },
+    {
+      "bytes": 6561,
+      "gitBlob": "6b04cdb0234b12e0715717f39bb5a6c120fff8d3",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/numeric_correspondence.rs",
+      "sha256": "45adadb6ab68f8c0cff909285f7998fa76c6373332a0395d6208cbd38a5d4440"
+    },
+    {
+      "bytes": 12852,
+      "gitBlob": "35f97c00656817765030c8ec6b238cecc033b8cf",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/original_admission.rs",
+      "sha256": "adb96451b616ad9b366386cd40eed41fb80160f743a2b78529bae54f868dba24"
+    },
+    {
+      "bytes": 11857,
+      "gitBlob": "6e55568c97c56ad66403d9856d80ada8b0f2e29a",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/original_backend.rs",
+      "sha256": "35d86ce923afc039d6524c7dd41b58ea37d029365e13fdc8a88352572f2cfdee"
+    },
+    {
+      "bytes": 8507,
+      "gitBlob": "bf4ab9d5ddd67c3d8754f109015d71f7725cc8c2",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/presence_definition.rs",
+      "sha256": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75"
+    },
+    {
+      "bytes": 285089,
+      "gitBlob": "995e73cf3a93dee4facd06d457eb435692c659c4",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/property_definition.rs",
+      "sha256": "02155e22cb3006f7c8295da59816489ba11f0f8c2a26308d3b73cef6850bd788"
+    },
+    {
+      "bytes": 4497,
+      "gitBlob": "002e4b5e5e67a4b55caeb4f78971d67960da234a",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/qualified_profile.rs",
+      "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+    },
+    {
+      "bytes": 7387,
+      "gitBlob": "19dcdf88afee9d44582045b3f361c2ebf9d9bd8a",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/read_context_definition.rs",
+      "sha256": "8dbabd1eed12da7add0ebb039c806512f3ded3bd8eba3ea7ba3ede5360b57e70"
+    },
+    {
+      "bytes": 24337,
+      "gitBlob": "b4653a36f9fde0d3bf7fc06d7ff97cc6951c15a2",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/record_definition.rs",
+      "sha256": "c15db2fedebf28b3d7a34b9f02aa09a1ceefde0bdc24ae374edd88bd17f5b06a"
+    },
+    {
+      "bytes": 10251,
+      "gitBlob": "450a065108f2c25b4df57c2f3cc479ccf3c3241e",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/recursive_observation.rs",
+      "sha256": "335d00b42f2f3296704ea8c78494dc890f244f9c9e03d629813c7e5142adff50"
+    },
+    {
+      "bytes": 25865,
+      "gitBlob": "f0403f9c078b11d7d20d1b63a845d0d4d066552d",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/registered_access.rs",
+      "sha256": "784f82e5a6bf3a970e4797e2842b45ac12945da4dc105d6b120ba44f7dea8845"
+    },
+    {
+      "bytes": 8762,
+      "gitBlob": "41177eb55cec5db3411c35616082a6c4ad5af611",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/relational.rs",
+      "sha256": "b0e7f5851317b03a678f0ce4eaeda6d2b1030a3ec803ebf6ca6a14dc9883b022"
+    },
+    {
+      "bytes": 46299,
+      "gitBlob": "ed8ede6248bfbfe50113612271754534fe3bea07",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/relationship_definition.rs",
+      "sha256": "ce1c9cf445afa105fcdb87260053bdf89bea3091054efe6fc100d5e3430652ca"
+    },
+    {
+      "bytes": 10038,
+      "gitBlob": "f512c95cd506cf66ab703d988111e35ff0d779a2",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/relationship_lowering.rs",
+      "sha256": "713547f9e491542b912b6544176c05bb532fa8dffc0a821c004075abf1a58295"
+    },
+    {
+      "bytes": 30955,
+      "gitBlob": "c294125baa83245e2f72b290ddb1cfa0d0101823",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/result_definition.rs",
+      "sha256": "53c8102b2c916cecaa8f7e1cdc65c52cf95585f5f87be91d89fa60eb0f979155"
+    },
+    {
+      "bytes": 5591,
+      "gitBlob": "ecf21afb93cf16586692b558c8c8fde9af81835b",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/row_codec.rs",
+      "sha256": "26553ad206c4813f309c3ececcae73fe861638967f1b41d80229d9d67ee34931"
+    },
+    {
+      "bytes": 28426,
+      "gitBlob": "a20cc5fd0b5aa5169c2d0c6077fc163174f7e814",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/row_custody.rs",
+      "sha256": "172cb81bd5c303ffdcd0cdc4825759bc578d1129f88d2a83b79e3ea6eea95d7e"
+    },
+    {
+      "bytes": 41293,
+      "gitBlob": "bbb8ce3220c31d7edeb782219cda820f486b4982",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/row_join_definition.rs",
+      "sha256": "83c1d8747213e87badc4cef5209c636347eaa6acc14becab5fc4e509e83dd65e"
+    },
+    {
+      "bytes": 13425,
+      "gitBlob": "25f69a6fcfe26d10bbfc51693f629dfe84f0a9ec",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/row_tree_mapping.rs",
+      "sha256": "5e33720066bdda4612d73143a5e143b5aa3d86a6cbbab12ded84f0b9a1bb9b8c"
+    },
+    {
+      "bytes": 19571,
+      "gitBlob": "58ddfc989f7ebf25b588e464e7fbfedfe75925a6",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/row_value_traversal.rs",
+      "sha256": "578bb1774307b6e193f8e5c7eb7269d5ffd115666869e686278f8c500611ca3f"
+    },
+    {
+      "bytes": 49686,
+      "gitBlob": "e3a22423c1676bbda9510f22ecea547bf3c1da86",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/select_definition.rs",
+      "sha256": "978baab8919bdca2f90c97add4e7bea0cff158cabef81b17d04bec18b3307346"
+    },
+    {
+      "bytes": 8819,
+      "gitBlob": "f4afa7cc2efd433170333acad1309b8944f3b3e5",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/structured.rs",
+      "sha256": "a12a4794a4ce81c2fc1c8dd396a2e366615bcbadb3da6cb425f8dd33404bdce6"
+    },
+    {
+      "bytes": 4248,
+      "gitBlob": "81cb72108b72de0adc1d8a71be9e739c1df58933",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/tree.rs",
+      "sha256": "bf11d86110799a9e0c548dc1b626e21a104ab0d249971cb6cb2566b9e880ad1c"
+    },
+    {
+      "bytes": 37975,
+      "gitBlob": "423db5d601ff923842cec4066f8f27d8f4b7e3fc",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/value_definition.rs",
+      "sha256": "e2f9b3671f6659aecef602e7b7c50b2d3f743d45e60ca5d2b42d912904d042e9"
+    },
+    {
+      "bytes": 33262,
+      "gitBlob": "c43795af5eb7613c9bc8711b1fd1deb2f42dd6b6",
+      "mode": "100644",
+      "path": "crates/weft-postgresql/src/value_traversal.rs",
+      "sha256": "7799fcadbabbcd8c9aaa9883ce2bcc678a987622dc844eb9bd652570bbfc6165"
+    },
+    {
+      "bytes": 1026,
+      "gitBlob": "835a799834a624dbfb107a64def532861d0af7a9",
+      "mode": "100644",
+      "path": "crates/weft-python/Cargo.toml",
+      "sha256": "7e14adc0c9726c780174dc8c96301b5651ad6cc2d61e1bad7a46dba8dfaba36a"
+    },
+    {
+      "bytes": 164,
+      "gitBlob": "c64e6cd5554fde961888bf21a6ab17fc0897749c",
+      "mode": "100644",
+      "path": "crates/weft-python/pyproject.toml",
+      "sha256": "e61c33fdc35b192e848111dc810e5aae8e053d43f14b1f10ea8a9bdeddc86c7a"
+    },
+    {
+      "bytes": 1068,
+      "gitBlob": "a450925bae7abad6f0aff16bcf97062a4ab88891",
+      "mode": "100644",
+      "path": "crates/weft-python/src/lib.rs",
+      "sha256": "15fc77f52ca54a37b1acdde40391a4dac1fbe7abf3868e8a03555421899095c8"
+    },
+    {
+      "bytes": 1572,
+      "gitBlob": "2f0d1de8bc2e3aaad0b0ba10e32df940673a7bfc",
+      "mode": "100644",
+      "path": "crates/weft-runtime/Cargo.toml",
+      "sha256": "a3b0fc075b80f58d30c2c003b99e225bcbffa3678b987ac705e8132a3fc4dd5a"
+    },
+    {
+      "bytes": 339,
+      "gitBlob": "9372736290110d34873de9127efc5c872b4e4318",
+      "mode": "100644",
+      "path": "crates/weft-runtime/examples/compile_initial.rs",
+      "sha256": "4f28351bd1e22c01294ba8f0d2ee429f302664df729131d294b1d76c3c861e04"
+    },
+    {
+      "bytes": 931,
+      "gitBlob": "6065472a5a0deab97a9d35357037bae2768cc0fa",
+      "mode": "100644",
+      "path": "crates/weft-runtime/examples/compile_native_review.rs",
+      "sha256": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d"
+    },
+    {
+      "bytes": 239,
+      "gitBlob": "805799d84764ff1b991852eaa4c14c22555021f6",
+      "mode": "100644",
+      "path": "crates/weft-runtime/examples/compile_public_batch.rs",
+      "sha256": "3a824696d4ce43c29b0ce12c9d60d22824e5b9af83d195a26b8a17730e4a1280"
+    },
+    {
+      "bytes": 1024,
+      "gitBlob": "ec609ea24582f9c842b30b9ce4f87fc40f63443f",
+      "mode": "100644",
+      "path": "crates/weft-runtime/examples/compile_qualified.rs",
+      "sha256": "5fe9736c413ed246e17b7516fadb87046cd7b1d9bd535a64b306cedf22c4ea49"
+    },
+    {
+      "bytes": 21298,
+      "gitBlob": "d299dc724547caf91ee8dff5e2c72056285a74fc",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/lib.rs",
+      "sha256": "4bd552789182caa13073c28aeb2a0ed0640ceb102fa347ebeda6865535497c6b"
+    },
+    {
+      "bytes": 3396,
+      "gitBlob": "26b3f0c291f56416cb75f73768d42c499ed5dd43",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/main.rs",
+      "sha256": "3c4a2232a0b23af6fa4cbc611d7a9c5452a81a3e2e66c7ea7aaa83b0d39d67ab"
+    },
+    {
+      "bytes": 3040,
+      "gitBlob": "3e3087919670a92e48c37171788250e84c397746",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/paths.rs",
+      "sha256": "3a83f24b8b273f4de06c45a3557b6c0bb363468db7a610556db754d11fa7721c"
+    },
+    {
+      "bytes": 4148,
+      "gitBlob": "c3e9cb1731d109d3a9d1128841c2b9d3cb05482d",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/paths_cli.rs",
+      "sha256": "4aabd6a7fff0da6dfb7630ca7db356afbf9fa286d189372b362a509addd802c3"
+    },
+    {
+      "bytes": 15856,
+      "gitBlob": "61360dcd5d2e8468ce22df638ab7824e1008b65d",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/paths_keys.rs",
+      "sha256": "67e797a7971e0dff95206f898e0b925a50b6faca5d4365529ef3c92a65058d51"
+    },
+    {
+      "bytes": 4158,
+      "gitBlob": "5c4309055dee8688aff65acb86469fbfcd443660",
+      "mode": "100644",
+      "path": "crates/weft-runtime/src/paths_keys_cli.rs",
+      "sha256": "9859d5226a94d6e49b248d63688c1d6438dea7b78416fb3a2b7481df070f36ba"
+    },
+    {
+      "bytes": 3682,
+      "gitBlob": "9ba4979d2d628359495f7b7660bffc63214f684d",
+      "mode": "100644",
+      "path": "crates/weft-runtime/tests/paths_cli.rs",
+      "sha256": "7216f89d3c1f4991830683271223787023433b878293e9ca81a08980bcbaf98b"
+    },
+    {
+      "bytes": 4066,
+      "gitBlob": "659a5d07e67caef6f6176141ae49c7bbae435853",
+      "mode": "100644",
+      "path": "crates/weft-runtime/tests/paths_keys_cli.rs",
+      "sha256": "f118a65cae1d382384d95f5f141875a503898e7c0b178309e481f7027a48188c"
+    },
+    {
+      "bytes": 12083,
+      "gitBlob": "9324968d0b16333a982069a278996163edfa4f2c",
+      "mode": "100644",
+      "path": "crates/weft-runtime/tests/paths_keys_having.rs",
+      "sha256": "ad1613e37efa13f4f4a767bd552f9998f6c9ce7c27f429d67e037473b7a4815a"
+    },
+    {
+      "bytes": 969,
+      "gitBlob": "feac49da7020cd6b66c26c0e0053cc29bbfd3630",
+      "mode": "100644",
+      "path": "crates/weft-wasm/Cargo.toml",
+      "sha256": "54216221669904eb684e27be991647e9d8ad50f06b8ed7aecf44e259cd3fc5f8"
+    },
+    {
+      "bytes": 679,
+      "gitBlob": "f34d2c3dfc5f2c9b331cd98e05cf551ee33a9a4f",
+      "mode": "100644",
+      "path": "crates/weft-wasm/src/lib.rs",
+      "sha256": "3bce88847ab1bd75071694c5799b30d17a19c57e274004652f7af0533f6b5a12"
+    },
+    {
+      "bytes": 1636,
+      "gitBlob": "bff1fc5a8ede0c75796037700e272c7a1e73ce70",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/application-result-v0.2.schema.json",
+      "sha256": "0e9fc7aa16d14a4e78027a70514d75476d1576f9625747e1b5f56b76147f8014"
+    },
+    {
+      "bytes": 2281,
+      "gitBlob": "5800cad40de29960b872af76edf1e4c1f2b63041",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/application-result-v0.4.schema.json",
+      "sha256": "ee87e4e845d670601a301701dc6109c7a37dadb96ccb1e7f75c8144c5bd8bc2a"
+    },
+    {
+      "bytes": 7580,
+      "gitBlob": "ac57b3c25c82e77cdd9ca06e699c2d64cbadef09",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json",
+      "sha256": "b3b556d49b9c605e0c1ce1cad601905ba89008b67f5129f4bdbdbb8df0b55fc2"
+    },
+    {
+      "bytes": 18068,
+      "gitBlob": "1cc13b95226f3c887c7411c8f35003f4221c3015",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41"
+    },
+    {
+      "bytes": 18066,
+      "gitBlob": "3d0b8fd69ea93109dcab51a5a0d9e52738bf163d",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json",
+      "sha256": "655f2dea7b459b354af1f66ae1684f1ba2bce907a5c7355d34c9f9c461f9ea7a"
+    },
+    {
+      "bytes": 4006,
+      "gitBlob": "418afd598fe7feb89cda149890d1b96c0ecf5fda",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/backend-manifest.schema.json",
+      "sha256": "d18133db2b104714f78839aba458d62dffa79d969195df02582a87465a2ac4a1"
+    },
+    {
+      "bytes": 3874,
+      "gitBlob": "b02ca0597d829b04e751a530a937efdc5079ac90",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-request-v0.2.schema.json",
+      "sha256": "2a9a4264a9d8926176aa3809d613e103f35c8f634b0d8839ddf2bbcf598cacde"
+    },
+    {
+      "bytes": 3511,
+      "gitBlob": "dbc7f5e8ac1d95d9c85749b475568582498ddbf6",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "sha256": "7345c424b1bbf8da15e6f7b4efb81da7eeb85a1e08fb91319eeb7b19ec129047"
+    },
+    {
+      "bytes": 3513,
+      "gitBlob": "2ec9b22e9479e8ed74cdc088ea71e368ac7e55fc",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef"
+    },
+    {
+      "bytes": 3511,
+      "gitBlob": "2c6e073e2d538454c726f96e6e234581217acd69",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "sha256": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932"
+    },
+    {
+      "bytes": 2851,
+      "gitBlob": "5b674d7781fe7013d419c54791f5508f839ade34",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-request.schema.json",
+      "sha256": "8916022eb698864f5580319848307a1e0e90699dbaac1dafd6b8f2e11119d3e5"
+    },
+    {
+      "bytes": 30933,
+      "gitBlob": "4a4cd7f6ad6241da911334ed0f873d593bbea933",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
+      "sha256": "8cce222e4031b5cf2e2aa6388b28e948e1d1408e60b3056a2c3c297e993af3dc"
+    },
+    {
+      "bytes": 34484,
+      "gitBlob": "b8a03d44e0d0e689b890ab5896e6dcff80cd0f97",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a"
+    },
+    {
+      "bytes": 62090,
+      "gitBlob": "433a94247b0d96ad33861a47ad17926a50680ee3",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb"
+    },
+    {
+      "bytes": 62086,
+      "gitBlob": "49b62782a4d2a990f785cadbcf100fb8424be7e1",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "sha256": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140"
+    },
+    {
+      "bytes": 23723,
+      "gitBlob": "1996ebf0e45003ff4ffb88a9c9d1c1e77aa66311",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/compile-response.schema.json",
+      "sha256": "234e439bca6ac06b783579005e3db086526b4f16a28267e0fdc92fe55abfb938"
+    },
+    {
+      "bytes": 2261,
+      "gitBlob": "86e9cd72a6d6182e104ef62359f9f0fd686cb631",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/conformance-case.schema.json",
+      "sha256": "837197d5a3d7ef43b80ae50ef8d45caf14a42ce88d5d166492abf8247e791e99"
+    },
+    {
+      "bytes": 2813,
+      "gitBlob": "e15cf366c561add486d83238a88c0f7b58151753",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/distribution-index.schema.json",
+      "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d"
+    },
+    {
+      "bytes": 9259,
+      "gitBlob": "ab6925c0302a4640c30c6343e11328675296db7d",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/distribution-manifest.schema.json",
+      "sha256": "856d5103161b965db3eb1dc0198d08c13a65a2cd7367aab5caf345ba69722d66"
+    },
+    {
+      "bytes": 17644,
+      "gitBlob": "37d562a0b19ca2b3671a167ad2d816868a80b106",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.2.schema.json",
+      "sha256": "17b650e2573b4274cfd8506cf02b963060c0d978ffc7f979d94a7d9eafea1316"
+    },
+    {
+      "bytes": 38838,
+      "gitBlob": "ea47211813d4eb96762ab3d3d7f8a1f0950b676c",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297"
+    },
+    {
+      "bytes": 43626,
+      "gitBlob": "b47fd210601c09213a5bf88e0cb5543a6d99d790",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4"
+    },
+    {
+      "bytes": 42813,
+      "gitBlob": "a5cbe0875038fb1a9d6314f2876aeca3ff023b14",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/logical-plan-v0.4.schema.json",
+      "sha256": "a6f28858646e4795019037233ef0e8d6b0aeb45e7440cbcf4e7a477891a1b3d5"
+    },
+    {
+      "bytes": 8879,
+      "gitBlob": "bdf15621aa9eb750172007c13f483475ae575cdd",
+      "mode": "100644",
+      "path": "docs/helix/02-design/contracts/logical-plan.schema.json",
+      "sha256": "ce9c7de12094ab840e4b483faed44a4ee5e122e47a4d4c9f9e46d8144541f9ff"
+    },
+    {
+      "bytes": 1992499,
+      "gitBlob": "6da3729cb533ca8075f9fe7ed43164b945c8145a",
+      "mode": "100644",
+      "path": "docs/helix/03-test/fixtures/cases.json",
+      "sha256": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306"
+    },
+    {
+      "bytes": 2780,
+      "gitBlob": "ccf235bf28173db5fc159e199b4e40a6339e05c0",
+      "mode": "100644",
+      "path": "docs/helix/03-test/fixtures/sales.umf.json",
+      "sha256": "4a1f4041b9ac4dedf6a1bcaedc7f4d16b37d6af822caf81f919b4d2f86900a63"
+    },
+    {
+      "bytes": 210076,
+      "gitBlob": "4281f13126a61eb064842deb79f037006b848b89",
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/B-005-original-recursive-row-native.json",
+      "sha256": "4fe80b2cf9824669a3d2c7a29d92330999ba5d5acd7694d42615bcc67eeaa0b6"
+    },
+    {
+      "bytes": 5520,
+      "gitBlob": "f42c2966aa16345ec340719e3ade700d5db2542a",
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/B-005-row-custody-native.json",
+      "sha256": "c9a02209a194554f01d87b3489853faab88a87a8a71d85f7b025def071b3f648"
+    },
+    {
+      "bytes": 9904,
+      "gitBlob": "be7f3a32638525138f08023f41c3c29f95729cf7",
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/B-005-row-tree-custody-native.json",
+      "sha256": "154a0ea1c47b6a5f227de6ff048f034d4c879b9b613219fd9b26fe934765111f"
+    },
+    {
+      "bytes": 31389,
+      "gitBlob": "80efc0f184bbdf62b9097c2d5684b1c8b6811ca0",
+      "mode": "100644",
+      "path": "docs/helix/04-build/evidence/B-006-cross-module-native/compile.json",
+      "sha256": "f8492391b65b717be213fbafb6fbdbcb8c8d9fe7cec9d77461ee420464bf0560"
+    },
+    {
+      "bytes": 807,
+      "gitBlob": "83d4bedea4363fdca975b8fd7d93e3574a3d4ce5",
+      "mode": "100644",
+      "path": "packages/weft-browser/README.md",
+      "sha256": "498b53d7aa2ecd271fd1aaffb9f26ef282e30d7496aac4343a82e5ae35d7a8d3"
+    },
+    {
+      "bytes": 386,
+      "gitBlob": "17d2d74605361441987505d9858f30126706c900",
+      "mode": "100644",
+      "path": "packages/weft-browser/package.json",
+      "sha256": "ebaf2330f50817489f3c1810c8f70f6a0c5650ff276184a4ca3d970b27a5e8fc"
+    },
+    {
+      "bytes": 1554,
+      "gitBlob": "6ecd32955498a8c6036831b92b31ebdd1f19a5a1",
+      "mode": "100644",
+      "path": "packages/weft-browser/src/index.ts",
+      "sha256": "ff575c5e5866cb33cc3ec949bf25f3d94a3414a486a8507173902ac852044a11"
+    },
+    {
+      "bytes": 255,
+      "gitBlob": "d3f37ff575a1bfd608b5d37145fc73db26de8600",
+      "mode": "100644",
+      "path": "packages/weft-browser/tsconfig.json",
+      "sha256": "c6560b415ab4714c721a6019116ed62349bb95f80255108381b332cc12479f80"
+    },
+    {
+      "bytes": 113,
+      "gitBlob": "38c5ee54a9557e203e59ef6dc06586b6bd1b77d7",
+      "mode": "100644",
+      "path": "rust-toolchain.toml",
+      "sha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+    },
+    {
+      "bytes": 948,
+      "gitBlob": "806168d3403d7564dac3c8aaf7afec556b0ce199",
+      "mode": "100644",
+      "path": "spec/upstream/README.md",
+      "sha256": "4114be61fdfa91ccb9e91e7b80bf0d9f579ffb0a6f143f1718bda1bd062eed49"
+    },
+    {
+      "bytes": 9607,
+      "gitBlob": "d3b2a5993e165230a1284cd05e78b8257027ee63",
+      "mode": "100644",
+      "path": "spec/upstream/ashlar-delta-v03.sql",
+      "sha256": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e"
+    },
+    {
+      "bytes": 18941,
+      "gitBlob": "1bc03f55ddf11a44a2a7fc7351187a8a70da0ddb",
+      "mode": "100644",
+      "path": "spec/upstream/umf-0.7.0.schema.json",
+      "sha256": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813"
+    },
+    {
+      "bytes": 26793,
+      "gitBlob": "ebaf4c4ee757b88825a30cb81be647d4761bcf5e",
+      "mode": "100644",
+      "path": "spec/upstream/umf-0.8.0.schema.json",
+      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+    },
+    {
+      "bytes": 203,
+      "gitBlob": "c1823e1a6fcfa9a353c1d5f803866c6a6ab6737a",
+      "mode": "100644",
+      "path": "spec/upstream/umf-0.8.0.source.json",
+      "sha256": "9d638cb3cf3980b9edd610c6a37264e68472bf7cd7885ccd7c3cd0df2c1c0984"
+    },
+    {
+      "bytes": 225,
+      "gitBlob": "4629006d518fb83789ca7f512a6bd8549823a4d7",
+      "mode": "100644",
+      "path": "spikes/b001/core/Cargo.toml",
+      "sha256": "9864f167a7d28c19882edd6a582a55be3a171d566273c6c8b5637947f8f6cdad"
+    },
+    {
+      "bytes": 188,
+      "gitBlob": "70e3929daccb267200fb17baf4c78639c8fcafd8",
+      "mode": "100644",
+      "path": "spikes/b001/core/src/bin/report.rs",
+      "sha256": "749acc0b5e02e956db5416fd39d62eaa6624d6c6421f0d0609b8b326b345535c"
+    },
+    {
+      "bytes": 15386,
+      "gitBlob": "f005c0552203f87ece5ff162cd515b3a375f051c",
+      "mode": "100644",
+      "path": "spikes/b001/core/src/lib.rs",
+      "sha256": "d3ff7598621703f941317d1b0d80ac48c86e74598d4811c9a9c4e473425315f7"
+    },
+    {
+      "bytes": 1604,
+      "gitBlob": "cdcc91b0b951cd58d1eee142519a5ec7647b5c56",
+      "mode": "100644",
+      "path": "spikes/b001/core/tests/boundary.rs",
+      "sha256": "ec2fff4657d00a3796c4be2225250989ffd621a2a93fbb27a38d7befdaec46e3"
+    },
+    {
+      "bytes": 293,
+      "gitBlob": "5a2719430edc9199b4dd31bfefa9ba21cb9e198d",
+      "mode": "100644",
+      "path": "spikes/b001/python/Cargo.toml",
+      "sha256": "7cd318743ca8b8cb1608a92502cfc0b54f897ad1650f7bacc6006d9b320e452b"
+    },
+    {
+      "bytes": 178,
+      "gitBlob": "ee0ab31d3c12b988f8105bafff1fd3972da99ee4",
+      "mode": "100644",
+      "path": "spikes/b001/python/pyproject.toml",
+      "sha256": "2d478db532fd74ab9cf1aa98bfe6c9a00c9dfaf3fcfe598f39fadf7e05645663"
+    },
+    {
+      "bytes": 263,
+      "gitBlob": "c33f07a76491bd36ff8dc1f7a2e75b34c64d34a2",
+      "mode": "100644",
+      "path": "spikes/b001/python/src/lib.rs",
+      "sha256": "5f36625154b7934ec71409acf1f8cc11b92b383b5e09bdee86d48ff7a0efb4af"
+    },
+    {
+      "bytes": 220,
+      "gitBlob": "1b89db941f1d3c163b3f8f806918af5955d1e707",
+      "mode": "100644",
+      "path": "spikes/b001/wasm/Cargo.toml",
+      "sha256": "8de2c9cd8028822e4e1c3e7fa0df8f1d6e2063f81cd6652f8a52b6f741618ba3"
+    },
+    {
+      "bytes": 138,
+      "gitBlob": "ad476584fd38f9ad454829389878f521c137747e",
+      "mode": "100644",
+      "path": "spikes/b001/wasm/src/lib.rs",
+      "sha256": "724af7bfba952c221bbaadc7efc1dea46947230aeca035ba96e3bffde55dcd77"
+    },
+    {
+      "bytes": 1625357,
+      "gitBlob": "33e22b84cba512594ae3b43d0a75ccd81af479e4",
+      "mode": "100644",
+      "path": "tests/application/fixtures/cases.json",
+      "sha256": "e74e260e19e0ded02463002b2cdd6ccf99936951a6e90432ff20482cbbaf1626"
+    },
+    {
+      "bytes": 55534,
+      "gitBlob": "bab353a10458e816a43fbbae38bb9a038b969572",
+      "mode": "100644",
+      "path": "tests/ashlar-databricks/fixtures/original-commerce-path-request.json",
+      "sha256": "b493b03ebf870b8de6c2720a59af2eddfaec38e4be6a27024f46a359ca0fa54a"
+    },
+    {
+      "bytes": 27544,
+      "gitBlob": "85a45bf992872c53f367fb18e22977aef2116509",
+      "mode": "100644",
+      "path": "tests/fixtures/original-commerce-0.8/ontology.json",
+      "sha256": "51d87c554df36846e41378cfaafc81277fcab61f6c891a6c64f34dba8fd9ac2a"
+    },
+    {
+      "bytes": 55267,
+      "gitBlob": "5e9dacb3e16a8caf2693c9513256a351e6a828d1",
+      "mode": "100644",
+      "path": "tests/fixtures/original-supply-chain-having/old-distinct-request.json",
+      "sha256": "b58f7790c0f71103dbfae62b3e6eb3e1835fb67c749999c7e03a96fb8fdd15ed"
+    },
+    {
+      "bytes": 20564,
+      "gitBlob": "1dc554dc2d1b250010cad6d7551b77a155e995aa",
+      "mode": "100644",
+      "path": "tests/fixtures/original-supply-chain-having/old-distinct-response.json",
+      "sha256": "b5953ac4f061f6eab808dc882cfe92940f1ed582d63964f2be130fc1a2aa8a74"
+    },
+    {
+      "bytes": 55327,
+      "gitBlob": "7fccb94693bb72b6ab349e7edd416d24038bce3c",
+      "mode": "100644",
+      "path": "tests/fixtures/original-supply-chain-having/old-request.json",
+      "sha256": "41be129090c12b8b525e023f63c038d571b993161e4c276cc50553fdfec9ace8"
+    },
+    {
+      "bytes": 47111,
+      "gitBlob": "311c6070a8c326d8a56c99c46a023dcc6b490073",
+      "mode": "100644",
+      "path": "tests/fixtures/original-supply-chain-having/old-response.json",
+      "sha256": "dd8733556ee61fcaddaf7480e1f07dfdcdeafef32b4ac5869272bab6e4e4c709"
+    },
+    {
+      "bytes": 55216,
+      "gitBlob": "10245af26f58267039ba265d9c8a6368874c26c6",
+      "mode": "100644",
+      "path": "tests/fixtures/original-supply-chain-having/request.json",
+      "sha256": "4c16096f86a309d109a6c1e6358c5ca9135fca5484bc0f662e8a3053deab628c"
+    },
+    {
+      "bytes": 194,
+      "gitBlob": "de64a2ff210412a909677fb55a214d3e2b75bd4d",
+      "mode": "100644",
+      "path": "tests/frontend/wasm-probe/Cargo.toml",
+      "sha256": "436110f0fc8af147369dc91bbd3a1118b9a839ec937a6c3d51410ba7b881b85d"
+    },
+    {
+      "bytes": 129,
+      "gitBlob": "cf7997455947dfcb8ba7c359d5bebcfdbc345ea5",
+      "mode": "100644",
+      "path": "tests/frontend/wasm-probe/src/lib.rs",
+      "sha256": "5c4069689c550d489e9299f8a38c5a11f8af0045010bd4f5ae78fb5b33511da5"
+    },
+    {
+      "bytes": 226,
+      "gitBlob": "3ac85d16353f0b21d59c224d024c2bb665dafbaa",
+      "mode": "100644",
+      "path": "tests/register-backend/probe/Cargo.toml",
+      "sha256": "d5b2aeae4f22ea27cc611d429e0a111b163641774305680077c524447a3a7133"
+    },
+    {
+      "bytes": 5200,
+      "gitBlob": "e959d346a1afa1a88f4778d8b4f401682242568c",
+      "mode": "100644",
+      "path": "tests/register-backend/probe/src/lib.rs",
+      "sha256": "2f91a3481f58bb754b67430945b574b6bca0220feca503f0d3c29a5faecd37c7"
+    },
+    {
+      "bytes": 197,
+      "gitBlob": "6faa6cbd425a688516b30dd32fcd0b5539b0ce1f",
+      "mode": "100644",
+      "path": "tests/register-backend/probe/src/main.rs",
+      "sha256": "eb3f21dd2d3376e53329590e16c192c9e4f4f5edff35920a4382f1e2e3e0add7"
+    },
+    {
+      "bytes": 9742519,
+      "gitBlob": "8d957fc7b24df5ab01db510557498a7dcb82c122",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/application-cases.json",
+      "sha256": "86dbf599a2cb09381a1fcfc9f9d5ea9df94bf1e08f87d8c86fb2e70a806480e1"
+    },
+    {
+      "bytes": 6299,
+      "gitBlob": "98cbae3289fa0e11008aae5e1905f687e8beac57",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/binding-row.json",
+      "sha256": "1127037a1d399dc1ff3fe5d27cfebf9a988fdf644271f6202de18039e7701249"
+    },
+    {
+      "bytes": 1060577,
+      "gitBlob": "d8d1233943769c36a59dbde1806bca3594d67666",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/compiler-cases.json",
+      "sha256": "5e7cd906dc0fc81b0714dc82d8df66492e3b6fde39e3f2e74038472f3dc38e37"
+    },
+    {
+      "bytes": 300306,
+      "gitBlob": "f3ab30ed77810a7883d02de63c18421b6908bb61",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-address-compile-transport.json",
+      "sha256": "f3c74718592f81858ebc3c1edc4427633b1640e82a7a0e4cad37e631944d8fdb"
+    },
+    {
+      "bytes": 17724,
+      "gitBlob": "d96c37d5f4027b2a5b2000726c8d4978a43643d8",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-address-composition.json",
+      "sha256": "4180b2fd6703d3ccfd1c1b6d03a1bd5a46d611432052af76dcf2f85245d49f47"
+    },
+    {
+      "bytes": 827305,
+      "gitBlob": "db12906e8836a64562b11be325050e8d88ef0a2b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-inputs.json",
+      "sha256": "2e045de83fd6e781ff9b1fd4eb22b47def8e619a7cd3e77df60dc68cb7f4ccc1"
+    },
+    {
+      "bytes": 14847,
+      "gitBlob": "d244f3287c436a2e92f830c07fd9fca355490143",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-props-composition.json",
+      "sha256": "78345f294a2df69b0cd1210338a45e639e959cfdfdf04bd37b69ae769b754685"
+    },
+    {
+      "bytes": 1052445,
+      "gitBlob": "a64b6d885494e4b118ccf430af906cb9c53ca682",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-public-transport.json",
+      "sha256": "796463240d04e72a8777894ab2b4f812bc6f04e0aafc180d5089525c2695b3f1"
+    },
+    {
+      "bytes": 24180,
+      "gitBlob": "8f159da80df91a64958772671dc38619da27ccba",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-row-composition.json",
+      "sha256": "63ef9b53977d742339be1d9f2fa6db53d3064066b7111790299397c9e25e5de2"
+    },
+    {
+      "bytes": 225498,
+      "gitBlob": "12b2a2db62895102757ee83b521c57680a58cfcc",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-sequence-compile-transport.json",
+      "sha256": "0fd3b2bde5d23639e9cf33dfcbb2496232914cb9893912f9465af6bb0b5ba3b0"
+    },
+    {
+      "bytes": 13394,
+      "gitBlob": "7b17f96e8f8a1a5e53925225b8020b28cbfce7f3",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-sequence-composition.json",
+      "sha256": "85b178c8f066f5ca43a36af7feed90dd11cdbf051773fc5c135801e4c4cb98a7"
+    },
+    {
+      "bytes": 155461,
+      "gitBlob": "184b7104b2a63de1664b404ed7cea9e1f80886a6",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-boolean-sequence-inputs.json",
+      "sha256": "f4eefcf2f7116298234789040785459acaaf764a60b4a0a8e28b22da57452b3c"
+    },
+    {
+      "bytes": 1781822,
+      "gitBlob": "628b30c73f53e0b50d2adb79e8b48e054541b7ca",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-composite-relationship-inputs.json",
+      "sha256": "ed4e45de75683e2280219559e547a0211724cd11022f84b0a34f6a965e83e67b"
+    },
+    {
+      "bytes": 337048,
+      "gitBlob": "9b6600f8c87496be6fd43a4ed5a5457f33ab3543",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-cyclic-compile-transport.json",
+      "sha256": "97e63efaa1ec2a2ecdcfbf13400ea3a0b8d36365b9062b295bb46e450731f396"
+    },
+    {
+      "bytes": 19131,
+      "gitBlob": "5e2cbde4fb0de255334ceeceb6b0311d208ddce4",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-cyclic-composition.json",
+      "sha256": "8960a60259ee7648856b7a1cf65d7014e0df218551768cc73b08b79184e6f9ed"
+    },
+    {
+      "bytes": 157582,
+      "gitBlob": "c96be63023bbaa7492372eb5e85f6811511fa487",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-decimal-map-inputs.json",
+      "sha256": "b1123a964581679140e44166031e56d2897f3bf46926fa5861d13491cf041f5b"
+    },
+    {
+      "bytes": 157603,
+      "gitBlob": "6a7ccf5c45e652fa82c54efe0ddbc7639ad24de9",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-decimal-sequence-inputs.json",
+      "sha256": "2bdb4569232a10792d34858107b4f1a88b26f27a159e381a76064a01673cfcbb"
+    },
+    {
+      "bytes": 183079,
+      "gitBlob": "f9797411bc036f34381cdf6e77405040fa266f63",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-decimal-structured-inputs.json",
+      "sha256": "f449e3755370542b67d35630ce31ded606698a08c8fd05f7d28a65658281d2a5"
+    },
+    {
+      "bytes": 150312,
+      "gitBlob": "ad391736f2f1c7113da56f50319ba950fc3cb487",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-address-props-composition.json",
+      "sha256": "5895e27a810cbd38f62e146cf1251c110265de7c602db99458ba4638d1e21e85"
+    },
+    {
+      "bytes": 159645,
+      "gitBlob": "d8b28abfd636625ef371c519f7117e770cb27095",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-address-row-composition.json",
+      "sha256": "ae4ab4a7504e17dc11f8e3c012cd1d7a5518e490a39cec2e7c4c3b9a9bfc9907"
+    },
+    {
+      "bytes": 151719,
+      "gitBlob": "47b7be2f7a5f1fa4d2862d28db36938e7c69c4dc",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-cyclic-props-composition.json",
+      "sha256": "4a5c65f4ed140837b1c5bc465cef191a49a4129124ddd85b888f941c0bda9622"
+    },
+    {
+      "bytes": 161052,
+      "gitBlob": "51a638b49930bd1b56175bcf71c0213eb293c7d2",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-cyclic-row-composition.json",
+      "sha256": "23c3dd61863e210cd71a5bff92df9f640500f17c45bce3f77f2e617925ef7428"
+    },
+    {
+      "bytes": 918293,
+      "gitBlob": "92d92fee6075c3edda657ab59417487fd7d4672b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-decimal-map-signed-structured-inputs.json",
+      "sha256": "62e5945dd5df79744af5e537b6b37afedbf3a164d67dd2a943da18abb4179c69"
+    },
+    {
+      "bytes": 918586,
+      "gitBlob": "3bb0abe42c0f7629f3a502a40d6237ee163b881d",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-decimal-sequence-signed-structured-inputs.json",
+      "sha256": "7f04abc009c6a6e529a474d32ada34fd400a85f80738ea8c2ecf590e9b777f23"
+    },
+    {
+      "bytes": 145970,
+      "gitBlob": "f1e858cf2266a4b9575d249b91ed0bd96ce7399b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-map-props-composition.json",
+      "sha256": "38e9fd3c0bc96b4aa90213a6f7aac53eb5fefdbd7b992d45e46956ab6489861e"
+    },
+    {
+      "bytes": 155303,
+      "gitBlob": "75d8fabb04593b6e52269d1944b29663abd9ca93",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-map-row-composition.json",
+      "sha256": "e3b17b66935ab6b0f8896f213dbac993cb1327881f0425e96a31080439e34719"
+    },
+    {
+      "bytes": 146369,
+      "gitBlob": "0e4bcf9c5a949b2b4cc50f596890079e07dfb0b0",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-nested-sequence-props-composition.json",
+      "sha256": "a86efef4fcc38a604b197e9c461321b9f94b76e98f1b4a3cec4141031bfcb8e9"
+    },
+    {
+      "bytes": 155702,
+      "gitBlob": "7ec9f408ac82e3a692e4cde91f7e4036eb779b12",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-nested-sequence-row-composition.json",
+      "sha256": "a2a5d24b030be661d2b87abd32fcc031a6687f34a0353cbefc18e6c1c908d9a2"
+    },
+    {
+      "bytes": 150820,
+      "gitBlob": "2624ed78b5f64143e0d0d672b8773df6ec7a411b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-numeric-address-props-composition.json",
+      "sha256": "b2a135e98c94f80f6e068928a3fdce23229ea79938a1f62679355160303fd746"
+    },
+    {
+      "bytes": 160153,
+      "gitBlob": "ca2bcdbd153afaf635837860176bc4e9514d1948",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-numeric-address-row-composition.json",
+      "sha256": "291890b35c773a7b5ce77ba5b8e3f385f3bbf6993d4fe9f72c9d0d84249757b7"
+    },
+    {
+      "bytes": 146334,
+      "gitBlob": "b8b7d81ade33d466b3d6f32a0e1084ddbbf28cec",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-numeric-map-props-composition.json",
+      "sha256": "856f62eeee7cacc50e5a562968156e38b4565ac82481653e423552d39ae9c9c5"
+    },
+    {
+      "bytes": 155667,
+      "gitBlob": "12aab98d0876662a2180b41e03e304818dc88c2a",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-numeric-map-row-composition.json",
+      "sha256": "54c0715da3ac1dc622d107d75ee27d83379677ed95649812fcf203c76b0d9078"
+    },
+    {
+      "bytes": 18379449,
+      "gitBlob": "659f0220851d62f2e67cfe597261d9e0507a9057",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-public-transport.json",
+      "sha256": "85369d936105946697b0aab73e8fbbd47644faa9fb1b934cb5bc9840a0c03cba"
+    },
+    {
+      "bytes": 918142,
+      "gitBlob": "68463304b8a397cc1810bc33cf5e77fa691fd48e",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-signed-map-decimal-structured-inputs.json",
+      "sha256": "e46b9b58a44b1e185e8949723ef62db2758bcc8419eb8e15fd49d3f1c164b58f"
+    },
+    {
+      "bytes": 918395,
+      "gitBlob": "99f08fc5e1c6fabf119850d0c7de1df334da8e12",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-signed-sequence-decimal-structured-inputs.json",
+      "sha256": "2a05bde8be0d1a2fffd8b76df667926af79f500394dea49c9e4f97ea7f666246"
+    },
+    {
+      "bytes": 145970,
+      "gitBlob": "f1e858cf2266a4b9575d249b91ed0bd96ce7399b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-tags-props-composition.json",
+      "sha256": "38e9fd3c0bc96b4aa90213a6f7aac53eb5fefdbd7b992d45e46956ab6489861e"
+    },
+    {
+      "bytes": 155303,
+      "gitBlob": "75d8fabb04593b6e52269d1944b29663abd9ca93",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-entity-tags-row-composition.json",
+      "sha256": "e3b17b66935ab6b0f8896f213dbac993cb1327881f0425e96a31080439e34719"
+    },
+    {
+      "bytes": 1774458,
+      "gitBlob": "fb38001c0e9199587e12ad1ea0de7471ddff261c",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-heterogeneous-relationship-inputs.json",
+      "sha256": "4e5acda744f86913bb7016dbff12e93758d87bb9b87a8f6a5680d68330d0d628"
+    },
+    {
+      "bytes": 225749,
+      "gitBlob": "e4f84863b367d347a1d881ad00bd275d2ae44293",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-map-compile-transport.json",
+      "sha256": "bcc410107ded9c40b1aadac3a894dded339644411f57e9076109cdaa4b43913b"
+    },
+    {
+      "bytes": 13382,
+      "gitBlob": "2ee3a40db7c5898672b696042b755bdd41c59b86",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-map-composition.json",
+      "sha256": "4df7bfcc18116fc27a494d9f8b9ffb5ea4b2f3f0327d20900cda40be423fdd80"
+    },
+    {
+      "bytes": 172556,
+      "gitBlob": "6f9b913c2639bc206cbb155a96baf6b6d7aa1d8a",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-multi-recursive-entity-composition.json",
+      "sha256": "2c28a3afc39b308d18a2334bcef5d850f136180df7dfe527f35765ddfa812383"
+    },
+    {
+      "bytes": 912551,
+      "gitBlob": "23cc75528646ea8c24bf589f87a245b710b4d678",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-multi-recursive-entity-inputs.json",
+      "sha256": "56c999c2a467973e6fa1368f564d0f48b218f9641046b118c830de3216c58c87"
+    },
+    {
+      "bytes": 2034317,
+      "gitBlob": "11718f07d0139d99d730690471d6f98e65e429d9",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-multi-recursive-entity-public.json",
+      "sha256": "dc022ff188f4c10e7d5541ed83d6a8984f45adebe5a06abafa85676a19ec0999"
+    },
+    {
+      "bytes": 240896,
+      "gitBlob": "c1451452b069011b11332b5492d9a4426ae40a60",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-nested-sequence-compile-transport.json",
+      "sha256": "a04d09067c40dfc5c5ca8f198840496e5d8e03268bf93da71a057bc3f556926e"
+    },
+    {
+      "bytes": 13781,
+      "gitBlob": "ecdab0edeb81e8ecb04e21356b5c135f5ec46a94",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-nested-sequence-composition.json",
+      "sha256": "a6d19424b02f2e61569b46227a7d5fb156b9c69c6b4792906eddcf7810f226d6"
+    },
+    {
+      "bytes": 310849,
+      "gitBlob": "06f11ac0f5852c56f96b9b1a03acc54001389f8a",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-numeric-address-compile-transport.json",
+      "sha256": "26bbf2e66c7a8e3ee5f4cf8727e71f500262ee819cfe4795563fcb7229849ddc"
+    },
+    {
+      "bytes": 18232,
+      "gitBlob": "dc685091c0aa41b478ca8c990d919fa4340082f6",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-numeric-address-composition.json",
+      "sha256": "8f08b6090760c9675cfa4a79219d0ad359cf172b768f31681a9fccb96e1aa5cb"
+    },
+    {
+      "bytes": 232442,
+      "gitBlob": "aaf88b947445a749dcfa9c10e45b253445e30a64",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-numeric-map-compile-transport.json",
+      "sha256": "97d4621ead31985f0b9e3c947fdff401ca662a689a39fa74ddaf86a29b8dbe8e"
+    },
+    {
+      "bytes": 13746,
+      "gitBlob": "1bfcd7d5d5fe1217d34b05d01ab817356416bfdf",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-numeric-map-composition.json",
+      "sha256": "c00c09e4f3d6ac7a5d7dbe9c57735424af2660df3ff45332f37fee0dace17786"
+    },
+    {
+      "bytes": 133527,
+      "gitBlob": "09426603685172675b634f63085f0073fb6066ce",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-optional-props-composition.json",
+      "sha256": "cf876a3505488d49bd082c9758e4a99aa2959923740396c8fa099fda1c39117e"
+    },
+    {
+      "bytes": 2347684,
+      "gitBlob": "308ac70c6da15ce87907b3635c83c24a321d3db6",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-optional-public-transport.json",
+      "sha256": "d9e5173b2ab893f4316a7f4dd43476185d254eb192bee53320a6bdeadae20afe"
+    },
+    {
+      "bytes": 142860,
+      "gitBlob": "1a8bb8054b2a25f356667fce79fe9857fc3100e1",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-optional-row-composition.json",
+      "sha256": "784550498c1594b6fc24231fc93744d9dd2c35eee0085ecfc1037b57bff36318"
+    },
+    {
+      "bytes": 1042216,
+      "gitBlob": "2c8690c5f04570d312c71256c600fc8512b8dc87",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-optional-scalar-inputs.json",
+      "sha256": "7c4c970c2110d7d8772b705614f25c1c839da4937c9f194c26d8d5531bf5eb9f"
+    },
+    {
+      "bytes": 5837584,
+      "gitBlob": "e60dcfa59d8441411a1eeeff946b5f6086cc860f",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-recursive-entity-inputs.json",
+      "sha256": "9d6e3aac100a41f2879330867301a4e19be6fc6aad6cb2ac548ae98ec3ca4c93"
+    },
+    {
+      "bytes": 55369,
+      "gitBlob": "5f12320812f964b8676adb2a0ef144c48caca39c",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-relationship-composition.json",
+      "sha256": "75a6b107f267287de5e4fbd4e1d3ff7bf4999a97a42d3da5d00be45cce93d0e4"
+    },
+    {
+      "bytes": 1286698,
+      "gitBlob": "55473e1193e30021723a0fd9e197a37b96927849",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-relationship-public-transport.json",
+      "sha256": "860d39d931da13cd86b36c052fc51a98569f25f284b42a86a03ca6de0c09d549"
+    },
+    {
+      "bytes": 7835459,
+      "gitBlob": "854be0e282880d422f6ba93035803e43ca710008",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-sales-join-inputs.json",
+      "sha256": "58486ad549a652cefe438cf726bd5a39b0750d7ba7fb8fad9fb1615ce137c143"
+    },
+    {
+      "bytes": 16435,
+      "gitBlob": "c873a70c8bc27ed759fb5a8b2f8b5b0808fcf2d3",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-1-props-composition.json",
+      "sha256": "33fe5976f4445ce7944ba3f6dfc53e5d0b28598aec56437a9a248ee3b934d8d3"
+    },
+    {
+      "bytes": 25768,
+      "gitBlob": "b167f9039e2c4f514c76c42dccf7d7482306d244",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-1-row-composition.json",
+      "sha256": "fe9acdbccd58538a63ce88bd340253b771e150a631156ffb1c0b3e61ffabb6b7"
+    },
+    {
+      "bytes": 16435,
+      "gitBlob": "191461aab83b5e0ff686aa04b9f50e10da15d7db",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-16-props-composition.json",
+      "sha256": "e6ecf174c9798874f49adbdb00e305b3de2ee7a38a894adb7bd353321a4cd536"
+    },
+    {
+      "bytes": 25768,
+      "gitBlob": "6b21a57b3357e6a1471ccf7d894915052e8a241a",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-16-row-composition.json",
+      "sha256": "446bcfec842e429426a417771971f4c2b6f6065245cd409c16f1a856da460770"
+    },
+    {
+      "bytes": 16435,
+      "gitBlob": "db4bfe0421d691372435207263cdafbc79cbf9d9",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-32-props-composition.json",
+      "sha256": "f24e5992163e9b3d5acea33527509d7fd41225090f2f3ad44cb7801ffb484a93"
+    },
+    {
+      "bytes": 25768,
+      "gitBlob": "f417ae657d7881533137b5486af53ebe34a40e5f",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-32-row-composition.json",
+      "sha256": "e64276c22ba479b451f67d169c042d91344c6d250132c98129485cabb16194d0"
+    },
+    {
+      "bytes": 16435,
+      "gitBlob": "8ef7dc49af29ad15a56f4cc0ae06442feefbbb42",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-64-props-composition.json",
+      "sha256": "10e7f6228f6f64f7e54750b89f6bea3cd124f993dcecc2d5a5e44bb04772820f"
+    },
+    {
+      "bytes": 25768,
+      "gitBlob": "ae4a65d892bfded02e974855a22377b5028a837d",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-64-row-composition.json",
+      "sha256": "30fa85f6c0fec9aa0a60ad4c78dde2e67aae88d749045aa6df06a3f8e4525e59"
+    },
+    {
+      "bytes": 16435,
+      "gitBlob": "059c4107b260d617a0cb6e252d8093d0d7b7004d",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-8-props-composition.json",
+      "sha256": "f4046d6ef19f982e1678b7772c412dcc7da30b3ff1afd485180d80585b81be77"
+    },
+    {
+      "bytes": 25768,
+      "gitBlob": "4e5772ccf850860a319711e9a57497930c2c763c",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-8-row-composition.json",
+      "sha256": "cf02bf9eb4c4adb90a59a216804a507de37d68a42d3c4a51bd407e858abeb482"
+    },
+    {
+      "bytes": 158070,
+      "gitBlob": "68b7eebad2071d70e640348293581998e20ec90c",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-map-inputs.json",
+      "sha256": "c243f0d1c8f272b0a8eaeb553db84c9d85a805398379ac8d697b38a84781f038"
+    },
+    {
+      "bytes": 5413854,
+      "gitBlob": "d774a0772d9256905909c601bf4c901ed8883014",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-public-transport.json",
+      "sha256": "5357fed50d2cd0936b57b3b623217dd63f83feb32687c27a0ff23e31d972ad83"
+    },
+    {
+      "bytes": 158071,
+      "gitBlob": "6b2b0688c19270ce1a676df736d77214a68a168b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-sequence-inputs.json",
+      "sha256": "53ef2dbfca465fa9b591d3702a8a0cd8ef76df03b3bc94d894d9c976809352b7"
+    },
+    {
+      "bytes": 183662,
+      "gitBlob": "88e0bbbbd0a4b1b1cad3a00d4872a4ed0d45621f",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-signed-structured-inputs.json",
+      "sha256": "02827a11e5a24b3189b24d2e9c9d5a1e0ea157575b1740071fb70ef50f51f36b"
+    },
+    {
+      "bytes": 1751282,
+      "gitBlob": "50fc753254354b1bb3055c625cba58707676e7d5",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-string-relationship-inputs.json",
+      "sha256": "367ae77d07aaa7033e5becc498584481fc1d2536aa7771aa435aed449bbd206c"
+    },
+    {
+      "bytes": 225839,
+      "gitBlob": "3dc618220d9b6ee7b78cb0a31b0f0aced7421090",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-tags-compile-transport.json",
+      "sha256": "4d645b7cc98c83f62a897c163427e16848ef70935a060f5d41de43cac79947d0"
+    },
+    {
+      "bytes": 13382,
+      "gitBlob": "2ee3a40db7c5898672b696042b755bdd41c59b86",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/fixtures/original-tags-composition.json",
+      "sha256": "4df7bfcc18116fc27a494d9f8b9ffb5ea4b2f3f0327d20900cda40be423fdd80"
+    },
+    {
+      "bytes": 41549,
+      "gitBlob": "cbb75c9e71f080399f2f60f3e6a25e386a942d1b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/binding-schema-bundle.json",
+      "sha256": "e26c9bfe261ae809e6ba3c92cbb9bdd2447c9bb2839b9b162e0fa9ab2b766839"
+    },
+    {
+      "bytes": 11858,
+      "gitBlob": "211c65e103030ec891a394925db3e3162665e5a4",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/leaf-codec-schema-bundle.json",
+      "sha256": "262f1257f34f57c2b1040ef18d1323a8f1cb31f518096b58ba227a582cdcbb49"
+    },
+    {
+      "bytes": 12779,
+      "gitBlob": "3d5f9a150e4b921b8f8c244981b9bce0466f9287",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/native-comparator-schema-bundle.json",
+      "sha256": "ee19828f84ada9063474e632860f70617f87696ac8fa2294631954a7545f0177"
+    },
+    {
+      "bytes": 284,
+      "gitBlob": "c0fbd0927da5a63754f281928ec6f32c5583134d",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/numeric-correspondence-source-pin.json",
+      "sha256": "ca68ee7999186b70ee06562577eaf744f047b046fb98408f17c4cc68f2d6d2dd"
+    },
+    {
+      "bytes": 2283,
+      "gitBlob": "9892e5d27afa502b4e98315d9084324f18767087",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/numeric-correspondence-vectors.json",
+      "sha256": "01bf8c2079c9f10ffebf0804138c8ef4b39019274a981cd1816f69682a69a1c9"
+    },
+    {
+      "bytes": 1369,
+      "gitBlob": "652aaf7b15772dbe4a7ce89a7a06259ffcf95926",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/presence-definition.schema.json",
+      "sha256": "08270a400dceb28e855ead142e31cfad1a30fd116d84b5380022fa3de4542f11"
+    },
+    {
+      "bytes": 10176,
+      "gitBlob": "267a3e8f7f12355086e31c0cf79fa91940155b74",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/read-context-schema-bundle.json",
+      "sha256": "a7a09ba34e23a521d25d6c9e171aa85d3c66b12638d6455e0ba8c65168657c9f"
+    },
+    {
+      "bytes": 20107,
+      "gitBlob": "eba51837a25ad369a1423c265eda773d14f3465b",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/row-join-schema-bundle.json",
+      "sha256": "22a058dbe5db2a8ff8c480351be587825b6978eaffaefa2adc5a80c7eede59d3"
+    },
+    {
+      "bytes": 13933,
+      "gitBlob": "b6f27f53aa83a69cea331cddf5d605435ced9b09",
+      "mode": "100644",
+      "path": "tests/truss-postgresql/upstream/value-definition-schema-bundle.json",
+      "sha256": "5d590e77d826d8228c1227dcaf66656a4600e902218a49d74f0e6dec3d28bb4f"
+    },
+    {
+      "bytes": 1029,
+      "gitBlob": "dc20fd6e8eefe7dccabfeaef00f082f6de244614",
+      "mode": "100644",
+      "path": "vendor/README.md",
+      "sha256": "d0703987e34f4aaec3623721d352bd56c8412a6fd5d5969956ca416ffde538c2"
+    },
+    {
+      "bytes": 5312,
+      "gitBlob": "7e28cdabe36cd4cefd10518cd8bff24a3335125a",
+      "mode": "100644",
+      "path": "vendor/ahash/.github/workflows/rust.yml",
+      "sha256": "0d0bc3c9d0fda45f18bc7dc169d90b78d2757a01f3e789fea5011c4e4d3ebd8f"
+    },
+    {
+      "bytes": 25,
+      "gitBlob": "fc89f1b28dbf07ff86d422fa85b595e07ede93d0",
+      "mode": "100644",
+      "path": "vendor/ahash/.gitignore",
+      "sha256": "4a59e617f7716cf2af51dbbd620c4a11f3ae00106cab84be3e2ce7b4128f5464"
+    },
+    {
+      "bytes": 3272,
+      "gitBlob": "e30b818ca6e1e8e02f93fd8c2f52f71b27572633",
+      "mode": "100644",
+      "path": "vendor/ahash/Cargo.toml",
+      "sha256": "b7d68dbac6096d63748886353cadb023c60f2cba231b0c36ffed40d2bff7207b"
+    },
+    {
+      "bytes": 2930,
+      "gitBlob": "b1c7d40838452f2579871be0004445616ba05cd8",
+      "mode": "100644",
+      "path": "vendor/ahash/Cargo.toml.orig",
+      "sha256": "84591ea3bef6c64be7d7b22aa3d12e3cdd723ec3afb6236c103bb497a8097dde"
+    },
+    {
+      "bytes": 9236,
+      "gitBlob": "26c4a688e3b5ba36fad11b0735d103558c5627ad",
+      "mode": "100644",
+      "path": "vendor/ahash/FAQ.md",
+      "sha256": "9eb41898523ee209a0a937f9bcb78afe45ad55ca0556f8a4d4063558098f6d1e"
+    },
+    {
+      "bytes": 10847,
+      "gitBlob": "16fe87b06e802f094b3fbb0894b137bca2b16ef1",
+      "mode": "100644",
+      "path": "vendor/ahash/LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2"
+    },
+    {
+      "bytes": 1057,
+      "gitBlob": "cba20106dd50f630db04a2c2da0cb4067400bf2f",
+      "mode": "100644",
+      "path": "vendor/ahash/LICENSE-MIT",
+      "sha256": "0444c6991eead6822f7b9102e654448d51624431119546492e8b231db42c48bb"
+    },
+    {
+      "bytes": 5798,
+      "gitBlob": "aa071cf51dc649270fa61cdbc0b4c26435952b51",
+      "mode": "100644",
+      "path": "vendor/ahash/README.md",
+      "sha256": "d7f74d616a751bcca23d5d3b58a6daf556356a526c5f0b6aa0504715d176549a"
+    },
+    {
+      "bytes": 782,
+      "gitBlob": "f59538cfbb1d9fe571d0164d9aabd2969ab52ade",
+      "mode": "100644",
+      "path": "vendor/ahash/build.rs",
+      "sha256": "d7dd5428c78b80bb3c99068561641ec661f0f94defbda17f85b443e358ab6396"
+    },
+    {
+      "bytes": 16,
+      "gitBlob": "75306517965a54731b94dca8bace640e856af115",
+      "mode": "100644",
+      "path": "vendor/ahash/rustfmt.toml",
+      "sha256": "e090969e99df9360705680cc0097cfaddae10c22dc2e01470592cf3b9787fd36"
+    },
+    {
+      "bytes": 12874,
+      "gitBlob": "dd6f925bb22d6143c2cf2241c13e1d8727bd365e",
+      "mode": "100644",
+      "path": "vendor/ahash/src/aes_hash.rs",
+      "sha256": "c29c24588676f669c9c5d928100d5743325a8a7aa19dae9e899b7108c2bf5309"
+    },
+    {
+      "bytes": 4076,
+      "gitBlob": "4169f5fb3ebfa14df9aed4c70a5caa9a6522f98a",
+      "mode": "100644",
+      "path": "vendor/ahash/src/convert.rs",
+      "sha256": "85789aaa5da2a1d37d91570ba6fa14ef261ff264dac40a624a88178f41c5494b"
+    },
+    {
+      "bytes": 11845,
+      "gitBlob": "9a2956d6c467fcd528fb47882a45ef4a66d65764",
+      "mode": "100644",
+      "path": "vendor/ahash/src/fallback_hash.rs",
+      "sha256": "6061ff5c42423f9028f487e4b042449424da6a5de5fd57fdb5f2b8063124312d"
+    },
+    {
+      "bytes": 14071,
+      "gitBlob": "ac307767935147f47e929766af3d354a470fea7b",
+      "mode": "100644",
+      "path": "vendor/ahash/src/hash_map.rs",
+      "sha256": "1df153463e3c1f818bebf09938bfe63f18dc34cfeaf3041a67e2a604135e3f84"
+    },
+    {
+      "bytes": 18203,
+      "gitBlob": "a725380d3c8d0a52874479941c4498a2e08727bb",
+      "mode": "100644",
+      "path": "vendor/ahash/src/hash_quality_test.rs",
+      "sha256": "61a5d8a24b1882479ef72590f9165a2cfd5af3a26e1aca3e172061798d93f35e"
+    },
+    {
+      "bytes": 9375,
+      "gitBlob": "e12d8b0a24c28821c6f20debf72e6fceb755d698",
+      "mode": "100644",
+      "path": "vendor/ahash/src/hash_set.rs",
+      "sha256": "222d4563ea3749bc63ab7ded5c4a4239a0a1515b6a64301c0e04cf095386776d"
+    },
+    {
+      "bytes": 11022,
+      "gitBlob": "826806b662321c12c5834006dca5a66954f4bd0a",
+      "mode": "100644",
+      "path": "vendor/ahash/src/lib.rs",
+      "sha256": "de037bb4e0535fdf4c432f87f0e0d0e5ba9a4ba25033f97c9a76ded33574aa9e"
+    },
+    {
+      "bytes": 12443,
+      "gitBlob": "c426036a7e30da83ddb3bfe7322cc3794cc48502",
+      "mode": "100644",
+      "path": "vendor/ahash/src/operations.rs",
+      "sha256": "dae1c602718e29e5839fad52e512a8cf168c1d888cfa9cd074302db7dbabb3d4"
+    },
+    {
+      "bytes": 18398,
+      "gitBlob": "46edc2df02e52a8f63f6670560454fd50411e842",
+      "mode": "100644",
+      "path": "vendor/ahash/src/random_state.rs",
+      "sha256": "3a28f818165289071339299c49d8deb93fb27bf31ab1416349132d3af5ec2ad4"
+    },
+    {
+      "bytes": 6965,
+      "gitBlob": "0ba76da01203d6095c794c4a8cf0f46a94160b1a",
+      "mode": "100644",
+      "path": "vendor/ahash/src/specialize.rs",
+      "sha256": "f2fe0de5d79851ee8ef6d977f418db8d5df5469eaa18a5173fa16cd61df8312e"
+    },
+    {
+      "bytes": 6000,
+      "gitBlob": "f0cc0271470a9b2ece5203df07edfc6d8dcdbb25",
+      "mode": "100644",
+      "path": "vendor/ahash/tests/bench.rs",
+      "sha256": "e84993bb03089b11b8df0dccce273eab4d7aab966a71bc609d1e220ca783f023"
+    },
+    {
+      "bytes": 13842,
+      "gitBlob": "42edb5795d90048a7451886860d7fef8ea10b0dd",
+      "mode": "100644",
+      "path": "vendor/ahash/tests/map_tests.rs",
+      "sha256": "fd6028cc96e1892b7d27cb5f55bf290b8e331305515598b35a54a3f349c5d7a7"
+    },
+    {
+      "bytes": 2107,
+      "gitBlob": "56f754cbee4bfe8950e13a5ea5a826033bc7c742",
+      "mode": "100644",
+      "path": "vendor/ahash/tests/nopanic.rs",
+      "sha256": "0d28a46248d77283941db1d9fd154c68b965c81a0e3db1fe4a43e06fc448da8f"
+    }
+  ],
+  "sourceCommit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688"
+}

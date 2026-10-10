@@ -1,0 +1,137 @@
+{
+  "format": "weft-count-star-assembly-archive-inventory/0.1",
+  "archive": {
+    "path": "/private/tmp/weft-count-star-build-20261010-b/count-star-assembly-evidence-b.tar.gz",
+    "bytes": 42004,
+    "sha256": "4109e7f36c7d33e84a064ea8ec303d244cdeb971af80be37623547126310315d"
+  },
+  "files": [
+    {
+      "member": "actual-result-inventory-a.json",
+      "bytes": 15335,
+      "sha256": "3e6795214d1e5d97718ab870f61a0cff949d675b1f3637a4c1799ccaac6feff9"
+    },
+    {
+      "member": "candidate/assembly-custody.json",
+      "bytes": 12344,
+      "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca"
+    },
+    {
+      "member": "candidate/index-before-placement-a.json",
+      "bytes": 2060,
+      "sha256": "bd541aa8cb261376f160661d3df67065b36fcba4f6caf4c0f42e33d710c4b9dc"
+    },
+    {
+      "member": "candidate/manifest.json",
+      "bytes": 7733,
+      "sha256": "5ad944f609969e1183e8147b56141f0769a9cfd79b5dc65701fefe858713f743"
+    },
+    {
+      "member": "candidate/proposed-index-a.json",
+      "bytes": 2730,
+      "sha256": "7eddc39661f6cb400afae897aa0a7d8cd5dee0aec026ed45a4e197fa7c9558a6"
+    },
+    {
+      "member": "command-a.json",
+      "bytes": 15939,
+      "sha256": "d93f886f4a150837b6b11f5c53f1ff099167643334b48510dfc74a2f69450b84"
+    },
+    {
+      "member": "landing-source-freeze-b.json",
+      "bytes": 1391,
+      "sha256": "d9e1b6ba9df652bc5c155e3b2dc57d3283edd17c1e6f5eca2dae97b651ae3ab2"
+    },
+    {
+      "member": "observations/current-assembly-host-os-b.json",
+      "bytes": 781,
+      "sha256": "dcdbb1b487be9dbcf715f2a64fdaf43d4e1c2dbca74be9a25b2dd056ce3dfbf4"
+    },
+    {
+      "member": "observations/current-exact-build-tool-versions-a.json",
+      "bytes": 2293,
+      "sha256": "67621722c99230a50cdce9eb7cd6995deea7f257d5b8a257e56866d547d87fcd"
+    },
+    {
+      "member": "outcome-a.json",
+      "bytes": 617,
+      "sha256": "6f3482534621b84a8a199b958426638c6ecaa6bad216a97830188f3f30464e15"
+    },
+    {
+      "member": "placement-index-freeze-a.json",
+      "bytes": 24158,
+      "sha256": "378a0c18e252fc53a0a5382571b905a246c3bdd61c1f9ed2555cc88faf514ddf"
+    },
+    {
+      "member": "producer/launch-reviewed-build.py",
+      "bytes": 6275,
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "member": "producer/launch-reviewed-parity-g.py",
+      "bytes": 2541,
+      "sha256": "0b238f4b0cb5544f93cf669f9839562292d518c43fdb4ed52fdee84ee507bb9e"
+    },
+    {
+      "member": "producer/run-count-star-assembly-a.py",
+      "bytes": 1052,
+      "sha256": "0b72d6446ebdf4983640e9e3fbbf87fe469b011f90597954c4680a63b8b93677"
+    },
+    {
+      "member": "review/actual-a.json",
+      "bytes": 1686,
+      "sha256": "732aab1778d4204870a9dc17601f14a01d0f1cb4788e63cd4f84761cd5c0c766"
+    },
+    {
+      "member": "review/archive-a.json",
+      "bytes": 569,
+      "sha256": "8cf604ffd8c6ca1e3a34cc69ab9464b8e4a4a9feb9be29949e4d3e852796842f"
+    },
+    {
+      "member": "review/source-command-a.json",
+      "bytes": 1782,
+      "sha256": "c1cb1a0500d5abdf48eade5a49d61f478fbac273b75888a36ae392ab684d440b"
+    },
+    {
+      "member": "source-freeze-a.json",
+      "bytes": 1207,
+      "sha256": "e8dbe5d22dd854b86cec53a74b6ca8f5fdb943a7ef0ab35dc60512484ff8227c"
+    },
+    {
+      "member": "source/CONTRACT-003.md",
+      "bytes": 19784,
+      "sha256": "da17de824665b762847d38051186a01b0cb230276ba013cdb4a7a9f2f8a1b02d"
+    },
+    {
+      "member": "source/assemble-paths-distribution.py",
+      "bytes": 23381,
+      "sha256": "9b432126d76391cbe6e49a4b9a0b298a5f1613297f021ad823aa3ef3ad5e666e"
+    },
+    {
+      "member": "source/conformance.yml",
+      "bytes": 6163,
+      "sha256": "97ac70d871a8d7b49da4e53d877eee71d1d35cd0fbea2d84bbf7ab246a7f8ada"
+    },
+    {
+      "member": "source/count_star_distribution.py",
+      "bytes": 23704,
+      "sha256": "1f39b4b020bcccf527ce50d7c251cee83e95d693277a0bbf1d3b8268f58fe3f9"
+    },
+    {
+      "member": "source/test_assembly.py",
+      "bytes": 2872,
+      "sha256": "88439d934cfc4564bf64720d7ddc7fc9d533f9eac71b8394bfd6ab4588edc39b"
+    },
+    {
+      "member": "stderr-a.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "member": "stdout-a.log",
+      "bytes": 265,
+      "sha256": "dfddf583174cce4874e64d3ab1bd9036e71635b35fb2a22dbdb5f67b78057b8b"
+    }
+  ],
+  "decodedMemberBytes": 176662,
+  "qualification": "Original A evidence/source4 unchanged; fifth source workflow integration amendment and proposed durable placement/index descriptors only. No product or tool executable bytes; actual candidate67 files stays independently fixed. Proposed index is not a trusted revision until independent admission and commit."
+}

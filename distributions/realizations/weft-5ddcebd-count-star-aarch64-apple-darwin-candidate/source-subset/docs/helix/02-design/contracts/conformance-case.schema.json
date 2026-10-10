@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/conformance-case.schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "enum": [
+        "language",
+        "numeric",
+        "model",
+        "backend",
+        "host",
+        "resource",
+        "relational"
+      ]
+    },
+    "covers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^US-[0-9]{3}-AC[0-9]+$"
+      },
+      "minItems": 1
+    },
+    "request": {
+      "type": "object",
+      "description": "A raw compile request. Validate separately against compile-request; schemaNegative scenarios deliberately violate that schema."
+    },
+    "setup": {
+      "type": "object"
+    },
+    "expected": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "compiled",
+            "blocked"
+          ]
+        },
+        "code": {
+          "type": "string"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "string",
+                    "boolean",
+                    "integer",
+                    "decimal",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0
+          },
+          "minItems": 0
+        },
+        "assertions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "status",
+        "assertions"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "category",
+    "covers",
+    "request",
+    "setup",
+    "expected"
+  ],
+  "additionalProperties": false
+}

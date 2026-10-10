@@ -1,0 +1,581 @@
+{
+  "captureModule": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-build.py",
+  "commands": [
+    {
+      "argv": [
+        "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "-I",
+        "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-python.py",
+        "--extension",
+        "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-native/weft.abi3.so",
+        "--cases",
+        "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/cases.json",
+        "--output",
+        "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/python-g.json"
+      ],
+      "cwd": "/private/tmp/weft-count-star-build-20261010-b",
+      "phase": "full80-python",
+      "stderr": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/python-g.stderr.log",
+      "stdout": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/python-g.stdout.log",
+      "timeoutSeconds": 180
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/node/26.10.0_2/bin/node",
+        "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-browser.mjs",
+        "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/cases.json",
+        "/private/tmp/weft-count-star-build-20261010-b/web/weft.js",
+        "/private/tmp/weft-count-star-build-20261010-b/web/weft_bg.wasm",
+        "/private/tmp/weft-count-star-build-20261010-b/browser-wrapper/index.js",
+        "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/index.mjs",
+        "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/browser-g.json"
+      ],
+      "cwd": "/private/tmp/weft-count-star-build-20261010-b",
+      "phase": "full80-browser",
+      "stderr": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/browser-g.stderr.log",
+      "stdout": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/browser-g.stdout.log",
+      "timeoutSeconds": 240
+    }
+  ],
+  "environment": {
+    "PATH": "/usr/bin:/bin",
+    "PLAYWRIGHT_BROWSERS_PATH": "/Users/erik/Library/Caches/ms-playwright",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "TMPDIR": "/private/tmp/weft-count-star-build-20261010-b/task-tmp"
+  },
+  "executionPermission": "Python default sandbox; browser-only local Chromium sandbox escalation to permit macOS MachPort launch, same offline routed artifact scope as previous approved B.",
+  "qualification": "Actual full80 authored-corpus component parity with existing extracted native Python extension and real Chromium/WASM. CLI49 selected capability witnesses retained separately. No full boundary-transport suite, installed package, native SQL or index admission.",
+  "resources": [
+    {
+      "bytes": 2253,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-parity.py",
+      "sha256": "b270fca94206a7a6d2cb8256c9929af1290b509f46adbb881c773560259b031d"
+    },
+    {
+      "bytes": 6275,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-build.py",
+      "sha256": "e79ff9d4b27adad31c932a1563159b80284c5aefecbe895402b7abe95b396f74"
+    },
+    {
+      "bytes": 2840,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/select-wheel-member.py",
+      "sha256": "be54dbaf7937d023a25f5898eb5e33c2704a0366c879ddca88edd6f829d75ea4"
+    },
+    {
+      "bytes": 23350,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/command-h.json",
+      "sha256": "f41c8206adfac46eb0f0fca8831ea0ff3a3bd39f0874ab194763809719c2e7c7"
+    },
+    {
+      "bytes": 687929,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/source-inventory.json",
+      "sha256": "08e32444e85f71cb9e960d1731e41e7fe05d93d44d4b4f710c0c1dfbbe392c70"
+    },
+    {
+      "bytes": 79935,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/build-closure-inventory.json",
+      "sha256": "29528ce28cfe22f248bcee1a324434a1c211570a0cd5088b8497ea4bbbe837d3"
+    },
+    {
+      "bytes": 8532672,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/weft-paths-keys",
+      "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80"
+    },
+    {
+      "bytes": 8763008,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/weft.abi3.so",
+      "sha256": "eebabe581f8c4a4197eab39fb21f699ba859afabf8671c355edecf7bd4c76883"
+    },
+    {
+      "bytes": 7049,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/web/weft.js",
+      "sha256": "9b9f1df47ca6c168950b97164b151b33d57403d131a5e3f9199f30f9182936e3"
+    },
+    {
+      "bytes": 7140211,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/web/weft_bg.wasm",
+      "sha256": "a2136e001d2d0b1848033401b8219056f984d2745e5c7090155b04d8e17515ef"
+    },
+    {
+      "bytes": 1537,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/browser-wrapper/index.js",
+      "sha256": "7017218e7d504ed73fc81dcb36c0a0afe14e9711f14fc5edf87c4df6641e990a"
+    },
+    {
+      "bytes": 3162996,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/python-wheels-h/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl",
+      "sha256": "56e9b9f132700fa6d679dfe51ac5430d327b5b375ecf12e8c579301e45178c16"
+    },
+    {
+      "bytes": 20542587,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/distributions/realizations/weft-3a2a79c-paths-keys-aarch64-apple-darwin-candidate/evidence/expected-cases.json",
+      "sha256": "b9661c7ff024e9696417ef5bce3ca70a28d8cd8b93b109835ab0517ededf63d0"
+    },
+    {
+      "bytes": 760867,
+      "path": "/private/tmp/astra-count-star-independent-20261010-b/run.stdout.json",
+      "sha256": "86957764923106daa2599717ce9fcf8cca221bee9c3517f5919e1c99516b9359"
+    },
+    {
+      "bytes": 18058560,
+      "path": "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "4158f03e1bae2b759f25a1ba1fbdab8bfb7161eba4caf22e28f0915986625bbc"
+    },
+    {
+      "bytes": 132848,
+      "path": "/opt/homebrew/Cellar/node/26.10.0_2/bin/node",
+      "sha256": "02dc8fa00d7f857c2412a5d55a85a1b7a341e94c3df430bd8733c732e31dca46"
+    },
+    {
+      "bytes": 704,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/index.mjs",
+      "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+    },
+    {
+      "bytes": 1416,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/package.json",
+      "sha256": "ca170ec143a88ed3043ac953eb3b2377b2b97304104f4e1e23316684ce2c35af"
+    },
+    {
+      "bytes": 876,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/package.json",
+      "sha256": "07c47543631fef9508760365dee9fbe958c562093ec8d122543949ed231f233f"
+    },
+    {
+      "bytes": 1780,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/browsers.json",
+      "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+    },
+    {
+      "bytes": 35371,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-cli.py",
+      "sha256": "77517097fe5c5c3b27f90433c505c36514e409896beaa3d473f1937542eb75a5"
+    },
+    {
+      "bytes": 4877,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-cli.py",
+      "sha256": "5d0361c77fa584263f8e351dbdfbc1a09b674eb9484023595fc74e8eb234c682"
+    },
+    {
+      "bytes": 4584,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-python.py",
+      "sha256": "fc12ba4b7f2a2da9c6d4ab3b436d841994590a494cec67b666ce9432a86a0ee8"
+    },
+    {
+      "bytes": 5030,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/distribution/check-paths-embedding-browser.mjs",
+      "sha256": "ebc2779bf86b533f83a0639c119a1204ba3c519de968f17c1fca19f5d877a377"
+    },
+    {
+      "bytes": 1400,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/test.mjs",
+      "sha256": "1deb265617d0e87b6d05bf8b3d5bf73cd4b788665c249c609a01b94ceff2eea1"
+    },
+    {
+      "bytes": 764,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/jsx-runtime.mjs",
+      "sha256": "a6ae8df3a36f154f433b01fe1592170500f5fbe7798f6dacdfea5b492f31d1a6"
+    },
+    {
+      "bytes": 806,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/test.js",
+      "sha256": "b97fa53a6ab864f51c9c48b5e4647d0acae45ba2948c5d78e38bfeb56755d974"
+    },
+    {
+      "bytes": 942,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/jsx-runtime.js",
+      "sha256": "2fefb7ec3a42dcf1cea35ca7e3eb107507c4d80821b1d6abf6cfc9bca36498f0"
+    },
+    {
+      "bytes": 648,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/index.js",
+      "sha256": "4e98f65f0a9d9bcab8cffc0c5cfdd87fd3f5b0be74fc494ff166a466b204cd44"
+    },
+    {
+      "bytes": 698,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/cli.js",
+      "sha256": "5e79302a6aad7d835d92d5ae6b4244c91cf61b28e94d7917279090e6c231f7a1"
+    },
+    {
+      "bytes": 1935,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/globals.js",
+      "sha256": "f5922eb1fb6051900157492eb9c218e62d07378eed135bca4b2f173ed1184d1c"
+    },
+    {
+      "bytes": 14295,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/util.js",
+      "sha256": "874c55495773da8c5a2ec46551c2265937bf08446231c09a8b5966e8bea2b1f7"
+    },
+    {
+      "bytes": 8191,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/isomorphic.js",
+      "sha256": "3d61508f951aa9518adb4bf6594d61dfd1099c95a1a4f0af809a58ccebc59025"
+    },
+    {
+      "bytes": 4552,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/errorContext.js",
+      "sha256": "ffc1843cebb3e90e1674c07ee2607a4a63152eff609e5f9865bbb2f9eb02e9a1"
+    },
+    {
+      "bytes": 2013,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/package.js",
+      "sha256": "544a18417ea51dd4c8a9f3dbc4e2b47e46c80f452e0cd23d55e9b3680bc6241e"
+    },
+    {
+      "bytes": 35668,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/index.js",
+      "sha256": "cb793062d359fd495f10e0916523f52c76a47fd0b6c4195451dabcd48638e862"
+    },
+    {
+      "bytes": 14316,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/program.js",
+      "sha256": "d453e49272d33d592cac3c55e06536e5451bec135fa8d80d6b134fd5e072c88b"
+    },
+    {
+      "bytes": 304701,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/runner/index.js",
+      "sha256": "6dcf135a144b0f243848128bb68e0a25898b8ad764a34326f36ab45d9a9e1685"
+    },
+    {
+      "bytes": 3475,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/agents/agentParser.js",
+      "sha256": "a2f630c1c2c9eafa0a3ca9cdbeaa26e74801615bc572e3fce226acb662ceb0eb"
+    },
+    {
+      "bytes": 16958,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/agents/generateAgents.js",
+      "sha256": "3bae7bde1d05c0fbaaa1a82ce7a39732ff52904de575fe88e69c391a6c41478e"
+    },
+    {
+      "bytes": 4067,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/testBackend.js",
+      "sha256": "dcd8d09366617f13213ce544efb5fe47df5a87258ae93545d4d0738623f43ad1"
+    },
+    {
+      "bytes": 1104,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/testTool.js",
+      "sha256": "2a8f17d0a61ccb8a4ca9c52a3255d624deca989c0b06281d579629c664f8cc8e"
+    },
+    {
+      "bytes": 5427,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/generatorTools.js",
+      "sha256": "3c53feaeb9fc2ff728f334cb31f9b7211e65b20c692c7585459c3c97bdd13a12"
+    },
+    {
+      "bytes": 1577,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/streams.js",
+      "sha256": "8affc240a6a90ee2dbdedcde9927018efe426ec0d390bcd1ee4f0464e75adc0f"
+    },
+    {
+      "bytes": 11637,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/testContext.js",
+      "sha256": "74ff4273ea12e6353d4860c9452387b643d7d8899fbd4951389ba94d18df5e37"
+    },
+    {
+      "bytes": 3239,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/seed.js",
+      "sha256": "f36f7fb76d4ed33225e80be208cccc9757d363a9d1527cf560736c0f1e5edd31"
+    },
+    {
+      "bytes": 3714,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/testTools.js",
+      "sha256": "14710b5f34246005d974762b83a2a50e5cc17130af841cd3bc447811d69c6af7"
+    },
+    {
+      "bytes": 4889,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/browserBackend.js",
+      "sha256": "7143473e53c8b76720e42efab95f55227807590d2818104223d5df6ac46b681e"
+    },
+    {
+      "bytes": 6379,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/mcp/test/plannerTools.js",
+      "sha256": "715abc888d9ea30b532b75c6f09aa34101ab15c1eeb959c50cf9dedcf3a459ac"
+    },
+    {
+      "bytes": 9372,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/cli/testActions.js",
+      "sha256": "44a4770714406134d1135b77d3b4388b557a7decb7f24094e637b6a5d517dd48"
+    },
+    {
+      "bytes": 3603,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/cli/reportActions.js",
+      "sha256": "4eeceedf9588d69a153f018aa548e00b73e5f61cb39bb05f0fc87c06131af2b3"
+    },
+    {
+      "bytes": 116916,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/common/index.js",
+      "sha256": "8f2588ccdb7ce2d245fdbe3222ba67817293799dff1ba2e58303f0d558b6526f"
+    },
+    {
+      "bytes": 1262,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/loader/loaderProcessEntry.js",
+      "sha256": "45681332f4178770c204b33e5b8dcbba940baf3bc6fc86506bab24027cb513f3"
+    },
+    {
+      "bytes": 546200,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/matchers/expect.js",
+      "sha256": "b22e4f194830dceb0eb67ceb44523f49bbf49f96fba50cc097b677e94ef360d7"
+    },
+    {
+      "bytes": 75653,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/worker/workerProcessEntry.js",
+      "sha256": "cc8274565200e5f5aeecc80aef9518526ff82a32c36e2a2b06e445c238cebcc6"
+    },
+    {
+      "bytes": 2901663,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/transform/babelBundle.js",
+      "sha256": "01511e45db7646e2a12890de8d7866caa0754c8799db6407a6345236f4bed0c4"
+    },
+    {
+      "bytes": 290393,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright/lib/transform/esmLoader.js",
+      "sha256": "f4e708ea08083676777a7699c82417d16fa08113f197fbc070ccffb9e8db2beb"
+    },
+    {
+      "bytes": 697,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/index.js",
+      "sha256": "a58fb2cec4293e7dcf73c58a179898a4f3986666451a19da4e731fa3af63265b"
+    },
+    {
+      "bytes": 1063,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/index.mjs",
+      "sha256": "3d36e2132d3c8b62397d23f0bb4177336aaee503203ae2a2c90fbeb5bf3317dd"
+    },
+    {
+      "bytes": 839,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/cli.js",
+      "sha256": "f1c4075aef116c766092250d7f37b3249a7cee6465d953207fc38c8f6145becd"
+    },
+    {
+      "bytes": 3481,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/bootstrap.js",
+      "sha256": "4637f4dbfef9cfc01baeb5f5d2cb63fa0901522c96915ea2227290558d27123e"
+    },
+    {
+      "bytes": 2112,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/package.js",
+      "sha256": "9f938e1d44a0dd231b1660ca62f7dae964859b79cbdc370b8542c5d375ca3c05"
+    },
+    {
+      "bytes": 247102,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/serverRegistry.js",
+      "sha256": "e9db9d4eaa8c3690f700ea3047af7b0b6e0b16937a969589678c51db92272ae9"
+    },
+    {
+      "bytes": 3239355,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/utilsBundle.js",
+      "sha256": "580f571bf063e2256b51b3946a035bc452fc0e22808d5547b198baea39923a32"
+    },
+    {
+      "bytes": 3425603,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/coreBundle.js",
+      "sha256": "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac"
+    },
+    {
+      "bytes": 6662,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/registry.js",
+      "sha256": "c11d278e05542808ba37bdb032018eccf9dc78377f8025bd74fa906ae009ca30"
+    },
+    {
+      "bytes": 9519,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/session.js",
+      "sha256": "716e87fc77251129adf8c66374cccc6788f76a02b4b33692c7e63a01a659cb5c"
+    },
+    {
+      "bytes": 4106,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/minimist.js",
+      "sha256": "1d200627373a367e0097f1abeaaa4d67cde2c33f2e5efca5cb55222c7667adc3"
+    },
+    {
+      "bytes": 7087,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/channelSessions.js",
+      "sha256": "6b9c613e87340f48ad7182addd7495a8ff3fbe55feb1bbd0ce04f59f1552e126"
+    },
+    {
+      "bytes": 11703,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/output.js",
+      "sha256": "2eace914547a487b2aa1dc34af787fe92168f0b7b3dde24f2b127e817cc9b2b4"
+    },
+    {
+      "bytes": 153,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/cli.js",
+      "sha256": "dfde8e9dfde30c4b3914eb25ba1c5a8524ec64651d866171d75cd7b41a827180"
+    },
+    {
+      "bytes": 38111,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/help.json",
+      "sha256": "d63f1c7e006b1bdfbe656e6bea2b4dca9e1b6c17f8c806fdaca656fef71d234d"
+    },
+    {
+      "bytes": 16059,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/cli-client/program.js",
+      "sha256": "4a3ece6f75a707e6af71c1dde8650080e7819421594f251b9397e2e45e89cbb8"
+    },
+    {
+      "bytes": 3317,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/utils/socketConnection.js",
+      "sha256": "973c2bea70a1f1445f4673f99e9fa351e50a2ec9fd93d7381b2c41bb4de764dd"
+    },
+    {
+      "bytes": 4260,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/tools/utils/extension.js",
+      "sha256": "ed1a56cb9a6b4643a6a1dea604c541a4e3a4be8d8971edcfe53c7dc9cceefe98"
+    },
+    {
+      "bytes": 197,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/entry/cliDaemon.js",
+      "sha256": "062f256fb29a7bf91793a014b9c3f1f9cf2dc6b12e40a8a2ebba88a630ae16a0"
+    },
+    {
+      "bytes": 120,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/entry/oopBrowserDownload.js",
+      "sha256": "87567cdbd67dd2f50bb232d47d3784701ece7c81e39c0287bb7d1b466b68cf06"
+    },
+    {
+      "bytes": 442,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/entry/mcp.js",
+      "sha256": "cc87dc0020cb41caebbf04f50e42bc7835b033a6d80e9c3f0a3d0b3dbdf341c7"
+    },
+    {
+      "bytes": 108,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/entry/dashboardApp.js",
+      "sha256": "209962c6eaeef11629f226d6a2ab33ec7a2480754242b6e19590a9e6eb71d126"
+    },
+    {
+      "bytes": 5100,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/server/electron/loader.js",
+      "sha256": "8f4f2c20933e7bef2bbed9a1b455278ad1461aa919b0386f360aee5b2580149d"
+    },
+    {
+      "bytes": 650,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/snapshot.B_Jk1wbt.js",
+      "sha256": "d4d09e05451d107d8e1a6bbd041405fe518b9fd2833890e4ebaaad83b7f554f5"
+    },
+    {
+      "bytes": 6566,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/index.KZ4wOW1K.js",
+      "sha256": "53e2227532161670bc601e241a7a9af00ac54826a9dd2ef9c15b8c1f77e92e63"
+    },
+    {
+      "bytes": 37932,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/uiMode.Dzuouizj.js",
+      "sha256": "a584f96f0797144552430d7a04f7e3b84b1baaa0b781a664b1512339ec1c760b"
+    },
+    {
+      "bytes": 93459,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/sw.bundle.js",
+      "sha256": "cfd6662a71914516efe90a5a6f3da2bbe5db6e442939b868ca465f765d33723f"
+    },
+    {
+      "bytes": 288730,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/assets/xtermModule-BuZfJS5v.js",
+      "sha256": "17584c22ad7d49f3c3c9e07e8b2655203cd33e60c1cb527356eabfda6a59c830"
+    },
+    {
+      "bytes": 2510,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/assets/urlMatch-L3liM589.js",
+      "sha256": "1bc6321e32d11c31a452bc75896f0b344e6153321854d9f1658818be7f845c16"
+    },
+    {
+      "bytes": 643184,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/assets/defaultSettingsView-B-dXF5JN.js",
+      "sha256": "2ce8be133fe21a4abd7d8330d9b443092dc2ce28826f191442c14989f9d55b15"
+    },
+    {
+      "bytes": 307393,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/traceViewer/assets/codeMirrorModule-rXmQmLUY.js",
+      "sha256": "bb0f7c41f9889e4195c2504878e38061288881f426498434c9955479828f7e66"
+    },
+    {
+      "bytes": 324278,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/dashboard/assets/index-CyWAfh-p.js",
+      "sha256": "33abc7596e49d241e5b397141073e73bb2fb7eec9880bb1e0e2e6d0f673a150e"
+    },
+    {
+      "bytes": 358249,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/recorder/assets/index-DYjdXIbE.js",
+      "sha256": "f3c0288840bedb5739649f7fe938a30f57469d46d6ca1e56ee885a0860b98df9"
+    },
+    {
+      "bytes": 307374,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/recorder/assets/codeMirrorModule-CwYYHbcZ.js",
+      "sha256": "b673acf747a1667bbd90b96d9de583d69905b0bd78a196b2a7979a573f5171fd"
+    },
+    {
+      "bytes": 415216,
+      "path": "/private/tmp/ashlar-weft-distribution-d2d/node_modules/playwright-core/lib/vite/htmlReport/report.js",
+      "sha256": "f0941744b2ef35b91eafb3d6099f5d4acb342ddbb3000ff293b6e3abf80d29ac"
+    },
+    {
+      "bytes": 163329264,
+      "path": "/Users/erik/Library/Caches/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+      "sha256": "7687bff7cb2db075f250e6d5848bbc8838cac3802ac3952a899c574f8eccab45"
+    },
+    {
+      "bytes": 11874047,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/cases.json",
+      "sha256": "b7707cc60208baac9d1c74110a56750b84a60ebee38bb5c812800ed68b7d4605"
+    },
+    {
+      "bytes": 421,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/conversion.json",
+      "sha256": "cc3b84f53cd6af529ad0b8b30e8c444e46de146c723df7da25d5740167830cd5"
+    },
+    {
+      "bytes": 449,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full80-embeddings-e/conversion-outcome.json",
+      "sha256": "816299af8578ea71b42fb54c4a81078602ebd59c6932afdcb72a32515559c0d8"
+    },
+    {
+      "bytes": 24546,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full80-conversion-command-e.json",
+      "sha256": "029e927ee7b5c45165a3f58fe5ae59898d10707191aa424e35c95c0ab40f484b"
+    },
+    {
+      "bytes": 635113,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full041-a/actual-80-cases-d.json.gz",
+      "sha256": "81cdac9213c064ccf78ff90cd8fa643b78ed245d11977bcb87b36439b3890f35"
+    },
+    {
+      "bytes": 8763008,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-native/weft.abi3.so",
+      "sha256": "eebabe581f8c4a4197eab39fb21f699ba859afabf8671c355edecf7bd4c76883"
+    },
+    {
+      "bytes": 1432,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-selection.json",
+      "sha256": "762befe80f95edab6a2f2ade2fa5838c559a90694e5a8bfcefb1bf411d2a14ee"
+    },
+    {
+      "bytes": 1750,
+      "path": "/private/tmp/weft-additive041-full-cli-actual-result-independent-review-20261010-d.json",
+      "sha256": "01c8f6b43a51b537c6602834fcf999e9ef0f7b57a54d20bb62523dcfd22cfb41"
+    },
+    {
+      "bytes": 895,
+      "path": "/private/tmp/weft-full80-conversion-command-independent-review-20261010-e.json",
+      "sha256": "f5cf631eb145c7dd73a91f51427b373f471af1f6fce48c042e233b4a0bce3f87"
+    },
+    {
+      "bytes": 2541,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-parity-g.py",
+      "sha256": "0b238f4b0cb5544f93cf669f9839562292d518c43fdb4ed52fdee84ee507bb9e"
+    },
+    {
+      "bytes": 979,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/test-parity-guard-g.py",
+      "sha256": "69fe149374b366ce14976e2faa1a65aeefa8f268da7a3f6c6f59f1617b9ce2e9"
+    },
+    {
+      "bytes": 26139,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/full80-embedding-command-f.json",
+      "sha256": "2404aa14dc52674a326631a50567d41f0204da12918fc74dacc0b33818cc25e5"
+    }
+  ],
+  "sourceCommit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688",
+  "uncertainties": [
+    "OS dynamic libraries and browser resource/runtime caches are not hermetic.",
+    "Cooperative artifact custody with opening/closing exact pins; not adversarial filesystem protection.",
+    "Native extension is extracted from bounded independently inspected wheel, no pip installation."
+  ]
+}

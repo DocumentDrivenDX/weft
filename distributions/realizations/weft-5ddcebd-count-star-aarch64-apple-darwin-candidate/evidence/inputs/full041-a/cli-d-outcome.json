@@ -1,0 +1,11 @@
+{
+  "commandSha256": "aef833ed297eb14d375b24edafbd5a19a8e5eed1ee507bbc07815f2532a391f5",
+  "derivedInputPins": [],
+  "environmentInherited": false,
+  "exitCode": 0,
+  "openingClosingCustody": true,
+  "phase": "count-star-full-cli",
+  "qualification": "Actual full authored80-case CLI correspondence and49 accepted/refused capability witnesses only. No native SQL, full boundary-transport suite, installed package or index admission.",
+  "stderrBytes": 0,
+  "stdoutBytes": 109
+}

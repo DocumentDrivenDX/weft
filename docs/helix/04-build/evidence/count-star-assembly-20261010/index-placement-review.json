@@ -1,0 +1,309 @@
+{
+  "decision": "approve-exact-additive-entry-for-immutable-Git-index-commit",
+  "placementFreezeSha256": "378a0c18e252fc53a0a5382571b905a246c3bdd61c1f9ed2555cc88faf514ddf",
+  "source5FreezeSha256": "d9e1b6ba9df652bc5c155e3b2dc57d3283edd17c1e6f5eca2dae97b651ae3ab2",
+  "indexSha256": "7eddc39661f6cb400afae897aa0a7d8cd5dee0aec026ed45a4e197fa7c9558a6",
+  "indexGitBlobSha1": "cc863a7b5fdf108a7a860f2a00663e87b922855f",
+  "entry": {
+    "realizationId": "weft-5ddcebd-count-star-aarch64-apple-darwin-candidate",
+    "manifest": {
+      "path": "manifest.json",
+      "sha256": "5ad944f609969e1183e8147b56141f0769a9cfd79b5dc65701fefe858713f743",
+      "bytes": 7733
+    },
+    "executable": {
+      "path": "bin/weft-paths-keys",
+      "sha256": "0e8199a8953f46d7151c87ec001e6c8edff414c0af9cecc6c13e0ea8d23ede80",
+      "bytes": 8532672
+    },
+    "target": "aarch64-apple-darwin",
+    "assemblyCustody": {
+      "path": "assembly-custody.json",
+      "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca",
+      "bytes": 12344
+    }
+  },
+  "placementGitBlobs": {
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/assembly-custody.json": {
+      "gitBlobSha1": "51f5236c4d978b0e3665ec8ef7e566058e324f33",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/backend/backend-manifest.json": {
+      "gitBlobSha1": "ff0285f6f050c4d94016da3a71b6544bed725811",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/bin/weft-paths-keys": {
+      "gitBlobSha1": "0e7e1d8377f18270f8093e6d113ea3e72e3e6b40",
+      "expectedGitMode": "100755"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/authored-corpus.json.gz": {
+      "gitBlobSha1": "d5bbf3ac12578c62f83d4a307959063b2eead938",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls-custody.json": {
+      "gitBlobSha1": "c7f381f3bffdc064ffc181439e9f2e4f5c6364eb",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls-summary.json": {
+      "gitBlobSha1": "537f91948cfb42ad2441e520300d98948fe01c95",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/controls.jsonl.gz": {
+      "gitBlobSha1": "1ec09816653add9221e37955a95ed877645b9924",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus-custody.json": {
+      "gitBlobSha1": "c0c89733a2326aeecae68109912fe4357ffad0d5",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus-summary.json": {
+      "gitBlobSha1": "4d70aba5820153c8ad54e7bcb64f9a7c8b0f3857",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/corpus.jsonl.gz": {
+      "gitBlobSha1": "5b655a29dbd1559c5a348d9655ec9b99c765f8db",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/build-closure-inventory.json": {
+      "gitBlobSha1": "e033eebe099754ae49a6c7149580894030f7609c",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/cli-build-g-outcome.json": {
+      "gitBlobSha1": "4f0d16ef1130067c7d458c8b66437b5151627fa2",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/command-g.json": {
+      "gitBlobSha1": "a2e1bea0653286990f900e9bc4844c6b82d9f084",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/command-h.json": {
+      "gitBlobSha1": "8c055128dc3adecae7f4fe575589d0e833803376",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/component-parity-evidence-ab.tar.gz": {
+      "gitBlobSha1": "e73678d19c452ad66c8042730edcf82cde61755e",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundaries-b-outcome.json": {
+      "gitBlobSha1": "16ff9f86da02de3db90aa5a94b0b5c7e8b46e6d6",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundaries-b.observations.jsonl": {
+      "gitBlobSha1": "7a4639177ca87b42f347e9f08cd28783b3a744be",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundary-command-b.json": {
+      "gitBlobSha1": "14067804cabc56f9ca81f399a939b7474d4d6c9d",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/count-star-boundary-evidence-b.tar.gz": {
+      "gitBlobSha1": "20dcf42f85c58d281c8bacf6da60955feb617099",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/current-assembly-host-os-b.json": {
+      "gitBlobSha1": "721a09d3f2a516b9f34829853e9acd1224ac574e",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/current-exact-build-tool-versions-a.json": {
+      "gitBlobSha1": "e00297373c18b80cb73da91d453cd18372c16fa1",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-a/actual-80-cases-d.json.gz": {
+      "gitBlobSha1": "6b4fd69919f9676342ed8c302cee7a6e270a8d2e",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-a/cli-d-outcome.json": {
+      "gitBlobSha1": "182129d38667800371a43e6d27a7a100616f0abc",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-command-d.json": {
+      "gitBlobSha1": "42d0c7a6d8754b72c2f5bef70aed3f40dff92c4d",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full041-corpus-component-evidence-dg.tar.gz": {
+      "gitBlobSha1": "8702392b748fa5d76c491db79cb46b3591fc3688",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embedding-command-g.json": {
+      "gitBlobSha1": "c99bf238c40946808c5fafd9ee72c626699bb1c8",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/browser-g-outcome.json": {
+      "gitBlobSha1": "9315eca2c94e105b7bb9a9e8e560ff4088f48a40",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/browser-g.json": {
+      "gitBlobSha1": "51556e46d6417f3dbfe76a1594fe45d488f39a9e",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/python-g-outcome.json": {
+      "gitBlobSha1": "8193f3563a26d94d761e6a425a38655e3942e2c3",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/full80-embeddings-e/python-g.json": {
+      "gitBlobSha1": "6c089951a66c641810d479b86116e3dacfea5c68",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-inventory.json": {
+      "gitBlobSha1": "78433edbc2bb0b4921c0eb83063fb6e6937a19a3",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-metadata-h-outcome.json": {
+      "gitBlobSha1": "75a3556f514814d80ba22b60dbf500716572f843",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/inputs/source-metadata-h.stdout.log": {
+      "gitBlobSha1": "ff0285f6f050c4d94016da3a71b6544bed725811",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/source-inventory.json.gz": {
+      "gitBlobSha1": "3c325961b12e0fb152d2422290e6385cde7d4e12",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/tools.json": {
+      "gitBlobSha1": "79efd13e134d8feb2cf7a63545bff13f5d6911cd",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/evidence/transport.json": {
+      "gitBlobSha1": "8ac2d690f1cd54ff9d1150c1ce7f14f83d0b26f2",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/manifest.json": {
+      "gitBlobSha1": "2ab9e7f3fa045ed268e576480cfeb70cc43d250b",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/producer/assemble-paths-distribution.py": {
+      "gitBlobSha1": "e19a97b346d909a31e77bdc022f58cd14d665215",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/producer/count_star_distribution.py": {
+      "gitBlobSha1": "a293182e79d7f34ec2648f274c481b99cebd5199",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/Cargo.lock": {
+      "gitBlobSha1": "f1a4ddf602e4a727c8ff9c0a6058932efdf42280",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/application-result-v0.2.schema.json": {
+      "gitBlobSha1": "bff1fc5a8ede0c75796037700e272c7a1e73ce70",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/application-result-v0.4.schema.json": {
+      "gitBlobSha1": "5800cad40de29960b872af76edf1e4c1f2b63041",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json": {
+      "gitBlobSha1": "ac57b3c25c82e77cdd9ca06e699c2d64cbadef09",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json": {
+      "gitBlobSha1": "1cc13b95226f3c887c7411c8f35003f4221c3015",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json": {
+      "gitBlobSha1": "3d0b8fd69ea93109dcab51a5a0d9e52738bf163d",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/backend-manifest.schema.json": {
+      "gitBlobSha1": "418afd598fe7feb89cda149890d1b96c0ecf5fda",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.2.schema.json": {
+      "gitBlobSha1": "b02ca0597d829b04e751a530a937efdc5079ac90",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.3.schema.json": {
+      "gitBlobSha1": "dbc7f5e8ac1d95d9c85749b475568582498ddbf6",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json": {
+      "gitBlobSha1": "2ec9b22e9479e8ed74cdc088ea71e368ac7e55fc",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request-v0.4.schema.json": {
+      "gitBlobSha1": "2c6e073e2d538454c726f96e6e234581217acd69",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-request.schema.json": {
+      "gitBlobSha1": "5b674d7781fe7013d419c54791f5508f839ade34",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.2.schema.json": {
+      "gitBlobSha1": "4a4cd7f6ad6241da911334ed0f873d593bbea933",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.3.schema.json": {
+      "gitBlobSha1": "b8a03d44e0d0e689b890ab5896e6dcff80cd0f97",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json": {
+      "gitBlobSha1": "433a94247b0d96ad33861a47ad17926a50680ee3",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response-v0.4.schema.json": {
+      "gitBlobSha1": "49b62782a4d2a990f785cadbcf100fb8424be7e1",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/compile-response.schema.json": {
+      "gitBlobSha1": "1996ebf0e45003ff4ffb88a9c9d1c1e77aa66311",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/conformance-case.schema.json": {
+      "gitBlobSha1": "86e9cd72a6d6182e104ef62359f9f0fd686cb631",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/distribution-index.schema.json": {
+      "gitBlobSha1": "e15cf366c561add486d83238a88c0f7b58151753",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/distribution-manifest.schema.json": {
+      "gitBlobSha1": "ab6925c0302a4640c30c6343e11328675296db7d",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json": {
+      "gitBlobSha1": "37d562a0b19ca2b3671a167ad2d816868a80b106",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.3.schema.json": {
+      "gitBlobSha1": "ea47211813d4eb96762ab3d3d7f8a1f0950b676c",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json": {
+      "gitBlobSha1": "b47fd210601c09213a5bf88e0cb5543a6d99d790",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan-v0.4.schema.json": {
+      "gitBlobSha1": "a5cbe0875038fb1a9d6314f2876aeca3ff023b14",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/docs/helix/02-design/contracts/logical-plan.schema.json": {
+      "gitBlobSha1": "bdf15621aa9eb750172007c13f483475ae575cdd",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/rust-toolchain.toml": {
+      "gitBlobSha1": "38c5ee54a9557e203e59ef6dc06586b6bd1b77d7",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/spec/upstream/umf-0.7.0.schema.json": {
+      "gitBlobSha1": "1bc03f55ddf11a44a2a7fc7351187a8a70da0ddb",
+      "expectedGitMode": "100644"
+    },
+    "distributions/realizations/weft-5ddcebd-count-star-aarch64-apple-darwin-candidate/source-subset/spec/upstream/umf-0.8.0.schema.json": {
+      "gitBlobSha1": "ebaf4c4ee757b88825a30cb81be647d4761bcf5e",
+      "expectedGitMode": "100644"
+    }
+  },
+  "archiveSha256": "4109e7f36c7d33e84a064ea8ec303d244cdeb971af80be37623547126310315d",
+  "archiveInventorySha256": "138bae14da435b7835d8ee7a1774a756811617f3ba10c65ce752ab7b91187ebf",
+  "checks": [
+    "All67 placed bytes/modes identical independently reviewed actual candidate; closed file inventory; expected Git blobs/modes recorded",
+    "Index4th entry exact actual manifest/executable/custody/target correspondence; old3 entries unchanged vs current HEAD; offline index schema passes",
+    "Original source4 unchanged; fifth CI exact one owning inert assembly test command",
+    "ArchiveB25 safe regular members176,662decoded/42,004compressed; originalA19 unchanged/new6 exactsourcebytes; no tool/product binary copies",
+    "Retained actual full80(61corpus19controls),49 selected capability accepted witnesses,eightCLIboundaries and24 owning schemas remain prior scoped independent proof",
+    "Current assemblyOS observation cannot imply unknown original build-timeOS; no newcompiler products or security qualification"
+  ],
+  "trustBoundary": "Mutable proposed index is not yet trusted authority. Admission requires root commit preserving exact index/package Git blobs, then an independently selected immutable index revision/digest. Consumer constant updates are a separate iteration.",
+  "qualification": "Approves registration of exact fixed5dd CountStar041 aarch64-apple-darwin candidate with scoped compiler/component/transport proof. Does not discharge native SQL or host obligations or claim installed toolkit/full-boundary release qualification.",
+  "deliveryModeBoundary": "Current prepared placement modes are 0444/0555; Git preserves regular/executable bits only (100644/100755). Fresh checkout readonly modes or installed delivery are not proven. Future consumer must verify cooperative regular input exact bytes/closing custody and create owned readonly installed copies separately."
+}
