@@ -1,0 +1,8 @@
+{
+  "scope": "Fake injected cleanup only; no child processes",
+  "originalType": "GeneratorExit",
+  "observedType": "Refusal",
+  "sameObject": false,
+  "expected": "non-Exception cancellation retains original object",
+  "source": "/private/tmp/weft-paths-keys-producer-freeze-20261010-d/scripts/distribution/check-paths-cli.py"
+}

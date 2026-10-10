@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "bytes": 35388,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "8d3c4751a5bdaa504f4fb2068a5a79fea77d9b608467b422d555e459f5b13101"
+    },
+    {
+      "bytes": 18708,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "274334f3b6109a9696afc0e8e7a5c3a9acd3f588bcfe583e8e72ed2ce9184864"
+    }
+  ],
+  "receipt": {
+    "path": "receipt.json",
+    "sha256": "01033f939ce9c4b5701bd6eae50ea05a80a4c606aa12cf68fdb6fde11cc3506e"
+  },
+  "scope": "source-only explicit ownership with portable process control",
+  "supersedes": "/private/tmp/weft-paths-keys-producer-freeze-20261010-c/manifest.json"
+}

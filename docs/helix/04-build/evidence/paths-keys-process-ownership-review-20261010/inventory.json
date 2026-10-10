@@ -1,0 +1,48 @@
+{
+  "format": "paths-keys-process-ownership-evidence/0.1",
+  "files": [
+    {
+      "path": "source-d-freeze.json",
+      "sha256": "eac53a53252f825fc557e5597cc25ac43927a883c1b44286db5d183576e2e5c6",
+      "bytes": 681,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-d/manifest.json"
+    },
+    {
+      "path": "source-d-checks.json",
+      "sha256": "01033f939ce9c4b5701bd6eae50ea05a80a4c606aa12cf68fdb6fde11cc3506e",
+      "bytes": 2087,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-d/receipt.json"
+    },
+    {
+      "path": "source-e-freeze.json",
+      "sha256": "b4dd3831f4d582968db5f684a132075e4b917b3c0f18b9740855dd96c9a37e0d",
+      "bytes": 799,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-e/manifest.json"
+    },
+    {
+      "path": "source-e-checks.json",
+      "sha256": "3df797deef452203f78734c7f50d8a8e8ecbdf25d6194308b21031f78572586a",
+      "bytes": 2280,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-e/receipt.json"
+    },
+    {
+      "path": "source-e-review.json",
+      "sha256": "270245d42c94dc98c73f28cb70517f73246d037b06368596a29f61e40a05f586",
+      "bytes": 4942,
+      "originalPath": "/private/tmp/astra-paths-keys-producer-source-review-20261010-e.json"
+    },
+    {
+      "path": "source-d-cancellation-finding.json",
+      "sha256": "eace19686a4b95fedd322806f7063e1eeac435e9d67901e46663a4016e556c16",
+      "bytes": 330,
+      "originalPath": "/private/tmp/astra-paths-keys-owner-cancellation-20261010-d.json"
+    },
+    {
+      "path": "outer-command-b-finding.json",
+      "sha256": "2ac4ce6ccffde7438c526a23924c513786d1a52f655266cbd251392de87d44e2",
+      "bytes": 5250,
+      "originalPath": "/private/tmp/astra-paths-keys-qualification-command-review-20261010-b.json"
+    }
+  ],
+  "scope": "Reviewed35-test producer source and explicit process-group ownership only. Actual74 corpus execution and compiler/native/index/installation qualification remain separate."
+}

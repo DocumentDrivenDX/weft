@@ -1,0 +1,106 @@
+{
+  "verdict": "HOLD command B: outer cancellation does not clean isolated active inner child",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-qualification-20261010-b/freeze.json",
+    "sha256": "25c40f143306784dbc30c967d8e96f9e2487e3b0f676574993f9c44de52de906",
+    "bytes": 1469
+  },
+  "command": {
+    "path": "/private/tmp/weft-paths-keys-qualification-20261010-b/command.json",
+    "sha256": "271d24dcece5baa0ed45f7a4fcb7173c789b92e6a1a4c9ac9807fecdf571fada",
+    "bytes": 91288
+  },
+  "selectedResources": {
+    "count": 359,
+    "bytes": 53954965,
+    "allCurrentHashesAndLengthsPass": true
+  },
+  "source": {
+    "commit": "3a2a79ccc19d636f20d31116662d61365c1b4ff7",
+    "files": 1987,
+    "bytes": 312239178,
+    "inventory": {
+      "bytes": 577199,
+      "path": "/private/tmp/weft-paths-keys-3a2a79c-build-20261010-a/source-inventory.json",
+      "sha256": "e9f1e0ac01d7b9dc1b2d61148c74274c1fed5a5593726487aa4562f2e4bf3512"
+    },
+    "exactPathSetModesGitBlobsShaAndLengthsVerified": true
+  },
+  "producer": {
+    "frozenSource": {
+      "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-b/scripts/distribution/check-paths-cli.py",
+      "sha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf",
+      "bytes": 34257
+    },
+    "commandSnapshot": {
+      "path": "/private/tmp/weft-paths-keys-qualification-20261010-b/producer.py",
+      "sha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf",
+      "bytes": 34257
+    },
+    "priorHistoryReview": {
+      "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-b.json",
+      "sha256": "f43b337d9065287338b31998f9581f9434a3521bac731cb14681125e3e8ef331",
+      "bytes": 6332
+    }
+  },
+  "bridge": {
+    "sha256": "128fc9d4cd6cd33ae86844273b33d76de56ca9ad16d8f24c85072d5e16cfee63",
+    "changesOnly": [
+      "verified checker module snapshot path",
+      "schema root exact3a export"
+    ],
+    "sameReviewedCheckerBytes": true,
+    "scope": "selected retained interpreter/dependencies only; no full SDK/dynamic-library closure"
+  },
+  "limits": {
+    "outerSeconds": 180,
+    "outerEachStreamBytes": 262144,
+    "childSeconds": 20,
+    "childStdoutBytes": 4194304,
+    "childStderrBytes": 4096,
+    "schemaEnvelopeBytes": 67108864,
+    "schemaDocumentBytes": 16777216,
+    "receiptBytes": 301989888,
+    "protocolPrechargeBytes": 270846700,
+    "remainingTransportAndAccountingBytes": 31143188,
+    "scope": "finite configured/accounting limits, not observed duration/RSS or guarantee all worst-case transport payloads fit"
+  },
+  "freshOutputs": true,
+  "findings": [
+    {
+      "priority": "P1",
+      "location": "bounded-launcher.py capture finally killpg; producer.py transport start_new_session=True",
+      "problem": "On outer deadline/cancellation the launcher SIGKILLs only the producer group. Its active compiler/schema child has a separate process group; producer cannot run its cleanup finally and that child survives the outer return.",
+      "probe": {
+        "path": "/private/tmp/astra-paths-keys-qualification-cleanup-probe-20261010-b.json",
+        "sha256": "5f904c8bcb83a7305577092497535f3696868a6837da43295392d1ee9724e92d",
+        "bytes": 563
+      },
+      "observed": {
+        "scope": "Controlled inert Python process using exact frozen producer transport and launcher capture; no Weft compiler/native process",
+        "outerException": "TimeoutError",
+        "outerElapsedSeconds": 0.707498458,
+        "childAliveAfterOuterReturn": true,
+        "controlledChildGroupKilledByReviewer": true,
+        "launcherSha256": "1b3ddad1de8da44d2af9593bab1be96361a7167f807b7f1fab01b1d901382892",
+        "producerSha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf",
+        "scriptSha256": "c544f73809a049613965b87bfc5aee080246f243ded21e4c6c94472ccb9892e7"
+      },
+      "requestedCorrection": "Coordinate bounded graceful cancellation so the producer executes inner cleanup, and ensure bounded fallback cleanup of any active isolated inner groups before reporting return. Retain primary cancellation and failure custody."
+    }
+  ],
+  "otherChecks": [
+    "Original explicit profile/backend/binary/source SHA pins correspond reviewed3a resources; no implicit old-profile fallback",
+    "No inherited outer environment; single explicit qualification command and reviewed zero-argument schema bridge",
+    "Wrapper closing custody executes after body failure; primary exception retained across closing/outcome write errors",
+    "Original input/source bytes are never rewritten; source-only reads did not create producer outputs",
+    "Bundle counts and precharge agree exactly; semantic74 expectation/coverage approval remains parent gate"
+  ],
+  "scope": "Command readiness only, held for reproduced lifecycle finding. No qualification/compiler/Cargo/native/DB/install execution. One controlled inert Python subprocess probe was explicitly cleaned up.",
+  "script": {
+    "path": "/private/tmp/astra-paths-keys-qualification-command-review-20261010-b.py",
+    "sha256": "2a5e50680555dc1a3532653c8d69fa8abf23f95f6be77e218422eba1582add57",
+    "bytes": 6813
+  },
+  "runtime": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]"
+}

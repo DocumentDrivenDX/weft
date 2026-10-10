@@ -1,6 +1,8 @@
 """Tiny fake producer ports exercise new mode; no compiler/native qualification."""
 from dataclasses import replace
 import json
+import os,signal,subprocess,sys,time,types
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 import test_corpus as historical
@@ -144,6 +146,80 @@ class PathsKeysCorpusTests(unittest.TestCase):
             self.save();self.calls=[]
             with self.assertRaisesRegex(m.Refusal,'historical-pairs'):self.qualify()
             self.assertEqual(self.calls,[])
+
+    def test_transport_cleanup_preserves_cancellation_and_readonly_marker(self):
+        class Cancel(KeyboardInterrupt):
+            def __setattr__(self,name,value):
+                if name=='cleanup_failed':raise RuntimeError('marker refused')
+                super().__setattr__(name,value)
+        primary=Cancel();selector=m.selectors.DefaultSelector()
+        original_close=selector.close
+        def bad_close():original_close();raise OSError('controlled cleanup')
+        selector.close=bad_close
+        with patch.object(m.selectors,'DefaultSelector',return_value=selector),patch.object(m.subprocess,'Popen',side_effect=primary):
+            with self.assertRaises(Cancel) as caught:m.transport(self.fixture.binary,b'','normal',self.config)
+        self.assertIs(caught.exception,primary)
+        cancellation=KeyboardInterrupt();selector=m.selectors.DefaultSelector();original_close=selector.close
+        def cancel_close():original_close();raise cancellation
+        selector.close=cancel_close
+        child=self.fixture.root/'empty-child';child.write_text('#!'+sys.executable+'\n');child.chmod(0o755)
+        with patch.object(m.selectors,'DefaultSelector',return_value=selector):
+            with self.assertRaises(KeyboardInterrupt) as caught:m.transport(child,b'','normal',self.config)
+        self.assertIs(caught.exception,cancellation)
+
+    def test_cleanup_only_generator_exit_preserves_identity(self):
+        cancellation=GeneratorExit();selector=m.selectors.DefaultSelector();original_close=selector.close
+        def cancel_close():original_close();raise cancellation
+        selector.close=cancel_close
+        child=self.fixture.root/'generator-child';child.write_text('#!'+sys.executable+'\n');child.chmod(0o755)
+        with patch.object(m.selectors,'DefaultSelector',return_value=selector):
+            with self.assertRaises(GeneratorExit) as caught:m.transport(child,b'','normal',self.config)
+        self.assertIs(caught.exception,cancellation)
+
+    def test_closed_process_group_ownership_configuration(self):
+        self.assertEqual(self.config.process_group_owner,'transport')
+        for owner in ('unknown',None,True):
+            with self.assertRaises(m.Refusal):replace(self.config,process_group_owner=owner)
+        with patch.object(m.os,'getpid',return_value=123),patch.object(m.os,'getpgrp',return_value=124):
+            with self.assertRaisesRegex(m.Refusal,'outer-process-group-required'):replace(self.config,process_group_owner='outer')
+        with self.assertRaises(m.Refusal):replace(self.fixture.config,process_group_owner='outer')
+
+    def test_outer_capture_cleans_inner_group_on_deadline_cancel_and_success(self):
+        # Only inert Python children, no tested compiler or native runtime.
+        def capture(argv,cwd,environment,stdout_path,stderr_path,deadline,maximum):
+            # Test owns the outer group; production uses separately reviewed capture.
+            process=subprocess.Popen(argv,cwd=cwd,env=environment,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+            try:
+                try:out,err=process.communicate(timeout=deadline)
+                except subprocess.TimeoutExpired:raise TimeoutError('test outer deadline') from None
+                self.assertLessEqual(len(out)+len(err),maximum)
+                return {'exitCode':process.returncode}
+            finally:
+                try:os.killpg(process.pid,signal.SIGKILL)
+                except ProcessLookupError:pass
+                process.wait(timeout=1)
+                process.stdout.close();process.stderr.close()
+        for mode in ('deadline','cancel','success'):
+            pidpath=self.fixture.root/(mode+'.pid');heartbeat=self.fixture.root/(mode+'.heartbeat');child=self.fixture.root/(mode+'-child')
+            child.write_text('#!'+sys.executable+'\nimport os,time\npid=os.fork()\nif pid==0:\n open('+repr(str(pidpath))+',"w").write(str(os.getpid()))\n os.close(0);os.close(1);os.close(2)\n for n in range(2000):\n  open('+repr(str(heartbeat))+',"w").write(str(n));time.sleep(.01)\nelse:\n time.sleep(20) if '+repr(mode!='success')+' else None\n')
+            child.chmod(0o755)
+            leader=self.fixture.root/(mode+'-leader.py')
+            leader.write_text('import importlib.util,sys,types,pathlib,signal\ns=importlib.util.spec_from_file_location("inner",'+repr(str(Path(m.__file__).resolve()))+')\np=importlib.util.module_from_spec(s);sys.modules[s.name]=p;s.loader.exec_module(p)\n'+('signal.signal(signal.SIGALRM,lambda *args: (_ for _ in ()).throw(KeyboardInterrupt()));signal.setitimer(signal.ITIMER_REAL,.5)\n' if mode=='cancel' else '')+'p.transport(pathlib.Path('+repr(str(child))+'),b"","normal",types.SimpleNamespace(timeout_seconds=5,maximum_response_bytes=1000,source=pathlib.Path('+repr(str(self.fixture.root))+'),process_group_owner="outer"))\n')
+            try:
+                if mode=='deadline':
+                    with self.assertRaises(TimeoutError):capture([sys.executable,'-B','-S',str(leader)],str(self.fixture.root),{'PATH':'/usr/bin:/bin'},self.fixture.root/(mode+'.out'),self.fixture.root/(mode+'.err'),.8,10000)
+                else:
+                    result=capture([sys.executable,'-B','-S',str(leader)],str(self.fixture.root),{'PATH':'/usr/bin:/bin'},self.fixture.root/(mode+'.out'),self.fixture.root/(mode+'.err'),3,10000)
+                    self.assertEqual(result['exitCode']==0,mode=='success')
+                self.assertTrue(pidpath.exists())
+                pid=int(pidpath.read_text())
+                self.assertTrue(heartbeat.exists(),'Controlled descendant did not run')
+                before=heartbeat.read_bytes();time.sleep(.15)
+                self.assertEqual(heartbeat.read_bytes(),before,'Controlled descendant continued after outer cleanup')
+            finally:
+                if pidpath.exists():
+                    try:os.kill(int(pidpath.read_text()),signal.SIGKILL)
+                    except ProcessLookupError:pass
 
     def test_old_backend_or_compiled_profile_cannot_satisfy_new_mode(self):
         backend=m.document(self.fixture.backend.read_bytes())

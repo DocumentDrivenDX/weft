@@ -71,8 +71,11 @@ class Config:
     backend_sha256: str
     declared_capability_count: int
     profile: str = 'paths'
+    process_group_owner: str = 'transport'
     def __post_init__(self):
         if type(self.profile)is not str or self.profile not in PROFILES:raise Refusal('profile-setting')
+        if type(self.process_group_owner)is not str or self.process_group_owner not in ('transport','outer') or self.process_group_owner=='outer' and self.profile!='paths-keys':raise Refusal('process-group-owner')
+        if self.process_group_owner=='outer' and (os.getpid()!=os.getpgrp() or os.getpid()!=os.getsid(0)):raise Refusal('outer-process-group-required')
         if self.profile=='paths-keys' and self.declared_capability_count!=48:raise Refusal('declared-capability-count')
         if type(self.declared_capability_count)is not int or not 1<=self.declared_capability_count<=512:raise Refusal('declared-capability-count')
         if any(not isinstance(p,Path) or not p.is_absolute() for p in (self.source,self.binary,self.cases,self.backend,self.output,self.source_inventory,self.schema_checker)):raise Refusal('absolute-settings-required')
@@ -165,13 +168,20 @@ def extract_legacy(source,maximum):
 def transport(binary,data,mode,config):
     """One deadline covers process, descendants and every pipe; no threads."""
     if mode not in ('normal','directory-input','closed-output'):raise Refusal('transport-mode')
+    outer=getattr(config,'process_group_owner','transport')=='outer'
+    if outer and (os.getpid()!=os.getpgrp() or os.getpid()!=os.getsid(0)):raise Refusal('outer-process-group-required')
     owned=None;process=None;primary=None;cleanup_failed=False
+    cleanup_error=None
+    def failed(error):
+        nonlocal cleanup_failed,cleanup_error
+        cleanup_failed=True
+        if cleanup_error is None:cleanup_error=error
     selector=selectors.DefaultSelector();streams=[];out=bytearray();err=bytearray()
     deadline=time.monotonic()+config.timeout_seconds
     try:
         stdin=subprocess.PIPE
         if mode=='directory-input':owned=os.open(config.source,os.O_RDONLY);stdin=owned
-        process=subprocess.Popen([str(binary)],stdin=stdin,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+        process=subprocess.Popen([str(binary)],stdin=stdin,stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=not outer)
         streams=[p for p in (process.stdout,process.stderr,process.stdin) if p is not None]
         if owned is not None:os.close(owned);owned=None
         for stream,label in ((process.stdout,'out'),(process.stderr,'err')):
@@ -203,22 +213,27 @@ def transport(binary,data,mode,config):
     finally:
         if owned is not None:
             try:os.close(owned)
-            except BaseException:cleanup_failed=True
+            except BaseException as error:failed(error)
         # Kill the whole group even if the leader exited but descendants hold pipes.
         if process is not None:
-            try:os.killpg(process.pid,signal.SIGKILL)
+            try:
+                if outer:process.kill()
+                else:os.killpg(process.pid,signal.SIGKILL)
             except ProcessLookupError:pass
-            except BaseException:cleanup_failed=True
+            except BaseException as error:failed(error)
         for stream in streams:
             try:stream.close()
-            except BaseException:cleanup_failed=True
+            except BaseException as error:failed(error)
         try:selector.close()
-        except BaseException:cleanup_failed=True
+        except BaseException as error:failed(error)
         if process is not None:
             try:process.wait(timeout=1)
-            except BaseException:cleanup_failed=True
+            except BaseException as error:failed(error)
         if cleanup_failed:
-            if primary is not None:primary.cleanup_failed=True
+            if primary is not None:
+                try:primary.cleanup_failed=True
+                except BaseException:pass
+            elif not isinstance(cleanup_error,Exception):raise cleanup_error
             else:raise Refusal('transport-cleanup')
 
 
@@ -402,7 +417,8 @@ def main():
     for key in ('source-commit','binary-sha256','schema-checker-sha256','source-inventory-sha256','cases-sha256','backend-sha256'):parser.add_argument('--'+key,required=True)
     for key in ('maximum-input-bytes','maximum-response-bytes','timeout-seconds','maximum-source-files','maximum-source-file-bytes','maximum-source-total-bytes','maximum-cases','maximum-receipt-bytes','declared-capability-count'):parser.add_argument('--'+key,type=int,required=True)
     parser.add_argument('--profile',choices=tuple(PROFILES),default='paths')
-    a=parser.parse_args();config=Config(a.source,a.binary,a.cases,a.backend,a.output,a.source_commit,a.binary_sha256,a.maximum_input_bytes,a.maximum_response_bytes,a.timeout_seconds,a.source_inventory,a.source_inventory_sha256,a.schema_checker,a.schema_checker_sha256,a.maximum_source_files,a.maximum_source_file_bytes,a.maximum_source_total_bytes,a.maximum_cases,a.maximum_receipt_bytes,a.cases_sha256,a.backend_sha256,a.declared_capability_count,a.profile)
+    parser.add_argument('--process-group-owner',choices=('transport','outer'),default='transport')
+    a=parser.parse_args();config=Config(a.source,a.binary,a.cases,a.backend,a.output,a.source_commit,a.binary_sha256,a.maximum_input_bytes,a.maximum_response_bytes,a.timeout_seconds,a.source_inventory,a.source_inventory_sha256,a.schema_checker,a.schema_checker_sha256,a.maximum_source_files,a.maximum_source_file_bytes,a.maximum_source_total_bytes,a.maximum_cases,a.maximum_receipt_bytes,a.cases_sha256,a.backend_sha256,a.declared_capability_count,a.profile,a.process_group_owner)
     # Explicit trusted schema program receives a bounded byte envelope; no retrieval.
     def schema(scope,role,request,response):
         body=encoded({'scope':scope,'role':role,'requestHex':request.hex(),'responseHex':response.hex()})

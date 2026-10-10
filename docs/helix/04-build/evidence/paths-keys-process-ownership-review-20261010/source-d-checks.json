@@ -1,0 +1,26 @@
+{
+  "boundaries": "stdlib producer outside compiler modules; no Rust dependency edges changed. Cargo-metadata boundary command unavailable because cargo was absent from PATH; no Cargo executable started.",
+  "command": "-B -S -m unittest discover -s tests/distribution-paths-corpus -q",
+  "configuration": "Frozen required bounds and pins; closed explicit profile; old default remains paths; no environment-derived profile or trust.",
+  "diffCheck": "passed",
+  "formal": "Finite success/refusal/custody controls; no SQL, native, machine-proof, index or registration qualification.",
+  "observability": "Safe refusals, exact bounded raw receipts and explicit budget precharge; no OTel claim.",
+  "processOwnership": "Default transport unchanged; explicit outer only PathsKeys with PID=session=group leader before effects. Child joins outer group; inner kills/reaps direct child, outer whole-group cleanup owns descendants on success/failure/cancel. Inert timeout/cancel/stdio-closed descendant controls pass. First cleanup-only cancellation and original readonly-marker cancellation preserved; no compiler run.",
+  "producerProvenance": "Producer H separately frozen, never attributed to compiled Git3a. Historical manifest, inventory and source-subset source bytes establish463 exact original request/expected pairs through the unchanged owning pure extractor; complete namespace responses also match. No historical compiler replay.",
+  "scope": "Fake qualification ports and controlled Python transport children only; no Weft compiler, Cargo, native engine or actual corpus qualification. Existing Paths tests unchanged.",
+  "testCorrection": "Unsent C3.11 run encountered sandbox-denied /bin/ps; D uses independent inert descendant heartbeat witness and no ps dependency. Both final34 test runs pass.",
+  "tests": [
+    {
+      "count": 34,
+      "python": "/usr/bin/python3",
+      "status": "passed",
+      "version": "3.9.6"
+    },
+    {
+      "count": 34,
+      "python": "/private/tmp/ashlar-spark311/bin/python",
+      "status": "passed",
+      "version": "3.11.17"
+    }
+  ]
+}

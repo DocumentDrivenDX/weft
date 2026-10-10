@@ -1,0 +1,105 @@
+{
+  "actualNestedLifecycleControls": {
+    "bytes": 4003,
+    "path": "/private/tmp/astra-paths-keys-qualification-lifecycle-review-20261010-c.json",
+    "sha256": "301d402023766afad4380bc3ec87bc4047608c8a87325251a0be5d8436dded0d"
+  },
+  "baselineApproval": {
+    "bytes": 4132,
+    "path": "/private/tmp/astra-paths-keys-producer-source-review-20261010-b.json",
+    "sha256": "30546e8c6f62dcf7e7adb061db3cd0fcfe9556740e803faae653ad3b711ecf5a"
+  },
+  "checks": [
+    "Default transport retains isolated child group and existing normal protocol; trailing setting has exact transport/outer alternatives. Outer setting refuses old profile and non-session/group leader before child effects.",
+    "Explicit outer mode joins compiler and schema-checker children to producer session/group; inner transport kills/reaps direct child, outer capture owns complete group on success/failure/deadline/cancellation.",
+    "Exact reviewed outer capture plus frozen transport inert tests prove same-group timeout/cancellation/success closed-stdio descendant cleanup. E changes only cancellation-class propagation relative to D mechanism.",
+    "Final six independent controls prove closed setting, both runtime leader fences, old/default no process observation, direct-vs-group kill routing, readonly primary preservation, remaining cleanup attempts, all non-Exception cleanup-only cancellation identity, and sanitized ordinary cleanup refusal.",
+    "Historical463 source/content correspondence, all qualification algorithm, schema role routing, expected byte matching and accounting remain AST-exact B."
+  ],
+  "files": [
+    {
+      "bytes": 35371,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "77517097fe5c5c3b27f90433c505c36514e409896beaa3d473f1937542eb75a5"
+    },
+    {
+      "bytes": 19330,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "faf660bd2e9742c5ea6a6df1b011ecf17f109e09ff09560abbf84111fcdf9cbf"
+    }
+  ],
+  "findings": [],
+  "format": "independent-source-review/0.1",
+  "freeze": {
+    "bytes": 799,
+    "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-e/manifest.json",
+    "sha256": "b4dd3831f4d582968db5f684a132075e4b917b3c0f18b9740855dd96c9a37e0d"
+  },
+  "helix": {
+    "configuration": "Bounded injected setting and profile fence; local process-leader fact validated at configuration/launch, no ambient trust discovery.",
+    "formal": "Finite lifecycle counterexample now covered by controlled inert descendant witnesses and code correspondence; no arbitrary escaping-process or unbounded proof.",
+    "modularity": "Explicit process ownership port; no global monkeypatch, PID registry or compiler/profile mutation.",
+    "observability": "Fixed refusal for ordinary cleanup and best-effort boolean primary marker; exact cancellation object retained; no telemetry receiver claim."
+  },
+  "independentFinalControls": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "-W",
+      "error::ResourceWarning",
+      "/private/tmp/astra-paths-keys-owner-controls-20261010-e.py"
+    ],
+    "envOverrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "exit": 0,
+    "log": {
+      "bytes": 104,
+      "path": "/private/tmp/astra-paths-keys-owner-controls-20261010-e.log",
+      "sha256": "065c7d15facfd20f14fb9182747be315f3349fa1d5e1a0e966047509f4bfa9b1"
+    },
+    "script": {
+      "bytes": 4898,
+      "path": "/private/tmp/astra-paths-keys-owner-controls-20261010-e.py",
+      "sha256": "e257b4e83a8a4c74bca02eccae57f62278cb88c93536f6f16659d89cfbe5ff90"
+    },
+    "tests": 6
+  },
+  "limits": [
+    "Source-only approval; independently frozen command and parent execution gate still required.",
+    "No actual qualification/compiler/Cargo/native/DB execution.",
+    "Same-group cooperative child behavior; malicious setsid/process-group escape is outside reviewed trusted compiler/checker scope.",
+    "Descendant orphan reaping remains OS-owned; stopped heartbeat/group kill evidence does not claim general process-table authority."
+  ],
+  "liveFrozenParity": true,
+  "otherTestEvidence": {
+    "independentFrozenDTests": 34,
+    "ownerFinalEReport": {
+      "bytes": 2280,
+      "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-e/receipt.json",
+      "sha256": "3df797deef452203f78734c7f50d8a8e8ecbdf25d6194308b21031f78572586a"
+    },
+    "ownerReportedFinalTestsEach": 35,
+    "ownerRuntimes": [
+      "Python3.9.6",
+      "Python3.11.17"
+    ]
+  },
+  "supersededCancellationFinding": {
+    "bytes": 330,
+    "path": "/private/tmp/astra-paths-keys-owner-cancellation-20261010-d.json",
+    "sha256": "eace19686a4b95fedd322806f7063e1eeac435e9d67901e46663a4016e556c16"
+  },
+  "unchangedFunctions": [
+    "sha",
+    "read",
+    "document",
+    "encoded",
+    "verify_source",
+    "migrate_legacy",
+    "extract_legacy",
+    "qualify"
+  ],
+  "verdict": "APPROVE exact two-file producer E ownership correction"
+}
