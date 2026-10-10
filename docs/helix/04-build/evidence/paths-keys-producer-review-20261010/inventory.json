@@ -1,0 +1,48 @@
+{
+  "format": "paths-keys-producer-review-evidence/0.1",
+  "files": [
+    {
+      "path": "source-a-freeze.json",
+      "sha256": "46ebdc3689233e270056cae627d6806361d1466148423571b3ecdb441bc9645b",
+      "bytes": 557,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-a/manifest.json"
+    },
+    {
+      "path": "source-a-owner-checks.json",
+      "sha256": "b12110a456b38261ba2340353789e4d12c6ad201e2a7d3f897e054bdedcd8a22",
+      "bytes": 1432,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-a/receipt.json"
+    },
+    {
+      "path": "source-b-freeze.json",
+      "sha256": "b5ecfa363479c0b915ea496ee7264b7a49167fd0dd3167a6e6f3ede71e183999",
+      "bytes": 652,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-b/manifest.json"
+    },
+    {
+      "path": "source-b-owner-checks.json",
+      "sha256": "1dd115cfb82e1c4050f3878d251a5de82d90978a059a790578fd056606294e2d",
+      "bytes": 1487,
+      "originalPath": "/private/tmp/weft-paths-keys-producer-freeze-20261010-b/receipt.json"
+    },
+    {
+      "path": "history-a-findings.json",
+      "sha256": "0701de296360ed8fae3f816ba6e6d0da900933eaa827809d19bbb16d789a494c",
+      "bytes": 4580,
+      "originalPath": "/private/tmp/astra-paths-keys-producer-history-review-20261010-a.json"
+    },
+    {
+      "path": "history-b-review.json",
+      "sha256": "f43b337d9065287338b31998f9581f9434a3521bac731cb14681125e3e8ef331",
+      "bytes": 6332,
+      "originalPath": "/private/tmp/astra-paths-keys-producer-history-review-20261010-b.json"
+    },
+    {
+      "path": "source-b-review.json",
+      "sha256": "30546e8c6f62dcf7e7adb061db3cd0fcfe9556740e803faae653ad3b711ecf5a",
+      "bytes": 4132,
+      "originalPath": "/private/tmp/astra-paths-keys-producer-source-review-20261010-b.json"
+    }
+  ],
+  "scope": "Separately selected finite PathsKeys compiler qualification producer source only;31 actual Python tests and historical content controls. No actual74 compiler qualification, package/index/native/installed claim."
+}

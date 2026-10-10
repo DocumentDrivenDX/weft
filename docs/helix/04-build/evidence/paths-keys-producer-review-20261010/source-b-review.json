@@ -1,0 +1,89 @@
+{
+  "actualReviewerTest": {
+    "argv": [
+      "/usr/bin/python3",
+      "-B",
+      "-S",
+      "-W",
+      "error::ResourceWarning",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/distribution-paths-corpus",
+      "-q"
+    ],
+    "count": 31,
+    "cwd": "/private/tmp/ashlar-weft-distribution-d2d",
+    "environmentOverrides": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "exit": 0,
+    "log": {
+      "bytes": 98,
+      "path": "/private/tmp/astra-paths-keys-producer-tests-20261010-b.log",
+      "sha256": "457953fea7ab2f9d704b46ca8494bb7f6075cef54e5a6f2d7b3e9a835bfcac05"
+    }
+  },
+  "checks": [
+    "Closed explicit paths-keys profile,48 complete selected capabilities,50 Paths+19 control+5 namespace current cases; original paths default and463 old execution path preserved.",
+    "Historical manifest/receipt/source inventory pins and source commit/realization/executable/backend correspondence are checked before execute.",
+    "Bounded gzip inventory and receipt inflation reject extra members/tails; inventory source SHA/bytes/Gitblob binds actual retained source-subset; unchanged pure extractor reconstructs463 ordered IDs/request/oldExpected bytes and full244B namespace responses.",
+    "Child baseline uses real historical530 evidence through fake execution ports;11 isolated historical mutations refuse before execution or output publication.",
+    "Producer H separately identified by harness hash/bytes; not falsely attributed to compiled3a source. Historical463 are references, not newly executed rows.",
+    "Exact source/CI test command31 strict tests pass, including old23 controls and8 newprofile tests."
+  ],
+  "childHistoricalReview": {
+    "bytes": 6332,
+    "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-b.json",
+    "sha256": "f43b337d9065287338b31998f9581f9434a3521bac731cb14681125e3e8ef331"
+  },
+  "files": [
+    {
+      "bytes": 34257,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf"
+    },
+    {
+      "bytes": 13291,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "86c85713c6074e45284d70bfaa96b065bcbad5bb98dd7e680dd375df42925b52"
+    }
+  ],
+  "findings": [],
+  "format": "independent-source-review/0.1",
+  "freeze": {
+    "bytes": 652,
+    "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-b/manifest.json",
+    "sha256": "b5ecfa363479c0b915ea496ee7264b7a49167fd0dd3167a6e6f3ede71e183999"
+  },
+  "helix": {
+    "configuration": "Frozen required resource budgets, exact selectors/pins and old default preserved; no ambient profile discovery.",
+    "formal": "Finite adversarial correspondence controls against actual historical source; no native or unbounded mechanical proof.",
+    "modularity": "Single producer seam outside Rust compiler; no new dependency edge or public compiler type change.",
+    "observability": "Retained raw bounded evidence and closed Refusal vocabulary; malformed historical structure can raise built-in ValueError/KeyError, so no general sanitized producer-CLI claim."
+  },
+  "historicalARefusalProof": {
+    "bytes": 4580,
+    "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-a.json",
+    "sha256": "0701de296360ed8fae3f816ba6e6d0da900933eaa827809d19bbb16d789a494c"
+  },
+  "limits": [
+    "Source approval only; exact current74 expectations and bounded command need separate approval before any actual same-binary qualification.",
+    "No compiler/Cargo/native/build/index/install execution or qualification in this review.",
+    "Trust pins supplied by independently reviewed composition; this producer is not a self-registration or package trust authority.",
+    "Existing cooperative local file custody limits remain; not a hostile-filesystem/symlink-race guarantee."
+  ],
+  "liveFrozenParity": true,
+  "unchangedAstFunctions": [
+    "sha",
+    "read",
+    "document",
+    "encoded",
+    "verify_source",
+    "migrate_legacy",
+    "extract_legacy",
+    "transport"
+  ],
+  "verdict": "APPROVE exact two-file producer B source slice"
+}

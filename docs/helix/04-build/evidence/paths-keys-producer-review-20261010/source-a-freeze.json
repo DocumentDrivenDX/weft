@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "bytes": 30273,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "a6fbbbd3924198d14e981c9a6ff7004531ed50bc8e2179926d2303357046f916"
+    },
+    {
+      "bytes": 10612,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "60f307ec06ac321f69c06a2ee3a4ccacd4d8c2863b828697ac0d76bb344642f7"
+    }
+  ],
+  "receipt": {
+    "path": "receipt.json",
+    "sha256": "b12110a456b38261ba2340353789e4d12c6ad201e2a7d3f897e054bdedcd8a22"
+  },
+  "scope": "source-only producer seam"
+}

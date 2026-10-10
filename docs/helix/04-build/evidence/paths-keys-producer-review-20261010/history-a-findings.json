@@ -1,0 +1,108 @@
+{
+  "controls": [
+    {
+      "accepted": true,
+      "control": "baseline original receipt with historical inventory absent",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": true,
+      "control": "nonhex request accepted",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": true,
+      "control": "empty old expected accepted",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": true,
+      "control": "namespace response omitted",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": true,
+      "control": "forged inventory digest in both labels",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": true,
+      "control": "invented unique legacy ID accepted",
+      "fakeExecuteCalls": 156,
+      "refusal": null,
+      "reportWritten": true
+    },
+    {
+      "accepted": false,
+      "control": "migration negative control",
+      "fakeExecuteCalls": 0,
+      "refusal": "historical-correspondence",
+      "reportWritten": false
+    }
+  ],
+  "files": [
+    {
+      "bytes": 30273,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "a6fbbbd3924198d14e981c9a6ff7004531ed50bc8e2179926d2303357046f916"
+    },
+    {
+      "bytes": 10612,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "60f307ec06ac321f69c06a2ee3a4ccacd4d8c2863b828697ac0d76bb344642f7"
+    }
+  ],
+  "findings": [
+    {
+      "correction": "Verify bounded original historical inventory artifact and contents, bind all referenced descriptors to it, independently extract the463 original cases from retained source bytes and compare exact ordered IDs/requestHex/originalExpectedHex and namespace response/migrations/exit/stderr before execute; alternatively require an explicit independently approved historical-qualification digest authority that guarantees these exact contents, with no label-only equivalent.",
+      "evidence": "Original historical receipt plus metadata-consistent re-pinned variants reaches all156 fake calls and publishes report despite missing historical inventory, malformed request/expected bytes, omitted namespace response, invented ID or forged shared inventory digest.",
+      "finding": "Historical source/receipt claims do not establish original463 correspondence",
+      "lines": "274-283",
+      "priority": "P1"
+    }
+  ],
+  "format": "independent-source-review/0.1",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-a/manifest.json",
+    "sha256": "46ebdc3689233e270056cae627d6806361d1466148423571b3ecdb441bc9645b"
+  },
+  "historicalInput": {
+    "path": "/private/tmp/weft-paths-full-corpus-20261010-c/producer-output/receipt.json",
+    "sha256": "7f80a87ac41d868a32d220fd5a5ec7f8998c264ec0eecc4455029ce3ba7caf68"
+  },
+  "limits": [
+    "All actual executions here are in-memory fake ports; no compiler/Cargo/native/DB/process launch.",
+    "Historical receipt mutations were written only inside owned temporary test directories and re-pinned as explicit test inputs; original receipt/frozen sources untouched.",
+    "This demonstrates missing local correspondence enforcement, not a bypass of a separately trusted and independently accepted immutable real bundle.",
+    "Remaining producer/transport/old-default surface is parent review scope."
+  ],
+  "originalInputAudit": {
+    "path": "/private/tmp/astra-paths-historical-seam-input-review-20261010-a.json",
+    "sha256": "497e20052cbcdd310cdd42177d38a020e6289930f7dd5f0c250d84e4f0315d28"
+  },
+  "ownerNewModeTests": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/python3 -B -S -m unittest discover -s tests/distribution-paths-corpus -p test_paths_keys_corpus.py -v",
+    "passed": 7
+  },
+  "positives": [
+    "producerProvenance explicitly separates separately reviewed harness H from compiled source inventory",
+    "Known history source/realization disagreement and migration controls refuse",
+    "No old463 execution is asserted; exact5 representative fences are distinct"
+  ],
+  "runtime": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]",
+  "script": {
+    "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-a.py",
+    "sha256": "2dfdbbbf35d2e53550492be64281dbc4ad67c32c3a05e3171aa4e700de8ef355"
+  },
+  "verdict": "blocked-historical-correspondence"
+}

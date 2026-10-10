@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "bytes": 34257,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf"
+    },
+    {
+      "bytes": 13291,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "86c85713c6074e45284d70bfaa96b065bcbad5bb98dd7e680dd375df42925b52"
+    }
+  ],
+  "receipt": {
+    "path": "receipt.json",
+    "sha256": "1dd115cfb82e1c4050f3878d251a5de82d90978a059a790578fd056606294e2d"
+  },
+  "scope": "source-only producer correction",
+  "supersedes": "/private/tmp/weft-paths-keys-producer-freeze-20261010-a/manifest.json"
+}

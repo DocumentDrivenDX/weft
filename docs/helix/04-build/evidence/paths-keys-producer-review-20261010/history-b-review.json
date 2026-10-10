@@ -1,0 +1,171 @@
+{
+  "verdict": "APPROVE corrected B historical correspondence seam, scoped source-only",
+  "freeze": {
+    "path": "/private/tmp/weft-paths-keys-producer-freeze-20261010-b/manifest.json",
+    "sha256": "b5ecfa363479c0b915ea496ee7264b7a49167fd0dd3167a6e6f3ede71e183999",
+    "bytes": 652
+  },
+  "files": [
+    {
+      "bytes": 34257,
+      "path": "scripts/distribution/check-paths-cli.py",
+      "sha256": "4f76da0b1c683c81993bce2b22f24e75b85a88680a997ca811dc78306bf43cdf"
+    },
+    {
+      "bytes": 13291,
+      "path": "tests/distribution-paths-corpus/test_paths_keys_corpus.py",
+      "sha256": "86c85713c6074e45284d70bfaa96b065bcbad5bb98dd7e680dd375df42925b52"
+    }
+  ],
+  "actualHistoricalReceipt": {
+    "path": "/private/tmp/weft-paths-full-corpus-20261010-c/producer-output/receipt.json",
+    "sha256": "7f80a87ac41d868a32d220fd5a5ec7f8998c264ec0eecc4455029ce3ba7caf68",
+    "bytes": 47489682
+  },
+  "priorInputAudit": {
+    "path": "/private/tmp/astra-paths-historical-seam-input-review-20261010-a.json",
+    "sha256": "497e20052cbcdd310cdd42177d38a020e6289930f7dd5f0c250d84e4f0315d28",
+    "bytes": 4425
+  },
+  "supersededFinding": {
+    "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-a.json",
+    "sha256": "0701de296360ed8fae3f816ba6e6d0da900933eaa827809d19bbb16d789a494c",
+    "bytes": 4580
+  },
+  "ownerTests": {
+    "passed": 8,
+    "runtime": "3.9.6 (default, Aug 25 2026, 21:26:21) \n[Clang 21.0.0 (clang-2100.3.34.2)]"
+  },
+  "controls": [
+    {
+      "control": "baseline actual463",
+      "accepted": true,
+      "exceptionType": null,
+      "reason": null,
+      "fakeExecuteCalls": 156,
+      "sourceExtractions": 1,
+      "reportWritten": true
+    },
+    {
+      "control": "nonhex request",
+      "accepted": false,
+      "exceptionType": "ValueError",
+      "reason": "non-hexadecimal number found in fromhex() arg at position 0",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "empty original expected",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-pairs",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "missing namespace response",
+      "accepted": false,
+      "exceptionType": "KeyError",
+      "reason": "'responseHex'",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "forged shared inventory digest",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-inventory",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 0,
+      "reportWritten": false
+    },
+    {
+      "control": "invented unique ID",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-pairs",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "migration",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-correspondence",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 0,
+      "reportWritten": false
+    },
+    {
+      "control": "source request and receipt jointly changed",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-source",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "source inventory entry SHA forged",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-source",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "missing historical inventory",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "source-extra-or-nonregular",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 0,
+      "reportWritten": false
+    },
+    {
+      "control": "namespace response changed",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-pairs",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    },
+    {
+      "control": "receipt records reversed",
+      "accepted": false,
+      "exceptionType": "Refusal",
+      "reason": "historical-pairs",
+      "fakeExecuteCalls": 0,
+      "sourceExtractions": 1,
+      "reportWritten": false
+    }
+  ],
+  "checks": [
+    "Actual original530 receipt plus actual bounded single-member historical inventory and source subset reaches all74 fake protocol cases and8 fake transport controls",
+    "All five previous content/correspondence negatives rejected before any execute; absent inventory now rejected",
+    "Exact ordered463 original source IDs/request bytes/oldExpected bytes and static04namespace bytes verified; no migrations; no historical463 executed anew",
+    "Original source file SHA/length/Git blob linked to historical inventory, independent from current3a source inventory; joint request+receipt tampering without historical source pin fails",
+    "Harness hash and wording preserve separately reviewed producerH versus compiled3a and historical530",
+    "Opening/closing retained historical files join source-hash custody checks; bounded input/single-member inventory inflation remains explicit"
+  ],
+  "notes": [
+    "Malformed nonhex or missing response fields currently fail with ValueError or KeyError rather than Refusal; they still withhold output and make zero execution calls. Broader CLI diagnostic normalization is not claimed."
+  ],
+  "limits": [
+    "No tested compiler/process, Cargo, SQL/native/DB or package/install/index operation was executed. All execute ports are controlled in-memory fakes.",
+    "Re-sealed mutations are isolated temporary test inputs, not modifications to originals or a bypass of externally pinned accepted authority.",
+    "Not a new historical/native qualification; preaccepted expected bytes and final real candidate corpus remain separate review gates.",
+    "Other producer transport/default/API surfaces remain parent review scope."
+  ],
+  "script": {
+    "path": "/private/tmp/astra-paths-keys-producer-history-review-20261010-b.py",
+    "sha256": "6885767e93bd2de64f78cd034bea98b57a7f8f5998b98afbe6709929ab44b5da",
+    "bytes": 9866
+  }
+}

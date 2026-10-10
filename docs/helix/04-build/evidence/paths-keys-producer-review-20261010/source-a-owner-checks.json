@@ -1,0 +1,24 @@
+{
+  "boundaries": "stdlib producer outside compiler modules; no Rust dependency edges changed. Cargo-metadata boundary command unavailable because cargo was absent from PATH; no Cargo executable started.",
+  "command": "-B -S -m unittest discover -s tests/distribution-paths-corpus -q",
+  "configuration": "Frozen required bounds and pins; closed explicit profile; old default remains paths; no environment-derived profile or trust.",
+  "diffCheck": "passed",
+  "formal": "Finite success/refusal/custody controls; no SQL, native, machine-proof, index or registration qualification.",
+  "observability": "Safe refusals, exact bounded raw receipts and explicit budget precharge; no OTel claim.",
+  "producerProvenance": "Producer H is separately frozen here; not asserted to be part of compiled source3a. Historical manifest/receipt both source-inventory-bound; source/executable/backend/inventory correspondence and463 unique namespace rows checked, not rerun.",
+  "scope": "Fake qualification ports and controlled Python transport children only; no Weft compiler, Cargo, native engine or actual corpus qualification. Existing Paths tests unchanged.",
+  "tests": [
+    {
+      "count": 30,
+      "python": "/usr/bin/python3",
+      "status": "passed",
+      "version": "3.9.6"
+    },
+    {
+      "count": 30,
+      "python": "/private/tmp/ashlar-spark311/bin/python",
+      "status": "passed",
+      "version": "3.11.17"
+    }
+  ]
+}
