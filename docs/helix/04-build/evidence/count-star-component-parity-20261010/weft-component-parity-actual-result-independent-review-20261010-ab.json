@@ -1,0 +1,175 @@
+{
+  "profile": "weft-component-parity-actual-result-independent-review/0.1",
+  "decision": "approve actual scoped component results for landing",
+  "actual_inventory_sha256": "e5b4be995a6eaac609ceea171a3bb0ce0cba8a9235b02b15f9d12b6b85d8c456",
+  "component_inventory_sha256": "2014b263e28a31f1e909fd7f3ebcb94cb80d46d4c4dedce1c069f78fec3fd524",
+  "source_commit": "5ddcebd6941c572ddd62b78925fdb1fe78b1c688",
+  "cases": 85,
+  "historical_cases": 74,
+  "new_semantic_cases": 11,
+  "browser_version": "151.0.7922.34",
+  "terminal_handles": {
+    "wheel_A": 19789,
+    "cli_A": 47725,
+    "python_A": 22147,
+    "browser_A_failure": 61960,
+    "browser_B": 86577
+  },
+  "checks": [
+    "All26actualevidencefiles exact hashes/size and18,068,809Btotal",
+    "All100recipeBclosingpins unchanged; A93pins unchanged",
+    "Actualwheel decoded5members hash/size exact; soleextension byteequal H product and selectedextraction",
+    "Complete old74 requestbytes/framedresponsebytes exact originals",
+    "New11 requests and semanticresponses exact independentlyreviewedexpectations",
+    "CLI85 outputs twice checked by frozen harness; actualexit0/no stderr",
+    "Python85 responsebytes/hash exactcases; selectedextractedextension actualimport and twicecall checks passed",
+    "Browser85 responsebytes/hash exactcases; actual initializedWASM and publicTSwrapper twicecall checks passed",
+    "Both generic041 optin fences WFT-VERSION; native type/surrogate and browser scalar controls executed by frozen harness",
+    "Actualbrowser trapretired true and exactly4local route requests",
+    "All4successfulphase outcomes openingClosingCustodytrue,environmentInheritedfalse,stderr0; dynamiccases/nativepins exact",
+    "BrowserA MachPort launch failure exit1 retained; B samebrowsercommand reviewedescalation passed",
+    "Component H34boundedarchivefiles and7hashonlyproducts exact; ECLI101 andGPython101 failures retained; no toolbinarycopies",
+    "Compressedarchive62regularsafemembers exactdeclaredhashes/19,079,354Bdecoded; noMachO/ELF/WASMproduct/toolcopies"
+  ],
+  "qualification": "Actual74historical040+11new041 CLI/extractedPython/realbrowserWASM component transport parity only.",
+  "limits": [
+    "No pipinstalledPythonpackage qualification",
+    "No full49capability041profile migration,indexadmission or immutable release qualification",
+    "No nativeSQL/source/ACK/installedendtoendtoolkitqualification",
+    "Cooperative artifactcustody; no hermeticOS/browsercache claim"
+  ],
+  "actual_files": [
+    {
+      "bytes": 688,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser-b-outcome.json",
+      "sha256": "9ff8dff589b22dbb58e96b7e18df5b34729e8969e387e7598eac48eae75429ec"
+    },
+    {
+      "bytes": 331,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/cli.json",
+      "sha256": "5d29f457055ad3e85b888311478d2ff1af68a3d05df9859f6ba3fa8ccb81d4cd"
+    },
+    {
+      "bytes": 3034584,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser-b.json",
+      "sha256": "d755330d94d1b8dec87627de143e7f6f9acb5bc2874432bf8151a3cc08290070"
+    },
+    {
+      "bytes": 1432,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-selection.json",
+      "sha256": "762befe80f95edab6a2f2ade2fa5838c559a90694e5a8bfcefb1bf411d2a14ee"
+    },
+    {
+      "bytes": 11905947,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/cases.json",
+      "sha256": "3b543fa0b47bf8c629a9a3215cd24011e4bcb1d7fed204dae262a0ebe2a48105"
+    },
+    {
+      "bytes": 905,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/python-outcome.json",
+      "sha256": "9a50bb6cac9c7570661841ca9e187d8f54fa14db1552d51c898ee52976f0288c"
+    },
+    {
+      "bytes": 690,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser-outcome.json",
+      "sha256": "f20c147ca11d17676237b7ce9bfdf649e92cee54a8e185bd9b7704c14419a9a9"
+    },
+    {
+      "bytes": 489,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-selection-outcome.json",
+      "sha256": "6a867738152467d0bd45d802e0f8a71d68e7969dd4d144b1a419ccb656794dea"
+    },
+    {
+      "bytes": 3034348,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/python.json",
+      "sha256": "7048bec1a9885244f51b5989330cac5f9e50a1c6eafc105a22f692a71414fd22"
+    },
+    {
+      "bytes": 478,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/cli-outcome.json",
+      "sha256": "14c9cbd0bdaeffe8819d005072acc93d63ca3b2c68793fdb5f165c9c91b337b9"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/python.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 50,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser-b.stdout.log",
+      "sha256": "051bb6e22b54af41a577ad549fe914d921d4b48a0bc66ef4d1efc6c9fa50158a"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/cli.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-selection.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser-b.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 57,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/python.stdout.log",
+      "sha256": "e3cb922ac8993a9e84a83174d3899e83b7278987b84186f3ba140b9146f82368"
+    },
+    {
+      "bytes": 8402,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/browser.stderr.log",
+      "sha256": "5413a2485a434b3864ab25b13dfd75fdfe61575451609f5c74100a65bd9502c5"
+    },
+    {
+      "bytes": 0,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/wheel-selection.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 48,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-a/cli.stdout.log",
+      "sha256": "6de345ff5ca3abf81fe1b106b29154ac08cb2e5a152754867a26113e150449a3"
+    },
+    {
+      "bytes": 26118,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-command-a.json",
+      "sha256": "b046cb9c85c56b696761bf30ba293c709b62238e6dbdf700b1e31c23619c3205"
+    },
+    {
+      "bytes": 24730,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/parity-command-b.json",
+      "sha256": "1a58946919dce5ab55f2ed77aa806a24a7871b09df06daf5964277cf3ea40590"
+    },
+    {
+      "bytes": 2253,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/launch-reviewed-parity.py",
+      "sha256": "b270fca94206a7a6d2cb8256c9929af1290b509f46adbb881c773560259b031d"
+    },
+    {
+      "bytes": 2840,
+      "path": "/private/tmp/weft-count-star-build-20261010-b/select-wheel-member.py",
+      "sha256": "be54dbaf7937d023a25f5898eb5e33c2704a0366c879ddca88edd6f829d75ea4"
+    },
+    {
+      "bytes": 23137,
+      "path": "/private/tmp/weft-component-parity-command-independent-review-20261010-a.json",
+      "sha256": "1173eb2f8b80f47c831a2867d9e3727f7ff4fb9e93c0880921a4e7d6c5053ab4"
+    },
+    {
+      "bytes": 1282,
+      "path": "/private/tmp/weft-component-browser-retry-independent-review-20261010-b.json",
+      "sha256": "b6a6efbfcee45b344d9554deccf55e100daafddc58b45b038ef8a2d9a9d5c840"
+    }
+  ],
+  "archive_sha256": "0e169b25969e92937e2f5994fd5a81ede0943098eeca4debc70e7aaea3a77ca7",
+  "archive_inventory_sha256": "b75c192c202f4378a74bbf96241285d24bf39a6fc8931ab1151abd01c3a2518f"
+}

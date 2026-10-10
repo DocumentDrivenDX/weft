@@ -11,7 +11,7 @@ if(args.length!==6||args.some(p=>!isAbsolute(p)))throw new Error('absolute-confi
 const [casesPath,wasmJs,wasmBinary,wrapperJs,playwrightPath,output]=args;
 const maximum=4*1024*1024;
 async function read(path,limit=maximum){const info=await lstat(path);if(!info.isFile()||info.size>limit)throw new Error('regular-bounded-input');const raw=await readFile(path);if(raw.length>limit)throw new Error('input-bound');return raw;}
-const [caseBytes,js,wasm,wrapper]=await Promise.all([read(casesPath,32*1024*1024),read(wasmJs),read(wasmBinary),read(wrapperJs)]);
+const [caseBytes,js,wasm,wrapper]=await Promise.all([read(casesPath,32*1024*1024),read(wasmJs),read(wasmBinary,16*1024*1024),read(wrapperJs)]);
 const rows=JSON.parse(caseBytes);
 if(!Array.isArray(rows)||!rows.length||rows.length>128)throw new Error('case-inventory');
 for(const row of rows)if(typeof row.request!=='string'||typeof row.expected!=='string'||Buffer.byteLength(row.request)>16*1024*1024||Buffer.byteLength(row.expected)>maximum)throw new Error('case-bound');
