@@ -1,0 +1,35 @@
+{
+  "format": "weft-cli-candidate-controls/0.1",
+  "qualification": "19 actual produced CLI static compiler controls (16 refusals,3 coherent fresh/older binding variants), each public response schema checked; no native data, authorization, drift, index registration or fresh-install claim. Failed preparation a/b retained separately; diagnostic-code expectation mistakes fixed before successful c.",
+  "compilerSourceCommit": "362a9c6af85996a80ed4af6f68efecfe6eb22110",
+  "binarySha256": "ab899150d217a26368ab0c0954a627401d41031fc768f758247231ea513a3437",
+  "harness": {
+    "path": "scripts/distribution/check-cli-controls.py",
+    "sha256": "01dbe70e2428741a007b12e218da9c39fcef542fcae59e68e36fbb4cd0724854",
+    "bytes": 7388
+  },
+  "publicResponseChecker": {
+    "path": "tests/compile/schema-check.ts",
+    "sha256": "9f7d877ed578e664e20d740382a716341d13441e4a377da0ac207d910e7c7501",
+    "bytes": 920
+  },
+  "decodedCaseBytes": 4395706,
+  "decodedCaseSha256": "e55275e6ff3c759950a2a944bfea4483d2f45796e19eafda736657413a089856",
+  "reports": [
+    {
+      "path": "cases.jsonl.gz",
+      "sha256": "7d936a858607be47a3441f3334c5b1feede89b627593d9918c7633c277cda1bc",
+      "bytes": 15227
+    },
+    {
+      "path": "schema.log",
+      "sha256": "ef6293b42873451b4858f8a7c9ce802f231903e8f93e80799279681b0821fefc",
+      "bytes": 63
+    },
+    {
+      "path": "summary.json",
+      "sha256": "fc7573e1ef3dbe51b7cd29dda037573788e65a48c5a18e33df064dc0a8d8a49f",
+      "bytes": 471
+    }
+  ]
+}

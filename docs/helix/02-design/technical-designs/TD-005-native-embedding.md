@@ -54,3 +54,20 @@ No database migrations. Add fixtures/refusal tests first, implement the smallest
 story components, execute the mapped evidence, then review conformance. A rejected
 new profile/version rolls back by unregistering it; retained models are untouched.
 Keep source-language/IR/backend versions separate and refuse stale caches.
+
+
+## Distribution composition and installation
+
+The composition root selects an independently indexed CLI realization under
+CONTRACT-003. Compiler crates own compilation only; `scripts/distribution/` owns
+build/corpus custody and inert records, the public distribution index owns approved
+selection, and the consuming host owns installation/profile checks and execution.
+Keep build records separate from registration authority. Dependency checks prevent
+compiler modules from importing installer, network or native-engine behavior.
+
+Construct one typed installation configuration before use: trusted distribution
+identity, supported target and explicit artifact/output locations. Unknown or
+missing identities, changed bytes and unsupported targets refuse without fallback.
+The host passes fresh publication-bound requests unchanged and still discharges
+all emitted guards and obligations. A fresh documented native installation and
+publication test qualifies the consuming workflow separately from CLI conformance.

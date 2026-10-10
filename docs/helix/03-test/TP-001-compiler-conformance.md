@@ -97,3 +97,33 @@ The executable command `bun run specs:check` validates documents, schemas, initi
 ## Application-read extension
 
 STP-007 allocates the six PR #2 outcomes to frontend/oracle, host and native-backend layers. Preserve 0.1 corpus expectations and add separate 0.2 profile fixtures; no planned criterion is counted as covered by incorporation into the PRD.
+
+
+## Concrete CLI distribution qualification
+
+Run the actual produced release executable with its exact selected feature set,
+not an instrumented test binary. Freeze the complete ordered tracked-source and
+public-schema/backend inventories; record actual tools, commands, features, target
+and known environment, retaining unknown build properties. Execute every declared
+public-transport case with complete response and deterministic-repeat comparison.
+Keep original receipts; allow only independently reviewed exact historical
+expected-artifact migrations with old/new path, value and digest correspondence.
+
+Add current malformed envelope/pin/binding/resource, candidate-opt-out and wrong
+backend/profile controls. Vary valid fresh publication IDs, UUIDs and versions;
+reject static inconsistent vectors at compile time and actual native drift through
+host observations. Coherent retained older publications remain usable under host
+retention rules; registration is never bound to fixture values.
+Verify byte-cap, multibyte UTF-8, input/output I/O failure and framing on the actual
+executable. Assert complete unique case IDs and executable identity around every
+invocation, then close source/harness/corpus custody before reporting success.
+
+Map installation tests to DIST-F1–F4 and the conditional DIST-L1 progress witness.
+Exercise production/index admission separately from trusted consumer installation,
+including adversarial changed binary/record/schema/corpus,
+wrong target/features/backend, missing/partial receipts and unindexed manifests.
+None may register itself or fall back to another compiler. Retain safe structured
+stage/refusal diagnostics; check that credential and raw request payloads are
+absent. A separately executed fresh native publication/read from documented
+commands is required for the consumer's setup claim. Compiler transport evidence
+cannot substitute for that native execution.

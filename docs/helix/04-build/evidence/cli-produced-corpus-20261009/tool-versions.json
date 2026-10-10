@@ -1,0 +1,5 @@
+{
+  "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)\nbinary: rustc\ncommit-hash: 1159e78c4747b02ef996e55082b704c09b970588\ncommit-date: 2025-09-14\nhost: aarch64-apple-darwin\nrelease: 1.90.0\nLLVM version: 20.1.8\n",
+  "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)\n",
+  "scope": "Observed selected toolchain after build; not a claim of hermeticity or complete linker/cache provenance"
+}

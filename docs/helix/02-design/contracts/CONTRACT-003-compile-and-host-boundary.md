@@ -220,3 +220,59 @@ The produced CLI must be checked at the exact byte boundary, multibyte boundary,
 oversized input and malformed UTF-8, alongside ordinary response framing and
 the full declared compiler-profile corpus. A build alone establishes none of
 that conformance or native execution.
+
+
+## Compiler distribution boundary
+
+`weft-distribution/0.1` describes a concrete CLI build, separately from language,
+IR, backend and compile-interface versions. A build record binds the complete
+ordered tracked-source inventory and exact commit, lockfile/toolchain digests,
+observed build command/features/target and tool versions, executable bytes, backend
+manifest identities, public schemas, and conformance receipts. Record unknown
+linker, cache and environment properties explicitly; the same source revision does
+not imply identical executable bytes or a hermetic build.
+
+A build record is inert data. Only an independently reviewed entry in a public
+Weft distribution index selected from a trusted release/package revision can
+register the record and executable digests. A caller-supplied manifest, local
+checksum or passing smoke test cannot promote a build. Configuration selects the
+trusted distribution identity and local installation location outside compile
+requests. Requests retain ordinary fresh publication IDs, table UUIDs, versions
+and source bindings; registration cannot become a fixed-fixture request allowlist.
+
+The first composition is the release CLI with exactly
+`ashlar-databricks-candidate`, Rust 1.90.0 and one actually executed target triple.
+Every other composition/platform requires its own record and qualification.
+Candidate opt-in, source/model gates and all emitted host obligations remain in
+force. Distribution qualification does not establish authorization, stored-value
+validity, publication consistency or native engine support.
+
+Production follows build → digest/profile/full-corpus qualification → independent
+index admission. Consumer installation follows trusted indexed selection → fetch
+or local realization match → verify → install → available. A local rebuild with
+different bytes remains an unindexed candidate until independently admitted.
+Failure at any consumer stage leaves that component unavailable; there is no
+compiler fallback. Changing executable/source/features/target/schema/corpus
+invalidates that concrete realization. Index admission requires actual produced-byte execution over the
+complete declared public-transport corpus, full responses, current refusal and
+candidate-opt-out controls and valid fresh-binding variation. Static inconsistent
+vectors refuse at compile time; actual native drift refuses through host
+observations. A coherent retained older publication remains usable under host
+retention rules. Explicit reviewed historical expected-artifact migrations retain
+original receipts and record exact old/new values, paths and hashes; general SQL
+or response normalization is forbidden.
+
+| Property | Required invariant or progress condition |
+| --- | --- |
+| DIST-F1 | An inert build record cannot promote itself; availability requires the independently trusted index entry |
+| DIST-F2 | Executable, source, features, target, backend, schema and complete receipt identities agree with the selected realization |
+| DIST-F3 | Registration discharges no source, authorization, publication or stored-value host obligation |
+| DIST-F4 | A failed verification/install step leaves the component unavailable and cannot select a fallback |
+| DIST-L1 | With a trusted valid realization, available artifact, complete passing receipts, writable installation and completion of pending steps, installation reaches available; unavailable external inputs do not imply unconditional progress |
+
+The distribution harness lives outside compiler crates and receives explicit
+build/check paths and typed options. It verifies opening/closing source and
+executable custody, reports stage/profile/digests and stable refusal codes, and
+keeps protocol output clean. Diagnostics exclude credentials and raw user model or
+query payloads. These state transitions are a precise specification with
+executable positive/adversarial tests, not a mechanical proof claim.

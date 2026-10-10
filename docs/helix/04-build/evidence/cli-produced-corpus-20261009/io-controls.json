@@ -1,0 +1,17 @@
+{
+  "binarySha256": "ab899150d217a26368ab0c0954a627401d41031fc768f758247231ea513a3437",
+  "scope": "actual produced CLI I/O controls only",
+  "controls": [
+    {
+      "id": "directory-input",
+      "exit": 2,
+      "stderr": "WEFT_CLI_INPUT_IO\n",
+      "stdoutBytes": 0
+    },
+    {
+      "id": "closed-output",
+      "exit": 2,
+      "stderr": "WEFT_CLI_OUTPUT_IO\n"
+    }
+  ]
+}

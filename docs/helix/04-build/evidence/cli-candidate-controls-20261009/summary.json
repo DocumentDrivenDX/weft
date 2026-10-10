@@ -1,0 +1,10 @@
+{
+  "scope": "actual CLI static refusal and fresh-binding compilation only; no native data, authorization or freshness claim",
+  "binarySha256": "ab899150d217a26368ab0c0954a627401d41031fc768f758247231ea513a3437",
+  "harnessSha256": "01dbe70e2428741a007b12e218da9c39fcef542fcae59e68e36fbb4cd0724854",
+  "sourceSha256": "f8492391b65b717be213fbafb6fbdbcb8c8d9fe7cec9d77461ee420464bf0560",
+  "cases": 19,
+  "blockedCases": 16,
+  "compiledCases": 3,
+  "custodyClosed": true
+}
