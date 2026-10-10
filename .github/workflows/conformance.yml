@@ -63,6 +63,8 @@ jobs:
         run: cargo build -p weft-runtime --features ashlar-databricks-left-join --locked
       - name: Test explicit path runtime namespace
         run: cargo test -p weft-runtime --features ashlar-databricks-paths paths::tests --locked
+      - name: Test explicit path CLI transport
+        run: cargo test -p weft-runtime --features ashlar-databricks-paths --bin weft-paths --test paths_cli --locked
       - name: Refuse conflicting runtime registrations
         shell: bash
         run: |
