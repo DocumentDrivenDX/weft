@@ -1,0 +1,47 @@
+{
+  "version": "weft.security.key-events-checkpoint/0.1.0",
+  "base": "effe0276abb486c847d2901581a2255199931c18",
+  "command": [
+    "cargo",
+    "test",
+    "--release",
+    "--locked",
+    "--workspace"
+  ],
+  "exitCode": 0,
+  "passed": 559,
+  "testGroups": 44,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "declaredSources": 823,
+  "sourceCustody": "start.json exact823 declared repository inputs frozen before workspace execution and checked unchanged at terminal; external Cargo registry/build runtime dependencies excluded",
+  "toolchain": "rustc1.90.0 aarch64-apple-darwin release",
+  "scope": "Private actual selected Key/member custody; no complete backend issuer/authentication, public security lowering or original132-case/native/Python/browser acceptance promotion",
+  "formal": {
+    "laws": 3,
+    "formulas": 9,
+    "unsat": 3,
+    "sat": 6,
+    "receipt": "key-address-formal.json",
+    "review": "astra-review.json",
+    "scope": "Conditional algebraic constructors, not Rust/native refinement"
+  },
+  "attempts": [
+    "Initial compile failed at payload visibility/compact SourceIssuer initializer integration; corrected",
+    "Initial core215pass1fail: alternate-primary test Key omitted mandatory UMF name and pinned envelope refused it; added required fixture name without weakening admission",
+    "Earlier successful formal receipt archived before fixture correction; actual current producer rerun and independent replay green"
+  ],
+  "logs": {
+    "astra-review.json": "23a67ce15461cb4e7be06b68e42e745cd5ead875c572ad0753f3ea1a8691ae08",
+    "formal.log": "4e413c2f163a63e9d7e0cb3d986311619a0df020ba166b64b1343a2015782769",
+    "initial-compile-attempt.log": "62098162ffcc4befbd138ff8ccab2b261fc7343b0c4aa0f8bfb360fbdc221927",
+    "initial-core-attempt.log": "57e881c546f15f91fb570224df544d8b6e457930aa865b378f5f54adaa6f6e42",
+    "key-address-formal.json": "ffa571fd7e912cba62017442e86b86581cd1586b82053ad796b4a1146058d18d",
+    "pre-fixture-correction-formal.log": "4e413c2f163a63e9d7e0cb3d986311619a0df020ba166b64b1343a2015782769",
+    "pre-fixture-correction-key-address-formal.json": "ce2ca2c78991ee71094c152b8dc9f033e316afab9e84e6f2d18c18a33350441c",
+    "start.json": "c305623ba921ab4107da3e5c103dd82e6e3a2eed8f9491df4ed88646da8e0c12",
+    "terminal.json": "378413dfe15439cf5a0caeee37cae8d4e407e502a7c842c7abbaeb769faf7ada",
+    "workspace-release.log": "04755dfec37263ce762848234e65f8d048d7e9b29802befbfa537ec76e15cf11"
+  }
+}

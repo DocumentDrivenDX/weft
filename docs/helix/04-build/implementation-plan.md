@@ -169,3 +169,50 @@ Astra's read-only implementation review is clean after channel-only/self-join
 controls, and independently replays all9 current formulas in fresh Z3 contexts.
 The checkpoint preserves both pre-refinement successful runs and the corrected
 initial formal parser failure; stored receipts are not relabeled or repinned.
+
+
+### B-008 selected Key/member semantics — 2026-10-10
+
+Under CONTRACT-006 and the shared independent requirement issuer design, private
+owner Key/KeyField events now retain the original selected Key definition,
+qualified target and exact original key-ID/member-slice references. Member events
+retain their zero-based ordinal, original native member declaration, qualified
+inventory reference and catalog field carrier. Existing canonical source strings
+retain their one-based member positions; no source string is decoded to recover
+meaning. A selected nonprimary Key remains selected when another Key is primary.
+Raw definition metadata, member order and native carrier meaning remain borrowed.
+
+The dedicated private key-events module resolves exact selected IDs and complete
+ordered native member references, charging every candidate/member comparison.
+Retention checks identity rather than structural equality, with exact/minus-one
+visit/text controls and a populated4096/4097 cardinality boundary. Key/KeyField
+source-key projection equals the complete payload map. Assignments=None preserves
+the legacy source-only ledger and avoids this resolution/retention work.
+Independent actual compound fixtures cover both member orders, exact original
+pointers and selected-vs-primary identity. Isolated controls cover target, Key ID,
+member-slice, definition, ordinal, field-reference, carrier, native declaration
+and namespace substitutions; missing/duplicate/reordered/shortened/foreign selected
+Key definitions refuse. [Execution evidence](evidence/security-key-events/checkpoint.json)
+retains initial compiler integration errors and the fixture's mandatory-name
+admission failure, followed by actual corrected runs.
+
+Three conditional algebraic laws cover member ordinal, selected Key identity and
+original occurrence. Nine formulas retain pre-solve SMT and four declared source
+hashes frozen before construction/rechecked before publication. Astra ultra's
+read-only review is clean and independently replays all9 in fresh Z3 contexts.
+These are constructor/projection laws, not Rust representation/traversal refinement
+or native key enforcement; simplified erasure controls are not Rust mutants.
+
+Next retain typed query projection/operator/output semantics and complete
+independent backend kind/template/site/failure/prerequisite and original assertion
+mappings with authenticated exact profiles. Complete issuance, physical lowering,
+B10/admission-drift closure and integrated native qualification remain unfinished.
+All132 original cases remain binding; this checkpoint promotes none. B-008 and
+the active goal remain open.
+
+Final current-source `cargo test --release --locked --workspace` passes559tests
+across44groups, zero failed/ignored/filtered. All823 declared repository inputs
+are prefrozen and verified unchanged at terminal exit0. External Cargo registry
+and build-runtime dependencies remain outside that inventory. Both initial failed
+attempts and the prior source-specific formal receipt remain preserved. The current
+four formal source pins match; Astra independently replays all9 current formulas.
