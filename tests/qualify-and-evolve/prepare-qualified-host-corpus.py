@@ -2,6 +2,8 @@
 @covers US-005-AC1 @covers US-005-AC2 @covers US-005-AC3
 """
 import gzip,hashlib,json,os,subprocess
+import sys
+if sys.flags.optimize:raise RuntimeError('Qualification requires nonoptimized Python')
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2];SOURCE=ROOT/'docs/helix/04-build/evidence/B-007-qualified-registration/compiled-artifacts.jsonl.gz'
 OUT=Path(os.environ.get('WEFT_QUALIFIED_HOST_OUT','/private/tmp/weft-b007-qualified-hosts'));OUT.mkdir(parents=True,exist_ok=True)

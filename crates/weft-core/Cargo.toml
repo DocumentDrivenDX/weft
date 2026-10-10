@@ -8,6 +8,7 @@ rust-version = "1.90"
 serde.workspace = true
 serde_json.workspace = true
 sha2.workspace = true
+num-bigint = "=0.4.8"
 jsonschema = { version = "=0.56.0", default-features = false, features = ["macros", "arbitrary-precision"] }
 [[test]]
 name = "application-syntax"

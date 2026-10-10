@@ -3,7 +3,7 @@ name: Compiler conformance
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, codex/reliability-review]
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,7 @@ concurrency:
 jobs:
   compiler-and-evidence:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 180
     env:
       CARGO_PROFILE_TEST_OPT_LEVEL: "1"
       CARGO_PROFILE_TEST_DEBUG_ASSERTIONS: "true"
@@ -31,6 +31,15 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: '1.4.2'
+      - name: Install pinned Rust and host builders
+        run: |
+          rustup toolchain install 1.90.0 --profile minimal --component rustfmt --target wasm32-unknown-unknown
+          rustup default 1.90.0
+          python -m pip install maturin==1.9.6
+          cargo install wasm-bindgen-cli --version 0.2.105 --locked
+          cargo fetch --locked
+      - name: Install actual Chromium and system dependencies
+        run: bunx --bun playwright@1.62.1 install --with-deps chromium
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
       - name: Validate governed specifications
@@ -48,6 +57,31 @@ jobs:
           python3 -S -W error::ResourceWarning -m unittest discover -s scripts/distribution -p test_paths_assembly.py -q
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-paths-assembly -q
           python3 -S -W error::ResourceWarning -m unittest discover -s tests/distribution-paths-corpus -q
+      - name: Enforce module boundaries and negative controls
+        run: WEFT_CARGO="$(command -v cargo)" bun run modules:check
+      - name: Install pinned host diagnostics dependencies
+        run: python -m pip install -r scripts/reliability/requirements.txt
+      - name: Actual SDK diagnostics, receiver and failure controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_diagnostics.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_diagnostics.py -v
+      - name: Runner configuration and fail-closed controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_config.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_config.py -v
+      - name: Configured optimized source mutation qualification
+        run: >-
+          python -O tests/qualify-and-evolve/source-mutations.py
+          --cargo "$(command -v cargo)"
+          --rustup-home "$(rustup show home)"
+          --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")"
+          --temp-root "$RUNNER_TEMP/weft-mutations"
+          --output-root "$RUNNER_TEMP/weft-mutation-evidence"
+      - name: Formal controls and actual Rust correspondence
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_formal.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_formal.py -v
+          python scripts/reliability/gate.py --cargo "$(command -v cargo)" --rustup-home "$(rustup show home)" --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")" --temp-root "$RUNNER_TEMP/weft-formal" --output-root "$RUNNER_TEMP/weft-formal-evidence"
       - name: Build browser ESM and declarations
         run: bun run browser:build
       - name: Candidate Rust workspace conformance
@@ -109,3 +143,30 @@ jobs:
           done
       - name: Replay retained evidence and corruption controls
         run: python tests/qualify-and-evolve/check-retained-evidence.py
+      - name: Current input closure and stale controls
+        run: |
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_custody.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_custody.py -v
+          PYTHONPATH=scripts python -m unittest discover -s scripts/reliability -p test_fresh_hosts.py -v
+          PYTHONPATH=scripts python -O -m unittest discover -s scripts/reliability -p test_fresh_hosts.py -v
+      - name: Fresh CLI, installed native wheel and real Chromium WASM parity
+        run: >-
+          python scripts/reliability/fresh_hosts.py
+          --cargo "$(command -v cargo)"
+          --rustup-home "$(rustup show home)"
+          --cargo-home "$(dirname "$(dirname "$(command -v cargo)")")"
+          --temp-root "$RUNNER_TEMP/weft-fresh-hosts"
+          --output-root "$RUNNER_TEMP/weft-fresh-host-evidence"
+          --bun "$(command -v bun)"
+          --maturin "$(command -v maturin)"
+          --wasm-bindgen "$(command -v wasm-bindgen)"
+      - name: Retain current qualification receipts and fresh artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: current-qualification-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/weft-fresh-host-evidence
+            ${{ runner.temp }}/weft-fresh-hosts/fresh-host-evidence
+            ${{ runner.temp }}/weft-formal-evidence
+            ${{ runner.temp }}/weft-mutation-evidence
+          if-no-files-found: error

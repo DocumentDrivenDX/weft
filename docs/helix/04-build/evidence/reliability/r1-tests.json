@@ -1,0 +1,94 @@
+{
+  "chunk": "R1",
+  "baseCommit": "5025ae3",
+  "toolchain": "Rust 1.90.0",
+  "inputManifest": "r1-inputs.json",
+  "inputManifestSha256": "e149f307c01c380b5e61a27855b76d944fecb45a009a9e4ff713356c9e7adce3",
+  "checks": [
+    {
+      "name": "focused Rust",
+      "exitCode": 0,
+      "passed": 138,
+      "logSha256": "02d2b0fb716947298f9bcd4b073c9d70f88bc8a1331a95e4dfcd5a54a900be2b",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-core",
+        "-p",
+        "weft-runtime",
+        "--lib",
+        "--bin",
+        "weft-runtime",
+        "--test",
+        "security_admission",
+        "--test",
+        "security_literals",
+        "--test",
+        "application-model",
+        "--test",
+        "input",
+        "--locked",
+        "--offline",
+        "--target-dir",
+        "/private/tmp/weft-reliability-target"
+      ],
+      "externalLog": "/private/tmp/weft-reliability-r1-final.log"
+    },
+    {
+      "name": "compile-negative doctests",
+      "exitCode": 0,
+      "passed": 2,
+      "logSha256": "9d0a835228968dc2fd2ead3e3e19946b7d76a4a34ae0506e59d59ee50f074a7a",
+      "argv": [
+        "cargo",
+        "test",
+        "-p",
+        "weft-core",
+        "--doc",
+        "--locked",
+        "--offline",
+        "--target-dir",
+        "/private/tmp/weft-reliability-target"
+      ],
+      "externalLog": "/private/tmp/weft-reliability-r1-doc.log"
+    },
+    {
+      "name": "workspace compile-only",
+      "exitCode": 0,
+      "passed": null,
+      "logSha256": "2981f0b1cdabe079e78f96301f67d9a9ab7ce9efe0639787c10c8e084e722eed",
+      "argv": [
+        "cargo",
+        "test",
+        "--workspace",
+        "--no-run",
+        "--features",
+        "weft-runtime/truss-postgresql-candidate,weft-runtime/ashlar-databricks-candidate,weft-runtime/test-original,weft-runtime/test-third,weft-postgresql/conformance-original",
+        "--locked",
+        "--offline",
+        "--target-dir",
+        "/private/tmp/weft-reliability-target"
+      ],
+      "externalLog": "/private/tmp/weft-reliability-r1-workspace-build.log"
+    }
+  ],
+  "limits": "Focused Rust behavior, compile-negative API controls and compile-only workspace compatibility. No fresh wheel/browser or full current qualification.",
+  "suites": {
+    "core_library": 65,
+    "application_model": 18,
+    "security_admission": 42,
+    "security_literals": 3,
+    "runtime_library": 1,
+    "runtime_main": 3,
+    "real_cli": 6,
+    "compile_negative_doctests": 2
+  },
+  "environment": {
+    "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+    "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+    "cargoExecutable": "/private/tmp/weft-toolchain/cargo/bin/cargo",
+    "PYO3_PYTHON": "/private/tmp/weft-toolchain/venv/bin/python",
+    "cwd": "/private/tmp/weft-reliability-20261010"
+  }
+}

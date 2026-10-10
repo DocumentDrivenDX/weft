@@ -1,0 +1,391 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:umf:security:spike:ontology:0.2.0:weft-selected-draft-source-overlay",
+  "title": "Draft ontology 0.2.0; not public compiler admission",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "0.2.0"
+    },
+    "documentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "documentId",
+          "revision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "subject": {
+      "$ref": "#/$defs/ref"
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/entity"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "associations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/association"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "context": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ref"
+      },
+      "minItems": 0,
+      "maxItems": 256
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "version",
+    "documentId",
+    "revision",
+    "documents",
+    "subject",
+    "entities",
+    "associations",
+    "context",
+    "actions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/text"
+        },
+        "moduleId": {
+          "$ref": "#/$defs/text"
+        },
+        "elementId": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "protection": {
+          "enum": [
+            "protected",
+            "unprotected"
+          ]
+        },
+        "queryUse": {
+          "type": "object",
+          "properties": {
+            "predicate": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "order": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "group": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "join": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            },
+            "aggregate": {
+              "enum": [
+                "disclosed",
+                "original-authorized",
+                "prohibited"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ref",
+        "protection"
+      ],
+      "additionalProperties": false
+    },
+    "entity": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ref"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "type",
+        "keyId",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "endpoint": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": {
+          "$ref": "#/$defs/ref"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ref"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "role",
+        "target",
+        "fields"
+      ],
+      "additionalProperties": false
+    },
+    "association": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "record-members"
+            },
+            "type": {
+              "$ref": "#/$defs/ref"
+            },
+            "keyId": {
+              "$ref": "#/$defs/text"
+            },
+            "endpoints": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 256,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "target": {
+                    "$ref": "#/$defs/ref"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 256,
+                    "uniqueItems": true,
+                    "items": {
+                      "$ref": "#/$defs/ref"
+                    }
+                  }
+                },
+                "required": [
+                  "role",
+                  "target",
+                  "fields"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "type",
+            "keyId",
+            "endpoints"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "core-relationship"
+            },
+            "relationship": {
+              "$ref": "#/$defs/relationshipRef"
+            },
+            "witness": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "record-key"
+                    },
+                    "type": {
+                      "$ref": "#/$defs/ref"
+                    },
+                    "keyId": {
+                      "$ref": "#/$defs/text"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "type",
+                    "keyId"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "const": "opaque-existential"
+                    }
+                  },
+                  "required": [
+                    "kind"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "endpoints": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "$ref": "#/$defs/text"
+                  },
+                  "side": {
+                    "enum": [
+                      "source",
+                      "target"
+                    ]
+                  },
+                  "target": {
+                    "$ref": "#/$defs/ref"
+                  },
+                  "keyId": {
+                    "$ref": "#/$defs/text"
+                  }
+                },
+                "required": [
+                  "role",
+                  "side",
+                  "target",
+                  "keyId"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "relationship",
+            "witness",
+            "endpoints"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "relationshipRef": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "$ref": "#/$defs/text"
+        },
+        "moduleId": {
+          "$ref": "#/$defs/text"
+        },
+        "relationshipId": {
+          "$ref": "#/$defs/text"
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "relationshipId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -21,7 +21,7 @@ pub(super) fn validate(
     }
     let input = c
         .catalog
-        .inputs
+        .inputs()
         .iter()
         .find(|i| {
             i.pin.document_id == rel.identity.document_id && i.pin.revision == rel.identity.revision

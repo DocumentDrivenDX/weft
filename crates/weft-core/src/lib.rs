@@ -4,6 +4,23 @@ mod application_scope;
 pub mod arithmetic_resolve;
 mod arithmetic_query;
 mod arithmetic_syntax;
+mod security_budget;
+pub mod security_scan_obligations;
+pub mod security_query_uses;
+pub mod security_query_profile;
+pub mod security_evaluation;
+pub mod security_composition;
+pub mod security_ir;
+pub mod security_literals;
+pub mod security_policy_types;
+pub mod security_ontology;
+pub mod security_candidate_ontology;
+pub mod security_candidate_policy_types;
+pub mod security_candidate_ir;
+pub mod security_candidate_dependencies;
+pub mod security_candidate_incidence;
+pub mod security_association_ref;
+pub mod security_source;
 pub mod application_ir;
 pub mod application_model;
 pub mod application_resolve;
@@ -75,12 +92,12 @@ pub fn frontend_json(request: &str) -> String {
             let (catalog, plan) =
                 prepare_and_resolve_application(sql, modules, parameters, profile)?;
             return Ok(
-                serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs,"diagnostics":[]}),
+                serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs(),"diagnostics":[]}),
             );
         }
         let (catalog, plan) = prepare_and_resolve(sql, modules)?;
         Ok(
-            serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs,"diagnostics":[]}),
+            serde_json::json!({"status":"resolved","logicalPlan":plan,"retainedModules":catalog.inputs(),"diagnostics":[]}),
         )
     }
     let output = match run(request) {

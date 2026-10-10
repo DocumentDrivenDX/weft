@@ -1,0 +1,9 @@
+# Host diagnostics only; compiler/core/bindings do not import these packages.
+opentelemetry-api==1.45.1
+opentelemetry-sdk==1.45.1
+opentelemetry-proto==1.45.1
+opentelemetry-semantic-conventions==0.66b1
+opentelemetry-exporter-otlp-proto-common==1.45.1
+protobuf==7.36.2
+typing-extensions==4.16.0
+z3-solver==4.15.4.0

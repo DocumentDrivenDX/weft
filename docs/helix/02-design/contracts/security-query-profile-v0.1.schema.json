@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.query-profile/0.1.0"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "modelPins": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "umfVersion": {
+            "const": "0.8.0"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "documentId",
+          "revision",
+          "umfVersion",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "policySha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ontologySha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "backendId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "backendVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "targetProfile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1024
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "backendId",
+        "backendVersion",
+        "targetProfile",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 256,
+      "items": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "bindings": {
+      "type": "array",
+      "maxItems": 16384,
+      "items": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "$ref": "#/$defs/ref"
+          },
+          "field": {
+            "$ref": "#/$defs/ref"
+          },
+          "operator": {
+            "enum": [
+              "predicate",
+              "order",
+              "group",
+              "join",
+              "aggregate"
+            ]
+          },
+          "originalAction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          }
+        },
+        "required": [
+          "target",
+          "field",
+          "operator",
+          "originalAction"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "id",
+    "revision",
+    "action",
+    "modelPins",
+    "policySha256",
+    "ontologySha256",
+    "binding",
+    "targets",
+    "bindings"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

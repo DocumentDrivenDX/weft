@@ -2,6 +2,8 @@
 @covers US-005-AC1 @covers US-005-AC3
 """
 import hashlib,json,os,subprocess,sys
+import sys
+if sys.flags.optimize:raise RuntimeError('Qualification requires nonoptimized Python')
 from pathlib import Path
 import weft
 import weft.weft as extension

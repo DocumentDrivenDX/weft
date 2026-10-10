@@ -1,0 +1,21 @@
+{
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra"
+  },
+  "baseCommit": "2470447",
+  "disposition": "approved for commit/push; no remaining material findings",
+  "reviewedInputs": {
+    "r4-tests.json": "6876c8b44137a76083930cfef9b63bad9d57437b6958ddd13161935837e4e2b1",
+    "r4-mutations.json": "1ba3ca4fccfd7f2afcb74059383e8edaa28adc7c98e9b2749a97b3b58e354366",
+    "r4-lifecycle.json": "a8ced42c0d0c8b967f2dfd05584f5463b8f3c812ea51571cb3e2793f30ae3101"
+  },
+  "verification": [
+    "16 frozen input fingerprints and8 terminal log results/digests",
+    "Independent18 normal/18 optimized receiver/privacy/failure controls",
+    "Seven clean originals and seven exact mutant failures",
+    "Actual qualification bytes, lifecycle manifest/events digest and16 ordered records/7completed operations/no loss",
+    "Executed scoped source revision matches retained manifest"
+  ],
+  "limits": "Unix host diagnostics and scoped runner integration. Full current qualification remains R6. Public security/native activation remains blocked."
+}
