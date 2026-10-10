@@ -16,6 +16,7 @@ impl ComparisonOperator {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {
+    StringIn { field: Field, values: Vec<crate::application_ir::Value> },
     NullTest { field: Field, negated: bool },
     NullableStringEqual { left: Field, right: Field },
     ScalarCompare { left: Field, right: crate::application_ir::Value, operator: ComparisonOperator },
@@ -43,6 +44,11 @@ pub enum Expression {
     Field {
         scan: String,
         identity: Identity,
+    },
+    CountDistinct {
+        argument: Field,
+        #[serde(rename = "type")]
+        logical_type: LogicalType,
     },
     Count {
         #[serde(rename = "type")]

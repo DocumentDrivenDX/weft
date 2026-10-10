@@ -66,6 +66,7 @@ fn collect_value(lower: &mut Lower<'_>, v: &app::Value) {
 }
 fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> Result<()> {
     match p {
+        plan::Predicate::StringIn{field,values}=>{collect_field(lower,field);for value in values{collect_value(lower,value)}},
         plan::Predicate::NullTest{field,..}=>collect_field(lower,field),
         plan::Predicate::NullableStringEqual{left,right}=>{collect_field(lower,left);collect_field(lower,right)},
         plan::Predicate::ScalarCompare { left, right, .. } => { collect_field(lower, left); collect_value(lower, right) }
@@ -339,6 +340,11 @@ fn predicate(
     guards: &mut Vec<String>,
 ) -> Result<String> {
     match p {
+        plan::Predicate::StringIn{field,values}=>{
+            let left=lower.expression(&field_expression(field))?;
+            let right=values.iter().map(|v|application::value(lower,v)).collect::<Result<Vec<_>>>()?;
+            Ok(format!("({left} IN ({}))",right.join(", ")))
+        },
         plan::Predicate::NullTest{field,negated}=>Ok(format!("({} IS {}NULL)",lower.expression(&field_expression(field))?,if *negated {"NOT "}else{""})),
         plan::Predicate::NullableStringEqual{left,right}=>Ok(format!("({} = {})",lower.expression(&field_expression(left))?,lower.expression(&field_expression(right))?)),
 
@@ -452,11 +458,16 @@ pub(super) fn lower(
     binding: &Binding,
     p: &plan::Plan,
 ) -> Result<TargetPlan> {
-    if p.aggregate || !p.groups.is_empty() {
+    if p.aggregate && !p.outputs.iter().any(|o|matches!(o.expression,plan::Expression::CountDistinct{..})) {
         return Err(fail(
             "WFT-CAPABILITY",
             "Grouped arithmetic requires a separately admitted lowering",
         ));
+    }
+    if p.aggregate {
+        if p.read_profile.is_some() || p.distinct || p.groups.iter().any(|f|f.logical_type.family!=Family::String || f.logical_type.nullable || f.logical_type.facets!=json!({})) || p.outputs.iter().any(|o|!matches!(o.expression,plan::Expression::Field{..}|plan::Expression::CountDistinct{..})) {
+            return Err(fail("WFT-CAPABILITY","Distinct-count profile requires exact required String groups and direct grouped outputs only"));
+        }
     }
     let positioned = p.required_capabilities.iter().any(|c| c == "project.positionedOutputs");
     let mut lower = Lower::new(binding);
@@ -475,7 +486,7 @@ pub(super) fn lower(
     for pred in &p.filters {
         collect_predicate(&mut lower, pred)?
     }
-    for f in &p.order {
+    for f in p.groups.iter().chain(&p.order) {
         collect_field(&mut lower, f)
     }
     if let Some(key) = &p.page_key {
@@ -506,6 +517,7 @@ pub(super) fn lower(
                     },
                 )
             }
+            plan::Expression::CountDistinct { argument,.. } => collect_field(&mut lower,argument),
             plan::Expression::Arithmetic { expression } => collect_numeric(&mut lower, expression),
             _ => return Err(fail(
                 "WFT-CAPABILITY",
@@ -584,6 +596,10 @@ pub(super) fn lower(
                     vec![identity.clone()],
                 )
             }
+            plan::Expression::CountDistinct{argument,logical_type}=>{
+                let arg=lower.expression(&field_expression(argument))?;
+                (format!("CAST(COUNT(DISTINCT {arg}) AS STRING)"),logical_type.clone(),vec![argument.identity.clone()])
+            }
             plan::Expression::Arithmetic { expression } => {
                 let coefficient = numeric(&mut lower, expression, &mut guards)?;
                 let ty = match expression.domain {
@@ -639,6 +655,19 @@ pub(super) fn lower(
         filter.as_deref(),
         &guards,
     );
+    let grouping=p.groups.iter().map(|f|lower.expression(&field_expression(f))).collect::<Result<Vec<_>>>()?;
+    for output in &p.outputs {
+        if let plan::Expression::CountDistinct{argument,..}=&output.expression {
+            let arg=lower.expression(&field_expression(argument))?;
+            let mut tuple=grouping.clone();tuple.push(arg);
+            let where_sql=filter.as_ref().map(|f|format!(" WHERE {f}")).unwrap_or_default();
+            let distinct=format!("SELECT DISTINCT {} FROM {from}{where_sql}",tuple.iter().enumerate().map(|(i,e)|format!("{e} AS `_count_key_{i}`")).collect::<Vec<_>>().join(", "));
+            let group_aliases=(0..grouping.len()).map(|i|format!("`_count_key_{i}`")).collect::<Vec<_>>();
+            let group_sql=if group_aliases.is_empty(){String::new()}else{format!(" GROUP BY {}",group_aliases.join(", "))};
+            let counts=format!("SELECT TRY_SUM(CAST(1 AS DECIMAL(38,0))) AS `_cardinality`, MAX(1) AS `_nonempty` FROM ({distinct}) `_distinct_count_input`{group_sql}");
+            checks.push(json!({"phase":"aggregate-candidates","sql":format!("WITH {} SELECT CAST(COUNT(*) AS STRING) AS violations FROM ({counts}) `_count_capacity` WHERE (`_nonempty` IS NOT NULL AND `_cardinality` IS NULL) OR `_cardinality` > CAST('9223372036854775807' AS DECIMAL(38,0))",lower.ctes.join(", "))}));
+        }
+    }
     let mut sql = format!(
         "WITH {} SELECT {}{} FROM {from}",
         lower.ctes.join(", "),
@@ -648,6 +677,7 @@ pub(super) fn lower(
     if let Some(filter) = filter {
         sql.push_str(&format!(" WHERE {filter}"))
     }
+    if !grouping.is_empty(){sql.push_str(&format!(" GROUP BY {}",grouping.join(", ")))}
     if !p.order.is_empty() {
         let order = p
             .order

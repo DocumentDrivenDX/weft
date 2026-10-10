@@ -468,7 +468,8 @@ impl<B: Backend> Registered for Adapter<B> {
         // New 0.3 comparisons must be admitted before any backend binding callback.
         // Retain the ordering of older operations; do not retroactively preflight them.
         if matches!(plan, Plan::V03(_)) {
-            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "project.distinct", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull"].contains(&id.as_str())) {
+            let distinct_count=plan.capabilities().iter().any(|id|id=="aggregate.countDistinct");
+            for id in plan.capabilities().iter().filter(|id| ["compare.less", "compare.lessEqual", "compare.greaterEqual", "compare.notEqual", "compare.scalarJoin", "project.positionedOutputs", "project.distinct", "predicate.nativeNull", "compare.nullAwareStringEqual", "value.nativeNull", "predicate.stringIn", "aggregate.countDistinct"].contains(&id.as_str()) || (distinct_count && ["aggregate","group"].contains(&id.as_str()))) {
                 if !self.manifest.capabilities.iter().any(|c| &c.id == id
                     && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
                     && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
@@ -780,6 +781,7 @@ fn selected(plan: Plan<'_>) -> Selection {
                 match p {
                     crate::arithmetic_plan::Predicate::Legacy{predicate:p}=>predicate(p,s),
                     crate::arithmetic_plan::Predicate::ArithmeticCompare{left,right,..}|crate::arithmetic_plan::Predicate::ArithmeticCompareExtended{left,right,..}=>{arithmetic(left,s);arithmetic(right,s)},
+                    crate::arithmetic_plan::Predicate::StringIn{field,values}=>{s.fields.push(field.identity.clone());for v in values{value(v,s)}},
                     crate::arithmetic_plan::Predicate::NullTest{field,..}=>s.fields.push(field.identity.clone()),
                     crate::arithmetic_plan::Predicate::NullableStringEqual{left,right}=>{s.fields.push(left.identity.clone());s.fields.push(right.identity.clone())},
                     crate::arithmetic_plan::Predicate::ScalarCompare{left,right,..}=>{s.fields.push(left.identity.clone());value(right,s)}
@@ -796,7 +798,7 @@ fn selected(plan: Plan<'_>) -> Selection {
                 use crate::arithmetic_plan::Expression;
                 match &output.expression {
                     Expression::Field{identity,..}=>s.fields.push(identity.clone()),
-                    Expression::Sum{argument,..}=>s.fields.push(argument.identity.clone()),
+                    Expression::Sum{argument,..}|Expression::CountDistinct{argument,..}=>s.fields.push(argument.identity.clone()),
                     Expression::RelatedKeys{relationship,..}=>rel(relationship,&mut s),
                     Expression::Arithmetic{expression}=>arithmetic(expression,&mut s),
                     Expression::Count{..}=>{}

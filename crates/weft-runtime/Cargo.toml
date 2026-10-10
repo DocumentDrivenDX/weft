@@ -4,6 +4,7 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+ashlar-databricks-count-distinct=["dep:weft-databricks"]
 truss-postgresql-qualified=["dep:weft-postgresql"]
 ashlar-databricks-qualified=["dep:weft-databricks"]
 ashlar-databricks-candidate=["dep:weft-databricks"]

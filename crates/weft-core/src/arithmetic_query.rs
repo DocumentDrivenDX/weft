@@ -16,6 +16,7 @@ pub enum Output {
     Field(Column),
     Entity(Name),
     Count,
+    CountDistinct(Column),
     Sum(Column),
     Related { relationship: Column, bound: u16 },
 }
@@ -26,6 +27,7 @@ pub struct Projection {
 }
 #[derive(Debug, Clone)]
 pub enum Predicate {
+    StringIn { column: Column, literals: Vec<Literal> },
     NullTest { column: Column, negated: bool },
     ExtendedCompare { column: Column, value: Value, operator: crate::arithmetic_plan::ComparisonOperator },
     ArithmeticCompareExtended { left: Expression, right: Expression, operator: crate::arithmetic_plan::ComparisonOperator },
@@ -118,7 +120,9 @@ fn operator(p: &mut Parser) -> Result<Operator> {
 fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
     let mut predicates = Vec::new();
     loop {
-        let predicate = if let Some(predicate) = null_predicate(p)? {
+        let predicate = if let Some(predicate) = string_in_predicate(p, budget)? {
+            predicate
+        } else if let Some(predicate) = null_predicate(p)? {
             predicate
         } else if p.peek_word("has_related") {
             p.word("has_related")?;
@@ -179,6 +183,22 @@ fn predicates(p: &mut Parser, budget: &mut Budget) -> Result<Vec<Predicate>> {
         p.word("and")?;
     }
     Ok(predicates)
+}
+fn string_in_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Predicate>> {
+    let checkpoint=p.clone();
+    let column=match p.column03(){Ok(c)=>c,Err(_)=>{*p=checkpoint;return Ok(None)}};
+    if !p.peek_word("in"){*p=checkpoint;return Ok(None)}
+    p.word("in")?;p.symbol('(')?;
+    let mut literals=Vec::new();
+    loop {
+        budget.reserve(p)?;
+        let literal=p.literal()?;
+        if !matches!(literal.kind,LiteralKind::String){return Err(fail(p,"IN accepts exact String literals only"));}
+        literals.push(literal);
+        if !p.peek_symbol(','){break}p.symbol(',')?;
+    }
+    p.symbol(')')?;
+    Ok(Some(Predicate::StringIn{column,literals}))
 }
 fn null_predicate(p: &mut Parser) -> Result<Option<Predicate>> {
     let checkpoint=p.clone();
@@ -246,9 +266,9 @@ pub fn parse(sql: &str) -> Result<Query> {
         let output = if p.peek_word("count") {
             p.word("count")?;
             p.symbol('(')?;
-            p.symbol('*')?;
+            let output=if p.peek_word("distinct") {p.word("distinct")?;Output::CountDistinct(p.column03()?)} else {p.symbol('*')?;Output::Count};
             p.symbol(')')?;
-            Output::Count
+            output
         } else if p.peek_word("sum") {
             p.word("sum")?;
             p.symbol('(')?;

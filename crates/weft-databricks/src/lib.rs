@@ -11,3 +11,6 @@ pub mod qualified_profile;
 
 /// Explicit finite coefficient lowering for exact 0.3 row arithmetic.
 pub mod arithmetic;
+
+/// Explicit required String set/count composition; preserves prior arithmetic profile.
+pub mod count_distinct;

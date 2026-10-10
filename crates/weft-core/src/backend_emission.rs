@@ -100,7 +100,7 @@ pub(crate) fn validate(
         }
         Plan::V03(p) => p.outputs.iter().map(|o|(o.name.as_str(),match &o.expression {
             crate::arithmetic_plan::Expression::Field{identity,..}=>Expected::Field(identity),
-            crate::arithmetic_plan::Expression::Count{logical_type}|crate::arithmetic_plan::Expression::Sum{logical_type,..}=>Expected::Scalar(logical_type),
+            crate::arithmetic_plan::Expression::CountDistinct{logical_type,..}|crate::arithmetic_plan::Expression::Count{logical_type}|crate::arithmetic_plan::Expression::Sum{logical_type,..}=>Expected::Scalar(logical_type),
             crate::arithmetic_plan::Expression::RelatedKeys{relationship,bound,..}=>Expected::Related(relationship,*bound),
             crate::arithmetic_plan::Expression::Arithmetic{expression}=>Expected::Arithmetic(&expression.domain),
         })).collect(),

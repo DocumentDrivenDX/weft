@@ -33,7 +33,7 @@ impl Budget {
     pub(crate) fn new() -> Self {
         Self { nodes: 0 }
     }
-    fn reserve(&mut self, p: &Parser) -> Result<()> {
+    pub(crate) fn reserve(&mut self, p: &Parser) -> Result<()> {
         if self.nodes >= MAX_NODES {
             return Err(limit(p, "Expression node limit exceeded"));
         }

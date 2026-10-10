@@ -584,7 +584,7 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
     impl Backend for Probe {
         type Mapping=();type TargetPlan=();
         fn describe(&self)->Result<Manifest> {
-            let mut m=weft_databricks::arithmetic::Arithmetic.describe()?;
+            let mut m=if self.mode=="old-profile" {weft_databricks::arithmetic::Arithmetic.describe()?}else if ["aggregate","group","aggregate.countDistinct","predicate.stringIn"].contains(&self.id) {weft_databricks::count_distinct::CountDistinct.describe()?}else{weft_databricks::arithmetic::Arithmetic.describe()?};
             if self.mode=="missing" {m.capabilities.retain(|c|c.id!=self.id);}
             else if self.mode=="target" {
                 let mut other=m.target_profiles[0].clone();other.id="other".into();m.target_profiles.push(other);
@@ -600,10 +600,11 @@ fn new_comparison_capabilities_refuse_before_binding_callback() {
         fn lower(&self,_:&Context<'_>,_:&())->Result<()> {panic!()}
         fn emit(&self,_:&Context<'_>,_:&())->Result<Emission> {panic!()}
     }
-    for (id,sql) in [("project.distinct","SELECT DISTINCT c.name FROM Customer c"),("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id"),("predicate.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("value.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("compare.nullAwareStringEqual","SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name")] {
-        for mode in ["missing","unsupported","target","language","candidate-no-opt-in"] {
+    for (id,sql) in [("aggregate","SELECT COUNT(DISTINCT c.name) AS n FROM Customer c"),("group","SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c GROUP BY c.name"),("aggregate.countDistinct","SELECT COUNT(DISTINCT c.name) AS n FROM Customer c"),("predicate.stringIn","SELECT c.name FROM Customer c WHERE c.name IN ('a','b')"),("project.distinct","SELECT DISTINCT c.name FROM Customer c"),("compare.less","SELECT c.name FROM Customer c WHERE c.name<'z'"),("compare.lessEqual","SELECT c.name FROM Customer c WHERE c.name<='z'"),("compare.greaterEqual","SELECT c.name FROM Customer c WHERE c.name>='z'"),("compare.notEqual","SELECT c.name FROM Customer c WHERE c.name<>'z'"),("compare.scalarJoin","SELECT c.name FROM Customer c JOIN Customer d ON c.name<d.name"),("project.positionedOutputs","SELECT c.id,d.id FROM Customer c JOIN Customer d ON c.id=d.id"),("predicate.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("value.nativeNull","SELECT c.name FROM Customer c WHERE c.name IS NULL"),("compare.nullAwareStringEqual","SELECT c.name FROM Customer c JOIN Customer d ON c.name=d.name")] {
+        let mut modes=vec!["missing","unsupported","target","language","candidate-no-opt-in"];if ["aggregate.countDistinct","predicate.stringIn"].contains(&id){modes.push("old-profile");}
+        for mode in modes {
             let calls=Arc::new(AtomicUsize::new(0));let mut registry=Registry::default();registry.register(Probe{id,mode,calls:calls.clone()}).unwrap();
-            let mut request=if id=="compare.nullAwareStringEqual" {nullable_request(sql,"name")}else{arithmetic_request(sql)};if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
+            let mut request=if id=="compare.nullAwareStringEqual" {nullable_request(sql,"name")}else if mode!="old-profile" && ["aggregate","group","aggregate.countDistinct","predicate.stringIn"].contains(&id){count_request(sql)}else{arithmetic_request(sql)};if mode=="candidate-no-opt-in" {request["options"]["allowCandidate"]=json!(false);}
             let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();
             assert_eq!(response["diagnostics"][0]["code"],"WFT-CAPABILITY","{id}/{mode}:{response}");assert_eq!(calls.load(Ordering::SeqCst),0);assert!(response.get("sql").is_none());
         }
@@ -764,4 +765,55 @@ fn distinct_order_uses_visible_physical_projection_not_hidden_input_field() {
     let response=arithmetic_compile(&arithmetic_request("SELECT c.name FROM Customer c ORDER BY c.name LIMIT 2"));
     assert_eq!(response["status"],"compiled");assert!(response["sql"].as_str().unwrap().contains("ORDER BY"));
     assert!(!response["sql"].as_str().unwrap().ends_with("ORDER BY `name` ASC LIMIT 2"));
+}
+
+fn count_request(sql:&str)->Value {
+    let mut r=arithmetic_request(sql);r["target"]["backendId"]=json!(weft_databricks::count_distinct::ID);r["target"]["backendVersion"]=json!(weft_databricks::count_distinct::VERSION);r["target"]["targetProfile"]=json!(weft_databricks::count_distinct::PROFILE);r
+}
+fn count_compile(request:&Value)->Value {
+    let mut registry=Registry::default();registry.register(weft_databricks::arithmetic::Arithmetic).unwrap();registry.register(weft_databricks::count_distinct::CountDistinct).unwrap();
+    serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap()
+}
+
+#[test]
+fn count_distinct_string_and_literal_in_are_exact_and_guarded() {
+    for sql in ["SELECT COUNT(DISTINCT c.name) AS n FROM Customer c", "SELECT c.name,COUNT(DISTINCT d.name) AS n FROM Customer c JOIN Customer d ON c.name=d.name WHERE c.name IN ('A','A','A ') GROUP BY c.name ORDER BY c.name"] {
+        let response=count_compile(&count_request(sql));
+        assert_eq!(response["status"],"compiled","{response}");
+        let caps=response["logicalPlan"]["requiredCapabilities"].as_array().unwrap();
+        assert!(caps.contains(&json!("aggregate.countDistinct")));
+        let count=response["columns"].as_array().unwrap().last().unwrap();
+        assert_eq!(count["representation"]["logicalType"],json!({"family":"integer","facets":{},"nullable":false}));
+        assert!(response["sql"].as_str().unwrap().contains("COUNT(DISTINCT "));
+        let exact=response["obligations"].as_array().unwrap().iter().find(|o|o["id"]=="ashlar.arithmetic.exact").unwrap();
+        let guard=exact["parameters"]["checks"].as_array().unwrap().iter().find(|c|c["phase"]=="aggregate-candidates").unwrap()["sql"].as_str().unwrap();
+        assert!(guard.contains("TRY_SUM(CAST(1 AS DECIMAL(38,0)))"));assert!(guard.contains("MAX(1)"));assert!(guard.contains("9223372036854775807"));
+        if sql.contains(" IN ") {assert!(caps.contains(&json!("predicate.stringIn")));assert_eq!(response["parameters"].as_array().unwrap().iter().filter(|p|p["value"]=="A").count(),2);}
+    }
+    for sql in ["SELECT COUNT(DISTINCT c.id) AS n FROM Customer c", "SELECT c.name FROM Customer c WHERE c.name IN (1)", "SELECT c.name FROM Customer c WHERE c.name IN (NULL)", "SELECT c.name FROM Customer c WHERE c.name IN (:v)", "SELECT c.name FROM Customer c WHERE c.name IN ()", "SELECT COUNT(DISTINCT c.name),SUM(c.id) FROM Customer c"] {
+        let response=count_compile(&count_request(sql));assert_eq!(response["status"],"blocked","{sql}: {response}");assert!(response.get("sql").is_none());
+    }
+    assert_eq!(count_compile(&{let mut r=nullable_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c","name");r["target"]["backendId"]=json!(weft_databricks::count_distinct::ID);r["target"]["backendVersion"]=json!(weft_databricks::count_distinct::VERSION);r["target"]["targetProfile"]=json!(weft_databricks::count_distinct::PROFILE);r})["status"],"blocked");
+}
+
+#[test]
+fn count_distinct_and_in_old_profiles_and_resource_budget_refuse() {
+    for version in ["0.1.0","0.2.0"] {
+        for sql in ["SELECT COUNT(DISTINCT c.name) FROM Customer c","SELECT c.name FROM Customer c WHERE c.name IN ('a')"] {
+            let mut request=common::request(sql);request["interfaceVersion"]=json!(format!("weft-compile/{version}"));request["dialect"]=json!(format!("weft-sql/{version}"));
+            let r=run(&request);assert_eq!(r["status"],"blocked");assert_eq!(r["diagnostics"][0]["phase"],"parse");assert!(r.get("sql").is_none());
+        }
+    }
+    let sql=format!("SELECT c.name FROM Customer c WHERE c.name IN ({})",vec!["'a'";257].join(","));
+    let r=count_compile(&count_request(&sql));assert_eq!(r["diagnostics"][0]["code"],"WFT-LIMIT");assert!(r.get("sql").is_none());
+}
+
+#[test]
+fn distinct_count_target_is_explicit_and_old_arithmetic_refuses_new_capabilities() {
+    for sql in ["SELECT COUNT(DISTINCT c.name) AS n FROM Customer c","SELECT c.name FROM Customer c WHERE c.name IN ('a')"] {
+        let r=count_compile(&arithmetic_request(sql));assert_eq!(r["status"],"blocked");assert_eq!(r["diagnostics"][0]["code"],"WFT-CAPABILITY");assert!(r.get("sql").is_none());
+    }
+    let mut missing=count_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c");missing["target"].as_object_mut().unwrap().remove("targetProfile");assert_eq!(count_compile(&missing)["status"],"blocked");
+    let mut req=count_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c");req["target"]["targetProfile"]=json!(weft_databricks::arithmetic::PROFILE);assert_eq!(count_compile(&req)["status"],"blocked");
+    let mut req=count_request("SELECT COUNT(DISTINCT c.name) AS n FROM Customer c");let mut b:Value=serde_json::from_str(req["target"]["bindingJson"].as_str().unwrap()).unwrap();b["profile"]=json!("future");let raw=b.to_string();req["target"]["bindingJson"]=json!(raw);req["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));assert_eq!(count_compile(&req)["diagnostics"][0]["code"],"WFT-BINDING");
 }

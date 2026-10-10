@@ -97,6 +97,13 @@ fn predicate(scope: &mut Scope, p: &ast::Predicate, on: bool) -> Result<ir::Pred
         scope.caps.insert("arithmetic.compareExact".into());
     }
     match p {
+        ast::Predicate::StringIn{column,literals}=>{
+            let field=scope.field(column)?;
+            if field.logical_type.family!=Family::String || field.logical_type.nullable || field.logical_type.facets!=json!({}) {return Err(fail("WFT-TYPE","IN requires an exact required String Field"));}
+            let values=literals.iter().map(|v|scope.value(&old_ast::Value::Literal(v.clone()),&field.logical_type)).collect::<Result<Vec<_>>>()?;
+            scope.caps.insert("predicate.stringIn".into());
+            Ok(ir::Predicate::StringIn{field,values})
+        },
         ast::Predicate::NullTest{column,negated}=>{
             let field=scope.presence_field03(column)?;
             scope.caps.insert("predicate.nativeNull".into());scope.caps.insert("value.nativeNull".into());
@@ -242,7 +249,7 @@ pub(crate) fn resolve(
     let aggregate = q
         .outputs
         .iter()
-        .any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_)))
+        .any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_)))
         || !groups.is_empty();
     if aggregate {
         s.caps.insert("aggregate".into());
@@ -316,6 +323,12 @@ pub(crate) fn resolve(
                         },
                     )],
                 )
+            }
+            ast::Output::CountDistinct(c) => {
+                let argument=s.field(c)?;
+                if argument.logical_type.family!=Family::String || argument.logical_type.nullable || argument.logical_type.facets!=json!({}) {return Err(fail("WFT-TYPE","COUNT DISTINCT requires an exact required String Field"));}
+                s.caps.insert("aggregate.countDistinct".into());
+                ("count".into(),vec![("count".into(),ir::Expression::CountDistinct{argument,logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}})])
             }
             ast::Output::Count => {
                 s.caps.insert("aggregate.count".into());
@@ -625,6 +638,26 @@ mod tests {
         let original=serde_json::to_value(plan).unwrap();assert!(PlanSchema03::is_valid(&original));
         for value in [json!(false),json!(1),json!(null),json!("true")] {let mut bad=original.clone();bad["distinct"]=value;assert!(!PlanSchema03::is_valid(&bad));}
         let old=run("join-count","SELECT c.id FROM Customer c",json!({})).unwrap();let original=serde_json::to_value(old).unwrap();assert!(original.get("distinct").is_none());assert!(PlanSchema03::is_valid(&original));
+    }
+
+    #[test]
+    fn count_distinct_and_string_in_closed_ir_refuse_domain_and_slot_mutations() {
+        let mut req=request("join-count");
+        let mut doc:serde_json::Value=serde_json::from_str(req["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+        doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["name"]=="name"&&e["kind"]=="field").unwrap()["nullability"]=json!("required");
+        let raw=doc.to_string();req["modules"][0]["documentJson"]=json!(raw);req["modules"][0]["pin"]["sha256"]=json!(crate::json::sha256(raw.as_bytes()));
+        let catalog=Catalog::prepare(serde_json::from_value(req["modules"].clone()).unwrap()).unwrap();
+        let p=resolve(&catalog,ast::parse("SELECT c.name,COUNT(DISTINCT c.name) AS n FROM Customer c WHERE c.name IN ('a','a') GROUP BY c.name").unwrap(),Default::default(),None).unwrap();
+        let original=serde_json::to_value(p).unwrap();assert!(PlanSchema03::is_valid(&original));
+        for pointer in ["/outputs/1/expression/argument/type/family","/filters/0/field/type/family","/filters/0/values/0/type/family"] {
+            let mut bad=original.clone();*bad.pointer_mut(pointer).unwrap()=json!("integer");assert!(!PlanSchema03::is_valid(&bad));
+        }
+        for pointer in ["/outputs/1/expression/argument/type/nullable","/filters/0/field/type/nullable","/filters/0/values/0/type/nullable"] {
+            let mut bad=original.clone();*bad.pointer_mut(pointer).unwrap()=json!(true);assert!(!PlanSchema03::is_valid(&bad));
+        }
+        let mut bad=original.clone();bad["filters"][0]["values"]=json!([]);assert!(!PlanSchema03::is_valid(&bad));
+        let mut bad=original.clone();bad["filters"][0]["values"][0]["kind"]=json!("parameter");assert!(!PlanSchema03::is_valid(&bad));
+        let mut bad=original.clone();bad["outputs"][1]["expression"]["type"]["facets"]=json!({"integerWidth":"signed64"});assert!(!PlanSchema03::is_valid(&bad));
     }
 
 }

@@ -1,7 +1,9 @@
 {
   "type": "object",
   "properties": {
-    "distinct": { "const": true },
+    "distinct": {
+      "const": true
+    },
     "irVersion": {
       "const": "weft-ir/0.3.0"
     },
@@ -1004,6 +1006,77 @@
             "right"
           ],
           "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "stringIn"
+            },
+            "field": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/field"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        },
+                        "facets": {
+                          "const": {}
+                        },
+                        "nullable": {
+                          "const": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/value"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "literal"
+                      },
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          },
+                          "facets": {
+                            "const": {}
+                          },
+                          "nullable": {
+                            "const": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "values"
+          ],
+          "additionalProperties": false
         }
       ]
     },
@@ -1106,6 +1179,52 @@
           "required": [
             "op",
             "expression"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "countDistinct"
+            },
+            "argument": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/field"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        },
+                        "facets": {
+                          "const": {}
+                        },
+                        "nullable": {
+                          "const": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "type": {
+              "const": {
+                "family": "integer",
+                "facets": {},
+                "nullable": false
+              }
+            }
+          },
+          "required": [
+            "op",
+            "argument",
+            "type"
           ],
           "additionalProperties": false
         }
