@@ -1,0 +1,48 @@
+{
+  "approved": true,
+  "checks": [
+    {
+      "command": "bun run specs:check",
+      "exitCode": 0,
+      "result": "51 governed artifacts,31 schemas,30 planned criteria,636 fixtures,1 deliberate schema negative",
+      "session": 56088,
+      "terminalChunk": "d12d51"
+    },
+    {
+      "chunk": "ce84c9",
+      "command": "bun tests/compile/schema-v0.4-check.ts",
+      "exitCode": 0,
+      "result": "15 request-envelope controls"
+    },
+    {
+      "chunk": "1328dc",
+      "command": "bun tests/two-hop-schemas/check.ts",
+      "exitCode": 0,
+      "result": "51 structural controls"
+    }
+  ],
+  "coreSchema": {
+    "bytes": 26793,
+    "id": "urn:umf:core:0.8.0",
+    "literalDefinitionPresent": true,
+    "path": "spec/upstream/umf-0.8.0.schema.json",
+    "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+  },
+  "findings": [
+    "Exact existing SHA-pinned core0.8 added before exhaustive contract schema compilation.",
+    "Offline Ajv registration only; no loadSchema/network loader or validation exclusion added.",
+    "Owning security literal references resolve through exact core urn/$defs/literal."
+  ],
+  "openingClosingSourceCustody": true,
+  "preservation": "Foreign common.rs not edited; actual full80 component evidence remains tied to5dd compiler products.",
+  "scope": "Independent review of six additive offlineAjv registration lines only; no schema/compiler edits, no build or native engine qualification.",
+  "source": {
+    "path": "/private/tmp/ashlar-weft-distribution-d2d/scripts/check-specs.ts",
+    "sha256": "d83ef59d7a4eb0ab64b3c4f2a4dd4520c23ffd2df0afec293be2848aebaf1449"
+  },
+  "sourceFreeze": {
+    "path": "/private/tmp/weft-offline-registry-freeze-20261010.json",
+    "sha256": "53ab8f8445133c956676ccce18185dd8c96465003bd2bcbc24830090ee27cfa1"
+  },
+  "sourceHead": "ed2b6777d3a1d63850af4bac8bc0180e3820ed01"
+}
