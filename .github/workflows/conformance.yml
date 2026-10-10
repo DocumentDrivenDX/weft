@@ -34,7 +34,9 @@ jobs:
       - name: Install locked JavaScript dependencies
         run: bun install --frozen-lockfile
       - name: Validate governed specifications
-        run: bun run specs:check
+        run: |
+          bun run specs:check
+          bun tests/compile/schema-v0.4-check.ts
       - name: Check distribution metadata boundaries
         run: |
           bun test tests/distribution-manifest/schema.test.ts
