@@ -1,0 +1,734 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+  "type": "object",
+  "properties": {
+    "backendId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "backendVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interfaceVersion": {
+      "const": "weft-backend/0.3.0"
+    },
+    "bindingProfile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engineVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sessionSettings": {
+            "type": "object"
+          },
+          "storageLayoutRevision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publicationRevision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "engine",
+          "engineVersion",
+          "sessionSettings",
+          "storageLayoutRevision",
+          "publicationRevision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "logicalDomain": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "resultDomain": {
+            "type": "object",
+            "minProperties": 1
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/pathObligation"
+            },
+            "minItems": 0
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "candidate",
+              "unsupported"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0,
+            "uniqueItems": true
+          },
+          "targetProfiles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "languageProfiles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dialectProfile": {
+                  "const": "weft-sql/0.4.1"
+                },
+                "irVersion": {
+                  "const": "weft-ir/0.4.1"
+                }
+              },
+              "required": [
+                "dialectProfile",
+                "irVersion"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "logicalDomain",
+          "resultDomain",
+          "constraints",
+          "obligations",
+          "status",
+          "evidence",
+          "targetProfiles",
+          "languageProfiles"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "languageProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dialectProfile": {
+            "const": "weft-sql/0.4.1"
+          },
+          "irVersion": {
+            "const": "weft-ir/0.4.1"
+          }
+        },
+        "required": [
+          "dialectProfile",
+          "irVersion"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 1
+    }
+  },
+  "required": [
+    "backendId",
+    "backendVersion",
+    "interfaceVersion",
+    "bindingProfile",
+    "targetProfiles",
+    "capabilities",
+    "evidence",
+    "languageProfiles"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "span": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "facets": {
+          "type": "object"
+        },
+        "nullable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "family",
+        "facets",
+        "nullable"
+      ],
+      "additionalProperties": false
+    },
+    "key": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          },
+          "minItems": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/type"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "fields",
+        "types"
+      ],
+      "additionalProperties": false
+    },
+    "relationshipIdentity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "relationship"
+      ],
+      "additionalProperties": false
+    },
+    "multiplicity": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "const": "*"
+            }
+          ]
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ]
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/relationshipIdentity"
+        },
+        "inverse": {
+          "type": "boolean"
+        },
+        "from": {
+          "$ref": "#/$defs/identity"
+        },
+        "to": {
+          "$ref": "#/$defs/identity"
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/key"
+        },
+        "targetKey": {
+          "$ref": "#/$defs/key"
+        },
+        "sourceMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetLifecycle": {
+          "enum": [
+            "owned",
+            "independent"
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "inverse",
+        "from",
+        "to",
+        "sourceKey",
+        "targetKey",
+        "sourceMultiplicity",
+        "targetMultiplicity",
+        "targetLifecycle"
+      ],
+      "additionalProperties": false
+    },
+    "pathRead": {
+      "type": "object",
+      "properties": {
+        "startScan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        },
+        "hopSpans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "startScan",
+        "hops",
+        "span",
+        "hopSpans"
+      ],
+      "additionalProperties": false
+    },
+    "publicationTable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "uuid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "uuid",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "pathObligation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "ashlar.path.occurrenceIntegrity",
+                  "ashlar.path.countCapacity"
+                ]
+              }
+            },
+            "parameters": {
+              "type": "object"
+            },
+            "owner": {
+              "enum": [
+                "host",
+                "backend"
+              ]
+            },
+            "failureCode": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "ashlar.path.occurrenceIntegrity"
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "phase": {
+                  "const": "before-user-query"
+                },
+                "samePublicationRequired": {
+                  "const": true
+                },
+                "noPartialPublication": {
+                  "const": true
+                },
+                "success": {
+                  "const": "one exact STRING count equal to 0 per check"
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "$ref": "#/$defs/pathRead"
+                      },
+                      "edgeEncoding": {
+                        "const": "signed64-decimal/0.1"
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "edgeEncoding"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                },
+                "edgeSchemas": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathIndex": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "hop": {
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      },
+                      "relationship": {
+                        "$ref": "#/$defs/relationshipIdentity"
+                      },
+                      "table": {
+                        "$ref": "#/$defs/publicationTable"
+                      },
+                      "identityColumn": {
+                        "const": "id"
+                      },
+                      "nativeType": {
+                        "const": "BIGINT"
+                      }
+                    },
+                    "required": [
+                      "pathIndex",
+                      "hop",
+                      "relationship",
+                      "table",
+                      "identityColumn",
+                      "nativeType"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathIndex": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "kind": {
+                        "enum": [
+                          "edgeEncoding",
+                          "intermediateIdentity",
+                          "collectionEncoding"
+                        ]
+                      },
+                      "sql": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "failureCode": {
+                        "const": "WFT-BINDING"
+                      }
+                    },
+                    "required": [
+                      "pathIndex",
+                      "kind",
+                      "sql",
+                      "failureCode"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "phase",
+                "samePublicationRequired",
+                "noPartialPublication",
+                "success",
+                "paths",
+                "edgeSchemas",
+                "checks"
+              ],
+              "additionalProperties": false
+            },
+            "owner": {
+              "const": "host"
+            },
+            "failureCode": {
+              "const": "WFT-BINDING"
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "ashlar.path.countCapacity"
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "phase": {
+                  "const": "before-user-query"
+                },
+                "samePublicationRequired": {
+                  "const": true
+                },
+                "noPartialPublication": {
+                  "const": true
+                },
+                "success": {
+                  "const": "one exact STRING count equal to 0 per check"
+                },
+                "nativeRepresentation": {
+                  "const": "signed64"
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathOccurrence": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "kind": {
+                        "enum": [
+                          "pathRows",
+                          "targetDistinct"
+                        ]
+                      },
+                      "sql": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "failureCode": {
+                        "const": "WFT-CAPABILITY"
+                      }
+                    },
+                    "required": [
+                      "pathOccurrence",
+                      "kind",
+                      "sql",
+                      "failureCode"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "phase",
+                "samePublicationRequired",
+                "noPartialPublication",
+                "success",
+                "nativeRepresentation",
+                "checks"
+              ],
+              "additionalProperties": false
+            },
+            "owner": {
+              "const": "host"
+            },
+            "failureCode": {
+              "const": "WFT-CAPABILITY"
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

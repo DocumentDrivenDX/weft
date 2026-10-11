@@ -1,0 +1,506 @@
+{
+  "sourceCommit": "f36f206eef70f69f2386a2acb466814d8302b016",
+  "accepted": {
+    "project": [
+      "inherited042:paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+      "inherited042:paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:3:distinct_composition_remains_required_string_only",
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:decimal-expression",
+      "inherited042:paths:boolean-direct",
+      "inherited042:paths:optional-projection",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:numeric-property-join",
+      "inherited042:paths:string-lex-in",
+      "inherited042:paths:optional-count-distinct",
+      "inherited042:paths:keys:original",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:paths:keys:repeated_expressions",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:paths:keys:required_root_with_left_other",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "inherited042:paths:keys:inverse",
+      "inherited042:paths:keys:composite",
+      "inherited042:paths:keys:scalar_only",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "relationship.twoHopPaths": [
+      "inherited042:paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+      "inherited042:paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "result.pathOccurrences": [
+      "inherited042:paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+      "inherited042:paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2"
+    ],
+    "scan": [
+      "inherited042:paths:1:authored_self_loop_can_reuse_the_same_edge_occurrence_at_both_hops",
+      "inherited042:paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:3:distinct_composition_remains_required_string_only",
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:8:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:decimal-expression",
+      "inherited042:paths:boolean-direct",
+      "inherited042:paths:optional-projection",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:numeric-property-join",
+      "inherited042:paths:string-lex-in",
+      "inherited042:paths:optional-count-distinct",
+      "inherited042:paths:keys:original",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:paths:keys:repeated_expressions",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:paths:keys:required_root_with_left_other",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "inherited042:paths:keys:inverse",
+      "inherited042:paths:keys:composite",
+      "inherited042:paths:keys:scalar_only",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "relationship.inverse": [
+      "inherited042:paths:2:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:12:same_authored_edge_twice_uses_distinct_occurrence_aliases_and_both_directions",
+      "inherited042:paths:keys:inverse"
+    ],
+    "order.asc": [
+      "inherited042:paths:3:distinct_composition_remains_required_string_only",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:string-lex-in",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner",
+      "original-commerce:fulfillment"
+    ],
+    "project.distinct": [
+      "inherited042:paths:3:distinct_composition_remains_required_string_only"
+    ],
+    "type.string": [
+      "inherited042:paths:3:distinct_composition_remains_required_string_only",
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:optional-projection",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:string-lex-in",
+      "inherited042:paths:optional-count-distinct",
+      "inherited042:paths:keys:original",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:paths:keys:required_root_with_left_other",
+      "inherited042:paths:keys:composite",
+      "inherited042:paths:keys:scalar_only",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "aggregate": [
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:optional-count-distinct",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "aggregate.count": [
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "relationship.pathExpansion": [
+      "inherited042:paths:4:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:16:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:17:repeated_collections_keep_separate_roles_and_plain_expansion_has_no_count_guard",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "limit": [
+      "inherited042:paths:5:original_collection_retains_pins_keys_wide_order_and_closed_inventory",
+      "inherited042:paths:6:generated_collection_and_guard_sql_are_lexically_closed",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:controls:fresh-binding-0",
+      "inherited042:controls:fresh-binding-1",
+      "inherited042:controls:fresh-binding-2",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "project.positionedOutputs": [
+      "inherited042:paths:7:repeated_logical_labels_retain_the_exact_positioned_host_map",
+      "inherited042:paths:optional-string-join",
+      "original-commerce:partial-return"
+    ],
+    "arithmetic.+": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "original-commerce:partial-return",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "arithmetic.exact.integer": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "original-commerce:partial-return",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "equal": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:paths:keys:required_root_with_left_other",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "filter": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:string-lex-in",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "parameter.named": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards"
+    ],
+    "type.integer": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:numeric-property-join",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "type.integer.unbounded": [
+      "inherited042:paths:9:scalar_parameters_and_arithmetic_keep_original_tokens_and_separate_guards",
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "join.left": [
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:keys:required_root_with_left_other"
+    ],
+    "value.outerJoinPresence": [
+      "inherited042:paths:10:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:keys:required_root_with_left_other"
+    ],
+    "aggregate.countDistinct": [
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:optional-count-distinct"
+    ],
+    "aggregate.havingCountDistinctGreater": [
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit"
+    ],
+    "aggregate.pathTargetDistinctCount": [
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:15:global_count_kind_inventory_and_empty_formula_are_selected",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:paths:20:global_count_kind_inventory_and_empty_formula_are_selected"
+    ],
+    "group": [
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:18:left_root_distinguishes_absence_and_retains_native_match_inventory",
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "innerJoin": [
+      "inherited042:paths:11:path_counts_use_complete_filtered_bag_before_having_order_limit",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:numeric-property-join",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "original-commerce:partial-return",
+      "original-commerce:fulfillment",
+      "original-commerce:settlement",
+      "original-commerce:refund",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "and": [
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:string-lex-in",
+      "original-commerce:settlement"
+    ],
+    "arithmetic.*": [
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:decimal-expression",
+      "original-commerce:refund"
+    ],
+    "arithmetic.-": [
+      "inherited042:paths:integer-expression",
+      "original-commerce:partial-return",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "arithmetic.compareExact": [
+      "inherited042:paths:integer-expression",
+      "original-commerce:refund"
+    ],
+    "arithmetic.negate": [
+      "inherited042:paths:integer-expression"
+    ],
+    "compare.greaterEqual": [
+      "inherited042:paths:integer-expression"
+    ],
+    "compare.less": [
+      "inherited042:paths:integer-expression",
+      "original-commerce:partial-return",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias",
+      "labels:explicit-alias"
+    ],
+    "compare.lessEqual": [
+      "inherited042:paths:integer-expression",
+      "inherited042:paths:numeric-property-join"
+    ],
+    "compare.notEqual": [
+      "inherited042:paths:integer-expression"
+    ],
+    "arithmetic.exact.decimal": [
+      "inherited042:paths:decimal-expression",
+      "original-commerce:refund"
+    ],
+    "type.decimal": [
+      "inherited042:paths:decimal-expression",
+      "original-commerce:settlement",
+      "original-commerce:refund"
+    ],
+    "type.boolean": [
+      "inherited042:paths:boolean-direct"
+    ],
+    "value.nativeNull": [
+      "inherited042:paths:optional-projection",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:optional-count-distinct"
+    ],
+    "value.presence": [
+      "inherited042:paths:optional-projection",
+      "inherited042:paths:optional-null-predicate",
+      "inherited042:paths:optional-string-join",
+      "inherited042:paths:optional-count-distinct"
+    ],
+    "predicate.nativeNull": [
+      "inherited042:paths:optional-null-predicate"
+    ],
+    "compare.nullAwareStringEqual": [
+      "inherited042:paths:optional-string-join"
+    ],
+    "compare.scalarJoin": [
+      "inherited042:paths:numeric-property-join"
+    ],
+    "compare.lexicographicGreater": [
+      "inherited042:paths:string-lex-in",
+      "original-commerce:fulfillment"
+    ],
+    "predicate.stringIn": [
+      "inherited042:paths:string-lex-in"
+    ],
+    "aggregate.countDistinct.optional": [
+      "inherited042:paths:optional-count-distinct"
+    ],
+    "relationship.boundedKeys": [
+      "inherited042:paths:keys:original",
+      "inherited042:paths:keys:empty_outer",
+      "inherited042:paths:keys:repeated_expressions",
+      "inherited042:paths:keys:mixed_reverse_order",
+      "inherited042:paths:keys:two_roots",
+      "inherited042:paths:keys:required_root_with_left_other",
+      "inherited042:paths:keys:arithmetic_and_collection",
+      "inherited042:paths:keys:inverse",
+      "inherited042:paths:keys:composite"
+    ],
+    "aggregate.havingCountStarGreater": [
+      "inherited042:count-star:original-replay",
+      "inherited042:count-star:joined-filtered-full-bag",
+      "inherited042:count-star:expansion-count-owner"
+    ],
+    "project.implicitArithmeticLabels": [
+      "original-commerce:partial-return",
+      "labels:parentheses",
+      "labels:internal-spaces",
+      "labels:exterior-whitespace",
+      "labels:unicode-quoted-alias"
+    ]
+  }
+}

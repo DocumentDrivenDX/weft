@@ -1,0 +1,13 @@
+{
+  "approved": true,
+  "sourceFreezeSHA256": "ec69b7cee65f603dbc05e96927adab4c39a5ca1ad5a2ad65876ef6f8890c6ac6",
+  "checks": {
+    "fullAuthorChecker": "4763d6",
+    "mechanical94CorpusAndOriginal80Inputs": "2798b4",
+    "restrictedExpectedResponseChanges": "1cec23",
+    "CExactHashesAndNarrowGuard": "0b8e60/f9fd1d",
+    "pureRetainedResponseAnd4MalformedControls": "88a8cf"
+  },
+  "scope": "Authored94 expectations only: original80 exactSQL/modules/binding text and digests, governed closed marker migrations and explicit diagnostic exceptions; original4 and10 independently authored spans/collisions/comments/version semantic controls, strict ordinal types/full expression operand lineage. New lexical bags remain independent native obligations; no corpus/compiler/native/index/embedding execution qualification granted.",
+  "superseded": "A/B preserved; C closes exact-int ordinal and extra/duplicate operand lineage checker gaps."
+}

@@ -1,0 +1,16 @@
+{
+  "approved": true,
+  "actualFreezeSHA256": "3fb6edec138c2fe1d1487a5553b302be60cf56dff998914f9fbae2d1dce43aa7",
+  "checks": {
+    "fullRawCaptureRunner": "4510d7 independently authored C checker after raw retention, repeat comparison, closing resource verification and cancellation-safe receipt",
+    "all480PinsAnd94x2": "f3bf7f 480 exact resource/actual/command/buildfreeze pins;94 originalrequestbytes and188 rawresponsebytes/stderr/capture lengths/hashes/deterministic pairs +owningC semantic correspondence;51compiled43blocked",
+    "expectationIndependence": "Authored corpusC source review ca239bd2 retained; original80 governed migrations and14 independent original/span/collision/fence expectations"
+  },
+  "terminal": {
+    "session": 7415,
+    "chunk": "d01f6b",
+    "exitCode": 0
+  },
+  "scope": "Actual named fresh CLI product-only94correspondence/determinism. Original four commerce allcompiled under separately selected042; lexical bags remain native host obligations. No Python/WASM/browser embedding, installation, trusted index, production/native SQL execution or full-toolkit qualification.",
+  "reviewHarnessCorrection": "271a6b first audit used wrong outputs key; actualFiles corrected before any substantive claim in f3bf7f. No artifact changes or compiler rerun."
+}

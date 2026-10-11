@@ -1,0 +1,92 @@
+{
+  "sourceCommit": "f36f206eef70f69f2386a2acb466814d8302b016",
+  "commandSha256": "a880ed3cd99b34c482165cbae184c58775e521e83afe48e5bada773ff10a2649",
+  "records": [
+    {
+      "phase": "cli",
+      "capture": {
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 8889
+      },
+      "targetBytes": 382910944,
+      "products": [
+        {
+          "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/weft-implicit-arithmetic",
+          "bytes": 8688144,
+          "sha256": "8e1e43aa81b312a124e88698477e1392f6c538451d5cb8f582a38934c776e55a"
+        }
+      ]
+    },
+    {
+      "phase": "python",
+      "capture": {
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 7457
+      },
+      "targetBytes": 550217718,
+      "products": [
+        {
+          "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/libweft.dylib",
+          "bytes": 9445488,
+          "sha256": "f307f12ef5ea2fe1a5e5897f25b77a0ee317f0003feb137dc731132ced9c8376"
+        },
+        {
+          "path": "/private/tmp/weft-042-products-a/wheels/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl",
+          "bytes": 3405289,
+          "sha256": "7c15ea437fd4c125f8b5b8acec135681f47aed0f7f789c24f6683f24fcb64ff5"
+        }
+      ]
+    },
+    {
+      "phase": "wasm",
+      "capture": {
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 8741
+      },
+      "targetBytes": 795596563,
+      "products": [
+        {
+          "path": "/private/tmp/weft-042-release-target-a/wasm32-unknown-unknown/release/weft_wasm.wasm",
+          "bytes": 8365080,
+          "sha256": "baf4745bb8ba432f68369844e2b9442cd2088efa3381c92743917c84b5c0b192"
+        }
+      ]
+    },
+    {
+      "phase": "wasm-bindings",
+      "capture": {
+        "exitCode": 0,
+        "stdoutBytes": 0,
+        "stderrBytes": 0
+      },
+      "targetBytes": 795596563,
+      "products": [
+        {
+          "path": "/private/tmp/weft-042-products-a/web/weft_bg.wasm.d.ts",
+          "bytes": 571,
+          "sha256": "11fd114062ee8cf0f1be2087251c274578007a711d8909ba8669dbf21767fa19"
+        },
+        {
+          "path": "/private/tmp/weft-042-products-a/web/weft.js",
+          "bytes": 6979,
+          "sha256": "d5a6af11ac7a4164343d028e6ce17abeaa8714d56d873ed50b44757322d320ef"
+        },
+        {
+          "path": "/private/tmp/weft-042-products-a/web/weft_bg.wasm",
+          "bytes": 7850844,
+          "sha256": "cbddc3e2cc12ea57c7af79c308d575828204ed25c7504cf2876c529ff4eb0d0b"
+        },
+        {
+          "path": "/private/tmp/weft-042-products-a/web/weft.d.ts",
+          "bytes": 1655,
+          "sha256": "035e1c394a6e25b7bed58c6b8e24d4b3e7a8a80ef6b272762bbf49fee6cfbe7f"
+        }
+      ]
+    }
+  ],
+  "success": true,
+  "qualification": "Freshcomponentbuild only; source/toolbytes closure recorded, cacheddependencies/SDK not claimed hermetic; no native/embedding/index claim"
+}

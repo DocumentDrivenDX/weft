@@ -1,0 +1,11 @@
+{
+  "freezeSha256": "fa1c7ca1d81c6a5716b667076ffa9fec39e400992845dd47e7ba7a76ccb08095",
+  "approval": true,
+  "checks": [
+    "d33abd all165resource+11actualpins exact;8rawboundary outcomes match independent input lengths/digests and exactowningexpectations;3exit0/closingtrue",
+    "Observed publicRegistry exact042 backend/dialect/IR,50capabilities,evidenceempty; candidate qualification retained",
+    "Selected releasehelper producedhash and samecorefingerprint reviewed; priorAhelperE0463failure preserved"
+  ],
+  "scope": "Actual selected release publicRegistry metadata and eight fixed CLI transport boundary controls only; no indexed/nativeSQL/installed/hermetic or production claim.",
+  "stderr": "Boundary helper retained110B Darwin tempdir warning; no allstderr-empty claim."
+}

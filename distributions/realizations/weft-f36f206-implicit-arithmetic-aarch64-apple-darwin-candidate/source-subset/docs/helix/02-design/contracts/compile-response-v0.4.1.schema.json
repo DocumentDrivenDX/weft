@@ -1,0 +1,2090 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.4.1"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^WFT-[A-Z0-9-]+$"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning",
+                  "info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "enum": [
+                  "input",
+                  "model",
+                  "parse",
+                  "resolve",
+                  "type",
+                  "capability",
+                  "lower",
+                  "emit",
+                  "host"
+                ]
+              },
+              "sourceSpan": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "additionalProperties": false
+              },
+              "identity": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "pointer": {
+                "type": "string"
+              },
+              "recoverability": {
+                "enum": [
+                  "correct-input",
+                  "change-profile",
+                  "host-action",
+                  "none"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "severity",
+              "message",
+              "phase",
+              "recoverability"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "status": {
+          "const": "blocked"
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "diagnostics",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "interfaceVersion": {
+          "const": "weft-compile/0.4.1"
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^WFT-[A-Z0-9-]+$"
+              },
+              "severity": {
+                "enum": [
+                  "error",
+                  "warning",
+                  "info"
+                ]
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "enum": [
+                  "input",
+                  "model",
+                  "parse",
+                  "resolve",
+                  "type",
+                  "capability",
+                  "lower",
+                  "emit",
+                  "host"
+                ]
+              },
+              "sourceSpan": {
+                "type": "object",
+                "properties": {
+                  "start": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "end": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [
+                  "start",
+                  "end"
+                ],
+                "additionalProperties": false
+              },
+              "identity": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "element": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "element"
+                ],
+                "additionalProperties": false
+              },
+              "pointer": {
+                "type": "string"
+              },
+              "recoverability": {
+                "enum": [
+                  "correct-input",
+                  "change-profile",
+                  "host-action",
+                  "none"
+                ]
+              }
+            },
+            "required": [
+              "code",
+              "severity",
+              "message",
+              "phase",
+              "recoverability"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0
+        },
+        "status": {
+          "const": "compiled"
+        },
+        "dialect": {
+          "const": "weft-sql/0.4.1"
+        },
+        "compilerVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "modelPins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "umfVersion": {
+                "enum": [
+                  "0.7.0",
+                  "0.8.0"
+                ]
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "umfVersion",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 32
+        },
+        "backend": {
+          "type": "object",
+          "properties": {
+            "backendId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "backendVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "targetProfile": {
+              "type": "string",
+              "minLength": 1
+            },
+            "interfaceVersion": {
+              "const": "weft-backend/0.3.0"
+            }
+          },
+          "required": [
+            "backendId",
+            "backendVersion",
+            "targetProfile",
+            "interfaceVersion"
+          ],
+          "additionalProperties": false
+        },
+        "bindingSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "logicalPlan": {
+          "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json"
+        },
+        "sql": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parameters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "logicalType": {
+                "type": "object",
+                "properties": {
+                  "family": {
+                    "enum": [
+                      "boolean",
+                      "string",
+                      "integer",
+                      "decimal"
+                    ]
+                  },
+                  "facets": {
+                    "type": "object"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "family",
+                  "nullable"
+                ],
+                "additionalProperties": false
+              },
+              "value": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "position",
+              "logicalType",
+              "value",
+              "origin"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 1024
+        },
+        "columns": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "outputName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "representation": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "logicalType": {
+                        "type": "object",
+                        "properties": {
+                          "family": {
+                            "enum": [
+                              "boolean",
+                              "string",
+                              "integer",
+                              "decimal"
+                            ]
+                          },
+                          "facets": {
+                            "type": "object"
+                          },
+                          "nullable": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "family",
+                          "facets",
+                          "nullable"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "carrier": {
+                        "enum": [
+                          "text",
+                          "boolean"
+                        ]
+                      },
+                      "decoder": {
+                        "enum": [
+                          "text",
+                          "boolean",
+                          "exact-integer",
+                          "exact-decimal"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "logicalType",
+                      "carrier",
+                      "decoder"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "value"
+                      },
+                      "descriptor": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "element": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "element"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "nativeNull": {
+                        "type": "boolean"
+                      },
+                      "outerJoin": {
+                        "type": "object",
+                        "properties": {
+                          "scan": {
+                            "type": "string",
+                            "pattern": "^s[0-9]+$"
+                          },
+                          "record": {
+                            "type": "object",
+                            "properties": {
+                              "documentId": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "revision": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "module": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "element": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            },
+                            "required": [
+                              "documentId",
+                              "revision",
+                              "module",
+                              "element"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "scan",
+                          "record"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "descriptor",
+                      "nativeNull"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "relatedKeys"
+                      },
+                      "relationship": {
+                        "type": "object",
+                        "properties": {
+                          "documentId": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "revision": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "module": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "relationship": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "documentId",
+                          "revision",
+                          "module",
+                          "relationship"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "key": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "fields": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "documentId": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "revision": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "module": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "element": {
+                                  "type": "string",
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "documentId",
+                                "revision",
+                                "module",
+                                "element"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          },
+                          "types": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "family": {
+                                  "enum": [
+                                    "boolean",
+                                    "string",
+                                    "integer",
+                                    "decimal"
+                                  ]
+                                },
+                                "facets": {
+                                  "type": "object"
+                                },
+                                "nullable": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "family",
+                                "facets",
+                                "nullable"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "minItems": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "fields",
+                          "types"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "relationship",
+                      "key",
+                      "bound"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "relatedPaths"
+                      },
+                      "path": {
+                        "$ref": "#/$defs/pathRead"
+                      },
+                      "startRecord": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      },
+                      "edgeEncoding": {
+                        "const": "signed64-decimal/0.1"
+                      },
+                      "outerJoin": {
+                        "type": "object",
+                        "properties": {
+                          "scan": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "record": {
+                            "$ref": "#/$defs/identity"
+                          }
+                        },
+                        "required": [
+                          "scan",
+                          "record"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "path",
+                      "startRecord",
+                      "bound",
+                      "edgeEncoding"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "logicalType": {
+                        "const": {
+                          "family": "integer",
+                          "facets": {},
+                          "nullable": false
+                        }
+                      },
+                      "carrier": {
+                        "const": "text"
+                      },
+                      "decoder": {
+                        "const": "exact-integer"
+                      },
+                      "pathTarget": {
+                        "type": "object",
+                        "properties": {
+                          "pathOccurrence": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "record": {
+                            "$ref": "#/$defs/identity"
+                          },
+                          "key": {
+                            "$ref": "#/$defs/key"
+                          }
+                        },
+                        "required": [
+                          "pathOccurrence",
+                          "record",
+                          "key"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "logicalType",
+                      "carrier",
+                      "decoder",
+                      "pathTarget"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "sourceIdentities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "documentId": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "revision": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "module": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "element": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "documentId",
+                    "revision",
+                    "module",
+                    "element"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "nullable": {
+                "type": "boolean"
+              },
+              "carrierName": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "position",
+              "outputName",
+              "representation",
+              "sourceIdentities",
+              "nullable"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "representation": {
+                      "properties": {
+                        "kind": {
+                          "const": "relatedPaths"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "representation"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "nullable": {
+                      "const": false
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "representation": {
+                      "required": [
+                        "pathTarget"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "representation"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "nullable": {
+                      "const": false
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "obligations": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1,
+                    "not": {
+                      "enum": [
+                        "ashlar.path.occurrenceIntegrity",
+                        "ashlar.path.countCapacity"
+                      ]
+                    }
+                  },
+                  "parameters": {
+                    "type": "object"
+                  },
+                  "owner": {
+                    "enum": [
+                      "host",
+                      "backend"
+                    ]
+                  },
+                  "failureCode": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "parameters",
+                  "owner",
+                  "failureCode"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "const": "ashlar.path.occurrenceIntegrity"
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "phase": {
+                        "const": "before-user-query"
+                      },
+                      "samePublicationRequired": {
+                        "const": true
+                      },
+                      "noPartialPublication": {
+                        "const": true
+                      },
+                      "success": {
+                        "const": "one exact STRING count equal to 0 per check"
+                      },
+                      "paths": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "path": {
+                              "$ref": "#/$defs/pathRead"
+                            },
+                            "edgeEncoding": {
+                              "const": "signed64-decimal/0.1"
+                            },
+                            "bound": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 1000
+                            }
+                          },
+                          "required": [
+                            "path",
+                            "edgeEncoding"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      },
+                      "edgeSchemas": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "pathIndex": {
+                              "type": "integer",
+                              "minimum": 0
+                            },
+                            "hop": {
+                              "enum": [
+                                0,
+                                1
+                              ]
+                            },
+                            "relationship": {
+                              "$ref": "#/$defs/relationshipIdentity"
+                            },
+                            "table": {
+                              "$ref": "#/$defs/publicationTable"
+                            },
+                            "identityColumn": {
+                              "const": "id"
+                            },
+                            "nativeType": {
+                              "const": "BIGINT"
+                            }
+                          },
+                          "required": [
+                            "pathIndex",
+                            "hop",
+                            "relationship",
+                            "table",
+                            "identityColumn",
+                            "nativeType"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 2
+                      },
+                      "checks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "pathIndex": {
+                              "type": "integer",
+                              "minimum": 0
+                            },
+                            "kind": {
+                              "enum": [
+                                "edgeEncoding",
+                                "intermediateIdentity",
+                                "collectionEncoding"
+                              ]
+                            },
+                            "sql": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "failureCode": {
+                              "const": "WFT-BINDING"
+                            }
+                          },
+                          "required": [
+                            "pathIndex",
+                            "kind",
+                            "sql",
+                            "failureCode"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "phase",
+                      "samePublicationRequired",
+                      "noPartialPublication",
+                      "success",
+                      "paths",
+                      "edgeSchemas",
+                      "checks"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "owner": {
+                    "const": "host"
+                  },
+                  "failureCode": {
+                    "const": "WFT-BINDING"
+                  }
+                },
+                "required": [
+                  "id",
+                  "parameters",
+                  "owner",
+                  "failureCode"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "const": "ashlar.path.countCapacity"
+                  },
+                  "parameters": {
+                    "type": "object",
+                    "properties": {
+                      "phase": {
+                        "const": "before-user-query"
+                      },
+                      "samePublicationRequired": {
+                        "const": true
+                      },
+                      "noPartialPublication": {
+                        "const": true
+                      },
+                      "success": {
+                        "const": "one exact STRING count equal to 0 per check"
+                      },
+                      "nativeRepresentation": {
+                        "const": "signed64"
+                      },
+                      "checks": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "pathOccurrence": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "kind": {
+                              "enum": [
+                                "pathRows",
+                                "targetDistinct"
+                              ]
+                            },
+                            "sql": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "failureCode": {
+                              "const": "WFT-CAPABILITY"
+                            }
+                          },
+                          "required": [
+                            "pathOccurrence",
+                            "kind",
+                            "sql",
+                            "failureCode"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      }
+                    },
+                    "required": [
+                      "phase",
+                      "samePublicationRequired",
+                      "noPartialPublication",
+                      "success",
+                      "nativeRepresentation",
+                      "checks"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "owner": {
+                    "const": "host"
+                  },
+                  "failureCode": {
+                    "const": "WFT-CAPABILITY"
+                  }
+                },
+                "required": [
+                  "id",
+                  "parameters",
+                  "owner",
+                  "failureCode"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 0
+        },
+        "qualification": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": [
+                "candidate",
+                "conformance-verified"
+              ]
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "assumptions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 0
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "assessment": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "candidate",
+                          "unsupported"
+                        ]
+                      },
+                      "evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "uniqueItems": true
+                      },
+                      "obligations": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/pathObligation"
+                        },
+                        "minItems": 0
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "status",
+                      "evidence",
+                      "obligations"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "declaration": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "logicalDomain": {
+                        "type": "object",
+                        "minProperties": 1
+                      },
+                      "resultDomain": {
+                        "type": "object",
+                        "minProperties": 1
+                      },
+                      "constraints": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 0,
+                        "uniqueItems": true
+                      },
+                      "obligations": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/pathObligation"
+                        },
+                        "minItems": 0
+                      },
+                      "status": {
+                        "enum": [
+                          "supported",
+                          "candidate",
+                          "unsupported"
+                        ]
+                      },
+                      "evidence": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 0,
+                        "uniqueItems": true
+                      },
+                      "targetProfiles": {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "minItems": 1,
+                        "uniqueItems": true
+                      },
+                      "languageProfiles": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "dialectProfile": {
+                              "const": "weft-sql/0.4.1"
+                            },
+                            "irVersion": {
+                              "const": "weft-ir/0.4.1"
+                            }
+                          },
+                          "required": [
+                            "dialectProfile",
+                            "irVersion"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "logicalDomain",
+                      "resultDomain",
+                      "constraints",
+                      "obligations",
+                      "status",
+                      "evidence",
+                      "targetProfiles",
+                      "languageProfiles"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "assessment",
+                  "declaration"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "status",
+            "evidence",
+            "assumptions"
+          ],
+          "additionalProperties": false
+        },
+        "targetContext": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "engine": {
+              "type": "string",
+              "minLength": 1
+            },
+            "engineVersion": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sessionSettings": {
+              "type": "object"
+            },
+            "storageLayoutRevision": {
+              "type": "string",
+              "minLength": 1
+            },
+            "publicationRevision": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "engine",
+            "engineVersion",
+            "sessionSettings",
+            "storageLayoutRevision",
+            "publicationRevision"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "interfaceVersion",
+        "diagnostics",
+        "status",
+        "dialect",
+        "compilerVersion",
+        "modelPins",
+        "backend",
+        "bindingSha256",
+        "logicalPlan",
+        "sql",
+        "parameters",
+        "columns",
+        "obligations",
+        "qualification"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "logicalPlan": {
+                "properties": {
+                  "requiredCapabilities": {
+                    "contains": {
+                      "const": "project.positionedOutputs"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "columns": {
+                "items": {
+                  "required": [
+                    "carrierName"
+                  ]
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "columns": {
+                "items": {
+                  "not": {
+                    "required": [
+                      "carrierName"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "columns": {
+                "contains": {
+                  "properties": {
+                    "representation": {
+                      "properties": {
+                        "kind": {
+                          "const": "relatedPaths"
+                        }
+                      },
+                      "required": [
+                        "kind"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "representation"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "columns"
+            ]
+          },
+          "then": {
+            "properties": {
+              "obligations": {
+                "contains": {
+                  "properties": {
+                    "id": {
+                      "const": "ashlar.path.occurrenceIntegrity"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "logicalPlan": {
+                "required": [
+                  "pathExpansion"
+                ]
+              }
+            },
+            "required": [
+              "logicalPlan"
+            ]
+          },
+          "then": {
+            "properties": {
+              "obligations": {
+                "contains": {
+                  "properties": {
+                    "id": {
+                      "const": "ashlar.path.occurrenceIntegrity"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "columns": {
+                "contains": {
+                  "properties": {
+                    "representation": {
+                      "required": [
+                        "pathTarget"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "representation"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "columns"
+            ]
+          },
+          "then": {
+            "properties": {
+              "obligations": {
+                "contains": {
+                  "properties": {
+                    "id": {
+                      "const": "ashlar.path.countCapacity"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "logicalPlan": {
+                "required": [
+                  "pathExpansion"
+                ],
+                "properties": {
+                  "outputs": {
+                    "contains": {
+                      "required": [
+                        "expression"
+                      ],
+                      "properties": {
+                        "expression": {
+                          "required": [
+                            "op"
+                          ],
+                          "properties": {
+                            "op": {
+                              "const": "count"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "logicalPlan"
+            ]
+          },
+          "then": {
+            "properties": {
+              "obligations": {
+                "contains": {
+                  "required": [
+                    "id"
+                  ],
+                  "properties": {
+                    "id": {
+                      "const": "ashlar.path.countCapacity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "span": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "facets": {
+          "type": "object"
+        },
+        "nullable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "family",
+        "facets",
+        "nullable"
+      ],
+      "additionalProperties": false
+    },
+    "key": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          },
+          "minItems": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/type"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "fields",
+        "types"
+      ],
+      "additionalProperties": false
+    },
+    "relationshipIdentity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "relationship"
+      ],
+      "additionalProperties": false
+    },
+    "multiplicity": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "const": "*"
+            }
+          ]
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ]
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/relationshipIdentity"
+        },
+        "inverse": {
+          "type": "boolean"
+        },
+        "from": {
+          "$ref": "#/$defs/identity"
+        },
+        "to": {
+          "$ref": "#/$defs/identity"
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/key"
+        },
+        "targetKey": {
+          "$ref": "#/$defs/key"
+        },
+        "sourceMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetLifecycle": {
+          "enum": [
+            "owned",
+            "independent"
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "inverse",
+        "from",
+        "to",
+        "sourceKey",
+        "targetKey",
+        "sourceMultiplicity",
+        "targetMultiplicity",
+        "targetLifecycle"
+      ],
+      "additionalProperties": false
+    },
+    "pathRead": {
+      "type": "object",
+      "properties": {
+        "startScan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/relationship"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        },
+        "hopSpans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/span"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      },
+      "required": [
+        "startScan",
+        "hops",
+        "span",
+        "hopSpans"
+      ],
+      "additionalProperties": false
+    },
+    "publicationTable": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "uuid": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "name",
+        "uuid",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "pathObligation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "not": {
+                "enum": [
+                  "ashlar.path.occurrenceIntegrity",
+                  "ashlar.path.countCapacity"
+                ]
+              }
+            },
+            "parameters": {
+              "type": "object"
+            },
+            "owner": {
+              "enum": [
+                "host",
+                "backend"
+              ]
+            },
+            "failureCode": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "ashlar.path.occurrenceIntegrity"
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "phase": {
+                  "const": "before-user-query"
+                },
+                "samePublicationRequired": {
+                  "const": true
+                },
+                "noPartialPublication": {
+                  "const": true
+                },
+                "success": {
+                  "const": "one exact STRING count equal to 0 per check"
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "$ref": "#/$defs/pathRead"
+                      },
+                      "edgeEncoding": {
+                        "const": "signed64-decimal/0.1"
+                      },
+                      "bound": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "edgeEncoding"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                },
+                "edgeSchemas": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathIndex": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "hop": {
+                        "enum": [
+                          0,
+                          1
+                        ]
+                      },
+                      "relationship": {
+                        "$ref": "#/$defs/relationshipIdentity"
+                      },
+                      "table": {
+                        "$ref": "#/$defs/publicationTable"
+                      },
+                      "identityColumn": {
+                        "const": "id"
+                      },
+                      "nativeType": {
+                        "const": "BIGINT"
+                      }
+                    },
+                    "required": [
+                      "pathIndex",
+                      "hop",
+                      "relationship",
+                      "table",
+                      "identityColumn",
+                      "nativeType"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 2
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathIndex": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "kind": {
+                        "enum": [
+                          "edgeEncoding",
+                          "intermediateIdentity",
+                          "collectionEncoding"
+                        ]
+                      },
+                      "sql": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "failureCode": {
+                        "const": "WFT-BINDING"
+                      }
+                    },
+                    "required": [
+                      "pathIndex",
+                      "kind",
+                      "sql",
+                      "failureCode"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "phase",
+                "samePublicationRequired",
+                "noPartialPublication",
+                "success",
+                "paths",
+                "edgeSchemas",
+                "checks"
+              ],
+              "additionalProperties": false
+            },
+            "owner": {
+              "const": "host"
+            },
+            "failureCode": {
+              "const": "WFT-BINDING"
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "ashlar.path.countCapacity"
+            },
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "phase": {
+                  "const": "before-user-query"
+                },
+                "samePublicationRequired": {
+                  "const": true
+                },
+                "noPartialPublication": {
+                  "const": true
+                },
+                "success": {
+                  "const": "one exact STRING count equal to 0 per check"
+                },
+                "nativeRepresentation": {
+                  "const": "signed64"
+                },
+                "checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pathOccurrence": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "kind": {
+                        "enum": [
+                          "pathRows",
+                          "targetDistinct"
+                        ]
+                      },
+                      "sql": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "failureCode": {
+                        "const": "WFT-CAPABILITY"
+                      }
+                    },
+                    "required": [
+                      "pathOccurrence",
+                      "kind",
+                      "sql",
+                      "failureCode"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "phase",
+                "samePublicationRequired",
+                "noPartialPublication",
+                "success",
+                "nativeRepresentation",
+                "checks"
+              ],
+              "additionalProperties": false
+            },
+            "owner": {
+              "const": "host"
+            },
+            "failureCode": {
+              "const": "WFT-CAPABILITY"
+            }
+          },
+          "required": [
+            "id",
+            "parameters",
+            "owner",
+            "failureCode"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

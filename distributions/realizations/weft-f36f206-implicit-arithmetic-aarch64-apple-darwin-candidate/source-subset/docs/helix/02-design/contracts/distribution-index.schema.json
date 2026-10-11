@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/distribution-index.schema.json",
+  "$comment": "Inert public selection records. Trust requires an independently selected immutable index revision and exact digest, not schema validity or a caller-provided index. Admission verifies unique realization IDs, actual manifest/executable/target correspondence and complete produced evidence. No locator execution, automatic registration, or host-obligation discharge. Lexical relative paths do not establish filesystem containment. The separately indexed assembly custody descriptor binds the complete package inventory; an untrusted package inventory cannot verify itself. All index entry artifact paths resolve relative to the caller-selected realization package root, never the index file or repository directory.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "weft-distribution-index/0.1"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1024,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "realizationId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+          },
+          "manifest": {
+            "$ref": "#/$defs/artifact"
+          },
+          "executable": {
+            "$ref": "#/$defs/artifact"
+          },
+          "target": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 256,
+            "pattern": "^[A-Za-z0-9_]+(?:-[A-Za-z0-9_.]+){2,}$"
+          },
+          "assemblyCustody": {
+            "$ref": "#/$defs/artifact"
+          }
+        },
+        "required": [
+          "realizationId",
+          "manifest",
+          "executable",
+          "target",
+          "assemblyCustody"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "format",
+    "entries"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifact": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*//)(?!.*\\/$)[^\\u0000-\\u001f\\u007f\\\\:]+$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

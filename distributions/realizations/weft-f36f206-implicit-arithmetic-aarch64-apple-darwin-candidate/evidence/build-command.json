@@ -1,0 +1,1327 @@
+{
+  "sourceCommit": "f36f206eef70f69f2386a2acb466814d8302b016",
+  "root": "/private/tmp/weft-042-integration-b",
+  "output": "/private/tmp/weft-042-products-a",
+  "target": "/private/tmp/weft-042-release-target-a",
+  "sourceFiles": [
+    {
+      "path": "/private/tmp/weft-042-integration-b/.cargo/config.toml",
+      "bytes": 250,
+      "sha256": "6e87ded1a3f6228bb0aee5f62f89e72f87c1f9281d882ef7ac1dd8844315a64f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/Cargo.lock",
+      "bytes": 28387,
+      "sha256": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/Cargo.toml",
+      "bytes": 682,
+      "sha256": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/Cargo.toml",
+      "bytes": 1120,
+      "sha256": "1d7e0eb769344add1e9b21d3bdbe7ddb3148003eba9bc2b22d53c25f412b0786"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/examples/security_candidate_ir.rs",
+      "bytes": 942,
+      "sha256": "a8ee96a1b6cf0a29fbfaee2845128891a3f3ba97566a25fbd4fbde4f3b5fa19d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/examples/security_cell_inspection.rs",
+      "bytes": 3737,
+      "sha256": "ae31aee52b30c9fb589de07f596411bfb0d321e3f1fdd20341291ff5dccddaa4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/examples/security_fact_inspection.rs",
+      "bytes": 4137,
+      "sha256": "f1fd8cd10244dd5724192fb87d5f8b3940c350d8f2b03c9deaef3356626caeeb"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/examples/security_mapping_handoff.rs",
+      "bytes": 2337,
+      "sha256": "e9ba11a4ce1f323f59df8965bdce8f690dc24cfc2cdd59b29480c41ee10b0989"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/application_ir.rs",
+      "bytes": 3032,
+      "sha256": "6653d07a2eeeb632cbbff53419590f1a950240fa8934e3ffd52a1d9eae232a1c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/application_model.rs",
+      "bytes": 20596,
+      "sha256": "dc13cfbabaacb78cf0d34ad689226fb27c7aba4b766206e7d68b5e9367dd0811"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/application_resolve.rs",
+      "bytes": 14652,
+      "sha256": "5c272ef21eadf10a2192095e03b82442b74deb81935e4a016f9a632043c48be1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/application_scope.rs",
+      "bytes": 11904,
+      "sha256": "89fbb5d278b0e32a97ea2199d4a6b281a87df7cfb7c1280447dac3c086953e65"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/application_syntax.rs",
+      "bytes": 7763,
+      "sha256": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41732,
+      "sha256": "fda1bcdccf51d345312de038a6de74a26e8e34daaa69c4284e8f05205a0250e5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/arithmetic_plan.rs",
+      "bytes": 3784,
+      "sha256": "41bf6deab05a49b61966b8e690002702d1c3e1018cae4083be97e90e2739a72b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19693,
+      "sha256": "c5e7795e1d5694f65a58f5e70d7d78bb37aef594b2c068b18cc60b11d77a606d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/arithmetic_resolve.rs",
+      "bytes": 10240,
+      "sha256": "8d4f6da3fc807935b52e2415604583af4d8f53bc0ee337775a5b28c1f4986440"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/arithmetic_syntax.rs",
+      "bytes": 8098,
+      "sha256": "24620970982bc738e4abf01093771707adf35eaadc3320852210c7db2661577d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend.rs",
+      "bytes": 38294,
+      "sha256": "4d8ee8b47e08a0be29409077baf4072feed337ec946464f671ec4c4c1ecfbe1c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03.rs",
+      "bytes": 6841,
+      "sha256": "fcfa161b4381d5938dc7e96d9b0a13be9d68b4177a2e5cba3d2811a7c2f4d242"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 33412,
+      "sha256": "b96aac2f34afb2d0d29d85094551cb490f4b92a095fe40720123e2cec825870e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3685,
+      "sha256": "e0681d34d80fd19adc4cea46f65ec10707750bcf4390b17aad81ca49008d875e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 11080,
+      "sha256": "9eb92682818594350b64f48d2ffbbd0ad4b5fbda66bf4a0ea1cca9de1e4e157b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03_tests.rs",
+      "bytes": 30728,
+      "sha256": "e10178a8eb4fe10a06b0286ff56325a36984854f51e227dbbfab002944abd90f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend03_view.rs",
+      "bytes": 4115,
+      "sha256": "6c94b9b726dbe74bb0d25c451f4872f6a82dcdcc5e2c10f87cfa5af49e00a500"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/backend_emission.rs",
+      "bytes": 44469,
+      "sha256": "6fbe584a4de038a5278b7d40a6c0f4adb2161ee2cc08da8c5faea15796998b32"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/bin/frontend.rs",
+      "bytes": 183,
+      "sha256": "95469b6c18c6e50832f5beb8038fce512e58415676a84278630fcb6494392050"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/compile.rs",
+      "bytes": 17205,
+      "sha256": "27dd0a99e1d4d058308ac3905cd9e67abed6bd05bc4cb2adb46340b15632faff"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/compile04.rs",
+      "bytes": 17708,
+      "sha256": "2c82da3f60c20776284ff97b4844e976edd4b8c12d5be016ec4a323ebc7196ac"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/compile041.rs",
+      "bytes": 8762,
+      "sha256": "e2e76957f836dafc47fb3ca480be94dd5ea603c0e5f9db79dcc79e1ea4f2f238"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/compile042.rs",
+      "bytes": 8762,
+      "sha256": "4eea7b8e7dc71a26a0b97c5b80322614a9e806e7df6aedb7f776a10ba0c8ca2c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/error.rs",
+      "bytes": 780,
+      "sha256": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/exact.rs",
+      "bytes": 3059,
+      "sha256": "315ada2fb97f307b506b09a8a9f02cad4383597d1ab9b1c0200c8d3c3f8e7780"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/ir.rs",
+      "bytes": 3764,
+      "sha256": "ec75a449cd52b95930c1aed95e201cd3317e4171f482d8d17be111e28f559f9f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/json.rs",
+      "bytes": 7436,
+      "sha256": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/lib.rs",
+      "bytes": 5021,
+      "sha256": "4fee0b3f9948d3a5cc777340ae04b929f9f8f749fa2446f2ef2d72c57f6d244d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/model.rs",
+      "bytes": 15537,
+      "sha256": "ddf8b851462c8f2da6bbae6d70b560c9a144a691c82ea1102578880be7b085c5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26559,
+      "sha256": "88836d4878f8b97d285294b00672554bd0254fee3816bf3d6b4209581ff7edc4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/path_ir.rs",
+      "bytes": 27897,
+      "sha256": "0c7b97e381397483aa3fbe3e2d39c719bd05c07e308d11fca166dc1c10beec73"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/path_query.rs",
+      "bytes": 21978,
+      "sha256": "073222d700d4f7aa75f528cc46ff5a6065405fbcb7321fe02c02fd20f65a8173"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/path_resolve.rs",
+      "bytes": 10830,
+      "sha256": "1fffaf46129c0451eaf72fe3d832a0147d6a8db650211c059a0f2aebb77026e6"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/path_syntax.rs",
+      "bytes": 11196,
+      "sha256": "87e8e0183f95b708151bc9f62c515c063879aba78b815296927da1a6846f9e96"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/resolve.rs",
+      "bytes": 10230,
+      "sha256": "db56e29f39d9de3a682fbb917e11cf2144fa83ad48b5cc3fcf539b60b6e7fa4c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_association_ref.rs",
+      "bytes": 3717,
+      "sha256": "7683d8989a765c2713272d7643b41fdd2f73cb513a04a7ed97abeb53884d5a3e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_backend.rs",
+      "bytes": 13105,
+      "sha256": "630ed24f24a6481fc5c5a1cb92cb1fc5abf3b76ed4781e935808d10bef26a254"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_budget.rs",
+      "bytes": 9280,
+      "sha256": "a96d32840b01dce893ce181c0fed6109a45e4e1b0f3d9b6d1f2f551b756e7322"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_candidate_dependencies.rs",
+      "bytes": 9720,
+      "sha256": "e914f1ff5e5fa0f5ca6367b1d199be4c30e10d4a3bc6cdedc12e3c7ca0f59423"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_candidate_incidence.rs",
+      "bytes": 93968,
+      "sha256": "fc2a2a4faa22029bf6a2d62ca6b965a55e75ff6a198b58070b5b5f9de5a2c9b7"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_candidate_ir.rs",
+      "bytes": 8569,
+      "sha256": "8870ab073cdaff2dc34c6904240ea6766e8f5ff82e405c8a8760261ffb3da1d3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_candidate_ontology.rs",
+      "bytes": 7057,
+      "sha256": "e1fb1492cc68b7ee385138ae7d4524a24190ea1dbcb034a3aab2407b77f1870f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_candidate_policy_types.rs",
+      "bytes": 5856,
+      "sha256": "f1a42c3068c771bcfe8c322b0a305115aa33f31a78cf6b5c98b6694e88bd631f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_case_catalog.rs",
+      "bytes": 9670,
+      "sha256": "ad6706779519df2a1a0138c797de425341161426ee4395092cfbf52b15b82fe4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_composition.rs",
+      "bytes": 18293,
+      "sha256": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_deployment_catalog.rs",
+      "bytes": 10631,
+      "sha256": "466f65cc2865f8aeb8fc03e2be8ea458820e21e05bbdf882ca5a27f6e2aa88a1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_evaluation.rs",
+      "bytes": 40072,
+      "sha256": "5f84887ed95e10e0f185816c8d3f8a13f68f84fbe44bfb203ff9dbcc3eca198e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_ir.rs",
+      "bytes": 9389,
+      "sha256": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_literals.rs",
+      "bytes": 9330,
+      "sha256": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_lowering.rs",
+      "bytes": 3118,
+      "sha256": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_custody.rs",
+      "bytes": 51619,
+      "sha256": "c1a9e09f3d4f83751c1011b90b67953f105c6423a50274aaa0489908114afe1b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_matching.rs",
+      "bytes": 12887,
+      "sha256": "c545f2477501f4db5ccc018d8c0ed44df981973337f480d88166c9cf52a48ad0"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_sources.rs",
+      "bytes": 36673,
+      "sha256": "29ec1b5fa94e717d5d2b9883efc9de30017fb6be2dc36d3e17a675527ba59fd5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_sources/association_events.rs",
+      "bytes": 1598,
+      "sha256": "fbd1fff2fca560b7f55c71f70c5061f9d3b00575a1aff782947b7d002d95f79e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_sources/key_events.rs",
+      "bytes": 7282,
+      "sha256": "37e0212b70266ac0ae4104cc53a8d56068e1cb73a7ffca310bf28d2cb7d65146"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_obligation_sources/query_events.rs",
+      "bytes": 2574,
+      "sha256": "f61a3a4daea7a55fc1cd0ee97f116bf84ac48006a8365932d4f306545108625f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_ontology.rs",
+      "bytes": 7965,
+      "sha256": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_payload_applicability.rs",
+      "bytes": 17359,
+      "sha256": "dee0c576c98b915fde11b6c9903e8126a6dcf8da43ff106228dbb55ebe8749de"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_policy_types.rs",
+      "bytes": 5164,
+      "sha256": "0e26b8fd4e2da7a80ccc84d7ae4ad05495e334cdd0cc0e3c59633d7663fb7d06"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_query_profile.rs",
+      "bytes": 27828,
+      "sha256": "7d1c658ce77d0248a1c07a4ef12ae367c0dcb87a7efe0ee60011c24b3deec061"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_query_uses.rs",
+      "bytes": 9146,
+      "sha256": "4d5d7c3996a57ba1c6ce0b3ee715a4fc0a6905ef458f35202f94887aa0e8f1fa"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_record_homes.rs",
+      "bytes": 55653,
+      "sha256": "2ee7c45aafc9dab1a08517cc64d427d2cea331b5ce80c923c4f74ce8bc894e16"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_requirement_templates.rs",
+      "bytes": 23202,
+      "sha256": "01ccff648a09bc3c23a63eaba33e13a42635047245f77cf89e3c6fda139851d2"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_requirements.rs",
+      "bytes": 8603,
+      "sha256": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_result_cells.rs",
+      "bytes": 3740,
+      "sha256": "f6c5c4c456381e11a6dc2b0daee09fd4339dd724bd66b95164998f7a0716658d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_result_check.rs",
+      "bytes": 11399,
+      "sha256": "8ccf6e43741e097f33849beca64e3f29a8a2d288ab51f4c3012348c016329cb1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_result_selection.rs",
+      "bytes": 5071,
+      "sha256": "a8d0f8ce4e0486bd32974525e25571e3527bfa30225a111cc71febcea3faaa88"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_rule_occurrences.rs",
+      "bytes": 8053,
+      "sha256": "30c472269532e2f90a9bfa5ab3fc4b5a6e548a86500bc46262c43461f92f83f9"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_scan_obligations.rs",
+      "bytes": 9360,
+      "sha256": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_semantic_coverage.rs",
+      "bytes": 141159,
+      "sha256": "4c7ee4f7a67de8807fc9824bb44c53cd573b87677f70251607d15141f7c4945c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/security_source.rs",
+      "bytes": 5391,
+      "sha256": "04656ce56aa905217e9217afac55d61a7748cb1ba3e2f8ddfbcffae613a8df41"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/src/syntax.rs",
+      "bytes": 16055,
+      "sha256": "092c75a9012659bdedba98af5ba4c48fe1299266a294156ef44ac6db570be95e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/frontend.rs",
+      "bytes": 4539,
+      "sha256": "4e24cdff14d6253447fce48b7b8545c2818db4e5d1219e7d841b2eb90b722bf5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/mathematical08.rs",
+      "bytes": 1175,
+      "sha256": "c95559d7ef5f8f3ffe817d19b7b47aebfe587bdf74f5a79adac60f5400fffc9d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/original08.rs",
+      "bytes": 5780,
+      "sha256": "f948c58d3731cecf12a4a3cdc7a41628176fb07cef759afc90b32fdaa063e556"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-composition-oracle.json",
+      "bytes": 25425,
+      "sha256": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-deployment-duty-catalog.txt",
+      "bytes": 2206,
+      "sha256": "acd4aa9de1bb10336ef1a7d1526e406a53ce625241bebfaef3072ab51170873f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-disposition-oracle.json",
+      "bytes": 64238,
+      "sha256": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-evaluation-oracle.json",
+      "bytes": 1286436,
+      "sha256": "900cc8d2fbc4d637908d9223a0aaa823951e9a1875759ac3efb26c1d1e05274b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-required-case-plan.json",
+      "bytes": 147740,
+      "sha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-required-case-plan.provenance.json",
+      "bytes": 470,
+      "sha256": "b85b6bb7c77a681967841a7bd5264e2a032697aa83b7ec131de52afcbc8bca35"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security-source-fixture.json",
+      "bytes": 17235,
+      "sha256": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security_admission.rs",
+      "bytes": 132677,
+      "sha256": "4734220224799df71e8b31cb9321ea848ca3d4021761bffe9cbbf0c7c6dba3fb"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-core/tests/security_literals.rs",
+      "bytes": 2586,
+      "sha256": "5f0cb5f2638cd0a7ce657ed5c467788adaf922a6bf16d4d000e4f6bf000c767b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/Cargo.toml",
+      "bytes": 385,
+      "sha256": "03e6fb9fb2b7132c8cc9dd2c110a4544978a856dc41eca1fd91648fefa4ceed8"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/examples/compile.rs",
+      "bytes": 458,
+      "sha256": "40c0d585cb90792fd6f0d96bf3e7cdd389279515ea4e3ed0e8aef16ae8f74cdf"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/arithmetic.rs",
+      "bytes": 7558,
+      "sha256": "de4f8539e782b50a506cfdf50be3ad32ec54f9f522fc9e77556fbc94929b2ed0"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/binding.rs",
+      "bytes": 21394,
+      "sha256": "c76f1c018b562c0088378e58609ad95a82e090745ba055c2ae6e09886fa2df59"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate.rs",
+      "bytes": 32161,
+      "sha256": "dafb2aabe4b4cdbc938f84fc50e3e48a050c3670273dfb28fec5eddc221d4802"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/application.rs",
+      "bytes": 16858,
+      "sha256": "f6f6269996c49c3f7acb4b9ed13c0e80e25d6c24f0e163eff2cef4339cd3f660"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/arithmetic.rs",
+      "bytes": 34589,
+      "sha256": "39b9ecef419730095681529419c1d80a830705dee06ea9ed64ebf572eb53a622"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/compound.rs",
+      "bytes": 8948,
+      "sha256": "2fb9b3b7a6cfadb77a5f50ff89a9979b0ee8606b52d4127251665952bc10d44e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42290,
+      "sha256": "d267064f220d96f39f99ecd83bd75ad151f11ad0ca601a1e4b1edd16ece31213"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/related_keys.rs",
+      "bytes": 5908,
+      "sha256": "ed99856f9044b77e2477764d9b1f136cc17a9ff0db6770d6164809f63c62fb13"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/candidate/relationships.rs",
+      "bytes": 13451,
+      "sha256": "9bdc758bf9e8e2edf13cef776d9b79257ec6095ab659c0fa555f10a7acca112e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/count_distinct.rs",
+      "bytes": 2841,
+      "sha256": "4d8e8dd391f7f2670705fdd611204b4c19942a237996d4f2c59ff6be72bf2548"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/count_having.rs",
+      "bytes": 3199,
+      "sha256": "e835313d8ae870e7b19dac8086f8f888e0a0d99c79e33766a1ff495fea10bd17"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/implicit_arithmetic.rs",
+      "bytes": 2438,
+      "sha256": "cd0bb65e75d054b602f010e620a8e8692fbfbfc2f565b70d9cd9c86e304c28ba"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/left_join.rs",
+      "bytes": 3292,
+      "sha256": "f89a0e9358ead34344ed88cc957932f1a84bbdcf6217463ff8d8d4158a2218ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/lib.rs",
+      "bytes": 901,
+      "sha256": "99f2cf3a1c614ebc860226002a96662f48f6ad1e57309b4226e16f4ceb021626"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/mathematical_integer.rs",
+      "bytes": 12353,
+      "sha256": "8bafcb244b3685f84b7c9c146912ebf21dd93bdbf0b44351c6141a0e8866b546"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/native_profile.rs",
+      "bytes": 7307,
+      "sha256": "ad42dd8ec5142dce300691952dd1e6b65dc7ab8feae9363e62443831bb29706a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/paths.rs",
+      "bytes": 7921,
+      "sha256": "f7e677df76ac697f72289b477e9d14159ac5a05f11467316282f31be4deaf72d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/paths_keys.rs",
+      "bytes": 4001,
+      "sha256": "163e3868b171bdb107444ce2d041e3f2c78b00c1a4512aac8e5cf4a15a07674b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/paths_keys_having.rs",
+      "bytes": 2497,
+      "sha256": "0f721a706f527a9d60d5d75eb2ec768281f2157fbfbcc904a15ee9ad61a0a809"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/src/qualified_profile.rs",
+      "bytes": 4497,
+      "sha256": "249ea3658939d2dc55c6dbb8a967819463331c7226742da62902dbf65431bb84"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/tests/paths.rs",
+      "bytes": 18427,
+      "sha256": "501ec02b19ac86b945ffcf80b6d33e9aa19f5a5a1b10de952513afe7021594ac"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-databricks/tests/relationship_degree.rs",
+      "bytes": 4705,
+      "sha256": "ae2ebfbea870a3a78df0f58740f10f3eedbc7524919d08cf4124213443647cbf"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/Cargo.toml",
+      "bytes": 550,
+      "sha256": "cabbe952912a16ca40695f46425a41bac13a1a4d327ede9ed4303e2d7537178c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/examples/compile_probe.rs",
+      "bytes": 473,
+      "sha256": "5b2defabf62ea5059c371e2176aecb8abb85f7ad909aa6c46c3298af7d126cb5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/examples/home_probe.rs",
+      "bytes": 1395,
+      "sha256": "d9cab573615454afa287d3653181836a2a7e74a17286c600640aa1fea3c8c221"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/examples/parameter_probe.rs",
+      "bytes": 1522,
+      "sha256": "e2dc94738d4dfa78cc6de859ee9539863e6adb066ca99de9ab6f5cc9a1abac5e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/access.rs",
+      "bytes": 8433,
+      "sha256": "99824efbaf7e0878f8a38f7df673560edf281d603f4ddb17fb02ef1c28a1f822"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/binding.rs",
+      "bytes": 12960,
+      "sha256": "d5ac1297816451f484f5823ef68f0bb5da0e62cd4e0f0005907fbbc7075810bf"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/candidate.rs",
+      "bytes": 27586,
+      "sha256": "add26b0507afa63722dc8a7a2308f3c2a6307223cb8589a6bb660753765d01ed"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/candidate/application.rs",
+      "bytes": 36549,
+      "sha256": "45b7f9187e47dcf0f3ff84deee72323a0d473453ba357e6eba09e0f353ca4cf6"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/candidate/relationships.rs",
+      "bytes": 3477,
+      "sha256": "1de5f2ab8b9f464ff5607c54f2edd2548f0074d039e9b5be8ecf432233c729fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/collection.rs",
+      "bytes": 7304,
+      "sha256": "a7d15d50dd98094cddcde5292c69afda0266bfba30fe4c3a80225e076bf0bf6b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/comparator_requirements.rs",
+      "bytes": 30910,
+      "sha256": "144dc3472072893956f5b7f9a1d7142b707284c6edeb1f1aaa5fe73791c284e1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/conformance_original.rs",
+      "bytes": 71379,
+      "sha256": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/expression.rs",
+      "bytes": 4288,
+      "sha256": "b2867d312f9aafc1651a709ceea0e215af6206b6cb8ebbba74472685e8fdacd5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/json_codec.rs",
+      "bytes": 10106,
+      "sha256": "04771c4bd7b750e26d4f3e8368b8379904eeec58ba3bc84de4fe3ae08ae9cbb8"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/leaf_codec_definition.rs",
+      "bytes": 11845,
+      "sha256": "1502bd78e6f368e94b5ce8ed8fe379c46a67aeaee8a10aba0de619ac21fe8d6a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/lib.rs",
+      "bytes": 7990,
+      "sha256": "07ece0a57e10ccbf6279e88f90bc9a4ac07ec56c1605d96d8335db407a669b8b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/native_comparator_definition.rs",
+      "bytes": 21445,
+      "sha256": "a4f19e1041ba29416aab9764da7b61bd4f9a9c779e4a282efdf697a5e45398fb"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/native_profile.rs",
+      "bytes": 8520,
+      "sha256": "dd03d79bb4fe0072bd0b81e4bfd826db8cfc4781fbd2e32c25cc7e604b25a9ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/numeric_correspondence.rs",
+      "bytes": 6561,
+      "sha256": "45adadb6ab68f8c0cff909285f7998fa76c6373332a0395d6208cbd38a5d4440"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/original_admission.rs",
+      "bytes": 12852,
+      "sha256": "adb96451b616ad9b366386cd40eed41fb80160f743a2b78529bae54f868dba24"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/original_backend.rs",
+      "bytes": 11857,
+      "sha256": "35d86ce923afc039d6524c7dd41b58ea37d029365e13fdc8a88352572f2cfdee"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/presence_definition.rs",
+      "bytes": 8507,
+      "sha256": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/property_definition.rs",
+      "bytes": 285110,
+      "sha256": "55b7bd078744bd283c219879a3579d61fca8c7556091bf5d9c83bff50522dd55"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/qualified_profile.rs",
+      "bytes": 4497,
+      "sha256": "ee93032d4e787330ba41b0a72b5ed3686c26c8d9326bda868bf0b2e670c75993"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/read_context_definition.rs",
+      "bytes": 7387,
+      "sha256": "8dbabd1eed12da7add0ebb039c806512f3ded3bd8eba3ea7ba3ede5360b57e70"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/record_definition.rs",
+      "bytes": 24345,
+      "sha256": "2d618d581873a9a70e06c965839772a36b119a349aa509471634fb23fb1d2d7f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/recursive_observation.rs",
+      "bytes": 10251,
+      "sha256": "335d00b42f2f3296704ea8c78494dc890f244f9c9e03d629813c7e5142adff50"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/registered_access.rs",
+      "bytes": 25865,
+      "sha256": "784f82e5a6bf3a970e4797e2842b45ac12945da4dc105d6b120ba44f7dea8845"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/relational.rs",
+      "bytes": 8762,
+      "sha256": "b0e7f5851317b03a678f0ce4eaeda6d2b1030a3ec803ebf6ca6a14dc9883b022"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/relationship_definition.rs",
+      "bytes": 46301,
+      "sha256": "2db4cca55033db9214780c8c48d7a0f9b1e08e6cb97a8067453dc3f99522b625"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/relationship_lowering.rs",
+      "bytes": 10038,
+      "sha256": "713547f9e491542b912b6544176c05bb532fa8dffc0a821c004075abf1a58295"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/result_definition.rs",
+      "bytes": 30955,
+      "sha256": "53c8102b2c916cecaa8f7e1cdc65c52cf95585f5f87be91d89fa60eb0f979155"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/row_codec.rs",
+      "bytes": 5591,
+      "sha256": "26553ad206c4813f309c3ececcae73fe861638967f1b41d80229d9d67ee34931"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/row_custody.rs",
+      "bytes": 28426,
+      "sha256": "172cb81bd5c303ffdcd0cdc4825759bc578d1129f88d2a83b79e3ea6eea95d7e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/row_join_definition.rs",
+      "bytes": 41293,
+      "sha256": "83c1d8747213e87badc4cef5209c636347eaa6acc14becab5fc4e509e83dd65e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/row_tree_mapping.rs",
+      "bytes": 13425,
+      "sha256": "5e33720066bdda4612d73143a5e143b5aa3d86a6cbbab12ded84f0b9a1bb9b8c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/row_value_traversal.rs",
+      "bytes": 19571,
+      "sha256": "578bb1774307b6e193f8e5c7eb7269d5ffd115666869e686278f8c500611ca3f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/select_definition.rs",
+      "bytes": 49686,
+      "sha256": "978baab8919bdca2f90c97add4e7bea0cff158cabef81b17d04bec18b3307346"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/structured.rs",
+      "bytes": 8819,
+      "sha256": "a12a4794a4ce81c2fc1c8dd396a2e366615bcbadb3da6cb425f8dd33404bdce6"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/tree.rs",
+      "bytes": 4248,
+      "sha256": "bf11d86110799a9e0c548dc1b626e21a104ab0d249971cb6cb2566b9e880ad1c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/value_definition.rs",
+      "bytes": 37979,
+      "sha256": "2979ba0fcacb7d12872e4f5e3d40b06d6c43bc4fe41270c74a9808bd4d849fd8"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-postgresql/src/value_traversal.rs",
+      "bytes": 33262,
+      "sha256": "7799fcadbabbcd8c9aaa9883ce2bcc678a987622dc844eb9bd652570bbfc6165"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-python/Cargo.toml",
+      "bytes": 1119,
+      "sha256": "e519d49f1284185a14c137dbf436f964d1ebaae6deada389ae7cbe9e0f2ea54a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-python/pyproject.toml",
+      "bytes": 164,
+      "sha256": "e61c33fdc35b192e848111dc810e5aae8e053d43f14b1f10ea8a9bdeddc86c7a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-python/src/lib.rs",
+      "bytes": 1402,
+      "sha256": "fedaaaacd15d4411952aac6f0d040f0f743fc1aea32d0206109efcc0e55017d3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/Cargo.toml",
+      "bytes": 1773,
+      "sha256": "f983acf5df5a07fad6bf3ca8bbb1b8b27c4f6bc1888f89861772826de99e00b3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/examples/compile_initial.rs",
+      "bytes": 339,
+      "sha256": "4f28351bd1e22c01294ba8f0d2ee429f302664df729131d294b1d76c3c861e04"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/examples/compile_native_review.rs",
+      "bytes": 931,
+      "sha256": "dd881ccb4799c94b4f09d6c8dabf3f115f13c0d8e6ee02c55ed04b6ab15fa93d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/examples/compile_public_batch.rs",
+      "bytes": 239,
+      "sha256": "3a824696d4ce43c29b0ce12c9d60d22824e5b9af83d195a26b8a17730e4a1280"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/examples/compile_qualified.rs",
+      "bytes": 1024,
+      "sha256": "5fe9736c413ed246e17b7516fadb87046cd7b1d9bd535a64b306cedf22c4ea49"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/implicit_arithmetic.rs",
+      "bytes": 8689,
+      "sha256": "9b81cb2adeb5581716c3e69780963c0a5973842bcd0003c2367870500db2e084"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/implicit_arithmetic_cli.rs",
+      "bytes": 4786,
+      "sha256": "e27e3b5206e640c5c5a7af6487efdac74938120b7e79637874ccdca51e98390b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/lib.rs",
+      "bytes": 21384,
+      "sha256": "0b03deda1d9a4d5a3bfe844d37fae707e8c056fbc3f920ec51d87c9744e2f811"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/main.rs",
+      "bytes": 4421,
+      "sha256": "2ed39a6f3c84c3b4d380ce88c2cd007292efbb2e608b5e6eeb6180bfc602faf3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/paths.rs",
+      "bytes": 3040,
+      "sha256": "3a83f24b8b273f4de06c45a3557b6c0bb363468db7a610556db754d11fa7721c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/paths_cli.rs",
+      "bytes": 4148,
+      "sha256": "4aabd6a7fff0da6dfb7630ca7db356afbf9fa286d189372b362a509addd802c3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/paths_keys.rs",
+      "bytes": 15856,
+      "sha256": "67e797a7971e0dff95206f898e0b925a50b6faca5d4365529ef3c92a65058d51"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/src/paths_keys_cli.rs",
+      "bytes": 4158,
+      "sha256": "9859d5226a94d6e49b248d63688c1d6438dea7b78416fb3a2b7481df070f36ba"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/tests/implicit_arithmetic_input.rs",
+      "bytes": 1497,
+      "sha256": "91de4e9190234fcaaca715277d115e2ca23f379d82d1df18514d5200714757ac"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/tests/input.rs",
+      "bytes": 4009,
+      "sha256": "11d4c3972388793977fa233e349c28bc271f377491fd3e36fd27023d06d31ce3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/tests/paths_cli.rs",
+      "bytes": 3682,
+      "sha256": "7216f89d3c1f4991830683271223787023433b878293e9ca81a08980bcbaf98b"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/tests/paths_keys_cli.rs",
+      "bytes": 4066,
+      "sha256": "f118a65cae1d382384d95f5f141875a503898e7c0b178309e481f7027a48188c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-runtime/tests/paths_keys_having.rs",
+      "bytes": 12083,
+      "sha256": "ad1613e37efa13f4f4a767bd552f9998f6c9ce7c27f429d67e037473b7a4815a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-wasm/Cargo.toml",
+      "bytes": 1062,
+      "sha256": "973926db43198b82c8c198b20809cefa203b3932e4c7dcfd33fb86714bb12dc7"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/crates/weft-wasm/src/lib.rs",
+      "bytes": 905,
+      "sha256": "8268ef465f06323814cf2a10329607ccd6b67c95ea1ed784e2dcd329fb05cdd7"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/application-result-v0.2.schema.json",
+      "bytes": 1636,
+      "sha256": "0e9fc7aa16d14a4e78027a70514d75476d1576f9625747e1b5f56b76147f8014"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/application-result-v0.4.schema.json",
+      "bytes": 2281,
+      "sha256": "ee87e4e845d670601a301701dc6109c7a37dadb96ccb1e7f75c8144c5bd8bc2a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json",
+      "bytes": 7580,
+      "sha256": "b3b556d49b9c605e0c1ce1cad601905ba89008b67f5129f4bdbdbb8df0b55fc2"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json",
+      "bytes": 18068,
+      "sha256": "f9ab03aa42a95d2c73a2a3015e4f1f9fecdb8ca7ea2f1eda361cf2c61ec1ec41"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/backend-manifest-v0.3.2.schema.json",
+      "bytes": 18068,
+      "sha256": "e7d6eb558a80569b0cdd01a72342aa3f8d0fde2e41d3529724854aa5c6d3291d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/backend-manifest-v0.3.schema.json",
+      "bytes": 18066,
+      "sha256": "655f2dea7b459b354af1f66ae1684f1ba2bce907a5c7355d34c9f9c461f9ea7a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/backend-manifest.schema.json",
+      "bytes": 4006,
+      "sha256": "d18133db2b104714f78839aba458d62dffa79d969195df02582a87465a2ac4a1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.2.schema.json",
+      "bytes": 3874,
+      "sha256": "2a9a4264a9d8926176aa3809d613e103f35c8f634b0d8839ddf2bbcf598cacde"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.3.schema.json",
+      "bytes": 3511,
+      "sha256": "7345c424b1bbf8da15e6f7b4efb81da7eeb85a1e08fb91319eeb7b19ec129047"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.4.1.schema.json",
+      "bytes": 3513,
+      "sha256": "6da5cd0b5a0cd8e92ce6e179f8e092ecc3c3c134b2d32d25d0dbe2c87b39a1ef"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.4.2.schema.json",
+      "bytes": 3513,
+      "sha256": "8a0da7aa576b0fc08fd65621cf99e70b47a26828c719dee1c1d8d9c974298de8"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.4.schema.json",
+      "bytes": 3511,
+      "sha256": "51f9793fb7ca32fdde778e2ff8cacd1018e4142fb04dea610005895aacec3932"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request-v0.5.schema.json",
+      "bytes": 4464,
+      "sha256": "ba61774b93779354deb50879d85aee5e8b1d6cc9c1fd373f43e721afb6fefdc0"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-request.schema.json",
+      "bytes": 2851,
+      "sha256": "8916022eb698864f5580319848307a1e0e90699dbaac1dafd6b8f2e11119d3e5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.2.schema.json",
+      "bytes": 30933,
+      "sha256": "8cce222e4031b5cf2e2aa6388b28e948e1d1408e60b3056a2c3c297e993af3dc"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.3.schema.json",
+      "bytes": 34484,
+      "sha256": "9583cd85063d00a2f88473acb2a1566ad9d94b8b305e2388c612fdb43c52507a"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.4.1.schema.json",
+      "bytes": 62090,
+      "sha256": "04dd09885d93fa0aa53152a1b686a01c8303549318b12555364f7b6c564ee8cb"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.4.2.schema.json",
+      "bytes": 62090,
+      "sha256": "1967e1cabee8dc80119376ad15d0e58e16c916962d414d78fdc0247603b42da3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.4.schema.json",
+      "bytes": 62086,
+      "sha256": "c177b9bbb9fff3d69a833aa5bf05dbe752a1f76e65833cae8ea35fd4b1373140"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response-v0.5.schema.json",
+      "bytes": 2852,
+      "sha256": "6dcbfa453b72ed92a8153873584425193311c0b99640bd31db82a26fda3dcfc8"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/compile-response.schema.json",
+      "bytes": 23723,
+      "sha256": "234e439bca6ac06b783579005e3db086526b4f16a28267e0fdc92fe55abfb938"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/conformance-case.schema.json",
+      "bytes": 2261,
+      "sha256": "837197d5a3d7ef43b80ae50ef8d45caf14a42ce88d5d166492abf8247e791e99"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/distribution-index.schema.json",
+      "bytes": 2813,
+      "sha256": "768f25323aa5e046298742200ba413ba98d2f53cf9e10ee3126c6ea618ef830d"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/distribution-manifest.schema.json",
+      "bytes": 9259,
+      "sha256": "856d5103161b965db3eb1dc0198d08c13a65a2cd7367aab5caf345ba69722d66"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan-v0.2.schema.json",
+      "bytes": 17644,
+      "sha256": "17b650e2573b4274cfd8506cf02b963060c0d978ffc7f979d94a7d9eafea1316"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+      "bytes": 38838,
+      "sha256": "60fe7c27d6afea25bebe3cd429d5a86e1b447c403715f298be79fd0aa0d3f297"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json",
+      "bytes": 43626,
+      "sha256": "3e371f1ce3814c9328802c3981483c1ed97f97f34fd3b6767c54ebfec8c083e4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json",
+      "bytes": 43626,
+      "sha256": "a70ff489be0a9621b43623f1d69f0a1490345c8a1a4bf654121b88f0c7dd8ac1"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan-v0.4.schema.json",
+      "bytes": 42813,
+      "sha256": "a6f28858646e4795019037233ef0e8d6b0aeb45e7440cbcf4e7a477891a1b3d5"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/logical-plan.schema.json",
+      "bytes": 8879,
+      "sha256": "ce9c7de12094ab840e4b483faed44a4ee5e122e47a4d4c9f9e46d8144541f9ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-backend-manifest-v0.1.schema.json",
+      "bytes": 2274,
+      "sha256": "2b8a6870b9984d27c2638ce3e8a97e33a7289a5dc384e32c2173eff19ec4c945"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-cells-v0.1.schema.json",
+      "bytes": 2063,
+      "sha256": "73c7345d444cd40c1bd15f2ee718cedd40531513943395d53104d452a0f0661f"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json",
+      "bytes": 4482,
+      "sha256": "40ea3be31de4e4d8013f6cf558e497f4fac2d420e202ff76de26a50363147f7e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-compile-request-v0.2.schema.json",
+      "bytes": 4510,
+      "sha256": "2087847a3c318923d55355cf9e87135503d44493fb578de3bf2673c26aa14c13"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-compile-response-v0.1.schema.json",
+      "bytes": 2870,
+      "sha256": "01022aa9742bbc51e8004055845af50c194cffb469f7158d7461e94a70533787"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-compile-response-v0.2.schema.json",
+      "bytes": 13728,
+      "sha256": "0ba4f4c36e9e646ba9f649da37edaca920da8a8982f2df20cec5c20f3823e473"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json",
+      "bytes": 3833,
+      "sha256": "8fcd179fb2582525776902d8e550fbae4591655a33c93767f1ca883042e98fc9"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/README.md",
+      "bytes": 948,
+      "sha256": "4114be61fdfa91ccb9e91e7b80bf0d9f579ffb0a6f143f1718bda1bd062eed49"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/ashlar-delta-v03.sql",
+      "bytes": 9607,
+      "sha256": "ad4a264508c971aefcd94e3ae90f8f74dcf119b7d767f6060c638f4abde3284e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-0.7.0.schema.json",
+      "bytes": 18941,
+      "sha256": "a95512729481417f1a3a094cc337d7264a575bd6b54046b05c037db6c33b4813"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-0.8.0.schema.json",
+      "bytes": 26793,
+      "sha256": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-0.8.0.source.json",
+      "bytes": 460,
+      "sha256": "281c76d30ff6914a105147376396227a4e2b5825bffd2b950ad0ff540867ecd4"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-ontology-0.1.0-selected.schema.json",
+      "bytes": 5401,
+      "sha256": "bc9423587424e83ccf20a90054d31dda1a7656d5860e822c69db3bc8cf01a066"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-ontology-0.1.0.schema.json",
+      "bytes": 5364,
+      "sha256": "590c2d2d851280bad715ac928ad333215617e53b23d52c6bd9e4982b8566fcef"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-ontology-0.2.0-draft-selected.schema.json",
+      "bytes": 8963,
+      "sha256": "7e605eaee2f580336c7117de3717c8c6281485851126b5187a6e9583c1aaa4a7"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-ontology-0.2.0-draft.schema.json",
+      "bytes": 8922,
+      "sha256": "46248b7f8e45eb8dd883ff45b43f54bd63bf6fe19a2469b4fc6b6cd57214cb4c"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-policy-0.1.0-selected.schema.json",
+      "bytes": 17571,
+      "sha256": "e14fd4d7acac1a901a171ca942e9ba227218353c63a8af966429e4cdfdc498f3"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-policy-0.1.0.schema.json",
+      "bytes": 16725,
+      "sha256": "da6875e8889a7d0adb215964e4298b6642ba6667710d7a274888dcff2a9ef6fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-policy-0.2.0-draft-selected.schema.json",
+      "bytes": 18250,
+      "sha256": "40e942605f166f6bece3b55919cc646808eb275076c0df221be99e8617737ef2"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/umf-security-policy-0.2.0-draft.schema.json",
+      "bytes": 17397,
+      "sha256": "bdaa033eeac6989bdc63e3e3e64e5ac030596868e9fc213597a5a498b7bd1a3e"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/weft-record-homes-spike-0.1.0.schema.json",
+      "bytes": 16141,
+      "sha256": "ede23e1a814b1e2bfe1b1e06758f20a2cdf7f1a71cdeb68e690ec2e04cacde91"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/spec/upstream/weft-record-homes-spike-0.1.0.source.json",
+      "bytes": 394,
+      "sha256": "2b0eac5cb23f2b38699b1e57c937f6ffb9c3eedae87a213e44db4f8ef9629528"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/tests/register-backend/probe/Cargo.toml",
+      "bytes": 226,
+      "sha256": "d5b2aeae4f22ea27cc611d429e0a111b163641774305680077c524447a3a7133"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/tests/register-backend/probe/src/lib.rs",
+      "bytes": 5202,
+      "sha256": "2b16bd237d3df3d0f2ed53a618904618eba7e97d467410103a8fd9e159179ea6"
+    },
+    {
+      "path": "/private/tmp/weft-042-integration-b/tests/register-backend/probe/src/main.rs",
+      "bytes": 197,
+      "sha256": "eb3f21dd2d3376e53329590e16c192c9e4f4f5edff35920a4382f1e2e3e0add7"
+    }
+  ],
+  "toolFiles": [
+    {
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "resolved": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+      "bytes": 30854216,
+      "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6"
+    },
+    {
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+      "resolved": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+      "bytes": 414776,
+      "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea"
+    },
+    {
+      "path": "/private/tmp/weft-toolchain/venv/bin/maturin",
+      "resolved": "/private/tmp/weft-toolchain/venv/bin/maturin",
+      "bytes": 37007840,
+      "sha256": "efc2e751af40d8f62e9e471efc9677cab58b22a0bdc7244f7a3d8e70a59d1b7a"
+    },
+    {
+      "path": "/private/tmp/weft-toolchain/cargo/bin/wasm-bindgen",
+      "resolved": "/private/tmp/weft-toolchain/cargo/bin/wasm-bindgen",
+      "bytes": 6272560,
+      "sha256": "8413bdf70847451cd35bd242e7eb2aa5d8c717699d39273248ebdf1d1cc43ae4"
+    },
+    {
+      "path": "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "resolved": "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "bytes": 18058560,
+      "sha256": "4158f03e1bae2b759f25a1ba1fbdab8bfb7161eba4caf22e28f0915986625bbc"
+    }
+  ],
+  "commands": [
+    {
+      "phase": "cli",
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "-j1",
+        "--target",
+        "aarch64-apple-darwin",
+        "-p",
+        "weft-runtime",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-implicit-arithmetic",
+        "--bin",
+        "weft-implicit-arithmetic"
+      ],
+      "products": [
+        "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/weft-implicit-arithmetic"
+      ]
+    },
+    {
+      "phase": "python",
+      "argv": [
+        "/private/tmp/weft-toolchain/venv/bin/maturin",
+        "build",
+        "--manifest-path",
+        "/private/tmp/weft-042-integration-b/crates/weft-python/Cargo.toml",
+        "--offline",
+        "--locked",
+        "--release",
+        "-j1",
+        "--target",
+        "aarch64-apple-darwin",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-implicit-arithmetic",
+        "--interpreter",
+        "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "--out",
+        "/private/tmp/weft-042-products-a/wheels"
+      ],
+      "products": [
+        "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/libweft.dylib"
+      ]
+    },
+    {
+      "phase": "wasm",
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "build",
+        "--offline",
+        "--locked",
+        "--release",
+        "-j1",
+        "--target",
+        "wasm32-unknown-unknown",
+        "-p",
+        "weft-wasm",
+        "--no-default-features",
+        "--features",
+        "ashlar-databricks-implicit-arithmetic"
+      ],
+      "products": [
+        "/private/tmp/weft-042-release-target-a/wasm32-unknown-unknown/release/weft_wasm.wasm"
+      ]
+    },
+    {
+      "phase": "wasm-bindings",
+      "argv": [
+        "/private/tmp/weft-toolchain/cargo/bin/wasm-bindgen",
+        "--target",
+        "web",
+        "--out-name",
+        "weft",
+        "--out-dir",
+        "/private/tmp/weft-042-products-a/web",
+        "/private/tmp/weft-042-release-target-a/wasm32-unknown-unknown/release/weft_wasm.wasm"
+      ],
+      "products": []
+    }
+  ],
+  "environment": {
+    "PATH": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin",
+    "CARGO_HOME": "/private/tmp/weft-toolchain/cargo",
+    "CARGO_TARGET_DIR": "/private/tmp/weft-042-release-target-a",
+    "RUSTC": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+    "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+    "CARGO_NET_OFFLINE": "true",
+    "CARGO_CACHE_AUTO_CLEAN_FREQUENCY": "never",
+    "CARGO_INCREMENTAL": "0",
+    "CARGO_BUILD_JOBS": "1",
+    "MACOSX_DEPLOYMENT_TARGET": "11.0",
+    "SDKROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "TMPDIR": "/private/tmp/weft-042-products-a/tmp",
+    "LANG": "en_US.UTF-8"
+  },
+  "limits": {
+    "phaseSeconds": 300,
+    "streamBytes": 4194304,
+    "targetLogicalBytes": 3221225472,
+    "artifactBytes": 33554432
+  },
+  "qualification": "Freshcomponentbuild only; source/toolbytes closure recorded, cacheddependencies/SDK not claimed hermetic; no native/embedding/index claim"
+}

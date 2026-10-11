@@ -1,0 +1,2413 @@
+{
+  "scope": "actual CLI94 independent semantics and deterministic pairs only; no embedding/native/index qualification",
+  "sourceCommit": "f36f206eef70f69f2386a2acb466814d8302b016",
+  "terminal": {
+    "session": 7415,
+    "exitCode": 0,
+    "chunk": "d01f6b"
+  },
+  "resources": [
+    {
+      "path": "/private/tmp/weft-042-corpus-author-a.py",
+      "bytes": 7921,
+      "sha256": "ce21e5d96f0c6b9aef4b2be9c1feb96a84f7dae64dc9a1ce3075d6a38b403c94"
+    },
+    {
+      "path": "/private/tmp/weft-042-corpus-expectations-a.py",
+      "bytes": 3471,
+      "sha256": "66ee1270d2b08ac53c7660b1c7bd66ef2b09d44a554d027362fdfbe53a306264"
+    },
+    {
+      "path": "/private/tmp/weft-042-corpus-authored-a/corpus.json.gz",
+      "bytes": 616168,
+      "sha256": "d941d430062481058d27813a3e0de0b8861ec1684b705648f0ab174b6d9690af"
+    },
+    {
+      "path": "/private/tmp/weft-042-corpus-authored-a/migration-ledger.json",
+      "bytes": 22748,
+      "sha256": "0d5c1d428c3f6c6d8b11a87369cb97315989b35f91cb3726a1e21122f185d4f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/weft-implicit-arithmetic",
+      "bytes": 8688144,
+      "sha256": "8e1e43aa81b312a124e88698477e1392f6c538451d5cb8f582a38934c776e55a"
+    },
+    {
+      "path": "/private/tmp/ashlar-count-star-installed-cli-capture-a.py",
+      "bytes": 3216,
+      "sha256": "1e42caf78bd7c7bb9251fb926d88a8efc6138ec52271a6525ecb6954fab97fea"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b.py",
+      "bytes": 2695,
+      "sha256": "491c7579f6b87163b3118239842e0475b5fc0406a683bacba11ff4dde6fd92ae"
+    }
+  ],
+  "command": {
+    "path": "/private/tmp/weft-042-cli-corpus-command-b.json",
+    "bytes": 2049,
+    "sha256": "cfbb779e32c0da4be3dcf319c7ba9c892e07e8e685f1a276e42f23a012e8a3dd"
+  },
+  "actualFiles": [
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/000-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/000-0.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/000-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/000-1.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/000.request",
+      "bytes": 55406,
+      "sha256": "bfeb590955731c420a927839a452e12928655cd706faa55e50c2e4503f1b6bd5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/001-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/001-0.stdout",
+      "bytes": 51317,
+      "sha256": "572d68b32352940025e9d72c596dabbb192a0e47e5838cd8ed56ed43ea785db5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/001-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/001-1.stdout",
+      "bytes": 51317,
+      "sha256": "572d68b32352940025e9d72c596dabbb192a0e47e5838cd8ed56ed43ea785db5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/001.request",
+      "bytes": 5975,
+      "sha256": "cb7ac4e7712dd9228b616d664ee91da483be9e654ff8a621de35607f5e5a6b80"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/002-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/002-0.stdout",
+      "bytes": 88706,
+      "sha256": "222df3f1555274132454f4fbf12a40576dda4c2bf4b794e5d6af43ebb0d6643f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/002-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/002-1.stdout",
+      "bytes": 88706,
+      "sha256": "222df3f1555274132454f4fbf12a40576dda4c2bf4b794e5d6af43ebb0d6643f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/002.request",
+      "bytes": 5965,
+      "sha256": "947501189edc9f84cdf822a2163db4638cd07ab6c7135753ccce1901e66bf997"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/003-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/003-0.stdout",
+      "bytes": 14772,
+      "sha256": "7aec9caa960141bf117f438764cdf2f499a36d0fda19af81b544d95927be17b0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/003-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/003-1.stdout",
+      "bytes": 14772,
+      "sha256": "7aec9caa960141bf117f438764cdf2f499a36d0fda19af81b544d95927be17b0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/003.request",
+      "bytes": 55323,
+      "sha256": "ae82eefaa6952dfcdb9e69aa59ee381787f625e56ef2060a36a092764b49f832"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/004-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/004-0.stdout",
+      "bytes": 88669,
+      "sha256": "ffe34fd534e8a5ed43dd26626215546c057a2eec04e209184d7e735b9b9509e6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/004-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/004-1.stdout",
+      "bytes": 88669,
+      "sha256": "ffe34fd534e8a5ed43dd26626215546c057a2eec04e209184d7e735b9b9509e6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/004.request",
+      "bytes": 55397,
+      "sha256": "d6ea98b3b3c9b638e88dd4223a364b780bc9afbf96ac0b97904d76b0c35b6ffc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/005-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/005-0.stdout",
+      "bytes": 103735,
+      "sha256": "aeac41b78855b2423773f806788eeef97d3579880a24a92780a1e30e346cf7e9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/005-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/005-1.stdout",
+      "bytes": 103735,
+      "sha256": "aeac41b78855b2423773f806788eeef97d3579880a24a92780a1e30e346cf7e9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/005.request",
+      "bytes": 55405,
+      "sha256": "536b59885cac72c4265f3f31fcdb5a10f116b62870d617436ade321d6e453aa5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/006-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/006-0.stdout",
+      "bytes": 103735,
+      "sha256": "aeac41b78855b2423773f806788eeef97d3579880a24a92780a1e30e346cf7e9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/006-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/006-1.stdout",
+      "bytes": 103735,
+      "sha256": "aeac41b78855b2423773f806788eeef97d3579880a24a92780a1e30e346cf7e9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/006.request",
+      "bytes": 55405,
+      "sha256": "536b59885cac72c4265f3f31fcdb5a10f116b62870d617436ade321d6e453aa5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/007-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/007-0.stdout",
+      "bytes": 104766,
+      "sha256": "e1157d7ffe5f1fc1667c40a85278c7bfd2715db99eb0f5bf41ee7a33a53f5154"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/007-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/007-1.stdout",
+      "bytes": 104766,
+      "sha256": "e1157d7ffe5f1fc1667c40a85278c7bfd2715db99eb0f5bf41ee7a33a53f5154"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/007.request",
+      "bytes": 55389,
+      "sha256": "a27bb3383b991530ade7dd0f0ddd390c13f1fd202b4003093ddcb7f97b966762"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/008-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/008-0.stdout",
+      "bytes": 128295,
+      "sha256": "e926a8cf9e85bf9587baa5fa72e9a8cbc0a0bad77ed27606c1f402f336d218cf"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/008-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/008-1.stdout",
+      "bytes": 128295,
+      "sha256": "e926a8cf9e85bf9587baa5fa72e9a8cbc0a0bad77ed27606c1f402f336d218cf"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/008.request",
+      "bytes": 55452,
+      "sha256": "8d3e195feab1186b751a59eeadf051068d942798664cfee05ca74ddda8c9cb62"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/009-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/009-0.stdout",
+      "bytes": 120012,
+      "sha256": "fcf6e1da6533e2f2347ed2aa93943381601ba6e2d4409064aa124e248dc2c040"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/009-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/009-1.stdout",
+      "bytes": 120012,
+      "sha256": "fcf6e1da6533e2f2347ed2aa93943381601ba6e2d4409064aa124e248dc2c040"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/009.request",
+      "bytes": 55468,
+      "sha256": "2e9f5d1f30f13542ab660c5d5ebfb1447c7710af9e20937dc55fa58003ac953d"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/010-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/010-0.stdout",
+      "bytes": 118001,
+      "sha256": "8c3a6e91773bcad4b2f364ee4e7a025f54a2dc78854652033abc34a2b10067b8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/010-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/010-1.stdout",
+      "bytes": 118001,
+      "sha256": "8c3a6e91773bcad4b2f364ee4e7a025f54a2dc78854652033abc34a2b10067b8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/010.request",
+      "bytes": 55439,
+      "sha256": "0d3b25d19b396960f01f5b1f4582405f8df19d90db839166d67f678967d74326"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/011-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/011-0.stdout",
+      "bytes": 131197,
+      "sha256": "12937933d06502665a35e3968b478af50ace54d44f173664cc6323f4dbc8481e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/011-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/011-1.stdout",
+      "bytes": 131197,
+      "sha256": "12937933d06502665a35e3968b478af50ace54d44f173664cc6323f4dbc8481e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/011.request",
+      "bytes": 55620,
+      "sha256": "ec7969ba73441e3828d1d5d0cd0a5ddf35da59e5f0ecc29934214df326099821"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/012-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/012-0.stdout",
+      "bytes": 88696,
+      "sha256": "9e70e8339dfd40d2d792d5e859afa51d35499655ec309fc80b84b38bc7170434"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/012-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/012-1.stdout",
+      "bytes": 88696,
+      "sha256": "9e70e8339dfd40d2d792d5e859afa51d35499655ec309fc80b84b38bc7170434"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/012.request",
+      "bytes": 5963,
+      "sha256": "d5afc02fb8b141710ab295521a7e14e5210736398cbc5ce0ab57182d9ebcb6aa"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/013-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/013-0.stdout",
+      "bytes": 237,
+      "sha256": "70ea31ce3f3dd1854e49a147ee58ad810b0a6bde22f86bd4be23b9bb4b226a5e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/013-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/013-1.stdout",
+      "bytes": 237,
+      "sha256": "70ea31ce3f3dd1854e49a147ee58ad810b0a6bde22f86bd4be23b9bb4b226a5e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/013.request",
+      "bytes": 55409,
+      "sha256": "8d49d1af786f1ccd59f9e22787c3da6bf92000cea46395970315601f1c78f488"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/014-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/014-0.stdout",
+      "bytes": 247,
+      "sha256": "5cc07e842b086ec0770bae7c633aa7f300362680cb22e41fefd1941bcd6cad2e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/014-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/014-1.stdout",
+      "bytes": 247,
+      "sha256": "5cc07e842b086ec0770bae7c633aa7f300362680cb22e41fefd1941bcd6cad2e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/014.request",
+      "bytes": 55335,
+      "sha256": "0cc0acb875c428dc88426cdf9b571846ba02d61065ef52dbc381a80c6c31ebb1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/015-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/015-0.stdout",
+      "bytes": 89486,
+      "sha256": "b19542581adb088f41ab42bb621092a390a4f4b7c0aff725666240fc4cd1a0a2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/015-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/015-1.stdout",
+      "bytes": 89486,
+      "sha256": "b19542581adb088f41ab42bb621092a390a4f4b7c0aff725666240fc4cd1a0a2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/015.request",
+      "bytes": 55422,
+      "sha256": "88f8d22a1fb0cc6f07c60b78a8872b927ddb4e3e989ed6c07436d64c6d1e78c7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/016-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/016-0.stdout",
+      "bytes": 88669,
+      "sha256": "ffe34fd534e8a5ed43dd26626215546c057a2eec04e209184d7e735b9b9509e6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/016-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/016-1.stdout",
+      "bytes": 88669,
+      "sha256": "ffe34fd534e8a5ed43dd26626215546c057a2eec04e209184d7e735b9b9509e6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/016.request",
+      "bytes": 55397,
+      "sha256": "d6ea98b3b3c9b638e88dd4223a364b780bc9afbf96ac0b97904d76b0c35b6ffc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/017-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/017-0.stdout",
+      "bytes": 87786,
+      "sha256": "bf88266009dedd27f2a89ed88f855f293c23f803b8cae45c937dc21d1e9c850b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/017-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/017-1.stdout",
+      "bytes": 87786,
+      "sha256": "bf88266009dedd27f2a89ed88f855f293c23f803b8cae45c937dc21d1e9c850b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/017.request",
+      "bytes": 55385,
+      "sha256": "9d1c02316e16fe90a36a67fb0b23a0c7919eacb547a75af56d424cc5f7f2ccc1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/018-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/018-0.stdout",
+      "bytes": 117034,
+      "sha256": "f60798865dd8df14ba5f0c0a54f05113281f4f48422b2d6df1b91ebe27f1c08d"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/018-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/018-1.stdout",
+      "bytes": 117034,
+      "sha256": "f60798865dd8df14ba5f0c0a54f05113281f4f48422b2d6df1b91ebe27f1c08d"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/018.request",
+      "bytes": 55502,
+      "sha256": "9f038f0dd6bccb72159ac0286962bb85ab88c38d2014ec84fe81c3734c7ff1d6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/019-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/019-0.stdout",
+      "bytes": 252,
+      "sha256": "3a71ec0459d56151ae59dc1ac538fe5cc227ef2dd49967a8def88e6ae1dbee92"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/019-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/019-1.stdout",
+      "bytes": 252,
+      "sha256": "3a71ec0459d56151ae59dc1ac538fe5cc227ef2dd49967a8def88e6ae1dbee92"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/019.request",
+      "bytes": 55431,
+      "sha256": "623ca83bcb8c69f42128169c6921084f464317de8129a185defd60ecbfaaa951"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/020-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/020-0.stdout",
+      "bytes": 94891,
+      "sha256": "d190759da56fda84f3c04be563a1e516ac8062d07e0b246d5107b2c5a0eb47a2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/020-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/020-1.stdout",
+      "bytes": 94891,
+      "sha256": "d190759da56fda84f3c04be563a1e516ac8062d07e0b246d5107b2c5a0eb47a2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/020.request",
+      "bytes": 55446,
+      "sha256": "febf082e392ea8adf95dcbeae11ba1509b722543b6743172a5f44d4c44208dd4"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/021-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/021-0.stdout",
+      "bytes": 44173,
+      "sha256": "04acfb0dae4ad7d491d9a6ca0c072ad500e110c0cb6fb8c9692a353e2a2ab758"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/021-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/021-1.stdout",
+      "bytes": 44173,
+      "sha256": "04acfb0dae4ad7d491d9a6ca0c072ad500e110c0cb6fb8c9692a353e2a2ab758"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/021.request",
+      "bytes": 55415,
+      "sha256": "40be63463caeb0e88c22010b814d33d94faa5133078aba6ba53e1a4331fcfe26"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/022-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/022-0.stdout",
+      "bytes": 16478,
+      "sha256": "a3747ced8e0aeef30863645363735ef09bbff90a4379db5083140ff3fe49373b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/022-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/022-1.stdout",
+      "bytes": 16478,
+      "sha256": "a3747ced8e0aeef30863645363735ef09bbff90a4379db5083140ff3fe49373b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/022.request",
+      "bytes": 5761,
+      "sha256": "4ae28a5888b5511f4c380b800f612825fdd176e6bd58d46adeafa22992da1d88"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/023-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/023-0.stdout",
+      "bytes": 10482,
+      "sha256": "0a71e3bbdd4eede24063777877a5c242747c3f3ed7e959a5d742fb6d1fb7ae6a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/023-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/023-1.stdout",
+      "bytes": 10482,
+      "sha256": "0a71e3bbdd4eede24063777877a5c242747c3f3ed7e959a5d742fb6d1fb7ae6a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/023.request",
+      "bytes": 5747,
+      "sha256": "0deb2b92d076e443b9691682800ac0d678641ac3126c619059ca57722aca58ec"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/024-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/024-0.stdout",
+      "bytes": 14059,
+      "sha256": "54cd8fe73f44d8a983174cf482f4456a2f26cc5c6513f19d5d21109e5bbea2bd"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/024-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/024-1.stdout",
+      "bytes": 14059,
+      "sha256": "54cd8fe73f44d8a983174cf482f4456a2f26cc5c6513f19d5d21109e5bbea2bd"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/024.request",
+      "bytes": 2247,
+      "sha256": "ebf653ceb04db9841b62d6eae63fefd38ee23efad3041602db78edb0b5254d5e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/025-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/025-0.stdout",
+      "bytes": 16725,
+      "sha256": "f65753c1619b7c0568268a35df56fb5e3e842fb4d699fd72729f1cb075037fb7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/025-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/025-1.stdout",
+      "bytes": 16725,
+      "sha256": "f65753c1619b7c0568268a35df56fb5e3e842fb4d699fd72729f1cb075037fb7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/025.request",
+      "bytes": 2269,
+      "sha256": "afbe4babe3880461e9c70adc37510cd4d9cfc1e4994f28636b9fdf1552ee044c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/026-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/026-0.stdout",
+      "bytes": 22779,
+      "sha256": "fad2c0a2725a8d108dd747ac52bdda7e2558681d1aa12c2ef4392ad9cede8678"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/026-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/026-1.stdout",
+      "bytes": 22779,
+      "sha256": "fad2c0a2725a8d108dd747ac52bdda7e2558681d1aa12c2ef4392ad9cede8678"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/026.request",
+      "bytes": 2287,
+      "sha256": "1331ef4e4d25a01fafffd73714e5d9ba2ebe7025cd47a0c8a12261adf71f8077"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/027-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/027-0.stdout",
+      "bytes": 19124,
+      "sha256": "88733337e1994454f6dc7fd1352e9afc7c6f3fd0baefad79e198622a71cc4ac7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/027-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/027-1.stdout",
+      "bytes": 19124,
+      "sha256": "88733337e1994454f6dc7fd1352e9afc7c6f3fd0baefad79e198622a71cc4ac7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/027.request",
+      "bytes": 5780,
+      "sha256": "d3c384d95163412b04080afdb07a5964b4064daac776336335aa4f44960d9fa4"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/028-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/028-0.stdout",
+      "bytes": 22854,
+      "sha256": "7334d85e022d59d79fed1c656c4adfae87d6f79f85997afe51967a894fb84dcf"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/028-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/028-1.stdout",
+      "bytes": 22854,
+      "sha256": "7334d85e022d59d79fed1c656c4adfae87d6f79f85997afe51967a894fb84dcf"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/028.request",
+      "bytes": 55387,
+      "sha256": "b0b5781c8f59b680973c2d43f1ef7450c523ff87944991cca51e25de8548da77"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/029-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/029-0.stdout",
+      "bytes": 19301,
+      "sha256": "ae4df5264463297f8cdabaa4bfd2e346f07a9f19eb6dea7c6adfb9f634d81f26"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/029-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/029-1.stdout",
+      "bytes": 19301,
+      "sha256": "ae4df5264463297f8cdabaa4bfd2e346f07a9f19eb6dea7c6adfb9f634d81f26"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/029.request",
+      "bytes": 2268,
+      "sha256": "ecaaa265db2aadee99eb61b49e7ebfa12201489f487ef194aca72b3653240db8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/030-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/030-0.stdout",
+      "bytes": 48078,
+      "sha256": "fbfd635608473caf1c7089d14babbfdaae09713a7c897ab15301515517b9f9f2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/030-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/030-1.stdout",
+      "bytes": 48078,
+      "sha256": "fbfd635608473caf1c7089d14babbfdaae09713a7c897ab15301515517b9f9f2"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/030.request",
+      "bytes": 55355,
+      "sha256": "865cd044c80fe8d51a40d47e5b335677077b3ebc00bfab9da7be658ad2398a50"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/031-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/031-0.stdout",
+      "bytes": 53796,
+      "sha256": "991e5399ef13811ac1ea9d61628926cc6d535d9d0ad16a953b428db9e2193c62"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/031-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/031-1.stdout",
+      "bytes": 53796,
+      "sha256": "991e5399ef13811ac1ea9d61628926cc6d535d9d0ad16a953b428db9e2193c62"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/031.request",
+      "bytes": 55406,
+      "sha256": "56ca56345eb80c16444912614581f906e5319823811332756eaa5c8ea059e95a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/032-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/032-0.stdout",
+      "bytes": 55641,
+      "sha256": "163dff0da0aae763a3b177b00bbb60625cbc9239ce4134ae9d603945ad627c4b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/032-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/032-1.stdout",
+      "bytes": 55641,
+      "sha256": "163dff0da0aae763a3b177b00bbb60625cbc9239ce4134ae9d603945ad627c4b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/032.request",
+      "bytes": 55394,
+      "sha256": "ba4720e40c8a6e2cf6bb9f87856c52cdf7d6f3289fa7d109b99c37a4245ccf00"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/033-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/033-0.stdout",
+      "bytes": 154391,
+      "sha256": "e23922fbff90b6fb00cf18c122781ad7eb3af73f679fb62ab531fc000a855bb5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/033-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/033-1.stdout",
+      "bytes": 154391,
+      "sha256": "e23922fbff90b6fb00cf18c122781ad7eb3af73f679fb62ab531fc000a855bb5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/033.request",
+      "bytes": 55510,
+      "sha256": "aa50765ffda205a8c4e30e18f3a771584b142a0bea5e677f730dbfe01e46b96c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/034-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/034-0.stdout",
+      "bytes": 69483,
+      "sha256": "1cdebc7914e870da1c57291eb97c7937e47a2d9f249036d53300c389e5205a6a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/034-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/034-1.stdout",
+      "bytes": 69483,
+      "sha256": "1cdebc7914e870da1c57291eb97c7937e47a2d9f249036d53300c389e5205a6a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/034.request",
+      "bytes": 55422,
+      "sha256": "70ded08fdc730680d9d733a9c5947febf9e4bf391117ea0206393771ba2923e0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/035-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/035-0.stdout",
+      "bytes": 60407,
+      "sha256": "ce0e00bd44f41fecf7156978318f94279cd1de2429b3be447e12a8106a6de16f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/035-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/035-1.stdout",
+      "bytes": 60407,
+      "sha256": "ce0e00bd44f41fecf7156978318f94279cd1de2429b3be447e12a8106a6de16f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/035.request",
+      "bytes": 55396,
+      "sha256": "b07985a8cd8970cf7c0f5f30c7ef05e13e297522bf39d48c73114640c4407f30"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/036-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/036-0.stdout",
+      "bytes": 56866,
+      "sha256": "dc2c652cc93551d1bfae4ba6f8eed17197771b010e3c65ddf4513c67611a7487"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/036-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/036-1.stdout",
+      "bytes": 56866,
+      "sha256": "dc2c652cc93551d1bfae4ba6f8eed17197771b010e3c65ddf4513c67611a7487"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/036.request",
+      "bytes": 55381,
+      "sha256": "bb01a7a40deeff6a0d132df10b9253d00b64b116fd39d0809916c6d7dfaddbb9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/037-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/037-0.stdout",
+      "bytes": 44660,
+      "sha256": "540bd38e61e8caccabed2f89daaee2e238934133a484b450a8a8978c46feea51"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/037-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/037-1.stdout",
+      "bytes": 44660,
+      "sha256": "540bd38e61e8caccabed2f89daaee2e238934133a484b450a8a8978c46feea51"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/037.request",
+      "bytes": 42005,
+      "sha256": "28051a3303327ec7437495eadf1f6c4a52a1b607ac8465734a391f9b0caf9e08"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/038-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/038-0.stdout",
+      "bytes": 51852,
+      "sha256": "fa62b0d0d415f03a3093fbe9983e2b18f35533bf897138be6083bcd531595dc9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/038-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/038-1.stdout",
+      "bytes": 51852,
+      "sha256": "fa62b0d0d415f03a3093fbe9983e2b18f35533bf897138be6083bcd531595dc9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/038.request",
+      "bytes": 42032,
+      "sha256": "495c2205e366c638c623f2e615d77e72017a74250df579bb3c7d1ae80c694259"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/039-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/039-0.stdout",
+      "bytes": 12025,
+      "sha256": "1bb6bf6759f35dfb29293994db8702a9319210749935465f7e1e946eb6634c3c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/039-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/039-1.stdout",
+      "bytes": 12025,
+      "sha256": "1bb6bf6759f35dfb29293994db8702a9319210749935465f7e1e946eb6634c3c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/039.request",
+      "bytes": 55297,
+      "sha256": "42035b3bd93541d43471e5ef3ad1660f20f7ed91e9c3fad51fdc0bd2b8c73f89"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/040-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/040-0.stdout",
+      "bytes": 270,
+      "sha256": "a5855d974476ec5b9724a4b2dd7e4f2f0c6f0a77a6d85773d11dc78d9e1744a5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/040-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/040-1.stdout",
+      "bytes": 270,
+      "sha256": "a5855d974476ec5b9724a4b2dd7e4f2f0c6f0a77a6d85773d11dc78d9e1744a5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/040.request",
+      "bytes": 55355,
+      "sha256": "2fcfad8167cf56806210a5613e46c35e6307dcce71300446f466c1c35304828b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/041-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/041-0.stdout",
+      "bytes": 270,
+      "sha256": "2a3aa3f1dc127c9bc283b9c342f232ecebd01f8cc8b3cd3cae218d11c98a394e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/041-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/041-1.stdout",
+      "bytes": 270,
+      "sha256": "2a3aa3f1dc127c9bc283b9c342f232ecebd01f8cc8b3cd3cae218d11c98a394e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/041.request",
+      "bytes": 55358,
+      "sha256": "32986bf8ff219d956880336144363067822f3aa0f8d0939edb7a974766ecf872"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/042-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/042-0.stdout",
+      "bytes": 255,
+      "sha256": "4a690cf7dbe1864ff2f6e8a189df0917f2c6eb56a7b0713e0ffc0fe135a86adb"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/042-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/042-1.stdout",
+      "bytes": 255,
+      "sha256": "4a690cf7dbe1864ff2f6e8a189df0917f2c6eb56a7b0713e0ffc0fe135a86adb"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/042.request",
+      "bytes": 55396,
+      "sha256": "bfcd63bdcd7109541ebdc0d7cd0d3cacd411e2081d31ea9bafe2db1e720c533c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/043-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/043-0.stdout",
+      "bytes": 217,
+      "sha256": "271c288072f667e3f68d4083a02d5866de88f23d2f656f11334e999368e45eac"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/043-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/043-1.stdout",
+      "bytes": 217,
+      "sha256": "271c288072f667e3f68d4083a02d5866de88f23d2f656f11334e999368e45eac"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/043.request",
+      "bytes": 55359,
+      "sha256": "71e28951a12a3c1ae1e300a201b6e4489b03670fb77928e6ac6ca1211e3be8e4"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/044-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/044-0.stdout",
+      "bytes": 217,
+      "sha256": "271c288072f667e3f68d4083a02d5866de88f23d2f656f11334e999368e45eac"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/044-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/044-1.stdout",
+      "bytes": 217,
+      "sha256": "271c288072f667e3f68d4083a02d5866de88f23d2f656f11334e999368e45eac"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/044.request",
+      "bytes": 55369,
+      "sha256": "39eb4f18fbd14af434c5fadd181207188beb53755abf8cf2ac7a9d4a16e936aa"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/045-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/045-0.stdout",
+      "bytes": 283,
+      "sha256": "706429797cf2162923cf718b9f73e7ac89f288960770d129336150b1c5ae7b9e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/045-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/045-1.stdout",
+      "bytes": 283,
+      "sha256": "706429797cf2162923cf718b9f73e7ac89f288960770d129336150b1c5ae7b9e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/045.request",
+      "bytes": 55438,
+      "sha256": "9964e08c296bd53daf1c113c3350d2ed7bc049f154babe614fd582f6648892dc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/046-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/046-0.stdout",
+      "bytes": 247,
+      "sha256": "6840877459478ed50aef45cab931ada0183360c5fefd6d22833f7548c55014ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/046-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/046-1.stdout",
+      "bytes": 247,
+      "sha256": "6840877459478ed50aef45cab931ada0183360c5fefd6d22833f7548c55014ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/046.request",
+      "bytes": 41983,
+      "sha256": "596d530372ff4a5abe77cb3dd89d3d4a796317d549652ec97e26805ac56d9d08"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/047-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/047-0.stdout",
+      "bytes": 246,
+      "sha256": "4749d8ec0393386544ccd930641c08a780cb1bab445cc1514e260d7c33eaec2b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/047-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/047-1.stdout",
+      "bytes": 246,
+      "sha256": "4749d8ec0393386544ccd930641c08a780cb1bab445cc1514e260d7c33eaec2b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/047.request",
+      "bytes": 41978,
+      "sha256": "4bf7614d965130d66003a84ff54d3cb656c1ffd09e61a95c3fe456089651811d"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/048-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/048-0.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/048-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/048-1.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/048.request",
+      "bytes": 55356,
+      "sha256": "c87de6b7e91a5882bcc9b27432718e69931e9878a614c5ee2212209f4e863ea5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/049-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/049-0.stdout",
+      "bytes": 217,
+      "sha256": "ab75de50a4210ba0199f63c779baa9d473c2c7f1a7e4659f109ca6eeb2cc52fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/049-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/049-1.stdout",
+      "bytes": 217,
+      "sha256": "ab75de50a4210ba0199f63c779baa9d473c2c7f1a7e4659f109ca6eeb2cc52fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/049.request",
+      "bytes": 55350,
+      "sha256": "461d08491f7d39c3219a82f3e8e37d5b86997b971867183d60d795d999ee4414"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/050-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/050-0.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/050-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/050-1.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/050.request",
+      "bytes": 55406,
+      "sha256": "bfeb590955731c420a927839a452e12928655cd706faa55e50c2e4503f1b6bd5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/051-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/051-0.stdout",
+      "bytes": 231,
+      "sha256": "a15e4283cbfc17283d25851dce6343c9d6cf5a3e1b311ce0d4a5213b231649e4"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/051-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/051-1.stdout",
+      "bytes": 231,
+      "sha256": "a15e4283cbfc17283d25851dce6343c9d6cf5a3e1b311ce0d4a5213b231649e4"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/051.request",
+      "bytes": 55402,
+      "sha256": "f26c723d5e6ca4f9a1861efb348e59664481ce5793ca2520c795a624ae424acd"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/052-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/052-0.stdout",
+      "bytes": 221,
+      "sha256": "c13389e82053cf7a9e3384e4da5ff5ec7bf92c17d423eaedfa1f5d5354fa9a7f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/052-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/052-1.stdout",
+      "bytes": 221,
+      "sha256": "c13389e82053cf7a9e3384e4da5ff5ec7bf92c17d423eaedfa1f5d5354fa9a7f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/052.request",
+      "bytes": 55369,
+      "sha256": "14d65fcde6370e0f801c49de00cc64b1edb802c735a5acffb5dddd51505480ec"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/053-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/053-0.stdout",
+      "bytes": 217,
+      "sha256": "ab75de50a4210ba0199f63c779baa9d473c2c7f1a7e4659f109ca6eeb2cc52fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/053-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/053-1.stdout",
+      "bytes": 217,
+      "sha256": "ab75de50a4210ba0199f63c779baa9d473c2c7f1a7e4659f109ca6eeb2cc52fc"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/053.request",
+      "bytes": 55391,
+      "sha256": "7fd9c41f281b96681d72f42a40b36658c340d4f48c71562c97ec168817984a18"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/054-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/054-0.stdout",
+      "bytes": 223,
+      "sha256": "1d7fc22dd23a36fc894e5580fb563370d298e038c16f1fa9bf050f89e8bf7823"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/054-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/054-1.stdout",
+      "bytes": 223,
+      "sha256": "1d7fc22dd23a36fc894e5580fb563370d298e038c16f1fa9bf050f89e8bf7823"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/054.request",
+      "bytes": 55431,
+      "sha256": "a9a6209422ebc929837d66221d9869e12fdf824b6d0107c81d1e749c49094e4f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/055-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/055-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/055-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/055-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/055.request",
+      "bytes": 55405,
+      "sha256": "97a93c2363f53ec79cd6a2a738cac02ba9353ad864dbd6c1bfd7df23e62dc722"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/056-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/056-0.stdout",
+      "bytes": 205,
+      "sha256": "d29b1b55332cbe5be7c94441a65366aca2efc64facadf47bcff87ecf7dc59c16"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/056-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/056-1.stdout",
+      "bytes": 205,
+      "sha256": "d29b1b55332cbe5be7c94441a65366aca2efc64facadf47bcff87ecf7dc59c16"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/056.request",
+      "bytes": 55405,
+      "sha256": "756eda8a4477d2e7c9f41ae5526e2b8c6bae5ee220171e87b9f7efa994090086"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/057-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/057-0.stdout",
+      "bytes": 208,
+      "sha256": "d63292179a7db1f81e6cd3d65d187185b501fdf82e51be0888c1f0bc875e7c4e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/057-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/057-1.stdout",
+      "bytes": 208,
+      "sha256": "d63292179a7db1f81e6cd3d65d187185b501fdf82e51be0888c1f0bc875e7c4e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/057.request",
+      "bytes": 55405,
+      "sha256": "2b847320d485c8058aa2f034ffeb0c03f8af1dd5dff90142337e516f35b35d0e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/058-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/058-0.stdout",
+      "bytes": 197,
+      "sha256": "d83a291fdaba47e10f4376a0ec3a5b94994cfd37063292fef1b1a2c4f3933643"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/058-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/058-1.stdout",
+      "bytes": 197,
+      "sha256": "d83a291fdaba47e10f4376a0ec3a5b94994cfd37063292fef1b1a2c4f3933643"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/058.request",
+      "bytes": 120807,
+      "sha256": "2cff6fdda3e47e8e391664f811e47fcb0fe33a47c74d04e4b735f1a6b4a610ab"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/059-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/059-0.stdout",
+      "bytes": 203,
+      "sha256": "fad18977d9f63c09be094dbeac67442b62402a623c08bd33694963f65b9f07b8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/059-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/059-1.stdout",
+      "bytes": 203,
+      "sha256": "fad18977d9f63c09be094dbeac67442b62402a623c08bd33694963f65b9f07b8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/059.request",
+      "bytes": 4225902,
+      "sha256": "3b08497404b8133473f1fc0dea4a4e9670e4ac323f240c57ba57fdbd34faea5a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/060-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/060-0.stdout",
+      "bytes": 208,
+      "sha256": "7ca9bf19d73b14c18105601dbc2515e55c37001c787dbf5d683e7c6e2a2d1503"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/060-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/060-1.stdout",
+      "bytes": 208,
+      "sha256": "7ca9bf19d73b14c18105601dbc2515e55c37001c787dbf5d683e7c6e2a2d1503"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/060.request",
+      "bytes": 55445,
+      "sha256": "b76f37eed21cae880b6a3fb87fdea54ecd4a257d14cbf7d46d4dd86a3875d316"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/061-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/061-0.stdout",
+      "bytes": 237,
+      "sha256": "8252a9336d5fe0abdddeb0a44d138a5500ae3334c0e3307e4847a5c8e4f6ae0b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/061-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/061-1.stdout",
+      "bytes": 237,
+      "sha256": "8252a9336d5fe0abdddeb0a44d138a5500ae3334c0e3307e4847a5c8e4f6ae0b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/061.request",
+      "bytes": 55374,
+      "sha256": "362dc97af1de62f79fcff3838d9de23d9251d00f2a974f8a2450a2ec0b8e6708"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/062-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/062-0.stdout",
+      "bytes": 220,
+      "sha256": "26bf011ee4fca074b7b350b70361a56386a29aa4a36370e648d53facefa941c1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/062-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/062-1.stdout",
+      "bytes": 220,
+      "sha256": "26bf011ee4fca074b7b350b70361a56386a29aa4a36370e648d53facefa941c1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/062.request",
+      "bytes": 55406,
+      "sha256": "a55a3f32504ae7fb61820c3976318940e0d4e161372f421582e92dcbda80d400"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/063-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/063-0.stdout",
+      "bytes": 220,
+      "sha256": "26bf011ee4fca074b7b350b70361a56386a29aa4a36370e648d53facefa941c1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/063-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/063-1.stdout",
+      "bytes": 220,
+      "sha256": "26bf011ee4fca074b7b350b70361a56386a29aa4a36370e648d53facefa941c1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/063.request",
+      "bytes": 55512,
+      "sha256": "29986eb823ff45fc2b25b39dae44b61a02ff86c5e411ef8d57da22ed19752747"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/064-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/064-0.stdout",
+      "bytes": 225,
+      "sha256": "0b1ba8a7338164123de512c14214536981ba951499f5dd5ae2fc76981101dca5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/064-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/064-1.stdout",
+      "bytes": 225,
+      "sha256": "0b1ba8a7338164123de512c14214536981ba951499f5dd5ae2fc76981101dca5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/064.request",
+      "bytes": 55407,
+      "sha256": "540513bb06ba651fd7d04430e6ef4f0d2640c3c9df3c757ec5ef292248cf2538"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/065-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/065-0.stdout",
+      "bytes": 238,
+      "sha256": "4d6ae0401c620831119d9ddd9bfc298a712907059045f13773252335e01f66f1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/065-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/065-1.stdout",
+      "bytes": 238,
+      "sha256": "4d6ae0401c620831119d9ddd9bfc298a712907059045f13773252335e01f66f1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/065.request",
+      "bytes": 55365,
+      "sha256": "cda6feb18c7198b8a7dcf4f4a801502b981b6fbcdf0998720f1682491dcbb2da"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/066-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/066-0.stdout",
+      "bytes": 104252,
+      "sha256": "05708e6bb61882affdec9c46208de488ec05432b9cbdb7c1dee045eda454f85a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/066-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/066-1.stdout",
+      "bytes": 104252,
+      "sha256": "05708e6bb61882affdec9c46208de488ec05432b9cbdb7c1dee045eda454f85a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/066.request",
+      "bytes": 55412,
+      "sha256": "3131ac3b15fdb8fbf113cf0d57d05158822a7bf270818de735f46eb3e5897086"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/067-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/067-0.stdout",
+      "bytes": 104252,
+      "sha256": "02c604b3465d1ec159aeaa70a22abd9fe19f8224a6f152a0dc57427cb5301491"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/067-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/067-1.stdout",
+      "bytes": 104252,
+      "sha256": "02c604b3465d1ec159aeaa70a22abd9fe19f8224a6f152a0dc57427cb5301491"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/067.request",
+      "bytes": 55412,
+      "sha256": "7f8d53c1be42258610e5bba7f81508c34cc1519ea600e3b59d760d8c6e5bb0b5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/068-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/068-0.stdout",
+      "bytes": 104402,
+      "sha256": "c5e9aad2dd7ad1f711de8e5a96c410eb7e8018268320eb4d2c9b2280b5c0c7ef"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/068-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/068-1.stdout",
+      "bytes": 104402,
+      "sha256": "c5e9aad2dd7ad1f711de8e5a96c410eb7e8018268320eb4d2c9b2280b5c0c7ef"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/068.request",
+      "bytes": 55416,
+      "sha256": "b40b85acdb430f3c4fb94900e2a3b128b66c53143e238a09ad26655e73495942"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/069-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/069-0.stdout",
+      "bytes": 19461,
+      "sha256": "d44b118ad0c0060d6afd7fd93ae3480d24847c983e3cc7fc2c13cf9829083bb7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/069-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/069-1.stdout",
+      "bytes": 19461,
+      "sha256": "d44b118ad0c0060d6afd7fd93ae3480d24847c983e3cc7fc2c13cf9829083bb7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/069.request",
+      "bytes": 55232,
+      "sha256": "5e5229b126438c89f5eac6dfe4660c5937fc67cc5f779ba604118fa04d8b1f0a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/070-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/070-0.stdout",
+      "bytes": 30765,
+      "sha256": "c97023d9fbe1a793331d34877c9959b108732c94b204b7f9b2fb700643f17bad"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/070-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/070-1.stdout",
+      "bytes": 30765,
+      "sha256": "c97023d9fbe1a793331d34877c9959b108732c94b204b7f9b2fb700643f17bad"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/070.request",
+      "bytes": 55367,
+      "sha256": "f8317bdda12ee3cb2165adba60c61844f9d24cedee0eda1a21362813d98ebc63"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/071-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/071-0.stdout",
+      "bytes": 99903,
+      "sha256": "e10cb2d285056958396e6e36e1de1b031d441022d5487debc06073bd63b65530"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/071-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/071-1.stdout",
+      "bytes": 99903,
+      "sha256": "e10cb2d285056958396e6e36e1de1b031d441022d5487debc06073bd63b65530"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/071.request",
+      "bytes": 55448,
+      "sha256": "a5c685ec520720a5c93c9ea2bc4725b85703f17473e2f7fbe6f9922f65572135"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/072-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/072-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/072-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/072-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/072.request",
+      "bytes": 55232,
+      "sha256": "147bfe55c6b5ada2fa9689434748ffa1061e9e7a199640dbfc75196eaf41f6f8"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/073-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/073-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/073-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/073-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/073.request",
+      "bytes": 55216,
+      "sha256": "9fcd4126072dfe3f54be02c2c0368425656c05d36b3d44ec82cf77f772475db5"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/074-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/074-0.stdout",
+      "bytes": 221,
+      "sha256": "c13389e82053cf7a9e3384e4da5ff5ec7bf92c17d423eaedfa1f5d5354fa9a7f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/074-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/074-1.stdout",
+      "bytes": 221,
+      "sha256": "c13389e82053cf7a9e3384e4da5ff5ec7bf92c17d423eaedfa1f5d5354fa9a7f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/074.request",
+      "bytes": 55216,
+      "sha256": "f73c254420822bb0f11e3603ad6c2884f0b5d53767347c00983f67bd66118f44"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/075-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/075-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/075-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/075-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/075.request",
+      "bytes": 55232,
+      "sha256": "032b62f25be4c26a143f93b6ae3e669aa4e0ef20ed03eab7a62634d420e77018"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/076-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/076-0.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/076-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/076-1.stdout",
+      "bytes": 234,
+      "sha256": "22580da4bd48425a66bf53ec23ff405970f19b0926a6d04cf3150ac3776169f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/076.request",
+      "bytes": 55233,
+      "sha256": "709de506e56d76a0861cdd37ece9d2060b20cc54324dc0485f46ea36f36ecb86"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/077-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/077-0.stdout",
+      "bytes": 239,
+      "sha256": "31bc50631842cddcac32fbc1e252fee0123958622804ec0d7ec62d93c7dee25a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/077-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/077-1.stdout",
+      "bytes": 239,
+      "sha256": "31bc50631842cddcac32fbc1e252fee0123958622804ec0d7ec62d93c7dee25a"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/077.request",
+      "bytes": 55223,
+      "sha256": "feadf0bf342574da962363a9667f21923b2831127afc911d014037ded9ec4095"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/078-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/078-0.stdout",
+      "bytes": 260,
+      "sha256": "2c58f017d105700acd8869533b069ad6411f0dfa7a3467cba222fd0603d7be21"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/078-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/078-1.stdout",
+      "bytes": 260,
+      "sha256": "2c58f017d105700acd8869533b069ad6411f0dfa7a3467cba222fd0603d7be21"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/078.request",
+      "bytes": 55187,
+      "sha256": "a5b69bdbe7cbd669cdd1398716d008c67e0c238966b8546d1f58c22c6fc35952"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/079-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/079-0.stdout",
+      "bytes": 283,
+      "sha256": "56c8c76a3b9cffa0ea35b0919577c76018da5cf8d5d73446e028af87ddedf652"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/079-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/079-1.stdout",
+      "bytes": 283,
+      "sha256": "56c8c76a3b9cffa0ea35b0919577c76018da5cf8d5d73446e028af87ddedf652"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/079.request",
+      "bytes": 55229,
+      "sha256": "6940f8f1bbf53015405dd742486f7fa1d272218e6881280c6d009162db6e97b3"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/080-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/080-0.stdout",
+      "bytes": 52790,
+      "sha256": "60a7caeb6eda72e3f7d16d8b4fdcc4b84bbd3a43499685d73f22136fa173bafb"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/080-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/080-1.stdout",
+      "bytes": 52790,
+      "sha256": "60a7caeb6eda72e3f7d16d8b4fdcc4b84bbd3a43499685d73f22136fa173bafb"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/080.request",
+      "bytes": 55449,
+      "sha256": "e3cd2eacbf2d20737503b089f76f94f7f46134dc915e47d637336b035daff99f"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/081-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/081-0.stdout",
+      "bytes": 35412,
+      "sha256": "57ee20e12513173f82b263826c3667af5220d09f51e9517ec1a66794611272a3"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/081-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/081-1.stdout",
+      "bytes": 35412,
+      "sha256": "57ee20e12513173f82b263826c3667af5220d09f51e9517ec1a66794611272a3"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/081.request",
+      "bytes": 55380,
+      "sha256": "653ed0307cac67ebcbf1279740b79b9670c2383166e52b1195f6461c61b8d81e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/082-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/082-0.stdout",
+      "bytes": 33126,
+      "sha256": "20fa79d9c76c75645c11df177190c7c08ea174765cef64b9c64c1d89a631d2b1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/082-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/082-1.stdout",
+      "bytes": 33126,
+      "sha256": "20fa79d9c76c75645c11df177190c7c08ea174765cef64b9c64c1d89a631d2b1"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/082.request",
+      "bytes": 55384,
+      "sha256": "8c2280838aad97f53801cea8a67ed0d328940c53e4928202cf8337156e235802"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/083-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/083-0.stdout",
+      "bytes": 51452,
+      "sha256": "01c39d34dc51d133abdb7d9f1fb06474c8b30e4564c6fe266dfb82c66c0320f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/083-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/083-1.stdout",
+      "bytes": 51452,
+      "sha256": "01c39d34dc51d133abdb7d9f1fb06474c8b30e4564c6fe266dfb82c66c0320f7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/083.request",
+      "bytes": 55444,
+      "sha256": "5ad0213d61723fc19eb4e78da3134891c2d51253d7eb70518156ea90b9d94700"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/084-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/084-0.stdout",
+      "bytes": 48290,
+      "sha256": "14c8e9c3953459cdd552e9aa0582ae53e0565e6d42ca42be3a978228f7c79508"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/084-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/084-1.stdout",
+      "bytes": 48290,
+      "sha256": "14c8e9c3953459cdd552e9aa0582ae53e0565e6d42ca42be3a978228f7c79508"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/084.request",
+      "bytes": 55429,
+      "sha256": "b67b625186524901b9c626f69cdb9056024974fe359851e99fdcbb925275e0a9"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/085-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/085-0.stdout",
+      "bytes": 48303,
+      "sha256": "94efc2292214d738a5be4548dd3e46f60bb418cc33f6092a63c1b1c9c697b3c6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/085-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/085-1.stdout",
+      "bytes": 48303,
+      "sha256": "94efc2292214d738a5be4548dd3e46f60bb418cc33f6092a63c1b1c9c697b3c6"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/085.request",
+      "bytes": 55433,
+      "sha256": "dcf244223e90689359fdc20826d01f4b22075c832a0b51b109984fa831c371d0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/086-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/086-0.stdout",
+      "bytes": 48290,
+      "sha256": "bb8ca948d5a221eea42b0c24859a2725da5ef891a1597d066f84427634714db7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/086-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/086-1.stdout",
+      "bytes": 48290,
+      "sha256": "bb8ca948d5a221eea42b0c24859a2725da5ef891a1597d066f84427634714db7"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/086.request",
+      "bytes": 55436,
+      "sha256": "a081daa7b95d6b99aae33ca6c88a26223ba65db36cc2c4da8b30a0ca226cb2ee"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/087-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/087-0.stdout",
+      "bytes": 48311,
+      "sha256": "095568a8ea540ccd1101df030d5841b58fda709b5dd995b3873f06bf3af91196"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/087-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/087-1.stdout",
+      "bytes": 48311,
+      "sha256": "095568a8ea540ccd1101df030d5841b58fda709b5dd995b3873f06bf3af91196"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/087.request",
+      "bytes": 55459,
+      "sha256": "5bfc87bee2fcd565e24acc389f4109ca0435b9869afe39397eab02a059ef2441"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/088-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/088-0.stdout",
+      "bytes": 47315,
+      "sha256": "eac5471032ae2919136b87389bb334e3447cf30ba76d39d1cfa9f1892b3112a0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/088-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/088-1.stdout",
+      "bytes": 47315,
+      "sha256": "eac5471032ae2919136b87389bb334e3447cf30ba76d39d1cfa9f1892b3112a0"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/088.request",
+      "bytes": 55440,
+      "sha256": "05086ebbad1b8caa8c7139d18a0b787fd7fb80f5042546bec3b2cd11f5dbab5c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/089-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/089-0.stdout",
+      "bytes": 228,
+      "sha256": "a0c6387e8842c98986f28aa26aadd15ca16a4ef3eaffd7ca9cdd273142d6370b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/089-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/089-1.stdout",
+      "bytes": 228,
+      "sha256": "a0c6387e8842c98986f28aa26aadd15ca16a4ef3eaffd7ca9cdd273142d6370b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/089.request",
+      "bytes": 55460,
+      "sha256": "704517ca0a483fc7c6ca3fd3da7a532a1345a1b686177fd4d8fb8e648bddc359"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/090-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/090-0.stdout",
+      "bytes": 228,
+      "sha256": "a0c6387e8842c98986f28aa26aadd15ca16a4ef3eaffd7ca9cdd273142d6370b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/090-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/090-1.stdout",
+      "bytes": 228,
+      "sha256": "a0c6387e8842c98986f28aa26aadd15ca16a4ef3eaffd7ca9cdd273142d6370b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/090.request",
+      "bytes": 55479,
+      "sha256": "9dadb958d75024f078bec6d13d04141ca6148a2fe3ad0fac73a420d3d41f822b"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/091-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/091-0.stdout",
+      "bytes": 253,
+      "sha256": "ff442e61c7825e94627531dab9c60afc8e995015e8903ee75a66145a72d5773c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/091-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/091-1.stdout",
+      "bytes": 253,
+      "sha256": "ff442e61c7825e94627531dab9c60afc8e995015e8903ee75a66145a72d5773c"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/091.request",
+      "bytes": 55438,
+      "sha256": "849e4679ae93e3efe5c4b4e96d699caa45cfed3ca36d53068c73fc00cd4c4136"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/092-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/092-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/092-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/092-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/092.request",
+      "bytes": 55449,
+      "sha256": "a98b0999816097b60b22ebc2e22e29e83d363f6f900217e197a9e41c28fb8a82"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/093-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/093-0.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/093-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/093-1.stdout",
+      "bytes": 246,
+      "sha256": "787d19d6586b70b6f8c973f1b1328c9581309faa6ea7d32f7fc6f955af247cff"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/093.request",
+      "bytes": 55449,
+      "sha256": "88c2d2bee69303335bde78b0d2095a2b08d76ccc30088bbf84e184fcfb590b2e"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-corpus-b/receipt.json",
+      "bytes": 58379,
+      "sha256": "876b344445fff4453a0017d13bb3b2d2fa0314f7d4025f26b3d58ea329f1b26b"
+    }
+  ],
+  "buildFreeze": {
+    "path": "/private/tmp/weft-042-products-actual-freeze-a.json",
+    "bytes": 58535,
+    "sha256": "ed4df9c5fe5bb778f800210d9133a6a56730515f6af13afb4e987ebccfdbed69"
+  }
+}

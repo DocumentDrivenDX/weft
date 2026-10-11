@@ -1,0 +1,1676 @@
+{
+  "type": "object",
+  "properties": {
+    "distinct": {
+      "const": true
+    },
+    "irVersion": {
+      "const": "weft-ir/0.3.0"
+    },
+    "modulePins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pin"
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "readProfile": {
+      "type": "null"
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "typeGraph": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/descriptor"
+      },
+      "maxItems": 131072
+    },
+    "source": {
+      "$ref": "#/$defs/scan"
+    },
+    "pageKey": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/key"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "joins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "right": {
+            "$ref": "#/$defs/scan"
+          },
+          "on": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/predicate"
+            },
+            "minItems": 1
+          },
+          "kind": {
+            "const": "left"
+          }
+        },
+        "required": [
+          "right",
+          "on"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 16
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/predicate"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "aggregate": {
+      "type": "boolean"
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expression": {
+            "$ref": "#/$defs/expression"
+          }
+        },
+        "required": [
+          "name",
+          "expression"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "order": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/field"
+      }
+    },
+    "limit": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "having": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "object",
+            "properties": {
+              "op": {
+                "const": "countDistinct"
+              },
+              "argument": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/field"
+                  },
+                  {
+                    "properties": {
+                      "type": {
+                        "type": "object",
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          },
+                          "facets": {
+                            "const": {}
+                          },
+                          "nullable": {
+                            "const": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "type": {
+                "const": {
+                  "family": "integer",
+                  "facets": {},
+                  "nullable": false
+                }
+              }
+            },
+            "required": [
+              "op",
+              "argument",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          "threshold": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "literal"
+              },
+              "value": {
+                "type": "string",
+                "pattern": "^[0-9]+$"
+              },
+              "type": {
+                "type": "object",
+                "properties": {
+                  "family": {
+                    "const": "integer"
+                  },
+                  "facets": {
+                    "const": {}
+                  },
+                  "nullable": {
+                    "const": false
+                  }
+                },
+                "required": [
+                  "family",
+                  "facets",
+                  "nullable"
+                ],
+                "additionalProperties": false
+              },
+              "span": {
+                "$ref": "#/$defs/span"
+              }
+            },
+            "required": [
+              "kind",
+              "value",
+              "type",
+              "span"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "count",
+          "threshold"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "outerJoinScans": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^s[0-9]+$"
+      },
+      "minItems": 1,
+      "maxItems": 16,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "irVersion",
+    "modulePins",
+    "readProfile",
+    "requiredCapabilities",
+    "typeGraph",
+    "source",
+    "pageKey",
+    "joins",
+    "filters",
+    "groups",
+    "aggregate",
+    "outputs",
+    "order",
+    "limit"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan-v0.3.schema.json",
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "pin": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "umfVersion": {
+          "enum": [
+            "0.7.0",
+            "0.8.0"
+          ]
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "umfVersion",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "span": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "facets": {
+          "type": "object"
+        },
+        "nullable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "family",
+        "facets",
+        "nullable"
+      ],
+      "additionalProperties": false
+    },
+    "member": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        }
+      },
+      "required": [
+        "name",
+        "identity"
+      ],
+      "additionalProperties": false
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "weft-application-read/0.2.0"
+        },
+        "subset": {
+          "enum": [
+            "entity-page",
+            "count-summary",
+            "related-entity-page"
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "subset"
+      ],
+      "additionalProperties": false
+    },
+    "field": {
+      "type": "object",
+      "properties": {
+        "scan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        }
+      },
+      "required": [
+        "scan",
+        "identity",
+        "type",
+        "span"
+      ],
+      "additionalProperties": false
+    },
+    "key": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/identity"
+          },
+          "minItems": 1
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/type"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "fields",
+        "types"
+      ],
+      "additionalProperties": false
+    },
+    "relationshipIdentity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "relationship": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "relationship"
+      ],
+      "additionalProperties": false
+    },
+    "multiplicity": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "const": "*"
+            }
+          ]
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ]
+    },
+    "scan": {
+      "type": "object",
+      "properties": {
+        "occurrence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "record": {
+          "$ref": "#/$defs/identity"
+        },
+        "pin": {
+          "$ref": "#/$defs/pin"
+        }
+      },
+      "required": [
+        "occurrence",
+        "record",
+        "pin"
+      ],
+      "additionalProperties": false
+    },
+    "descriptor": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "scalar"
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "availability": {
+              "enum": [
+                "required",
+                "absent-allowed"
+              ]
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "kind",
+            "identity",
+            "availability",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "sequence"
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "availability": {
+              "enum": [
+                "required",
+                "absent-allowed"
+              ]
+            },
+            "item": {
+              "$ref": "#/$defs/identity"
+            }
+          },
+          "required": [
+            "kind",
+            "identity",
+            "availability",
+            "item"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "map"
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "availability": {
+              "enum": [
+                "required",
+                "absent-allowed"
+              ]
+            },
+            "item": {
+              "$ref": "#/$defs/identity"
+            }
+          },
+          "required": [
+            "kind",
+            "identity",
+            "availability",
+            "item"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "structured"
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "availability": {
+              "enum": [
+                "required",
+                "absent-allowed"
+              ]
+            },
+            "record": {
+              "$ref": "#/$defs/identity"
+            }
+          },
+          "required": [
+            "kind",
+            "identity",
+            "availability",
+            "record"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "record"
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            },
+            "availability": {
+              "type": "null"
+            },
+            "members": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/member"
+              }
+            }
+          },
+          "required": [
+            "kind",
+            "identity",
+            "availability",
+            "members"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "relationship": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "$ref": "#/$defs/relationshipIdentity"
+        },
+        "inverse": {
+          "type": "boolean"
+        },
+        "from": {
+          "$ref": "#/$defs/identity"
+        },
+        "to": {
+          "$ref": "#/$defs/identity"
+        },
+        "sourceKey": {
+          "$ref": "#/$defs/key"
+        },
+        "targetKey": {
+          "$ref": "#/$defs/key"
+        },
+        "sourceMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetMultiplicity": {
+          "$ref": "#/$defs/multiplicity"
+        },
+        "targetLifecycle": {
+          "enum": [
+            "owned",
+            "independent"
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "inverse",
+        "from",
+        "to",
+        "sourceKey",
+        "targetKey",
+        "sourceMultiplicity",
+        "targetMultiplicity",
+        "targetLifecycle"
+      ],
+      "additionalProperties": false
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "literal"
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "kind",
+            "value",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "parameter"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            },
+            "span": {
+              "$ref": "#/$defs/span"
+            }
+          },
+          "required": [
+            "kind",
+            "name",
+            "value",
+            "type",
+            "span"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "field"
+            },
+            "field": {
+              "$ref": "#/$defs/field"
+            }
+          },
+          "required": [
+            "kind",
+            "field"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "predicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "legacy"
+            },
+            "predicate": {
+              "$ref": "#/$defs/legacyPredicate"
+            }
+          },
+          "required": [
+            "op",
+            "predicate"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "arithmeticCompare"
+            },
+            "left": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "greater": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "greater"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "scalarCompare"
+            },
+            "left": {
+              "$ref": "#/$defs/comparisonField"
+            },
+            "right": {
+              "$ref": "#/$defs/comparisonValue"
+            },
+            "operator": {
+              "$ref": "#/$defs/comparisonOperator"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "operator"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "boolean"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "operator": {
+                    "const": "notEqual"
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "integer"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "integer"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "left": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "decimal"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "right": {
+                    "properties": {
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "decimal"
+                          }
+                        }
+                      },
+                      "field": {
+                        "properties": {
+                          "type": {
+                            "properties": {
+                              "family": {
+                                "const": "decimal"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "arithmeticCompareExtended"
+            },
+            "left": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "right": {
+              "$ref": "#/$defs/numericExpression"
+            },
+            "operator": {
+              "$ref": "#/$defs/comparisonOperator"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right",
+            "operator"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "nullTest"
+            },
+            "field": {
+              "$ref": "#/$defs/comparisonField"
+            },
+            "negated": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "negated"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "nullableStringEqual"
+            },
+            "left": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/comparisonField"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "right": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/comparisonField"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "stringIn"
+            },
+            "field": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/field"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        },
+                        "facets": {
+                          "const": {}
+                        },
+                        "nullable": {
+                          "const": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "allOf": [
+                  {
+                    "$ref": "#/$defs/value"
+                  },
+                  {
+                    "properties": {
+                      "kind": {
+                        "const": "literal"
+                      },
+                      "type": {
+                        "properties": {
+                          "family": {
+                            "const": "string"
+                          },
+                          "facets": {
+                            "const": {}
+                          },
+                          "nullable": {
+                            "const": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 256
+            }
+          },
+          "required": [
+            "op",
+            "field",
+            "values"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "expression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "field"
+            },
+            "scan": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identity": {
+              "$ref": "#/$defs/identity"
+            }
+          },
+          "required": [
+            "op",
+            "scan",
+            "identity"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "count"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "op",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "sum"
+            },
+            "argument": {
+              "$ref": "#/$defs/field"
+            },
+            "type": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "op",
+            "argument",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "relatedKeys"
+            },
+            "scan": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationship": {
+              "$ref": "#/$defs/relationship"
+            },
+            "bound": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "op",
+            "scan",
+            "relationship",
+            "bound"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "arithmetic"
+            },
+            "expression": {
+              "$ref": "#/$defs/numericExpression"
+            }
+          },
+          "required": [
+            "op",
+            "expression"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "countDistinct"
+            },
+            "argument": {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/field"
+                },
+                {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {
+                        "family": {
+                          "const": "string"
+                        },
+                        "facets": {
+                          "const": {}
+                        },
+                        "nullable": {
+                          "const": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "type": {
+              "const": {
+                "family": "integer",
+                "facets": {},
+                "nullable": false
+              }
+            }
+          },
+          "required": [
+            "op",
+            "argument",
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "numericDomain": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "family": {
+              "const": "integer"
+            }
+          },
+          "required": [
+            "family"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "family": {
+              "const": "decimal"
+            },
+            "scale": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 262144
+            }
+          },
+          "required": [
+            "family",
+            "scale"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "numericExpression": {
+      "type": "object",
+      "properties": {
+        "domain": {
+          "$ref": "#/$defs/numericDomain"
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        },
+        "kind": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "const": "field"
+                },
+                "field": {
+                  "$ref": "#/$defs/numericField"
+                }
+              },
+              "required": [
+                "op",
+                "field"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "const": "literal"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+                  "maxLength": 1024
+                }
+              },
+              "required": [
+                "op",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "const": "parameter"
+                },
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-z_][a-z0-9_]*$"
+                },
+                "value": {
+                  "type": "string",
+                  "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+                  "maxLength": 1024
+                }
+              },
+              "required": [
+                "op",
+                "name",
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "const": "negate"
+                },
+                "operand": {
+                  "$ref": "#/$defs/numericExpression"
+                }
+              },
+              "required": [
+                "op",
+                "operand"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "op": {
+                  "const": "binary"
+                },
+                "operator": {
+                  "enum": [
+                    "+",
+                    "-",
+                    "*"
+                  ]
+                },
+                "left": {
+                  "$ref": "#/$defs/numericExpression"
+                },
+                "right": {
+                  "$ref": "#/$defs/numericExpression"
+                }
+              },
+              "required": [
+                "op",
+                "operator",
+                "left",
+                "right"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "domain",
+        "span",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "legacyPredicate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "equal"
+            },
+            "left": {
+              "$ref": "#/$defs/field"
+            },
+            "right": {
+              "$ref": "#/$defs/value"
+            }
+          },
+          "required": [
+            "op",
+            "left",
+            "right"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "lexicographicGreater"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/field"
+              },
+              "minItems": 1
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/value"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "op",
+            "columns",
+            "values"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "op": {
+              "const": "hasRelated"
+            },
+            "scan": {
+              "type": "string",
+              "minLength": 1
+            },
+            "relationship": {
+              "$ref": "#/$defs/relationship"
+            },
+            "key": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/value"
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "op",
+            "scan",
+            "relationship",
+            "key"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "numericField": {
+      "type": "object",
+      "properties": {
+        "scan": {
+          "type": "string",
+          "minLength": 1
+        },
+        "identity": {
+          "$ref": "#/$defs/identity"
+        },
+        "type": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/type"
+            },
+            {
+              "properties": {
+                "family": {
+                  "enum": [
+                    "integer",
+                    "decimal"
+                  ]
+                },
+                "nullable": {
+                  "const": false
+                }
+              }
+            }
+          ]
+        },
+        "span": {
+          "$ref": "#/$defs/span"
+        }
+      },
+      "required": [
+        "scan",
+        "identity",
+        "type",
+        "span"
+      ],
+      "additionalProperties": false
+    },
+    "comparisonOperator": {
+      "enum": [
+        "less",
+        "lessEqual",
+        "greaterEqual",
+        "notEqual"
+      ]
+    },
+    "comparisonField": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/field"
+        },
+        {
+          "properties": {
+            "type": {
+              "properties": {
+                "nullable": {
+                  "const": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "comparisonValue": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/value"
+        },
+        {
+          "properties": {
+            "type": {
+              "properties": {
+                "nullable": {
+                  "const": false
+                }
+              }
+            },
+            "field": {
+              "$ref": "#/$defs/comparisonField"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

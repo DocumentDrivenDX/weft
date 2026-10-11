@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/backend-manifest.schema.json",
+  "type": "object",
+  "properties": {
+    "backendId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "backendVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interfaceVersion": {
+      "const": "weft-backend/0.1.0"
+    },
+    "dialectProfile": {
+      "const": "weft-sql/0.1.0"
+    },
+    "irVersion": {
+      "const": "weft-ir/0.1.0"
+    },
+    "bindingProfile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1
+          },
+          "engineVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sessionSettings": {
+            "type": "object"
+          },
+          "storageLayoutRevision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "publicationRevision": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "engine",
+          "engineVersion",
+          "sessionSettings",
+          "storageLayoutRevision",
+          "publicationRevision"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "logicalDomain": {
+            "type": "object"
+          },
+          "resultDomain": {
+            "type": "object"
+          },
+          "constraints": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parameters": {
+                  "type": "object"
+                },
+                "owner": {
+                  "enum": [
+                    "host",
+                    "backend"
+                  ]
+                },
+                "failureCode": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "parameters",
+                "owner",
+                "failureCode"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 0
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "candidate",
+              "unsupported"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          }
+        },
+        "required": [
+          "id",
+          "logicalDomain",
+          "resultDomain",
+          "constraints",
+          "obligations",
+          "status",
+          "evidence"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "backendId",
+    "backendVersion",
+    "interfaceVersion",
+    "dialectProfile",
+    "irVersion",
+    "bindingProfile",
+    "targetProfiles",
+    "capabilities",
+    "evidence"
+  ],
+  "additionalProperties": false
+}

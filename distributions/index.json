@@ -76,6 +76,25 @@
         "sha256": "a0b25554c859265b1442f26a62381ea25e1f69f16b5e6147ea2f0ebc926c0cca",
         "bytes": 12344
       }
+    },
+    {
+      "realizationId": "weft-f36f206-implicit-arithmetic-aarch64-apple-darwin-candidate",
+      "manifest": {
+        "path": "manifest.json",
+        "sha256": "8ef7b41c11e9d1d86750406a06f346dda991af26aa49f0a193022fe8826f58f3",
+        "bytes": 9902
+      },
+      "executable": {
+        "path": "bin/weft-implicit-arithmetic",
+        "sha256": "8e1e43aa81b312a124e88698477e1392f6c538451d5cb8f582a38934c776e55a",
+        "bytes": 8688144
+      },
+      "target": "aarch64-apple-darwin",
+      "assemblyCustody": {
+        "path": "assembly-custody.json",
+        "sha256": "81ece3c4e9aede42ff6f5453088bd6cfeb18c9c60e149745cf3f935ea0784f66",
+        "bytes": 17079
+      }
     }
   ]
 }

@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-backend-manifest-v0.1.schema.json",
+  "type": "object",
+  "properties": {
+    "backendId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "backendVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "interfaceVersion": {
+      "const": "weft-security-backend/0.1.0"
+    },
+    "bindingProfile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetProfiles": {
+      "type": "array",
+      "items": {
+        "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json#/properties/targetProfiles/items"
+      },
+      "minItems": 1,
+      "maxItems": 256
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "$ref": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/backend-manifest-v0.2.schema.json#/properties/capabilities/items"
+      },
+      "minItems": 1,
+      "maxItems": 4096
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "sourceProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dialect": {
+            "const": "weft-sql/0.2.0"
+          },
+          "applicationIr": {
+            "const": "weft-ir/0.2.0"
+          },
+          "policy": {
+            "const": "0.1.0"
+          },
+          "ontology": {
+            "const": "0.1.0"
+          },
+          "securityIr": {
+            "const": "weft.security.logical-ir/0.1.0"
+          }
+        },
+        "required": [
+          "dialect",
+          "applicationIr",
+          "policy",
+          "ontology",
+          "securityIr"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "backendId",
+    "backendVersion",
+    "interfaceVersion",
+    "bindingProfile",
+    "targetProfiles",
+    "capabilities",
+    "evidence",
+    "sourceProfiles"
+  ],
+  "additionalProperties": false
+}

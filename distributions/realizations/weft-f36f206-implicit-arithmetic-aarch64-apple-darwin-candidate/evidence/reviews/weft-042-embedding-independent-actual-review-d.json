@@ -1,0 +1,13 @@
+{
+  "actualFreezeSha256": "7c024f3ca051ea13e50f6cba1020b200dbff6aaeb1f0c9732bc830a5da5cca6f",
+  "approval": true,
+  "checks": [
+    "92 selected resource and 13 actual output pins exact:9046d2",
+    "All94 first/second Python and browser strings byteexact frozen owning CLI expectations; Python response digests exact",
+    "191 retained browser raw observations:188 corpus,generic WFT-VERSION fence,two exact WFT-BACKEND-FAILURE trap-retirement responses",
+    "Allthree capture exit0/openingClosingCustody true; browser151.0.7922.34,offline origin-only requests",
+    "Original C pre-child namespace failure retained; no rerun by reviewer"
+  ],
+  "scope": "Extracted CPython extension and real Chromium WASM transport parity for94 owning cases. No installed-wheel, native SQL, product index or production qualification.",
+  "stderr": "Wheel phase retained110bytes stderr; Python/browser empty. No claim all phases had empty stderr."
+}

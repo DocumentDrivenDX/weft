@@ -1,0 +1,492 @@
+{
+  "qualification": "Actual metadata-helper compilefailure only; no observed backendmanifest orCLI8 result",
+  "terminal": {
+    "exitCode": 1,
+    "chunk": "a7e96c"
+  },
+  "command": {
+    "path": "/private/tmp/weft-042-metadata-boundary-command-a.json",
+    "bytes": 25455,
+    "sha256": "f7fbb21da69ec5238c42d3ad6a9148c793157a06a70093220731a28e1fa47ccf"
+  },
+  "resources": [
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/weft-implicit-arithmetic",
+      "bytes": 8688144,
+      "sha256": "8e1e43aa81b312a124e88698477e1392f6c538451d5cb8f582a38934c776e55a"
+    },
+    {
+      "path": "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+      "bytes": 414776,
+      "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea"
+    },
+    {
+      "path": "/usr/bin/python3",
+      "bytes": 200560,
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    },
+    {
+      "path": "/private/tmp/ashlar-count-star-installed-cli-capture-a.py",
+      "bytes": 3216,
+      "sha256": "1e42caf78bd7c7bb9251fb926d88a8efc6138ec52271a6525ecb6954fab97fea"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-metadata-a.rs",
+      "bytes": 365,
+      "sha256": "25685ee114aa0021bce2ecbd272737c41cdd4e95514a0dae26a9d7e7586b4996"
+    },
+    {
+      "path": "/private/tmp/weft-042-metadata-boundary-launch-a.py",
+      "bytes": 2408,
+      "sha256": "b6549f709ab74b4a56baf86ffdb6ec6141801afcf1e2f6fc3ea5d379628af429"
+    },
+    {
+      "path": "/private/tmp/weft-042-boundaries-a.py",
+      "bytes": 9030,
+      "sha256": "1236e8e91b11b88a5fa6bac3d9c9b1ddfa3dfc7eeb7100f3bfbad9fb1a72601e"
+    },
+    {
+      "path": "/private/tmp/weft-042-products-actual-freeze-a.json",
+      "bytes": 58535,
+      "sha256": "ed4df9c5fe5bb778f800210d9133a6a56730515f6af13afb4e987ebccfdbed69"
+    },
+    {
+      "path": "/private/tmp/weft-042-cli-capability-witnesses-b.json",
+      "bytes": 25813,
+      "sha256": "e88ecd0a37a63a3ff97e5d475c1b5b613d88f5d188368d18f47ca14d248f2104"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libcrypto_common-1a67823dd6c29a4f.rlib",
+      "bytes": 32160,
+      "sha256": "9653951fa4a7755d4a7e3170d9072953023beab839389d779e2cc586b0009eea"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libregex-6f5be92d064f555a.rlib",
+      "bytes": 937224,
+      "sha256": "fb46d2249d24503a59cdda894d3899d57f80e0768be5844edf865ebfe99330ff"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_bigint-f1fe717c6e9ddf43.rlib",
+      "bytes": 3201328,
+      "sha256": "b32afa411da8e662c498af7f5f88d135d648ac9da83fefa177b691416158cf8b"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libjsonschema_regex-64a0d8d7ec0f2e62.rlib",
+      "bytes": 180864,
+      "sha256": "bb58c0afd26da8c89e8530f4a6b6052b04e737834882e5e90c42fd19d64c3933"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libzmij-762e6d79a40a5c3b.rlib",
+      "bytes": 170344,
+      "sha256": "83410cb9db8e975f84fa2d6ff25dffafc42ab1cc1faa649d13c6acd2c296f088"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libdata_encoding-3f526bd4b7b5146b.rlib",
+      "bytes": 472016,
+      "sha256": "9944addecf1ad4b130731a1fd3fd25d82220ea3d1cde54ff10f7aa02cd8fd69f"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libserde-39a63dd911db9711.rlib",
+      "bytes": 934968,
+      "sha256": "003225d473c6f9c5d93b2dcdef388b279dd28ce5502cc69c1941d2b2326a9f58"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libgeneric_array-744119debcbd32e7.rlib",
+      "bytes": 1000728,
+      "sha256": "f2131712c40a40ecd2280065349f0ee389b9506c76daf923eda28203425551ed"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libbytecount-ca3c2b09c5e39086.rlib",
+      "bytes": 20312,
+      "sha256": "da9461454107bbe0bb868edb4f24d29a73d038e90b7294f2bbcd3be5e07a974a"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libahash-de475ebdf02bbb03.rlib",
+      "bytes": 283136,
+      "sha256": "f189d03ea2198469b7fc526832cd74989bf8387bdbd27bde3b20ceb235ccd843"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/liboutref-02a2cd2dd64bbc87.rlib",
+      "bytes": 22888,
+      "sha256": "ce46b74704d5b99c861919ad711918d67e961929c65eb939204da7486e2355f3"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_runtime-ff5101ef4f76afd6.rlib",
+      "bytes": 221680,
+      "sha256": "9f434ff1c1a9b628d532d7ad61e0ae0df26742c618f01e958d96741d2119bffd"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_runtime-1cf019afd50bab31.rlib",
+      "bytes": 221696,
+      "sha256": "b10a0b8b333b5bf618ce42ecb195d463b1447e60aa160fd13e3145a2129bb5c0"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_core-d153e58bf919b971.rlib",
+      "bytes": 17108472,
+      "sha256": "45cbfa6daf38630ced2549fb8f6b87b4ab5995f7f8b015cdaaa8e85c611ced40"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libmicromap-aa5d1fa6ac2fe913.rlib",
+      "bytes": 546776,
+      "sha256": "75727446dd7d9129ad8004e568b6a6e63c74e9d564a182fdc9a4fef7dbf60211"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libregex_automata-fb5d119372e9940b.rlib",
+      "bytes": 5946944,
+      "sha256": "61d04b55afacad830dbe9b0dd22fe2aafac0b7cb20044cb99f6fa61c16ccb589"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libemail_address-6bb67e02a2624d88.rlib",
+      "bytes": 110280,
+      "sha256": "2a5268e65569980f3dede985c081505c5ffe89db34f21ff59865ffc4a486ce60"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libfluent_uri-1b4cfb4e3b74801e.rlib",
+      "bytes": 1167392,
+      "sha256": "e7fd53b86e8b65277334cd0b546f76c79d9ebd4da8d828085c527523c4a055df"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libonce_cell-e7e0e5275cea126c.rlib",
+      "bytes": 229120,
+      "sha256": "d8ca73625960869c2cc7db29ce708160172100728a533aa8d77c2ccd2950011e"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libhashbrown-3ac93858476caffb.rlib",
+      "bytes": 1588336,
+      "sha256": "e70eb32bb63ddeefefc45a51938ad375b9cd910b19da831296fd17fbbd848754"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libserde_json-7d34957666c647fe.rlib",
+      "bytes": 2589920,
+      "sha256": "504d6e0a9b590ab3fba45da15fdc88303e9a402bcfd2d2890501d3596027a324"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libzerocopy-8a9afd4ac2299071.rlib",
+      "bytes": 15586656,
+      "sha256": "15eb1dfabf36a2718dc6902772c8fa934207ec70633b4aa6ca3297574c010521"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libonce_cell-8c00e5ff5f61bde8.rlib",
+      "bytes": 142656,
+      "sha256": "56c6f63c64b1ca546f0e524484e5d17022974328f9de9a078fbf5b3e4a188fb3"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libfluent_uri-b01d9fdd7f9d0e9d.rlib",
+      "bytes": 1167384,
+      "sha256": "b5dbdc83d10d59f5a88609d17ca49af391e5dce1ce4d7217c6ec01c409e0223a"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/liblock_api-37d3f9333527bcb3.rlib",
+      "bytes": 390032,
+      "sha256": "c2474c8d4a8afc93d6598fc49d1f5e08966a21a11d857219d0a8e4d6bcfdffe7"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libjsonschema_value-cd8194b579743571.rlib",
+      "bytes": 524232,
+      "sha256": "b06fcb404a52fd1104f015c7f9d1ed629ef2830c5548c8215dfd9b27f33ed009"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libscopeguard-74a4f2dfc00578c2.rlib",
+      "bytes": 26224,
+      "sha256": "5cee002494dbe41e59e6a89179e428999b32c40754c3b3620107e66fca000eef"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libpercent_encoding-1f192dbbc5499ef2.rlib",
+      "bytes": 65688,
+      "sha256": "d59b279dc668f500eb1182177295d1888a3db24e771aee917dfbac455324296e"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libemail_address-fd016321e9d477ee.rlib",
+      "bytes": 110288,
+      "sha256": "aaf1bd5f237f0ea6a680c2ea6a0362f9db4d46930561e234aaa4274b16bdf9a8"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libryu-c2ab8dfe11d26260.rlib",
+      "bytes": 76336,
+      "sha256": "a5387eeaccbafd50bd28be8e8ff7f7a2c1c2eb0bdd4be81e9a4f983bc7770055"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_complex-9e23577b59ba1090.rlib",
+      "bytes": 815304,
+      "sha256": "1af9b49987c33653c1bd743cfb41ab08cde3b5e683f9446679f48910b5f0e3e8"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libfraction-0d899180a661a637.rlib",
+      "bytes": 724368,
+      "sha256": "902d895b1f87d75435a37c0f6e92a3a7b91a67ad9f29fc4b84eb0e278f765236"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum-712cddd72cfacf69.rlib",
+      "bytes": 13352,
+      "sha256": "e3e0916b47e9c908a8972d403a67c50cf3ebeae57dfc5456f99ad8a4bb0b05ea"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libjsonschema-f2497cdd8b48ccdd.rlib",
+      "bytes": 15674056,
+      "sha256": "59c27c93579d61b4ded5cef6a57a0d97ee7251d4bc7695c34525c5b41e230792"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libregex_syntax-23d02422840c10be.rlib",
+      "bytes": 6752768,
+      "sha256": "e30d9db8503084a7e7f52bb8a0fb41200e31b5d23924cf4f20b6776423177113"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libstrum-3ada6868b3ed1559.rlib",
+      "bytes": 29880,
+      "sha256": "75b389aee8e453dc141d345800dc338f9dea62562778d50d7252d683d1f569e2"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libfoldhash-4fa2f4d74356b49f.rlib",
+      "bytes": 97464,
+      "sha256": "946851c92797701a63df7b90aae2bbcc35f85a54f4ca781f249a2da4bdbc9afe"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libunindent-dcd25291238caf79.rlib",
+      "bytes": 22808,
+      "sha256": "73463d735ac6f04c3e633c410fed764d5615a12b3e6c617c6c4476db0dc3fe7a"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libblock_buffer-930fa69c2c6ed898.rlib",
+      "bytes": 62992,
+      "sha256": "bbd6bcd3c9540de79faed8732d4109de8b01191c11e60c741fa2b22ece24ddd5"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libahash-3c469c0a5c839ac3.rlib",
+      "bytes": 283136,
+      "sha256": "5dd79dd91a35d4aaa4cbd7073d6bacfa091ce7bf6ef37a82b05b4dc7ca4b9f73"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libfancy_regex-b9bb47789db05b6e.rlib",
+      "bytes": 1933192,
+      "sha256": "4702e7e02a1cde1ab090c8b3911e570b29204e5f589caa63608bc3909583c316"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libreferencing-6fe026b3895bf886.rlib",
+      "bytes": 1318368,
+      "sha256": "e4238c05bcfb5c3d46a511b3b7b1a819b86aafc2f856d8b23238de5fddae1c16"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libtypenum-2d9846aa4cbdc230.rlib",
+      "bytes": 2750720,
+      "sha256": "5fc48f11362c8c1a6a2471425138c28d5d682f411794ac26990310cdbdf79577"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libserde_core-b6ccfc8e757cd11d.rlib",
+      "bytes": 5223936,
+      "sha256": "1d0df6a9beb2383f01605c2266ef08e6076e1d01d5cffafd594bd746b8fd35bc"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libmemchr-eee7ec48af13d17d.rlib",
+      "bytes": 974632,
+      "sha256": "b9e39a161a019da97eb2cc9014e6b012ee547dabe0d678fa1825656eefa82383"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libborrow_or_share-d5cdf5bca909aa20.rlib",
+      "bytes": 29792,
+      "sha256": "d8157f1eb936e0a587c4e75546f843cf5b1560644a1b14d0bf1b9c11ce109c0c"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libunicode_general_category-57d67f5b8e0415b2.rlib",
+      "bytes": 2780960,
+      "sha256": "8abe6eab2bf5c0f64606fb858fc9e5001dd27c2269063d4cf68d1366b2a65120"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libpyo3_ffi-e1ceb9be0eed05d3.rlib",
+      "bytes": 616304,
+      "sha256": "f209a2f5c134da71081ad53cb71e0133be29f2afbc7262c2fc17a7e3db685918"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libcfg_if-8ac30d49b20f7158.rlib",
+      "bytes": 6624,
+      "sha256": "e06c82eb790896f6a973ff49dbf75ba7b0c2a9ae52af3b2cfafbc8485624709a"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libbit_vec-9192d14a7c8016dc.rlib",
+      "bytes": 249904,
+      "sha256": "eff0d8e22a357ab0190b1ae365a9cb82e20a2568266e3289d92dc4e1d2ee6087"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libserde-f11041e897ff68d5.rlib",
+      "bytes": 934968,
+      "sha256": "c5456591cdfdcd866644b095b8d463d78607a2449a901f0982779eaec6dc96f9"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_cmp-d1cfdb0e156dc8cc.rlib",
+      "bytes": 509128,
+      "sha256": "689be32dba81840449ffd46c40512c2e9775eef4b906e0348ff589781b070051"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/liblibc-32e337b4fdde3909.rlib",
+      "bytes": 2914336,
+      "sha256": "4191f1cc8e341c56887dc5cba1dd6463fcd0ba862c1bab818f53f5ab92b8810b"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libbit_set-1cceeeeb02389287.rlib",
+      "bytes": 141496,
+      "sha256": "11fea5612634e04a9742c01155154c69b3726cd49641aaab40b9578816045efb"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libitoa-5ba9a6d6a149bf2a.rlib",
+      "bytes": 81352,
+      "sha256": "f76c59f414070c512e4a462cc898e046c6387435b7e2ebed479e619782550f35"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libpyo3-7a1277f864c6c2d6.rlib",
+      "bytes": 6808856,
+      "sha256": "5d5b40553c8d449f5c3e0d7ee2945dd1975ca1405976f7e76fc8a2a71ece695e"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_databricks-22e1a4b9121475c1.rlib",
+      "bytes": 2938632,
+      "sha256": "8430f05d1a1f6adfe5bdd784ff4e581b373f7b77227d0ae5ddd906f24969cbca"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libdigest-6cc75f57b557398f.rlib",
+      "bytes": 186840,
+      "sha256": "a552ea53171b184c5af601fbb87998a71ba97f47ff392abbdc4ccab5ba862684"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libjsonschema_value-a71d051bd16ce79e.rlib",
+      "bytes": 524208,
+      "sha256": "79dae5a5fac2548ec00d9522f61d22a1a58507790284d2c6d45a664d26cbd976"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libsmallvec-7f8a777f6616d2bc.rlib",
+      "bytes": 313432,
+      "sha256": "b7f4d2c990979a3164883c72c3958106518d3c7b20b3d5d711c3537b1e143ccc"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libvsimd-6f2f97ce38ece952.rlib",
+      "bytes": 1460792,
+      "sha256": "ab9e60b02ccd30374c3d3e15f3e043009ff3e06cdbeecd08982590e64b41edc8"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libreferencing-18f7714dbf7a6149.rlib",
+      "bytes": 1318240,
+      "sha256": "930ba560bc4dc5b3ae28d5f70436677e9eec269469b0eb6c823f2458d36df5f2"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libparking_lot-e44c14571cf138c5.rlib",
+      "bytes": 283904,
+      "sha256": "fd965e05e4eaf4e13e8519e06e0316f14375a0cd62a0ff335cb1d4a75e768f45"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libcpufeatures-f67648e5f6983c87.rlib",
+      "bytes": 19344,
+      "sha256": "fe900e21db471959db4023a344429965c7892293664f69954c81a65bcfddd952"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libparking_lot_core-173992816dc18237.rlib",
+      "bytes": 213896,
+      "sha256": "723059eb546369e0275a627c417c652ff1fb9d756ceaa4fa700908b9c0e1aa17"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libstrum-122d5d5cc2e7f22a.rlib",
+      "bytes": 29880,
+      "sha256": "ab663a760bbddab33812da40d2cc4d9d193e7a77d6ac66389293c04c2651817d"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_databricks-2a50d4e0d273afd2.rlib",
+      "bytes": 2938992,
+      "sha256": "7e8ab095d00764d370e095461a865394530b6e217dd97999d3ae99d8076025cc"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libaho_corasick-07b209dc04085c68.rlib",
+      "bytes": 2124944,
+      "sha256": "759759fab2735937aa46950c14d3b40d7e1073ad2a6f377b31ff2af08c7851fd"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_iter-4c53a56e6e114ecf.rlib",
+      "bytes": 43040,
+      "sha256": "40c1673b49dc98c42c674c9b8c9f16358b79c904e3252aaff10cf6bb497aaca0"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_integer-0326e4519395603c.rlib",
+      "bytes": 356216,
+      "sha256": "7d875eec378dfabecb8a0b52dc3267c45e401ad2dc345a565e0444b1fb4afc11"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libsha2-318362e769ab9ee9.rlib",
+      "bytes": 165824,
+      "sha256": "ac44228829cd8bcd04dc7913a915df1009b9a10433e8ddcaab904fb142774c57"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_traits-3e0e81e91003fdf0.rlib",
+      "bytes": 1871544,
+      "sha256": "465a461c95dbcf6a0928776f66e6c43a2d6c55f9597787e852944c0ca2c3f492"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libref_cast-323e0ad7c361832d.rlib",
+      "bytes": 29840,
+      "sha256": "20aed146682857961aa49600ec25a4189656c2c4d6ef06bb05e80ea0fd124c5d"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libjsonschema-5bc0cba6bd58e809.rlib",
+      "bytes": 15673264,
+      "sha256": "93fd54b34fae6049f7c1dafef3eda85b29e0fef5de4c6ade43e699b2b8dbeac8"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libuuid_simd-dc0439649302604d.rlib",
+      "bytes": 269560,
+      "sha256": "709ad387b88f2c21fecf58bf9e5c164accefc0ce573379e11341348edaaf177a"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libequivalent-a39e0b4c4f43bf36.rlib",
+      "bytes": 8936,
+      "sha256": "715a649cebef044d6e2eef8390b1cf78e85dce2b8b315a0b44abda3549ce3e3b"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libweft_core-9057d547fe93087c.rlib",
+      "bytes": 17107864,
+      "sha256": "3524a3842a55f2524e57a6e7c67bb30ca15a7620584372e65e5590a5a6a238fd"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/liballocator_api2-40aa53ecfd30e8bb.rlib",
+      "bytes": 794232,
+      "sha256": "014569d63b86a9dade47fbc29e9d69dd4e673830861c75dc826affb8342c6012"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libmemoffset-611140653404e520.rlib",
+      "bytes": 27376,
+      "sha256": "650cc8c046a51391c08ca60d018c5fdf3a4ac158923215bddb95a0638ba31dc9"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/deps/libnum_rational-60a6b437f628a0b9.rlib",
+      "bytes": 558352,
+      "sha256": "7bae29776d785ef9f0f3bf965ce61a769e2a337085109a11a32797d1b7c0c835"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/.fingerprint/weft-runtime-bbb7c7c3adcecb63/bin-weft-implicit-arithmetic.json",
+      "bytes": 1092,
+      "sha256": "2d09e0859ba2e7f1335e1d88eea3464098817b3b08845b484a53be21c209ea72"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/.fingerprint/weft-databricks-2a50d4e0d273afd2/lib-weft_databricks.json",
+      "bytes": 583,
+      "sha256": "5f8d84d7ac0ba9d4a9b8999d16d0dd458d97ff5661ce7095aa3bcf9d8374ee5c"
+    },
+    {
+      "path": "/private/tmp/weft-042-release-target-a/aarch64-apple-darwin/release/.fingerprint/weft-core-9057d547fe93087c/lib-weft_core",
+      "bytes": 16,
+      "sha256": "725bf20747a22fd9c854c8bf6fd06d10ff3e825e6a7eb1803f297152e669cb8b"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "/private/tmp/weft-042-metadata-boundary-a/metadata-build.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/private/tmp/weft-042-metadata-boundary-a/metadata-build.stderr",
+      "bytes": 919,
+      "sha256": "67e2b696bc93b0daf44d6b89437b370bfbd439f023f9747b6eb7d839c392c4bb"
+    },
+    {
+      "path": "/private/tmp/weft-042-metadata-boundary-a/metadata-build-outcome.json",
+      "bytes": 309,
+      "sha256": "ef0b5affe294bc8e9898bf0ea573ec34def03552cb54f9e0f6303df55a76217c"
+    }
+  ],
+  "diagnosis": "Missing explicit hostproc-macro dependency search path; actual stderr E0463 serde_derive. No source/product/dependency rebuild or automaticretry."
+}

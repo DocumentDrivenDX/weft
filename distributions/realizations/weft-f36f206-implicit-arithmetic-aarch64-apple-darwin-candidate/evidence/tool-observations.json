@@ -1,0 +1,64 @@
+{
+  "scope": "actualcurrent observations during freshf36productbuild; exacttoolbytes identity recorded, no historicalenvironmentreplay",
+  "observations": [
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/rustc",
+        "-Vv"
+      ],
+      "sha256": "b2011d06d5c7efff7b48b1e1aec6106989e44f3a5ad1d171e06a41c0fbc3ffea",
+      "exitCode": 0,
+      "stdout": "rustc 1.90.0 (1159e78c4 2025-09-14)\nbinary: rustc\ncommit-hash: 1159e78c4747b02ef996e55082b704c09b970588\ncommit-date: 2025-09-14\nhost: aarch64-apple-darwin\nrelease: 1.90.0\nLLVM version: 20.1.8\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/rustup/toolchains/1.90.0-aarch64-apple-darwin/bin/cargo",
+        "-V"
+      ],
+      "sha256": "b617f75ab3fadd5d764368413b7e87532dfa45039aac431f9c0af883b824a6e6",
+      "exitCode": 0,
+      "stdout": "cargo 1.90.0 (840b83a10 2025-07-30)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/venv/bin/maturin",
+        "--version"
+      ],
+      "sha256": "efc2e751af40d8f62e9e471efc9677cab58b22a0bdc7244f7a3d8e70a59d1b7a",
+      "exitCode": 0,
+      "stdout": "maturin 1.9.6\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/private/tmp/weft-toolchain/cargo/bin/wasm-bindgen",
+        "--version"
+      ],
+      "sha256": "8413bdf70847451cd35bd242e7eb2aa5d8c717699d39273248ebdf1d1cc43ae4",
+      "exitCode": 0,
+      "stdout": "wasm-bindgen 0.2.105\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Users/erik/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+        "--version"
+      ],
+      "sha256": "4158f03e1bae2b759f25a1ba1fbdab8bfb7161eba4caf22e28f0915986625bbc",
+      "exitCode": 0,
+      "stdout": "Python 3.12.14\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/usr/bin/sw_vers"
+      ],
+      "sha256": "b822969762f22f30bfdd9139e5188949ddbc75b5f0c8e58788d7bb88b3c11e25",
+      "exitCode": 0,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434\n",
+      "stderr": ""
+    }
+  ]
+}

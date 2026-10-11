@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json",
+  "type": "object",
+  "properties": {
+    "interfaceVersion": {
+      "const": "weft-security-compile/0.1.0"
+    },
+    "dialect": {
+      "const": "weft-sql/0.2.0"
+    },
+    "sql": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentJson": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pin": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "umfVersion": {
+                "const": "0.8.0"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "umfVersion",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "selectedModuleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "documentJson",
+          "pin",
+          "selectedModuleIds"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "backendId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "backendVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetProfile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bindingJson": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bindingSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "backendId",
+        "backendVersion",
+        "targetProfile",
+        "bindingJson",
+        "bindingSha256"
+      ],
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "allowCandidate": {
+          "type": "boolean"
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "readProfile": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "weft-application-read/0.2.0"
+        },
+        "subset": {
+          "enum": [
+            "entity-page",
+            "count-summary",
+            "related-entity-page"
+          ]
+        }
+      },
+      "required": [
+        "version",
+        "subset"
+      ],
+      "additionalProperties": false
+    },
+    "parameters": {
+      "type": "object",
+      "maxProperties": 1024,
+      "propertyNames": {
+        "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "family": {
+            "enum": [
+              "boolean",
+              "string",
+              "integer",
+              "decimal"
+            ]
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "family",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "umf.security/0.1.0"
+        },
+        "policyJson": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ontologyJson": {
+          "type": "string",
+          "minLength": 1
+        },
+        "queryProfileJson": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4000000
+        }
+      },
+      "required": [
+        "version",
+        "policyJson",
+        "ontologyJson"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "interfaceVersion",
+    "dialect",
+    "sql",
+    "modules",
+    "target",
+    "security"
+  ],
+  "additionalProperties": false
+}
