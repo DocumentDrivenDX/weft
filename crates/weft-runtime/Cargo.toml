@@ -5,6 +5,7 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+ashlar-databricks-implicit-arithmetic=["dep:weft-databricks"]
 ashlar-databricks-paths-keys=["dep:weft-databricks"]
 ashlar-databricks-paths=["dep:weft-databricks"]
 ashlar-databricks-left-join=["dep:weft-databricks"]
@@ -44,3 +45,8 @@ required-features=["ashlar-databricks-paths"]
 name="weft-paths-keys"
 path="src/paths_keys_cli.rs"
 required-features=["ashlar-databricks-paths-keys"]
+
+[[bin]]
+name="weft-implicit-arithmetic"
+path="src/implicit_arithmetic_cli.rs"
+required-features=["ashlar-databricks-implicit-arithmetic"]

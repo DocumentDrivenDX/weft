@@ -825,7 +825,7 @@ fn lower_profile(
     for h in p.having() {
         let count_sql = match h.count {
             b03::ExpressionView::Legacy(arithmetic::Expression::CountDistinct{argument,..})=>format!("COUNT(DISTINCT {})",field_sql(&mut lower,argument)?),
-            b03::ExpressionView::Legacy(arithmetic::Expression::Count{..}) if keys_profile && c.plan.ir_version()=="weft-ir/0.4.1" => "COUNT(*)".into(),
+            b03::ExpressionView::Legacy(arithmetic::Expression::Count{..}) if keys_profile && matches!(c.plan.ir_version(),"weft-ir/0.4.1"|"weft-ir/0.4.2") => "COUNT(*)".into(),
             _=>return Err(fail("WFT-CAPABILITY","Selected realization does not admit this HAVING count")),
         };
         let app::Value::Literal {

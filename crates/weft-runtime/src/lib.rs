@@ -463,3 +463,6 @@ mod qualified_tests {
         }
     }
 }
+
+#[cfg(feature="ashlar-databricks-implicit-arithmetic")]
+pub mod implicit_arithmetic;

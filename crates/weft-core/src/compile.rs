@@ -358,3 +358,6 @@ fn public_diagnostic(d: Diagnostic) -> Value {
 
 #[path = "compile041.rs"]
 pub mod v041;
+
+#[path = "compile042.rs"]
+pub mod v042;

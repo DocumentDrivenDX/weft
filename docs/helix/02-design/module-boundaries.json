@@ -184,6 +184,14 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/implicit_arithmetic.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:ImplicitArithmeticLabels"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/left_join.rs",
           "publicDeclarations": [
             "const:ID",
@@ -207,7 +215,8 @@
             "mod:left_join",
             "mod:paths",
             "mod:paths_keys",
-            "mod:paths_keys_having"
+            "mod:paths_keys_having",
+            "mod:implicit_arithmetic"
           ],
           "pathReferences": []
         },
@@ -488,6 +497,7 @@
           "publicDeclarations": [
             "field:output",
             "field:alias",
+            "field:implicit_label",
             "field:distinct",
             "field:outputs",
             "field:source",
@@ -922,11 +932,13 @@
             "fn:compile_json_with_factory",
             "fn:compile_json_with_security_factory",
             "mod:v04",
-            "mod:v041"
+            "mod:v041",
+            "mod:v042"
           ],
           "pathReferences": [
             "crates/weft-core/src/compile04.rs",
-            "crates/weft-core/src/compile041.rs"
+            "crates/weft-core/src/compile041.rs",
+            "crates/weft-core/src/compile042.rs"
           ]
         },
         {
@@ -942,6 +954,17 @@
         },
         {
           "path": "crates/weft-core/src/compile041.rs",
+          "publicDeclarations": [
+            "type:RegistryFactory",
+            "struct:Compiler",
+            "field:registry",
+            "fn:compile_json",
+            "fn:compile_json_with_factory"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/compile042.rs",
           "publicDeclarations": [
             "type:RegistryFactory",
             "struct:Compiler",
@@ -1144,10 +1167,12 @@
           "publicDeclarations": [
             "field:output",
             "field:alias",
+            "field:implicit_label",
             "field:path",
             "field:span",
             "field:alias",
             "field:count_star_having",
+            "field:implicit_arithmetic",
             "field:distinct",
             "field:outputs",
             "field:source",
@@ -2655,12 +2680,25 @@
       ],
       "sources": [
         {
+          "path": "crates/weft-runtime/src/implicit_arithmetic.rs",
+          "publicDeclarations": [
+            "fn:compile_json"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/implicit_arithmetic_cli.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-runtime/src/lib.rs",
           "publicDeclarations": [
             "mod:paths_keys",
             "mod:paths",
             "fn:compile_json",
-            "fn:compile_json_with_conformance_configuration"
+            "fn:compile_json_with_conformance_configuration",
+            "mod:implicit_arithmetic"
           ],
           "pathReferences": []
         },
@@ -2842,7 +2880,8 @@
           "publicDeclarations": [
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",
-            "fn:compile_paths_keys_json"
+            "fn:compile_paths_keys_json",
+            "fn:compile_implicit_arithmetic_json"
           ],
           "pathReferences": []
         }

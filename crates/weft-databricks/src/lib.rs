@@ -27,3 +27,5 @@ pub mod paths;
 pub mod paths_keys;
 
 pub mod paths_keys_having;
+
+pub mod implicit_arithmetic;

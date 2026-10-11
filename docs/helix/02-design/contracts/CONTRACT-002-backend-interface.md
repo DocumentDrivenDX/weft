@@ -215,3 +215,20 @@ Each backend must assess them independently and use a separately admitted
 profile/realization; existing supported declarations must not acquire new
 capabilities without qualification. Logical path identity remains frontend-owned;
 physical edge tokens and native checks remain backend-owned.
+
+
+## Additive implicit arithmetic label capability
+
+A backend selecting `weft-sql/0.4.2` and `weft-ir/0.4.2` MUST declare
+`project.implicitArithmeticLabels` before binding unnamed computed projections.
+This capability admits source-expression logical labels only; it does not widen
+operators, type domains, numeric capacity or source/publication obligations.
+Physical carrier naming MUST preserve each output ordinal and original logical
+label independently. The additive Ashlar candidate backend version is
+`0.4.2-implicit-arithmetic-labels-candidate`; older backend manifests and
+capability selections MUST remain unchanged.
+
+The closed `backend-manifest-v0.3.2.schema.json` admits only the exact
+0.4.2 language/IR pair for this additive profile; both JSON and typed manifest
+validation MUST select it explicitly. Mixed version pairs refuse. Older manifest
+schemas remain unchanged.

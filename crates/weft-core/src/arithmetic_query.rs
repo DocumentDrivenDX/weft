@@ -275,6 +275,9 @@ fn arithmetic_predicate(p: &mut Parser, budget: &mut Budget) -> Result<Option<Pr
 }
 // Shared query segments keep each private dialect on the same legacy grammar.
 pub(crate) fn projection(p: &mut Parser, budget: &mut Budget) -> Result<Projection> {
+    projection_version(p, budget, false)
+}
+pub(crate) fn projection_version(p: &mut Parser, budget: &mut Budget, implicit_arithmetic: bool) -> Result<Projection> {
     let output = if p.peek_word("count") {
         p.word("count")?;
         p.symbol('(')?;
@@ -324,7 +327,7 @@ pub(crate) fn projection(p: &mut Parser, budget: &mut Budget) -> Result<Projecti
     } else {
         None
     };
-    if matches!(output, Output::Arithmetic(_)) && alias.is_none() {
+    if matches!(output, Output::Arithmetic(_)) && alias.is_none() && !implicit_arithmetic {
         return Err(fail(
             p,
             "Computed arithmetic projection requires an explicit alias",

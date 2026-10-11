@@ -176,6 +176,7 @@ pub(crate) fn resolve(
                     output => ProjectionSource::Extra(output),
                 },
                 alias: p.alias.as_ref(),
+                implicit_label: p.implicit_label.as_deref(),
             })
             .collect(),
         source: &query.source,
@@ -235,7 +236,7 @@ pub(crate) fn resolve(
         order: p.order,
         limit: p.limit,
         path_expansion: p.extension.map(|binding| binding.expansion),
-    }, query.count_star_having)
+    }, query.count_star_having, query.implicit_arithmetic)
     .map_err(|_| {
         Diagnostic::new(
             "WFT-TYPE",

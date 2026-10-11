@@ -19,13 +19,17 @@ struct Schema;
     path = "../../docs/helix/02-design/contracts/backend-manifest-v0.3.1.schema.json"
 )]
 struct Schema041;
+#[jsonschema::validator(
+    path = "../../docs/helix/02-design/contracts/backend-manifest-v0.3.2.schema.json"
+)]
+struct Schema042;
 pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     if raw.len() > 1024 * 1024 {
         return Err(fail("WFT-LIMIT", "Manifest exceeds one MiB"));
     }
     let v = crate::json::checked_json(raw)
         .map_err(|_| fail("WFT-BACKEND-VERSION", "Malformed or duplicate-key manifest"))?;
-    if !(Schema::is_valid(&v) || Schema041::is_valid(&v)) {
+    if !(Schema::is_valid(&v) || Schema041::is_valid(&v) || Schema042::is_valid(&v)) {
         return Err(fail(
             "WFT-BACKEND-VERSION",
             "Manifest violates closed backend03 schema",
@@ -38,7 +42,9 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
 }
 pub(super) fn validate(m: &Manifest) -> Result<()> {
     let value = bounded_json(m, 1024 * 1024)?;
-    if !(Schema::is_valid(&value) || Schema041::is_valid(&value)) || !unique(&m.evidence) {
+    if !(Schema::is_valid(&value) || Schema041::is_valid(&value) || Schema042::is_valid(&value))
+        || !unique(&m.evidence)
+    {
         return Err(fail(
             "WFT-BACKEND-VERSION",
             "Invalid bounded backend03 manifest",

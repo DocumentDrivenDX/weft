@@ -29,6 +29,8 @@ struct PlanSchema04;
     path = "../../docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json"
 )]
 struct PlanSchema041;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json")]
+struct PlanSchema042;
 type Result<T> = std::result::Result<T, Invalid>;
 fn span(s: &Span) -> bool {
     s.start <= s.end
@@ -236,9 +238,9 @@ pub struct Plan {
 }
 impl Plan {
     pub fn new(p: PlanParts) -> Result<Self> {
-        Self::new_version(p, false)
+        Self::new_version(p, false, false)
     }
-    pub(crate) fn new_version(p: PlanParts, version041: bool) -> Result<Self> {
+    pub(crate) fn new_version(p: PlanParts, version041: bool, version042: bool) -> Result<Self> {
         if p.page_key.is_some() {
             return Err(Invalid::InvalidStage);
         }
@@ -360,7 +362,9 @@ impl Plan {
             .collect();
         let plan = Self {
             distinct: p.distinct,
-            ir_version: if version041 {
+            ir_version: if version042 {
+                "weft-ir/0.4.2"
+            } else if version041 {
                 "weft-ir/0.4.1"
             } else {
                 "weft-ir/0.4.0"
@@ -383,7 +387,9 @@ impl Plan {
             outer_join_scans,
         };
         let value = serde_json::to_value(&plan).map_err(|_| Invalid::InvalidShape)?;
-        if !(if version041 {
+        if !(if version042 {
+            PlanSchema042::is_valid(&value)
+        } else if version041 {
             PlanSchema041::is_valid(&value)
         } else {
             PlanSchema04::is_valid(&value)

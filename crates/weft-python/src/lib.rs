@@ -24,6 +24,14 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
         compile_json_with_conformance_configuration,
         m
     )?)?;
+    #[cfg(feature="ashlar-databricks-implicit-arithmetic")]
+    m.add_function(wrap_pyfunction!(compile_implicit_arithmetic_json, m)?)?;
     m.add("__version__", env!("CARGO_PKG_VERSION"))?;
     Ok(())
+}
+
+#[cfg(feature="ashlar-databricks-implicit-arithmetic")]
+#[pyfunction]
+fn compile_implicit_arithmetic_json(request: &str) -> String {
+    weft_runtime::implicit_arithmetic::compile_json(request)
 }

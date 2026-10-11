@@ -1,0 +1,2070 @@
+{
+  "format": "weft042-evidence-inventory/0.1",
+  "sourceBase": "6cc7bc71e47cf31da9197c964db979f9a21ecb4d",
+  "archiveSha256": "d1b08408e05fb18109e0b289e6dc6a9eca4bfca87b73aff482fdbfefd4551646",
+  "archiveBytes": 807607,
+  "decodedBytes": 13561431,
+  "members": [
+    {
+      "name": "focused-b/core-parser.stderr",
+      "bytes": 11915,
+      "sha256": "87105ed00f4d0e0d11c933c2229f8f2b40b47c9f760b3b3d658a4e0290dda936"
+    },
+    {
+      "name": "focused-b/core-parser.stdout",
+      "bytes": 2027,
+      "sha256": "42622882cc2398c360b545f7213d6842fdf04459daecd928d289443f974a9ebb"
+    },
+    {
+      "name": "focused-b/receipt.json",
+      "bytes": 569,
+      "sha256": "e6c0ade702ba9c14105e23f47109fa5b659ff18711ba1a02e8aea473aa1cef83"
+    },
+    {
+      "name": "focused-b/runtime-042.stderr",
+      "bytes": 6396,
+      "sha256": "496c7ca6df96f5105858cad63278b3c0488099955990867e8916dae3404d23c2"
+    },
+    {
+      "name": "focused-b/runtime-042.stdout",
+      "bytes": 2204,
+      "sha256": "32a57c56a94b2cd6ca1e3d8f623623927b69c4e5381e8e56840d7b74a5f0dd15"
+    },
+    {
+      "name": "focused-c/core-parser.stderr",
+      "bytes": 9045,
+      "sha256": "d2534b91b92c6a1f96ade4c850b64413d6adb1aa4610223681ea2018e8fd06cd"
+    },
+    {
+      "name": "focused-c/core-parser.stdout",
+      "bytes": 2027,
+      "sha256": "42622882cc2398c360b545f7213d6842fdf04459daecd928d289443f974a9ebb"
+    },
+    {
+      "name": "focused-c/receipt.json",
+      "bytes": 568,
+      "sha256": "6043ccd4d8dfcf10a1b60d01a6da6e53203fe6639f32e4289328f030eeb5ad2f"
+    },
+    {
+      "name": "focused-c/runtime-042.stderr",
+      "bytes": 6396,
+      "sha256": "342dcf782bd2e5026b474be687987ab9081512d95e5fb93452b6cb4c2553b9ad"
+    },
+    {
+      "name": "focused-c/runtime-042.stdout",
+      "bytes": 2316,
+      "sha256": "bb51134947ccffa527a584d50c44016856898439aa1bf17159a7a532e3820d56"
+    },
+    {
+      "name": "focused-d/core-parser.stderr",
+      "bytes": 9045,
+      "sha256": "3ddfd6bd55bbf802867dd34cb00e6f8eb69a2e4109b851f8888ba0fd5d316fa7"
+    },
+    {
+      "name": "focused-d/core-parser.stdout",
+      "bytes": 2027,
+      "sha256": "42622882cc2398c360b545f7213d6842fdf04459daecd928d289443f974a9ebb"
+    },
+    {
+      "name": "focused-d/old-paths-keys-regression.stderr",
+      "bytes": 6802,
+      "sha256": "73ee36149511894c6090174d769350fb99d799e3e88161a3803085aba59eedca"
+    },
+    {
+      "name": "focused-d/old-paths-keys-regression.stdout",
+      "bytes": 1581,
+      "sha256": "cd0061eac10fa919cfd58e574282a43f6efa5892c78cd56dfe7b8728d1475097"
+    },
+    {
+      "name": "focused-d/python-wrapper-check.stderr",
+      "bytes": 8946,
+      "sha256": "32c18f3edcb03056ace65f6182514c730baa2816f03867e2c4760ca1a3e642c3"
+    },
+    {
+      "name": "focused-d/python-wrapper-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "focused-d/receipt.json",
+      "bytes": 1130,
+      "sha256": "3dd4363082f44c7f9528cd80318fc64e8f7de50f201bbbe60c8d0967cc5731eb"
+    },
+    {
+      "name": "focused-d/runtime-042.stderr",
+      "bytes": 6922,
+      "sha256": "60bf5932d1337349828ca4af9d5e98e9e0a24fb63225592df81d831a59e854cc"
+    },
+    {
+      "name": "focused-d/runtime-042.stdout",
+      "bytes": 1260,
+      "sha256": "615ddf7aa55fb6885154e5526fcff6dac60946d6db55974882c3b548317a3ab0"
+    },
+    {
+      "name": "focused-d/wasm-wrapper-check.stderr",
+      "bytes": 9235,
+      "sha256": "176e270afcae4b8dc418c9ae5caca2c04315b22c3f3324e6dd2d6bf6900d0d47"
+    },
+    {
+      "name": "focused-d/wasm-wrapper-check.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "focused-e/receipt.json",
+      "bytes": 406,
+      "sha256": "bc233bdcf2076617609660c1db1a66d379b261499452e16e92cfaaa436c5351d"
+    },
+    {
+      "name": "focused-e/runtime-042.stderr",
+      "bytes": 6820,
+      "sha256": "cd24f20bf44d2e957e29ccffe4b87944d01612bddb8dd1445a3a8e6ee57cbb23"
+    },
+    {
+      "name": "focused-e/runtime-042.stdout",
+      "bytes": 1260,
+      "sha256": "db0b60535f5fa7e87d1ea5fe9ce4da40bfc30b8413c56bb84de0d1ade34f887f"
+    },
+    {
+      "name": "freezes/weft-042-focused-actual-freeze-b.json",
+      "bytes": 1285,
+      "sha256": "5585eb0f0183fcf33676f1504dddfc2a41c4982654b24ddd1ecbd29392751d53"
+    },
+    {
+      "name": "freezes/weft-042-focused-actual-freeze-c.json",
+      "bytes": 1273,
+      "sha256": "80163e49a5bee02e3a5574d42a44f4316eeb65d34b7f3d30d5440c5886417607"
+    },
+    {
+      "name": "freezes/weft-042-focused-actual-freeze-d.json",
+      "bytes": 2467,
+      "sha256": "ef2e4e1d669a3fe4df9bcb556ec4fe7c1bf63ef5887b2d8988ab77ce6acbb427"
+    },
+    {
+      "name": "freezes/weft-042-focused-actual-freeze-e.json",
+      "bytes": 921,
+      "sha256": "033f35e72c8d2b1498ed832e7abc61efc06b5084c8d9b368c7f0b2d9e7ad83b2"
+    },
+    {
+      "name": "freezes/weft-042-integration-actual-freeze-l.json",
+      "bytes": 3265,
+      "sha256": "0b7a0f6cbadd6eb351022130518be14c542c2eb7593ba656adcfc108cae1ec0c"
+    },
+    {
+      "name": "freezes/weft-042-public-actual-freeze-fhij.json",
+      "bytes": 54203,
+      "sha256": "75058aa6349707bcc7bdf2b17c01efd3f0440d59062fc63c761bb8cb49916fc5"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/boundaries.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/boundaries.stdout",
+      "bytes": 646,
+      "sha256": "bfbb02925bc2fff01e3029e78aa209a113f6173ef6072ba29395bd7328c0b655"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/fulfillment.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/fulfillment.stdout",
+      "bytes": 35412,
+      "sha256": "57ee20e12513173f82b263826c3667af5220d09f51e9517ec1a66794611272a3"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/partial-return.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/partial-return.stdout",
+      "bytes": 52790,
+      "sha256": "60a7caeb6eda72e3f7d16d8b4fdcc4b84bbd3a43499685d73f22136fa173bafb"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/receipt.json",
+      "bytes": 2387,
+      "sha256": "b1739529382f68535bfa43537b0b7ff79ce0693ff41ca2e9c8396a62b0b36b84"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/refund.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/refund.stdout",
+      "bytes": 51452,
+      "sha256": "01c39d34dc51d133abdb7d9f1fb06474c8b30e4564c6fe266dfb82c66c0320f7"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/runtime.stderr",
+      "bytes": 6231,
+      "sha256": "166c2eebbf4192004d8ae37abbde9fc58fb96dd314ebbc5805ded9f935127c5b"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/runtime.stdout",
+      "bytes": 696,
+      "sha256": "15a3e4231b206fafb2645b9de254afc136ff8ff2e0e3c6ec20a2316de23397ca"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/settlement.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/settlement.stdout",
+      "bytes": 33126,
+      "sha256": "20fa79d9c76c75645c11df177190c7c08ea174765cef64b9c64c1d89a631d2b1"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/transport.stderr",
+      "bytes": 6705,
+      "sha256": "c7db945a707165accd5431689fb0670693c95e5b4e221b3bb795ed0f13ffbded"
+    },
+    {
+      "name": "integrated/weft-042-integration-check-l/transport.stdout",
+      "bytes": 226,
+      "sha256": "bd1076a687093b0e4595dd9325e5504c5e2a2ff50c2c3910385ea20dd904118a"
+    },
+    {
+      "name": "integration-c/governance-checks.json",
+      "bytes": 824,
+      "sha256": "60b171b304224872911f89851805bd7eead0feed8b2184468e25893973da9e62"
+    },
+    {
+      "name": "integration-c/module-boundaries.json",
+      "bytes": 103301,
+      "sha256": "452f7061721abebc9016d9e759faf3fab920bd9ea52559b87a7ccbacb6638ddb"
+    },
+    {
+      "name": "integration-c/source-freeze.json",
+      "bytes": 7522,
+      "sha256": "0d9c0b6f270399a72764db47d35c082b0c46ed8647d4ed90a796584ea689db0b"
+    },
+    {
+      "name": "integration-d/conformance.yml",
+      "bytes": 10221,
+      "sha256": "3f5842f6589de0ea998fd6cc4c9348d4ef1c46b83f41033dc9b53a37db705b12"
+    },
+    {
+      "name": "integration-d/source-freeze.json",
+      "bytes": 7706,
+      "sha256": "944965955b9bd28d246d919aaf2eb3f158f1fc121314749acd20aa21f07a274a"
+    },
+    {
+      "name": "public/tmp/weft-042-cli-build-command-f.json",
+      "bytes": 1362,
+      "sha256": "1ecdd461a689875fc3fe52faafa4923ef6d15345b7b2301beb514e41cbb01913"
+    },
+    {
+      "name": "public/tmp/weft-042-cli-build-f.py",
+      "bytes": 2188,
+      "sha256": "1ef8cef22a90c2d8524f5dbed851d05404b140b2dda10311f17b451acceca5dd"
+    },
+    {
+      "name": "public/tmp/weft-042-metadata-j.rs",
+      "bytes": 365,
+      "sha256": "25685ee114aa0021bce2ecbd272737c41cdd4e95514a0dae26a9d7e7586b4996"
+    },
+    {
+      "name": "public/tmp/weft-042-public-check-g.py",
+      "bytes": 3398,
+      "sha256": "b55a2cdb775a6910ebf570ac48b43d2658c7dc39117331bbf054112fbaea9388"
+    },
+    {
+      "name": "public/tmp/weft-042-public-check-h.py",
+      "bytes": 4000,
+      "sha256": "a23f62231410652316f978e4627bb12398b30522df510e0569ac94378c6eb0b7"
+    },
+    {
+      "name": "public/tmp/weft-042-public-check-i.py",
+      "bytes": 4502,
+      "sha256": "dae08964fd8e9a9a581a9063485875caf9839e964bb276289e0dcbd78e7dcbc5"
+    },
+    {
+      "name": "public/weft-042-cli-checks-f/build-receipt.json",
+      "bytes": 620,
+      "sha256": "8552e95c14243896c3fe1c0aeb84c744169b571b85f07bd5a641150ed64cad89"
+    },
+    {
+      "name": "public/weft-042-cli-checks-f/build.stderr",
+      "bytes": 6127,
+      "sha256": "75837e02d06601716ad407fec77f4bcc20e404acb597658d07a27bb4d09f43f4"
+    },
+    {
+      "name": "public/weft-042-cli-checks-f/build.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-metadata-j/build-receipt.json",
+      "bytes": 51,
+      "sha256": "e97796002627d38a4c914e367208276a05cc4c58b494f48bd57c5a02f390473c"
+    },
+    {
+      "name": "public/weft-042-metadata-j/build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-metadata-j/build.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-metadata-j/manifest.json",
+      "bytes": 53868,
+      "sha256": "33de51e60a1f2eb46813abe8601d90dc7cbe67d6a6b248890dcc70842bfcbe6e"
+    },
+    {
+      "name": "public/weft-042-metadata-j/manifest.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-g/old-000.request",
+      "bytes": 55397,
+      "sha256": "4fd72e4c1b726491097ffdb952a5e5e4686252a1e08312935160ce228f9e1ad4"
+    },
+    {
+      "name": "public/weft-042-public-check-g/old-000.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-g/old-000.stdout",
+      "bytes": 234,
+      "sha256": "da28987449c851db117f435eb23795484154be79ef97862b43eb74b167929a63"
+    },
+    {
+      "name": "public/weft-042-public-check-g/receipt.json",
+      "bytes": 653,
+      "sha256": "652e2671c03ce9bd95523caac4229545bd05f427cca7f31e4fc56f1866e1ca5f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-000.request",
+      "bytes": 55397,
+      "sha256": "4fd72e4c1b726491097ffdb952a5e5e4686252a1e08312935160ce228f9e1ad4"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-000.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-000.stdout",
+      "bytes": 234,
+      "sha256": "da28987449c851db117f435eb23795484154be79ef97862b43eb74b167929a63"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-001.request",
+      "bytes": 5966,
+      "sha256": "c71dd21e6a6c29debd4f942f6e05146880f006d4c89258af9670734eb145b339"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-001.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-001.stdout",
+      "bytes": 51308,
+      "sha256": "7ab960a5ee83bda2b6d6fa2cfcd747215c99faabae44603478a58e323d01425d"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-002.request",
+      "bytes": 5956,
+      "sha256": "5d849657fd4143daa775aa234f46dfee667da458613b48f25de26e7d400bcdc1"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-002.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-002.stdout",
+      "bytes": 88697,
+      "sha256": "b50af7d8cdb25963314ffb801acc5acf7b8cdfbec58d615821595e99c5946ffe"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-003.request",
+      "bytes": 55314,
+      "sha256": "f83985d708199abb5813801b960aec3b7c5ba45c8f706b3b5a2d8f7ce0e75d3f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-003.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-003.stdout",
+      "bytes": 14763,
+      "sha256": "bdfcaba355d80a4af0f545e242aaa27eb33457af2fb9fc0da8db6f957a20d8db"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-004.request",
+      "bytes": 55388,
+      "sha256": "021f1d0a22560fe336421d414334e2a29cafb6bafdec00708f5e8c96d856447a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-004.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-004.stdout",
+      "bytes": 88660,
+      "sha256": "2b3db5131dd99f283ab95f3063f98c563a89fe19075bb0770bcafd6223830ea5"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-005.request",
+      "bytes": 55396,
+      "sha256": "9567f641fd30e95fe92561c1924542ff38f1793ccf402b09e3661e1dbc28e557"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-005.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-005.stdout",
+      "bytes": 103726,
+      "sha256": "fc0ce7e75c23823abfd86ace107f3625abfe4fbe0400b3571fdf4f26e05d0bed"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-006.request",
+      "bytes": 55396,
+      "sha256": "9567f641fd30e95fe92561c1924542ff38f1793ccf402b09e3661e1dbc28e557"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-006.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-006.stdout",
+      "bytes": 103726,
+      "sha256": "fc0ce7e75c23823abfd86ace107f3625abfe4fbe0400b3571fdf4f26e05d0bed"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-007.request",
+      "bytes": 55380,
+      "sha256": "e62db3a71a104166c9d675fd79366f49c160d61648c92be705ef5e84e25aea73"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-007.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-007.stdout",
+      "bytes": 104757,
+      "sha256": "ad13f2fed6529eb98b1def5a8bfc4640037b0523175b691ae9c0f0080138081b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-008.request",
+      "bytes": 55443,
+      "sha256": "327c58e96b9d0ee63c2601a0cb215b005a1c3e470e38f8cf884197c271bbfb90"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-008.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-008.stdout",
+      "bytes": 128286,
+      "sha256": "007dbcaba04cc85f0a532e0e415ae2fa8d9c723798ee007e847da2ef07a2b07b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-009.request",
+      "bytes": 55459,
+      "sha256": "6dc4346c60e5f927d40f75022135c88d1234e771ebe15bdc80b1720b1913f381"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-009.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-009.stdout",
+      "bytes": 120003,
+      "sha256": "ba3629af5f80739af3147c04f74360cacf71507b6f51658e4e6c0b0d564c6956"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-010.request",
+      "bytes": 55430,
+      "sha256": "75cbd329caa1efefb05fdb6a91038ce436d93130cf360a69e8e2496065d1bceb"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-010.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-010.stdout",
+      "bytes": 117992,
+      "sha256": "8f407cdd7ec047b4db5ece4b0fc86a7ab7537497c8832e884ab7cfd8bf4fa3d2"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-011.request",
+      "bytes": 55611,
+      "sha256": "b455b8a3d14833ef7782fb010df294a68a807365b23a01ca0f885891af75419b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-011.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-011.stdout",
+      "bytes": 131188,
+      "sha256": "bf8691e3c73d025c8a9266a097fd0eaae849d62c1f44c8387983a16cf71af18f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-012.request",
+      "bytes": 5954,
+      "sha256": "c2d1fb66da73e27876cfac50ca56e5d67a6c5bda25a89e4568fed26f97aa09d4"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-012.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-012.stdout",
+      "bytes": 88687,
+      "sha256": "dbac085cc416bbb23185b01915c443d2aab7c5b83816e65542730dcadd4f2405"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-013.request",
+      "bytes": 55400,
+      "sha256": "775bd49046d705e1be76563ea4b26f1b27f3e1cc71943eb02bf6bc6b92a6ea13"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-013.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-013.stdout",
+      "bytes": 237,
+      "sha256": "eecd2dd63b09ec5de4e0b339864cf3dfcb97943f82c790e85701da316cc46c03"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-014.request",
+      "bytes": 55326,
+      "sha256": "4f134375a2f3caa1e127b2be9001dc2e6bf8efecb3229fde53e0243289919c58"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-014.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-014.stdout",
+      "bytes": 247,
+      "sha256": "d904347a329feff52be6ed79cda87af35078f10b51955470ba3e6e15447b8820"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-015.request",
+      "bytes": 55413,
+      "sha256": "01b1e8e663d124c04750df36f02a44fbb579a0603c8fbfe7f5b5397dffda900a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-015.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-015.stdout",
+      "bytes": 89477,
+      "sha256": "e61f784ef94dc2623377664a829541fa1e764a04e008feafac5efcb73353115f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-016.request",
+      "bytes": 55388,
+      "sha256": "021f1d0a22560fe336421d414334e2a29cafb6bafdec00708f5e8c96d856447a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-016.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-016.stdout",
+      "bytes": 88660,
+      "sha256": "2b3db5131dd99f283ab95f3063f98c563a89fe19075bb0770bcafd6223830ea5"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-017.request",
+      "bytes": 55376,
+      "sha256": "f90b4fa5976c562b85621eefdd9b9cc556be3832484700e1176b3a000966db23"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-017.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-017.stdout",
+      "bytes": 87777,
+      "sha256": "7c869c6e5ff31b80dddbf138592fbff04185f7ec1319b45ddc7a182fe5cdf647"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-018.request",
+      "bytes": 55493,
+      "sha256": "34dfc43a1efd7875a494a7f4c5baa2ff5b5cf76d7ac012e96a2f33a782e3b23a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-018.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-018.stdout",
+      "bytes": 117025,
+      "sha256": "b2c363876e491fa178fe9413a783fca6d60feffb93047bca2366a3ee33f60f66"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-019.request",
+      "bytes": 55422,
+      "sha256": "a9daf009e1735f1c8b607dcdba26b468c1caa5f054ef1f084d7661366b4a2309"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-019.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-019.stdout",
+      "bytes": 252,
+      "sha256": "f48fe0aa6f1298699df0ff12344853b2143c6ee158097478fb0e707c7f03a6ad"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-020.request",
+      "bytes": 55437,
+      "sha256": "d883439e119212f6f060a0f84c5216fbdf4a530e269cda1775977b1018c4bb2c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-020.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-020.stdout",
+      "bytes": 94882,
+      "sha256": "c649ca4f0e502000371fc802629785baf1a7f9f17910e3ed8f01b9ee9938824f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-021.request",
+      "bytes": 55406,
+      "sha256": "41f764a3ce9610d528583f9a1d734fc5aec5dc5cbcfc2eb489b4f3e96cfda9ce"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-021.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-021.stdout",
+      "bytes": 44164,
+      "sha256": "00834f53707c5a4660805f00a237b64c9cab9d9cff6f3b385afccd7bc0e42573"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-022.request",
+      "bytes": 5752,
+      "sha256": "88bc04226984e961da5a6bcb208d50380c360ecbc6a38d5066e3ca9f876872d5"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-022.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-022.stdout",
+      "bytes": 16469,
+      "sha256": "f7345ef2be75d88cf290c7b97c881090e2dd722af2e170a086c628fcdd5f4097"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-023.request",
+      "bytes": 5738,
+      "sha256": "fb3a04be0befe410996460d920c03fdb604689abe2bfa26d75725663de988059"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-023.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-023.stdout",
+      "bytes": 10473,
+      "sha256": "4f365c32bd9de95b885f9c22c39949d94220923feb7d7684a676f7288c8193d6"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-024.request",
+      "bytes": 2238,
+      "sha256": "7f78e606471bee328e99370bc7f954a2114c7622e456fb656be3de89bd392c59"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-024.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-024.stdout",
+      "bytes": 14050,
+      "sha256": "0d86005e65e1564fd2e5a5cd70ce0ed98ae36f790542f40831baad82509ed2ec"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-025.request",
+      "bytes": 2260,
+      "sha256": "b38653f50269784a006b11916c730ba10596c996206d0853280ca16204f46f97"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-025.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-025.stdout",
+      "bytes": 16716,
+      "sha256": "2672b62fb8d7834a69bf2ba366a4f30e057e553b272ea4c03bd700392de9005d"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-026.request",
+      "bytes": 2278,
+      "sha256": "218dbbb49f8adde43b4e1cb172e1be10c28edd82433442ea9309f427470726a7"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-026.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-026.stdout",
+      "bytes": 22770,
+      "sha256": "ef0ca1b38e5ed229d50fd2211cac3a1c82f3d426d3112c17c179bdaa8ef12128"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-027.request",
+      "bytes": 5771,
+      "sha256": "5496195c010d06f07f71767beee5a03d45d1cc54f38c575e134137984fa75855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-027.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-027.stdout",
+      "bytes": 19115,
+      "sha256": "d744ea10080c411a18a1ac94bf5c27c9e4b154d233caadcc5db5276405654eee"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-028.request",
+      "bytes": 55378,
+      "sha256": "249461280fb6f0ee7b0b3f0c51a12a063c596e188e9357aad73622e3557e0042"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-028.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-028.stdout",
+      "bytes": 22845,
+      "sha256": "fd5319f0c38ea3fa0bbc4105e2ab6ca84660cd465608a2ce94b3cb1161f7741a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-029.request",
+      "bytes": 2259,
+      "sha256": "4b278f84dde43f4afa82f40c60d545f7a20381b560851e1c54a1f5b7ac8b08b8"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-029.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-029.stdout",
+      "bytes": 19292,
+      "sha256": "d18b1ef20c8782da8617056f6af257764c98f30643558312e013e283a97a89ce"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-030.request",
+      "bytes": 55346,
+      "sha256": "504c45bad8328037d5c22e59a6174b5a5f32bed906f55214eb641e129a2357e8"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-030.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-030.stdout",
+      "bytes": 48069,
+      "sha256": "f055d0229f08a49ce1ff7f9b6fa186375b89dbfb9db858814ad0c9dbd59bb40a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-031.request",
+      "bytes": 55397,
+      "sha256": "4348120236de3384f2b644d098b8e2519c7ff0f061905f1a5754b2a94519f18f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-031.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-031.stdout",
+      "bytes": 53787,
+      "sha256": "8e8bf69e1f47a511177a3d53191780ecbe84ecf8dc362a42160f1420ba482418"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-032.request",
+      "bytes": 55385,
+      "sha256": "5b6384c53cc293736d8b1df25cdb1c4b8458b126867b6053230057b47e192792"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-032.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-032.stdout",
+      "bytes": 55632,
+      "sha256": "1caa3082dae67875be82224c0fa9fa9b3f8660ea3526232ea1177bf86e70e9df"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-033.request",
+      "bytes": 55501,
+      "sha256": "c02eb66ea467845cea9461fbfbcd00337fba8116c5063d9a61e9e120ae235d82"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-033.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-033.stdout",
+      "bytes": 154382,
+      "sha256": "de0b605405c620c7c144dcd4e77239aa86af3aeeffd95e3e5125c6ff50098f91"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-034.request",
+      "bytes": 55413,
+      "sha256": "10e64fd465efcd3275be818a53f8d8618953de8c9e5cb8c187b8b7ab5feac5af"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-034.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-034.stdout",
+      "bytes": 69474,
+      "sha256": "90fa513f88fb88b3b4861fa649dd17537d2539b73422217e6c600a9ad1d1247b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-035.request",
+      "bytes": 55387,
+      "sha256": "fb915f76e1e08a173ebc7771a44520ea58c2c2c332a7aa8b5261aa0e844fb6dc"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-035.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-035.stdout",
+      "bytes": 60398,
+      "sha256": "6b791cf1c5b7d2fe2fb5e35c449abb57364ccd9267bfd089b7ff2741338d450a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-036.request",
+      "bytes": 55372,
+      "sha256": "de679773146cf23de3e84b5200cbbd566d2a14e0aa6f7e53fcfaddcf80fed4f5"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-036.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-036.stdout",
+      "bytes": 56857,
+      "sha256": "a0b236942b5699f69b6529bc36949b573df8d4eb57ef6b356c3a0d59c3dafd1b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-037.request",
+      "bytes": 41996,
+      "sha256": "dfe576bfa527c60b73418b9327452ff98675a821049af327c623601a9b0aea33"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-037.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-037.stdout",
+      "bytes": 44651,
+      "sha256": "879198abd8a8b58d7a050ce73b61564f5839dc0ce0b8b966fb8804782493428b"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-038.request",
+      "bytes": 42023,
+      "sha256": "adac263b484d09e82d49c13325d38d095c7cd2ed372d3e42ed427ef4faa31a94"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-038.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-038.stdout",
+      "bytes": 51843,
+      "sha256": "222bdeebb9df6bf6339372d772e4c97a01efba59cce967f5b41d4a4ca678de37"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-039.request",
+      "bytes": 55288,
+      "sha256": "db4f68e77f909a7aeb2e7cab9c3fea22edcedbb5f3e8b597eccce22330270d58"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-039.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-039.stdout",
+      "bytes": 12016,
+      "sha256": "cf7b068e8db909ec3708ba46bedac857ced2bdef83d3105a1d4f49dd683f861e"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-040.request",
+      "bytes": 55346,
+      "sha256": "bb35b667543f08eec36ec98892abf9d2d17a850c6a2314282b5caedc1c453d9f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-040.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-040.stdout",
+      "bytes": 270,
+      "sha256": "e2f32ca0a945c3312a2aa9ca387e218572bf39febbc2a2b13e1f3e94388ffcdb"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-041.request",
+      "bytes": 55349,
+      "sha256": "cc7ff25bda722e7658420f12d6eee355d41c4b145195a079f6765edf4674f039"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-041.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-041.stdout",
+      "bytes": 270,
+      "sha256": "295a91434120e8c72c910fae76d685ff39e74e12746a5f12969fc3cad7eee12f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-042.request",
+      "bytes": 55387,
+      "sha256": "12821fefcbda0d4a05012b72a085613d7db51dedda87dc332be5dc308a7ada2a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-042.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-042.stdout",
+      "bytes": 255,
+      "sha256": "5dd1f785a7193b200c1b1a98c24dcfa81646d6a28391daab78f66dacaac37f14"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-043.request",
+      "bytes": 55350,
+      "sha256": "a94262f866bc1e9b3f04fe122f1b87de1650c38dc1068bb1cd501870f17dca40"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-043.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-043.stdout",
+      "bytes": 217,
+      "sha256": "9d15d97b33733490b5c25ec7818e1542b172d3c0e8edaa10daf914fd98f7533a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-044.request",
+      "bytes": 55360,
+      "sha256": "242b8633301a302d6dccf619d65223157b693cb3560f1d7ecaa938553acf1b1a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-044.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-044.stdout",
+      "bytes": 217,
+      "sha256": "9d15d97b33733490b5c25ec7818e1542b172d3c0e8edaa10daf914fd98f7533a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-045.request",
+      "bytes": 55429,
+      "sha256": "c24c9cbc8c1674d76688cc6af1d488d083068298a44dad4c7a2b409157b4e4ed"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-045.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-045.stdout",
+      "bytes": 283,
+      "sha256": "b51ff053b9bf0e6499e9e532caa647a114086614c4f800ad9f82d86a244b8c96"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-046.request",
+      "bytes": 41974,
+      "sha256": "1cd66674b3c0653c7ebcf6bfe3a58cdcd1a48d21c07a353044388417a2e2362c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-046.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-046.stdout",
+      "bytes": 247,
+      "sha256": "02ad0d25bf1f1e711e75e4369fa08dadb5655eda79d09768b3fb23c26669bceb"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-047.request",
+      "bytes": 41969,
+      "sha256": "f12a4d0ea4648d583c75e0659e797fc3a8e537aa1b40e56c102862905567bead"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-047.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-047.stdout",
+      "bytes": 246,
+      "sha256": "9fe85f2526f5d89e33861a9427e98c78ff47fa20ef9e9a5b8e55dcfa658b02cd"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-048.request",
+      "bytes": 55347,
+      "sha256": "b34fcaed68d14a36984f6b83e78d666ffed7548c1cca842c602d7e3ed469c0ed"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-048.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-048.stdout",
+      "bytes": 234,
+      "sha256": "da28987449c851db117f435eb23795484154be79ef97862b43eb74b167929a63"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-049.request",
+      "bytes": 55341,
+      "sha256": "b3ca4ecb312075a36901d30b51cb1c1f84395924448c9dc2297db774b642ddcd"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-049.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-049.stdout",
+      "bytes": 217,
+      "sha256": "241b0d860fe309dad33ad0ede68c743480f08475a0d0933d7d758958b74f76c3"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-050.request",
+      "bytes": 55397,
+      "sha256": "4fd72e4c1b726491097ffdb952a5e5e4686252a1e08312935160ce228f9e1ad4"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-050.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-050.stdout",
+      "bytes": 234,
+      "sha256": "da28987449c851db117f435eb23795484154be79ef97862b43eb74b167929a63"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-051.request",
+      "bytes": 55393,
+      "sha256": "bc61a647e395a807a0811592f915ba4d6c7dfa986589c60b92b059ec46fd902d"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-051.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-051.stdout",
+      "bytes": 231,
+      "sha256": "0d18fb510ffa9ff9b286caff51ebf6ce6ade0444535b420a0561ff7840a13154"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-052.request",
+      "bytes": 55369,
+      "sha256": "ee71fdcfc25bece675bc976af35263f3f7d57dd3d3ad0e07d145fc066b05d395"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-052.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-052.stdout",
+      "bytes": 221,
+      "sha256": "811fb93c1eea9de57e131f0663161123d5eb1ff80c62ab59ac6552262e21a8f3"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-053.request",
+      "bytes": 55382,
+      "sha256": "23ef61450f4b2a6c7b0c18198f29f426b6144656caba2f901e42a9714f053db9"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-053.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-053.stdout",
+      "bytes": 217,
+      "sha256": "241b0d860fe309dad33ad0ede68c743480f08475a0d0933d7d758958b74f76c3"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-054.request",
+      "bytes": 55422,
+      "sha256": "ef1fa163f767108c2c0e27b02d5eeb0cdc29257f24c005d0f3fc70e46363b31a"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-054.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-054.stdout",
+      "bytes": 223,
+      "sha256": "3decb6a7cc914a13713ae3d68c50528bfc02d4bc3c7f74c839839ce9c486cffe"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-055.request",
+      "bytes": 55396,
+      "sha256": "289445f42a961861ec5380f0af9c40c85ca6b1045ada4cbd35f9c86fcbd99ac5"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-055.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-055.stdout",
+      "bytes": 246,
+      "sha256": "459782c7cba307074b9820cbd680279022e4ad8de6cd948e4961b87e48c16043"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-056.request",
+      "bytes": 55396,
+      "sha256": "c2df2d67f2dbcf48a0107de8ccc6d48dbc5141cff4ed6335a26d9eabc912efbe"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-056.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-056.stdout",
+      "bytes": 205,
+      "sha256": "23971d88fb8a7ee464dd804ba836a92c309ef719e51b0ac657fa0da9b1c1c672"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-057.request",
+      "bytes": 55396,
+      "sha256": "773bf3774b0aad4a92c127b9636ecf2c384ffb40db6d9ab0c4ebfe281732dcf2"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-057.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-057.stdout",
+      "bytes": 208,
+      "sha256": "56d8186a5212a684cae2a56c71dfdf621d61e7126a7a94346c3ba4a7714b48c6"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-058.request",
+      "bytes": 120798,
+      "sha256": "6850633332254d606d9b05dd211b2dec779b19e652c2be1fce94c9c2fcaad733"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-058.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-058.stdout",
+      "bytes": 197,
+      "sha256": "1ffd4bf9c3a75efb73f30892edc140b130d36c15b6f60d95ad76ff48e0f6083c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-059.request",
+      "bytes": 4225893,
+      "sha256": "2fd7fd1f23c1f3b17ff1b8dbf12dd556a6a316c24c33f5318a09ea9650d935ba"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-059.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-059.stdout",
+      "bytes": 203,
+      "sha256": "90ce84c2be99eee1507e5f773b1f4935ff209a1a5c36cccd9026545d5120aee0"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-060.request",
+      "bytes": 55436,
+      "sha256": "c2dbfeff7a7b1911d1da7feb591a0af754e063404ab00f67d3c38652a34d146e"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-060.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-060.stdout",
+      "bytes": 208,
+      "sha256": "8de20be1c72ddad538fc75b4ccdad2c8737ba39e1038d7f71a4a3ceec23bae38"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-061.request",
+      "bytes": 55365,
+      "sha256": "b8301fcd1886719965eceffce8bad1054bb445a419d5e4e1c6cf432eba22fba8"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-061.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-061.stdout",
+      "bytes": 237,
+      "sha256": "bfc7413da7d8c0ed5cfb42bb9d06fc8db9c7393228b2cdd99304844f95d0dee2"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-062.request",
+      "bytes": 55397,
+      "sha256": "a1bfe02a548e5e891dd53bc391ae864b4c2d7ec6c2640df88685ed3eac13ed93"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-062.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-062.stdout",
+      "bytes": 220,
+      "sha256": "7e33d2a10aba12d296f48c9bfcfbfe62528df0c96bc7307b23d4f8d505551991"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-063.request",
+      "bytes": 55503,
+      "sha256": "80778848d68dbff0e73f4e69ea497903944ac095dbe10e5a91773beb7788412c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-063.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-063.stdout",
+      "bytes": 220,
+      "sha256": "7e33d2a10aba12d296f48c9bfcfbfe62528df0c96bc7307b23d4f8d505551991"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-064.request",
+      "bytes": 55398,
+      "sha256": "a9b849f018a9212733ca498e72bf22897f42b2413abe83030b50aa481b35549e"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-064.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-064.stdout",
+      "bytes": 225,
+      "sha256": "28bdb2d4277b81e7ff787af613c7208afae5543e78f8f14069d16327550c5b6c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-065.request",
+      "bytes": 55356,
+      "sha256": "c3c3bb6fd0630864b37e31ba9c405d8dbefd8b60a61b5badb6d27a4de234f175"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-065.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-065.stdout",
+      "bytes": 238,
+      "sha256": "6e458ebc8bf1256b914f9dee4935b151f5ec3e906f36f5091b4adcb4dc57c42c"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-066.request",
+      "bytes": 55403,
+      "sha256": "d767963f9be887ed72b2ef4b26f58a57215e7eac055d3d797a03bcf65291c682"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-066.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-066.stdout",
+      "bytes": 104243,
+      "sha256": "1a6a16144fe8d734a0a56303c7e6f6d6bd7bac371d84707422980763fedc1e61"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-067.request",
+      "bytes": 55403,
+      "sha256": "35f0ac188895059323023fa8aff7a7421241013ff285b775c748fde0f6d10233"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-067.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-067.stdout",
+      "bytes": 104243,
+      "sha256": "e19fc939be4e660a381f46d26ae758637060540096e6b3a4c67a5ad9032e4ec8"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-068.request",
+      "bytes": 55407,
+      "sha256": "96da9d446a8db22b103be0ad8c86dad8023b25d69155246caf7a11c235fabc2f"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-068.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-068.stdout",
+      "bytes": 104393,
+      "sha256": "9eb5a7ef95af48e85f88051196e5f26f692ffbb6b4032fd9efbbc2a7c1fb8683"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-069.request",
+      "bytes": 55223,
+      "sha256": "ab1475fd1228849dca964ae20661ef90e9d4dfc0e6e8c81ce0e4a1fc5beff552"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-069.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-h/old-069.stdout",
+      "bytes": 19452,
+      "sha256": "aab97c6114a980cef521916781cb82739a9d416b1bbfe440e8bdefa0fb2a3621"
+    },
+    {
+      "name": "public/weft-042-public-check-h/receipt.json",
+      "bytes": 15277,
+      "sha256": "ef1aa85cbc78c0904d8061f329adc8793c91f503c7ac7b8fe053b7073459500e"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-0.request",
+      "bytes": 55380,
+      "sha256": "653ed0307cac67ebcbf1279740b79b9670c2383166e52b1195f6461c61b8d81e"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-0.stdout",
+      "bytes": 35412,
+      "sha256": "57ee20e12513173f82b263826c3667af5220d09f51e9517ec1a66794611272a3"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-1.request",
+      "bytes": 55380,
+      "sha256": "653ed0307cac67ebcbf1279740b79b9670c2383166e52b1195f6461c61b8d81e"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/fulfillment-1.stdout",
+      "bytes": 35412,
+      "sha256": "57ee20e12513173f82b263826c3667af5220d09f51e9517ec1a66794611272a3"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-069.request",
+      "bytes": 55223,
+      "sha256": "ab1475fd1228849dca964ae20661ef90e9d4dfc0e6e8c81ce0e4a1fc5beff552"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-069.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-069.stdout",
+      "bytes": 19452,
+      "sha256": "aab97c6114a980cef521916781cb82739a9d416b1bbfe440e8bdefa0fb2a3621"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-070.request",
+      "bytes": 55358,
+      "sha256": "c5f56cdb1134c170421d0bde22a402ddfaeea648857a914c26900313169f0a11"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-070.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-070.stdout",
+      "bytes": 30756,
+      "sha256": "2e2ebd74a54362cfcb4e1afb7b31499cf16be631a9cf8f05c9dae7be684707d9"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-071.request",
+      "bytes": 55439,
+      "sha256": "2eadf181bdcc990f3fc4dd8774286534eb5e75b87269ed269354298ca319f25d"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-071.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-071.stdout",
+      "bytes": 99894,
+      "sha256": "4338956de1cea9e176e858c9cd5e77a5bc25af7c3b3e5d69c4349a58b7cc1d19"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-072.request",
+      "bytes": 55223,
+      "sha256": "4254970c77f57588f06146cf5395180670ef11a1372c9f39386c8105540464d9"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-072.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-072.stdout",
+      "bytes": 246,
+      "sha256": "459782c7cba307074b9820cbd680279022e4ad8de6cd948e4961b87e48c16043"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-073.request",
+      "bytes": 55216,
+      "sha256": "f68e2dee0589c964ff9f6a8c73560158ba74ad0d75e85df8008a84143cf2d55e"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-073.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-073.stdout",
+      "bytes": 244,
+      "sha256": "2fd1bcc193d33173cfc26685793abb1b6b8a19f27d9d2d847fd0f11507f00f18"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-074.request",
+      "bytes": 55216,
+      "sha256": "2e241cfccfb096974bfe2c1051e0d65e574db9b8a42dc50ee466e05912db1ba7"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-074.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-074.stdout",
+      "bytes": 221,
+      "sha256": "811fb93c1eea9de57e131f0663161123d5eb1ff80c62ab59ac6552262e21a8f3"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-075.request",
+      "bytes": 55223,
+      "sha256": "097af3ceffcf4dacd789373c2f6d00a87d6a306d7ced65f4c4b62001562693ae"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-075.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-075.stdout",
+      "bytes": 244,
+      "sha256": "09def849c75e1404859e0d86485179be178d7e9772fe32e0ec363f9b44aa1933"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-076.request",
+      "bytes": 55224,
+      "sha256": "bb2e02518f97560ea06442e4d21dfef3f5e97c5d6f3fbb8b0b3c1a43f4a0aa79"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-076.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-076.stdout",
+      "bytes": 234,
+      "sha256": "da28987449c851db117f435eb23795484154be79ef97862b43eb74b167929a63"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-077.request",
+      "bytes": 55214,
+      "sha256": "9bca8b2792bb3e5a168f6e0d0d2602d6e5194c6334ec24e922a533f2249a6240"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-077.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-077.stdout",
+      "bytes": 239,
+      "sha256": "a4f8f0e0465b5a56a31f998012342a64ea8b8f1024c3fed5be8eac0fa47599a2"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-078.request",
+      "bytes": 55178,
+      "sha256": "20d82962f8df7fe9b2183f301cdf0b4d31e703d29b1bb3a1c467f05852b2e900"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-078.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-078.stdout",
+      "bytes": 260,
+      "sha256": "17efbaddd65c0ce31e6a1db331e24a659f07a4757e6d530ccdecf62986a877f3"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-079.request",
+      "bytes": 55220,
+      "sha256": "2cfda1a70cd5c3844df0e4192adb66339ae57df22957983c9c7458a5df4233af"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-079.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/old-079.stdout",
+      "bytes": 283,
+      "sha256": "260fc023484a3d8c206a343888b52831b374fbd6ec6c3b8e97786e20e9bab9cf"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-0.request",
+      "bytes": 55449,
+      "sha256": "e3cd2eacbf2d20737503b089f76f94f7f46134dc915e47d637336b035daff99f"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-0.stdout",
+      "bytes": 52790,
+      "sha256": "60a7caeb6eda72e3f7d16d8b4fdcc4b84bbd3a43499685d73f22136fa173bafb"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-1.request",
+      "bytes": 55449,
+      "sha256": "e3cd2eacbf2d20737503b089f76f94f7f46134dc915e47d637336b035daff99f"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/partial-return-1.stdout",
+      "bytes": 52790,
+      "sha256": "60a7caeb6eda72e3f7d16d8b4fdcc4b84bbd3a43499685d73f22136fa173bafb"
+    },
+    {
+      "name": "public/weft-042-public-check-i/receipt.json",
+      "bytes": 4503,
+      "sha256": "36372897ca5c0f26536d0b9ecc8afb4a4ac105e297763b2df8f38b758e649267"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-0.request",
+      "bytes": 55444,
+      "sha256": "5ad0213d61723fc19eb4e78da3134891c2d51253d7eb70518156ea90b9d94700"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-0.stdout",
+      "bytes": 51452,
+      "sha256": "01c39d34dc51d133abdb7d9f1fb06474c8b30e4564c6fe266dfb82c66c0320f7"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-1.request",
+      "bytes": 55444,
+      "sha256": "5ad0213d61723fc19eb4e78da3134891c2d51253d7eb70518156ea90b9d94700"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/refund-1.stdout",
+      "bytes": 51452,
+      "sha256": "01c39d34dc51d133abdb7d9f1fb06474c8b30e4564c6fe266dfb82c66c0320f7"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-0.request",
+      "bytes": 55384,
+      "sha256": "8c2280838aad97f53801cea8a67ed0d328940c53e4928202cf8337156e235802"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-0.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-0.stdout",
+      "bytes": 33126,
+      "sha256": "20fa79d9c76c75645c11df177190c7c08ea174765cef64b9c64c1d89a631d2b1"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-1.request",
+      "bytes": 55384,
+      "sha256": "8c2280838aad97f53801cea8a67ed0d328940c53e4928202cf8337156e235802"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "public/weft-042-public-check-i/settlement-1.stdout",
+      "bytes": 33126,
+      "sha256": "20fa79d9c76c75645c11df177190c7c08ea174765cef64b9c64c1d89a631d2b1"
+    },
+    {
+      "name": "reviewed-commands/weft-042-bounded-check-command-b.json",
+      "bytes": 5496,
+      "sha256": "3a6eca96bcceac0c26e94a04e042aa16e66f12a8163f368c41f7e95e112e2c25"
+    },
+    {
+      "name": "reviewed-commands/weft-042-bounded-check-command-c.json",
+      "bytes": 5515,
+      "sha256": "60d5a2e40e741f22db18a208e6b7a8358bb81db2de602b2500b452a5b0f63396"
+    },
+    {
+      "name": "reviewed-commands/weft-042-bounded-check-command-d.json",
+      "bytes": 5494,
+      "sha256": "bf1afc11a9737c8dda9d028e531fcd42dab07c06204b8a133f8bd1b6775f5c45"
+    },
+    {
+      "name": "reviewed-commands/weft-042-bounded-check-command-e.json",
+      "bytes": 3690,
+      "sha256": "a43e34449c300196a80bfd8fd3067aa66cddd32035829a18fbff92f7f71a9a7c"
+    },
+    {
+      "name": "reviewed-commands/weft-042-integration-check-l.py",
+      "bytes": 3008,
+      "sha256": "1f1d7d460fd6d13081524ebf0b3ebeb93b0c8a91cf5947eef1797e5a3d202525"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-independent-command-review-b.json",
+      "bytes": 972,
+      "sha256": "4c44ab5c8c9b9dd68d0ef37d4146cc4cbadee98a8413d6391d212113e2410fc5"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-independent-normative-review-c.json",
+      "bytes": 2444,
+      "sha256": "91f87951090705d275eecda7743fb7a73c42197a320a4089ff59dbc2059e8b7f"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-independent-source-command-review-bc.json",
+      "bytes": 948,
+      "sha256": "c0a99d2aeeee26bc09afb9e76be3e90352b368dca6e0cd0c556a85e330f30492"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-independent-source-command-review-d.json",
+      "bytes": 955,
+      "sha256": "60f8bee2cadfd4358a56e1a7787433923223003405b7fb93c44300d5a96858d9"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-independent-source-review-a.json",
+      "bytes": 8785,
+      "sha256": "d5ebbf98289878695018aa2fe9bc836d9f90793d251b3e5dfd2e39fbb4528514"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-integration-source-freeze-b.json",
+      "bytes": 7222,
+      "sha256": "fabd50040916e1d542ef31309d5f61b80163043396181d129b5baf736377e190"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-public-schema-validation-k.json",
+      "bytes": 4644,
+      "sha256": "d9741d18490cbf96be36b260144cf69795f9e3b953dc3e87c8875c4449b76dfe"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-root-integration-independent-review-b.json",
+      "bytes": 1634,
+      "sha256": "9ecaf43f5f8e2e851a8396d84862a821137f20d2ee004b581abd28d5b665392e"
+    },
+    {
+      "name": "reviews-and-freezes/weft-042-source-freeze-e.json",
+      "bytes": 9519,
+      "sha256": "e885a9de4ddc95f5b6f1f4ded5035e02c2a98b55d240a875011c7c273f5ce5c4"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41732,
+      "sha256": "fda1bcdccf51d345312de038a6de74a26e8e34daaa69c4284e8f05205a0250e5"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19693,
+      "sha256": "c5e7795e1d5694f65a58f5e70d7d78bb37aef594b2c068b18cc60b11d77a606d"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 33412,
+      "sha256": "b96aac2f34afb2d0d29d85094551cb490f4b92a095fe40720123e2cec825870e"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3685,
+      "sha256": "e0681d34d80fd19adc4cea46f65ec10707750bcf4390b17aad81ca49008d875e"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 11080,
+      "sha256": "9eb92682818594350b64f48d2ffbbd0ad4b5fbda66bf4a0ea1cca9de1e4e157b"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/compile.rs",
+      "bytes": 17205,
+      "sha256": "27dd0a99e1d4d058308ac3905cd9e67abed6bd05bc4cb2adb46340b15632faff"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/compile042.rs",
+      "bytes": 8762,
+      "sha256": "4eea7b8e7dc71a26a0b97c5b80322614a9e806e7df6aedb7f776a10ba0c8ca2c"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26559,
+      "sha256": "88836d4878f8b97d285294b00672554bd0254fee3816bf3d6b4209581ff7edc4"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/path_ir.rs",
+      "bytes": 27897,
+      "sha256": "0c7b97e381397483aa3fbe3e2d39c719bd05c07e308d11fca166dc1c10beec73"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-core/src/path_query.rs",
+      "bytes": 21978,
+      "sha256": "073222d700d4f7aa75f528cc46ff5a6065405fbcb7321fe02c02fd20f65a8173"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42290,
+      "sha256": "d267064f220d96f39f99ecd83bd75ad151f11ad0ca601a1e4b1edd16ece31213"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-databricks/src/implicit_arithmetic.rs",
+      "bytes": 2438,
+      "sha256": "cd0bb65e75d054b602f010e620a8e8692fbfbfc2f565b70d9cd9c86e304c28ba"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-databricks/src/lib.rs",
+      "bytes": 901,
+      "sha256": "99f2cf3a1c614ebc860226002a96662f48f6ad1e57309b4226e16f4ceb021626"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-python/Cargo.toml",
+      "bytes": 1119,
+      "sha256": "e519d49f1284185a14c137dbf436f964d1ebaae6deada389ae7cbe9e0f2ea54a"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-python/src/lib.rs",
+      "bytes": 1402,
+      "sha256": "fedaaaacd15d4411952aac6f0d040f0f743fc1aea32d0206109efcc0e55017d3"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-runtime/Cargo.toml",
+      "bytes": 1773,
+      "sha256": "f983acf5df5a07fad6bf3ca8bbb1b8b27c4f6bc1888f89861772826de99e00b3"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-runtime/src/implicit_arithmetic.rs",
+      "bytes": 8689,
+      "sha256": "9b81cb2adeb5581716c3e69780963c0a5973842bcd0003c2367870500db2e084"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-runtime/src/implicit_arithmetic_cli.rs",
+      "bytes": 4786,
+      "sha256": "e27e3b5206e640c5c5a7af6487efdac74938120b7e79637874ccdca51e98390b"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-runtime/src/lib.rs",
+      "bytes": 21384,
+      "sha256": "0b03deda1d9a4d5a3bfe844d37fae707e8c056fbc3f920ec51d87c9744e2f811"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-runtime/tests/implicit_arithmetic_input.rs",
+      "bytes": 1497,
+      "sha256": "91de4e9190234fcaaca715277d115e2ca23f379d82d1df18514d5200714757ac"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-wasm/Cargo.toml",
+      "bytes": 1062,
+      "sha256": "973926db43198b82c8c198b20809cefa203b3932e4c7dcfd33fb86714bb12dc7"
+    },
+    {
+      "name": "source/integrated-b/crates/weft-wasm/src/lib.rs",
+      "bytes": 905,
+      "sha256": "8268ef465f06323814cf2a10329607ccd6b67c95ea1ed784e2dcd329fb05cdd7"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/architecture.md",
+      "bytes": 9599,
+      "sha256": "59f32f5b2bbb58718fd1da6a5588776e67cd165e4c51b46c7d7002d4b28be6a5"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md",
+      "bytes": 10131,
+      "sha256": "562b489d50b47c17bb9a3a4e5cad4f4f889153acab08c6fc59cb3cf04af5da9c"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/CONTRACT-002-backend-interface.md",
+      "bytes": 14233,
+      "sha256": "53b7a2f2ff35cce722ef113365c0df2790dcff9faee852d5524e31b70e37cb3a"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+      "bytes": 22049,
+      "sha256": "1ee3724b000641a81c22d09a0842c95517309d7fb1684e6dbe83431e167314a2"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/backend-manifest-v0.3.2.schema.json",
+      "bytes": 18068,
+      "sha256": "e7d6eb558a80569b0cdd01a72342aa3f8d0fde2e41d3529724854aa5c6d3291d"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/compile-request-v0.4.2.schema.json",
+      "bytes": 3513,
+      "sha256": "8a0da7aa576b0fc08fd65621cf99e70b47a26828c719dee1c1d8d9c974298de8"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/compile-response-v0.4.2.schema.json",
+      "bytes": 62090,
+      "sha256": "1967e1cabee8dc80119376ad15d0e58e16c916962d414d78fdc0247603b42da3"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/exact-arithmetic-v0.3.md",
+      "bytes": 26607,
+      "sha256": "8675ae85f55cbeae2cb7e8ea1b3c11fd398b96e6d7b749835326e88362ba6bc9"
+    },
+    {
+      "name": "source/integrated-b/docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json",
+      "bytes": 43626,
+      "sha256": "a70ff489be0a9621b43623f1d69f0a1490345c8a1a4bf654121b88f0c7dd8ac1"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/arithmetic_application_resolve.rs",
+      "bytes": 41732,
+      "sha256": "fda1bcdccf51d345312de038a6de74a26e8e34daaa69c4284e8f05205a0250e5"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/arithmetic_query.rs",
+      "bytes": 19693,
+      "sha256": "c5e7795e1d5694f65a58f5e70d7d78bb37aef594b2c068b18cc60b11d77a606d"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/backend03_emission.rs",
+      "bytes": 33412,
+      "sha256": "b96aac2f34afb2d0d29d85094551cb490f4b92a095fe40720123e2cec825870e"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/backend03_manifest.rs",
+      "bytes": 3685,
+      "sha256": "e0681d34d80fd19adc4cea46f65ec10707750bcf4390b17aad81ca49008d875e"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/backend03_registry.rs",
+      "bytes": 11080,
+      "sha256": "9eb92682818594350b64f48d2ffbbd0ad4b5fbda66bf4a0ea1cca9de1e4e157b"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/compile.rs",
+      "bytes": 16710,
+      "sha256": "4b026372c5ca6cea4ffa77552364b126d4ee54bf7195b057bfb10663aae5ab92"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/compile042.rs",
+      "bytes": 8762,
+      "sha256": "4eea7b8e7dc71a26a0b97c5b80322614a9e806e7df6aedb7f776a10ba0c8ca2c"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/path_application_resolve.rs",
+      "bytes": 26559,
+      "sha256": "88836d4878f8b97d285294b00672554bd0254fee3816bf3d6b4209581ff7edc4"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/path_ir.rs",
+      "bytes": 27897,
+      "sha256": "0c7b97e381397483aa3fbe3e2d39c719bd05c07e308d11fca166dc1c10beec73"
+    },
+    {
+      "name": "source/prior-e/crates/weft-core/src/path_query.rs",
+      "bytes": 21978,
+      "sha256": "073222d700d4f7aa75f528cc46ff5a6065405fbcb7321fe02c02fd20f65a8173"
+    },
+    {
+      "name": "source/prior-e/crates/weft-databricks/src/candidate/path_lowering.rs",
+      "bytes": 42290,
+      "sha256": "d267064f220d96f39f99ecd83bd75ad151f11ad0ca601a1e4b1edd16ece31213"
+    },
+    {
+      "name": "source/prior-e/crates/weft-databricks/src/implicit_arithmetic.rs",
+      "bytes": 2438,
+      "sha256": "cd0bb65e75d054b602f010e620a8e8692fbfbfc2f565b70d9cd9c86e304c28ba"
+    },
+    {
+      "name": "source/prior-e/crates/weft-databricks/src/lib.rs",
+      "bytes": 901,
+      "sha256": "99f2cf3a1c614ebc860226002a96662f48f6ad1e57309b4226e16f4ceb021626"
+    },
+    {
+      "name": "source/prior-e/crates/weft-python/Cargo.toml",
+      "bytes": 1119,
+      "sha256": "e519d49f1284185a14c137dbf436f964d1ebaae6deada389ae7cbe9e0f2ea54a"
+    },
+    {
+      "name": "source/prior-e/crates/weft-python/src/lib.rs",
+      "bytes": 1402,
+      "sha256": "fedaaaacd15d4411952aac6f0d040f0f743fc1aea32d0206109efcc0e55017d3"
+    },
+    {
+      "name": "source/prior-e/crates/weft-runtime/Cargo.toml",
+      "bytes": 1773,
+      "sha256": "f983acf5df5a07fad6bf3ca8bbb1b8b27c4f6bc1888f89861772826de99e00b3"
+    },
+    {
+      "name": "source/prior-e/crates/weft-runtime/src/implicit_arithmetic.rs",
+      "bytes": 8689,
+      "sha256": "9b81cb2adeb5581716c3e69780963c0a5973842bcd0003c2367870500db2e084"
+    },
+    {
+      "name": "source/prior-e/crates/weft-runtime/src/implicit_arithmetic_cli.rs",
+      "bytes": 4176,
+      "sha256": "bad8f329a438f70b79c73e180fab372288e237487d28d494fe2b3ab547fd5a8c"
+    },
+    {
+      "name": "source/prior-e/crates/weft-runtime/src/lib.rs",
+      "bytes": 21384,
+      "sha256": "0b03deda1d9a4d5a3bfe844d37fae707e8c056fbc3f920ec51d87c9744e2f811"
+    },
+    {
+      "name": "source/prior-e/crates/weft-wasm/Cargo.toml",
+      "bytes": 1062,
+      "sha256": "973926db43198b82c8c198b20809cefa203b3932e4c7dcfd33fb86714bb12dc7"
+    },
+    {
+      "name": "source/prior-e/crates/weft-wasm/src/lib.rs",
+      "bytes": 905,
+      "sha256": "8268ef465f06323814cf2a10329607ccd6b67c95ea1ed784e2dcd329fb05cdd7"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/architecture.md",
+      "bytes": 9599,
+      "sha256": "59f32f5b2bbb58718fd1da6a5588776e67cd165e4c51b46c7d7002d4b28be6a5"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/CONTRACT-001-weft-sql-and-logical-plan.md",
+      "bytes": 10131,
+      "sha256": "562b489d50b47c17bb9a3a4e5cad4f4f889153acab08c6fc59cb3cf04af5da9c"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/CONTRACT-002-backend-interface.md",
+      "bytes": 14233,
+      "sha256": "53b7a2f2ff35cce722ef113365c0df2790dcff9faee852d5524e31b70e37cb3a"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/CONTRACT-003-compile-and-host-boundary.md",
+      "bytes": 20619,
+      "sha256": "1a7bf7f71328321deb7fbbd55c8e1d2bef7ac3d1dc34430188dd647cdf5f48cd"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/backend-manifest-v0.3.2.schema.json",
+      "bytes": 18068,
+      "sha256": "e7d6eb558a80569b0cdd01a72342aa3f8d0fde2e41d3529724854aa5c6d3291d"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/compile-request-v0.4.2.schema.json",
+      "bytes": 3513,
+      "sha256": "8a0da7aa576b0fc08fd65621cf99e70b47a26828c719dee1c1d8d9c974298de8"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/compile-response-v0.4.2.schema.json",
+      "bytes": 62090,
+      "sha256": "1967e1cabee8dc80119376ad15d0e58e16c916962d414d78fdc0247603b42da3"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/exact-arithmetic-v0.3.md",
+      "bytes": 26607,
+      "sha256": "8675ae85f55cbeae2cb7e8ea1b3c11fd398b96e6d7b749835326e88362ba6bc9"
+    },
+    {
+      "name": "source/prior-e/docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json",
+      "bytes": 43626,
+      "sha256": "a70ff489be0a9621b43623f1d69f0a1490345c8a1a4bf654121b88f0c7dd8ac1"
+    }
+  ],
+  "qualification": "Source/inert checks and actual publicCLI metadata only; no indexed distribution, actual Python/WASM runtime parity or native query qualification."
+}

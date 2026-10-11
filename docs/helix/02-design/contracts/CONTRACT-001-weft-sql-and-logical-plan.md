@@ -155,3 +155,15 @@ two-hop path bag, bounded path projection and grouped path counts under a new
 closed language/IR family. It does not extend this document's 0.1 grammar or
 retroactively admit paths in retained dialect versions. Explicit source property
 joins remain property joins; adapters must not reinterpret them as paths.
+
+
+## Explicit implicit-arithmetic-label profile
+
+The exact `weft-sql/0.4.2` and `weft-ir/0.4.2` pair extends only the
+explicit 0.4.1 subset with unnamed arithmetic projection labels governed by
+`weft.exact-arithmetic-0.3`. The closed 0.4.2 plan retains the existing typed
+expression tree and original spans; an unnamed computed output has the exact
+original expression substring as its logical name and requires
+`project.implicitArithmeticLabels`. Existing output ordinal, collision,
+positioned carrier and exact arithmetic rules continue to apply. Older dialects
+and their serialized plans MUST retain their original behavior.

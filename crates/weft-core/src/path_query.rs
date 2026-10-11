@@ -28,6 +28,7 @@ pub(crate) enum Output {
 pub(crate) struct Projection {
     pub output: Output,
     pub alias: Option<Name>,
+    pub implicit_label: Option<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -40,6 +41,7 @@ pub(crate) struct Expansion {
 #[derive(Debug, Clone)]
 pub(crate) struct Query {
     pub count_star_having: bool,
+    pub implicit_arithmetic: bool,
     pub distinct: bool,
     pub outputs: Vec<Projection>,
     pub source: Source,
@@ -52,12 +54,19 @@ pub(crate) struct Query {
     pub limit: Option<u16>,
 }
 
-fn projection(p: &mut Parser, budget: &mut Budget) -> Result<Projection> {
+fn projection(p: &mut Parser, budget: &mut Budget, sql: &str, implicit_arithmetic: bool) -> Result<Projection> {
     if !p.peek_word("related_paths") && !p.peek_word("count_distinct_path_targets") {
-        let legacy::Projection { output, alias } = legacy::projection(p, budget)?;
+        let legacy::Projection { output, alias } = legacy::projection_version(p, budget, implicit_arithmetic)?;
+        let implicit_label = match &output {
+            legacy::Output::Arithmetic(expression) if alias.is_none() && implicit_arithmetic => {
+                Some(sql.get(expression.span.start..expression.span.end).ok_or_else(|| Diagnostic::new("WFT-OUTPUT-NAME", "parse", "Invalid arithmetic expression source span"))?.to_owned())
+            }
+            _ => None,
+        };
         return Ok(Projection {
             output: Output::Legacy(output),
             alias,
+            implicit_label,
         });
     }
     let expression = path_syntax::parse(p)?;
@@ -84,7 +93,7 @@ fn projection(p: &mut Parser, budget: &mut Budget) -> Result<Projection> {
     } else {
         None
     };
-    Ok(Projection { output, alias })
+    Ok(Projection { output, alias, implicit_label: None })
 }
 
 fn expansion(p: &mut Parser) -> Result<Option<Expansion>> {
@@ -120,12 +129,15 @@ fn expansion(p: &mut Parser) -> Result<Option<Expansion>> {
 /// The resolver owns grouping, alias scope, relationship continuity and admission.
 /// Syntax fixes expansion after ordinary joins and retains the existing HAVING form.
 pub(crate) fn parse(sql: &str) -> Result<Query> {
-    parse_version(sql, false)
+    parse_version(sql, false, false)
 }
 pub(crate) fn parse041(sql: &str) -> Result<Query> {
-    parse_version(sql, true)
+    parse_version(sql, true, false)
 }
-fn parse_version(sql: &str, count_star_having: bool) -> Result<Query> {
+pub(crate) fn parse042(sql: &str) -> Result<Query> {
+    parse_version(sql, true, true)
+}
+fn parse_version(sql: &str, count_star_having: bool, implicit_arithmetic: bool) -> Result<Query> {
     let mut p = Parser::new(sql)?;
     let mut budget = Budget::new();
     p.word("select")?;
@@ -137,7 +149,7 @@ fn parse_version(sql: &str, count_star_having: bool) -> Result<Query> {
     };
     let mut outputs = Vec::new();
     loop {
-        outputs.push(projection(&mut p, &mut budget)?);
+        outputs.push(projection(&mut p, &mut budget, sql, implicit_arithmetic)?);
         if outputs.len() > 256 {
             return Err(
                 Diagnostic::new("WFT-LIMIT", "parse", "Output count exceeds limit").at(&p.span()),
@@ -161,6 +173,7 @@ fn parse_version(sql: &str, count_star_having: bool) -> Result<Query> {
     } = legacy::tail_version(&mut p, &mut budget, count_star_having)?;
     Ok(Query {
         count_star_having,
+        implicit_arithmetic,
         distinct,
         outputs,
         source,
@@ -510,4 +523,52 @@ GROUP BY l.id ORDER BY l.id;"#;
         let huge=sql.replace(">1",&format!(">{}","1".repeat(1025)));assert_eq!(parse041(&huge).unwrap_err().code,"WFT-LIMIT");
     }
 
+}
+
+#[cfg(test)]
+mod implicit_arithmetic_tests {
+    use super::*;
+    const ORIGINAL: &str = "SELECT f.quantity,r.quantity,l.quantity-f.quantity+r.quantity FROM order_lines l JOIN fulfillments f ON f.line_id=l.id JOIN returns r ON r.line_id=l.id WHERE f.quantity<l.quantity";
+    #[test]
+    fn original_unnamed_expression_is_exact_and_old_profiles_refuse() {
+        assert_eq!(parse(ORIGINAL).unwrap_err().code, "WFT-UNSUPPORTED");
+        assert_eq!(parse041(ORIGINAL).unwrap_err().code, "WFT-UNSUPPORTED");
+        let query = parse042(ORIGINAL).unwrap();
+        assert_eq!(
+            query.outputs[2].implicit_label.as_deref(),
+            Some("l.quantity-f.quantity+r.quantity")
+        );
+        assert!(query.outputs[2].alias.is_none());
+        assert!(query.outputs[..2]
+            .iter()
+            .all(|p| p.implicit_label.is_none()));
+    }
+    #[test]
+    fn parentheses_whitespace_and_utf8_source_bytes_are_retained() {
+        let sql = "SELECT  (\"é\".quantity + 1)  FROM order_lines \"é\"";
+        let q = parse042(sql).unwrap();
+        assert_eq!(
+            q.outputs[0].implicit_label.as_deref(),
+            Some("(\"é\".quantity + 1)")
+        );
+        match &q.outputs[0].output {
+            Output::Legacy(legacy::Output::Arithmetic(e)) => assert_eq!(
+                sql.get(e.span.start..e.span.end),
+                q.outputs[0].implicit_label.as_deref()
+            ),
+            _ => panic!("original arithmetic syntax lost"),
+        }
+        for sql in [
+            "SELECT l.quantity/*x*/+1 FROM order_lines l",
+            "SELECT l.quantity--x\n+1 FROM order_lines l",
+        ] {
+            assert!(parse042(sql).is_err());
+        }
+    }
+    #[test]
+    fn explicit_alias_retains_authored_name_without_new_label() {
+        let query = parse042("SELECT l.quantity + 1 AS next FROM order_lines l").unwrap();
+        assert_eq!(query.outputs[0].alias.as_ref().unwrap().value, "next");
+        assert!(query.outputs[0].implicit_label.is_none());
+    }
 }

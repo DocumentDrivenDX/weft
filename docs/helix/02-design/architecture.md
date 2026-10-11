@@ -107,9 +107,9 @@ never establishes semantic conformance.
 | `crates/weft-postgresql` | PostgreSQL target meanings and SQL/obligations | Backend implementations of CONTRACT-002 | `weft-core`; locked target dependencies | Runtime/wrappers, Databricks adapter, live storage clients |
 | `tests/register-backend/probe` | Independent conformance backend | Registered test Backend | `weft-core` | Concrete production adapters/runtime |
 | `tests/frontend/wasm-probe` | Browser core probe entrypoint | WASM probe exports | `weft-core` | Target adapters/runtime |
-| `crates/weft-runtime` | Explicit feature-selected compiler composition and portable entrypoint | `compile_json` | `weft-core`, Databricks/PostgreSQL adapters, backend probe | Python/WASM wrappers, storage/host implementations |
-| `crates/weft-python` | Thin native Python translation | Python `compile_json`; explicitly built `compile_paths_keys_json` | `weft-runtime`; locked PyO3 | Direct core/adapters, browser wrapper, storage |
-| `crates/weft-wasm` | Thin browser/WASM translation | WASM `compile_json`; explicitly built `compile_paths_keys_json` | `weft-runtime`; locked wasm-bindgen | Direct core/adapters, Python wrapper, storage |
+| `crates/weft-runtime` | Explicit feature-selected compiler composition and portable entrypoint | `compile_json`; explicit `implicit_arithmetic::compile_json` | `weft-core`, Databricks/PostgreSQL adapters, backend probe | Python/WASM wrappers, storage/host implementations |
+| `crates/weft-python` | Thin native Python translation | Python `compile_json`; explicitly built `compile_paths_keys_json` and `compile_implicit_arithmetic_json` | `weft-runtime`; locked PyO3 | Direct core/adapters, browser wrapper, storage |
+| `crates/weft-wasm` | Thin browser/WASM translation | WASM `compile_json`; explicitly built `compile_paths_keys_json` and `compile_implicit_arithmetic_json` | `weft-runtime`; locked wasm-bindgen | Direct core/adapters, Python wrapper, storage |
 | `spikes/b001/core` | Historical isolated foundation | Spike compiler exports | Locked external dependencies only | Active compiler/adapters/runtime |
 | `spikes/b001/python` | Historical native spike wrapper | Spike Python exports | `weft-spike-core`; locked PyO3 | Active compiler/runtime and other wrappers |
 | `spikes/b001/wasm` | Historical browser spike wrapper | Spike WASM exports | `weft-spike-core`; locked wasm-bindgen | Active compiler/runtime and other wrappers |

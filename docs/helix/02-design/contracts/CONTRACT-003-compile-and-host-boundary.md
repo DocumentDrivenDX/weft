@@ -336,3 +336,18 @@ is an intentional source API migration for unreleased Rust callers; it does not
 change compile request/response schemas or permit version relabeling.
 
 The CLI reads a cloned, unbuffered OS stdin handle on Unix and Windows; it does not use Rust stdin read-ahead. Unix shared-offset evidence verifies the unread suffix after the sentinel. Windows is an implemented branch without execution evidence in R1; other target families refuse host input. Handle-clone failures follow the safe host I/O refusal.
+
+
+## Explicit 0.4.2 compiler selection
+
+The closed `weft-compile/0.4.2` request/response and `weft-sql/0.4.2`
+selection use the corresponding closed 0.4.2 logical plan schema. Registered code
+selects the additive backend profile explicitly. Native CLI, Python and browser
+WASM MUST share the same core through the explicitly named
+`compile_implicit_arithmetic_json` embedding selection; generic and existing
+PathsKeys entrypoints retain their older profile fences. Unknown version pairs
+refuse before backend composition. Original SQL and supplied model/binding bytes
+MUST remain unchanged; host SQL rewriting is not a substitute for compiler
+capability. Distribution admission requires separately reviewed fresh products,
+exact historical parity and cross-embedding evidence, preserving every existing
+index entry and trust boundary.

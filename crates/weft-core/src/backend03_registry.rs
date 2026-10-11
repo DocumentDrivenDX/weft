@@ -118,7 +118,9 @@ impl<B: Backend> Registered for Adapter<B> {
         }
         let selection = emission::selection(plan)?;
         let language = LanguageProfile {
-            dialect_profile: if plan.ir_version() == "weft-ir/0.4.1" {
+            dialect_profile: if plan.ir_version() == "weft-ir/0.4.2" {
+                "weft-sql/0.4.2"
+            } else if plan.ir_version() == "weft-ir/0.4.1" {
                 "weft-sql/0.4.1"
             } else {
                 "weft-sql/0.4.0"

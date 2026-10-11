@@ -253,3 +253,35 @@ The narrow HAVING form is `COUNT(DISTINCT Field) > IntegerLiteral`, after aggreg
 COUNT DISTINCT operates on the complete joined/WHERE bag per exact required String group. Native null arguments are excluded from the deduplicated capacity bag as well as the count, while the logical group still exists and an all-null group returns count zero. Capacity checks cover each explicitly projected count expression and its HAVING references over the pre-HAVING bag. Unprojected HAVING counts remain refused. A HAVING predicate cannot conceal a failed capacity guard or an invalid source row. Global empty input returns zero; grouped empty input returns no groups. Existing publication/source checks, exact UTF8_BINARY equality and immutable whole-vector holds through cleanup remain mandatory.
 
 Acceptance MUST include unchanged original archaeology media SQL/model/graph bytes; exact original grouped result; null and missing distinction; all-null group zero before HAVING; duplicate occurrence bags and parallel count values; empty group/global inputs; exact threshold boundary/refusal; HAVING-excluded capacity failure; required-null/malformed source failure; exact native guard ordering and unchanged emitted SQL; source/Python/browser parity and prior artifact compatibility. Native execution and publication qualification require separately retained actual evidence.
+
+
+## Explicit 0.4.2 implicit arithmetic labels
+
+The exact `weft-compile/0.4.2`, `weft-sql/0.4.2` and `weft-ir/0.4.2`
+selection MAY admit an arithmetic projection without AS. Older profiles retain
+all acceptance, refusal and serialization behavior, including the explicit
+computed-alias requirement. Generic compiler entrypoints MUST NOT select this
+extension implicitly.
+
+For an unnamed arithmetic projection, the logical output name MUST be the exact
+original UTF-8 SQL substring covered by the complete arithmetic expression span.
+Span offsets MUST use the existing UTF-8 byte-offset convention and valid
+character boundaries. Existing comment refusal remains unchanged; no comment
+stripping or normalization may manufacture an accepted expression or label.
+Retain authored parentheses and internal whitespace; omit surrounding projection
+whitespace and separators. No SQL rewriting, synthetic source alias or UMF
+identity replacement is permitted. The typed expression, every original operand
+identity, domain, literal token and span remain unchanged. Explicit AS retains
+its existing naming semantics. Such a projection requires the separately admitted
+`project.implicitArithmeticLabels` capability before backend binding.
+
+Computed-name collisions and collisions with explicit aliases MUST refuse.
+Repeated implicit scalar Field names retain the existing
+`project.positionedOutputs` policy; physical carrier names remain separate from
+logical names. This extension does not widen expression operators, numeric
+capacity, grouping, ordering, source validity or complete-bag integrity rules.
+The additive backend profile is `0.4.2-implicit-arithmetic-labels-candidate`;
+CLI, Python and WASM expose an explicitly named selection with the same core.
+Support qualification requires unchanged original query conformance, historical
+profile byte parity and fresh embedding evidence; authored source alone does not
+qualify installed distribution or native execution.

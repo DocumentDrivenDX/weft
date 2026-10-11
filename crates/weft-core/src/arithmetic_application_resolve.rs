@@ -182,6 +182,7 @@ pub(crate) enum ProjectionSource<'a, P> {
 pub(crate) struct ProjectionView<'a, P> {
     pub output: ProjectionSource<'a, P>,
     pub alias: Option<&'a crate::syntax::Name>,
+    pub implicit_label: Option<&'a str>,
 }
 pub(crate) struct QueryView<'a, P> {
     pub distinct: bool,
@@ -567,10 +568,14 @@ pub(crate) fn resolve_parts<X: QueryExtension>(
             }
         };
         for (label, expression) in expressions {
+            if p.implicit_label.is_some() {
+                s.caps.insert("project.implicitArithmeticLabels".into());
+            }
             let name = p
                 .alias
                 .as_ref()
                 .map(|a| a.value.clone())
+                .or_else(|| p.implicit_label.map(str::to_owned))
                 .unwrap_or(if default.is_empty() {
                     label
                 } else {
@@ -778,6 +783,7 @@ pub(crate) fn resolve(
             .map(|p| ProjectionView {
                 output: ProjectionSource::Legacy(&p.output),
                 alias: p.alias.as_ref(),
+                implicit_label: None,
             })
             .collect(),
         source: &q.source,

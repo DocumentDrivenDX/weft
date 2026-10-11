@@ -3,7 +3,15 @@ use super::*;
 use crate::ir::{Family, Identity};
 use serde_json::{json, Value};
 pub(crate) fn validate_response_schema(value: &Value) -> bool {
-    if value["interfaceVersion"] == "weft-compile/0.4.1" {
+    if value["interfaceVersion"] == "weft-compile/0.4.2" {
+        static VALIDATOR042: std::sync::OnceLock<Option<jsonschema::Validator>> = std::sync::OnceLock::new();
+        VALIDATOR042.get_or_init(|| {
+            let plan:Value=serde_json::from_str(include_str!("../../../docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json")).ok()?;
+            let response:Value=serde_json::from_str(include_str!("../../../docs/helix/02-design/contracts/compile-response-v0.4.2.schema.json")).ok()?;
+            let registry=jsonschema::Registry::new().add("https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/logical-plan-v0.4.2.schema.json",plan).ok()?.prepare().ok()?;
+            jsonschema::options().with_registry(&registry).build(&response).ok()
+        }).as_ref().is_some_and(|validator|validator.is_valid(value))
+    } else if value["interfaceVersion"] == "weft-compile/0.4.1" {
         static VALIDATOR041: std::sync::OnceLock<Option<jsonschema::Validator>> = std::sync::OnceLock::new();
         VALIDATOR041.get_or_init(|| {
             let plan:Value=serde_json::from_str(include_str!("../../../docs/helix/02-design/contracts/logical-plan-v0.4.1.schema.json")).ok()?;
@@ -131,7 +139,7 @@ pub(super) fn selection(plan: Plan04View<'_>) -> Result<Selection> {
     for h in plan.having() {
         match h.count {
             ExpressionView::Legacy(crate::arithmetic_plan::Expression::Count { .. }) => {
-                if plan.ir_version() != "weft-ir/0.4.1"
+                if !matches!(plan.ir_version(), "weft-ir/0.4.1" | "weft-ir/0.4.2")
                     || plan.groups().is_empty()
                     || !plan.outputs().any(|o| {
                         matches!(
@@ -523,7 +531,7 @@ pub(super) fn validate(
             ));
         }
     }
-    let response = json!({"interfaceVersion":if plan.ir_version()=="weft-ir/0.4.1" {"weft-compile/0.4.1"}else{"weft-compile/0.4.0"},"status":"compiled","diagnostics":[],"dialect":if plan.ir_version()=="weft-ir/0.4.1" {"weft-sql/0.4.1"}else{"weft-sql/0.4.0"},"compilerVersion":"weft/0.1.0","modelPins":plan.pins(),"backend":{"backendId":manifest.backend_id,"backendVersion":manifest.backend_version,"targetProfile":target.id,"interfaceVersion":"weft-backend/0.3.0"},"targetContext":target,"bindingSha256":binding.sha256,"logicalPlan":plan.serialized(),"sql":emitted.sql,"parameters":emitted.parameters,"columns":emitted.columns,"obligations":emitted.obligations,"qualification":{"status":"candidate","evidence":[],"assumptions":[],"operations":qualifications}});
+    let response = json!({"interfaceVersion":if plan.ir_version()=="weft-ir/0.4.2" {"weft-compile/0.4.2"}else if plan.ir_version()=="weft-ir/0.4.1" {"weft-compile/0.4.1"}else{"weft-compile/0.4.0"},"status":"compiled","diagnostics":[],"dialect":if plan.ir_version()=="weft-ir/0.4.2" {"weft-sql/0.4.2"}else if plan.ir_version()=="weft-ir/0.4.1" {"weft-sql/0.4.1"}else{"weft-sql/0.4.0"},"compilerVersion":"weft/0.1.0","modelPins":plan.pins(),"backend":{"backendId":manifest.backend_id,"backendVersion":manifest.backend_version,"targetProfile":target.id,"interfaceVersion":"weft-backend/0.3.0"},"targetContext":target,"bindingSha256":binding.sha256,"logicalPlan":plan.serialized(),"sql":emitted.sql,"parameters":emitted.parameters,"columns":emitted.columns,"obligations":emitted.obligations,"qualification":{"status":"candidate","evidence":[],"assumptions":[],"operations":qualifications}});
     if !validate_response_schema(&response) {
         return Err(fail(
             "WFT-EMIT",
