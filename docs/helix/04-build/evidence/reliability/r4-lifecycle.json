@@ -1,0 +1,40 @@
+{
+  "manifest": {
+    "access": "owner-only",
+    "attempt_id": "c7ba1a2eb60e4a2f87ce4e171609a778",
+    "counts": {
+      "captured": 16,
+      "dropped": 0,
+      "emitted": 16,
+      "export_dropped": 0,
+      "export_failed": 0,
+      "export_pending": 0,
+      "export_queued": 0,
+      "exported": 0,
+      "operations": 7,
+      "operations_failed": 0
+    },
+    "ended_ns": "1791607384054659000",
+    "export_enabled": false,
+    "flush_state": "complete",
+    "input_revision": {
+      "kind": "sha256",
+      "scope": "compiler-and-host-source",
+      "value": "bc99f759e63117762de713af4702118c73c3410cf20fc094b75b1c996801b45a"
+    },
+    "loss": [],
+    "operation": "source-mutations",
+    "outcome": "passed",
+    "owner": "weft-reliability",
+    "retention_runs": 8,
+    "revision": 16,
+    "run_id": "d0456ac4807749cc8fdf8a7aafdab96c",
+    "schema_version": 1,
+    "sources": [
+      "events.jsonl"
+    ],
+    "started_ns": "1791607158158797000"
+  },
+  "eventsSha256": "3d92e0879de8ce3e89f6a941b2990ac750be0cc7472af97b03e8d8418b0df9ad",
+  "scope": "Actual optimized seven-mutation runner, safe local capture; exporter disabled. SDK receiver export separately tested."
+}

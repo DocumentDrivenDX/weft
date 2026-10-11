@@ -16,8 +16,8 @@ fn fail(code:&str)->Diagnostic{Diagnostic::new(code,"model","Security source adm
 pub struct SecuritySourcePacket{model_pins:Vec<crate::ir::ModelPin>,policy_json:String,ontology_json:String,policy:Value,ontology:Value}
 impl SecuritySourcePacket{
  pub(crate) fn require_catalog(&self,catalog:&Catalog)->Result<()>{
-  if catalog.pins()!=self.model_pins||catalog.inputs.len()!=catalog.documents.len(){return Err(fail("WFT-SECURITY-PIN"));}
-  for (input,document) in catalog.inputs.iter().zip(&catalog.documents){
+  if catalog.pins()!=self.model_pins||catalog.inputs().len()!=catalog.documents.len(){return Err(fail("WFT-SECURITY-PIN"));}
+  for (input,document) in catalog.inputs().iter().zip(&catalog.documents){
    if sha256(input.document_json.as_bytes())!=input.pin.sha256||input.pin.document_id!=document["id"]||input.pin.umf_version!=document["umf"]||checked_json(&input.document_json).map_err(|_|fail("WFT-SECURITY-PIN"))?!=*document{return Err(fail("WFT-SECURITY-PIN"));}
   }Ok(())
  }
@@ -37,15 +37,15 @@ impl SecuritySourcePacket{
   let mut nodes=0;if let Some(rules)=policy["rules"].as_array(){for rule in rules{bounds(&rule["condition"],1,&mut nodes)?;}}
   if !(if candidate{CandidatePolicySchema::is_valid(&policy)&&CandidateOntologySchema::is_valid(&ontology)}else{PolicySchema::is_valid(&policy)&&OntologySchema::is_valid(&ontology)}){return Err(fail("WFT-SECURITY-SOURCE"));}
   if policy["ontology"]["documentId"]!=ontology["documentId"]||policy["ontology"]["revision"]!=ontology["revision"]{return Err(fail("WFT-SECURITY-PIN"));}
-  if catalog.inputs.len()!=catalog.documents.len(){return Err(fail("WFT-SECURITY-PIN"));}
-  for (input,document) in catalog.inputs.iter().zip(&catalog.documents){
+  if catalog.inputs().len()!=catalog.documents.len(){return Err(fail("WFT-SECURITY-PIN"));}
+  for (input,document) in catalog.inputs().iter().zip(&catalog.documents){
    if input.document_json.len()>4*1024*1024||sha256(input.document_json.as_bytes())!=input.pin.sha256||input.pin.document_id!=document["id"]||input.pin.umf_version!=document["umf"]||checked_json(&input.document_json).map_err(|_|fail("WFT-SECURITY-PIN"))?!=*document{return Err(fail("WFT-SECURITY-PIN"));}
   }
   let docs=ontology["documents"].as_array().unwrap();let mut ids=BTreeSet::new();
-  if docs.len()!=catalog.inputs.len(){return Err(fail("WFT-SECURITY-PIN"));}
+  if docs.len()!=catalog.inputs().len(){return Err(fail("WFT-SECURITY-PIN"));}
   for doc in docs{
    let id=doc["documentId"].as_str().unwrap();
-   if !ids.insert(id)||!catalog.inputs.iter().any(|m|m.pin.document_id==id&&doc["revision"]==m.pin.revision&&m.pin.umf_version=="0.8.0"){return Err(fail("WFT-SECURITY-PIN"));}
+   if !ids.insert(id)||!catalog.inputs().iter().any(|m|m.pin.document_id==id&&doc["revision"]==m.pin.revision&&m.pin.umf_version=="0.8.0"){return Err(fail("WFT-SECURITY-PIN"));}
   }
   let mut rule_ids=BTreeSet::new();for rule in policy["rules"].as_array().unwrap(){
    if !rule_ids.insert(rule["id"].as_str().unwrap()){return Err(fail("WFT-SECURITY-SOURCE"));}

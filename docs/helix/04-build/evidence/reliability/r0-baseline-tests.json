@@ -1,0 +1,16 @@
+{
+  "command": "cargo test -p weft-core --lib --test security_admission --test security_literals --locked --offline",
+  "toolchain": "Rust 1.90.0",
+  "exitCode": 0,
+  "testsPassed": 105,
+  "breakdown": {
+    "library": 60,
+    "security_admission": 42,
+    "security_literals": 3
+  },
+  "logSha256": "524625cea581c9d1cee631a7b3eb1855ff5d52ccb2876e8bcf6553084b7f5426",
+  "scope": "Copied original blocked security foundation. Component tests only; no native security or fresh host qualification.",
+  "originalCheckoutChanged": false,
+  "inputManifest": "r0-baseline-inputs.json",
+  "inputManifestSha256": "5df06d0ffc741075de205b03d064973068f00e038230ccd799c21b95114b67a5"
+}

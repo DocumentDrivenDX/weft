@@ -538,7 +538,7 @@ pub fn admit_property(
         ));
     }
     let input = catalog
-        .inputs
+        .inputs()
         .iter()
         .find(|input| {
             input.pin.document_id == owner.document_id
@@ -665,7 +665,7 @@ pub fn admit_value(
     let root: Identity = serde_json::from_value(property["logical"].clone())
         .map_err(|_| fail("Invalid property identity"))?;
     let input = catalog
-        .inputs
+        .inputs()
         .iter()
         .find(|input| {
             input.pin.document_id == root.document_id
@@ -1100,7 +1100,7 @@ mod tests {
         let properties = BTreeMap::from([(registration.clone(), property)]);
         let (_, plan) = weft_core::prepare_and_resolve(
             &format!("SELECT SUM(o.{member_name}) AS total FROM {record_name} o"),
-            catalog.inputs.clone(),
+            catalog.inputs().to_vec(),
         )
         .unwrap();
         let manifest = <crate::candidate::Candidate as weft_core::backend::Backend>::describe(
@@ -2706,7 +2706,7 @@ mod tests {
             let pin = binding["properties"][index]["valueProfile"].clone();
             let artifact = |identity: &str, bytes: &[u8]| json!({"identity":identity,"bytesBase64":STANDARD.encode(bytes),"sha256":sha256(bytes)});
             let empty = artifact("fixture", b"{}");
-            let document: Value = serde_json::from_str(&catalog.inputs[0].document_json).unwrap();
+            let document: Value = serde_json::from_str(&catalog.inputs()[0].document_json).unwrap();
             let authored: Vec<_> = descriptors
                 .iter()
                 .map(|d| {
@@ -3705,7 +3705,7 @@ mod tests {
                 serde_json::to_value(&row_compiled.parameters).unwrap()
             );
 
-            let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs,"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
+            let serialized_request = json!({"interfaceVersion":"weft-compile/0.2.0","dialect":"weft-sql/0.2.0","sql":format!("SELECT c.{member_name} FROM Customer c"),"modules":catalog.inputs(),"target":{"backendId":row_target.backend_id,"backendVersion":row_target.backend_version,"targetProfile":row_target.profile_id,"bindingJson":row_input.json,"bindingSha256":row_input.sha256},"options":{"allowCandidate":true}});
             let owned_configuration = crate::original_admission::Configuration {
                 relationships: vec![],
                 binding_profile: row_input.profile.clone(),
@@ -3749,7 +3749,7 @@ mod tests {
                     assert_eq!(selected.binding_sha256, row_input.sha256);
                     assert_eq!(selected.backend_id, "truss.postgresql.original");
                     assert!(selected.allow_candidate);
-                    assert_eq!(resolved_catalog.inputs.len(), catalog.inputs.len());
+                    assert_eq!(resolved_catalog.inputs().len(), catalog.inputs().len());
                     assert!(matches!(resolved_plan, weft_core::backend::Plan::V02(_)));
                     let request_binding = weft_core::backend::BindingInput {
                         profile: row_input.profile.clone(),
@@ -4472,7 +4472,7 @@ mod tests {
         let properties = BTreeMap::from([(registration.clone(), property)]);
         admit_properties(&requirements, &properties, &comparisons).unwrap();
         let (_, plan) =
-            weft_core::prepare_and_resolve("SELECT c.name FROM Customer c", catalog.inputs.clone())
+            weft_core::prepare_and_resolve("SELECT c.name FROM Customer c", catalog.inputs().to_vec())
                 .unwrap();
         let manifest = <crate::candidate::Candidate as weft_core::backend::Backend>::describe(
             &crate::candidate::Candidate,
@@ -5090,7 +5090,7 @@ mod tests {
         )
         .is_err());
         assert!(atomic_parameters.into_slots().is_empty());
-        let (_, self_plan) = weft_core::prepare_and_resolve("SELECT c.name AS left_name, d.name AS right_name FROM Customer c JOIN Customer d ON c.name = d.name",catalog.inputs.clone()).unwrap();
+        let (_, self_plan) = weft_core::prepare_and_resolve("SELECT c.name AS left_name, d.name AS right_name FROM Customer c JOIN Customer d ON c.name = d.name",catalog.inputs().to_vec()).unwrap();
         let (left_scan, right_scan) = match &self_plan.root {
             weft_core::ir::Node::Project { input, .. } => match input.as_ref() {
                 weft_core::ir::Node::InnerJoin { left, right, .. } => {

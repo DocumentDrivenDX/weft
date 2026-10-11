@@ -1,0 +1,17 @@
+{
+  "reviewer": "gpt-6-astra",
+  "reasoningEffort": "ultra",
+  "status": "approved",
+  "scope": "R1 only",
+  "baseCommit": "5025ae3",
+  "inputManifestSha256": "e149f307c01c380b5e61a27855b76d944fecb45a009a9e4ff713356c9e7adce3",
+  "resolvedFinding": "Buffered stdin read-ahead exceeded contractual sentinel consumption; unbuffered cloned OS handle and actual shared-offset suffix test repaired it.",
+  "independentEvidence": {
+    "consumedBytes": 16777217,
+    "preservedSuffixBytes": 65535,
+    "focusedPassed": 138,
+    "compileNegativePassed": 2,
+    "workspace": "candidate composition compile-only"
+  },
+  "limits": "Windows branch is implemented without execution evidence; full current wheel/browser/native qualification awaits R6."
+}

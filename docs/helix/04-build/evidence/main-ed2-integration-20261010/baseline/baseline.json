@@ -1,0 +1,38 @@
+{
+  "version": "weft-main-integration-baseline/1",
+  "status": "passed",
+  "checkpoint": "bf64c8c56520d1117ace6d12b517c6b5a15559de",
+  "requests": 2181,
+  "requestsUnchanged": true,
+  "comparison": "Type-preserving canonical JSON encoding of complete response objects; historical raw wire bytes were not compared",
+  "historicalIdenticalOutputs": 2128,
+  "changedOutputs": 53,
+  "integratedMainResponseParity": true,
+  "referenceCompilerSha256": "c1c51be67f1b53e67ed7c06d86fa4c59e0f74370301005c1eb9c7121f2c601e5",
+  "integrationCompilerSha256": "dea7fc60fcf2e492e4b58fc53b690be5f804c4a3d94f154b5d0912f3dac4874c",
+  "lockSha256": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+  "toolchain": "Rust/Cargo1.90.0",
+  "features": [
+    "truss-postgresql-qualified",
+    "ashlar-databricks-qualified"
+  ],
+  "referenceBuildCommand": [
+    "cargo",
+    "build",
+    "-p",
+    "weft-runtime",
+    "--example",
+    "compile_public_batch",
+    "--features",
+    "truss-postgresql-qualified,ashlar-databricks-qualified",
+    "--locked",
+    "--offline"
+  ],
+  "referenceSourceClean": true,
+  "generatorSha256": "bfa8720ad4967596d4ac025161d9c53ae760b5a788ed1ccfdfce64034de2c0ea",
+  "historicalArtifactsSha256": "39039daf794bac5ff2bfd4761e72a605ed0f6f8be776e31673d661377f431763",
+  "baselineSha256": "c6fb495551698317fde59ac216bf36a1cf0175c6ed12f1272e45f90d1fa1a490",
+  "differencesSha256": "5f450ece85f1a8652f8d7732f4a6422c106c5261c9ebdbb100efba443c99a7b8",
+  "sourceInputsSha256": "328b690def9d1c52dc586e272465ac6479f35a34563941d2c7749c52a2208bad",
+  "scope": "Independent clean pinned-main compiler reference for integration compatibility, not an independent native oracle. Unchanged complete response objects equal historical native-qualified receipt objects under type-preserving canonical JSON encoding. Changed outputs do not inherit native qualification. Fresh hosts and hosted CI remain separate gates."
+}

@@ -119,7 +119,7 @@ impl<'a> Index<'a> {
         let mut revisions = BTreeMap::new();
         let mut elements = BTreeMap::new();
         let mut types = BTreeMap::new();
-        for (doc, input) in ctx.catalog().documents.iter().zip(&ctx.catalog().inputs) {
+        for (doc, input) in ctx.catalog().documents.iter().zip(ctx.catalog().inputs()) {
             b.charge(input.document_json.len())?;
             b.charge(input.pin.document_id.len())?;
             b.charge(input.pin.revision.len())?;
@@ -594,7 +594,7 @@ fn check_budget(
         return Err(fail());
     }
     let pins = value["modelPins"].as_array().ok_or_else(fail)?;
-    if pins.len() != ctx.catalog().inputs.len() {
+    if pins.len() != ctx.catalog().inputs().len() {
         return Err(fail());
     }
     let mut seen = BTreeSet::new();
@@ -604,7 +604,7 @@ fn check_budget(
             return Err(fail());
         }
         let mut actual = None;
-        for input in &ctx.catalog().inputs {
+        for input in ctx.catalog().inputs() {
             b.charge(input.pin.document_id.len())?;
             if input.pin.document_id == pin["documentId"] {
                 actual = Some(input);

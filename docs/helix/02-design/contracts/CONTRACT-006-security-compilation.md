@@ -1418,9 +1418,11 @@ constant transformation. Self-join occurrences remain distinct even for identica
 revision-qualified field identities. The counted ledger bounds one million
 visits and sixteen million charged bytes: ontology source bytes before each
 composition, supplied rule IDs, initial projected-field identifiers, and selected
-transform literals and normalized payloads after composition. This excludes other
-policy/model inspection and active-mask normalization inside composition; it does
-not bound every instruction or allocation.
+transform literals and normalized payloads after composition. A separate
+composition ledger is shared across all rows and actions of this check. It bounds sixteen million normalized payload bytes and sixteen million
+encoded disclosure-copy bytes, reserving normalization cost before allocation.
+Neither ledger resets between rows. Other policy/model inspection is outside
+these ledgers; they do not bound every instruction or allocation.
 
 Selection mismatch returns WFT-SECURITY-RESULT-SELECTION; ledger exhaustion
 returns WFT-LIMIT/result, while prior declaration/cell/source errors retain their

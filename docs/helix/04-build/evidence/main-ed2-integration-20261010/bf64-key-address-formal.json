@@ -1,0 +1,88 @@
+{
+  "version": "weft.security.key-address-laws/0.1.0",
+  "laws": 3,
+  "formulas": [
+    {
+      "law": "ordered-member-position",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-datatypes ((OrderedMemberAddress 0)) (((Member (key SelectedKeyAddress) (position Int) (field KeyQualifiedRef)))))\n(declare-fun original_index () Int)\n(declare-fun alternate_index () Int)\n(declare-fun retained_field () KeyQualifiedRef)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(declare-fun original_source () String)\n(assert\n (>= original_index 0))\n(assert\n (>= alternate_index 0))\n(assert\n (and (distinct original_index alternate_index) true))\n(assert\n (let ((?x13 (Key original_source retained_target selected_key_id)))\n(let ((?x19 (Member ?x13 alternate_index retained_field)))\n(let ((?x18 (Member ?x13 original_index retained_field)))\n(= ?x18 ?x19)))))\n(check-sat)\n"
+    },
+    {
+      "law": "ordered-member-position",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-fun original_index () Int)\n(declare-fun alternate_index () Int)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(declare-fun original_source () String)\n(assert\n (>= original_index 0))\n(assert\n (>= alternate_index 0))\n(assert\n (and (distinct original_index alternate_index) true))\n(assert\n (let ((?x13 (Key original_source retained_target selected_key_id)))\n(= ?x13 ?x13)))\n(check-sat)\n"
+    },
+    {
+      "law": "ordered-member-position",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-datatypes ((OrderedMemberAddress 0)) (((Member (key SelectedKeyAddress) (position Int) (field KeyQualifiedRef)))))\n(declare-fun original_index () Int)\n(declare-fun alternate_index () Int)\n(declare-fun retained_field () KeyQualifiedRef)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(declare-fun original_source () String)\n(assert\n (>= original_index 0))\n(assert\n (>= alternate_index 0))\n(assert\n (and (distinct original_index alternate_index) true))\n(assert\n (let ((?x13 (Key original_source retained_target selected_key_id)))\n(let ((?x19 (Member ?x13 alternate_index retained_field)))\n(let ((?x18 (Member ?x13 original_index retained_field)))\n(and (distinct ?x18 ?x19) true)))))\n(check-sat)\n"
+    },
+    {
+      "law": "selected-key-identity",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-fun alternate_key_id () String)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(declare-fun original_source () String)\n(assert\n (and (distinct selected_key_id alternate_key_id) true))\n(assert\n (let ((?x24 (Key original_source retained_target alternate_key_id)))\n(let ((?x13 (Key original_source retained_target selected_key_id)))\n(= ?x13 ?x24))))\n(check-sat)\n"
+    },
+    {
+      "law": "selected-key-identity",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-fun alternate_key_id () String)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(assert\n (and (distinct selected_key_id alternate_key_id) true))\n(assert\n (= retained_target retained_target))\n(check-sat)\n"
+    },
+    {
+      "law": "selected-key-identity",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-fun alternate_key_id () String)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(declare-fun original_source () String)\n(assert\n (and (distinct selected_key_id alternate_key_id) true))\n(assert\n (let ((?x24 (Key original_source retained_target alternate_key_id)))\n(let ((?x13 (Key original_source retained_target selected_key_id)))\n(and (distinct ?x13 ?x24) true))))\n(check-sat)\n"
+    },
+    {
+      "law": "original-key-occurrence",
+      "role": "law",
+      "expected": "unsat",
+      "actual": "unsat",
+      "replay": "unsat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-fun alternate_source () String)\n(declare-fun original_source () String)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(assert\n (and (distinct original_source alternate_source) true))\n(assert\n (let ((?x29 (Key alternate_source retained_target selected_key_id)))\n(let ((?x13 (Key original_source retained_target selected_key_id)))\n(= ?x13 ?x29))))\n(check-sat)\n"
+    },
+    {
+      "law": "original-key-occurrence",
+      "role": "erasure-control",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-fun alternate_source () String)\n(declare-fun original_source () String)\n(declare-fun selected_key_id () String)\n(assert\n (and (distinct original_source alternate_source) true))\n(assert\n (= selected_key_id selected_key_id))\n(check-sat)\n"
+    },
+    {
+      "law": "original-key-occurrence",
+      "role": "nonvacuity",
+      "expected": "sat",
+      "actual": "sat",
+      "replay": "sat",
+      "smt2": "; benchmark generated from python API\n(set-info :status unknown)\n(declare-datatypes ((KeyQualifiedRef 0)) (((Ref (document String) (module String) (element String)))))\n(declare-datatypes ((SelectedKeyAddress 0)) (((Key (source String) (target KeyQualifiedRef) (keyId String)))))\n(declare-fun alternate_source () String)\n(declare-fun original_source () String)\n(declare-fun selected_key_id () String)\n(declare-fun retained_target () KeyQualifiedRef)\n(assert\n (and (distinct original_source alternate_source) true))\n(assert\n (let ((?x29 (Key alternate_source retained_target selected_key_id)))\n(let ((?x13 (Key original_source retained_target selected_key_id)))\n(and (distinct ?x13 ?x29) true))))\n(check-sat)\n"
+    }
+  ],
+  "z3Version": "4.15.4",
+  "sourcePins": {
+    "scripts/security/prove-key-event-addresses.py": "3b82dace36cb3528ff3d9c6026dd2114ffc09a3fb3008ffc7e40bf902b9e2404",
+    "crates/weft-core/src/security_obligation_sources/key_events.rs": "37e0212b70266ac0ae4104cc53a8d56068e1cb73a7ffca310bf28d2cb7d65146",
+    "crates/weft-core/src/security_obligation_sources.rs": "6ab7b02f71571532b28abd9254cfd1bb48d996c6a6ca09bc25ad21fd5bf690ad",
+    "crates/weft-core/src/security_semantic_coverage.rs": "e85acd6ee5571b486a98188608dcb74aa77a03a99333b4c9e82519132f0653d9"
+  },
+  "custody": "Sources frozen before formula construction and rechecked before publication; SMT captured before solve.",
+  "assumptions": "Typed constructors preserve exact selected Key ID, qualified target, original source occurrence and zero-based nonnegative member index. Source coordinates are opaque, not decoded.",
+  "scope": "Conditional algebraic constructor laws only. Erasure controls are projection sanity checks, not Rust mutants. No canonical-string/usize/Vec/pointer correspondence, traversal completeness, original Key selection refinement, backend/template applicability, authority or native enforcement proof."
+}

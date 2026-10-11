@@ -1,0 +1,28 @@
+{
+  "reviewer": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra"
+  },
+  "disposition": "approved for commit/push; no remaining material findings",
+  "reviewedInputs": {
+    "r0-repaired-inputs.json": "23f2a64cc34c812880e4c8df9cc59c25c71cb60a15255ab49fd47d1cafae19f5",
+    "crates/weft-core/src/security_budget.rs": "90b8c76dcfe7ea44285b53213195af30746da7cad4a71a830d3ac4a9176a35b6",
+    "crates/weft-core/src/security_composition.rs": "38d3af23b2020331208bba924863796137144695b33b95abd53445544139c3a8",
+    "crates/weft-core/src/security_evaluation.rs": "c6fea98451bfaae80414c49b0c5f2260d293bb8b6f07b410228b991f7f8142fb",
+    "scripts/spec-allocation.ts": "a5d4e74e3d332cba0f381b07996a297afac134e8495bf65744772a6e22fd7155",
+    "docs/helix/01-frame/concerns.md": "be74bb3babd5e6ac5759b7cb17123d10c8f442c2f76ec7d2e715a63960a9653b"
+  },
+  "resolvedFindings": [
+    "Canonical active concern IDs/applicability/rigor/overrides",
+    "Declared requirement/story correspondence and wrong-known-story control",
+    "Aggregate transform normalization and retained disclosure copy budget",
+    "Duplicate-index identity copy ledger"
+  ],
+  "independentReviewerVerification": [
+    "All82 current repaired source manifest entries match",
+    "Recorded log hash matches110passing tests and0failed/ignored/filtered",
+    "Both reviewer repros rebuilt against repaired library refuse",
+    "Zero coefficient exact behavior retained"
+  ],
+  "limits": "R0 baseline/governance and scoped source repairs only. FR19\u201322 full security/native acceptance open; public0.3 activation blocked."
+}

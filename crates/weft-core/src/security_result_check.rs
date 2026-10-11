@@ -16,6 +16,15 @@ impl Budget {
   let bytes=match value {None=>1,Some(ScalarLiteral::Boolean(_))=>1,Some(ScalarLiteral::String(s)|ScalarLiteral::Binary(s))=>s.len(),Some(ScalarLiteral::Number(n))=>usize::try_from(n.magnitude().bits().div_ceil(64)).ok().and_then(|words|words.checked_mul(8)).ok_or_else(fail)?};
   self.charge(bytes)
  }
+ /// Reserve a conservative expansion bound before normalization allocates.
+ pub(crate) fn normalize(&mut self,field:&Value,value:&Value)->Result<Option<ScalarLiteral>> {
+  let upper=crate::security_budget::literal_upper_bound(field,value).ok_or_else(fail)?;
+  // Result-phase numeric accounting retains main's whole-word allocation units.
+  let upper=if matches!(field["scalarType"].as_str(),Some("integer"|"decimal"))&&!value.is_null(){upper.checked_add(7).and_then(|n|n.checked_div(8)).and_then(|n|n.checked_mul(8)).ok_or_else(fail)?}else{upper};
+  if self.work==0||upper>self.bytes{return Err(Diagnostic::new("WFT-LIMIT","result","Security normalization resource limit exceeded"));}
+  let normalized=normalized_literal(field,value).map_err(|_|fail())?;
+  self.normalized(&normalized).map_err(|_|Diagnostic::new("WFT-LIMIT","result","Security normalization resource limit exceeded"))?;Ok(normalized)
+ }
  pub(crate) fn literal(&mut self,value:&Value)->Result<()> {
   // Bound caller-owned declarations before normalization or serialization.
   let mut stack=vec![(value,1usize)];
@@ -50,7 +59,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
      Disposition::Transformed{transform,version,output_field,domain:declared,literal}=>{
       if transform!="constant"||version!="0.1.0"{return Err(fail());}budget.literal(literal)?;
       let source=locate(ctx.catalog(),output_field).map_err(|_|fail())?;if &domain(source).map_err(|_|fail())?!=declared{return Err(fail());}
-      let normalized=normalized_literal(source,literal).map_err(|_|fail())?;budget.normalized(&normalized)?;
+      let normalized=budget.normalize(source,literal).map_err(|_|fail())?;
       let found=classes.iter().position(|c|c.output==output_field&&c.version==version&&c.domain==declared&&c.literal==normalized);
       budget.text(&rule.id)?;
       if let Some(i)=found {classes[i].sources.insert(&rule.id);} else {classes.push(Class{output:output_field,version,domain:declared,literal:normalized,sources:BTreeSet::from([rule.id.as_str()])});}
@@ -75,7 +84,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
      if disposition_sources.is_empty()||disposition_sources.len()>256{return Err(fail());}
      let reference=SecurityRef{document_id:output_field.document_id.clone(),module_id:output_field.module.clone(),element_id:output_field.element.clone()};
      if !matches(output_field,&reference,ctx)||!model_domain(result_domain,&reference,ctx){return Err(fail());}
-     let source=locate(ctx.catalog(),&reference).map_err(|_|fail())?;let output_domain=domain(source).map_err(|_|fail())?;let normalized=normalized_literal(source,literal).map_err(|_|fail())?;budget.normalized(&normalized)?;
+     let source=locate(ctx.catalog(),&reference).map_err(|_|fail())?;let output_domain=domain(source).map_err(|_|fail())?;let normalized=budget.normalize(source,literal).map_err(|_|fail())?;
      let i=classes.iter().position(|c|c.output==&reference&&c.version==version&&c.domain==&output_domain&&c.literal==normalized).ok_or_else(fail)?;
      if !seen_classes.insert(i){return Err(fail());}
      let mut sources=BTreeSet::new();for s in disposition_sources {budget.text(&s.rule_id)?;budget.identity(&s.target)?;budget.identity(&s.field)?;
@@ -103,4 +112,17 @@ mod tests {
   let mut exact=Budget{work:10,bytes:520};assert!(exact.normalized(&number).is_ok());assert_eq!(exact.bytes,0);
   assert!(exact.normalized(&Some(ScalarLiteral::String("x".into()))).is_err());
  }
+ #[test]
+ fn numeric_expansion_reservation_refuses_before_allocating_and_preserves_phase_budget() {
+  let field=serde_json::json!({"kind":"field","scalarType":"integer","cardinality":"one","nullability":"required"});
+  let literal=serde_json::json!({"integerToken":"1e1000000"});
+  let upper=crate::security_budget::literal_upper_bound(&field,&literal).unwrap();
+  let rounded=upper.div_ceil(8)*8;
+  let mut short=Budget{work:10,bytes:rounded-1};assert!(short.normalize(&field,&literal).is_err());assert_eq!(short.bytes,rounded-1);assert_eq!(short.work,10);
+  let string_field=serde_json::json!({"kind":"field","scalarType":"string","cardinality":"one","nullability":"required"});
+  let string=serde_json::json!({"string":"x".repeat(4_000_000)});
+  let mut result=Budget::new();for _ in 0..4{assert!(result.normalize(&string_field,&string).is_ok());}
+  assert_eq!(result.bytes,0);assert!(result.normalize(&string_field,&serde_json::json!({"string":"x"})).is_err());
+ }
+
 }

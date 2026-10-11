@@ -16,12 +16,12 @@ impl SecurityResolvedQuery{
  pub fn scans(&self)->&BTreeMap<String,SecurityRef>{&self.scans}
  pub fn uses(&self)->&[QueryUse]{&self.uses}
  pub fn projections(&self)->&[Projection]{&self.projections}
- pub fn require_sources(&self,security:&SecurityLogicalPlan,catalog:&Catalog)->Result<()>{security.require_catalog(catalog)?;if self.model_inputs!=catalog.inputs||self.policy_json!=security.source().policy_json()||self.ontology_json!=security.source().ontology_json(){return Err(fail());}Ok(())}
+ pub fn require_sources(&self,security:&SecurityLogicalPlan,catalog:&Catalog)->Result<()>{security.require_catalog(catalog)?;if self.model_inputs!=catalog.inputs()||self.policy_json!=security.source().policy_json()||self.ontology_json!=security.source().ontology_json(){return Err(fail());}Ok(())}
  pub fn resolve(sql:&str,catalog:&Catalog,security:&SecurityLogicalPlan,parameters:crate::application_resolve::Parameters,profile:Option<app::ReadProfile>)->Result<Self>{
   security.require_catalog(catalog)?;if sql.len()>4_000_000{return Err(fail());}
   let query=crate::application_resolve::resolve(catalog,crate::application_syntax::parse(sql)?,parameters,profile)?;
   let closure=SecurityOntologyClosure::read(security.source(),catalog)?;
-  fn reference(id:&Identity,catalog:&Catalog)->Result<SecurityRef>{if !catalog.inputs.iter().any(|m|m.pin.document_id==id.document_id&&m.pin.revision==id.revision){return Err(fail());}Ok(SecurityRef{document_id:id.document_id.clone(),module_id:id.module.clone(),element_id:id.element.clone()})}
+  fn reference(id:&Identity,catalog:&Catalog)->Result<SecurityRef>{if !catalog.inputs().iter().any(|m|m.pin.document_id==id.document_id&&m.pin.revision==id.revision){return Err(fail());}Ok(SecurityRef{document_id:id.document_id.clone(),module_id:id.module.clone(),element_id:id.element.clone()})}
   let mut scans=BTreeMap::new();for scan in std::iter::once(&query.source).chain(query.joins.iter().map(|j|&j.right)){
    let target=reference(&scan.record,catalog)?;if !closure.types.contains_key(&target)||scans.insert(scan.occurrence.clone(),target).is_some(){return Err(fail());}
   }
@@ -47,7 +47,7 @@ impl SecurityResolvedQuery{
    app::Expression::RelatedKeys{..}=>return Err(unsupported())
   }}
   if projections.len()>4096||scans.len()>256{return Err(fail());}
-  Ok(Self{sql:sql.into(),query,model_inputs:catalog.inputs.clone(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
+  Ok(Self{sql:sql.into(),query,model_inputs:catalog.inputs().to_vec(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
  }
 }
 
@@ -74,6 +74,6 @@ mod tests{
  #[test]
  fn ordered_alias_outputs_survive_dependency_deduplication_and_stale_models_refuse(){
   let (catalog,security)=fixture();let query=SecurityResolvedQuery::resolve("SELECT r.salary AS first_value,r.salary AS second_value FROM Resource r",&catalog,&security,BTreeMap::new(),None).unwrap();assert_eq!(query.projections().len(),1);assert_eq!(query.application_plan().outputs.len(),2);assert_eq!(query.application_plan().outputs[0].name,"first_value");assert_eq!(query.application_plan().outputs[1].name,"second_value");
-  let mut changed=catalog.clone();changed.inputs[0].selected_module_ids.clear();assert!(query.require_sources(&security,&changed).is_err());
+  let mut changed_inputs=catalog.inputs().to_vec();changed_inputs[0].selected_module_ids.clear();assert!(Catalog::prepare_security(changed_inputs).is_err());let mut changed_inputs=catalog.inputs().to_vec();changed_inputs[0].pin.revision.push_str("-changed");let changed=Catalog::prepare_security(changed_inputs).unwrap();assert!(query.require_sources(&security,&changed).is_err());
  }
 }

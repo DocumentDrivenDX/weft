@@ -1,0 +1,13 @@
+{
+  "reviewer": "Astra Ultra",
+  "status": "approved",
+  "main": "2650937",
+  "scope": "Original query/association payload custody, retained bounded event population and private prepared Catalog source",
+  "checks": {
+    "coreLib": 225,
+    "securityAdmission": 64,
+    "moduleControls": 16,
+    "assemblyControls": 5
+  },
+  "limits": "Final rebuilt hosts/full custody and final-SHA hosted CI remain required"
+}

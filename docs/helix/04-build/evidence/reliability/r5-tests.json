@@ -1,0 +1,125 @@
+{
+  "chunk": "R5",
+  "baseCommit": "605d2b6",
+  "formalEvidence": "r5-formal.json",
+  "formalEvidenceSha256": "d87d5dbf2f5cb98b6c26ae298bf9b44de602153547a0a37e2e9c41ee5ad412c2",
+  "checks": [
+    {
+      "name": "normal_controls",
+      "exitCode": 0,
+      "passed": 7,
+      "logSha256": "a9f17fe0892330b99d6f7d330700748f979849464a5f7306ab43adb23af43450"
+    },
+    {
+      "name": "optimized_controls",
+      "exitCode": 0,
+      "passed": 7,
+      "logSha256": "bddce96f84ad9ff239e1de06b16dfeaf9388c94a10c667153f0b07a2cafb6ad6"
+    },
+    {
+      "name": "actual_configured_gate",
+      "exitCode": 0,
+      "passed": 10,
+      "logSha256": "6a4e7af36803785833c1d9f19b540fe399cc6c9d1d1544eb44afc9954e7fd152"
+    },
+    {
+      "name": "modules",
+      "exitCode": 0,
+      "passed": 15,
+      "logSha256": "f87b5ade839342c64a70066c9e86f1b2d11cfe2edb952969fccf5675b30593e2"
+    },
+    {
+      "name": "specs",
+      "exitCode": 0,
+      "passed": null,
+      "logSha256": "e74bd11e10fbc1495e0e3ff21d003d73f4b66af834415f9ac0193ac6382ae1dd"
+    },
+    {
+      "name": "missing_site_solver_cli",
+      "argv": [
+        "/private/tmp/weft-toolchain/venv/bin/python",
+        "-S",
+        "scripts/reliability/gate.py",
+        "--cargo",
+        "/private/tmp/weft-toolchain/cargo/bin/cargo",
+        "--rustup-home",
+        "/private/tmp/weft-toolchain/rustup",
+        "--cargo-home",
+        "/private/tmp/weft-toolchain/cargo",
+        "--temp-root",
+        "/private/tmp/weft-reliability-r5-missing-tool-temp",
+        "--output-root",
+        "/private/tmp/weft-reliability-r5-missing-tool-output"
+      ],
+      "exitCode": 1,
+      "expectedRefusal": true,
+      "outputsCreated": false
+    }
+  ],
+  "files": {
+    ".github/workflows/conformance.yml": "f95c6f4c89f9fc729c4c2527a6dc473a3a9372a876b89259b7592fb200379b94",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+    "docs/helix/02-design/module-boundaries.json": "795d4303c130191e6f3e24d66790b42c43c25cc094666db947e5bbda4025575b",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "b89ab34930f556905fd2c9910384416e9c43bf61f059fef879844d987768a7d3",
+    "scripts/reliability/formal.py": "c84510c2bd19719b9ac394144b1baa3e6f45ec4e8322435cc91f0da57334455c",
+    "scripts/reliability/gate.py": "728d2c31dc3175904a95282ab0ca93dacfad831bcc1fc08926f57b1891e4fac9",
+    "scripts/reliability/requirements.txt": "0884383734d31e9dcdabe732d5de94b0cb6baf06f9269859b71568b4034e309f",
+    "scripts/reliability/test_formal.py": "58273cffd4b1e1033af7e8267c735a93db45d3fc9b8cc6bd6dd4cc5ace4da1f8"
+  },
+  "command": [
+    "/private/tmp/weft-toolchain/venv/bin/python",
+    "scripts/reliability/gate.py",
+    "--cargo",
+    "/private/tmp/weft-toolchain/cargo/bin/cargo",
+    "--rustup-home",
+    "/private/tmp/weft-toolchain/rustup",
+    "--cargo-home",
+    "/private/tmp/weft-toolchain/cargo",
+    "--temp-root",
+    "/private/tmp/weft-reliability-r5-final-temp",
+    "--output-root",
+    "/private/tmp/weft-reliability-r5-repaired-frozen-output"
+  ],
+  "assurance": "FM002/003 finite27truth and FM004432disposition/protection cases: authored tables vsbounded implementation fold;469UNSAT/10SATincluding broken controls. Actual Rust admission/composition/reversed-order correspondence and exact-literal tests separately executed. FM001/005 actual public-refusal/factory/custody tests, not SMT hash/native proof.",
+  "authority": {
+    "WFT-FM-001": "CONTRACT-005 and TD-009 stable property table",
+    "WFT-FM-002": "CONTRACT-005 and TD-009 stable property table",
+    "WFT-FM-003": "CONTRACT-005 and TD-009 stable property table",
+    "WFT-FM-004": "CONTRACT-005 and TD-009 stable property table",
+    "WFT-FM-005": "CONTRACT-005 and TD-009 stable property table"
+  },
+  "limits": "One permit/require/forbid,27truth tuples; one selected field,three abstract disposition slots/three distinct exact normalized transform equivalence classes. Actual Rust correspondence is separately mandatory. No arbitrary AST/hash/arithmetic/native/liveness proof.",
+  "securityAcceptance": "FR19\u201322/US009 full acceptance remains open; publicsecurity/nativeactivation blocked.",
+  "resolvedFindings": [
+    "Explicit fixture/schema inputs frozen before evaluation and verified unchanged before success",
+    "Whole compiler-and-host source revision frozen/reconciled catches changed unlisted Rust implementation",
+    "Actual gate changed/deleted input controls refuse with failed manifest/no qualification/stdoutempty"
+  ],
+  "frozenExplicitInputs": {
+    "crates/weft-core/src/compile.rs": "cf0cf71b5184b9481f203e248c4287eced1fd7b36c5347d7af3fc832bad582bb",
+    "crates/weft-core/src/model.rs": "78d21fe6da0b308ecd5c9e3b09d5f4d6d0f5c6beff1ea50263d11e410b75cd6c",
+    "crates/weft-core/src/security_source.rs": "04656ce56aa905217e9217afac55d61a7748cb1ba3e2f8ddfbcffae613a8df41",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/tests/security_admission.rs": "d23a6210b8af517147a139f11fc1c80c81cb825c1812d455667704d524059c46",
+    "crates/weft-core/tests/security-source-fixture.json": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150",
+    "crates/weft-core/tests/security-composition-oracle.json": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e",
+    "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+    "scripts/reliability/formal.py": "c84510c2bd19719b9ac394144b1baa3e6f45ec4e8322435cc91f0da57334455c",
+    "scripts/reliability/gate.py": "728d2c31dc3175904a95282ab0ca93dacfad831bcc1fc08926f57b1891e4fac9",
+    "scripts/reliability/requirements.txt": "0884383734d31e9dcdabe732d5de94b0cb6baf06f9269859b71568b4034e309f",
+    "docs/helix/02-design/contracts/CONTRACT-005-security-compilation.md": "16cd03eadf976cf8f8ed780bb28d756e2576cadb1cf89322f156d5efaf066754",
+    "docs/helix/03-test/fixtures/cases.json": "5d13b1d0d77074193e678321406f57a9ce34e49cd413649f0f7f7210262c6306",
+    "docs/helix/02-design/contracts/compile-response-v0.3.schema.json": "f7a67a742bbc645d68209edd80fec8d63fbe9886bd9d94b289b060c094365612",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "b89ab34930f556905fd2c9910384416e9c43bf61f059fef879844d987768a7d3",
+    "Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "Cargo.lock": "e1c15a0cda8494bd51aa6d199edb5b0c997a4c1c028b45cf9c72a3bfb7419e45",
+    "rust-toolchain.toml": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+  },
+  "frozenCompilerAndHostRevision": {
+    "kind": "sha256",
+    "value": "0a9b0676366a754355e4c15cc3466d45dc112008a1f9a15314fb978517402343",
+    "scope": "compiler-and-host-source"
+  }
+}

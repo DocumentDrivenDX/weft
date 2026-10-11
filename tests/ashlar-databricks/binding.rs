@@ -121,16 +121,16 @@ fn unsafe_and_ambiguous_mapping_content_refuses() {
 #[test]
 fn unmapped_unknown_model_content_is_retained() {
     let c = catalog();
-    assert!(c.inputs[0].document_json.contains("future.vendor"));
+    assert!(c.inputs()[0].document_json.contains("future.vendor"));
     admit(&c, &fixture()).unwrap();
-    assert!(c.inputs[0].document_json.contains("opaque"));
+    assert!(c.inputs()[0].document_json.contains("opaque"));
 }
 
 #[test]
 fn bigint_admits_unsigned_subdomains_and_refuses_uint64() {
     for bits in [1, 8, 32, 63, 64] {
         let original = catalog();
-        let mut input = original.inputs[0].clone();
+        let mut input = original.inputs()[0].clone();
         let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
         document["modules"][0]["elements"][2]["facets"]["integerWidth"]["bits"] = json!(bits);
         input.document_json = document.to_string();
@@ -149,7 +149,7 @@ fn bigint_admits_unsigned_subdomains_and_refuses_uint64() {
 
 #[test]
 fn original_members_can_reference_another_supplied_local_module() {
-    let mut input = catalog().inputs[0].clone();
+    let mut input = catalog().inputs()[0].clone();
     let mut document: Value = serde_json::from_str(&input.document_json).unwrap();
     let field = document["modules"][0]["elements"]
         .as_array_mut()

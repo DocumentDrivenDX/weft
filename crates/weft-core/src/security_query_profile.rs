@@ -64,11 +64,11 @@ impl SecurityQueryProfile{
   let mut expected=BTreeSet::new();for target in &spec.targets{for field in closure.types[target].source["fields"].as_array().ok_or_else(fail)?{let reference=SecurityRef::read(&field["ref"])?;for operator in [QueryOperator::Predicate,QueryOperator::Order,QueryOperator::Group,QueryOperator::Join,QueryOperator::Aggregate]{if field["queryUse"][operator.name()]=="original-authorized"{expected.insert((target.clone(),reference.clone(),operator));}}}}
   let mut bindings=BTreeMap::new();for entry in &spec.bindings{let key=(entry.target.clone(),entry.field.clone(),entry.operator);if !expected.contains(&key)||entry.original_action==spec.action||!actions.iter().any(|a|a==&entry.original_action)||bindings.insert(key,entry.original_action.clone()).is_some(){return Err(fail());}}
   if bindings.keys().cloned().collect::<BTreeSet<_>>()!=expected{return Err(fail());}
-  Ok(Self{spec,model_inputs:catalog.inputs.clone(),raw:raw.into(),binding_json:binding_json.into(),policy_json:plan.source().policy_json().into(),ontology_json:plan.source().ontology_json().into(),closure,bindings})
+  Ok(Self{spec,model_inputs:catalog.inputs().to_vec(),raw:raw.into(),binding_json:binding_json.into(),policy_json:plan.source().policy_json().into(),ontology_json:plan.source().ontology_json().into(),closure,bindings})
  }
  pub fn require_sources(&self,plan:&SecurityLogicalPlan,catalog:&Catalog,binding_json:&str,backend_id:&str,backend_version:&str,target_profile:&str)->Result<()>{
   plan.require_catalog(catalog)?;
-  if self.model_inputs!=catalog.inputs||self.spec.model_pins!=catalog.pins()||self.policy_json!=plan.source().policy_json()||self.ontology_json!=plan.source().ontology_json()||self.binding_json!=binding_json||self.spec.binding.backend_id!=backend_id||self.spec.binding.backend_version!=backend_version||self.spec.binding.target_profile!=target_profile{return Err(fail());}Ok(())
+  if self.model_inputs!=catalog.inputs()||self.spec.model_pins!=catalog.pins()||self.policy_json!=plan.source().policy_json()||self.ontology_json!=plan.source().ontology_json()||self.binding_json!=binding_json||self.spec.binding.backend_id!=backend_id||self.spec.binding.backend_version!=backend_version||self.spec.binding.target_profile!=target_profile{return Err(fail());}Ok(())
  }
  fn derive(&self,target:&SecurityRef,field:&SecurityRef,operator:QueryOperator)->Result<ClaimedUse>{
   if !self.spec.targets.contains(target){return Err(fail());}let binding=self.closure.types.get(target).ok_or_else(fail)?;
@@ -153,7 +153,7 @@ mod tests{
   assert!(profile.require_sources(&plan,&catalog,&format!("{binding} "),"fixture","unqualified","fixture-only").is_err());
   assert!(profile.require_sources(&plan,&catalog,&binding,"fixture","changed","fixture-only").is_err());
   let mut policy=plan.source().policy().clone();policy["rules"][0]["condition"]["value"]=json!(false);let packet=crate::security_source::SecuritySourcePacket::read(&policy.to_string(),plan.source().ontology_json(),&catalog).unwrap();let changed=SecurityLogicalPlan::read(packet,&catalog).unwrap();assert!(profile.require_sources(&changed,&catalog,&binding,"fixture","unqualified","fixture-only").is_err());
-  let mut changed_catalog=catalog.clone();changed_catalog.inputs[0].selected_module_ids.clear();assert!(profile.require_sources(&plan,&changed_catalog,&binding,"fixture","unqualified","fixture-only").is_err());
+  let mut changed_inputs=catalog.inputs().to_vec();changed_inputs[0].selected_module_ids.clear();assert!(Catalog::prepare_security(changed_inputs).is_err());let mut changed_inputs=catalog.inputs().to_vec();changed_inputs[0].pin.revision.push_str("-changed");let changed_catalog=Catalog::prepare_security(changed_inputs).unwrap();assert!(profile.require_sources(&plan,&changed_catalog,&binding,"fixture","unqualified","fixture-only").is_err());
  }
  #[test]
  fn mapping_handoff_preserves_plan_identity_dependencies_and_source_refusal(){

@@ -1,0 +1,11 @@
+{
+  "reviewer": "gpt-6-astra",
+  "reasoningEffort": "ultra",
+  "status": "approved",
+  "scope": "R2 declared dependency and lexical ownership checks",
+  "testsPassed": 15,
+  "expectations": 28,
+  "inputReceiptSha256": "e53d96e96c41b9cea46bd7298250cb2a1e36d038631aa5179d105909438e224a",
+  "remainingMaterialFindings": 0,
+  "limits": "Semantic coupling remains manually reviewed; not complete Rust name resolution or macro expansion proof."
+}

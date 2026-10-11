@@ -1,0 +1,18 @@
+{
+  "reviewer": "Astra Ultra",
+  "status": "approved",
+  "reference": "bf64c8c",
+  "requests": 2181,
+  "historicalIdentical": 2128,
+  "nativeRequalificationOpen": 53,
+  "referenceSourceFiles": 2440,
+  "hostControls": {
+    "normal": 5,
+    "optimized": 5,
+    "libraryCasesRequired": 17,
+    "cliResponsesRequired": 16,
+    "cliInputLimitRefusalRequired": 1
+  },
+  "scope": "Exact executed recipe, independent clean main source/build/artifact joins, type-preserving complete response parity and executable-member refusal controls",
+  "limits": "Actual fresh hosts and final hosted CI remain required"
+}

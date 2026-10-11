@@ -33,7 +33,7 @@ fn original_element(
 ) -> Result<(serde_json::Value, serde_json::Value)> {
     let input = c
         .catalog
-        .inputs
+        .inputs()
         .iter()
         .find(|input| {
             input.pin.document_id == identity.document_id && input.pin.revision == identity.revision
@@ -231,7 +231,7 @@ impl Backend for Candidate {
         }
 
         if admitted.decoded_json("/basis/modelBundle")?
-            != serde_json::to_value(&c.catalog.inputs)
+            != serde_json::to_value(&c.catalog.inputs())
                 .map_err(|_| fail("Model serialization failure"))?
         {
             return Err(fail(

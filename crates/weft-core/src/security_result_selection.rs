@@ -1,5 +1,5 @@
 //! Conditional supplied-truth selection checks. Never authenticates truth or releases data.
-use crate::{application_ir::Expression,error::{Diagnostic,Result},security_backend::{SecurityBackendContext,SecuritySimulatedRowTruths},security_composition::{compose,Decision},security_ir::Disposition,security_ontology::{SecurityRef,locate},security_literals::normalized_literal,security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityTransform}};
+use crate::{application_ir::Expression,error::{Diagnostic,Result},security_backend::{SecurityBackendContext,SecuritySimulatedRowTruths},security_composition::{compose_with_budget,Decision},security_ir::Disposition,security_ontology::{SecurityRef,locate},security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityTransform}};
 use std::collections::{BTreeMap,BTreeSet};
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-RESULT-SELECTION","result","Simulated result selection refused")}
 fn limit()->Diagnostic{Diagnostic::new("WFT-LIMIT","result","Simulated selection resource limit exceeded")}
@@ -9,6 +9,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
  let rows=batch["rows"].as_array().ok_or_else(fail)?;
  if truth_rows.len()!=rows.len(){return Err(fail());}
  let requirements=ctx.requirements();let mut budget=crate::security_result_check::Budget::new();
+ let mut composition_budget=crate::security_budget::PayloadBudget::result_phase("WFT-LIMIT");
  let mut fields:BTreeMap<&str,BTreeSet<SecurityRef>>=BTreeMap::new();
  for output in requirements.outputs(){
   let Expression::Field{scan,identity}=&output.output().expression else{return Err(fail());};
@@ -31,7 +32,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
     budget.charge(ctx.logical_plan().source().ontology_json().len()).map_err(|_|limit())?;
     let primary=action.inventory().action()==requirements.primary_action();
     let output:Vec<_>=if primary{fields.get(scan.inventory().scan()).into_iter().flat_map(|f|f.iter().cloned()).collect()}else{Vec::new()};
-    let composition=compose(ctx.logical_plan(),ctx.catalog(),scan.inventory().target(),action.inventory().action(),&output,supplied).map_err(|_|fail())?;
+    let composition=compose_with_budget(ctx.logical_plan(),ctx.catalog(),scan.inventory().target(),action.inventory().action(),&output,supplied,&mut composition_budget).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;
     if composition.decision!=Decision::Permit{return Err(fail());}
     if primary {for (field,disposition) in composition.disclosure{selected.insert((scan.inventory().scan(),field),disposition);}}
    }
@@ -50,8 +51,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
      if transform!="constant"||version!=v||output_field.document_id!=f.document_id||output_field.module_id!=f.module||output_field.element_id!=f.element{return Err(fail());}
      let source=locate(ctx.catalog(),output_field).map_err(|_|fail())?;
      budget.literal(literal).map_err(|_|limit())?;budget.literal(l).map_err(|_|limit())?;
-     let a=normalized_literal(source,literal).map_err(|_|fail())?;let b=normalized_literal(source,l).map_err(|_|fail())?;
-     budget.normalized(&a).map_err(|_|limit())?;budget.normalized(&b).map_err(|_|limit())?;
+     let a=budget.normalize(source,literal).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;let b=budget.normalize(source,l).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;
      if a!=b{return Err(fail());}
     },_=>return Err(fail())
    }

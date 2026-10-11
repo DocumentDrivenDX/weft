@@ -1,0 +1,32 @@
+{
+  "chunk": "current-main-integration-final-local-qualification",
+  "reviewer": "Astra Ultra",
+  "verdict": "approved-local-qualification",
+  "materialFindingsRemaining": 0,
+  "qualifiedSourceCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "priorReceiptsAtCommit": "39236e26ddecd86a6159465e78ed74c00df9d037",
+  "hostQualificationSha256": "a0dac4c46bf7667f0fccfb40f04ceea8e2b5cb4ca302f2fcdd3f127922b362fe",
+  "originalFormalQualificationSha256": "b053ccc46417d4311dd832be21fc857c733affc77b21a7a8322b3846f153cdfc",
+  "verified": {
+    "currentInputs": 2687,
+    "historicalSourceBlobs": 111,
+    "ordinaryCases": 2181,
+    "libraryResourceSecurityControls": 17,
+    "cliResponseControls": 16,
+    "cliInputLimitRefusals": 1,
+    "formalProperties": 10,
+    "actualExactRustCorrespondenceTests": 13
+  },
+  "compilerAndHostRevision": {
+    "kind": "sha256",
+    "value": "06ff9ba591b0f825e4e70c54f680e24990767adacad6228270ef9f347d706068",
+    "scope": "compiler-and-host-source"
+  },
+  "evidence": {
+    "host": "r6-hosts.json",
+    "inputs": "r6-inputs.json",
+    "tests": "r6-tests.json"
+  },
+  "finalGate": "Exact new-head hosted CI and ancestry-preserving main merge remain required. These generated outputs are excluded from the qualified source closure; source and input identities must remain unchanged.",
+  "limits": "Local rebuilt public-host parity and retained historical custody; no current database execution, native security enforcement or package release. Final exact-head hosted CI remains required."
+}

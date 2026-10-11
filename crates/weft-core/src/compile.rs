@@ -1,4 +1,6 @@
 //! Public, pure compile transport. Hosts own backend registration and execution.
+/// Maximum UTF-8 request bytes admitted by the compiler and CLI.
+pub const MAX_REQUEST_BYTES: usize = 16 * 1024 * 1024;
 use crate::{
     backend::{BindingInput, Plan, Registry, Representation, Status, Target},
     error::{Diagnostic, Result},
@@ -47,6 +49,8 @@ struct Request03;
 struct RequestSecurity01;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.2.schema.json")]
 struct RequestSecurity02;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.5.schema.json")]
+struct RequestSecurityCompat05;
 /// Validated request target supplied to trusted host composition code.
 /// Binding bytes/digest, modules and SQL/plan have passed transport admission.
 pub struct CompositionInput<'a> {
@@ -91,7 +95,7 @@ impl Compiler {
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
-            if raw.len() > 16 * 1024 * 1024 {
+            if raw.len() > MAX_REQUEST_BYTES {
                 return Err(Diagnostic::new(
                     "WFT-LIMIT",
                     "input",
@@ -107,7 +111,7 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0")) = input["interfaceVersion"].as_str() {
+            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
                 version = v.into();
             }
             if security_factory.is_some() && version != "weft-security-compile/0.2.0" {
@@ -123,6 +127,7 @@ impl Compiler {
                     | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
                     | (Some("weft-security-compile/0.1.0"), Some("weft-sql/0.2.0"))
                     | (Some("weft-security-compile/0.2.0"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.5.0"), Some("weft-sql/0.2.0"))
             ) {
                 return Err(Diagnostic::new(
                     "WFT-VERSION",
@@ -132,6 +137,8 @@ impl Compiler {
             }
             if !(if version == "weft-compile/0.1.0" {
                 Request01::is_valid(&input)
+            } else if version == "weft-compile/0.5.0" {
+                RequestSecurityCompat05::is_valid(&input)
             } else if version == "weft-security-compile/0.2.0" {
                 RequestSecurity02::is_valid(&input)
             } else if version == "weft-security-compile/0.1.0" {
@@ -169,7 +176,7 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
-            let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0") {
+            let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
             } else {
                 crate::model::Catalog::prepare(req.modules)?

@@ -2,6 +2,8 @@
 @covers US-005-AC1 @covers US-005-AC3
 """
 import hashlib,json,os,subprocess,sys
+import sys
+if sys.flags.optimize:raise RuntimeError('Qualification requires nonoptimized Python')
 from pathlib import Path
 import weft
 import weft.weft as extension
@@ -21,5 +23,5 @@ for bad in [None,{},1,b'{}']:
 try:weft.compile_json('\ud800')
 except UnicodeError:pass
 else:raise AssertionError('Invalid surrogate accepted')
-summary=dict(status='passed',cases=2181,byteParity=True,subprocessDisabled=True,extensionSha256=hashlib.sha256(Path(extension.__file__).read_bytes()).hexdigest(),nativeModule=extension.__file__,version=weft.__version__,python=sys.version,scope='Actual loaded Python ABI with both qualified backends. Byte parity to fresh public Rust runtime on all native-qualified inputs; no Python database executions or broader platform claims.')
+summary=dict(status='passed',cases=2181,byteParity=True,subprocessDisabled=True,extensionSha256=hashlib.sha256(Path(extension.__file__).read_bytes()).hexdigest(),nativeModule=extension.__file__,version=weft.__version__,python=sys.version,scope='Actual loaded Python ABI with both qualified backends. Byte parity to fresh public Rust runtime on all retained fixture inputs and pinned-main outputs; changed outputs do not inherit native qualification; no Python database executions or broader platform claims.')
 (OUT/'python-summary.json').write_text(json.dumps(summary,indent=2)+'\n');(OUT/'python-receipts.json').write_text(json.dumps(dict(summary=summary,cases=receipts),indent=2)+'\n');print(json.dumps(summary))

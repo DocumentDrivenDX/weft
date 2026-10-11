@@ -1,0 +1,14 @@
+{
+  "reviewer": "Astra Ultra",
+  "status": "approved",
+  "main": "bf64c8c",
+  "scope": "Preserved typed field/Key semantics, module inventory, offline pinned schema hash, CI gate union, evidence custody",
+  "checks": {
+    "coreLib": 224,
+    "securityAdmission": 64,
+    "moduleControls": 16,
+    "boundaryControls": 3,
+    "algebraFormulasReplayed": 18
+  },
+  "limits": "Compiler baseline, fresh hosts and final-SHA hosted CI are separate gates"
+}

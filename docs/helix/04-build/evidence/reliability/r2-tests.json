@@ -1,0 +1,34 @@
+{
+  "chunk": "R2",
+  "baseCommit": "fa129cb",
+  "command": "bun run modules:check",
+  "environment": {
+    "WEFT_CARGO": "/private/tmp/weft-toolchain/cargo/bin/cargo",
+    "RUSTUP_HOME": "/private/tmp/weft-toolchain/rustup",
+    "CARGO_HOME": "/private/tmp/weft-toolchain/cargo"
+  },
+  "actualWorkspacePackages": 11,
+  "exitCode": 0,
+  "logSha256": "15498e297fe5826915240401b786f5390f911ad47755ece4b934f1457aaf7dcb",
+  "files": {
+    "scripts/module-boundaries.ts": "4e1596feaa69b5d4572e5aa199e87ba581af0a0c75eb41b3fd8f74c6feefb413",
+    "scripts/module-boundaries.test.ts": "10e9f5010619206aebadba63b9a608a51042fd4e2f4126e5ddceb5a21b543798",
+    "docs/helix/02-design/module-boundaries.json": "35d7fdcdb82438afd318d3debc3e7ac7b9e638fa455656f063604a16e8d21a6c",
+    "package.json": "95d1ad16293a124cc6ce5fef4d7394ca67189918bc3b2375b3836b28b067d187",
+    ".githooks/pre-commit": "97d83f9f0f8349f1c88706c91be4dbd175fc7583ed38bd1dd23207b579a3cdc2",
+    ".github/workflows/conformance.yml": "c177880b9bc50c4931ba48d50595060d295e5d717b04517c5f3db91452c613ff",
+    "docs/helix/02-design/technical-designs/TD-008-reliability.md": "8ceb031df844497b198d877f8da2ce3a8c028799410ff0147e1dcabf9131a5e5"
+  },
+  "limits": "Canonical Cargo direct package/dependency identity plus conservative lexical public-surface and browser/tool source ownership inventory. Browser/tool import coupling is explicitly manual; no complete Rust name resolution or intra-core semantic proof.",
+  "controlsPassed": 15,
+  "resolvedReviewFindings": [
+    "Lexical scanner handles same-line/reexports/extern/static or refuses unsupported public forms; actual file-scanner controls",
+    "Canonical dependency paths and full direct identity; real-metadata same-name external substitution control",
+    "Browser wrapper and reliability tools ownership and checked/manual coverage",
+    "Reject every symlink during traversal; real directory symlink control",
+    "Const unsafe function identity control",
+    "All four JavaScript dependency groups in root and browser manifests are checked, including initially absent groups",
+    "Use shared lexer for module path attributes, including raw strings/comments/cfg_attr; actual scanner redirection regression",
+    "Normalize raw identifier spellings for path/cfg_attr recognition; raw path and raw nested cfg_attr controls"
+  ]
+}

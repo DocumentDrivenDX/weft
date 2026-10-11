@@ -1,0 +1,27 @@
+{
+  "version": "weft.concurrent-main-reliability-migration/1",
+  "incomingMain": "ed2b6777d3a1d63850af4bac8bc0180e3820ed01",
+  "approvedPlanSha256": "ed0e404727fe74a7065aca0111fefe51364a3ca82381edb3b8dbd1a2eb16f2a8",
+  "runnerMigration": {
+    "oldId": "CONTRACT-006",
+    "oldPath": "docs/helix/02-design/contracts/CONTRACT-006-reliability-runner.md",
+    "newId": "CONTRACT-008",
+    "newPath": "docs/helix/02-design/contracts/CONTRACT-008-reliability-runner.md",
+    "originalSha256": "45cafd1e6e2fa0a22e3c77668dbad1d588dc961a5ac691fe464ca307c7d62452",
+    "newSha256": "98a81cf070af5ad5e0b8c45e6d57f792b5092eda1dcf06d62ee8ba7dcbf14377"
+  },
+  "preservedMainSecurityId": "CONTRACT-006",
+  "blockedCompatibilityId": "CONTRACT-007",
+  "preservedProtocols": [
+    "weft-compile/0.1.0",
+    "weft-compile/0.2.0",
+    "weft-compile/0.3.0",
+    "weft-compile/0.4.0",
+    "weft-compile/0.4.1",
+    "weft-security-compile/0.1.0",
+    "weft-security-compile/0.2.0"
+  ],
+  "blockedCompatibility": "weft-compile/0.5.0",
+  "priorApprovedPlanSha256": "37477f719d9b8f97a93f4f0118d4ee9c8756ba91f80bc0d8abfc9484b0db91d3",
+  "qualification": "Identity/source reconciliation only; no native security, package release or final host/CI qualification."
+}

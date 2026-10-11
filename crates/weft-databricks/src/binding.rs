@@ -276,7 +276,7 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding>
                 return Err(fail("Duplicate or foreign property mapping"));
             }
             let input = catalog
-                .inputs
+                .inputs()
                 .iter()
                 .find(|i| i.pin == authored.pin)
                 .unwrap();
@@ -404,7 +404,7 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding>
         }
         let authored = catalog.record_by_identity(&physical.source)?;
         let input = catalog
-            .inputs
+            .inputs()
             .iter()
             .find(|i| i.pin == authored.pin)
             .unwrap();

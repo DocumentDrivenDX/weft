@@ -1,0 +1,148 @@
+{
+  "version": "weft-runner/1",
+  "status": "passed",
+  "detected": 7,
+  "toolIdentity": {
+    "cargoVersion": "cargo 1.90.0 (840b83a10 2025-07-30)",
+    "rustcVersion": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+    "cargoExecutableSha256": "ec1b9233e7f72990ecd8e62063fa7f6c3dfc2bec8e97f88bff165f9100ac696a",
+    "rustToolchainSha256": "41ffa816f9f3929eee58730344f11d341b50fb15ac1f3850a7b9ff4205831e14"
+  },
+  "mutations": [
+    {
+      "mutation": "duplicate-key-guard",
+      "source": "crates/weft-core/src/json.rs",
+      "originalSha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+      "mutantSha256": "361dd4ee2b0432c08626d477471b567c85d1ff11277466fd02252775753592e7",
+      "test": "qualification-resources",
+      "filter": "generated_truncated_json_and_nested_duplicates",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 16442
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 2408
+    },
+    {
+      "mutation": "node-limit-guard",
+      "source": "crates/weft-core/src/json.rs",
+      "originalSha256": "e791b5d3f5de812bc59366fedc9d62d7687da93c31f0dbd82297faa9605535e4",
+      "mutantSha256": "25517f123ba1d1a0160678f66d8151251fc8810185550e19bb888e0d41fc9e0a",
+      "test": "qualification-resources",
+      "filter": "json_node_and_request_byte_limits",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 12286
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 2306
+    },
+    {
+      "mutation": "scan-type-filter",
+      "source": "crates/weft-postgresql/src/candidate.rs",
+      "originalSha256": "1f483fa787dff8b9f438d90227f331d0fb6246577c5a78c569571c6b006c0076",
+      "mutantSha256": "b8cfe9fcc97923aa21b1df1697e6ab2053ab309fe55d5dde3fdecc78afd3767a",
+      "test": "postgresql-candidate",
+      "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 18994
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 3356
+    },
+    {
+      "mutation": "projection-distinct",
+      "source": "crates/weft-postgresql/src/candidate.rs",
+      "originalSha256": "1f483fa787dff8b9f438d90227f331d0fb6246577c5a78c569571c6b006c0076",
+      "mutantSha256": "73ceb18a534207f009b539a6ddaf54813e7025b53165fe96206cc38ed45a4260",
+      "test": "postgresql-candidate",
+      "filter": "relational_emission_keeps_owner_selection_and_bag_projection",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 17069
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 3258
+    },
+    {
+      "mutation": "decimal-through-double",
+      "source": "crates/weft-postgresql/src/conformance_original.rs",
+      "originalSha256": "a1af5a643730da98d76c110b85e0baeab5a587f4bcbe056490a22922c4f7bc63",
+      "mutantSha256": "ba56d87e513e136ccbdf1d79e837ee2bcde532a9df1cc4c0c70662eae9b4682f",
+      "test": "postgresql-original",
+      "filter": "admitted_decimal_precision_scale_pairs_preserve_exact_operands",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 19260
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 3385
+    },
+    {
+      "mutation": "presence-null-to-absence",
+      "source": "crates/weft-postgresql/src/presence_definition.rs",
+      "originalSha256": "ba075768f392bc8eb82e5779bde206b763e93046195fadb82e74bb855af35b75",
+      "mutantSha256": "79b52b0276ef27f817fd141e12b792cb0e69f17538a98c3e96ff786643f680c0",
+      "test": "postgresql-lib",
+      "filter": "original_definition_drives_presence_without_coercion",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 18130
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 2728
+    },
+    {
+      "mutation": "module-pin-guard",
+      "source": "crates/weft-core/src/model.rs",
+      "originalSha256": "78d21fe6da0b308ecd5c9e3b09d5f4d6d0f5c6beff1ea50263d11e410b75cd6c",
+      "mutantSha256": "9d998a547f86827992fa5bdcb339429e7f95b92a4949aaa09e3f36e331d2b805",
+      "test": "qualification-properties",
+      "filter": "generated_unicode_retention_pins_and_selected_meaning",
+      "baseline": {
+        "exitCode": 0,
+        "selected": 1,
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "durationMs": 65080
+      },
+      "exitCode": 101,
+      "status": "detected",
+      "durationMs": 7999
+    }
+  ],
+  "scope": "Exact source guards and selected test failure signatures. No native mutated-result qualification; raw subprocess output is omitted.",
+  "diagnosticRunId": "d0456ac4807749cc8fdf8a7aafdab96c"
+}
