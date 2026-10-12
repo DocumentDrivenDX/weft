@@ -1045,3 +1045,26 @@ issues no authority and the public security compiler stays blocked.
 `../../04-build/evidence/security-physical-domains-20261012/receipt.json` retains
 source-qualified component checks. No separate SQL feature allowlist, new local
 literal algebra or native backend qualification is introduced.
+
+
+## Original execution query-slot correspondence — 2026-10-12
+
+The owned context exposes `check_execution_query_slots` for an explicitly fully
+parameterized relational-query profile. It reuses shape/domain checks and derives
+each scalar literal/parameter occurrence from the actual original resolved plan,
+in join/on order then filter order, including page tuples and relationship keys.
+Field-to-field comparisons create no parameter slot. The bounded derived inventory
+matches execution-slot count, exact text value, original logical type and exact
+origin `{kind:queryValue,sourcePath:...}`. Each repeated occurrence stays distinct;
+parameter names or same-typed values cannot substitute another occurrence.
+
+This is an optional correspondence component, not a rule that all backends must
+parameterize every literal. Alternate inline/deduplicated/mixed strategies need
+separate complete correspondence under their actual owned lowering. The component
+does not inspect SQL placeholder placement or prove SQL implements the original
+query; installation and policy/subject parameters remain separately unadmitted.
+Successful checks still produce no security-enabled compiler response or authority.
+
+`../../04-build/evidence/security-query-slots-20261012/receipt.json` retains
+source-qualified tests. Complete SQL/capability/obligation/native/host validation
+and original backend acceptance remain required.

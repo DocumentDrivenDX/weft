@@ -48,3 +48,30 @@ pub(crate) fn check_domains(ctx:&SecurityBackendContext<'_>,plan:&SecurityPhysic
  }
  Ok(())
 }
+
+/// Exact per-occurrence execution slots for the explicitly parameterized query profile.
+/// Installation values and SQL placeholder semantics remain separate obligations.
+pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPhysicalPlan)->Result<()> {
+ check_domains(ctx,plan)?;
+ use crate::application_ir::{Predicate,Value};
+ let mut originals:Vec<(String,&Value)>=Vec::new();
+ fn collect<'a>(p:&'a Predicate,path:String,out:&mut Vec<(String,&'a Value)>)->Result<()>{
+  fn push<'a>(path:String,v:&'a Value,out:&mut Vec<(String,&'a Value)>)->Result<()>{if matches!(v,Value::Field{..}){return Ok(());}if out.len()>=1024{return Err(fail());}out.push((path,v));Ok(())}
+  match p {
+   Predicate::Equal{right,..}=>push(format!("{path}/right"),right,out)?,
+   Predicate::LexicographicGreater{values,..}=>for(i,v)in values.iter().enumerate(){push(format!("{path}/values/{i}"),v,out)?;},
+   Predicate::HasRelated{key,..}=>for(i,v)in key.iter().enumerate(){push(format!("{path}/key/{i}"),v,out)?;}
+  }
+  Ok(())
+ }
+ let query=ctx.query().application_plan();
+ for(i,j)in query.joins.iter().enumerate(){for(k,p)in j.on.iter().enumerate(){collect(p,format!("joins/{i}/on/{k}"),&mut originals)?;}}
+ for(i,p)in query.filters.iter().enumerate(){collect(p,format!("filters/{i}"),&mut originals)?;}
+ originals.retain(|(_,v)|!matches!(v,Value::Field{..}));
+ if originals.len()!=plan.execution.parameters.len(){return Err(fail());}
+ for((path,original),slot)in originals.iter().zip(&plan.execution.parameters){
+  let (value,logical_type)=match original{Value::Literal{value,logical_type,..}|Value::Parameter{value,logical_type,..}=>(value,logical_type),_=>return Err(fail())};
+  if slot.value.as_str()!=value.as_str()||&slot.logical_type!=logical_type||slot.origin!=serde_json::json!({"kind":"queryValue","sourcePath":path}){return Err(fail());}
+ }
+ Ok(())
+}

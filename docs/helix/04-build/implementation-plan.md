@@ -968,3 +968,24 @@ Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15,
 US-056 AC7/AC10 prerequisites. Broader parameter domains remain explicit open
 integration work, not a product language limit. All132 original cases remain
 required; full shared implementation goal stays active.
+
+
+### Original query execution-slot correspondence — 2026-10-12
+
+The compiler now derives bounded scalar-value occurrences from its original
+resolved query and compares exact physical execution slots under the explicitly
+fully parameterized profile. Same-domain changed value, incorrect occurrence
+path, omission and extra slot all refuse while shape/domain alone pass. Source
+paths preserve join/on/filter/tuple/key occurrence identity; field-to-field values
+are not invented parameter slots. Original SQL meaning/placeholder use and other
+parameter sources remain open, so compiler emission continues to refuse.
+
+`evidence/security-query-slots-20261012/receipt.json` retains current source pins,
+archive and Rust1.90.0 release verification:257 unit +70 security admission +3
+literal tests,330 passing total, zero failed/ignored. The initial compile caught
+an extra dereference in the new borrowed-type comparison; it was corrected before
+execution. Derived inventory refuses beyond1024 occurrences before accumulation.
+No native SQL/codec/authority/lifetime/publication, formal refinement, full workspace
+or installed Python/browser qualification is claimed. Trace FR-19/22,
+CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15, US-056 AC7/AC10
+prerequisites. No backend case is promoted; original132-case goal stays active.

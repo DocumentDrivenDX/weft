@@ -1339,3 +1339,19 @@ fn physical_parameter_domains_reject_reinterpretation_without_emission() {
   Ok(SecurityRegistry::default())
  });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
+
+#[test]
+fn execution_slots_bind_original_query_values_not_only_domains(){
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*,ir::{Family,LogicalType},backend::ParameterSlot};
+ let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE r.resourceId='r1'");let mut calls=0;
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  calls+=1;
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right"})}]}};
+  ctx.check_execution_query_slots(&plan)?;
+  for mutation in 0..4{
+   let mut bad=plan.clone();match mutation{0=>bad.execution.parameters[0].value="r2".into(),1=>bad.execution.parameters[0].origin=json!({"kind":"queryValue","sourcePath":"filters/1/right"}),2=>bad.execution.parameters.clear(),3=>{let mut p=bad.execution.parameters[0].clone();p.position=2;bad.execution.parameters.push(p);},_=>unreachable!()}
+   ctx.check_physical_parameter_domains(&bad)?;assert!(ctx.check_execution_query_slots(&bad).is_err());
+  }
+  Ok(SecurityRegistry::default())
+ });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
