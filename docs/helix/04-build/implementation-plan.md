@@ -946,3 +946,25 @@ complete capability/obligation correspondence, native installation/authority/
 execution/publication and formal refinement remain separate requirements. No
 full workspace, installed Python/browser, native backend case or full profile is
 promoted; all132 original cases remain required and shared goal active.
+
+
+### Exact physical parameter domains — 2026-10-12
+
+The compiler now distinguishes bounded physical shape from exact parameter-domain
+correspondence. The latter reuses original ordinary compiler value semantics and
+rejects unknown selected facets rather than ignoring them. Eighteen controls cover
+empty/astral strings, NUL, canonical/noncanonical boolean, signed int8 boundaries,
+overflow/fractional/unbounded integer, decimal precision/scale/exponent and unknown
+string/integer/decimal facets. Shape can pass while domain checking refuses;
+neither permits emission or actual native execution.
+
+`evidence/security-physical-domains-20261012/receipt.json` retains the current
+source archive/pins and fresh Rust1.90.0 release run:257 unit +69 security admission
++3 literal tests,329 passing total, zero failed/ignored. Original query/parameter
+origin matching, complete capabilities/obligations, native codecs/placeholder/SQL
+meaning/current authority and final publication remain required. No full workspace,
+Python/browser, formal/native refinement or backend acceptance is claimed.
+Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15,
+US-056 AC7/AC10 prerequisites. Broader parameter domains remain explicit open
+integration work, not a product language limit. All132 original cases remain
+required; full shared implementation goal stays active.

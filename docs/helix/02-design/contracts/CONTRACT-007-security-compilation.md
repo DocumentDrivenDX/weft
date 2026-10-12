@@ -1021,3 +1021,27 @@ The component receipt is
 Public security compilation remains blocked. Complete physical/result/dependency
 coverage, backend capabilities, installed native behavior and host lifetime remain
 required. No independent SQL feature allowlist is introduced by these finite bounds.
+
+
+## Exact physical parameter-domain component — 2026-10-12
+
+The owned context's separate `check_physical_parameter_domains` first validates
+physical shape, then applies Weft's existing exact ordinary parameter semantics.
+This scoped component admits non-null strings/booleans with no selected facets,
+bounded signed/unsigned integerWidth1–64, and decimal precision1–28 with
+scale0–precision. Only the exact known facet members are admitted; opaque unknown
+facets remain retainable in shape but refuse semantic interpretation. Unbounded
+integer, derived/arbitrary decimal, nullable carriers and broader selected string
+facets require their own existing capability/profile integration rather than
+being silently reinterpreted. These are component limits, not a product SQL ceiling.
+
+Empty and valid Unicode strings pass; native NUL and noncanonical booleans refuse.
+Integer overflow/fractional spellings and decimal precision/scale violations or
+exponent spellings refuse. Values retain their original text. No parameter origin
+is matched to an actual source query, native placeholder layout or codec by this
+check; those mandatory obligations remain before lowering/emission. Success
+issues no authority and the public security compiler stays blocked.
+
+`../../04-build/evidence/security-physical-domains-20261012/receipt.json` retains
+source-qualified component checks. No separate SQL feature allowlist, new local
+literal algebra or native backend qualification is introduced.

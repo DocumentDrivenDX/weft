@@ -248,7 +248,7 @@ pub(crate) fn validate(
 }
 #[cfg(test)]
 fn validate_parameter(value: &str,t:&LogicalType)->Result<()> {validate_parameter_domain(value,t,false)}
-fn validate_parameter_domain(value: &str, t: &LogicalType, unbounded_admitted:bool) -> Result<()> {
+pub(crate) fn validate_parameter_domain(value: &str, t: &LogicalType, unbounded_admitted:bool) -> Result<()> {
     if t.family==Family::Integer && t.facets==serde_json::json!({}) && !unbounded_admitted {return Err(fail("Integer parameter needs an explicit bounded width"));}
     let kind = match t.family {
         Family::String => {

@@ -1312,3 +1312,30 @@ fn physical_plan_shape_is_bounded_and_never_emits_security_sql() {
   Ok(SecurityRegistry::default())
  });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
+
+#[test]
+fn physical_parameter_domains_reject_reinterpretation_without_emission() {
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*,ir::{Family,LogicalType},backend::ParameterSlot};
+ let req=security04_request();let mut calls=0;
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  calls+=1;
+  let integer=json!({"integerWidth":{"bits":8,"signed":true}});let decimal=json!({"precision":3,"scale":1});
+  for (family,facets,value,expected) in [
+   (Family::String,json!({}),"",true),(Family::String,json!({}),"😀",true),(Family::String,json!({}),"a\0b",false),
+   (Family::Boolean,json!({}),"true",true),(Family::Boolean,json!({}),"TRUE",false),
+   (Family::Integer,integer.clone(),"-128",true),(Family::Integer,integer.clone(),"127",true),
+   (Family::Integer,integer.clone(),"128",false),(Family::Integer,integer.clone(),"-129",false),
+   (Family::Integer,integer.clone(),"1.0",false),(Family::Integer,json!({}),"1",false),
+   (Family::Decimal,decimal.clone(),"99.9",true),(Family::Decimal,decimal.clone(),"100.0",false),
+   (Family::Decimal,decimal.clone(),"1.01",false),(Family::Decimal,decimal.clone(),"1e2",false),
+   (Family::String,json!({"unknown":true}),"value",false),
+   (Family::Integer,json!({"integerWidth":{"bits":8,"signed":true,"unknown":true}}),"1",false),
+   (Family::Decimal,json!({"precision":3,"scale":1,"unknown":true}),"1",false),
+  ] {
+   let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family,facets,nullable:false},value:value.into(),origin:json!({"kind":"parameter","name":"p"})}]}};
+   ctx.check_physical_shape(&plan)?;
+   assert_eq!(ctx.check_physical_parameter_domains(&plan).is_ok(),expected,"{value}");
+  }
+  Ok(SecurityRegistry::default())
+ });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
