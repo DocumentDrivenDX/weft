@@ -1348,6 +1348,14 @@ fn execution_slots_bind_original_query_values_not_only_domains(){
   calls+=1;
   let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right"})}]}};
   ctx.check_execution_query_slots(&plan)?;
+  ctx.check_postgresql_query_placeholders(&plan)?;
+  for(sql,expected)in [
+   ("SELECT $1, $1",true),
+   ("SELECT $1, '$2', \"$3\", $$ $4 $$ /* $5 */ -- $6",true),
+   ("SELECT '$1'",false),("SELECT $$ $1 $$",false),("SELECT $2",false),
+   ("SELECT $0",false),("SELECT $01",false),("SELECT ?",false),("SELECT 'unterminated",false)
+  ]{let mut candidate=plan.clone();candidate.execution.sql=sql.into();assert_eq!(ctx.check_postgresql_query_placeholders(&candidate).is_ok(),expected,"{sql}");}
+
   for mutation in 0..4{
    let mut bad=plan.clone();match mutation{0=>bad.execution.parameters[0].value="r2".into(),1=>bad.execution.parameters[0].origin=json!({"kind":"queryValue","sourcePath":"filters/1/right"}),2=>bad.execution.parameters.clear(),3=>{let mut p=bad.execution.parameters[0].clone();p.position=2;bad.execution.parameters.push(p);},_=>unreachable!()}
    ctx.check_physical_parameter_domains(&bad)?;assert!(ctx.check_execution_query_slots(&bad).is_err());

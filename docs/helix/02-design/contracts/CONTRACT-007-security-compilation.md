@@ -1068,3 +1068,21 @@ Successful checks still produce no security-enabled compiler response or authori
 `../../04-build/evidence/security-query-slots-20261012/receipt.json` retains
 source-qualified tests. Complete SQL/capability/obligation/native/host validation
 and original backend acceptance remain required.
+
+
+## PostgreSQL query-placeholder coverage component — 2026-10-12
+
+`check_postgresql_query_placeholders` rechecks the original execution query slots
+and uses the workspace-pinned sqlparser0.63.0 PostgreSQL tokenizer to distinguish
+actual canonical `$1`–`$n` placeholders from quoted identifiers, text literals,
+dollar-quoted strings and comments. Every declared execution slot must appear;
+repeated use of a slot is allowed, undeclared/zero/noncanonical ordinals refuse.
+Lexical errors refuse. This checker does not parse statement meaning, prove
+original query equivalence, inspect installation placeholders, select a native
+codec or certify the context's backend dialect. Its scope must be selected as a
+PostgreSQL ordinal profile; other strategies/dialects require their own coverage.
+
+The existing1MiB SQL bound limits tokenizer input. No allocation/instruction-level
+or concurrency-memory proof is claimed. This introduces no SQL keyword/feature
+allowlist and leaves public security compiler emission blocked. The source-qualified
+receipt is `../../04-build/evidence/security-postgres-placeholders-20261012/receipt.json`.

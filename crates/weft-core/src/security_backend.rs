@@ -110,6 +110,8 @@ impl<'a> SecurityBackendContext<'a> {
     pub fn check_physical_parameter_domains(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_domains(self,plan) }
     /// Exact per-occurrence execution values for a parameterized query; not SQL/native admission.
     pub fn check_execution_query_slots(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_query_slots(self,plan) }
+    /// PostgreSQL canonical ordinal coverage only; no statement meaning or execution authority.
+    pub fn check_postgresql_query_placeholders(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_postgres_placeholders(self,plan) }
     /// Pure declaration correspondence only; never permission to select/release a cell.
     pub fn check_result_declaration(&self, contract: &crate::security_lowering::SecurityResultContract) -> Result<()> { crate::security_result_check::check(self, contract) }
     /// Pure contract/cell correspondence; no permission to select or release results.

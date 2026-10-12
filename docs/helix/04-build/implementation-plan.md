@@ -989,3 +989,24 @@ No native SQL/codec/authority/lifetime/publication, formal refinement, full work
 or installed Python/browser qualification is claimed. Trace FR-19/22,
 CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15, US-056 AC7/AC10
 prerequisites. No backend case is promoted; original132-case goal stays active.
+
+
+### PostgreSQL execution placeholder coverage — 2026-10-12
+
+The original query-slot component now has a separate PostgreSQL ordinal coverage
+check using the existing workspace-pinned sqlparser0.63.0 tokenizer. Nine controls
+cover repeat `$1`, quoted/comment/dollar-quoted fake references, unused slots,
+undeclared/zero/noncanonical ordinals, question-mark strategy and lexical failure.
+The compiler still emits no security SQL; placeholder coverage is not query/SQL
+meaning, dialect registration or native execution admission.
+
+Core's explicit sqlparser dependency edge was missing in the initial compile and
+was added; the retained first log records that build error. Cargo.lock changes
+only that Core dependency edge, with no version changes. Fresh offline locked
+Rust1.90.0 release verification passes257 unit +70 security admission +3 literal
+checks,330 total, zero failed/ignored. `evidence/security-postgres-placeholders-20261012/`
+retains original source pins/archive and failure/current logs. Native/Python/browser,
+full workspace, formal refinement and complete allocation guarantees remain open.
+Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15,
+US-056 AC7/AC10 prerequisites. No backend case is promoted; all132 original
+cases remain required and full shared goal stays active.

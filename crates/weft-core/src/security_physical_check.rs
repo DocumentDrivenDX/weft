@@ -75,3 +75,22 @@ pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPh
  }
  Ok(())
 }
+
+/// PostgreSQL ordinal placeholder coverage only, not statement/query semantics.
+pub(crate) fn check_postgres_placeholders(ctx:&SecurityBackendContext<'_>,plan:&SecurityPhysicalPlan)->Result<()> {
+ check_query_slots(ctx,plan)?;
+ use sqlparser::{dialect::PostgreSqlDialect,tokenizer::{Tokenizer,Token}};
+ let dialect=PostgreSqlDialect{};
+ let tokens=Tokenizer::new(&dialect,&plan.execution.sql).tokenize().map_err(|_|fail())?;
+ let mut used=BTreeSet::new();
+ for token in tokens {
+  if let Token::Placeholder(name)=token {
+   let digits=name.strip_prefix('$').ok_or_else(fail)?;
+   let position=digits.parse::<usize>().map_err(|_|fail())?;
+   if position==0||position>plan.execution.parameters.len()||digits!=position.to_string(){return Err(fail());}
+   used.insert(position);
+  }
+ }
+ if used.len()!=plan.execution.parameters.len(){return Err(fail());}
+ Ok(())
+}
