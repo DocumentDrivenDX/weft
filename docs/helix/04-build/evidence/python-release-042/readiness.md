@@ -37,7 +37,7 @@ availability is not an ownership claim.
 
 ## Evidence and limitations
 
-See `summary.json` for exact wheels, digests, interpreters and passing validations.
+Installed-wheel validation records identify exact wheels, digests, interpreters and outcomes; the approved GitHub release attaches those records.
 Every installed-wheel replay checks 2,181 ordinary and 174 candidate/control
 response objects, repeat determinism, package contents and native payload custody,
 with subprocesses disabled during compilation. These are compiler/transport tests.
@@ -63,6 +63,6 @@ manual and requires the protected `pypi` environment; all platform and interpret
 jobs must pass. No sdist is offered without extracted-source validation.
 
 The user still supplies their PyPI username and establishes the pending publisher;
-integration/push approval is needed for the clean release patch and hosted runs.
+integration/push approval has been granted for the clean release patch and hosted runs.
 Final upload authorization follows artifact review. A narrower platform release
 requires a reviewed matrix change, rather than ignoring a failed platform.
