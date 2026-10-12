@@ -1226,3 +1226,20 @@ case duties and native gates remain mandatory before lowering/emission. Trace
 CONTRACT-006/007, S04, FR-19/22, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
 US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
 remain required and the full goal stays active.
+
+
+### Current security workspace integration — 2026-10-12
+
+After declaration DAG, exact-context event coverage, registry candidate checks
+and independently matched projection changes, a fresh full native Rust workspace
+run passes622 tests across46 groups, zero failed/ignored/filtered.
+`evidence/security-current-workspace-20261012/receipt.json` retains original
+command/log, Rust1.90.0 source attribution and post-run archive at0f06bc5.
+This is workspace integration, not a held source interval, hermetic binary
+provenance, installed Python/WASM/browser or native security qualification.
+
+Current shared case inventory still has132 required cases and106 null commands:
+16 pg-raw cases and30 each Truss/Delta raw/Ashlar. The integrated compiler
+components do not implement those missing original runners. No backend case is
+promoted; the full goal and every required native/authority/publication duty
+remain active. Trace S04/S11/S12, CONTRACT-006/007 and shared STP-056/057.
