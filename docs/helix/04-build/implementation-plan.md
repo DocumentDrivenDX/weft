@@ -1165,3 +1165,36 @@ workspace, installed Python/WASM/browser or native qualification is refreshed.
 Trace FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
 US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
 remain required and the full security goal stays active.
+
+
+### Registry-bound candidate correspondence integration — 2026-10-12
+
+A combined pure registry API now connects original declaration selection and
+private coherent semantic coverage to typed owner/rule custody and the existing
+physical-domain/query-slot/result/event-source checks. It does not dispatch
+backend lowering or emit an executable artifact. Candidate metadata requires
+explicit comparison selection; Supported metadata remains unqualified.
+
+Fresh Rust1.90.0 offline locked release verification passes334 tests:257 unit,
+74 security admission and3 literal tests. The original-context integration
+fixture has a panic-on-lower backend and verifies eight candidate mutations,
+six selected registration mutations, foreign registry identity and Candidate/
+Supported metadata controls. `SELECT 1` deliberately passes physical declaration
+shape for a field query, demonstrating absent SQL equivalence rather than
+claiming enforcement. Public compilation remains blocked without SQL/parameters/
+plan. Strict11-package ownership and16 Bun boundary tests pass.
+
+The first integration test's Supported manifest omitted required declared
+evidence metadata and correctly failed registration; the fixture was corrected
+with explicitly unverified evidence strings.
+`evidence/security-candidate-declaration-20261012/receipt.json` retains original
+failed/final logs, sources/archive and commands. No independent proof or native
+case is replaced by those strings.
+
+Next connect independently authored template/deployment matching and selected
+binding meaning with actual native admission. Complete SQL/query/codec
+correspondence, authority lifetime and publication remain required. No full
+workspace, installed Python/WASM/browser or native profile is refreshed. Trace
+S04, FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
+US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
+remain required and the full goal stays active.

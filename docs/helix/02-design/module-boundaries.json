@@ -1281,6 +1281,7 @@
             "trait:SecurityBackend",
             "struct:SecurityRegistry",
             "fn:register",
+            "fn:check_candidate_declaration",
             "type:SecurityRegistryFactory"
           ],
           "pathReferences": []

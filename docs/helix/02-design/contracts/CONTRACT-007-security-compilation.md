@@ -1273,3 +1273,44 @@ with changed SQL, binding or profile bytes refuse retained declarations; binding
 and profile controls explicitly keep all underlying unframed event IDs identical.
 The original compiler remains blocked with no SQL/parameters/plan. Retained
 receipt: `../../04-build/evidence/security-source-coverage-20261012/receipt.json`.
+
+
+## Combined registry-bound candidate declaration check — 2026-10-12
+
+`SecurityRegistry.check_candidate_declaration(context, candidate, allow_candidate)`
+connects existing correspondence components without invoking a backend callback.
+It rechecks original sources, selects the exact original registry declaration,
+issues conservative selected scan/action and whole-application capability
+coverage, retains typed owner demands and rule occurrences, then checks physical
+parameter domains, original query slots, result declaration and context-bound
+event source coverage. Unknown selected capability/profile/constraint, stale
+model revisions, insufficient declared limits and incomplete declarations refuse.
+The exact registry entry cannot be replaced by a separately supplied manifest.
+
+The candidate argument remains caller-owned declaration data. Success returns
+unit; it retains no admitted plan and cannot authorize subsequent mutation or
+execution. It does not call SecurityBackend.lower, native installation or result
+publication. Public compile continues to select registration and return blocked
+without dispatch. allow_candidate only selects Candidate metadata for this
+comparison; Supported/evidence strings are still declarations, not independent
+native evidence or permission. No new compile envelope or executable artifact
+version is introduced.
+
+The selected private semantic domain still requires complete required direct
+scalar outputs; unsupported computed/optional profiles remain explicit
+requirements for later integration. This component does not choose a smaller
+product SQL surface. Complete independently authored template/site/kind/failure/
+case and deployment-duty matching, selected binding interpretation, SQL/query
+equivalence, native codecs and original fact/authority/publication evidence are
+still mandatory before lowering dispatch or emission. No conditional template
+match or generic all-events host obligation qualifies those gates.
+
+The original-context integration fixture uses a backend whose lower method
+panics if invoked. Candidate and Supported metadata can pass declaration
+comparison while the compiler still returns WFT-SECURITY-LOWERING-UNSUPPORTED
+without SQL/parameters/plan. The physical SQL deliberately contains `SELECT 1`
+for an original resource-field query: its acceptance demonstrates that this
+checker does not establish SQL meaning. Eight isolated candidate corruptions,
+six selected-registration corruptions, Candidate refusal without explicit
+selection and foreign registry identity controls all refuse. Receipt:
+`../../04-build/evidence/security-candidate-declaration-20261012/receipt.json`.

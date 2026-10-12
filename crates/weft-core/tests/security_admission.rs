@@ -1469,3 +1469,45 @@ fn actual_owner_event_coverage_refuses_each_omission_extra_and_source_context_re
   for kind in ["scan","action","output"]{assert!(paths.iter().any(|p|p[0]==kind),"COUNT {kind}");}Ok(SecurityRegistry::default())
  });refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
+
+#[test]
+fn combined_candidate_checks_borrow_original_registration_without_backend_dispatch(){
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
+ let req=security04_request();let mut manifest=registration_manifest(&req);
+ manifest["capabilities"][0]["logicalDomain"]=json!({"version":"weft.security.logical-domain/0.1.0","policyProfile":"weft.security.owner-record-semantics/0.1.0","applicationProfile":"weft.security.owner-relational-plan/0.1.0","targets":[{"documentId":"domain","revision":"schema-1","moduleId":"m","elementId":"Resource"}],"limits":{"maxScans":256,"maxRulesPerAction":4096,"maxConditionNodes":1000000,"maxConditionDepth":64,"maxExistsDepth":64,"maxOutputs":4096}});
+ manifest["capabilities"][0]["resultDomain"]=json!({"version":"weft.security.result-domain/0.1.0","profile":"weft.security.required-direct-cells/0.1.0","cellEncoding":"weft.security.cells/0.1.0"});
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  let identity=SecurityIdentity{document_id:"domain".into(),revision:"schema-1".into(),module:"m".into(),element:"resourceId".into()};
+  let candidate=SecurityLowering{
+   lowering:SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT 1".into(),parameters:vec![]}},
+   result_contract:SecurityResultContract{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns:vec![SecurityResultColumn{position:1,output_name:"resourceId".into(),source_fields:vec![identity.clone()],outcomes:vec![SecurityResultOutcome::Original{id:"original".into(),domain:SecurityResultDomain::Model{field:identity}}]}]},
+   obligations:vec![SecurityAdmissionObligation{id:"declaration-only".into(),semantic_sources:ctx.semantic_source_ids()?.into_iter().collect(),enforcement_site:SecurityEnforcementSite::Host,prerequisites:vec![],failure_code:"WFT-UNVERIFIED".into(),evidence_case_ids:vec!["unverified-case".into()]}],capability_ids:vec!["declaration-only".into()]
+  };
+  let mut registry=SecurityRegistry::default();registry.register(RegistrationFixture(manifest.to_string()))?;
+  assert!(registry.check_candidate_declaration(ctx,&candidate,false).is_err());
+  registry.check_candidate_declaration(ctx,&candidate,true)?;
+  for mutation in 0..8{
+   let mut bad=candidate.clone();match mutation{
+    0=>bad.capability_ids.clear(),1=>bad.capability_ids.push("unknown".into()),2=>bad.lowering.execution.sql.clear(),
+    3=>bad.result_contract.columns[0].output_name="foreign".into(),4=>bad.obligations.clear(),5=>bad.obligations[0].semantic_sources.pop().map(|_|()).unwrap(),
+    6=>bad.result_contract.columns.clear(),7=>bad.obligations[0].prerequisites=vec!["missing".into()],_=>unreachable!()
+   }assert!(registry.check_candidate_declaration(ctx,&bad,true).is_err(),"mutation {mutation}");
+  }
+  for mutation in 0..6{
+   let mut bad=manifest.clone();match mutation{
+    0=>bad["capabilities"][0]["logicalDomain"]=json!({"fixture":true}),
+    1=>bad["capabilities"][0]["logicalDomain"]["limits"]["maxConditionNodes"]=json!(1),
+    2=>bad["capabilities"][0]["logicalDomain"]["targets"][0]["revision"]=json!("stale"),
+    3=>bad["capabilities"][0]["constraints"]=json!(["unknown"]),
+    4=>bad["capabilities"][0]["status"]=json!("unsupported"),
+    5=>bad["capabilities"][0]["resultDomain"]["profile"]=json!("unknown"),_=>unreachable!()
+   }
+   let mut other=SecurityRegistry::default();other.register(RegistrationFixture(bad.to_string()))?;assert!(other.check_candidate_declaration(ctx,&candidate,true).is_err(),"registration mutation {mutation}");
+  }
+  // The identical candidate cannot borrow an unrelated registry declaration.
+  let mut foreign=manifest.clone();foreign["backendVersion"]=json!("different");let mut other=SecurityRegistry::default();other.register(RegistrationFixture(foreign.to_string()))?;assert!(other.check_candidate_declaration(ctx,&candidate,true).is_err());
+  // Matching Supported metadata remains declaration correspondence, never authority.
+  let mut supported=manifest.clone();supported["capabilities"][0]["status"]=json!("supported");supported["evidence"]=json!(["declared-fixture-only"]);supported["capabilities"][0]["evidence"]=json!(["declared-fixture-only"]);let mut other=SecurityRegistry::default();other.register(RegistrationFixture(supported.to_string()))?;other.check_candidate_declaration(ctx,&candidate,false)?;
+  Ok(registry)
+ });refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-LOWERING-UNSUPPORTED");
+}

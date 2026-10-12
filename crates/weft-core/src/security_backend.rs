@@ -168,6 +168,19 @@ impl SecurityRegistry {
         self.entries.insert(key,Registration {manifest_json,manifest,backend:Box::new(backend)});
         Ok(())
     }
+    /// Combined candidate declaration correspondence. Never invokes lower or admits execution.
+    pub fn check_candidate_declaration(&self, context: &SecurityBackendContext<'_>, candidate: &SecurityLowering, allow_candidate: bool) -> Result<()> {
+        context.profiled_query().require_sources(context.logical_plan(),context.catalog(),context.binding_json(),context.backend_id(),context.backend_version(),context.target_profile())?;
+        let declaration=self.select_declaration(context)?;
+        let coverage=crate::security_semantic_coverage::issue(context,declaration,&candidate.capability_ids,allow_candidate)?;
+        let demands=crate::security_obligation_sources::issue_demands(&coverage)?;
+        let _occurrences=crate::security_rule_occurrences::issue(&demands)?;
+        context.check_physical_parameter_domains(&candidate.lowering)?;
+        context.check_execution_query_slots(&candidate.lowering)?;
+        context.check_result_declaration(&candidate.result_contract)?;
+        context.check_semantic_source_coverage(&candidate.obligations)?;
+        Ok(())
+    }
     pub(crate) fn select_declaration(&self, context: &SecurityBackendContext<'_>) -> Result<RegisteredSecurityDeclaration<'_>> {
         self.declaration_for(context.backend_id,context.backend_version,context.target_profile)
     }
