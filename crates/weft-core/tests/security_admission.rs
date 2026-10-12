@@ -1193,16 +1193,7 @@ fn historical_security_envelope_names_never_select_ordinary_composition() {
 #[test]
 fn optional_original_cells_match_exact_fact_presence_without_release() {
  use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
- let mut req=security04_request();req["sql"]=json!("SELECT r.salary FROM Resource r");
- let mut doc:Value=serde_json::from_str(req["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
- for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){if e["id"]=="salary"{e["nullability"]=json!("absent-allowed");}}
- req["modules"][0]["documentJson"]=json!(doc.to_string());req["modules"][0]["pin"]["sha256"]=json!(sha256(doc.to_string().as_bytes()));
- let mut ontology:Value=serde_json::from_str(req["security"]["ontologyJson"].as_str().unwrap()).unwrap();
- for e in ontology["entities"].as_array_mut().unwrap(){if let Some(fields)=e["fields"].as_array_mut(){for f in fields{if f["ref"]["elementId"]=="salary"{f["protection"]=json!("unprotected");}}}}
- let mut policy:Value=serde_json::from_str(req["security"]["policyJson"].as_str().unwrap()).unwrap();policy["rules"][0].as_object_mut().unwrap().remove("disclosure");
- req["security"]["policyJson"]=json!(policy.to_string());req["security"]["ontologyJson"]=json!(ontology.to_string());
- let mut profile:Value=serde_json::from_str(req["security"]["queryProfileJson"].as_str().unwrap()).unwrap();
- profile["modelPins"]=json!(req["modules"].as_array().unwrap().iter().map(|m|m["pin"].clone()).collect::<Vec<_>>());profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["ontologySha256"]=json!(sha256(ontology.to_string().as_bytes()));req["security"]["queryProfileJson"]=json!(profile.to_string());
+ let req=optional_original_request();
  let corpus:Value=serde_json::from_str(include_str!("security-evaluation-oracle.json")).unwrap();let case=&corpus["cases"][0];
  let field=json!({"documentId":"domain","moduleId":"m","elementId":"salary"});
  let mut calls=0;let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
@@ -1233,4 +1224,54 @@ fn optional_original_cells_match_exact_fact_presence_without_release() {
   }
   Ok(SecurityRegistry::default())
  });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
+
+fn optional_original_request()->Value {
+ let mut req=security04_request();req["sql"]=json!("SELECT r.salary FROM Resource r");
+ let mut doc:Value=serde_json::from_str(req["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+ for e in doc["modules"][0]["elements"].as_array_mut().unwrap(){if e["id"]=="salary"{e["nullability"]=json!("absent-allowed");}}
+ req["modules"][0]["documentJson"]=json!(doc.to_string());req["modules"][0]["pin"]["sha256"]=json!(sha256(doc.to_string().as_bytes()));
+ let mut ontology:Value=serde_json::from_str(req["security"]["ontologyJson"].as_str().unwrap()).unwrap();
+ for e in ontology["entities"].as_array_mut().unwrap(){if let Some(fields)=e["fields"].as_array_mut(){for f in fields{if f["ref"]["elementId"]=="salary"{f["protection"]=json!("unprotected");}}}}
+ let mut policy:Value=serde_json::from_str(req["security"]["policyJson"].as_str().unwrap()).unwrap();policy["rules"][0].as_object_mut().unwrap().remove("disclosure");
+ req["security"]["policyJson"]=json!(policy.to_string());req["security"]["ontologyJson"]=json!(ontology.to_string());
+ let mut profile:Value=serde_json::from_str(req["security"]["queryProfileJson"].as_str().unwrap()).unwrap();
+ profile["modelPins"]=json!(req["modules"].as_array().unwrap().iter().map(|m|m["pin"].clone()).collect::<Vec<_>>());profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["ontologySha256"]=json!(sha256(ontology.to_string().as_bytes()));req["security"]["queryProfileJson"]=json!(profile.to_string());
+ req
+}
+
+#[test]
+fn active_withholding_hides_optional_value_null_and_absence() {
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
+ let field=json!({"documentId":"domain","moduleId":"m","elementId":"salary"});
+ let corpus:Value=serde_json::from_str(include_str!("security-evaluation-oracle.json")).unwrap();let case=&corpus["cases"][0];
+ for active in [false,true] {
+  let mut req=optional_original_request();
+  let mut policy:Value=serde_json::from_str(req["security"]["policyJson"].as_str().unwrap()).unwrap();
+  let mut rule=policy["rules"][0].clone();rule["id"]=json!("withhold-optional");rule["condition"]=json!({"op":"literal","value":active});
+  rule["disclosure"]=json!([{"field":field,"disposition":{"kind":"withheld"}}]);policy["rules"].as_array_mut().unwrap().push(rule);
+  req["security"]["policyJson"]=json!(policy.to_string());
+  let mut profile:Value=serde_json::from_str(req["security"]["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));req["security"]["queryProfileJson"]=json!(profile.to_string());
+  let mut calls=0;let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+   calls+=1;let mut contract=direct_result_contract(ctx);
+   contract.columns[0].outcomes.extend([SecurityResultOutcome::Absent{id:"absent".into()},SecurityResultOutcome::Withheld{id:"withheld".into()}]);
+   ctx.check_result_declaration(&contract)?;
+   let bytes=serde_json::to_string(&contract).unwrap();let hash=sha256(bytes.as_bytes());let scan=ctx.requirements().scans()[0].inventory().scan().to_owned();
+   let choices=[json!({"outcomeId":"original","disposition":"original","value":{"integerToken":"100"}}),
+    json!({"outcomeId":"original","disposition":"original","value":null}),json!({"outcomeId":"absent","disposition":"absent"}),
+    json!({"outcomeId":"withheld","disposition":"withheld"})];
+   for state in 0..3 {
+    let mut fact=case["request"]["resources"][0].clone();
+    if state==1{for f in fact["fields"].as_array_mut().unwrap(){if f["field"]==field{f["value"]=Value::Null;}}}
+    if state==2{fact["fields"].as_array_mut().unwrap().retain(|f|f["field"]!=field);fact["absent"]=json!([field.clone()]);}
+    let rows=json!({"version":"weft.security.scoped-facts/0.1.0","rows":[{scan.clone():fact}]});
+    for (selected,cell) in choices.iter().enumerate(){
+     let batch=json!({"version":"weft.security.cells/0.1.0","resultContractSha256":hash,"rows":[[cell]]});
+     let result=ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&case["cut"].to_string(),&rows.to_string());
+     assert_eq!(result.is_ok(),selected==if active{3}else{state},"mask {active}, state {state}, cell {selected}: {result:?}");
+    }
+   }
+   Ok(SecurityRegistry::default())
+  });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+ }
 }

@@ -896,3 +896,25 @@ Trace CONTRACT-007 original field presence; shared STP-056 R09/B07/B09/B15,
 US-056 AC6/AC7 prerequisites. These remain simulated facts; authentication,
 native lowering/codec/current policy/publication and all original backend cases
 remain separate requirements. The shared132-case goal stays active.
+
+
+### Optional presence under active withholding — 2026-10-12
+
+`evidence/security-optional-withholding-20261012/receipt.json` retains24 actual
+owner fact-selection controls: active/false Withheld × value/null/explicit absence
+× four candidate cells. Under active Withheld every world accepts only the exact
+same value-free Withheld cell; Original value, Original(null) and Absent refuse.
+A false mask preserves the matching Original value/null or explicit Absent and
+refuses Withheld. Conservative declarations retain all potential outcomes in both
+policy variants. Public compiler emission remains blocked.
+
+All67 Rust security admission tests pass, zero failed/ignored; core sources are
+byte-identical to the preceding325-test component qualification. The test setup
+was factored without changing its source semantics. Three Z3 4.15.4 queries and
+fresh-context replays give two UNSAT/one SAT: active-mask tag equality, false-mask
+presence preservation and an absence-first leaking countermodel. This is finite
+supplied-fact/tag analysis, not Rust/native/SQL or error/timing noninterference.
+Trace CONTRACT-007 and shared STP-056 R08/R09/B07, US-056 AC6 prerequisites.
+Authenticated native facts, installed masks, protected observation/current authority
+and final release remain open. No original backend case or complete profile is
+promoted; the full shared implementation goal remains active.

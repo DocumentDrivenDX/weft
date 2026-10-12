@@ -1,0 +1,10 @@
+{
+  "z3": "4.15.4",
+  "results": {
+    "active-mask-presence-equality": "unsat",
+    "false-mask-retains-presence": "unsat",
+    "absence-first-leaks-under-mask": "sat"
+  },
+  "replays": 3,
+  "limits": "Finite supplied-fact state and tag model. Same authorized resource/policy/context, valid complete cuts and exact withheld cell are premises. No native execution, errors, timing, private-fact or SQL noninterference proof."
+}

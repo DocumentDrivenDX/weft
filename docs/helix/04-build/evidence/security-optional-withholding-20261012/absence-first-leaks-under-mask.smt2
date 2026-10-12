@@ -1,0 +1,15 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun b () Int)
+(declare-fun a () Int)
+(declare-fun masked () Bool)
+(assert
+ (let (($x28 (and (distinct (ite (= a 2) 2 3) (ite (= b 2) 2 3)) true)))
+(let (($x21 (and (distinct a b) true)))
+(let (($x13 (<= b 2)))
+(let (($x12 (>= b 0)))
+(let (($x11 (<= a 2)))
+(let (($x9 (>= a 0)))
+(let (($x14 (and $x9 $x11 $x12 $x13)))
+(and $x14 masked $x21 $x28)))))))))
+(check-sat)
