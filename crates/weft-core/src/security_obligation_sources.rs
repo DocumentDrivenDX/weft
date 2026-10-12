@@ -649,3 +649,13 @@ mod tests {
     }
 
 }
+
+/// Versioned context-bound projection of the existing owner lineage. Not authority.
+pub(crate) fn derive_context_bound(ctx:&SecurityBackendContext<'_>)->Result<BTreeSet<String>> {
+ ctx.profiled_query().require_sources(ctx.logical_plan(),ctx.catalog(),ctx.binding_json(),ctx.backend_id(),ctx.backend_version(),ctx.target_profile())?;
+ let original=derive(ctx)?;
+ let hash=ctx.execution_query_context_sha256();
+ let mut budget=Budget{work:1_000_000,text:16_000_000};let mut out=BTreeSet::new();
+ for source in &original {budget.issue(&["weft.security.semantic-source/0.1.0",&hash,source],&mut out)?;}
+ Ok(out)
+}

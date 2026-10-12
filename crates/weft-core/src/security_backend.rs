@@ -108,6 +108,10 @@ impl<'a> SecurityBackendContext<'a> {
     pub fn check_physical_shape(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check(self,plan) }
     /// Bounded declaration prerequisite graph only; no semantic coverage, evidence or authority.
     pub fn check_obligation_shape(&self, obligations: &[crate::security_lowering::SecurityAdmissionObligation]) -> Result<()> { crate::security_physical_check::check_obligations(self,obligations) }
+    /// Context-bound owner event IDs for declarations; returned strings are never credentials.
+    pub fn semantic_source_ids(&self) -> Result<std::collections::BTreeSet<String>> { crate::security_obligation_sources::derive_context_bound(self) }
+    /// Exact event-source coverage plus prerequisite shape; no semantic profile or evidence admission.
+    pub fn check_semantic_source_coverage(&self, obligations: &[crate::security_lowering::SecurityAdmissionObligation]) -> Result<()> { crate::security_physical_check::check_source_coverage(self,obligations) }
     /// Exact bounded parameter domains only; original query binding and native codecs remain unadmitted.
     pub fn check_physical_parameter_domains(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_domains(self,plan) }
     /// Exact per-occurrence execution values for a parameterized query; not SQL/native admission.

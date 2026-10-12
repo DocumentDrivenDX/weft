@@ -167,3 +167,15 @@ pub(crate) fn check_obligations(ctx:&SecurityBackendContext<'_>,items:&[crate::s
  while let Some(i)=ready.pop_front(){settled+=1;for &consumer in &consumers[i]{pending[consumer]-=1;if pending[consumer]==0{ready.push_back(consumer);}}}
  if settled!=items.len(){return Err(refused());}Ok(())
 }
+
+/// Exact context-bound event-source coverage only; no profile or evidence admission.
+pub(crate) fn check_source_coverage(ctx:&SecurityBackendContext<'_>,items:&[crate::security_lowering::SecurityAdmissionObligation])->Result<()> {
+ check_obligations(ctx,items)?;
+ let refused=||Diagnostic::new("WFT-SECURITY-SOURCE-COVERAGE","capability","Security semantic source coverage refused");
+ let required=crate::security_obligation_sources::derive_context_bound(ctx)?;
+ let mut seen=BTreeSet::new();
+ for item in items {for source in &item.semantic_sources{
+  if !required.contains(source){return Err(refused());}seen.insert(source.as_str());
+ }}
+ if seen.len()!=required.len(){return Err(refused());}Ok(())
+}

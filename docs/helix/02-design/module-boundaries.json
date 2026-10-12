@@ -1259,6 +1259,8 @@
             "type:SecuritySimulatedRowTruths",
             "fn:check_physical_shape",
             "fn:check_obligation_shape",
+            "fn:semantic_source_ids",
+            "fn:check_semantic_source_coverage",
             "fn:check_physical_parameter_domains",
             "fn:check_execution_query_slots",
             "fn:check_postgresql_query_placeholders",

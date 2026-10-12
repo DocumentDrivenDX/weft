@@ -1137,3 +1137,31 @@ native policy or lifetime qualification is refreshed. Trace FR-19/22,
 CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and US-056 AC7/AC9/AC10
 prerequisites. No original backend case is promoted; all132 remain required and
 the full goal stays active.
+
+
+### Context-bound owner event coverage — 2026-10-12
+
+Actual source inspection found the existing private owner event issuer and
+more detailed independent template/deployment matching. The new pure context
+API reuses that issuer and preserves its old protocol. A separately versioned
+exact-context frame supports returned declaration metadata and complete event
+source comparison after bounded DAG validation. It does not introduce another
+semantic issuer or admit a generic all-events obligation as security enforcement.
+
+Fresh offline locked Rust1.90.0 release verification passes333 tests:257 unit,
+73 security admission and3 literal tests. The added test removes every required
+source individually, adds an unowned source, covers duplicate output aliases and
+COUNT lineage, and rejects source SQL/binding/profile replay. Binding and profile
+changes preserve identical underlying event IDs, so their refusal specifically
+exercises exact-context framing. The first binding control omitted target digest
+update and stopped at WFT-PIN; the corrected fixture reaches the actual checker.
+Strict11-package ownership and16 Bun boundary tests pass.
+`evidence/security-source-coverage-20261012/receipt.json` retains source pins,
+archive, commands and original failed/final logs.
+
+Complete typed occurrence/capability/template/deployment coverage, native evidence
+validation and current authority/publication admission remain required. No full
+workspace, installed Python/WASM/browser or native qualification is refreshed.
+Trace FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
+US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
+remain required and the full security goal stays active.

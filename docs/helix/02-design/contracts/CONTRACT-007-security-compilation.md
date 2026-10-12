@@ -1229,3 +1229,47 @@ finite algorithm correspondence and boundary evidence, not a general formal
 refinement or native authority proof. The final compiler still refuses with no
 SQL/parameters/plan. Receipt:
 `../../04-build/evidence/security-obligation-shape-20261012/receipt.json`.
+
+
+## Context-bound owner event-source coverage component — 2026-10-12
+
+`semantic_source_ids` reuses the existing private security_obligation_sources
+issuer; it does not replace OwnerSourceDemands, typed RuleOccurrences, independent
+requirement templates, deployment-duty catalogs or their matching gates. Its
+returned strings project actual immutable owner requirements as compact JSON
+string arrays `["weft.security.semantic-source/0.1.0", contextSha256, eventId]`.
+`eventId` is the unchanged compact JSON string-array identity from that issuer.
+The exact context fingerprint covers original query, binding, model/pin selection,
+policy/ontology/profile and backend/target bytes under the existing framed-hash
+contract. SHA256 collision resistance is a correspondence premise, not authority.
+
+The old private source-only protocol stays unchanged. The new frame is a separate
+component encoding; no implicit conversion admits an old raw event ID or a new
+frame into independently authored profile/template obligations. Future full
+registration integration must select and validate that encoding explicitly.
+Owner issuance and framing each retain their existing finite1,000,000-work/
+16,000,000-byte ledger. Framing charges exact JSON expansion before allocating,
+with4096-byte IDs and4096 distinct sources. These are separate finite phases; no
+single aggregate ledger or general allocation/runtime proof is claimed.
+
+`check_semantic_source_coverage` first checks the bounded declaration DAG, then
+requires every declared source to belong to the actual current inventory and
+every inventory source to appear. Joint mechanisms may repeat a source across
+different obligations. Empty declarations, omissions, unowned sources and
+noncanonical/stale frames refuse. It derives the required set itself; a caller
+cannot supply a shortened required set. Returned inventory strings remain data.
+
+This checks owner event coverage, not complete typed condition/disclosure
+occurrence, semantic capability bundle, independently authored site/kind/evidence
+matching, deployment duty coverage or native enforcement. A generic all-events
+host obligation can pass this component while remaining unqualified. All those
+stronger gates, current authority and final publication remain mandatory before
+security compilation can emit. COUNT retains its scan/action/output source
+events here, without admitting computed result contracts or native count behavior.
+
+Tests erase every source from one actual inventory, add an unowned source, keep
+repeated aliases distinct and verify field-free COUNT lineage. Original contexts
+with changed SQL, binding or profile bytes refuse retained declarations; binding
+and profile controls explicitly keep all underlying unframed event IDs identical.
+The original compiler remains blocked with no SQL/parameters/plan. Retained
+receipt: `../../04-build/evidence/security-source-coverage-20261012/receipt.json`.

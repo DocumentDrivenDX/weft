@@ -1426,3 +1426,46 @@ fn obligation_graph_refuses_missing_cycles_ambiguity_and_exhaustion_without_emis
   Ok(SecurityRegistry::default())
  });assert_eq!(calls,1);refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
+
+#[test]
+fn actual_owner_event_coverage_refuses_each_omission_extra_and_source_context_replay(){
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
+ let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId AS first_id,r.resourceId AS second_id FROM Resource r");let mut retained=None;
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  let sources=ctx.semantic_source_ids()?;assert!(!sources.is_empty());assert_eq!(sources,ctx.semantic_source_ids()?);
+  let paths:Vec<Vec<String>>=sources.iter().map(|s|{
+   let frame:Vec<String>=serde_json::from_str(s).unwrap();assert_eq!(frame.len(),3);assert_eq!(frame[0],"weft.security.semantic-source/0.1.0");assert_eq!(frame[1],ctx.execution_query_context_sha256());serde_json::from_str(&frame[2]).unwrap()
+  }).collect();
+  assert_eq!(paths.iter().filter(|p|p[0]=="output").count(),2);
+  for kind in ["scan","action","rule","key","key-field","field","association","policy","ontology","query","model","module"]{assert!(paths.iter().any(|p|p[0]==kind),"{kind}");}
+  let item=SecurityAdmissionObligation{id:"all-events".into(),semantic_sources:sources.iter().cloned().collect(),enforcement_site:SecurityEnforcementSite::Host,prerequisites:vec![],failure_code:"WFT-UNVERIFIED".into(),evidence_case_ids:vec!["unverified-case".into()]};
+  ctx.check_semantic_source_coverage(&[item.clone()])?;assert!(ctx.check_semantic_source_coverage(&[]).is_err());
+  for i in 0..item.semantic_sources.len(){let mut missing=item.clone();missing.semantic_sources.remove(i);assert!(ctx.check_semantic_source_coverage(&[missing]).is_err(),"omission {i}");}
+  let mut extra=item.clone();extra.semantic_sources.push("unowned-source".into());ctx.check_obligation_shape(&[extra.clone()])?;assert!(ctx.check_semantic_source_coverage(&[extra]).is_err());
+  let mut second=item.clone();second.id="second-mechanism".into();ctx.check_semantic_source_coverage(&[item.clone(),second])?;
+  retained=Some(item);Ok(SecurityRegistry::default())
+ });refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");assert!(retained.is_some());
+ // Replay against independent changes in source SQL, binding bytes or profile bytes.
+ for mutation in 0..3{
+  let mut changed=req.clone();match mutation{
+   0=>changed["sql"]=json!(format!("{} ",req["sql"].as_str().unwrap())),
+   1=>{let binding=format!("{} ",req["target"]["bindingJson"].as_str().unwrap());changed["target"]["bindingJson"]=json!(binding);changed["target"]["bindingSha256"]=json!(sha256(binding.as_bytes()));let mut profile:Value=serde_json::from_str(changed["security"]["queryProfileJson"].as_str().unwrap()).unwrap();profile["binding"]["sha256"]=json!(sha256(binding.as_bytes()));changed["security"]["queryProfileJson"]=json!(profile.to_string());},
+   2=>changed["security"]["queryProfileJson"]=json!(format!("{} ",req["security"]["queryProfileJson"].as_str().unwrap())),_=>unreachable!()
+  }
+  let mut reached=false;
+  let raw=Compiler::default().compile_json_with_security_factory(&changed.to_string(),&mut |ctx|{
+   reached=true;
+   let old=retained.clone().unwrap();
+   if mutation>0{
+    let inner=|sources:&[String]|sources.iter().map(|s|serde_json::from_str::<Vec<String>>(s).unwrap()[2].clone()).collect::<std::collections::BTreeSet<_>>();
+    assert_eq!(inner(&old.semantic_sources),inner(&ctx.semantic_source_ids()?.into_iter().collect::<Vec<_>>()));
+   }
+   assert!(ctx.check_semantic_source_coverage(&[old]).is_err());Ok(SecurityRegistry::default())
+  });assert!(reached,"mutation {mutation}: {raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+ }
+ req["sql"]=json!("SELECT COUNT(*) FROM Resource r");
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  let paths:Vec<Vec<String>>=ctx.semantic_source_ids()?.iter().map(|s|{let f:Vec<String>=serde_json::from_str(s).unwrap();serde_json::from_str(&f[2]).unwrap()}).collect();
+  for kind in ["scan","action","output"]{assert!(paths.iter().any(|p|p[0]==kind),"COUNT {kind}");}Ok(SecurityRegistry::default())
+ });refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
