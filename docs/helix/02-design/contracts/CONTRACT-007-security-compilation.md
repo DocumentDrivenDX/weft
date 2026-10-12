@@ -1198,3 +1198,34 @@ analysis, not Rust refinement, authenticated evidence or backend qualification.
 Retained results: `../../04-build/evidence/security-obligation-model-20261012/receipt.json`.
 Public security compilation remains blocked until complete lowering, evidence
 validation and mandatory host/native admission are implemented and qualified.
+
+
+## Bounded obligation declaration graph component — 2026-10-12
+
+`SecurityBackendContext.check_obligation_shape` rechecks original source context
+and validates declaration structure only. It requires unique nonempty bounded
+IDs, nonempty source/evidence-case lists, unique members within each list,
+well-formed WFT failure codes and resolvable distinct prerequisites. It bounds
+4096 obligations,4096 entries per list,32768 total prerequisite edges and the
+shared1,000,000-work/16,000,000-byte declaration ledger. Text has an early16384-byte
+check and at most4096 Unicode scalar values; NUL refuses.
+
+The checker builds bounded indices only after charging declaration text, then
+uses an iterative topological traversal. Self dependencies and cycles refuse
+with WFT-SECURITY-OBLIGATIONS. No recursively traversed caller graph, admitted
+prefix, settlement or execution credential is returned. The typed enforcement
+site is retained but not admitted. An empty declaration list passes this shape
+check; unknown semantic source strings and evidence case IDs are opaque data.
+Thus a successful shape check cannot imply complete owner-source coverage,
+valid evidence or all-enforced qualification. Those gates from the preceding
+design remain mandatory and unimplemented.
+
+The original compiler-context test compares all512 directed three-node graphs
+against an independent transitive-closure oracle:25 acyclic graphs pass,487
+cyclic graphs refuse. It separately checks a4096-node chain, its long cycle,
+exact32768/32769-edge boundaries, missing references, duplicate IDs/source tokens,
+malformed/empty members, count exhaustion and total text exhaustion. This is
+finite algorithm correspondence and boundary evidence, not a general formal
+refinement or native authority proof. The final compiler still refuses with no
+SQL/parameters/plan. Receipt:
+`../../04-build/evidence/security-obligation-shape-20261012/receipt.json`.

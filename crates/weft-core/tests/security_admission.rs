@@ -1390,3 +1390,39 @@ fn query_slot_context_preserves_exact_source_bytes_across_equivalent_queries(){
   assert!(ctx.check_execution_query_slots(plan).is_err());Ok(SecurityRegistry::default())
  });assert_eq!(calls,1,"{second}");refused(serde_json::from_str(&second).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
+
+#[test]
+fn obligation_graph_refuses_missing_cycles_ambiguity_and_exhaustion_without_emission(){
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
+ let req=security04_request();let mut calls=0;
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  calls+=1;
+  let item=SecurityAdmissionObligation{id:"a".into(),semantic_sources:vec!["unadmitted-source".into()],enforcement_site:SecurityEnforcementSite::Host,prerequisites:vec![],failure_code:"WFT-REFUSED".into(),evidence_case_ids:vec!["unverified-case".into()]};
+  ctx.check_obligation_shape(&[])?;ctx.check_obligation_shape(&[item.clone()])?;
+  let mut chain:Vec<_>=(0..4096).map(|i|{let mut x=item.clone();x.id=format!("o{i}");if i>0{x.prerequisites=vec![format!("o{}",i-1)];}x}).collect();
+  ctx.check_obligation_shape(&chain)?;chain[0].prerequisites=vec!["o4095".into()];assert!(ctx.check_obligation_shape(&chain).is_err());
+  for mutation in 0..12{
+   let mut bad=vec![item.clone()];match mutation{
+    0=>bad.push(item.clone()),1=>bad[0].prerequisites=vec!["missing".into()],2=>bad[0].prerequisites=vec!["a".into()],
+    3=>{let mut b=item.clone();b.id="b".into();b.prerequisites=vec!["a".into()];bad[0].prerequisites=vec!["b".into()];bad.push(b);},
+    4=>bad[0].semantic_sources.clear(),5=>bad[0].evidence_case_ids.clear(),6=>bad[0].failure_code="WFT-".into(),
+    7=>bad[0].id="x".repeat(16385),8=>{let duplicate=bad[0].semantic_sources[0].clone();bad[0].semantic_sources.push(duplicate);},
+    9=>bad[0].prerequisites=vec!["missing".into();4097],10=>bad[0].evidence_case_ids=vec!["bad\0id".into()],
+    11=>bad=(0..4097).map(|i|{let mut x=item.clone();x.id=format!("o{i}");x}).collect(),_=>unreachable!()
+   }assert_eq!(ctx.check_obligation_shape(&bad).unwrap_err().code,"WFT-SECURITY-OBLIGATIONS","mutation {mutation}");
+  }
+  let mut dense:Vec<_>=(0..257).map(|i|{let mut x=item.clone();x.id=format!("d{i}");x.prerequisites=(0..i).map(|p|format!("d{p}")).collect();x}).collect();
+  dense.pop();ctx.check_obligation_shape(&dense)?;let mut over=item.clone();over.id="d256".into();over.prerequisites=(0..256).map(|i|format!("d{i}")).collect();over.prerequisites.truncate(128);dense.push(over);ctx.check_obligation_shape(&dense)?;dense.last_mut().unwrap().prerequisites.push("d128".into());assert!(ctx.check_obligation_shape(&dense).is_err());
+  // Independent transitive-closure oracle, exhaustive three-node directed graphs.
+  let mut acyclic=0;
+  for bits in 0..512u16{
+   let mut reach=[[false;3];3];
+   let graph:Vec<_>=(0..3).map(|i|{let mut x=item.clone();x.id=format!("g{i}");x.prerequisites=(0..3).filter(|&j|{let edge=bits&(1<<(i*3+j))!=0;reach[i][j]=edge;edge}).map(|j|format!("g{j}")).collect();x}).collect();
+   for k in 0..3{for i in 0..3{for j in 0..3{reach[i][j]|=reach[i][k]&&reach[k][j];}}}
+   let expected=!(0..3).any(|i|reach[i][i]);if expected{acyclic+=1;}
+   assert_eq!(ctx.check_obligation_shape(&graph).is_ok(),expected,"graph {bits}");
+  }assert_eq!(acyclic,25);
+  let mut bytes=item.clone();bytes.semantic_sources=(0..4096).map(|i|format!("{i:04}{}","x".repeat(4000))).collect();assert!(ctx.check_obligation_shape(&[bytes]).is_err());
+  Ok(SecurityRegistry::default())
+ });assert_eq!(calls,1);refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}

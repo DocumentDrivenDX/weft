@@ -1109,3 +1109,31 @@ CONTRACT-063/STP-056 B09/B11/B12/B15 and US-056 AC7/AC9/AC10 prerequisites.
 No backend case is promoted, all132 cases remain required, and the full goal
 stays active. Existing physical checkers and public blocked compiler behavior
 remain unchanged.
+
+
+### Obligation graph implementation and bounded oracle — 2026-10-12
+
+The actual compiler context now exposes a pure bounded obligation-shape checker,
+with charged declaration text and iterative prerequisite DAG validation. It
+refuses ambiguity, unresolved/self/cyclic prerequisites and exhausted budgets.
+The strict module map registers only the new public method; its initial ordering
+mismatch was corrected before final ownership validation.
+
+Fresh Rust1.90.0 offline locked release tests pass332 total:257 unit,72 security
+admission and3 literal tests. The added original-context test exhausts all512
+three-node directed graphs against an independent transitive-closure oracle
+(25 acyclic positives,487 cyclic refusals), checks a4096-node chain and long cycle,
+and crosses the exact32768-edge budget. Strict11-package ownership and16 Bun
+boundary tests pass. The first test build had a borrow error in the duplicate
+source mutation; fixed and retained as failed-build provenance.
+`evidence/security-obligation-shape-20261012/receipt.json` retains sources/archive,
+commands and original failure/final logs.
+
+This implements declaration/DAG shape, not complete owner source coverage or
+independently validated evidence settlement. Empty lists and opaque source IDs
+are deliberately demonstrated as shape-only successes, with public security
+compilation still blocked. No installed Python/WASM/browser, full workspace,
+native policy or lifetime qualification is refreshed. Trace FR-19/22,
+CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and US-056 AC7/AC9/AC10
+prerequisites. No original backend case is promoted; all132 remain required and
+the full goal stays active.

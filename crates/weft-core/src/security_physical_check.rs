@@ -135,3 +135,35 @@ pub(crate) fn context_fingerprint(ctx:&SecurityBackendContext<'_>)->String {
  let mut resolved=Sink(Sha256::new());serde_json::to_writer(&mut resolved,ctx.query().application_plan()).expect("owned relational plan serialization");feed(&mut h,&resolved.0.finalize());
  format!("{:x}",h.finalize())
 }
+
+/// Declaration graph only. Source coverage, evidence and authority are separate.
+pub(crate) fn check_obligations(ctx:&SecurityBackendContext<'_>,items:&[crate::security_lowering::SecurityAdmissionObligation])->Result<()> {
+ use std::collections::{BTreeMap,VecDeque};
+ let refused=||Diagnostic::new("WFT-SECURITY-OBLIGATIONS","capability","Security obligation declaration graph refused");
+ ctx.profiled_query().require_sources(ctx.logical_plan(),ctx.catalog(),ctx.binding_json(),ctx.backend_id(),ctx.backend_version(),ctx.target_profile())?;
+ if items.len()>4096{return Err(refused());}
+ let mut budget=Budget::new();let mut indices=BTreeMap::new();let mut edges=0usize;
+ fn text(budget:&mut Budget,s:&str)->Result<()>{if s.len()>16384{return Err(fail());}budget.text(s)}
+ for (i,item) in items.iter().enumerate(){
+  text(&mut budget,&item.id).map_err(|_|refused())?;
+  if indices.insert(item.id.as_str(),i).is_some()||item.semantic_sources.is_empty()||item.evidence_case_ids.is_empty(){return Err(refused());}
+  text(&mut budget,&item.failure_code).map_err(|_|refused())?;
+  if !item.failure_code.strip_prefix("WFT-").is_some_and(|s|!s.is_empty()&&s.bytes().all(|b|b.is_ascii_uppercase()||b.is_ascii_digit()||b==b'-')){return Err(refused());}
+  for list in [&item.semantic_sources,&item.prerequisites,&item.evidence_case_ids]{
+   if list.len()>4096{return Err(refused());}
+   let mut seen=BTreeSet::new();
+   for value in list{text(&mut budget,value).map_err(|_|refused())?;if !seen.insert(value.as_str()){return Err(refused());}}
+  }
+  edges=edges.checked_add(item.prerequisites.len()).ok_or_else(refused)?;
+  if edges>32768{return Err(refused());}
+ }
+ let mut pending=vec![0usize;items.len()];let mut consumers=vec![Vec::new();items.len()];
+ for (i,item) in items.iter().enumerate(){for name in &item.prerequisites{
+  let prerequisite=*indices.get(name.as_str()).ok_or_else(refused)?;
+  if prerequisite==i{return Err(refused());}
+  pending[i]+=1;consumers[prerequisite].push(i);
+ }}
+ let mut ready:VecDeque<_>=pending.iter().enumerate().filter_map(|(i,n)|(*n==0).then_some(i)).collect();let mut settled=0;
+ while let Some(i)=ready.pop_front(){settled+=1;for &consumer in &consumers[i]{pending[consumer]-=1;if pending[consumer]==0{ready.push_back(consumer);}}}
+ if settled!=items.len(){return Err(refused());}Ok(())
+}
