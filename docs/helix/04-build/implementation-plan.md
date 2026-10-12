@@ -1031,3 +1031,29 @@ formal/native refinement, full workspace or Python/browser qualification is
 claimed. Trace FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/
 B13/B15, US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted;
 all132 cases remain required and the full shared security goal stays active.
+
+
+### Security pipeline workspace and ownership integration — 2026-10-12
+
+After physical shape/domain/query-origin/placeholder/context changes, a fresh full
+Rust workspace release run passes618 tests across46 groups, zero failed/ignored/
+filtered. This includes native-host compilation of embedding/backend crates; it
+does not execute installed Python bindings or actual WASM/browser artifacts.
+`evidence/security-workspace-20261012/receipt.json` retains exact command,
+Rust1.90.0 inputs, source archive/pins and original logs.
+
+Strict module ownership now registers the five reviewed Core context APIs, private
+security_physical_check source and workspace-pinned sqlparser0.63.0 dependency.
+Only those reviewed entries change (24 additive map lines); checker implementation
+and all other ownership entries remain unchanged. Cargo boundary checks and3
+negative/positive boundary tests pass; strict11-package surface checking and all16
+Bun boundary tests pass. Initial strict invocations lacked required WEFT_CARGO;
+those configuration-error logs are retained. The intermediate map ordering was
+corrected to existing lexical order before final strict validation.
+
+This closes the current Rust source/dependency ownership integration gap, not
+B-009's broader original duties, hosted CI, installed bindings, native security
+lowering or any full backend case. Trace FR-19/22, CONTRACT-007/ADR-002 and shared
+CONTRACT-063/STP-056 B09/B11/B12, US-056 AC7/AC9/AC10 prerequisites. Compiler
+security emission remains blocked; all132 original cases remain required and full
+shared security goal stays active.

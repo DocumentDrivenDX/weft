@@ -368,6 +368,20 @@
           ],
           "defaultFeatures": false,
           "path": null
+        },
+        {
+          "name": "sqlparser",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.63.0",
+          "rename": null,
+          "target": null,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
+          "path": null
         }
       ],
       "sources": [
@@ -1243,6 +1257,11 @@
             "fn:validate_security_manifest_json",
             "struct:SecurityBackendContext",
             "type:SecuritySimulatedRowTruths",
+            "fn:check_physical_shape",
+            "fn:check_physical_parameter_domains",
+            "fn:check_execution_query_slots",
+            "fn:check_postgresql_query_placeholders",
+            "fn:execution_query_context_sha256",
             "fn:check_result_declaration",
             "fn:check_result_cells",
             "fn:check_simulated_result_selection",
@@ -1564,6 +1583,11 @@
         },
         {
           "path": "crates/weft-core/src/security_payload_applicability.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_physical_check.rs",
           "publicDeclarations": [],
           "pathReferences": []
         },

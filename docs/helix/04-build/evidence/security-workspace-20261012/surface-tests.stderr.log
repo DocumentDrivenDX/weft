@@ -1,0 +1,37 @@
+
+scripts/module-boundaries.test.ts:
+(pass) allowed actual graph passes [0.24ms]
+(pass) forbidden optional edge fails [0.12ms]
+(pass) unowned package fails [0.02ms]
+(pass) missing package fails [0.01ms]
+(pass) cycle fails even when edges individually allowed [0.04ms]
+(pass) new public type fails [0.02ms]
+(pass) new source fails
+(pass) removed public type fails [0.01ms]
+(pass) actual file scanner refuses same-line, reexport, extern and static additions [19.15ms]
+(pass) unsupported public form refuses [0.03ms]
+37 |   await writeFile(resolve(root,'Cargo.toml'),'[workspace]\nmembers=["core","runtime"]\nexclude=["external"]\nresolver="2"\n');
+38 |   await writeFile(resolve(root,'core/Cargo.toml'),pkg('weft-core'));
+39 |   await writeFile(resolve(root,'external/Cargo.toml'),pkg('weft-core','0.1.1'));
+40 |   await writeFile(resolve(root,'runtime/Cargo.toml'),pkg('weft-runtime')+'[dependencies]\nweft-core={path="../core"}\n');
+41 |   async function metadata() {
+42 |    const p=Bun.spawn([process.env.WEFT_CARGO??'cargo','metadata','--no-deps','--format-version','1','--offline'],{cwd:root,stdout:'pipe',stderr:'pipe'});
+                    ^
+error: Executable not found in $PATH: "cargo"
+  path: "cargo",
+ errno: -2,
+  code: "ENOENT"
+
+      at metadata (/private/tmp/weft-security-main-integration/scripts/module-boundaries.test.ts:42:16)
+      at <anonymous> (/private/tmp/weft-security-main-integration/scripts/module-boundaries.test.ts:45:20)
+(fail) actual Cargo metadata detects same-name external source substitution [5.71ms]
+(pass) directory symlink cannot hide source from actual scanner [2.14ms]
+(pass) const unsafe functions retain actual API identity [0.06ms]
+(pass) new JavaScript dependency groups cannot bypass ownership [0.33ms]
+(pass) raw and commented Rust path attributes cannot redirect owned modules [25.04ms]
+(pass) keyword-named public field remains owned [0.12ms]
+
+ 15 pass
+ 1 fail
+ 26 expect() calls
+Ran 16 tests across 1 file. [155.00ms]
