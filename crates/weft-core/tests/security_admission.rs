@@ -1169,3 +1169,23 @@ fn separate_security_protocols_preserve_callback_and_blocked_response_boundaries
   }
  }
 }
+
+#[test]
+fn historical_security_envelope_names_never_select_ordinary_composition() {
+    // The old security spike used compile 0.3/0.4, now owned by ordinary
+    // contracts. Selected security source must never disappear into that path.
+    for version in ["weft-compile/0.3.0", "weft-compile/0.4.0", "weft-compile/0.5.1",
+                    "weft-security-compile/0.3.0", ""] {
+        let mut req=query_profile_request();req["interfaceVersion"]=json!(version);
+        let mut ordinary_calls=0;
+        let raw=Compiler::default().compile_json_with_factory(&req.to_string(),&mut |_,_,_|{
+            ordinary_calls+=1;panic!("selected security source reached ordinary composition")
+        });
+        assert_eq!(ordinary_calls,0,"{version}");
+        let value:Value=serde_json::from_str(&raw).unwrap();
+        assert_eq!(value["status"],"blocked","{version}: {value}");
+        for key in ["sql","parameters","logicalPlan"] {
+            assert!(value.get(key).is_none(),"{version}: partial {key}");
+        }
+    }
+}

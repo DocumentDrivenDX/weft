@@ -850,3 +850,28 @@ source. Astra Ultra review, fresh source-bound formal and host/full-input custod
 checks, and final-head hosted CI are required for the reconciled source. Native
 security enforcement, authentication, full acceptance and the 53 historical
 output requalification gaps remain open.
+
+
+### Current security-envelope fallback regression — 2026-10-12
+
+Current maincdd8fa6 already contains the merged security compiler foundation.
+The stale sibling owner checkout retains the historical compile0.3/0.4 spike;
+it must not overwrite current ordinary contracts or be represented as current
+integration. The current separate security envelopes are
+weft-security-compile/0.1.0 and0.2.0; compile0.5 remains blocked-only under
+CONTRACT-007. Successful semantic/registration checks still do not emit native
+security lowering or authorize execution.
+
+`evidence/security-envelope-no-fallback-20261012/receipt.json` retains the
+current source checkpoint, pinned offline Rust1.90.0 release command and logs.
+All64 original security admission tests pass. With the new five-variant envelope
+regression all65 pass, zero failed/ignored. Historical compile0.3/0.4 with selected
+security content, unknown ordinary/security versions and empty version all block
+without ordinary composition or partial sql/parameters/logicalPlan emission.
+No compiler implementation changes or product SQL allowlist are introduced.
+
+Trace FR-19/20/22 and CONTRACT-007 source/version/fallback obligations; shared
+US-056 AC7/AC10 prerequisites. This does not qualify installed Python/browser
+parity, full workspace, B-009, actual physical lowering/ontology enforcement or
+any original backend acceptance case. Broader pending reviews and duties retain
+their independent scope. The original shared implementation goal remains active.
