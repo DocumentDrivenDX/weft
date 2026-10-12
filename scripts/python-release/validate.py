@@ -79,6 +79,7 @@ for realization, api in [
             assert canonical(json.loads(actual)) == canonical(json.loads(expected)), (realization,filename,row['id'])
             assert api(request) == actual
             candidate_receipts.append({'realization':realization,'id':row['id'],'responseSha256':sha(actual.encode())})
+assert len(candidate_receipts) == 174
 for value in [None, {}, 1, b'{}']:
     try:
         weft.compile_json(value)
@@ -98,6 +99,6 @@ for name, raw, code in controls:
     assert result['status'] == 'blocked' and result['diagnostics'][0]['code'] == code, (name,result)
     assert not set(result) & {'sql','parameters','logicalPlan','columns','obligations'}
 a.out.parent.mkdir(parents=True, exist_ok=True)
-summary = {'status':'passed','wheel':a.wheel.name,'wheelSha256':sha(a.wheel.read_bytes()),'nativeExtensionSha256':native_sha,'python':sys.version,'platform':platform_info,'machine':machine_info,'cases':len(receipts),'candidateCases':len(candidate_receipts),'candidateReceiptsSha256':sha(json.dumps(candidate_receipts,sort_keys=True).encode()),'controls':len(controls)+5,'subprocessDisabled':True,'corpusSha256':sha(a.corpus.read_bytes()),'receiptsSha256':sha(json.dumps(receipts,sort_keys=True).encode()),'scope':'Installed-wheel compatibility with retained main corpus. No new native database qualification; 53 changed outputs retain the recorded native-requalification gap.'}
+summary = {'status':'passed','sourceCommit':os.environ.get('WEFT_RELEASE_SOURCE_COMMIT'),'wheel':a.wheel.name,'wheelSha256':sha(a.wheel.read_bytes()),'nativeExtensionSha256':native_sha,'python':sys.version,'platform':platform_info,'machine':machine_info,'cases':len(receipts),'candidateCases':len(candidate_receipts),'candidateReceiptsSha256':sha(json.dumps(candidate_receipts,sort_keys=True).encode()),'controls':len(controls)+5,'subprocessDisabled':True,'corpusSha256':sha(a.corpus.read_bytes()),'receiptsSha256':sha(json.dumps(receipts,sort_keys=True).encode()),'scope':'Installed-wheel compatibility with retained main corpus. No new native database qualification; 53 changed outputs retain the recorded native-requalification gap.'}
 a.out.write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps(summary))
