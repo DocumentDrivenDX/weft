@@ -24,6 +24,8 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
+    m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;
+    #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_postgresql_json,m)?)?;
     #[cfg(feature = "ashlar-databricks-paths-keys")]
     m.add_function(wrap_pyfunction!(compile_paths_keys_json, m)?)?;
@@ -43,3 +45,7 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
 fn compile_implicit_arithmetic_json(request: &str) -> String {
     weft_runtime::implicit_arithmetic::compile_json(request)
 }
+
+#[cfg(feature="truss-postgresql-pg18")]
+#[pyfunction]
+fn compile_truss_runtime_json(request:&str)->String{weft_runtime::compile_truss_runtime_json(request)}

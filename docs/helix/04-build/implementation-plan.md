@@ -1273,3 +1273,16 @@ transport check is not native PG18 execution evidence or closure of the security
 compiler work. The next usable workflow is public registration and mutation,
 followed by Weft filter/count compilation and authorized execution in the caller's
 psycopg transaction; connections and transaction settlement remain host-owned.
+
+The connected Truss runtime adapter now has a separate binding and normal
+`compile_truss_runtime_json` entry point. It admits complete resolved member
+identities against original UMF source and actual record/property mappings, then
+uses existing Weft IR, parameter slots and result metadata. The adapter lowers
+equality filters/joins, scalar/complete-record projections, counts, ordering and
+limits to a statically named Truss source function. Optional projections explicitly
+assess `value.nativeNull`; the common emission validator remains intact.
+Truss owns source validation, ordinary-person authority, one-statement data
+snapshots, current context checks and exact decoding. Real installed consumer
+workflows and the .25→.26 migration have passed on pgserver-pg18==18.6.1/PG18.6.
+The evidence is scoped to string/boolean fields and integer COUNT; it does not
+close wider numeric/relationship/page-key support or security-compiler activation.

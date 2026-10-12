@@ -37,3 +37,15 @@ qualify execution against a live Truss database. The host must enforce the emitt
 obligations, exact decoding, authority and `search_path=pg_catalog,pg_temp`;
 Truss's public execution integration remains in progress. The target carries no
 inherited PG17 native evidence.
+
+The same feature also exports `compile_truss_runtime_json(request_json)` for the
+actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
+`0.1.0`, binding `truss-runtime-binding/0.1` and target
+`truss-runtime-pg18.6/0.1`. Truss constructs the binding from its accepted source
+bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
+This separate adapter uses Weft's application-read frontend and typed IR, then
+lowers to Truss's fixed, independently authorized query source. The current
+installed consumer demonstrates string/boolean filters, counts, `alias.*`,
+optional/null values and read-only execution on PG18.6. Wider numeric fields,
+relationships, structured properties and page-key profiles remain unsupported
+in that consumer. All new declarations retain Candidate status.
