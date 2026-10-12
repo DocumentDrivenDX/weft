@@ -1314,3 +1314,45 @@ checker does not establish SQL meaning. Eight isolated candidate corruptions,
 six selected-registration corruptions, Candidate refusal without explicit
 selection and foreign registry identity controls all refuse. Receipt:
 `../../04-build/evidence/security-candidate-declaration-20261012/receipt.json`.
+
+
+## Private matched-instance candidate projection — 2026-10-12
+
+The existing InstanceCorrespondence now has a private candidate comparison. It
+uses the retained original registry declarations after independent requirement
+instance matching, never a caller-supplied shortened expected list. Returned
+obligation IDs, failure codes, sites, prerequisite sets and evidence-case sets
+must match those originals exactly. Each original semantic subject projects to
+the current owner context-bound source frame. A selected-capability deployment
+subject contributes no invented semantic path; its returned semantic source set
+may be empty only when the matched original subject set has no semantic source.
+Duplicate IDs/list members, omitted obligations, foreign sources/cases/dependencies
+and stale frames refuse. Metadata order is immaterial, while original IDs retain
+the previously checked typed source/scope/kind/occurrence/origin correspondence.
+
+The combined private comparison additionally requires the exact original selected
+capability set, including selected zero-edge capabilities, and checks physical
+parameter domains, original query slots and result declaration. It does not use
+the legacy unscoped shape checker to reinterpret scoped deployment subjects. The
+legacy public check deliberately continues to refuse empty semantic-source lists.
+This is an explicit private projection bridge, not implicit protocol migration.
+The matcher takes its context from the retained owner correspondence, so a caller
+cannot supply a different expected context to this comparison.
+
+The comparison bounds4096 entries per collection and charges original/candidate
+text and owner-generated frame decoding under1,000,000 visits/16,000,000 bytes.
+The owner source issuer and other called components retain their own stated
+phase ledgers. No combined allocation/runtime proof or single aggregate budget
+is claimed. No admitted plan, native evidence outcome or execution credential is
+returned. Independent template/profile authenticity and sufficiency, deployment
+duties and actual original native enforcement remain separate mandatory gates.
+
+Tests build returned metadata from the independently authored template side of
+the existing fixture, not by copying decoded custody. Every omitted obligation
+and ten isolated metadata corruptions refuse; selected-only duties reject
+invented semantic sources. Reordered metadata passes. Six composed candidate
+corruptions cover capability omission/substitution/duplication, output omission,
+empty SQL and obligation omission. A deliberately semantically unproved `SELECT 1`
+can pass declaration comparison; SQL equivalence and native disclosure are not
+established. Public compilation/dispatch remains unchanged and blocked. Receipt:
+`../../04-build/evidence/security-matched-candidate-20261012/receipt.json`.

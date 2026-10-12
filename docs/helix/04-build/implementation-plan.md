@@ -1198,3 +1198,31 @@ workspace, installed Python/WASM/browser or native profile is refreshed. Trace
 S04, FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
 US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
 remain required and the full goal stays active.
+
+
+### Independent matched-instance candidate bridge — 2026-10-12
+
+The private instance correspondence now compares returned lowering obligations
+with retained original registry declarations after the existing independent
+matching gate. Its original owner context supplies current frames; selected-only
+deployment duties preserve empty semantic-source projections without invented
+paths. The composed check requires exact capability selection, including zero-edge
+selection, plus physical-domain/query-slot/result correspondence. Legacy unscoped
+shape behavior stays unchanged and no public admission/dispatch path is opened.
+
+Fresh offline locked Rust1.90.0 release tests pass335 total:258 unit,74 security
+admission and3 literal tests. The independent-template fixture exercises every
+obligation omission, ten isolated metadata mutations, invented selected-source
+and duplicate-ID controls, reordered metadata and six combined physical/capability
+corruptions. Strict11-package ownership and16 Bun boundary tests pass.
+`evidence/security-matched-candidate-20261012/receipt.json` retains exact sources,
+archive and commands/logs.
+
+This proves finite tested conditional declaration correspondence, not authenticated
+template completeness, independent native case execution, SQL/query equivalence
+or original authority/publication lifetime. No general formal Rust refinement,
+full workspace or Python/WASM/browser qualification is refreshed. Actual deployment
+case duties and native gates remain mandatory before lowering/emission. Trace
+CONTRACT-006/007, S04, FR-19/22, shared CONTRACT-063/STP-056 B09/B11/B12/B15 and
+US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted; all132
+remain required and the full goal stays active.

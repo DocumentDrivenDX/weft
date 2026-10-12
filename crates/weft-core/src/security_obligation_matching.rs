@@ -135,6 +135,58 @@ pub(crate) struct InstanceCorrespondence<'a,'d,'m,'c,'s> {
 #[allow(dead_code)]
 impl InstanceCorrespondence<'_, '_, '_, '_, '_> {
  pub(crate) fn alternatives(&self)->&BTreeMap<CoverageScope,BTreeSet<String>> {&self.alternatives}
+ /// Combined conditional correspondence using this matched original selection.
+ pub(crate) fn check_candidate(&self,candidate:&crate::security_lowering::SecurityLowering)->Result<()> {
+  let selected=self.source.demands.coverage().selected_capabilities();
+  if candidate.capability_ids.len()>4096{return Err(fail());}
+  let mut budget=Budget{work:1_000_000,text:16_000_000};let mut seen=BTreeSet::new();
+  for id in &candidate.capability_ids{budget.id(id)?;if !seen.insert(id.as_str())||!selected.contains(id.as_str()){return Err(fail());}}
+  if seen.len()!=selected.len(){return Err(fail());}
+  let ctx=self.source.demands.coverage().context();
+  ctx.check_physical_parameter_domains(&candidate.lowering)?;
+  ctx.check_execution_query_slots(&candidate.lowering)?;
+  ctx.check_result_declaration(&candidate.result_contract)?;
+  self.check_candidate_obligations(&candidate.obligations)
+ }
+ /// Exact returned metadata projection from matched originals, never execution admission.
+ pub(crate) fn check_candidate_obligations(&self,items:&[crate::security_lowering::SecurityAdmissionObligation])->Result<()> {
+  use crate::security_lowering::SecurityEnforcementSite;
+  let mut b=Budget{work:1_000_000,text:16_000_000};
+  let originals=self.source.originals();
+  if items.len()!=originals.len()||items.len()>4096{return Err(fail());}
+  let ctx=self.source.demands.coverage().context();
+  let mut frames=BTreeMap::new();
+  for frame in ctx.semantic_source_ids()? {
+   // Reserve decoded carrier text before parsing this owner-generated bounded frame.
+   b.text(&frame)?;b.text(&frame)?;
+   let mut parts:Vec<String>=serde_json::from_str(&frame).map_err(|_|fail())?;
+   if parts.len()!=3{return Err(fail());}
+   let raw=parts.pop().ok_or_else(fail)?;
+   if frames.insert(raw,frame).is_some(){return Err(fail());}
+  }
+  let mut candidates=BTreeMap::new();
+  for item in items{
+   b.id(&item.id)?;b.id(&item.failure_code)?;
+   if candidates.insert(item.id.as_str(),item).is_some(){return Err(fail());}
+  }
+  fn strings<'a>(values:&'a [String],b:&mut Budget)->Result<BTreeSet<&'a str>>{
+   if values.len()>4096{return Err(fail());}let mut out=BTreeSet::new();
+   for value in values{b.id(value)?;if !out.insert(value.as_str()){return Err(fail());}}Ok(out)
+  }
+  for original in originals{
+   b.id(&original.original.id)?;
+   let item=candidates.get(original.original.id.as_str()).ok_or_else(fail)?;
+   let site=matches!((&item.enforcement_site,original.site),(SecurityEnforcementSite::Host,"host")|(SecurityEnforcementSite::Backend,"backend")|(SecurityEnforcementSite::Native,"native"));
+   if !site||item.failure_code!=original.original.failure_code{return Err(fail());}
+   let mut expected=BTreeSet::new();
+   for subject in &original.subjects{
+    b.step()?;
+    if let ScopedSubject::Semantic{source,..}=subject{b.id(source)?;let frame=frames.get(*source).ok_or_else(fail)?;b.id(frame)?;expected.insert(frame.as_str());}
+   }
+   if strings(&item.semantic_sources,&mut b)?!=expected||strings(&item.prerequisites,&mut b)?!=original.prerequisites||strings(&item.evidence_case_ids,&mut b)?!=original.cases{return Err(fail());}
+  }
+  Ok(())
+ }
 }
 #[allow(dead_code)]
 pub(crate) fn match_instances<'a,'d,'m,'c,'s>(demands:&'a OwnerSourceDemands<'d,'m,'c,'s>,custody:&'a ObligationCustody<'m>,required:&'a InstancePremise)->Result<InstanceCorrespondence<'a,'d,'m,'c,'s>> {

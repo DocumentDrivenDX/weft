@@ -1315,4 +1315,49 @@ mod tests{
   });});
  }
 
+ #[test]
+ fn independently_matched_instances_bind_returned_obligation_metadata(){
+  use crate::security_lowering::{SecurityAdmissionObligation,SecurityEnforcementSite};
+  with_template_fixture(|owner,custody,profile|{
+   let issued=crate::security_requirement_templates::issue(owner,profile).unwrap();
+   let matched=crate::security_obligation_matching::match_instances(owner,custody,issued.required()).unwrap();
+   let required=&issued.required().base;
+   // Construct declarations from the independently authored template side, not custody.
+   let frames: BTreeMap<String,String>=owner.coverage().context().semantic_source_ids().unwrap().into_iter().map(|frame|{let parts:Vec<String>=serde_json::from_str(&frame).unwrap();(parts[2].clone(),frame)}).collect();
+   let mut candidate:Vec<_>=required.contracts.iter().map(|(id,c)|{
+    let atoms:Vec<_>=required.atoms.iter().filter(|a|&a.obligation==id).collect();
+    let semantic_sources=atoms.iter().filter_map(|a|match &a.subject{crate::security_obligation_matching::Subject::Semantic{source,..}=>Some(frames[source].clone()),_=>None}).collect::<BTreeSet<_>>().into_iter().collect();
+    let site=match c.site.as_str(){"host"=>SecurityEnforcementSite::Host,"backend"=>SecurityEnforcementSite::Backend,"native"=>SecurityEnforcementSite::Native,_=>panic!()};
+    SecurityAdmissionObligation{id:id.clone(),semantic_sources,enforcement_site:site,prerequisites:c.prerequisites.iter().cloned().collect(),failure_code:c.failure.clone(),evidence_case_ids:atoms.iter().map(|a|a.case.clone()).collect::<BTreeSet<_>>().into_iter().collect()}
+   }).collect();
+   assert!(candidate.iter().any(|o|o.semantic_sources.is_empty())); // Selected deployment duties invent no semantic path.
+   matched.check_candidate_obligations(&candidate).unwrap();candidate.reverse();matched.check_candidate_obligations(&candidate).unwrap();
+   for i in 0..candidate.len(){let mut missing=candidate.clone();missing.remove(i);assert!(matched.check_candidate_obligations(&missing).is_err(),"omission {i}");}
+   let semantic=candidate.iter().position(|o|!o.semantic_sources.is_empty()).unwrap();
+   for mutation in 0..10{
+    let mut bad=candidate.clone();let item=&mut bad[semantic];match mutation{
+     0=>item.id="foreign".into(),1=>item.failure_code="WFT-WRONG".into(),2=>item.enforcement_site=SecurityEnforcementSite::Compiler,
+     3=>item.semantic_sources.clear(),4=>item.semantic_sources.push("foreign-source".into()),5=>item.evidence_case_ids.push("foreign-case".into()),
+     6=>item.prerequisites.push("foreign-prerequisite".into()),7=>{let copy=item.semantic_sources[0].clone();item.semantic_sources.push(copy);},
+     8=>{let mut parts:Vec<String>=serde_json::from_str(&item.semantic_sources[0]).unwrap();parts[1]="0".repeat(64);item.semantic_sources[0]=serde_json::to_string(&parts).unwrap();},
+     9=>item.id="x".repeat(4097),_=>unreachable!()
+    }assert!(matched.check_candidate_obligations(&bad).is_err(),"mutation {mutation}");
+   }
+   use crate::security_lowering::{SecurityLowering,SecurityPhysicalPlan,SecurityOperation,SecurityResultContract,SecurityResultColumn,SecurityResultOutcome,SecurityIdentity};
+   let ctx=owner.coverage().context();
+   let physical=SecurityLowering{lowering:SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT 1".into(),parameters:vec![]}},
+    result_contract:SecurityResultContract{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns:["first_value","second_value"].iter().enumerate().map(|(i,name)|SecurityResultColumn{position:i+1,output_name:(*name).into(),source_fields:vec![SecurityIdentity{document_id:"domain".into(),revision:"schema-1".into(),module:"m".into(),element:"salary".into()}],outcomes:vec![SecurityResultOutcome::Withheld{id:"withheld".into()}]}).collect()},
+    obligations:candidate.clone(),capability_ids:owner.coverage().selected_capabilities().iter().cloned().collect()};
+   matched.check_candidate(&physical).unwrap();
+   // Legacy unscoped shape rejects empty sources; scoped comparison uses original Selected subjects.
+   assert!(ctx.check_obligation_shape(&physical.obligations).is_err());
+   for mutation in 0..6{
+    let mut bad=physical.clone();match mutation{0=>bad.capability_ids.pop().map(|_|()).unwrap(),1=>bad.capability_ids.push("foreign".into()),2=>bad.capability_ids.push(bad.capability_ids[0].clone()),3=>bad.result_contract.columns.pop().map(|_|()).unwrap(),4=>bad.lowering.execution.sql.clear(),5=>bad.obligations.pop().map(|_|()).unwrap(),_=>unreachable!()}
+    assert!(matched.check_candidate(&bad).is_err(),"physical mutation {mutation}");
+   }
+   let selected=candidate.iter().position(|o|o.semantic_sources.is_empty()).unwrap();let mut invented=candidate.clone();invented[selected].semantic_sources=candidate[semantic].semantic_sources.clone();assert!(matched.check_candidate_obligations(&invented).is_err());
+   let mut duplicate=candidate.clone();duplicate[0]=duplicate[1].clone();assert!(matched.check_candidate_obligations(&duplicate).is_err());
+  });
+ }
+
 }
