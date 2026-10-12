@@ -1,0 +1,129 @@
+name: Python release wheels
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish validated 0.4.2 wheels (requires protected pypi environment approval)'
+        type: boolean
+        default: false
+      github_release:
+        description: 'Attach validated wheels to regular GitHub release v0.4.2'
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - 'crates/**'
+      - 'Cargo.*'
+      - 'rust-toolchain.toml'
+      - 'vendor/**'
+      - 'scripts/python-release/**'
+      - '.github/workflows/python-wheels.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: macos-14, target: aarch64-apple-darwin, suffix: macos-arm64}
+          - {os: macos-15-intel, target: x86_64-apple-darwin, suffix: macos-x64}
+          - {os: ubuntu-24.04, target: x86_64-unknown-linux-gnu, suffix: linux-x64}
+          - {os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu, suffix: linux-arm64}
+          - {os: windows-2022, target: x86_64-pc-windows-msvc, suffix: windows-x64}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.9'
+      - name: Build audited ABI3 wheel
+        uses: PyO3/maturin-action@e83996d129638aa358a18fbd1dfb82f0b0fb5d3b
+        with:
+          maturin-version: '1.9.6'
+          rust-toolchain: '1.90.0'
+          target: ${{ matrix.target }}
+          manylinux: '2014'
+          args: --release --locked --manifest-path crates/weft-python/Cargo.toml --out dist --interpreter ${{ startsWith(matrix.os, 'ubuntu') && '/opt/python/cp39-cp39/bin/python' || 'python' }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wheel-${{ matrix.suffix }}
+          path: dist/*.whl
+          if-no-files-found: error
+  validate:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+        platform:
+          - {os: macos-14, suffix: macos-arm64}
+          - {os: macos-15-intel, suffix: macos-x64}
+          - {os: ubuntu-24.04, suffix: linux-x64}
+          - {os: ubuntu-24.04-arm, suffix: linux-arm64}
+          - {os: windows-2022, suffix: windows-x64}
+    runs-on: ${{ matrix.platform.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: wheel-${{ matrix.platform.suffix }}
+          path: dist
+      - name: Install exact wheel and replay complete corpus
+        shell: bash
+        run: |
+          wheel=(dist/*.whl)
+          test "${#wheel[@]}" = 1
+          python -m venv .wheel-venv
+          if [[ "$RUNNER_OS" == Windows ]]; then py=.wheel-venv/Scripts/python; else py=.wheel-venv/bin/python; fi
+          "$py" -m pip install --no-index "${wheel[0]}"
+          "$py" scripts/python-release/validate.py --wheel "${wheel[0]}" --out "reports/${{ matrix.platform.suffix }}-py${{ matrix.python }}.json"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: validation-${{ matrix.platform.suffix }}-${{ matrix.python }}
+          path: reports/*.json
+          if-no-files-found: error
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    needs: [build, validate]
+    runs-on: ubuntu-24.04
+    environment:
+      name: pypi
+      url: https://pypi.org/project/weft-sql/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: wheel-*
+          path: dist
+          merge-multiple: true
+      - name: Publish exact validated wheels using Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33
+        with:
+          packages-dir: dist/
+  github-release:
+    if: github.event_name == 'workflow_dispatch' && inputs.github_release
+    needs: [build, validate]
+    runs-on: ubuntu-24.04
+    environment: github-release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: wheel-*
+          path: dist
+          merge-multiple: true
+      - name: Create regular GitHub release with exact validated wheels
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create v0.4.2 dist/*.whl --target "$GITHUB_SHA" --title "weft-sql 0.4.2" --notes-file scripts/python-release/github-notes.md

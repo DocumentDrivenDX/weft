@@ -1,9 +1,27 @@
 [build-system]
-requires=["maturin==1.9.6"]
-build-backend="maturin"
+requires = ["maturin==1.9.6"]
+build-backend = "maturin"
+
 [project]
-name="weft-sql"
-version="0.1.0"
-requires-python=">=3.9"
+name = "weft-sql"
+version = "0.4.2"
+description = "Native UMF-powered SQL compiler with explicit backend profiles"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT OR Apache-2.0"
+license-files = ["LICENSE-MIT", "LICENSE-APACHE", "THIRD-PARTY-LICENSES.txt"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Rust",
+]
+
+[project.urls]
+Repository = "https://github.com/DocumentDrivenDX/weft"
+Issues = "https://github.com/DocumentDrivenDX/weft/issues"
+
 [tool.maturin]
-bindings="pyo3"
+bindings = "pyo3"
+features = ["truss-postgresql-qualified", "ashlar-databricks-qualified", "ashlar-databricks-paths-keys", "ashlar-databricks-implicit-arithmetic"]
+strip = true
