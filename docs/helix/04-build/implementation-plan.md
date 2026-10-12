@@ -875,3 +875,24 @@ US-056 AC7/AC10 prerequisites. This does not qualify installed Python/browser
 parity, full workspace, B-009, actual physical lowering/ontology enforcement or
 any original backend acceptance case. Broader pending reviews and duties retain
 their independent scope. The original shared implementation goal remains active.
+
+
+### Optional original presence correspondence — 2026-10-12
+
+The result declaration checker now represents possible explicit absence beside
+Original for absent-allowed fields. The supplied-fact result selector compares
+value/null/explicit-absence exactly; all six mismatched cross-state combinations
+and missing presence metadata refuse. The earlier incomplete optional declaration
+control still refuses. Public compilation continues to refuse lowering/emission.
+
+`evidence/security-optional-presence-20261012/receipt.json` retains source archive,
+source pins and fresh Rust1.90.0 release verification:256 unit +66 security
+admission +3 literal tests pass, zero failed/ignored. The source change after that
+run is a comment clarifying the truth-only selector's scope; executable inputs
+are identical. Three Z3 4.15.4 queries replay in fresh contexts: two UNSAT for
+conditional presence correspondence/missing-fact refusal and one SAT showing
+truth-only checks cannot establish presence. No Rust/native refinement is claimed.
+Trace CONTRACT-007 original field presence; shared STP-056 R09/B07/B09/B15,
+US-056 AC6/AC7 prerequisites. These remain simulated facts; authentication,
+native lowering/codec/current policy/publication and all original backend cases
+remain separate requirements. The shared132-case goal stays active.

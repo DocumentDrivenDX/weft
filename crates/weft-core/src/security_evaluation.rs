@@ -345,11 +345,15 @@ pub(crate) fn check_owner_rows(ctx:&crate::security_backend::SecurityBackendCont
  }
  ctx.check_simulated_result_selection(contract,contract_json,hash,batch_json,&truths)?;
  for (row,cells) in rows.iter().zip(cells){for (output,cell) in ctx.requirements().outputs().iter().zip(cells.as_array().ok_or_else(fail)?){
-  if cell["disposition"]!="original"{continue;}
+  if cell["disposition"]!="original"&&cell["disposition"]!="absent"{continue;}
   let crate::application_ir::Expression::Field{scan,identity}=&output.output().expression else{return Err(fail());};
   let field=SecurityRef{document_id:identity.document_id.clone(),module_id:identity.module.clone(),element_id:identity.element.clone()};
   let resource=row.get(scan).ok_or_else(fail)?;evaluator.budget.step()?;
   if !evaluator.coverage[&resource.identity.target].contains(&field){return Err(fail());}
+  if cell["disposition"]=="absent"{
+   if !resource.absent.contains(&field)||resource.fields.contains_key(&field){return Err(fail());}
+   continue;
+  }
   let expected=resource.fields.get(&field).ok_or_else(fail)?;let actual=evaluator.budget.literal(catalog,&field,&cell["value"])?;
   if let Some(v)=expected{evaluator.budget.copy_scalar(v)?;}if let Some(v)=&actual{evaluator.budget.copy_scalar(v)?;}
   if expected!=&actual{return Err(fail());}

@@ -1,4 +1,5 @@
-//! Conditional supplied-truth selection checks. Never authenticates truth or releases data.
+//! Conditional supplied-truth disposition checks. Never authenticates truth or releases data.
+//! Original values and absence require the separate supplied-fact correspondence check.
 use crate::{application_ir::Expression,error::{Diagnostic,Result},security_backend::{SecurityBackendContext,SecuritySimulatedRowTruths},security_composition::{compose_with_budget,Decision},security_ir::Disposition,security_ontology::{SecurityRef,locate},security_lowering::{SecurityResultContract,SecurityResultOutcome,SecurityTransform}};
 use std::collections::{BTreeMap,BTreeSet};
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-RESULT-SELECTION","result","Simulated result selection refused")}
@@ -46,7 +47,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
    let id=cell["outcomeId"].as_str().ok_or_else(fail)?;
    let outcome=column.outcomes.iter().find(|o|match o{SecurityResultOutcome::Original{id:i,..}|SecurityResultOutcome::Transformed{id:i,..}|SecurityResultOutcome::Withheld{id:i}|SecurityResultOutcome::Absent{id:i}=>i==id}).ok_or_else(fail)?;
    match (disposition,outcome){
-    (Disposition::Original,SecurityResultOutcome::Original{..})|(Disposition::Withheld,SecurityResultOutcome::Withheld{..})=>{},
+    (Disposition::Original,SecurityResultOutcome::Original{..}|SecurityResultOutcome::Absent{..})|(Disposition::Withheld,SecurityResultOutcome::Withheld{..})=>{},
     (Disposition::Transformed{transform,version,output_field,literal,..},SecurityResultOutcome::Transformed{transform:SecurityTransform::Constant{version:v,output_field:f,literal:l},..})=>{
      if transform!="constant"||version!=v||output_field.document_id!=f.document_id||output_field.module_id!=f.module||output_field.element_id!=f.element{return Err(fail());}
      let source=locate(ctx.catalog(),output_field).map_err(|_|fail())?;

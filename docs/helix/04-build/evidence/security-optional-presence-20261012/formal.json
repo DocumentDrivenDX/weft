@@ -1,0 +1,18 @@
+{
+  "z3": "4.15.4",
+  "queries": {
+    "presence-correspondence": {
+      "observed": "unsat",
+      "fresh_context_replay": "unsat"
+    },
+    "missing-fact-refusal": {
+      "observed": "unsat",
+      "fresh_context_replay": "unsat"
+    },
+    "truth-only-countermodel": {
+      "observed": "sat",
+      "fresh_context_replay": "sat"
+    }
+  },
+  "scope": "Finite value/null/explicit-absence/missing-fact model conditional on exact original disposition and complete covered supplied facts. Truth-only selection cannot establish presence. No Rust/SQL refinement, trusted fact issuance, native execution or publication proof."
+}

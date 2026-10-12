@@ -1,0 +1,17 @@
+; benchmark generated from python API
+(set-info :status unknown)
+(declare-fun cell () Int)
+(declare-fun fact () Int)
+(declare-fun optional () Bool)
+(declare-fun covered () Bool)
+(declare-fun original () Bool)
+(assert
+ (let (($x19 (= cell 2)))
+(let (($x34 (= fact 1)))
+(let (($x17 (<= cell 2)))
+(let (($x15 (>= cell 0)))
+(let (($x14 (<= fact 3)))
+(let (($x12 (>= fact 0)))
+(let (($x18 (and $x12 $x14 $x15 $x17)))
+(and $x18 original covered optional $x34 $x19)))))))))
+(check-sat)

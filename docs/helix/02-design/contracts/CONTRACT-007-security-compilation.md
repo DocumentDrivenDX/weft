@@ -968,3 +968,28 @@ The owner approved preserving main: this current security contract is
 CONTRACT-007, using blocked-only compile 0.5 / SQL 0.2. Historical receipts and
 schema hashes retain their original checkpoint meanings; fresh integrated
 qualification is required. Native security acceptance remains open.
+
+
+## Optional original result presence component — 2026-10-12
+
+The pure direct-field declaration checker now includes both Original and Absent
+for an absent-allowed field whenever Original is a conservative policy outcome.
+Both must be declared exactly once; missing/extra outcomes, required-field Absent,
+unsupported nullability and the aggregate256-outcome limit retain refusal.
+Transforms and Withheld do not fabricate absence. A transformed null remains its
+explicit transform outcome; Original(null) remains a present original value.
+
+Cell validation checks the exact outcome/tag/value shape. Supplied-truth selection
+checks active disposition only and cannot establish original values or absence.
+The separate supplied-fact selector requires complete original field coverage:
+Absent requires the exact field in the validated resource's explicit absent set,
+with no present field; Original requires an exact present value, including null.
+An omitted field without explicit absence refuses. These inputs remain simulated
+facts, not authenticated native observations, and no method releases results.
+
+The component evidence is under
+`../../04-build/evidence/security-optional-presence-20261012/`. Public security
+compilation still refuses lowering and emission; native codec/presence, current
+policy and final publication obligations remain required before integration can
+claim support. This extends pure correspondence only, not the supported SQL
+surface or a qualified native backend.

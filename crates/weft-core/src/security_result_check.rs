@@ -67,17 +67,19 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
     }
    }
   }
-  if original&&locate(ctx.catalog(),&field).map_err(|_|fail())?["nullability"]!="required"{return Err(fail());} // Original presence remains unresolved outside the required subset.
-  let required=usize::from(original)+usize::from(withheld)+classes.len();
+  let nullability=locate(ctx.catalog(),&field).map_err(|_|fail())?["nullability"].as_str().ok_or_else(fail)?.to_owned();
+  if original&&!matches!(nullability.as_str(),"required"|"absent-allowed"){return Err(fail());}
+  let absent=original&&nullability=="absent-allowed";
+  let required=usize::from(original)+usize::from(absent)+usize::from(withheld)+classes.len();
   if required==0||required>256||required!=column.outcomes.len(){return Err(fail());}
-  let mut ids=BTreeSet::new();let mut seen_classes=BTreeSet::new();let mut seen_original=false;let mut seen_withheld=false;
+  let mut ids=BTreeSet::new();let mut seen_classes=BTreeSet::new();let mut seen_original=false;let mut seen_withheld=false;let mut seen_absent=false;
   for outcome in &column.outcomes {budget.charge(0)?;
    let id=match outcome {SecurityResultOutcome::Original{id,..}|SecurityResultOutcome::Transformed{id,..}|SecurityResultOutcome::Withheld{id}|SecurityResultOutcome::Absent{id}=>id};
    budget.text(id)?;if !ids.insert(id){return Err(fail());}
    match outcome {
     SecurityResultOutcome::Original{domain,..}=>{if !original||seen_original||!model_domain(domain,&field,ctx){return Err(fail());}seen_original=true;},
     SecurityResultOutcome::Withheld{..}=>{if !withheld||seen_withheld{return Err(fail());}seen_withheld=true;},
-    SecurityResultOutcome::Absent{..}=>return Err(fail()),
+    SecurityResultOutcome::Absent{..}=>{if !absent||seen_absent{return Err(fail());}seen_absent=true;},
     SecurityResultOutcome::Transformed{transform,disposition_sources,domain:result_domain,..}=>{
      let SecurityTransform::Constant{version,output_field,literal}=transform;
      budget.text(version)?;budget.identity(output_field)?;budget.literal(literal)?;
@@ -94,7 +96,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
     }
    }
   }
-  if seen_original!=original||seen_withheld!=withheld||seen_classes.len()!=classes.len(){return Err(fail());}
+  if seen_original!=original||seen_absent!=absent||seen_withheld!=withheld||seen_classes.len()!=classes.len(){return Err(fail());}
  }
  Ok(())
 }
