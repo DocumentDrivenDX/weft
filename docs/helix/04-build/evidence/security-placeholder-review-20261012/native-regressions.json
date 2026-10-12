@@ -1,0 +1,946 @@
+{
+  "kind": "weft.postgresql-placeholder-native-lexical-evidence/0.1.0",
+  "generatedAt": "2026-10-12T16:49:15.026949+00:00",
+  "purpose": "Independent native parameter inventory and lexical boundary regression observations.",
+  "method": "PREPARE without supplied parameter types; inspect pg_prepared_statements; EXECUTE accepted cases using a text sentinel for each inferred parameter.",
+  "limits": [
+    "Finite lexical regression cases only; no application query equivalence or security lowering qualification.",
+    "Native preparation also parses statements; errors retain native SQLSTATE and message rather than being classified as all scanner errors.",
+    "Native parameter inventory reflects prepared parameter type array length; queries intentionally avoid gaps between used parameter positions.",
+    "The project profile independently forbids noncanonical and zero ordinals even where native PostgreSQL accepts leading zeros."
+  ],
+  "sourceReference": "https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/parser/scan.l",
+  "cases": [
+    {
+      "id": "baseline-one",
+      "sql": "SELECT $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "repeated-one",
+      "sql": "SELECT $1, $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-block-comment-hides-slot",
+      "sql": "SELECT 1%/*$1*/1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-line-comment-hides-slot",
+      "sql": "SELECT 1%-- $1\n1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-nested-comment-hides-slot",
+      "sql": "SELECT 1%/* outer /*$1*/ end */1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-comment-retains-real-slot",
+      "sql": "SELECT 1%/*$2*/1, $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0,
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-or-comment-hides-slot",
+      "sql": "SELECT 1|/*$1*/1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-minus-comment-hides-slot",
+      "sql": "SELECT 1-/*$1*/1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "operator-block-comment-unterminated",
+      "sql": "SELECT 1%/*$1",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated /* comment at or near \"/*$1\"",
+        "statementPosition": "31",
+        "context": null
+      }
+    },
+    {
+      "id": "operator-line-comment-cr",
+      "sql": "SELECT 1%-- $2\r1, $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            0,
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "line-comment-eof",
+      "sql": "SELECT $1 -- $2",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "ordinary-operators",
+      "sql": "SELECT 7%3, 1|2, 1#2, ~1, 1+2, 4/2, $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1,
+            3,
+            3,
+            -2,
+            3,
+            2,
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?",
+          "?column?",
+          "?column?",
+          "?column?",
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "nested-comments",
+      "sql": "SELECT $1 /* $2 /* $3 */ $4 */",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "unterminated-nested-comment",
+      "sql": "SELECT $1 /* $2 /* $3 */",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated /* comment at or near \"/* $2 /* $3 */\"",
+        "statementPosition": "33",
+        "context": null
+      }
+    },
+    {
+      "id": "escape-string-continuation-hides-slot",
+      "sql": "SELECT E'foo'\n'\\' $1 --'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo' $1 --"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-continuation-cr",
+      "sql": "SELECT E'foo'\r'\\' $1 --'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo' $1 --"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-continuation-line-comment",
+      "sql": "SELECT E'foo' -- $2\n'\\' $1 --'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo' $1 --"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-quote",
+      "sql": "SELECT E'foo\\' $2', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo' $2",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-double-quote",
+      "sql": "SELECT E'foo'' $2', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo' $2",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-literal-backslashes",
+      "sql": "SELECT E'foo\\\\', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo\\",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "escape-string-invalid-unicode",
+      "sql": "SELECT $1, E'\\uZZZZ'",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "22025",
+        "message": "invalid Unicode escape",
+        "statementPosition": "36",
+        "context": null
+      }
+    },
+    {
+      "id": "escape-string-unterminated",
+      "sql": "SELECT $1, E'foo\\'",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated quoted string at or near \"E'foo\\'\"",
+        "statementPosition": "34",
+        "context": null
+      }
+    },
+    {
+      "id": "standard-string-backslash",
+      "sql": "SELECT '\\', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "\\",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "standard-string-doubled-quote",
+      "sql": "SELECT 'it''s $2', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "it's $2",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "standard-string-continuation",
+      "sql": "SELECT 'foo'\n'$2', $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "foo$2",
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "standard-string-unterminated",
+      "sql": "SELECT $1, 'unterminated",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated quoted string at or near \"'unterminated\"",
+        "statementPosition": "34",
+        "context": null
+      }
+    },
+    {
+      "id": "parameter-ascii-junk",
+      "sql": "SELECT $1abc",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "trailing junk after parameter at or near \"$1abc\"",
+        "statementPosition": "30",
+        "context": null
+      }
+    },
+    {
+      "id": "parameter-unicode-junk",
+      "sql": "SELECT $1😀",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "trailing junk after parameter at or near \"$1😀\"",
+        "statementPosition": "30",
+        "context": null
+      }
+    },
+    {
+      "id": "parameter-underscore-junk",
+      "sql": "SELECT $1_",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "trailing junk after parameter at or near \"$1_\"",
+        "statementPosition": "30",
+        "context": null
+      }
+    },
+    {
+      "id": "parameter-leading-zero-native-acceptance",
+      "sql": "SELECT $01",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "parameter-zero",
+      "sql": "SELECT $0",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42P02",
+        "message": "there is no parameter $0",
+        "statementPosition": "30",
+        "context": null
+      }
+    },
+    {
+      "id": "invalid-numeric-dollar-tag",
+      "sql": "SELECT $1, $2$abc$2$",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated dollar-quoted string at or near \"$abc$2$\"",
+        "statementPosition": "36",
+        "context": null
+      }
+    },
+    {
+      "id": "invalid-zero-dollar-tag",
+      "sql": "SELECT $1, $0$abc$0$",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated dollar-quoted string at or near \"$abc$0$\"",
+        "statementPosition": "36",
+        "context": null
+      }
+    },
+    {
+      "id": "invalid-leading-zero-dollar-tag",
+      "sql": "SELECT $1, $01$abc$01$",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated dollar-quoted string at or near \"$abc$01$\"",
+        "statementPosition": "37",
+        "context": null
+      }
+    },
+    {
+      "id": "dollar-quote-empty-tag",
+      "sql": "SELECT $1, $$ $2 $$",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            " $2 "
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "dollar-quote-ascii-tag",
+      "sql": "SELECT $1, $_tag1$hello $2$_tag1$",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "hello $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "dollar-quote-unicode-tag",
+      "sql": "SELECT $1, $😀$hello $2$😀$",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "hello $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "dollar-quote-combining-tag",
+      "sql": "SELECT $1, $́$hello $2$́$",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "hello $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "dollar-quote-mismatched-tag",
+      "sql": "SELECT $1, $a$hello $2$A$",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated dollar-quoted string at or near \"$a$hello $2$A$\"",
+        "statementPosition": "34",
+        "context": null
+      }
+    },
+    {
+      "id": "identifier-dollar-suffix",
+      "sql": "SELECT 1 AS x$1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "columnNames": [
+          "x$1"
+        ]
+      }
+    },
+    {
+      "id": "identifier-unicode-dollar-suffix",
+      "sql": "SELECT 1 AS 😀$1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "columnNames": [
+          "😀$1"
+        ]
+      }
+    },
+    {
+      "id": "quoted-identifier",
+      "sql": "SELECT $1 AS \"$2\"",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "$2"
+        ]
+      }
+    },
+    {
+      "id": "quoted-identifier-doubled-quote",
+      "sql": "SELECT $1 AS \"a\"\"$2\"",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "a\"$2"
+        ]
+      }
+    },
+    {
+      "id": "quoted-identifier-unterminated",
+      "sql": "SELECT $1 AS \"$2",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "unterminated quoted identifier at or near \"\"$2\"",
+        "statementPosition": "36",
+        "context": null
+      }
+    },
+    {
+      "id": "unicode-quoted-identifier",
+      "sql": "SELECT $1 AS U&\"$2\"",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "$2"
+        ]
+      }
+    },
+    {
+      "id": "unicode-string-default-escape",
+      "sql": "SELECT $1, U&'d\\0061t $2'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "dat $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "unicode-string-custom-escape",
+      "sql": "SELECT $1, U&'hello\\world $2' UESCAPE '!'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "hello\\world $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "unicode-quoted-identifier-custom-escape",
+      "sql": "SELECT $1 AS U&\"hello\\world $2\" UESCAPE '!'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "hello\\world $2"
+        ]
+      }
+    },
+    {
+      "id": "unicode-string-custom-quote-escape",
+      "sql": "SELECT $1, U&'it''s !0061 $2' UESCAPE '!'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel",
+            "it's a $2"
+          ]
+        ],
+        "columnNames": [
+          "?column?",
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "unicode-string-invalid-default-escape",
+      "sql": "SELECT $1, U&'hello\\world'",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "invalid Unicode escape",
+        "statementPosition": "42",
+        "context": null
+      }
+    }
+  ],
+  "engine": {
+    "name": "PostgreSQL",
+    "version": "18.6",
+    "serverVersionNum": 180006,
+    "versionDescription": "PostgreSQL 18.6 on aarch64-apple-darwin23.6.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit",
+    "binarySha256": "0bc46289c80eeb3402138f3bc9653b3422d4de98a24dd3d4f0682affcce6cc95",
+    "runtimeDistribution": "pgserver-pg18",
+    "runtimeDistributionVersion": "18.6.1",
+    "driverDistribution": "psycopg",
+    "driverVersion": "3.3.6"
+  },
+  "sessionSettings": {
+    "standard_conforming_strings": "on",
+    "backslash_quote": "safe_encoding",
+    "server_encoding": "UTF8",
+    "client_encoding": "UTF8"
+  },
+  "summary": {
+    "caseCount": 50,
+    "prepared": 35,
+    "refused": 15
+  }
+}

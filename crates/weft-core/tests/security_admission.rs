@@ -1352,8 +1352,18 @@ fn execution_slots_bind_original_query_values_not_only_domains(){
   for(sql,expected)in [
    ("SELECT $1, $1",true),
    ("SELECT $1, '$2', \"$3\", $$ $4 $$ /* $5 */ -- $6",true),
+   ("SELECT $1::text, 5%2, 1+2, 1-2, 2*3, 6/2, 2^3, 1!=2, 1<>2, 1<=2, 2>=1",true),
+   ("SELECT $1, '{}'::jsonb ? 'key', '{}'::jsonb @> '{}'::jsonb, '{}'::jsonb ->> 'key'",true),
+   ("SELECT $1, 1 % /* $2 /* $3 */ $4 */ 1 -- $5\n",true),
+   ("SELECT $1, $tag_1$ $2 $tag_1$, E'escaped \\' $3'",true),
+   ("SELECT $1, 'ordinary'\n'$2'",true),
    ("SELECT '$1'",false),("SELECT $$ $1 $$",false),("SELECT $2",false),
-   ("SELECT $0",false),("SELECT $01",false),("SELECT ?",false),("SELECT 'unterminated",false)
+   ("SELECT $0",false),("SELECT $01",false),("SELECT ?",false),("SELECT 'unterminated",false),
+   ("SELECT 1%-- $1\n1",false),("SELECT 1%/*$1*/1",false),
+   ("SELECT E'foo'\n'\\' $1 --'",false),("SELECT $1, E'foo'\n'bar'",false),
+   ("SELECT $1😀",false),("SELECT $1_foo",false),
+   ("SELECT $1, $2$abc$2$",false),("SELECT $1, $0$abc$0$",false),("SELECT $1, $01$abc$01$",false),
+   ("SELECT $1, $😀$hello $2$😀$",false),("SELECT $1, U&'hello\\world' UESCAPE '!'",false)
   ]{let mut candidate=plan.clone();candidate.execution.sql=sql.into();assert_eq!(ctx.check_postgresql_query_placeholders(&candidate).is_ok(),expected,"{sql}");}
 
   for mutation in 0..5{

@@ -1057,3 +1057,29 @@ lowering or any full backend case. Trace FR-19/22, CONTRACT-007/ADR-002 and shar
 CONTRACT-063/STP-056 B09/B11/B12, US-056 AC7/AC9/AC10 prerequisites. Compiler
 security emission remains blocked; all132 original cases remain required and full
 shared security goal stays active.
+
+
+### PostgreSQL placeholder review correction — 2026-10-12
+
+Review found a P2 lexical correspondence defect: sqlparser0.63.0 could expose
+parameters hidden by native operator-adjacent comments or continued escape
+strings. It also accepted numeric dollar tags and Unicode identifier junk after
+ordinals. A bounded token preflight now refuses these forms. Ordinary operators,
+quoted identifiers, comments, standalone escape strings and ASCII/untagged dollar
+strings retain positive controls. Unicode dollar tags and Unicode U& string
+literals/custom UESCAPE remain explicitly unsupported by this component.
+
+`evidence/security-placeholder-review-20261012/receipt.json` retains original and
+corrected public-context probes, source pins/archive, targeted release logs and
+independent PostgreSQL18.6 observations. All331 targeted tests pass (257 unit,
+71 security admission,3 literals);11-package ownership and16 Bun boundary tests
+pass. An initial boundary invocation omitted required WEFT_CARGO; the corrected
+invocation and both logs are retained. Native evidence records50 exact lexical
+cases under UTF8/standard_conforming_strings=on:35 prepared/executed cases and15
+refusals. These native observations demonstrate finite scanner differences; they
+do not qualify complete security SQL or application-query equivalence.
+
+The public compiler stays blocked. Full workspace, hosted CI, installed binding
+parity, security lowering, native authority and full backend acceptance are not
+refreshed by this patch. Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056
+B09/B12/B13/B15; no acceptance criterion or original backend case is promoted.

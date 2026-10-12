@@ -82,10 +82,32 @@ pub(crate) fn check_postgres_placeholders(ctx:&SecurityBackendContext<'_>,plan:&
  check_query_slots(ctx,plan)?;
  use sqlparser::{dialect::PostgreSqlDialect,tokenizer::{Tokenizer,Token}};
  let dialect=PostgreSqlDialect{};
- let tokens=Tokenizer::new(&dialect,&plan.execution.sql).tokenize().map_err(|_|fail())?;
- let mut used=BTreeSet::new();
- for token in tokens {
+ let tokens=Tokenizer::new(&dialect,&plan.execution.sql).tokenize_with_location().map_err(|_|fail())?;
+ let mut used=BTreeSet::new();let mut escaped_string=false;
+ for (index,located) in tokens.iter().enumerate() {
+  let token=&located.token;
+  if matches!(token,Token::Whitespace(_)){continue;}
+  // sqlparser0.63 does not retain PostgreSQL escape mode across continued
+  // string fragments. Refuse that form before any apparent ordinal can count.
+  if escaped_string&&matches!(token,Token::SingleQuotedString(_)){return Err(fail());}
+  escaped_string=matches!(token,Token::EscapedStringLiteral(_));
+  match token {
+   // PostgreSQL ends an operator before either comment opener; the pinned
+   // tokenizer can absorb the opener and expose comment text as placeholders.
+   Token::CustomBinaryOperator(op) if op.contains("--")||op.contains("/*")=>return Err(fail()),
+   // The selected component retains ASCII dollar tags only. Numeric-leading
+   // tags are not native dollar-quote delimiters, despite tokenizer acceptance.
+   Token::DollarQuotedString(s) if s.tag.as_ref().is_some_and(|tag|{
+    !tag.as_bytes().first().is_some_and(|c|c.is_ascii_alphabetic()||*c==b'_')||!tag.bytes().all(|c|c.is_ascii_alphanumeric()||c==b'_')
+   })=>return Err(fail()),
+   // UESCAPE-aware Unicode decoding is not implemented by the pinned tokenizer.
+   Token::UnicodeStringLiteral(_)=>return Err(fail()),
+   _=>{}
+  }
   if let Token::Placeholder(name)=token {
+   // PostgreSQL treats any identifier-start byte (including non-ASCII) after
+   // an ordinal as parameter junk; sqlparser can split it into a separate word.
+   if tokens.get(index+1).is_some_and(|next|located.span.end==next.span.start&&matches!(&next.token,Token::Word(w) if w.quote_style.is_none())){return Err(fail());}
    let digits=name.strip_prefix('$').ok_or_else(fail)?;
    let position=digits.parse::<usize>().map_err(|_|fail())?;
    if position==0||position>plan.execution.parameters.len()||digits!=position.to_string(){return Err(fail());}

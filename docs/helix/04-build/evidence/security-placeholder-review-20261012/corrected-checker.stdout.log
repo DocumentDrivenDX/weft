@@ -1,0 +1,10 @@
+"SELECT 1%-- $1\n1" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT 1%/*$1*/1" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1, $2$abc$2$" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1😀" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1, $😀$hello $2$😀$" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1, U&'hello\\world' UESCAPE '!'" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT E'foo'\n'\\' $1 --'" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1, $0$abc$0$" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+"SELECT $1, $01$abc$01$" actual-checker=Err(Diagnostic { code: "WFT-SECURITY-PHYSICAL", severity: "error", message: "Physical security declaration shape refused", phase: "capability", source_span: None })
+public compiler status="blocked" diagnostic="WFT-SECURITY-BACKEND-REQUIRED"

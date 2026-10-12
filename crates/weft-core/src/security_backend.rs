@@ -110,7 +110,7 @@ impl<'a> SecurityBackendContext<'a> {
     pub fn check_physical_parameter_domains(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_domains(self,plan) }
     /// Exact per-occurrence execution values for a parameterized query; not SQL/native admission.
     pub fn check_execution_query_slots(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_query_slots(self,plan) }
-    /// PostgreSQL canonical ordinal coverage only; no statement meaning or execution authority.
+    /// Conservative PostgreSQL ordinal coverage; unsupported lexical forms refuse, with no execution authority.
     pub fn check_postgresql_query_placeholders(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check_postgres_placeholders(self,plan) }
     /// Exact input fingerprint for slot correspondence only; never an issuer or execution credential.
     pub fn execution_query_context_sha256(&self) -> String { crate::security_physical_check::context_fingerprint(self) }

@@ -1,0 +1,20 @@
+{
+  "base": "095aa5d133040da942f5632567d7ec17c9e10e8c",
+  "findings": [
+    {
+      "severity": "P2",
+      "location": "crates/weft-core/src/security_physical_check.rs:85",
+      "problem": "Pinned tokenizer exposes PostgreSQL comment/continued-escape-string text as real placeholders; numeric dollar tags and Unicode ordinal junk also falsely pass.",
+      "reproductions": [
+        "SELECT 1%/*$1*/1",
+        "SELECT 1%-- $1\n1",
+        "SELECT E'foo'\n'\\' $1 --'",
+        "SELECT $1\ud83d\ude00",
+        "SELECT $1, $2$abc$2$"
+      ],
+      "resolution": "Conservative bounded token preflight refuses these forms, rejects unsupported Unicode dollar tags/Unicode string literals, preserves positive ordinary-token cases."
+    }
+  ],
+  "other_reviewed_scopes": "No additional actionable defect found in shape/domain checks or versioned length-framed source fingerprint. Repeated named parameters retain per-occurrence correspondence.",
+  "limits": "Finite original-source review and native lexical observations; no security lowering, authentication, execution authority, full native scanner equivalence or acceptance-criterion promotion."
+}

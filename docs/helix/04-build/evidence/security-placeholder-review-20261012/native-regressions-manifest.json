@@ -1,0 +1,34 @@
+{
+  "kind": "weft.postgresql-placeholder-native-evidence-artifacts/0.1.0",
+  "artifacts": [
+    {
+      "path": "native-regressions.py",
+      "sha256": "a1e9571d5dd0a6be51a1bb4e3c2cbc3dabc49739c7d97604067ad81b0317e5fb",
+      "bytes": 7340
+    },
+    {
+      "path": "native-regressions.json",
+      "sha256": "a0bc084a04d622b293db5df28578a669682bd290aebe741499f07e7c85755792",
+      "bytes": 21656
+    }
+  ],
+  "command": {
+    "argv": [
+      "/private/tmp/truss-security-pg18-r2-20261011/bin/python",
+      "/private/tmp/weft-tokenizer-review-probe/native-regressions.py"
+    ],
+    "environment": {
+      "PYTHONPATH": "/private/tmp/truss-security-main-integration/packages/python/src:/private/tmp/truss-psycopg-baseline-env/lib/python3.11/site-packages"
+    },
+    "stdoutArtifact": "native-regressions.json",
+    "exitCode": 0
+  },
+  "verifiedSummary": {
+    "caseCount": 50,
+    "prepared": 35,
+    "refused": 15
+  },
+  "acceptedCasesExecutedSuccessfully": 35,
+  "ownedServerStopped": true,
+  "repositoryFilesEdited": false
+}

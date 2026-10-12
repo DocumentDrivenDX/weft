@@ -1073,11 +1073,14 @@ and original backend acceptance remain required.
 ## PostgreSQL query-placeholder coverage component — 2026-10-12
 
 `check_postgresql_query_placeholders` rechecks the original execution query slots
-and uses the workspace-pinned sqlparser0.63.0 PostgreSQL tokenizer to distinguish
-actual canonical `$1`–`$n` placeholders from quoted identifiers, text literals,
-dollar-quoted strings and comments. Every declared execution slot must appear;
-repeated use of a slot is allowed, undeclared/zero/noncanonical ordinals refuse.
-Lexical errors refuse. This checker does not parse statement meaning, prove
+and uses the workspace-pinned sqlparser0.63.0 PostgreSQL tokenizer with conservative
+token preflight. The selected lexical profile assumes UTF8 and
+`standard_conforming_strings=on`; it distinguishes canonical `$1`–`$n` placeholders
+from ordinary quoted identifiers, ordinary/standalone escape strings, ASCII-tagged
+or untagged dollar strings and comments. Every declared execution slot must appear;
+repeated use of a slot is allowed, undeclared/zero/noncanonical ordinals and
+identifier junk immediately following an ordinal refuse. Tokenizer errors refuse.
+This checker does not establish complete native literal or syntax validity, prove
 original query equivalence, inspect installation placeholders, select a native
 codec or certify the context's backend dialect. Its scope must be selected as a
 PostgreSQL ordinal profile; other strategies/dialects require their own coverage.
@@ -1086,6 +1089,18 @@ The existing1MiB SQL bound limits tokenizer input. No allocation/instruction-lev
 or concurrency-memory proof is claimed. This introduces no SQL keyword/feature
 allowlist and leaves public security compiler emission blocked. The source-qualified
 receipt is `../../04-build/evidence/security-postgres-placeholders-20261012/receipt.json`.
+
+The lexical correction retains `WFT-SECURITY-PHYSICAL` refusal for operator tokens
+containing a comment opener, continued escape strings, non-ASCII dollar tags and
+Unicode `U&` string literals/custom `UESCAPE`. These forms require a separately
+qualified scanner even when PostgreSQL accepts them. Ordinary operators remain
+admitted; whitespace before an operator-adjacent comment avoids that ambiguous
+token form. PostgreSQL18.6 native controls demonstrate that `$1` in
+`SELECT 1%/*$1*/1` and an escape-string continuation can be non-parameter text;
+the corrected checker refuses these cases. Native observations and before/after source checks are in
+`../../04-build/evidence/security-placeholder-review-20261012/receipt.json`.
+This is finite lexical correspondence evidence, not complete lowering or backend
+security acceptance; the public compiler remains blocked.
 
 
 ## Source-bound execution slot origins — 2026-10-12

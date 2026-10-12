@@ -1,0 +1,10 @@
+[package]
+name = "weft-tokenizer-review-probe"
+version = "0.1.0"
+edition = "2021"
+[dependencies]
+sqlparser = {version = "=0.63.0", default-features = false, features = ["std"]}
+weft-core = {path = "/private/tmp/weft-security-main-integration/crates/weft-core"}
+serde_json = {version = "=1.0.145", features = ["arbitrary_precision", "raw_value"]}
+[patch.crates-io]
+ahash = {path = "/private/tmp/weft-security-main-integration/vendor/ahash"}
