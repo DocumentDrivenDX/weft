@@ -993,3 +993,31 @@ compilation still refuses lowering and emission; native codec/presence, current
 policy and final publication obligations remain required before integration can
 claim support. This extends pure correspondence only, not the supported SQL
 surface or a qualified native backend.
+
+
+## Bounded physical declaration shape — 2026-10-12
+
+The owned context exposes `check_physical_shape` for
+weft.security.physical-plan/0.1.0 declarations. It rechecks original query/profile
+sources, requires unique operation IDs across installation and execution, and
+bounds512 installation operations,1MiB SQL per operation,1024 parameters per
+operation and16384 parameters across the complete plan. SQL must be nonempty and
+NUL-free. Parameter positions are contiguous within each operation; provenance
+must be an object and nullable string-carried slots refuse until a separately
+qualified codec exists. Empty non-null parameter strings remain representable.
+
+The shared declaration ledger bounds work and16,000,000 retained bytes, including
+parameter value/provenance/facets and original opaque JSON number lexemes. It
+charges numeric spelling without interpreting or normalizing opaque metadata.
+Depth/collection bounds remain enforced before any checked success. No accepted
+prefix is returned. This method checks shape only: nonempty SQL is not parsed or
+proved to realize the original query, parameter origins are not semantically
+matched, and no native privilege, installation, current authority or publication
+obligation is admitted. It issues no execution credential or immutable checked
+plan. Callers cannot convert success into emission or bypass future correspondence.
+
+The component receipt is
+`../../04-build/evidence/security-physical-shape-20261012/receipt.json`.
+Public security compilation remains blocked. Complete physical/result/dependency
+coverage, backend capabilities, installed native behavior and host lifetime remain
+required. No independent SQL feature allowlist is introduced by these finite bounds.

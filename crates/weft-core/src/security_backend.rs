@@ -104,6 +104,8 @@ impl<'a> SecurityBackendContext<'a> {
         let requirements = crate::security_requirements::SecurityRequirements::derive(profiled_query, logical_plan)?;
         Ok(Self { catalog,logical_plan,query,profiled_query,binding_json,backend_id,backend_version,target_profile,requirements })
     }
+    /// Bounded plan shape only; SQL/parameter meaning, coverage and native authority remain unadmitted.
+    pub fn check_physical_shape(&self, plan: &crate::security_lowering::SecurityPhysicalPlan) -> Result<()> { crate::security_physical_check::check(self,plan) }
     /// Pure declaration correspondence only; never permission to select/release a cell.
     pub fn check_result_declaration(&self, contract: &crate::security_lowering::SecurityResultContract) -> Result<()> { crate::security_result_check::check(self, contract) }
     /// Pure contract/cell correspondence; no permission to select or release results.

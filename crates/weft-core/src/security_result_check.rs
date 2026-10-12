@@ -29,7 +29,7 @@ impl Budget {
   // Bound caller-owned declarations before normalization or serialization.
   let mut stack=vec![(value,1usize)];
   while let Some((v,depth))=stack.pop(){self.charge(0)?;if depth>64{return Err(fail());}
-   match v { Value::String(s)=>{if s.len()>4_000_000{return Err(fail());}self.charge(s.len())?;},Value::Array(a)=>{if a.len()>4096{return Err(fail());}for x in a{stack.push((x,depth+1));}},Value::Object(o)=>{if o.len()>4096{return Err(fail());}for (k,x) in o{self.charge(k.len())?;stack.push((x,depth+1));}},_=>{} }
+   match v { Value::Number(n)=>{self.charge(n.as_str().len())?;},Value::String(s)=>{if s.len()>4_000_000{return Err(fail());}self.charge(s.len())?;},Value::Array(a)=>{if a.len()>4096{return Err(fail());}for x in a{stack.push((x,depth+1));}},Value::Object(o)=>{if o.len()>4096{return Err(fail());}for (k,x) in o{self.charge(k.len())?;stack.push((x,depth+1));}},_=>{} }
   } Ok(())
  }
 }
@@ -125,6 +125,14 @@ mod tests {
   let string=serde_json::json!({"string":"x".repeat(4_000_000)});
   let mut result=Budget::new();for _ in 0..4{assert!(result.normalize(&string_field,&string).is_ok());}
   assert_eq!(result.bytes,0);assert!(result.normalize(&string_field,&serde_json::json!({"string":"x"})).is_err());
+ }
+
+ #[test]
+ fn opaque_numeric_lexemes_consume_the_shared_declaration_byte_budget() {
+  let lexical="1".to_owned()+&"0".repeat(64);
+  let number:Value=serde_json::from_str(&lexical).unwrap();
+  let mut small=Budget{work:100,bytes:32};assert!(small.literal(&number).is_err());assert_eq!(small.bytes,32);
+  let mut exact=Budget{work:100,bytes:65};exact.literal(&number).unwrap();assert_eq!(exact.bytes,0);
  }
 
 }

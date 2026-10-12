@@ -918,3 +918,31 @@ Trace CONTRACT-007 and shared STP-056 R08/R09/B07, US-056 AC6 prerequisites.
 Authenticated native facts, installed masks, protected observation/current authority
 and final release remain open. No original backend case or complete profile is
 promoted; the full shared implementation goal remains active.
+
+
+### Physical declaration shape and metadata budgets — 2026-10-12
+
+The compiler now checks physical declaration structure through its original owned
+security context. Positive empty-installation/empty-string parameter and boundary
+controls pass; unknown version, whitespace/NUL/oversized SQL, duplicate operation
+ID,513 installations, noncontiguous parameter positions, nonobject provenance,
+nullable slots, oversized values/parameter vectors and excessive metadata depth
+refuse. Exactly512 installations and16384 aggregate slots pass; the next complete
+operation exceeding the slot limit refuses. Aggregate SQL/metadata budget refusal
+is independent of per-operation limits.
+
+Opaque JSON numeric tokens now consume their original lexical byte budget before
+serialization; a65-byte number fails a32-byte ledger and passes an exact65-byte
+ledger without coefficient expansion. This fixes a missing accounting branch in
+the shared declaration visitor, without changing opaque meaning.
+`evidence/security-physical-shape-20261012/receipt.json` retains original source
+pins/archive and Rust1.90.0 release verification:257 unit +68 security admission
++3 literal tests,328 passing total, zero failed/ignored. Shape success still ends
+in blocked compiler response without SQL/parameters/logicalPlan emission.
+
+Trace FR-19/22, CONTRACT-007 and shared STP-056 B09/B12/B15/B16, US-056
+AC7/AC10 prerequisites. SQL semantics, original parameter origin/domain mapping,
+complete capability/obligation correspondence, native installation/authority/
+execution/publication and formal refinement remain separate requirements. No
+full workspace, installed Python/browser, native backend case or full profile is
+promoted; all132 original cases remain required and shared goal active.

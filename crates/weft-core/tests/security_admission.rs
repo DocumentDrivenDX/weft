@@ -1275,3 +1275,40 @@ fn active_withholding_hides_optional_value_null_and_absence() {
   });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
  }
 }
+
+#[test]
+fn physical_plan_shape_is_bounded_and_never_emits_security_sql() {
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*};
+ let req=security04_request();let mut calls=0;
+ let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  calls+=1;
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT 1".into(),parameters:vec![]}};
+  ctx.check_physical_shape(&plan)?;
+  for mutation in 0..6 {
+   let mut bad=plan.clone();match mutation{
+    0=>bad.version="future".into(),1=>bad.execution.sql=" \n".into(),2=>bad.execution.sql="SELECT\0 1".into(),
+    3=>bad.execution.sql="x".repeat(1024*1024+1),4=>bad.installation.push(bad.execution.clone()),
+    5=>bad.installation=(0..513).map(|n|SecurityOperation{id:format!("install-{n}"),sql:"SELECT 1".into(),parameters:vec![]}).collect(),_=>unreachable!()
+   }assert!(ctx.check_physical_shape(&bad).is_err(),"mutation {mutation}");
+  }
+  let mut bounded=plan.clone();bounded.execution.sql="x".repeat(1024*1024);ctx.check_physical_shape(&bounded)?;
+  let slot=weft_core::backend::ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false},value:"".into(),origin:json!({"kind":"parameter","name":"p"})};
+  let mut parameterized=plan.clone();parameterized.execution.parameters=vec![slot.clone()];ctx.check_physical_shape(&parameterized)?;
+  for mutation in 0..6 {
+   let mut bad=parameterized.clone();match mutation {
+    0=>bad.execution.parameters[0].position=2,1=>bad.execution.parameters[0].origin=json!([]),
+    2=>bad.execution.parameters[0].logical_type.nullable=true,3=>bad.execution.parameters[0].value="x".repeat(1024*1024+1),
+    4=>bad.execution.parameters=(0..1025).map(|i|{let mut p=slot.clone();p.position=i+1;p}).collect(),
+    5=>{let mut origin=json!("leaf");for _ in 0..65{origin=json!({"next":origin});}bad.execution.parameters[0].origin=origin;},_=>unreachable!()
+   }assert!(ctx.check_physical_shape(&bad).is_err(),"parameter mutation {mutation}");
+  }
+  let mut too_many=plan.clone();too_many.installation=(0..17).map(|i|SecurityOperation{id:format!("install-{i}"),sql:"x".repeat(1024*1024),parameters:vec![]}).collect();assert!(ctx.check_physical_shape(&too_many).is_err());
+  let mut max_install=plan.clone();max_install.installation=(0..512).map(|i|SecurityOperation{id:format!("install-{i}"),sql:"SELECT 1".into(),parameters:vec![]}).collect();ctx.check_physical_shape(&max_install)?;
+  let slots:Vec<_>=(0..1024).map(|i|{let mut p=slot.clone();p.position=i+1;p}).collect();
+  let mut all_slots=plan.clone();all_slots.execution.parameters=slots.clone();all_slots.installation=(0..15).map(|i|SecurityOperation{id:format!("install-{i}"),sql:"SELECT 1".into(),parameters:slots.clone()}).collect();ctx.check_physical_shape(&all_slots)?;
+  all_slots.installation.push(SecurityOperation{id:"over-slot-limit".into(),sql:"SELECT 1".into(),parameters:slots});assert!(ctx.check_physical_shape(&all_slots).is_err());
+
+
+  Ok(SecurityRegistry::default())
+ });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
