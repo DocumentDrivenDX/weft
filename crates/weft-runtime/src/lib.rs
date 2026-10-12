@@ -466,3 +466,9 @@ mod qualified_tests {
 
 #[cfg(feature="ashlar-databricks-implicit-arithmetic")]
 pub mod implicit_arithmetic;
+
+/// Explicit production PG18 original-definition composition; generic transport stays unchanged.
+#[cfg(feature="truss-postgresql-pg18")]
+pub fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
+    weft_postgresql::pg18::compile_json(request,composition)
+}

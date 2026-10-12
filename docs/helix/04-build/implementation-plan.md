@@ -1243,3 +1243,33 @@ Current shared case inventory still has132 required cases and106 null commands:
 components do not implement those missing original runners. No backend case is
 promoted; the full goal and every required native/authority/publication duty
 remain active. Trace S04/S11/S12, CONTRACT-006/007 and shared STP-056/057.
+
+### Truss PG18 host composition — 2026-10-12
+
+The Truss consumer has authorized building its backend here against the
+DocumentDrivenDX pgserver PostgreSQL 18.6 runtime. The normal Python extension
+feature `truss-postgresql-pg18` exports
+`compile_truss_postgresql_json(request_json, composition_json)`. Rust exposes the
+same implementation through `weft_postgresql::pg18::compile_json`.
+
+The host supplies original data-only storage declarations separately from the
+SQL/model request. The bridge admits their bytes and pins through the existing
+original backend, with statically selected scalar procedures. It does not select
+fixture presets, start subprocesses, connect to a database, or evaluate authority.
+It requires backend `truss.postgresql.original` version `0.2.0`, target
+`truss-pg18.6-live/0.1`, and composition version
+`weft-truss-pg18-composition/0.1.0`. Historical PG17 profiles remain separate;
+the new manifest carries no inherited native evidence. Candidate opt-in and
+emitted host obligations remain required. Native row-tree procedures are not
+installed in this bridge. The target explicitly requires
+`search_path=pg_catalog,pg_temp` during prerequisites and query execution, so
+caller schemas cannot substitute unqualified operators.
+
+This compiler entry is a prerequisite for Truss's public compiled-query provider.
+That provider still needs real accepted model/storage declarations, independently
+safe logical projections over its tagged cells, native parameter binding,
+execution of emitted obligations and exact result decoding. A scalar filter
+transport check is not native PG18 execution evidence or closure of the security
+compiler work. The next usable workflow is public registration and mutation,
+followed by Weft filter/count compilation and authorized execution in the caller's
+psycopg transaction; connections and transaction settlement remain host-owned.

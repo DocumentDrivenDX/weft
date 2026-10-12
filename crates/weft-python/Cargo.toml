@@ -7,6 +7,7 @@ publish.workspace=true
 name="weft"
 crate-type=["cdylib"]
 [features]
+truss-postgresql-pg18=["weft-runtime/truss-postgresql-pg18"]
 ashlar-databricks-implicit-arithmetic=["weft-runtime/ashlar-databricks-implicit-arithmetic"]
 ashlar-databricks-paths-keys=["weft-runtime/ashlar-databricks-paths-keys"]
 ashlar-databricks-left-join=["weft-runtime/ashlar-databricks-left-join"]
