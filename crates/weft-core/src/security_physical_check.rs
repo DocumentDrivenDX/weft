@@ -64,6 +64,7 @@ pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPh
   }
   Ok(())
  }
+ let context_hash=context_fingerprint(ctx);
  let query=ctx.query().application_plan();
  for(i,j)in query.joins.iter().enumerate(){for(k,p)in j.on.iter().enumerate(){collect(p,format!("joins/{i}/on/{k}"),&mut originals)?;}}
  for(i,p)in query.filters.iter().enumerate(){collect(p,format!("filters/{i}"),&mut originals)?;}
@@ -71,7 +72,7 @@ pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPh
  if originals.len()!=plan.execution.parameters.len(){return Err(fail());}
  for((path,original),slot)in originals.iter().zip(&plan.execution.parameters){
   let (value,logical_type)=match original{Value::Literal{value,logical_type,..}|Value::Parameter{value,logical_type,..}=>(value,logical_type),_=>return Err(fail())};
-  if slot.value.as_str()!=value.as_str()||&slot.logical_type!=logical_type||slot.origin!=serde_json::json!({"kind":"queryValue","sourcePath":path}){return Err(fail());}
+  if slot.value.as_str()!=value.as_str()||&slot.logical_type!=logical_type||slot.origin!=serde_json::json!({"kind":"queryValue","sourcePath":path,"sourceContextSha256":context_hash}){return Err(fail());}
  }
  Ok(())
 }
@@ -93,4 +94,22 @@ pub(crate) fn check_postgres_placeholders(ctx:&SecurityBackendContext<'_>,plan:&
  }
  if used.len()!=plan.execution.parameters.len(){return Err(fail());}
  Ok(())
+}
+
+
+/// Framed exact source correspondence, not issuer authentication or authority.
+pub(crate) fn context_fingerprint(ctx:&SecurityBackendContext<'_>)->String {
+ use sha2::{Digest,Sha256};
+ fn feed(h:&mut Sha256,bytes:&[u8]){h.update((bytes.len() as u64).to_be_bytes());h.update(bytes);}
+ let mut h=Sha256::new();
+ for value in ["weft.security.query-slot-context/0.1.0",ctx.query().sql(),ctx.binding_json(),ctx.backend_id(),ctx.backend_version(),ctx.target_profile(),ctx.logical_plan().source().policy_json(),ctx.logical_plan().source().ontology_json(),ctx.profiled_query().profile_source_json()] {feed(&mut h,value.as_bytes());}
+ h.update((ctx.catalog().inputs().len() as u64).to_be_bytes());
+ for input in ctx.catalog().inputs(){
+  for value in [&input.document_json,&input.pin.document_id,&input.pin.revision,&input.pin.umf_version,&input.pin.sha256]{feed(&mut h,value.as_bytes());}
+  h.update((input.selected_module_ids.len() as u64).to_be_bytes());for id in &input.selected_module_ids{feed(&mut h,id.as_bytes());}
+ }
+ struct Sink(Sha256);
+ impl std::io::Write for Sink{fn write(&mut self,b:&[u8])->std::io::Result<usize>{self.0.update(b);Ok(b.len())}fn flush(&mut self)->std::io::Result<()>{Ok(())}}
+ let mut resolved=Sink(Sha256::new());serde_json::to_writer(&mut resolved,ctx.query().application_plan()).expect("owned relational plan serialization");feed(&mut h,&resolved.0.finalize());
+ format!("{:x}",h.finalize())
 }

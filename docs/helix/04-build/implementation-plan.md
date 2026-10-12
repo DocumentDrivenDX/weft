@@ -1010,3 +1010,24 @@ full workspace, formal refinement and complete allocation guarantees remain open
 Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056 B09/B12/B13/B15,
 US-056 AC7/AC10 prerequisites. No backend case is promoted; all132 original
 cases remain required and full shared goal stays active.
+
+
+### Execution slot context-source binding — 2026-10-12
+
+Occurrence paths alone could coincide across same-shaped queries. Query-slot
+origins now include an owner-derived context fingerprint over versioned framed
+original inputs and resolved query values. Wrong fingerprint refuses alongside
+wrong value/path/count. A real second compiler context with only an additional
+source SQL space rejects the first context's retained slot metadata despite
+identical logical value/type/path; both compiler responses remain blocked.
+
+`evidence/security-slot-context-20261012/receipt.json` retains source pins/archive
+and fresh offline locked Rust1.90.0 release verification:257 unit +71 security
+admission +3 literal tests,331 total passing, zero failed/ignored. Original model
+bytes are borrowed and resolved plan JSON is streamed into the hash. This is
+source correspondence under SHA256 collision resistance, not issuer authentication
+or authorization. No SQL meaning/native codec/source-lifetime/publication or
+formal/native refinement, full workspace or Python/browser qualification is
+claimed. Trace FR-19/22, CONTRACT-007, shared CONTRACT-063/STP-056 B09/B11/B12/
+B13/B15, US-056 AC7/AC9/AC10 prerequisites. No original backend case is promoted;
+all132 cases remain required and the full shared security goal stays active.

@@ -1086,3 +1086,22 @@ The existing1MiB SQL bound limits tokenizer input. No allocation/instruction-lev
 or concurrency-memory proof is claimed. This introduces no SQL keyword/feature
 allowlist and leaves public security compiler emission blocked. The source-qualified
 receipt is `../../04-build/evidence/security-postgres-placeholders-20261012/receipt.json`.
+
+
+## Source-bound execution slot origins — 2026-10-12
+
+Query-value origins now additionally require `sourceContextSha256`, obtained from
+the owned context's `execution_query_context_sha256`. Versioned length-framed
+hash inputs cover exact query SQL, binding JSON, backend/target identity, policy
+and ontology bytes, query-profile bytes, original model documents/pins/selected
+modules and the resolved application plan (including supplied parameter values).
+Large plan JSON is hashed through a streaming writer; original model bytes are
+borrowed. Parameter occurrence paths cannot be replayed under another context
+merely because its value/type/path have the same shape.
+
+This fingerprint is comparison data, not a signature, native credential or proof
+of issuer trust. Its correspondence relies on SHA256 collision resistance and
+original compiler-context source custody. A caller computing the expected hash
+still gains no execution authority or SQL-semantic validation; complete lowering,
+native qualification and host release remain mandatory. The source-qualified
+receipt is `../../04-build/evidence/security-slot-context-20261012/receipt.json`.

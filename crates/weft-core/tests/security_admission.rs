@@ -1346,7 +1346,7 @@ fn execution_slots_bind_original_query_values_not_only_domains(){
  let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE r.resourceId='r1'");let mut calls=0;
  let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
   calls+=1;
-  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right"})}]}};
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
   ctx.check_execution_query_slots(&plan)?;
   ctx.check_postgresql_query_placeholders(&plan)?;
   for(sql,expected)in [
@@ -1356,10 +1356,27 @@ fn execution_slots_bind_original_query_values_not_only_domains(){
    ("SELECT $0",false),("SELECT $01",false),("SELECT ?",false),("SELECT 'unterminated",false)
   ]{let mut candidate=plan.clone();candidate.execution.sql=sql.into();assert_eq!(ctx.check_postgresql_query_placeholders(&candidate).is_ok(),expected,"{sql}");}
 
-  for mutation in 0..4{
-   let mut bad=plan.clone();match mutation{0=>bad.execution.parameters[0].value="r2".into(),1=>bad.execution.parameters[0].origin=json!({"kind":"queryValue","sourcePath":"filters/1/right"}),2=>bad.execution.parameters.clear(),3=>{let mut p=bad.execution.parameters[0].clone();p.position=2;bad.execution.parameters.push(p);},_=>unreachable!()}
+  for mutation in 0..5{
+   let mut bad=plan.clone();match mutation{0=>bad.execution.parameters[0].value="r2".into(),1=>bad.execution.parameters[0].origin["sourcePath"]=json!("filters/1/right"),2=>bad.execution.parameters.clear(),3=>{let mut p=bad.execution.parameters[0].clone();p.position=2;bad.execution.parameters.push(p);},4=>bad.execution.parameters[0].origin["sourceContextSha256"]=json!("0".repeat(64)),_=>unreachable!()}
    ctx.check_physical_parameter_domains(&bad)?;assert!(ctx.check_execution_query_slots(&bad).is_err());
   }
   Ok(SecurityRegistry::default())
  });assert_eq!(calls,1,"{raw}");refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+}
+
+#[test]
+fn query_slot_context_preserves_exact_source_bytes_across_equivalent_queries(){
+ use weft_core::{security_backend::SecurityRegistry,security_lowering::*,ir::{Family,LogicalType},backend::ParameterSlot};
+ let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE r.resourceId='r1'");
+ let mut retained=None;
+ let first=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
+  ctx.check_execution_query_slots(&plan)?;retained=Some(plan);Ok(SecurityRegistry::default())
+ });refused(serde_json::from_str(&first).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
+ req["sql"]=json!(req["sql"].as_str().unwrap().to_owned()+" ");
+ let mut calls=0;let second=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
+  calls+=1;let plan=retained.as_ref().unwrap();ctx.check_physical_parameter_domains(plan)?;
+  assert_ne!(plan.execution.parameters[0].origin["sourceContextSha256"],ctx.execution_query_context_sha256());
+  assert!(ctx.check_execution_query_slots(plan).is_err());Ok(SecurityRegistry::default())
+ });assert_eq!(calls,1,"{second}");refused(serde_json::from_str(&second).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
 }
