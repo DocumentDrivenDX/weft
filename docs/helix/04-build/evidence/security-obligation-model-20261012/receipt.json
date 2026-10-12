@@ -1,0 +1,34 @@
+{
+  "command": "/private/tmp/umf-security-proof-venv/bin/python docs/helix/02-design/spikes/security-obligations/model.py",
+  "exitCode": 0,
+  "solver": "4.15.4",
+  "bound": {
+    "sources": 5,
+    "obligations": 5
+  },
+  "checks": 9,
+  "unsat": 6,
+  "sat": 3,
+  "sourcePins": {
+    "docs/helix/02-design/spikes/security-obligations/model.py": "b627811e645a976d7c77fab61656da03586a152436ca438ef61c8cdfa617fb67",
+    "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "51c80febbc73dca3423c68e5dea39f2a1d4bec3689b39537e4008ecf7c0289cb"
+  },
+  "artifacts": {
+    "results.json": "21c202c9b4e9992956848de032c3e4967c65a96be471132e0637971404bc487f",
+    "model.py": "b627811e645a976d7c77fab61656da03586a152436ca438ef61c8cdfa617fb67"
+  },
+  "scope": "Conditional finite obligation coverage and settlement design; no executable compiler or native proof",
+  "assumptions": [
+    "Owner-required source inventory is complete and original.",
+    "Accepted evidence and current-context flags are abstract inputs; their authentic issuers are not modeled.",
+    "Dependency graph contains at most5 nodes; complete validation and bounded runtime behavior remain implementation work."
+  ],
+  "trace": [
+    "FR-19",
+    "FR-22",
+    "CONTRACT-007",
+    "CONTRACT-063",
+    "STP-056 B09/B11/B12/B15"
+  ],
+  "acceptanceCasesPromoted": []
+}

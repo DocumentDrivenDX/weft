@@ -1120,3 +1120,81 @@ original compiler-context source custody. A caller computing the expected hash
 still gains no execution authority or SQL-semantic validation; complete lowering,
 native qualification and host release remain mandatory. The source-qualified
 receipt is `../../04-build/evidence/security-slot-context-20261012/receipt.json`.
+
+
+## Required lowering-obligation coverage and settlement design — 2026-10-12
+
+This section defines the next admission gate; it is not implemented by the
+current context checkers. `SecurityLowering.obligations` is a declaration. An
+empty list, a generic Supported capability, or all submitted obligations marked
+enforced cannot establish complete coverage. The compiler derives the required
+source inventory from its actual immutable SecurityRequirements and original
+source context, before considering a backend's declarations.
+
+The inventory must include each scan occurrence and action, each applicable rule
+and its complete condition/disclosure, each ordered identity key and component,
+each live field/context/association dependency, every operator use and its
+disclosed/original-authorized mode, and each ordered output occurrence. Repeated
+outputs and scan occurrences stay distinct even when their dependencies match.
+Zero-rule scans and COUNT-only queries still require scan/action eligibility.
+Empty association populations require completeness, not omission of their source.
+The inventory also contains mandatory source custody/current native mapping,
+authenticated original subject/context, complete current fact/authority cut,
+query/native codec correspondence, resource/diagnostic privacy and final
+publication/lifetime duties. Those duties cannot disappear because a query has
+no scalar outputs or a backend reports no installation operations.
+
+Source identities must be owner-issued, versioned and tied to the exact context
+fingerprint. They must identify the original semantic path and its qualified
+model lineage. Labels, rule names alone, hashes alone, caller-created paths and
+unqualified element IDs cannot identify a requirement. The concrete source-token
+wire encoding and native evidence validators remain open implementation decisions;
+no current string in semanticSources is admitted by this section alone. Neither
+post-serialization reindexing nor a copied source-context digest can manufacture
+owner custody. The implementation must preserve the original inventory objects.
+
+Coverage compares the complete owner inventory with declared source references:
+all required sources must be covered, all referenced sources must resolve to
+that original inventory, and duplicate/ambiguous obligation IDs refuse. Multiple
+obligations may cover one source when mechanisms cooperate; matching sets is a
+necessary comparison, not proof that the SQL implements those requirements.
+Each declared prerequisite must name exactly one declared obligation. Missing
+references, self dependencies and cycles refuse before installation or output.
+Use bounded topological validation, not recursive unchecked traversal. Initial
+budgets are4096 obligations,32768 dependency edges and16,000,000 charged UTF8
+bytes, including IDs, source tokens, failure codes and evidence case IDs.
+Exhaustion returns one refusal, without a partial admitted prefix.
+
+Enforced/refused/unverified outcomes belong to the independently checked receipt
+and its exact original operation, not to trusted backend declarations. A consumer
+can settle enforced only after all prerequisites settle enforced and the selected
+validator accepts its evidence for the current original source/native context.
+Compiler, backend, host and native sites remain distinct. Host/native authority
+or final publication duties cannot be discharged by an ordinary compiler's
+static claim. A refused, missing, stale or unverified dependency blocks its
+consumers and positive profile qualification. No retry may reinterpret an unknown
+original native outcome as a completed replacement operation. All duties must
+remain valid through their declared use and publication boundaries. A readiness
+check before execution alone does not discharge that interval.
+
+Required implementation controls include deleting every individual required
+source, zero-rule COUNT scans, duplicate aliased outputs, wrong scan/action/key
+component/endpoint direction, unowned source substitution, stale context replay,
+missing prerequisites, self/two-node/long cycles, conflicting enforcement sites,
+forged proof outcomes and bounded graph exhaustion. Native controls must mutate
+SQL, codec, mapping, policy and authority after comparison and before final
+disclosure. Prior protection and caller work must survive each refused activation.
+These controls belong inside the original B09/B11/B12/B15 and lifecycle runners;
+a shape checker or this design model cannot replace those required cases.
+
+The finite five-source/five-obligation model in
+`../spikes/security-obligations/model.py` executes nine solver checks. Six UNSAT
+results exclude uncovered sources, stale-only coverage, refused/unverified
+prerequisites, a two-node cycle and unowned sources under the stated constraints.
+Three SAT witnesses establish a usable dependency chain, the weakness of
+all-declared-enforced without complete owner coverage, and the fact that accepted
+flags alone do not prove actual native enforcement. This is conditional design
+analysis, not Rust refinement, authenticated evidence or backend qualification.
+Retained results: `../../04-build/evidence/security-obligation-model-20261012/receipt.json`.
+Public security compilation remains blocked until complete lowering, evidence
+validation and mandatory host/native admission are implemented and qualified.

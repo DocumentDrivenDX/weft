@@ -1083,3 +1083,29 @@ The public compiler stays blocked. Full workspace, hosted CI, installed binding
 parity, security lowering, native authority and full backend acceptance are not
 refreshed by this patch. Trace FR-19/22, CONTRACT-007 and shared CONTRACT-063/STP-056
 B09/B12/B13/B15; no acceptance criterion or original backend case is promoted.
+
+
+### Lowering obligation coverage design and formal analysis — 2026-10-12
+
+CONTRACT-007 now specifies original owner-derived requirement coverage, complete
+source references, distinct enforcement sites, bounded prerequisite DAG validation
+and current independently checked settlement. It retains scan/action obligations
+for zero-rule and field-free queries, ordered output/key identity, private-fact
+completeness and source/authority/publication duties. Concrete source-token wire
+encoding and native proof validators remain explicitly unimplemented.
+
+The actual Z3 4.15.4 spike executes nine five-source/five-obligation checks:
+six UNSAT violations and three SAT positive/negative witnesses. The negative
+witnesses show why all-declared-enforced can omit authority coverage and why
+accepted flags do not imply actual native enforcement.
+`evidence/security-obligation-model-20261012/receipt.json` retains the exact
+script, results, command and hashes. This formal analysis covers the conditional
+finite design, not executable Rust refinement, native SQL or lifetime.
+
+Next implement the owner source inventory and declaration coverage/DAG comparison
+against actual compiler contexts, then the selected independent evidence validators
+and original native admission runners. Trace FR-19–22, CONTRACT-007 and shared
+CONTRACT-063/STP-056 B09/B11/B12/B15 and US-056 AC7/AC9/AC10 prerequisites.
+No backend case is promoted, all132 cases remain required, and the full goal
+stays active. Existing physical checkers and public blocked compiler behavior
+remain unchanged.
