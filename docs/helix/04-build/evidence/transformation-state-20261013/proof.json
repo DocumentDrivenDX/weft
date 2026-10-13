@@ -1,0 +1,6 @@
+{
+  "z3": "4.15.4",
+  "scope": "three abstract normalized transform identities and selected row eligibility; tuple equality supplied by original composer; no SQL/native projection/literal/authentication implementation theorem",
+  "equivalenceCounterexample": "unsat",
+  "withheldOverConflictWitness": "[active1 = True,\n active0 = True,\n active2 = True,\n identity0 = -1,\n identity1 = 0,\n identity2 = 1,\n withheld = True,\n eligible = True]"
+}

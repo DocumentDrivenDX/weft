@@ -68,21 +68,39 @@ pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Res
   let binding=renderer.one(bindings.iter().chain(associations).filter(|e|e["type"]["documentId"].as_str()==Some(target.document_id.as_str())&&e["type"]["moduleId"].as_str()==Some(target.module_id.as_str())&&e["type"]["elementId"].as_str()==Some(target.element_id.as_str())).collect())?;
   let mut disclosure=Vec::new();
   for field in binding["fields"].as_array().ok_or_else(fail)? {
-   renderer.step()?;for key in ["documentId","moduleId","elementId"] {group_bytes=group_bytes.checked_add(field["ref"][key].as_str().ok_or_else(fail)?.len()).ok_or_else(fail)?;}if group_bytes>1_048_576{return Err(fail());}let field_ref=reference(&field["ref"])?;let mut declared=Vec::new();let mut withheld=Vec::new();
+   renderer.step()?;for key in ["documentId","moduleId","elementId"] {group_bytes=group_bytes.checked_add(field["ref"][key].as_str().ok_or_else(fail)?.len()).ok_or_else(fail)?;}if group_bytes>1_048_576{return Err(fail());}let field_ref=reference(&field["ref"])?;let mut declared=Vec::new();let mut withheld=Vec::new();let mut transforms=Vec::new();
    for (index,effect) in &selected {renderer.step()?;if *effect!=Effect::Permit{continue;}for (declared_field,disposition) in &plan.rules()[*index].disclosure {
     renderer.step()?;if declared_field!=&field_ref{continue;}declared.push(format!("q{index} IS TRUE"));
-    match disposition {Disposition::Withheld=>withheld.push(format!("q{index} IS TRUE")),Disposition::Original=>{},Disposition::Transformed{..}=>return Err(fail())}
+    match disposition {Disposition::Withheld=>withheld.push(format!("q{index} IS TRUE")),Disposition::Original=>{},Disposition::Transformed{..}=>transforms.push((*index,disposition))}
    }}
    let declared=if declared.is_empty(){"FALSE".into()}else{declared.join(" OR ")};let withheld=if withheld.is_empty(){"FALSE".into()}else{withheld.join(" OR ")};
+   let mut transform_metadata=Vec::new();let mut choices=Vec::new();let mut conflicts=Vec::new();
+   for (slot,(index,disposition)) in transforms.iter().enumerate() {
+    renderer.step()?;let encoded=serde_json::to_vec(disposition).map_err(|_|fail())?;
+    group_bytes=group_bytes.checked_add(encoded.len()).ok_or_else(fail)?;if group_bytes>1_048_576{return Err(fail());}
+    transform_metadata.push(json!({"slot":slot,"disposition":disposition}));choices.push(format!("WHEN q{index} IS TRUE THEN {slot}"));
+    for (other,_) in transforms.iter().take(slot) {
+     renderer.step()?;
+     let truths=selected.iter().map(|(i,e)|(plan.rules()[*i].id.clone(),if *e==Effect::Require||(*e==Effect::Permit&&(*i==*index||*i==*other)){weft_core::security_composition::Truth::True}else{weft_core::security_composition::Truth::False})).collect();
+     let composed=weft_core::security_composition::compose(plan,catalog,&target,&action,std::slice::from_ref(&field_ref),&truths)?;
+     if composed.decision==weft_core::security_composition::Decision::Conflict{conflicts.push(format!("(q{index} IS TRUE AND q{other} IS TRUE)"));}
+    }
+   }
+   let conflict=if conflicts.is_empty(){"FALSE".into()}else{conflicts.join(" OR ")};
+   let transformed=if transforms.is_empty(){"FALSE".into()}else{transforms.iter().map(|(i,_)|format!("q{i} IS TRUE")).collect::<Vec<_>>().join(" OR ")};
+   let transform_choice=if choices.is_empty(){"NULL::pg_catalog.int4".into()}else{format!("CASE {} ELSE NULL::pg_catalog.int4 END",choices.join(" "))};
    let fallback=if field["protection"]=="protected"{"indeterminate"}else{"original"};
-   let field_state=format!("CASE WHEN ({withheld}) THEN 'withheld' WHEN ({declared}) THEN 'original' ELSE '{fallback}' END");
+   let field_state=format!("CASE WHEN ({withheld}) THEN 'withheld' WHEN ({conflict}) THEN 'conflict' WHEN ({transformed}) THEN 'transformed' WHEN ({declared}) THEN 'original' ELSE '{fallback}' END");
    let state=format!("CASE WHEN ({decision}) <> 'permit' THEN 'not-applicable' ELSE ({field_state}) END");
    if state.len()>1_048_576{return Err(fail());}
    total+=state.len();if total>4_000_000{return Err(fail());}
-   disclosure.push(json!({"field":field_ref,"stateExpression":state}));
+   let transform_choice=format!("CASE WHEN ({state})='transformed' THEN ({transform_choice}) ELSE NULL::pg_catalog.int4 END");
+   if transform_choice.len()>1_048_576{return Err(fail());}
+   total+=transform_choice.len();if total>4_000_000{return Err(fail());}
+   disclosure.push(json!({"field":field_ref,"stateExpression":state,"transformationChoiceExpression":transform_choice,"transformations":transform_metadata}));
   }
   eligibility.push(json!({"target":target,"action":action,"decisionExpression":decision,"disclosure":disclosure}));
  }
- let output=json!({"version":"weft.truss.predicate-spike/0.3","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","indeterminateField":"projection_must_refuse","disclosureScope":"row_permit_gated_original_withheld_states_only_transformations_refuse_no_value_projection","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
+ let output=json!({"version":"weft.truss.predicate-spike/0.4","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","indeterminateField":"projection_must_refuse","conflictingField":"projection_must_refuse","disclosureScope":"row_permit_gated_original_withheld_transformed_conflict_states_no_value_projection","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
  if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(output)
 }

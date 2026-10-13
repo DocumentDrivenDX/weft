@@ -1,0 +1,5259 @@
+{
+  "scope": "Actual diagnostic renderer against full original disposition corpus; in-memory SQLite only for emitted CASE expressions with NULL::pg_catalog.int4 spelling translated to NULL. Not an independent PostgreSQL execution/refinement proof.",
+  "passedControls": 875,
+  "stateChoiceEvaluations": 1026,
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "ce0ee77c787a4572212f78e8b19024d34d93aa1189ac29d2d836176374ef7e5d",
+  "cases": [
+    {
+      "case": "oracle0",
+      "passed": true,
+      "inputBytes": 20370,
+      "exit": 0
+    },
+    {
+      "case": "oracle0Reversed",
+      "passed": true,
+      "inputBytes": 20370,
+      "exit": 0
+    },
+    {
+      "case": "oracle1",
+      "passed": true,
+      "inputBytes": 20368,
+      "exit": 0
+    },
+    {
+      "case": "oracle1Reversed",
+      "passed": true,
+      "inputBytes": 20368,
+      "exit": 0
+    },
+    {
+      "case": "oracle2",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle2Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle3",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle3Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle4",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle4Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle5",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle5Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle6",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle6Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle7",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle7Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle8",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle8Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle9",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle9Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle10",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle10Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle11",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle11Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle12",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle12Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle13",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle13Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle14",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle14Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle15",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle15Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle16",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle16Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle17",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle17Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle18",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle18Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle19",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle19Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle20",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle20Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle21",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle21Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle22",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle22Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle23",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle23Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle24",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle24Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle25",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle25Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle26",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle26Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle27",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle27Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle28",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle28Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle29",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle29Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle30",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle30Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle31",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle31Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle32",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle32Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle33",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle33Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle34",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle34Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle35",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle35Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle36",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle36Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle37",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle37Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle38",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle38Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle39",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle39Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle40",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle40Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle41",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle41Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle42",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle42Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle43",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle43Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle44",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle44Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle45",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle45Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle46",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle46Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle47",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle47Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle48",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle48Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle49",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle49Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle50",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle50Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle51",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle51Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle52",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle52Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle53",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle53Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle54",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle54Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle55",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle55Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle56",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle56Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle57",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle57Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle58",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle58Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle59",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle59Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle60",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle60Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle61",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle61Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle62",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle62Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle63",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle63Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle64",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle64Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle65",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle65Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle66",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle66Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle67",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle67Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle68",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle68Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle69",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle69Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle70",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle70Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle71",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle71Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle72",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle72Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle73",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle73Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle74",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle74Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle75",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle75Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle76",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle76Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle77",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle77Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle78",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle78Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle79",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle79Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle80",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle80Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle81",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle81Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle82",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle82Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle83",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle83Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle84",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle84Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle85",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle85Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle86",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle86Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle87",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle87Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle88",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle88Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle89",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle89Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle90",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle90Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle91",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle91Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle92",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle92Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle93",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle93Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle94",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle94Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle95",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle95Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle96",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle96Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle97",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle97Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle98",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle98Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle99",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle99Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle100",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle100Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle101",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle101Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle102",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle102Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle103",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle103Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle104",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle104Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle105",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle105Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle106",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle106Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle107",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle107Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle108",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle108Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle109",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle109Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle110",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle110Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle111",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle111Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle112",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle112Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle113",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle113Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle114",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle114Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle115",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle115Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle116",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle116Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle117",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle117Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle118",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle118Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle119",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle119Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle120",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle120Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle121",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle121Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle122",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle122Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle123",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle123Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle124",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle124Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle125",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle125Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle126",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle126Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle127",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle127Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle128",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle128Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle129",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle129Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle130",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle130Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle131",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle131Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle132",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle132Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle133",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle133Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle134",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle134Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle135",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle135Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle136",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle136Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle137",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle137Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle138",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle138Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle139",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle139Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle140",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle140Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle141",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle141Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle142",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle142Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle143",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle143Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle144",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle144Reversed",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "oracle145",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle145Reversed",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "oracle146",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle146Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle147",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle147Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle148",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle148Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle149",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle149Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle150",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle150Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle151",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle151Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle152",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle152Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle153",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle153Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle154",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle154Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle155",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle155Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle156",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle156Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle157",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle157Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle158",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle158Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle159",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle159Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle160",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle160Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle161",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle161Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle162",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle162Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle163",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle163Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle164",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle164Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle165",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle165Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle166",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle166Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle167",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle167Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle168",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle168Reversed",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "oracle169",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle169Reversed",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "oracle170",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle170Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle171",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle171Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle172",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle172Reversed",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "oracle173",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle173Reversed",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "oracle174",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle174Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle175",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle175Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle176",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle176Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle177",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle177Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle178",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle178Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle179",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle179Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle180",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle180Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle181",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle181Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle182",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle182Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle183",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle183Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle184",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle184Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle185",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle185Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle186",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle186Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle187",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle187Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle188",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle188Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle189",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle189Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle190",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle190Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle191",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle191Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle192",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle192Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle193",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle193Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle194",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle194Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle195",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle195Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle196",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle196Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle197",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle197Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle198",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle198Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle199",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle199Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle200",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle200Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle201",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle201Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle202",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle202Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle203",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle203Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle204",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle204Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle205",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle205Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle206",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle206Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle207",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle207Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle208",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle208Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle209",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle209Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle210",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle210Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle211",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle211Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle212",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle212Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle213",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle213Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle214",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle214Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle215",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle215Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle216",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle216Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle217",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle217Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle218",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle218Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle219",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle219Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle220",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle220Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle221",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle221Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle222",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle222Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle223",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle223Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle224",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle224Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle225",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle225Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle226",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle226Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle227",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle227Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle228",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle228Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle229",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle229Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle230",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle230Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle231",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle231Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle232",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle232Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle233",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle233Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle234",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle234Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle235",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle235Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle236",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle236Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle237",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle237Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle238",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle238Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle239",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle239Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle240",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle240Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle241",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle241Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle242",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle242Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle243",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle243Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle244",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle244Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle245",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle245Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle246",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle246Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle247",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle247Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle248",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle248Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle249",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle249Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle250",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle250Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle251",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle251Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle252",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle252Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle253",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle253Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle254",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle254Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle255",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle255Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle256",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle256Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle257",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle257Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle258",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle258Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle259",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle259Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle260",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle260Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle261",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle261Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle262",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle262Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle263",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle263Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle264",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle264Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle265",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle265Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle266",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle266Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle267",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle267Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle268",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle268Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle269",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle269Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle270",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle270Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle271",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle271Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle272",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle272Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle273",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle273Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle274",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle274Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle275",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle275Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle276",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle276Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle277",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle277Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle278",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle278Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle279",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle279Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle280",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle280Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle281",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle281Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle282",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle282Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle283",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle283Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle284",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle284Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle285",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle285Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle286",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle286Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle287",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle287Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle288",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle288Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle289",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle289Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle290",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle290Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle291",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle291Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle292",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle292Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle293",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle293Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle294",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle294Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle295",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle295Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle296",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle296Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle297",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle297Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle298",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle298Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle299",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle299Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle300",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle300Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle301",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle301Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle302",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle302Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle303",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle303Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle304",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle304Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle305",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle305Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle306",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle306Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle307",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle307Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle308",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle308Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle309",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle309Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle310",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle310Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle311",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle311Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle312",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle312Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle313",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle313Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle314",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle314Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle315",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle315Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle316",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle316Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle317",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle317Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle318",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle318Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle319",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle319Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle320",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle320Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle321",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle321Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle322",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle322Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle323",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle323Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle324",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle324Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle325",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle325Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle326",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle326Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle327",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle327Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle328",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle328Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle329",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle329Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle330",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle330Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle331",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle331Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle332",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle332Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle333",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle333Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle334",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle334Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle335",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle335Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle336",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle336Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle337",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle337Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle338",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle338Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle339",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle339Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle340",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle340Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle341",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle341Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle342",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle342Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle343",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle343Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle344",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle344Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle345",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle345Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle346",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle346Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle347",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle347Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle348",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle348Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle349",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle349Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle350",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle350Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle351",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle351Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle352",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle352Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle353",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle353Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle354",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle354Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle355",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle355Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle356",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle356Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle357",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle357Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle358",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle358Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle359",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle359Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle360",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle360Reversed",
+      "passed": true,
+      "inputBytes": 20686,
+      "exit": 0
+    },
+    {
+      "case": "oracle361",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle361Reversed",
+      "passed": true,
+      "inputBytes": 20684,
+      "exit": 0
+    },
+    {
+      "case": "oracle362",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle362Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle363",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle363Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle364",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle364Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle365",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle365Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle366",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle366Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle367",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle367Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle368",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle368Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle369",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle369Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle370",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle370Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle371",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle371Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle372",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle372Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle373",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle373Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle374",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle374Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle375",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle375Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle376",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle376Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle377",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle377Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle378",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle378Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle379",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle379Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle380",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle380Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle381",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle381Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle382",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle382Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle383",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle383Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle384",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle384Reversed",
+      "passed": true,
+      "inputBytes": 20827,
+      "exit": 0
+    },
+    {
+      "case": "oracle385",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle385Reversed",
+      "passed": true,
+      "inputBytes": 20825,
+      "exit": 0
+    },
+    {
+      "case": "oracle386",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle386Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle387",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle387Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle388",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle388Reversed",
+      "passed": true,
+      "inputBytes": 20968,
+      "exit": 0
+    },
+    {
+      "case": "oracle389",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle389Reversed",
+      "passed": true,
+      "inputBytes": 20966,
+      "exit": 0
+    },
+    {
+      "case": "oracle390",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle390Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle391",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle391Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle392",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle392Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle393",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle393Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle394",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle394Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle395",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle395Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle396",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle396Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle397",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle397Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle398",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle398Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle399",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle399Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle400",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle400Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle401",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle401Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle402",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle402Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle403",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle403Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle404",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle404Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle405",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle405Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle406",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle406Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle407",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle407Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle408",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle408Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle409",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle409Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle410",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle410Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle411",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle411Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle412",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle412Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle413",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle413Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle414",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle414Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle415",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle415Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle416",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle416Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle417",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle417Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle418",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle418Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle419",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle419Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle420",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle420Reversed",
+      "passed": true,
+      "inputBytes": 21002,
+      "exit": 0
+    },
+    {
+      "case": "oracle421",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle421Reversed",
+      "passed": true,
+      "inputBytes": 21000,
+      "exit": 0
+    },
+    {
+      "case": "oracle422",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle422Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle423",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle423Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle424",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle424Reversed",
+      "passed": true,
+      "inputBytes": 21143,
+      "exit": 0
+    },
+    {
+      "case": "oracle425",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle425Reversed",
+      "passed": true,
+      "inputBytes": 21141,
+      "exit": 0
+    },
+    {
+      "case": "oracle426",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle426Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle427",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle427Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle428",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle428Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle429",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle429Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle430",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle430Reversed",
+      "passed": true,
+      "inputBytes": 21318,
+      "exit": 0
+    },
+    {
+      "case": "oracle431",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "oracle431Reversed",
+      "passed": true,
+      "inputBytes": 21316,
+      "exit": 0
+    },
+    {
+      "case": "numeric0_-0False",
+      "passed": true,
+      "inputBytes": 21130,
+      "exit": 0
+    },
+    {
+      "case": "numeric0_-0True",
+      "passed": true,
+      "inputBytes": 21130,
+      "exit": 0
+    },
+    {
+      "case": "numeric100_1e2False",
+      "passed": true,
+      "inputBytes": 21133,
+      "exit": 0
+    },
+    {
+      "case": "numeric100_1e2True",
+      "passed": true,
+      "inputBytes": 21133,
+      "exit": 0
+    },
+    {
+      "case": "numeric1_2False",
+      "passed": true,
+      "inputBytes": 21129,
+      "exit": 0
+    },
+    {
+      "case": "numeric1_2True",
+      "passed": true,
+      "inputBytes": 21129,
+      "exit": 0
+    },
+    {
+      "case": "pairWork8192",
+      "passed": true,
+      "inputBytes": 43068,
+      "exit": 0
+    },
+    {
+      "case": "pairWork8193",
+      "passed": true,
+      "inputBytes": 43093,
+      "exit": 1
+    },
+    {
+      "case": "metadataSizing",
+      "passed": true,
+      "inputBytes": 20279,
+      "exit": 0
+    },
+    {
+      "case": "transformedMetadataExact",
+      "passed": true,
+      "inputBytes": 1068535,
+      "exit": 0
+    },
+    {
+      "case": "transformedMetadataOneOver",
+      "passed": true,
+      "inputBytes": 1068536,
+      "exit": 1
+    }
+  ]
+}
