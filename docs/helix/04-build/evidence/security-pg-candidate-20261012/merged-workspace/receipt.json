@@ -1,0 +1,13 @@
+{
+  "workspaceTests": 624,
+  "groups": 46,
+  "failed": 0,
+  "ignored": 0,
+  "filtered": 0,
+  "result": "pass",
+  "boundaries": "11packages/16controls pass; explicit seven-file upstream inventory repair independently reviewed",
+  "mergedUpstream": "8129b19963c4e9c72a0099d0f83f6fd32ed0ec91",
+  "inventorySha256": "7ea6ba1da645cc8f75e9fb4dd93be904403cc7bffbe831a03a9c8f5ce47f747f",
+  "review": "Astra Ultra verified exact seven source blobs against upstream8129b19 and each explicit public declaration. No generic inventory regeneration.",
+  "scope": "Merged Rust workspace only; no refreshed installed Python/WASM/browser/native deployment/security admission. Nine native lexical observations retained separately. No case promoted."
+}
