@@ -1,0 +1,67 @@
+{
+  "z3": "4.15.4",
+  "scope": "abstract K3 operators; existential witness counts 0..8 only; no SQL/parser/authentication/source-completeness implementation theorem",
+  "checks": [
+    {
+      "name": "and",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "or",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "not",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_0",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_1",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_2",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_3",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_4",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_5",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_6",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_7",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    },
+    {
+      "name": "exists_8",
+      "satisfiablePremises": true,
+      "counterexample": "unsat"
+    }
+  ],
+  "weakenedExistsCounterexample": "[a = 1]"
+}

@@ -1346,3 +1346,7 @@ The experimental `security_predicate_spike` module consumes the original admitte
 ### Additive Truss0.37 ordinary-query compatibility — 2026-10-13
 
 The import-load backend profile now accepts exact Truss0.37 alongside its original0.35/0.36 releases; other backend selections remain unchanged. The original Python module rebuilds with Rust1.90 and native pending/committed read-only import-load queries pass PostgreSQL18.6 (8.133s), retained in [native evidence](evidence/runtime037-compatibility-20261013/native-query.log). This preserves existing ordinary-query support. Nonempty signed64 facets remain refused by native query_objects; no signed64 query qualification, security-ready profile or acceptance case is promoted.
+
+### Conditional K3 lowering lemmas — 2026-10-13
+
+[Executable Z3 proof](evidence/predicate-k3-20261013/proof.py) and [results](evidence/predicate-k3-20261013/results.json) retain12 UNSAT discrepancy checks with satisfiable premises: K3 AND/OR/NOT and existential witness cardinalities0–8. A SAT weakened-EXISTS counterexample shows why SQL `EXISTS WHERE condition` loses an unknown witness. These are abstract finite truth-algebra lemmas, not parser/SQL implementation, source completeness, native authentication or unbounded existential proofs. The diagnostic lowering's actual native aggregate requires separate correspondence evidence. All required backend acceptance cases remain open at their previous statuses.
