@@ -31,5 +31,13 @@
       "caseClosed": false
     }
   ],
-  "scope": "Record-fact simulation only. Public security compilation remains WFT-SECURITY-LOWERING-UNSUPPORTED; graph variants not silently reinterpreted. No authenticated source/native snapshot, backend profile or release admission; no required case promoted and all132 remain in scope."
+  "scope": "Record-fact simulation only. Public security compilation remains WFT-SECURITY-LOWERING-UNSUPPORTED; graph variants not silently reinterpreted. No authenticated source/native snapshot, backend profile or release admission; no required case promoted and all132 remain in scope.",
+  "postmerge": {
+    "coreSecurityTests": 161,
+    "admissionIntegrationTests": 74,
+    "strictBoundaries": "11 packages passed",
+    "testedSourcesUnchanged": true,
+    "concurrentModelChange": "Added original record_members accessor; no changed existing model interpretation. Ordinary Truss runtime updates preserved.",
+    "scope": "626 workspace pass predates final merge; final security235 checks and strict boundaries pass on integrated main."
+  }
 }
