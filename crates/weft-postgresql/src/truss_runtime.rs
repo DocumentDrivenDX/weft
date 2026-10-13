@@ -18,6 +18,8 @@ pub const NUMERIC_PROFILE: &str = "truss-runtime-binding/0.2";
 pub const NUMERIC_TARGET: &str = "truss-runtime-pg18.6/0.2";
 pub const RELATIONSHIP_PROFILE: &str = "truss-runtime-binding/0.3";
 pub const RELATIONSHIP_TARGET: &str = "truss-runtime-pg18.6/0.3";
+pub const PAGE_PROFILE: &str = "truss-runtime-binding/0.4";
+pub const PAGE_TARGET: &str = "truss-runtime-pg18.6/0.4";
 const BACKEND: &str = "truss.postgresql.runtime";
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -49,6 +51,14 @@ struct RecordBinding {
     identity: Identity,
     type_id: String,
     fields: Vec<FieldBinding>,
+    #[serde(default)]
+    keys: Vec<KeyBinding>,
+}
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct KeyBinding {
+    key_id: String,
+    property_ids: Vec<String>,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -67,10 +77,13 @@ struct RelationshipBinding {
 pub struct Runtime {
     exact_numbers: bool,
     relationships: bool,
+    pages: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
-        if self.relationships {
+        if self.pages {
+            PAGE_PROFILE
+        } else if self.relationships {
             RELATIONSHIP_PROFILE
         } else if self.exact_numbers {
             NUMERIC_PROFILE
@@ -79,7 +92,9 @@ impl Runtime {
         }
     }
     fn target(&self) -> &'static str {
-        if self.relationships {
+        if self.pages {
+            PAGE_TARGET
+        } else if self.relationships {
             RELATIONSHIP_TARGET
         } else if self.exact_numbers {
             NUMERIC_TARGET
@@ -88,7 +103,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.relationships {
+        if self.pages {
+            "0.4.0"
+        } else if self.relationships {
             "0.3.0"
         } else if self.exact_numbers {
             "0.2.0"
@@ -197,7 +214,7 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: "weft-ir/0.2.0".into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -210,13 +227,25 @@ impl Backend for Runtime {
         if original_binding.get("relationships").is_some() != self.relationships {
             return Err(fail("Exact versioned relationship binding shape required"));
         }
+        if original_binding["records"]
+            .as_array()
+            .is_none_or(|records| {
+                records
+                    .iter()
+                    .any(|r| r.get("keys").is_some() != self.pages)
+            })
+        {
+            return Err(fail("Exact versioned key binding shape required"));
+        }
         let binding: Binding = serde_json::from_value(original_binding)
             .map_err(|_| fail("Runtime binding shape refused"))?;
         if binding.interface_version != self.profile()
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.relationships {
+                != if self.pages {
+                    "truss-catalog-runtime/0.29-candidate"
+                } else if self.relationships {
                     "truss-catalog-runtime/0.28-candidate"
                 } else if self.exact_numbers {
                     "truss-catalog-runtime/0.27-candidate"
@@ -372,6 +401,48 @@ impl Backend for Runtime {
                 }
             }
         }
+        if self.pages {
+            let Plan::V02(plan) = c.plan else {
+                return Err(unsupported("Page mapping requires application-read IR"));
+            };
+            if let Some(authored) = &plan.page_key {
+                let r = binding
+                    .records
+                    .iter()
+                    .find(|r| r.identity == plan.source.record)
+                    .ok_or_else(|| fail("Page source record mapping missing"))?;
+                let matches = r
+                    .keys
+                    .iter()
+                    .filter(|k| k.key_id == authored.id)
+                    .collect::<Vec<_>>();
+                if matches.len() != 1
+                    || authored.fields.len() != authored.types.len()
+                    || authored
+                        .types
+                        .iter()
+                        .any(|t| t.family != Family::String || t.facets != json!({}) || t.nullable)
+                {
+                    return Err(unsupported(
+                        "Unique required string page key mapping required",
+                    ));
+                }
+                let ids = authored
+                    .fields
+                    .iter()
+                    .map(|id| {
+                        r.fields
+                            .iter()
+                            .find(|f| f.identity == *id)
+                            .map(|f| f.property_id.clone())
+                            .ok_or_else(|| fail("Page key member mapping missing"))
+                    })
+                    .collect::<Result<Vec<_>>>()?;
+                if matches[0].property_ids != ids {
+                    return Err(fail("Page key mapping changes authored component order"));
+                }
+            }
+        }
         Ok(Validated {
             mapping: Mapping {
                 binding,
@@ -408,7 +479,9 @@ impl Backend for Runtime {
         let Plan::V02(plan) = c.plan else {
             return Err(unsupported("Runtime requires application-read IR"));
         };
-        if plan.read_profile.is_some() || !plan.groups.is_empty() || plan.page_key.is_some() {
+        if !plan.groups.is_empty()
+            || (!self.pages && (plan.read_profile.is_some() || plan.page_key.is_some()))
+        {
             return Err(unsupported("Runtime page-key/group profile unavailable"));
         }
         let mut build = Build {
@@ -438,7 +511,11 @@ impl Backend for Runtime {
         )?;
         build.binding_slot = binding_slot.clone();
         let source = |s: &app::Scan| -> Result<String> {
-            Ok(format!("\"truss\".\"query_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",m.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))
+            if let Some(page_key) = &plan.page_key {
+                Ok(format!("\"truss\".\"query_page_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}) AS {}",m.record(&s.record)?.type_id,literal(&page_key.id)?,Identifier::new(&s.occurrence)?.sql()))
+            } else {
+                Ok(format!("\"truss\".\"query_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",m.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))
+            }
         };
         let mut from = source(&plan.source)?;
         for join in &plan.joins {
@@ -766,6 +843,39 @@ impl Build<'_> {
                 let r = self.value(right)?;
                 Ok(format!("({l} = {r})"))
             }
+            app::Predicate::LexicographicGreater { columns, values } => {
+                if self.plan.page_key.is_none() {
+                    return Err(unsupported(
+                        "Authored page profile required for continuation",
+                    ));
+                }
+                if columns.is_empty()
+                    || columns.len() != values.len()
+                    || columns
+                        .iter()
+                        .any(|f| f.logical_type.family != Family::String || f.logical_type.nullable)
+                {
+                    return Err(unsupported(
+                        "Required string continuation components required",
+                    ));
+                }
+                let left = columns
+                    .iter()
+                    .map(|f| {
+                        self.scalar(&f.scan, &f.identity, &f.logical_type)
+                            .map(|v| v.0)
+                    })
+                    .collect::<Result<Vec<_>>>()?;
+                let right = values
+                    .iter()
+                    .map(|v| self.value(v))
+                    .collect::<Result<Vec<_>>>()?;
+                Ok(format!(
+                    "(ROW({})>ROW({}))",
+                    left.join(","),
+                    right.join(",")
+                ))
+            }
             app::Predicate::HasRelated {
                 scan,
                 relationship,
@@ -779,13 +889,15 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let relationships = version.as_deref() == Some("0.3.0");
+    let pages = version.as_deref() == Some("0.4.0");
+    let relationships = pages || version.as_deref() == Some("0.3.0");
     let numeric = relationships || version.as_deref() == Some("0.2.0");
     let mut factory =
         |_: &Catalog, _: Plan<'_>, target: weft_core::compile::CompositionInput<'_>| {
             let backend = Runtime {
                 exact_numbers: numeric,
                 relationships,
+                pages,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()

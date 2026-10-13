@@ -1,0 +1,16 @@
+{
+  "scope": "Candidate existing application-read profiles and typed string tuple continuation against actual Truss mappings",
+  "backendVersion": "0.4.0",
+  "binding": "truss-runtime-binding/0.4",
+  "target": "truss-runtime-pg18.6/0.4",
+  "readProfileVersion": "weft-application-read/0.2.0",
+  "nativeExtensionSha256": "c6fdb440812a93311225f3433e6594fd8438085456f64f67099978ebd441aa33",
+  "installedTrussTestsPassed": 7,
+  "seconds": 39.407,
+  "review": "Astra Ultra plan/source review",
+  "limits": [
+    "Live caller-managed continuation, no frozen snapshot/exactly-once enumeration",
+    "Required facetless string page keys only",
+    "No page joins, grouped summary or opaque cursors"
+  ]
+}
