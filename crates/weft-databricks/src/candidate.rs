@@ -56,41 +56,7 @@ impl Backend for Candidate {
             capabilities:["scan","project","project.entity","filter","innerJoin","equal","and","sum","group","aggregate","aggregate.count","parameter.named","compare.lexicographicGreater","order.asc","limit","key.uniqueStable","value.presence","value.sequence","value.map","value.structured","relationship.exists","relationship.boundedKeys","relationship.inverse","type.string","type.boolean","type.integer","type.decimal"].into_iter().map(|id|Capability{id:id.into(),target_profiles:vec!["dbsql-candidate".into()],language_profiles:languages.clone(),logical_domain:if id.starts_with("relationship.") {json!({"subset":"authored monomorphic directed edges; exact key tuples; parallel bags; finite signed64 ordinal domain or refusal"})} else if id == "value.presence" { json!({"subset":"optional scalar or compound envelopes; absent or exact value; explicit native null refuses"}) } else if ["value.sequence","value.map","value.structured"].contains(&id) { json!({"subset":"explicit candidate compound encoding; exact recursive values; depth below 128 and at most 100000 nodes per value or refusal"}) } else { json!({"subset":"required scalar relational/application operations with admitted exact homes"}) },result_domain:json!({"carrier":"exact text","sumCount":"finite DECIMAL38 or error; empty count zero"}),constraints:vec!["Candidate requires native/schema/policy/publication host verification".into(),"No broader warehouse or production qualification".into()],obligations:vec![],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Binding>> {
-        let binding = if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
-        for id in &c.selection.records {
-            if !binding.records.iter().any(|r| &r.logical == id) {
-                return Err(fail(
-                    "WFT-BINDING",
-                    "Selected original record has no mapping",
-                ));
-            }
-        }
-        for id in &c.selection.relationships {
-            if !binding.relationships.iter().any(|r| r.logical == json!(id)) {
-                return Err(fail(
-                    "WFT-BINDING",
-                    "Selected original relationship has no mapping",
-                ));
-            }
-        }
-        for id in &c.selection.fields {
-            if !binding
-                .records
-                .iter()
-                .any(|r| r.properties.iter().any(|p| &p.logical == id))
-            {
-                return Err(fail(
-                    "WFT-BINDING",
-                    "Selected original field has no mapping",
-                ));
-            }
-        }
-        Ok(Validated {
-            obligations: vec![publication(&binding)],
-            mapping: binding,
-            additional_capabilities: vec![],
-            coverage: c.selection.clone(),
-        })
+        validate_mapping(c, false)
     }
     fn assess(&self, c: &Context<'_>, _: &Binding) -> Result<Vec<Assessment>> {
         Ok(c.plan
@@ -344,12 +310,19 @@ impl<'a> Lower<'a> {
                 };
             let owner=format!("(r.source_system COLLATE UTF8_BINARY) = ({source} COLLATE UTF8_BINARY) AND r.{type_column} = CAST({type_slot} AS BIGINT)");
             let revision = if matches!(record.kind, RecordKind::Object | RecordKind::Edge) {
-                let p = self.slot(
-                    string_type(),
-                    record.schema_revision.clone(),
-                    json!({"kind":"schemaRevision","record":id}),
-                )?;
-                format!("(r.schema_revision COLLATE UTF8_BINARY) = ({p} COLLATE UTF8_BINARY)")
+                if record.compatible_schema_revisions.is_empty() {
+                    let p = self.slot(string_type(), record.schema_revision.clone(),
+                        json!({"kind":"schemaRevision","record":id}))?;
+                    format!("(r.schema_revision COLLATE UTF8_BINARY) = ({p} COLLATE UTF8_BINARY)")
+                } else {
+                    let mut predicates = Vec::new();
+                    for revision in &record.compatible_schema_revisions {
+                        let p = self.slot(string_type(), revision.clone(),
+                            json!({"kind":"schemaRevision","record":id}))?;
+                        predicates.push(format!("(r.schema_revision COLLATE UTF8_BINARY) = ({p} COLLATE UTF8_BINARY)"));
+                    }
+                    format!("({})", predicates.join(" OR "))
+                }
             } else {
                 "TRUE".into()
             };
@@ -606,4 +579,46 @@ fn numeric_guard(value: &str, ty: &LogicalType) -> String {
         ),
         _ => "FALSE".into(),
     }
+}
+
+// All historical registrations retain the single-revision admission boundary.
+pub(crate) fn validate_mapping(c: &Context<'_>, allow_compatible: bool) -> Result<Validated<Binding>> {
+        let binding = if matches!(c.plan,Plan::V03(_)) {binding::admit03(c.catalog,c.binding_value)?}else{binding::admit(c.catalog, c.binding_value)?};
+        if !allow_compatible && binding.records.iter().any(|r| !r.compatible_schema_revisions.is_empty()) {
+            return Err(fail("WFT-BINDING", "Compatible physical revisions require the separate candidate registration"));
+        }
+        for id in &c.selection.records {
+            if !binding.records.iter().any(|r| &r.logical == id) {
+                return Err(fail(
+                    "WFT-BINDING",
+                    "Selected original record has no mapping",
+                ));
+            }
+        }
+        for id in &c.selection.relationships {
+            if !binding.relationships.iter().any(|r| r.logical == json!(id)) {
+                return Err(fail(
+                    "WFT-BINDING",
+                    "Selected original relationship has no mapping",
+                ));
+            }
+        }
+        for id in &c.selection.fields {
+            if !binding
+                .records
+                .iter()
+                .any(|r| r.properties.iter().any(|p| &p.logical == id))
+            {
+                return Err(fail(
+                    "WFT-BINDING",
+                    "Selected original field has no mapping",
+                ));
+            }
+        }
+        Ok(Validated {
+            obligations: vec![publication(&binding)],
+            mapping: binding.clone(),
+            additional_capabilities: if binding.records.iter().any(|r| c.selection.records.contains(&r.logical) && !r.compatible_schema_revisions.is_empty()) { vec![crate::compatible_profile::CAPABILITY.into()] } else { vec![] },
+            coverage: c.selection.clone(),
+        })
 }
