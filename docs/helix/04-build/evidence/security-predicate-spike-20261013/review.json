@@ -1,0 +1,62 @@
+{
+  "review": "Independent Astra Ultra read-only diagnostic predicate spike review",
+  "reviewedAt": "2026-10-13T09:27:57.572988+00:00",
+  "repository": "/private/tmp/weft-security-main-integration",
+  "baseHead": "873eea4ead8ae6ab2412fdbd8ebe5a2b3467e2b2",
+  "worktreeSourcePinsAuthoritative": true,
+  "conclusion": "No direct logical K3/string/boolean discrepancy found under complete originally domain-valid fact/key and truthful-mapping premises. One execution-environment prerequisite remains to state/enforce.",
+  "findings": [
+    {
+      "priority": "P2",
+      "file": "crates/weft-postgresql/src/security_predicate_spike.rs",
+      "lines": [
+        21,
+        22,
+        23,
+        39,
+        54
+      ],
+      "issue": "Generated JSON/equality operators are unqualified; renderer correspondence depends on safe pg_catalog operator resolution, absent from current declared prerequisites and native harness setup.",
+      "recommendation": "Declare safe search_path/operator environment and original valid_scalar_cell custody as prerequisites; set and restore safe pg_catalog,pg_temp path in the diagnostic native harness, or qualify generated operators directly.",
+      "scope": "Conditional diagnostic truth correspondence; not a claimed production exploit or security admission bypass."
+    }
+  ],
+  "resolvedConcerns": [
+    "Fact domain/declared witness key admission is now an explicit prerequisite rather than inferred from truthful catalog assessment.",
+    "Escaped parameter bytes are charged before cloning at 1MiB cumulative; final serialized renderer response is bounded at 16MB."
+  ],
+  "independentControls": {
+    "passed": 11,
+    "results": "results.json",
+    "cases": "baseline, literals/K3 shape, safe string parameterization, numeric/mapping refusal, exact and one-over parameter boundary, cumulative multi-target expansion refusal",
+    "scope": "Actual current built diagnostic example, no native database mutation or exhaustive SQL equivalence theorem."
+  },
+  "nativeEvidence": {
+    "origin": "Parent-run log inspected, not independently rerun",
+    "log": "/private/tmp/truss-native-predicate-width64.log",
+    "result": "1 test passed in 7.712 seconds; fixture ordinary-writer population and selected administrative truth assertions only"
+  },
+  "sourceDigests": {
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "c832efc3e4446296f9eb26763de0ce43c41058da9f701ed53525b30adb6b2532",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "627c59e775403f23e6e96c84d8bd78cb695663265d3f4d072d79c0bb43668e97",
+    "crates/weft-postgresql/src/lib.rs": "88f392275273bf795ce4abd1074d449b648cf60b93b6f3072639dcbc55ba6d39",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_policy_types.rs": "0e26b8fd4e2da7a80ccc84d7ae4ad05495e334cdd0cc0e3c59633d7663fb7d06",
+    "crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4"
+  },
+  "trussSourceDigests": {
+    "packages/python/tests/test_security_predicate_native.py": "7e3c46acfa935950c910daa8aa409b69d578c9a231599bf4e95c096a1f2f743a",
+    "packages/python/src/truss/_catalog_runtime/scalars.sql": "48877cb2562e8616d53a3f09f11afa59ee99d7ad33149ebe9b3932ec4db19906"
+  },
+  "evidenceDigests": {
+    "exactParameterCeiling-rendered.json": "1b4a8c24dfe478376d932702620cde434ec7a11143339de60146bf4deed6263d",
+    "controls.py": "9047de8b2d1118ffab2ddb9ddcc49a3e50d20ada077b5b1eb437ca01f35b25f2",
+    "baseline-rendered.json": "f0739ff63fefd4dea49a0a167afa2da3681071250abd51a3c9b0f2eceb883f02",
+    "results.json": "5a36a2da60742a6f24483180456e626a074d9904d2ba9e8f52b526faa6108fbd",
+    "parameterizedString-rendered.json": "d759f8158011f3d3718e0264fc6a5c4154e760aa6213c023ff5fa0b3a9e59735",
+    "literalFalse-rendered.json": "f98f412c3bfdb5bb57edd94d7ed37a009d74803b1108908440ca4a5ccaadab82",
+    "k3Operators-rendered.json": "240c7b46cede7c2195e3a094df898565b731b82dfc821733bbbe3e7b60253fff"
+  }
+}

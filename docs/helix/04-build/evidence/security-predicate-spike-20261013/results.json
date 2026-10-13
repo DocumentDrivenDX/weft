@@ -1,0 +1,62 @@
+{
+  "scope": "Current diagnostic binary with original admitted policy/source; selected synthetic assessment refusals. No native SQL execution or row-truth equivalence proof.",
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "4329746ea0528537dbd4e9227bcb3cf5c8da0b64e1d5aea08bf8c13c96f3c445",
+  "controls": [
+    {
+      "case": "baseline",
+      "passed": true,
+      "compilerStatus": 0
+    },
+    {
+      "case": "literalFalse",
+      "passed": true,
+      "compilerStatus": 0
+    },
+    {
+      "case": "k3Operators",
+      "passed": true,
+      "compilerStatus": 0
+    },
+    {
+      "case": "parameterizedString",
+      "passed": true,
+      "compilerStatus": 0
+    },
+    {
+      "case": "numericRefusal",
+      "passed": true,
+      "compilerStatus": 1
+    },
+    {
+      "case": "assessmentPinRefusal",
+      "passed": true,
+      "compilerStatus": 1
+    },
+    {
+      "case": "missingBooleanProperty",
+      "passed": true,
+      "compilerStatus": 1
+    },
+    {
+      "case": "duplicateActiveType",
+      "passed": true,
+      "compilerStatus": 1
+    },
+    {
+      "case": "exactParameterCeiling",
+      "passed": true,
+      "compilerStatus": 0
+    },
+    {
+      "case": "overParameterCeiling",
+      "passed": true,
+      "compilerStatus": 1
+    },
+    {
+      "case": "cumulativeExpandedRuleParameters",
+      "passed": true,
+      "compilerStatus": 1
+    }
+  ]
+}
