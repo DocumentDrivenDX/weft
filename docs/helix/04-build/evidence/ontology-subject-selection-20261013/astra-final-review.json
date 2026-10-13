@@ -1,0 +1,16 @@
+{
+  "reviewer": "astra ultra",
+  "reportedResult": "No remaining correctness blocker under explicit trusted inspector/owner/host premise and ordinary unmodified Promise scope",
+  "independentReplay": "Cross-realm async refused before invocation, entered=0, exit0;39 original-binary controls pass",
+  "excludedCounterexamples": "Modified Promise constructor/species and hidden deferred wrappers remain configured-code trust premise; no universal containment claim",
+  "sources": {
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/subject-key.ts": "a9533b93352c88cd601273b1c686d1a8b1b8c9486eb6f63b77b09e7a36c19562",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/dist/index.js": "8d2c18d99c75c34c3846a3fbd75b58d4e17cbf0f5c4923887dd436dfd2fdaa5b",
+    "/private/tmp/truss-security-main-integration/packages/pg-runtime/dist/subject-key.d.ts": "a9aa529832e478a4f88761d71b556d9658a36e3b924fdb7ebab38b0182ff3a0c",
+    "/private/tmp/truss-security-main-integration/tests/pg-principal-native-runner.ts": "c83155f173894e33371358e43085952f5a2b73802a02199e7f213cd4b98007fd",
+    "/private/tmp/truss-security-main-integration/tests/pg-subject-key.test.ts": "d4cdd2a0c55620830390fd3cd85f519557286d1531bbc7f8af33a754c2fe82e6",
+    "/private/tmp/weft-security-main-integration/crates/weft-core/src/security_mapping_transport.rs": "1c3b4b13062b44b667c5686d175e30b17c44edc826d590298145741695001401",
+    "/private/tmp/weft-security-main-integration/crates/weft-postgresql/examples/security_predicate_spike.rs": "005518e419ef8d2e0d5d10d10352a95c56c67951004fdb462d4155916b2e9a5d"
+  },
+  "recordKind": "Parent-retained reviewer message; reviewer full receipt separately retained when available"
+}
