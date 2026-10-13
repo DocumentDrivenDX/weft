@@ -1,0 +1,123 @@
+[
+  {
+    "case": 0,
+    "bytes": 0,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 1,
+    "bytes": 1,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 2,
+    "bytes": 4,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 3,
+    "bytes": 2,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 4,
+    "bytes": 2,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 5,
+    "bytes": 30,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 6,
+    "bytes": 40,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 7,
+    "bytes": 39,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 8,
+    "bytes": 43,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 9,
+    "bytes": 1,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  },
+  {
+    "case": 10,
+    "bytes": 16000001,
+    "exit": 1,
+    "diagnostic": {
+      "code": "WFT-SECURITY-PREDICATE-SPIKE",
+      "severity": "error",
+      "message": "Bounded closed diagnostic input required",
+      "phase": "capability"
+    }
+  }
+]

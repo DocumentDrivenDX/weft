@@ -1,0 +1,288 @@
+{
+  "scope": "Independent execution of current built diagnostic example; valid original retained packet and malformed transport controls, no native database calls",
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "8b5dfd2c1ba1b69110a689990262899c6ec3fca29cedc9ac274d465cf8c8ca55",
+  "passed": 40,
+  "cases": [
+    {
+      "case": "validOriginalPacket",
+      "inputBytes": 21759,
+      "passed": true,
+      "exit": 0,
+      "diagnosticCode": null
+    },
+    {
+      "case": "empty",
+      "inputBytes": 0,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "malformed",
+      "inputBytes": 1,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "null",
+      "inputBytes": 4,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "array",
+      "inputBytes": 2,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "boolean",
+      "inputBytes": 4,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "number",
+      "inputBytes": 1,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "emptyObject",
+      "inputBytes": 2,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "invalidUtf8",
+      "inputBytes": 1,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "invalidStringSurrogate",
+      "inputBytes": 8,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "trailingGarbage",
+      "inputBytes": 21760,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "duplicateOuter",
+      "inputBytes": 43,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "duplicateNested",
+      "inputBytes": 55,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestArray",
+      "inputBytes": 10468,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestNull",
+      "inputBytes": 10470,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestString",
+      "inputBytes": 10469,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestBoolean",
+      "inputBytes": 10470,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestInteger",
+      "inputBytes": 10468,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "extraOuter",
+      "inputBytes": 21777,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "cutWithoutRequest",
+      "inputBytes": 21768,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "requestWithoutCut",
+      "inputBytes": 21782,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missing_request",
+      "inputBytes": 10455,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missing_assessment",
+      "inputBytes": 11305,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingInner_modules",
+      "inputBytes": 18060,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingInner_policyJson",
+      "inputBytes": 19762,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingInner_ontologyJson",
+      "inputBytes": 18523,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badModules",
+      "inputBytes": 18073,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badPolicyType",
+      "inputBytes": 19778,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badOntologyType",
+      "inputBytes": 18544,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badPolicyText",
+      "inputBytes": 19779,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-SOURCE"
+    },
+    {
+      "case": "badOntologyText",
+      "inputBytes": 18543,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-SOURCE"
+    },
+    {
+      "case": "badAssessment_None",
+      "inputBytes": 11323,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badAssessment_[]",
+      "inputBytes": 11321,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badAssessment_{}",
+      "inputBytes": 11321,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "badAssessment_'bad'",
+      "inputBytes": 11324,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "nullSimulationPair",
+      "inputBytes": 21795,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "emptySimulationPair",
+      "inputBytes": 21791,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "depth200",
+      "inputBytes": 429,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "exact16MInput",
+      "inputBytes": 16000000,
+      "passed": true,
+      "exit": 0,
+      "diagnosticCode": null
+    },
+    {
+      "case": "over16MInput",
+      "inputBytes": 16000001,
+      "passed": true,
+      "exit": 1,
+      "diagnosticCode": "WFT-SECURITY-PREDICATE-SPIKE"
+    }
+  ]
+}
