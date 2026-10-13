@@ -119,6 +119,12 @@ impl<'a> Scope<'a> {
                         }
                     ));
                 }
+                Shape::ExactScalar { scalar_type } => {
+                    self.caps.insert(match scalar_type {
+                        crate::application_model::ExactScalarType::Timestamp => "type.timestamp",
+                        crate::application_model::ExactScalarType::Binary => "type.binary",
+                    }.into());
+                }
                 Shape::Sequence { .. } => {
                     self.caps.insert("value.sequence".into());
                 }

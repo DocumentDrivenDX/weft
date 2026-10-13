@@ -81,6 +81,7 @@ pub struct Runtime {
     release_030: bool,
     groups: bool,
     selected_metadata: bool,
+    exact_scalars: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -106,7 +107,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.selected_metadata {
+        if self.exact_scalars {
+            "0.4.4"
+        } else if self.selected_metadata {
             "0.4.3"
         } else if self.groups {
             "0.4.2"
@@ -121,6 +124,13 @@ impl Runtime {
         } else {
             "0.1.0"
         }
+    }
+    fn admit_projection(&self, descriptor: &Descriptor) -> Result<()> {
+        if self.exact_scalars && matches!(descriptor.shape, Shape::ExactScalar { .. })
+            && matches!(descriptor.availability.as_deref(), Some("required" | "absent-allowed")) {
+            return Ok(());
+        }
+        scalar_type(descriptor, self.exact_numbers).map(|_| ())
     }
     fn additions(&self) -> Vec<String> {
         let mut v = vec!["value.nativeNull".into()];
@@ -221,9 +231,9 @@ impl Backend for Runtime {
     fn describe(&self) -> Result<Manifest> {
         let language = vec![LanguageProfile {
             dialect_profile: "weft-sql/0.2.0".into(),
-            ir_version: "weft-ir/0.2.0".into(),
+            ir_version: if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -315,7 +325,7 @@ impl Backend for Runtime {
                 let entity = c.catalog.entity_descriptor(&original)?;
                 for descriptor in &entity.graph {
                     if descriptor.identity != r.identity {
-                        scalar_type(descriptor, self.exact_numbers)?;
+                        self.admit_projection(descriptor)?;
                     }
                 }
             }
@@ -332,7 +342,7 @@ impl Backend for Runtime {
                     let (_, graph) = c.catalog.member_descriptor_by_identity(&original, &f.identity)?;
                     let descriptor = graph.iter().find(|d| d.identity == f.identity)
                         .ok_or_else(|| fail("Original member descriptor missing"))?;
-                    scalar_type(descriptor, self.exact_numbers)?;
+                    self.admit_projection(descriptor)?;
                 }
                 fields.insert(key(&f.identity));
             }
@@ -616,27 +626,20 @@ impl Backend for Runtime {
                                 )
                             }
                         }
+                        Shape::ExactScalar { .. } => (
+                            format!("({})::pg_catalog.text", build.projected_value(scan, identity)?),
+                            Representation::Value { descriptor: identity.clone(), native_null: true, outer_join: None },
+                            vec![identity.clone()],
+                        ),
                         Shape::Record { members } => {
                             let mut pairs = vec![];
                             for member in members {
                                 let field = build.descriptor(&member.identity)?;
-                                let Shape::Scalar { logical_type } = &field.shape else {
+                                if !matches!(field.shape, Shape::Scalar { .. } | Shape::ExactScalar { .. }) {
                                     return Err(unsupported("Scalar entity member required"));
-                                };
-                                let (value, _) =
-                                    build.scalar(scan, &member.identity, logical_type)?;
+                                }
                                 pairs.push(literal(&member.name)?);
-                                pairs.push(if field.availability.as_deref() == Some("required") {
-                                    match logical_type.family {
-                                        Family::Integer | Family::Decimal => {
-                                            let (cell, _) = build.cell(scan, &member.identity)?;
-                                            format!("pg_catalog.to_jsonb({cell}->>'text')")
-                                        }
-                                        _ => format!("pg_catalog.to_jsonb({value})"),
-                                    }
-                                } else {
-                                    build.envelope(scan, &member.identity)?
-                                });
+                                pairs.push(build.projected_value(scan, &member.identity)?);
                             }
                             (
                                 format!(
@@ -781,17 +784,30 @@ impl Build<'_> {
             Ok(format!("({value})::pg_catalog.text"))
         }
     }
+    fn scalar_json(&self, scan: &str, id: &Identity, d: &Descriptor) -> Result<String> {
+        let (cell, _) = self.cell(scan, id)?;
+        match &d.shape {
+            Shape::ExactScalar { .. } => Ok(format!("pg_catalog.to_jsonb({cell}->>'text')")),
+            Shape::Scalar { logical_type } => match logical_type.family {
+                Family::Integer | Family::Decimal => Ok(format!("pg_catalog.to_jsonb({cell}->>'text')")),
+                _ => {
+                    let (value, _) = self.scalar(scan, id, logical_type)?;
+                    Ok(format!("pg_catalog.to_jsonb({value})"))
+                }
+            },
+            _ => Err(unsupported("Scalar projection required")),
+        }
+    }
+    fn projected_value(&self, scan: &str, id: &Identity) -> Result<String> {
+        let d = self.descriptor(id)?;
+        if d.availability.as_deref() == Some("required") {
+            self.scalar_json(scan, id, d)
+        } else { self.envelope(scan, id) }
+    }
     fn envelope(&self, scan: &str, id: &Identity) -> Result<String> {
         let d = self.descriptor(id)?;
-        let Shape::Scalar { logical_type } = &d.shape else {
-            return Err(unsupported("Scalar envelope required"));
-        };
         let (cell, present) = self.cell(scan, id)?;
-        let (value, _) = self.scalar(scan, id, logical_type)?;
-        let jsonvalue = match logical_type.family {
-            Family::Integer | Family::Decimal => format!("pg_catalog.to_jsonb({cell}->>'text')"),
-            _ => format!("pg_catalog.to_jsonb({value})"),
-        };
+        let jsonvalue = self.scalar_json(scan, id, d)?;
         Ok(format!("CASE WHEN NOT ({present}) THEN pg_catalog.jsonb_build_object('state','absent') WHEN {cell}->>'kind'='null' THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',{jsonvalue}) END"))
     }
     fn value(&mut self, v: &app::Value) -> Result<String> {
@@ -930,7 +946,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let selected_metadata = version.as_deref() == Some("0.4.3");
+    let exact_scalars = version.as_deref() == Some("0.4.4");
+    let selected_metadata = exact_scalars || version.as_deref() == Some("0.4.3");
     let groups = selected_metadata || version.as_deref() == Some("0.4.2");
     let release_030 = groups || version.as_deref() == Some("0.4.1");
     let pages = release_030 || version.as_deref() == Some("0.4.0");
@@ -945,6 +962,7 @@ pub fn compile_json(request: &str) -> String {
                 release_030,
                 groups,
                 selected_metadata,
+                exact_scalars,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()

@@ -81,15 +81,15 @@ fn unique_strings(v: &[String]) -> bool {
 fn profile_key(p: &LanguageProfile) -> (&str, &str) {
     (&p.dialect_profile, &p.ir_version)
 }
-fn valid_languages(profiles: &[LanguageProfile]) -> bool {
+fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
     let mut seen = BTreeSet::new();
     !profiles.is_empty()
         && profiles.iter().all(|p| {
             matches!(
                 profile_key(p),
                 ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
-            ) && seen.insert(profile_key(p))
-        })
+            ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+        }) && profiles.iter().all(|p| seen.insert(profile_key(p)))
 }
 pub(crate) struct OpaqueManifest { settings:Vec<Value>, capabilities:Vec<(Value,Value,Vec<Value>)> }
 fn take_opaque(value:&mut Value,key:&str)->Result<Value>{
@@ -141,7 +141,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if m.interface_version != "weft-backend/0.2.0" || !valid_languages(&m.language_profiles) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
@@ -190,7 +190,7 @@ pub fn validate_manifest(m: &Manifest) -> Result<()> {
             || c.target_profiles
                 .iter()
                 .any(|p| !targets.contains(p.as_str()))
-            || !valid_languages(&c.language_profiles)
+            || !valid_languages(&c.language_profiles, &m.interface_version)
             || c.language_profiles
                 .iter()
                 .any(|p| !m.language_profiles.contains(p))
@@ -253,6 +253,9 @@ pub enum Plan<'a> {
 }
 impl Plan<'_> {
     pub fn language(&self) -> LanguageProfile {
+        if let Self::V02(p) = self {
+            return LanguageProfile { dialect_profile: "weft-sql/0.2.0".into(), ir_version: p.ir_version.clone() };
+        }
         let suffix = match self {
             Self::V01(_) => "0.1.0",
             Self::V02(_) => "0.2.0",

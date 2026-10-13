@@ -43,6 +43,8 @@ struct Request01;
     path = "../../docs/helix/02-design/contracts/compile-request-v0.2.schema.json"
 )]
 struct Request02;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.2.1.schema.json")]
+struct Request021;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
 struct Request03;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json")]
@@ -116,7 +118,7 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
+            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.2.1" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
                 version = v.into();
             }
             if security_factory.is_some() && version != "weft-security-compile/0.2.0" {
@@ -129,6 +131,7 @@ impl Compiler {
                 ),
                 (Some("weft-compile/0.1.0"), Some("weft-sql/0.1.0"))
                     | (Some("weft-compile/0.2.0"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.2.1"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
                     | (Some("weft-security-compile/0.1.0"), Some("weft-sql/0.2.0"))
                     | (Some("weft-security-compile/0.2.0"), Some("weft-sql/0.2.0"))
@@ -148,6 +151,8 @@ impl Compiler {
                 RequestSecurity02::is_valid(&input)
             } else if version == "weft-security-compile/0.1.0" {
                 RequestSecurity01::is_valid(&input)
+            } else if version == "weft-compile/0.2.1" {
+                Request021::is_valid(&input)
             } else if version == "weft-compile/0.2.0" {
                 Request02::is_valid(&input)
             } else {
@@ -181,13 +186,14 @@ impl Compiler {
             }
             crate::json::checked_json(&req.target.binding_json)
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
-            let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
+            let mut catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
             } else if exact_numbers {
                 crate::model::Catalog::prepare_exact_numbers(req.modules)?
             } else {
                 crate::model::Catalog::prepare(req.modules)?
             };
+            catalog.exact_scalars = req.interface_version == "weft-compile/0.2.1";
             if let Some(source)=req.security.as_ref() {
                 let packet=crate::security_source::SecuritySourcePacket::read(
                     source["policyJson"].as_str().expect("security request schema"),
@@ -234,12 +240,13 @@ impl Compiler {
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
-                let plan = crate::application_resolve::resolve(
+                let mut plan = crate::application_resolve::resolve(
                     &catalog,
                     query,
                     req.parameters.unwrap_or_default(),
                     req.read_profile,
                 )?;
+                if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
                 self.emit(
                     &req.interface_version,
                     &req.dialect,
@@ -343,7 +350,7 @@ impl Compiler {
         };
         Ok(
             json!({"interfaceVersion":version,"status":"compiled","diagnostics":[],"dialect":dialect,"compilerVersion":concat!("weft/",env!("CARGO_PKG_VERSION")),"modelPins":catalog.pins(),
-   "backend":{"backendId":compiled.backend_id,"backendVersion":compiled.backend_version,"targetProfile":compiled.target_profile.id,"interfaceVersion":"weft-backend/0.2.0"},
+   "backend":{"backendId":compiled.backend_id,"backendVersion":compiled.backend_version,"targetProfile":compiled.target_profile.id,"interfaceVersion":manifest.interface_version},
    "targetContext":compiled.target_profile,"bindingSha256":compiled.binding_sha256,"logicalPlan":logical_plan,"sql":compiled.emission.sql,"parameters":compiled.emission.parameters,"columns":columns,"obligations":compiled.emission.obligations,
    "qualification":{"status":if candidate{"candidate"}else{"conformance-verified"},"evidence":evidence,"assumptions":[],"operations":compiled.qualifications}}),
         )

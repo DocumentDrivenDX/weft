@@ -631,7 +631,7 @@ fn closure(descriptors: &[Descriptor], root: &Identity) -> Result<Vec<Descriptor
                     pending.push(id(&member.identity)?);
                 }
             }
-            Shape::Scalar { .. } => {}
+            Shape::Scalar { .. } | Shape::ExactScalar { .. } => {}
         }
     }
     descriptors

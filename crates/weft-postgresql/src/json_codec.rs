@@ -24,6 +24,7 @@ pub(crate) fn pack(graph: &[Descriptor]) -> Result<serde_json::Value> {
     for d in graph {
         let mut entry = json!({"optional":d.availability.as_deref()==Some("absent-allowed")});
         match &d.shape {
+            Shape::ExactScalar { .. } => return Err(Diagnostic::new("WFT-CAPABILITY", "lower", "Exact token projections require an explicit backend")),
             Shape::Scalar { logical_type } => {
                 entry["kind"] = json!("scalar");
                 entry["type"] = json!(logical_type);
@@ -77,6 +78,7 @@ pub(crate) fn pack(graph: &[Descriptor]) -> Result<serde_json::Value> {
             Shape::Sequence { .. } => "sequence",
             Shape::Map { .. } => "map",
             Shape::Scalar { .. } => "scalar",
+            Shape::ExactScalar { .. } => unreachable!("refused before packing"),
         });
         packed.push(entry);
     }

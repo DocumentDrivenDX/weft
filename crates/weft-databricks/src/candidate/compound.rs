@@ -8,6 +8,7 @@ pub(crate) fn pack(graph:&[Descriptor])->Result<Value> {
     for d in graph {
         let mut entry=json!({"optional":d.availability.as_deref()==Some("absent-allowed")});
         match &d.shape {
+            Shape::ExactScalar{..}=>return Err(fail("WFT-CAPABILITY","Exact token projections require an explicit backend")),
             Shape::Scalar{..}=>entry["kind"]=json!("scalar"),
             Shape::Sequence{item}|Shape::Map{item}=>{entry["kind"]=json!(if matches!(d.shape,Shape::Sequence{..}) {"sequence"} else {"map"});entry["item"]=json!(index(item)?);},
             Shape::Structured{..}|Shape::Record{..}=>{

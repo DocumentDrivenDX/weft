@@ -161,3 +161,33 @@ collections and relational path expansion/counting. This preserves the one-hop
 surface here: RELATED_KEYS still returns its original terminal-key bag. A future
 path bag must retain both actual edge occurrences and the intermediate identity;
 degree remains distinct-associated-instance counting, separate from path bags.
+
+## Projection-only exact tokens: compile/IR/backend 0.2.1
+
+The explicit `weft-compile/0.2.1` envelope retains SQL dialect
+`weft-sql/0.2.0` and selects `weft-ir/0.2.1`. It adds an identity descriptor
+`{kind:"exactScalar", identity:..., availability:"required"|"absent-allowed",
+scalarType:"timestamp"|"binary"}`. These are projection-only values, not new
+members of the comparable `LogicalType.family` set. Original cardinality must
+be one, references/item meaning must be absent and known facets must be empty.
+Unknown selected semantics continue to refuse.
+
+Required values MUST preserve the original timestamp text or binary token in a
+JSON string. Optional values MUST retain the existing absent/null/value envelope.
+A whole-entity selection MUST include every original member, including these
+values, or refuse. The backend owns exact native carrier validation; core scalar
+metadata does not choose a binary encoding or timestamp arithmetic semantics.
+Comparison, order, grouping, authored key admission, parameters and aggregates
+MUST NOT reinterpret these descriptors as comparable strings or numbers.
+
+The versioned request, logical-plan, response and backend-manifest declarations
+are the `*-v0.2.1.schema.json` files alongside this contract. New manifests use
+`weft-backend/0.2.1` and explicitly declare SQL0.2.0/IR0.2.1. Old backend0.2.0
+manifests and schemas stay closed to their original language pairs. A host MUST
+check the returned transport, dialect, IR and selected backend versions before
+executing or decoding. There is no automatic upgrade of an old request/backend.
+
+The Truss runtime backend0.4.4 maps these descriptors to its existing validated
+JSON-home text cells on runtime0.31/PostgreSQL18.6. Truss returns its existing
+`TextValue` Python carrier. This scoped native path does not qualify timestamp
+arithmetic, binary comparison, other database profiles or new browser artifacts.

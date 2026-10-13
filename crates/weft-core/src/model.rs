@@ -33,6 +33,7 @@ pub struct ModuleInput {
 pub struct Catalog {
     inputs: Vec<ModuleInput>,
     pub(crate) exact_numbers: bool,
+    pub(crate) exact_scalars: bool,
     pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
@@ -164,7 +165,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false })
+        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()

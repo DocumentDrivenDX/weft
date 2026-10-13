@@ -17,6 +17,11 @@ pub struct Member {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "kind", rename_all = "camelCase")]
 pub enum Shape {
+    /// Projection-only exact token. This is not a comparable LogicalType.
+    ExactScalar {
+        #[serde(rename = "scalarType")]
+        scalar_type: ExactScalarType,
+    },
     Scalar {
         #[serde(rename = "type")]
         logical_type: LogicalType,
@@ -34,6 +39,9 @@ pub enum Shape {
         members: Vec<Member>,
     },
 }
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum ExactScalarType { Timestamp, Binary }
 #[derive(Debug, Clone, Serialize)]
 pub struct Descriptor {
     pub identity: Identity,
@@ -284,8 +292,17 @@ impl Catalog {
                             quoted: true,
                             span: Span { start: 0, end: 0 },
                         };
-                        Shape::Scalar {
-                            logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers)?,
+                        if c.exact_scalars && matches!(v["scalarType"].as_str(), Some("timestamp" | "binary")) {
+                            if !references.is_empty() || v.get("itemType").is_some() || v.get("recordType").is_some() {
+                                return Err(fail("Exact scalar cannot carry references or item meaning"));
+                            }
+                            Shape::ExactScalar { scalar_type: if v["scalarType"] == "timestamp" {
+                                ExactScalarType::Timestamp
+                            } else { ExactScalarType::Binary } }
+                        } else {
+                            Shape::Scalar {
+                                logical_type: scalar_type(&required, &name, c.exact_numbers || r.pin.umf_version == "0.8.0", c.exact_numbers)?,
+                            }
                         }
                     }
                     _ => return Err(fail("Selected cardinality is unsupported")),

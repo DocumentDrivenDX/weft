@@ -220,6 +220,7 @@ impl Graph {
                 .ok_or_else(|| fail("Resolved identity is missing from storage graph"))?;
             let shape = &node["shape"];
             let matches = match &descriptor.shape {
+                Shape::ExactScalar { .. } => false,
                 Shape::Scalar { logical_type } => {
                     shape["kind"] == "scalar"
                         && shape["family"] == serde_json::json!(logical_type.family)
