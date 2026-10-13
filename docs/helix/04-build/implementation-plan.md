@@ -1295,3 +1295,12 @@ close wider numeric/relationship/page-key support or security-compiler activatio
 
 
 Post-merge validation preserves upstream8129b19's ordinary Truss PostgreSQL/runtime additions. [Merged workspace evidence](evidence/security-pg-candidate-20261012/merged-workspace/receipt.json) records624 passing tests across46 groups, zero failed/ignored/filtered. The strict inventory initially exposed seven upstream source/API entries missing from main's map. Astra independently checked those exact files/declarations against upstream before the explicit seven-entry repair; generic whole-inventory regeneration was rejected and not executed. Ownership now passes11 packages and16 controls. This does not qualify ordinary runtime additions as security admission or refresh installed bindings.
+
+
+### Shared logical fact projection consistency — 2026-10-12
+
+[Retained sources and controls](evidence/security-fact-consistency-20261012/receipt.json) align general and scoped Weft record-fact simulation with UMF's known keyed projection rule. General simulation now refuses conflicting subject/inventory/resource values; scoped simulation permits consistent partial projections instead of requiring identical entire field maps. Missing policy/output fields still refuse on their own selected projection, and null/absence remain distinct. Borrowed normalized values avoid additional payload retention; comparisons retain the existing conservative budget.
+
+Astra independently verified scoped join/masked combinations and the common fold after correcting one obsolete partial-subject rejection assertion. Native/compiler admission remains closed: no source/refinement/native-snapshot proof or required backend acceptance case is supplied by this logical change. All132 required cases remain in scope.
+
+Full workspace validation passes626 tests across46 groups, zero failed/ignored/filtered. Strict ownership passes11 packages and the independent Cargo manifest boundary check passes11 modules/12 edges. No inventory regeneration was required; the new fold is private.

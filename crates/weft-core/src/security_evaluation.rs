@@ -91,6 +91,25 @@ fn fact(input:Fact,closure:&SecurityOntologyClosure,catalog:&Catalog,budget:&mut
  for (r,key) in b.keys.iter().zip(&components){if fields.get(r).is_some_and(|v|v.as_ref()!=Some(key)){return Err(fail());}}
  Ok(NormalFact{identity:Identity{target:input.type_ref,key_id:b.source["keyId"].as_str().ok_or_else(fail)?.into(),components},fields,absent})
 }
+#[derive(PartialEq,Eq)]
+enum KnownProjection<'a>{Present(&'a Option<ScalarLiteral>),Absent}
+// Agreement of known projections; absent is known, omitted fields are unknown.
+// Borrow normalized values/identities rather than retaining additional copies.
+fn check_projection_consistency<'a>(rows:impl IntoIterator<Item=&'a NormalFact>,budget:&mut Budget)->Result<()>{
+ let mut known:BTreeMap<&Identity,BTreeMap<&SecurityRef,KnownProjection<'a>>>=BTreeMap::new();
+ for row in rows{
+  budget.step()?;let fields=known.entry(&row.identity).or_default();
+  for (field,value) in row.fields.iter().map(|(field,value)|(field,KnownProjection::Present(value))).chain(row.absent.iter().map(|field|(field,KnownProjection::Absent))){
+   budget.step()?;
+   if let Some(prior)=fields.get(field){
+    for scalar in [prior,&value].into_iter().filter_map(|v|match v{KnownProjection::Present(Some(scalar))=>Some(scalar),_=>None}){budget.copy_scalar(scalar)?;}
+    if prior!=&value{return Err(fail());}
+   }
+   fields.insert(field,value);
+  }
+ }
+ Ok(())
+}
 struct Evaluator<'a>{catalog:&'a Catalog,closure:SecurityOntologyClosure,subject:NormalFact,facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>,coverage:BTreeMap<SecurityRef,BTreeSet<SecurityRef>>,context:BTreeMap<SecurityRef,Option<ScalarLiteral>>,budget:Budget}
 impl Evaluator<'_>{
  fn complete(&self,r:&SecurityRef)->Result<()>{if self.coverage.contains_key(r){Ok(())}else{Err(fail())}}
@@ -158,6 +177,7 @@ pub fn simulate_json(plan:&SecurityLogicalPlan,catalog:&Catalog,cut_json:&str,re
  let subject=fact(cut.subjects.into_iter().next().ok_or_else(fail)?,&closure,catalog,&mut budget)?;if subject.identity.target!=closure.subject{return Err(fail());}
  let mut facts:BTreeMap<SecurityRef,Vec<Arc<NormalFact>>>=BTreeMap::new();let mut identities=BTreeSet::new();for input in cut.facts{let row=fact(input,&closure,catalog,&mut budget)?;budget.copy_identity(&row.identity)?;if !identities.insert(row.identity.clone()){return Err(fail());}facts.entry(row.identity.target.clone()).or_default().push(Arc::new(row));}
  let resources=request.resources.into_iter().map(|r|fact(r,&closure,catalog,&mut budget)).collect::<Result<Vec<_>>>()?;
+ check_projection_consistency(std::iter::once(&subject).chain(facts.values().flatten().map(Arc::as_ref)).chain(resources.iter()),&mut budget)?;
  let mut coverage=BTreeMap::new();let mut seen=BTreeSet::new();for entry in cut.coverage{budget.step()?;let b=closure.types.get(&entry.type_ref).ok_or_else(fail)?;let fields:BTreeSet<_>=entry.fields.iter().cloned().collect();if !seen.insert(entry.type_ref.clone())||entry.fields.len()>4096||fields.len()!=entry.fields.len()||!fields.is_subset(&b.fields){return Err(fail());}if entry.complete{coverage.insert(entry.type_ref,fields);}}
  let mut context=BTreeMap::new();for entry in cut.context{if !closure.context.contains(&entry.field)||context.contains_key(&entry.field){return Err(fail());}context.insert(entry.field.clone(),budget.literal(catalog,&entry.field,&entry.value)?);}
  let targets=request.targets.unwrap_or_else(||resources.iter().map(|r|r.identity.target.clone()).collect::<BTreeSet<_>>().into_iter().collect());
@@ -237,6 +257,36 @@ mod tests{
   for case in corpus["cases"].as_array().unwrap(){let (catalog,plan)=plan_with_ontology(&case["policy"],case.get("ontology"));let result=simulate_json(&plan,&catalog,&case["cut"].to_string(),&case["request"].to_string());
    if case["expected"]["status"]=="refused"{assert!(result.is_err(),"{}",case["name"]);}else{let rows=result.unwrap_or_else(|e|panic!("{}: {:?}",case["name"],e));assert_eq!(rows.len(),case["expected"]["rowCount"].as_u64().unwrap() as usize,"{}",case["name"]);assert!(rows.iter().all(|r|r.decision==Decision::Permit));}
   }
+ }
+ #[test]
+ fn inventory_and_resource_known_values_must_agree(){
+  let corpus:Value=serde_json::from_str(include_str!("../tests/security-evaluation-oracle.json")).unwrap();let case=&corpus["cases"][0];let (catalog,plan)=plan(&case["policy"]);
+  let mut cut=case["cut"].clone();let request=case["request"].clone();let mut inventory=request["resources"][0].clone();cut["facts"].as_array_mut().unwrap().push(inventory.clone());
+  assert!(simulate_json(&plan,&catalog,&cut.to_string(),&request.to_string()).is_ok());
+  inventory["fields"].as_array_mut().unwrap().iter_mut().find(|f|f["field"]["elementId"]=="salary").unwrap()["value"]=serde_json::json!({"integerToken":"1e2"});
+  *cut["facts"].as_array_mut().unwrap().last_mut().unwrap()=inventory.clone();
+  assert!(simulate_json(&plan,&catalog,&cut.to_string(),&request.to_string()).is_ok());
+  inventory["fields"].as_array_mut().unwrap().iter_mut().find(|f|f["field"]["elementId"]=="salary").unwrap()["value"]=serde_json::json!({"integerToken":"200"});
+  *cut["facts"].as_array_mut().unwrap().last_mut().unwrap()=inventory;
+  assert_eq!(simulate_json(&plan,&catalog,&cut.to_string(),&request.to_string()).unwrap_err().code,"WFT-SECURITY-EVALUATION");
+ }
+ #[test]
+ fn projection_fold_distinguishes_partial_null_absent_and_conflicting_values(){
+  let reference=|element:&str|SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:element.into()};
+  let identity=||Identity{target:reference("Resource"),key_id:"pk".into(),components:vec![ScalarLiteral::String("r1".into())]};
+  let a=NormalFact{identity:identity(),fields:BTreeMap::from([(reference("salary"),Some(ScalarLiteral::Number(100.into())))]),absent:BTreeSet::new()};
+  let partial=NormalFact{identity:identity(),fields:BTreeMap::new(),absent:BTreeSet::new()};
+  let null=NormalFact{identity:identity(),fields:BTreeMap::from([(reference("salary"),None)]),absent:BTreeSet::new()};
+  let absent=NormalFact{identity:identity(),fields:BTreeMap::new(),absent:BTreeSet::from([reference("salary")])};
+  let budget=||Budget{steps:0,limit:100,payload:PayloadBudget::new("WFT-SECURITY-EVALUATION")};
+  assert!(check_projection_consistency([&a,&partial,&a],&mut budget()).is_ok());
+  for rows in [[&a,&null],[&null,&absent],[&a,&absent]]{assert!(check_projection_consistency(rows,&mut budget()).is_err());}
+  assert!(check_projection_consistency([&absent,&partial,&absent],&mut budget()).is_ok());
+  let subject_identity=Identity{target:reference("Staff"),key_id:"pk".into(),components:vec![ScalarLiteral::String("alice".into())]};
+  let subject=NormalFact{identity:subject_identity.clone(),fields:BTreeMap::from([(reference("department"),Some(ScalarLiteral::String("engineering".into())))]),absent:BTreeSet::new()};
+  let inventory=NormalFact{identity:subject_identity,fields:BTreeMap::from([(reference("department"),Some(ScalarLiteral::String("sales".into())))]),absent:BTreeSet::new()};
+  assert!(check_projection_consistency([&subject,&inventory],&mut budget()).is_err());
+
  }
  #[test]
  fn unknown_cut_members_and_key_field_mismatch_refuse(){
@@ -319,17 +369,9 @@ pub(crate) fn check_owner_rows(ctx:&crate::security_backend::SecurityBackendCont
    if &input.type_ref!=actual.inventory().target(){return Err(fail());}row.insert(scan,fact(input,&closure,catalog,&mut budget)?);
   }rows.push(row);
  }
+ // Repeated identities in bags/self-joins may carry consistent partial projections.
+ check_projection_consistency(std::iter::once(&subject).chain(facts.values().flatten().map(Arc::as_ref)).chain(rows.iter().flat_map(|r|r.values())),&mut budget)?;
  let mut evaluator=Evaluator{catalog,closure,subject,facts,coverage,context,budget};
- // Repeated resource identities are permitted for bags/self-joins, with one value assignment.
- let mut coherent:BTreeMap<&Identity,&NormalFact>=BTreeMap::new();
- for value in std::iter::once(&evaluator.subject).chain(evaluator.facts.values().flatten().map(Arc::as_ref)).chain(rows.iter().flat_map(|r|r.values())){
-  evaluator.budget.step()?;
-  if let Some(prior)=coherent.insert(&value.identity,value){
-   evaluator.budget.charge(prior.fields.len()+value.fields.len()+prior.absent.len()+value.absent.len())?;
-   for scalar in prior.fields.values().chain(value.fields.values()).flatten(){evaluator.budget.copy_scalar(scalar)?;}
-   if prior.fields!=value.fields||prior.absent!=value.absent{return Err(fail());}
-  }
- }
  // Eagerly preflight every actual rule, including empty result batches.
  for scan in ctx.requirements().scans(){
   evaluator.complete(scan.inventory().target())?;let resources:Vec<_>=rows.iter().map(|row|row.get(scan.inventory().scan()).ok_or_else(fail)).collect::<Result<_>>()?;

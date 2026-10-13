@@ -1,0 +1,222 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-core)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:834:8
+    |
+834 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 8 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.73s
+     Running tests/security_admission.rs (/private/tmp/weft-042-release-target-a/debug/deps/security_admission-c1f140b0590f993b)
+
+running 74 tests
+test correlated_fixture_has_exact_ontology_closure ... ok
+test correlated_declared_term_types_are_checked_without_activation ... ok
+test core08_source_custody_never_activates_uninterpreted_security ... ok
+test admitted_ir_retains_correlated_binding_and_qualified_domains ... ok
+test draft_graph_selector_is_shape_custody_only_and_expression_bounds_still_apply ... ok
+test count_cannot_escape_profile_target_admission_by_having_no_field_uses ... ok
+test actual_sql_protected_predicate_refuses_without_backend_factory ... ok
+test admitted_query_profile_never_activates_backend_before_native_lowering ... ok
+test draft_policy_checks_raw_correlated_terms_and_intrinsic_types ... ok
+test draft_constants_and_result_declarations_require_classified_required_operands ... ok
+test draft_dependencies_separate_stored_context_and_constant_channels ... ok
+test draft_disclosure_bridge_preserves_missing_masks_exact_conflicts_and_withheld ... ok
+test draft_source_custody_preserves_bytes_and_cannot_downgrade_into_admitted_packet ... ok
+test draft_source_custody_refuses_unknown_semantics_pin_mismatch_and_duplicate_keys ... ok
+test draft_raw_ir_retains_nested_witness_slots_ordered_carriers_and_source_custody ... ok
+test draft_composition_matches_independent_truth_corpus_without_record_plan_cast ... ok
+test draft_selected_ownership_and_single_document_raw_endpoints_are_not_inferred ... ok
+test draft_graph_selected_closure_requires_actual_direction_target_key_and_witness_owner ... ok
+test draft_selected_ontology_closes_raw_members_and_refuses_semantic_substitutions ... ok
+test draft_unselected_alternate_keys_retain_core_integrity_without_switching_identity ... ok
+test draft_graph_policy_endpoint_terms_do_not_invent_opaque_identity_or_attributes ... ok
+test duplicate_json_and_deep_expressions_refuse_before_lowering ... ok
+test invalid_source_digest_refuses_before_security_gate ... ok
+test ir_admission_cannot_skip_type_checking ... ok
+test opaque_native_archive_is_retained_without_authorizing ... ok
+test incomplete_classification_and_wrong_endpoint_type_refuse ... ok
+test missing_security_and_prior_core_pin_do_not_downgrade ... ok
+test execution_slots_bind_original_query_values_not_only_domains ... ok
+test nested_unknown_meaning_and_missing_document_closure_refuse ... ok
+test prior_transport_cannot_carry_security_or_core08 ... ok
+test duplicate_types_wrong_document_endpoint_arity_and_domain_refuse ... ok
+test rehashed_catalog_input_cannot_substitute_for_prepared_definitions ... ok
+test physical_parameter_domains_reject_reinterpretation_without_emission ... ok
+test historical_security_envelope_names_never_select_ordinary_composition ... ok
+test physical_plan_shape_is_bounded_and_never_emits_security_sql ... ok
+test query_slot_context_preserves_exact_source_bytes_across_equivalent_queries ... ok
+test original_boolean_primary_metadata_preserves_explicit_key_selection_and_refusal_gate ... ok
+test policy_variable_scope_identity_and_actions_refuse ... ok
+test result_declaration_refuses_original_with_unresolved_optional_presence ... ok
+test optional_original_cells_match_exact_fact_presence_without_release ... ok
+test actual_owner_event_coverage_refuses_each_omission_extra_and_source_context_replay ... ok
+test result_declaration_checks_ordered_original_domains_without_opening_lowering ... ok
+test result_declaration_cannot_skip_unresolved_aggregates_after_valid_fields ... ok
+test result_declaration_preserves_numeric_classes_even_with_withholding ... ok
+test owner_requirements_keep_output_occurrences_actions_and_complete_rule_objects ... ok
+test same_local_ids_in_distinct_documents_do_not_merge ... ok
+test result_declaration_requires_all_false_permit_transform_sources ... ok
+test combined_candidate_checks_borrow_original_registration_without_backend_dispatch ... ok
+test result_declaration_keeps_null_transform_distinct_from_protected_absence ... ok
+test security_manifest_closed_versions_bounds_and_references_refuse ... ok
+test security04_owner_refusals_never_dispatch_registration ... ok
+test security_manifest_positional_struct_carriers_refuse_before_registration ... ok
+test scalar_operand_domains_and_endpoint_roles_refuse ... ok
+test source_packet_cannot_be_reused_with_changed_model_bytes ... ok
+test active_withholding_hides_optional_value_null_and_absence ... ok
+test stale_query_profile_source_refuses_before_backend_factory ... ok
+test security04_callback_receives_actual_owner_objects_once_and_never_emits_partial_output ... ok
+test source_unknown_meaning_and_stale_ontology_refuse ... ok
+test manifest_status_and_candidate_option_never_upgrade_unqualified_lowering ... ok
+test unsupported_security_does_not_invoke_backend_factory ... ok
+test target_membership_and_literal_wrapper_refuse ... ok
+test unknown_core_domain_and_invalid_key_refuse ... ok
+test security04_requires_explicit_exact_registration_and_never_falls_back ... ok
+test unknown_length_unit_and_inapplicable_scalar_facet_refuse ... ok
+test separate_security_protocols_preserve_callback_and_blocked_response_boundaries ... ok
+test security_callback_malformed_diagnostics_still_produce_bounded_error_refusals ... ok
+test result_declaration_accepts_256_outcomes_and_refuses_257_without_truncation ... ok
+test obligation_graph_refuses_missing_cycles_ambiguity_and_exhaustion_without_emission ... ok
+test result_cells_require_exact_custody_width_tags_and_domains ... ok
+test simulated_result_selection_bounds_aggregate_mask_normalization ... ok
+test owner_scoped_fact_selection_evaluates_membership_and_original_values_without_release ... ok
+test evaluated_owner_truth_metadata_refuses_before_unbounded_identifier_expansion ... ok
+test simulated_result_selection_enforces_complete_scoped_folds_without_release ... ok
+test simulated_result_selection_bounds_aggregate_escaped_disclosure_copies ... ok
+
+test result: ok. 74 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.52s
+
