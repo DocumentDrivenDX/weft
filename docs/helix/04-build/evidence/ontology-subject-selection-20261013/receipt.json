@@ -20,5 +20,7 @@
     "nativePredicates": 8,
     "independentBinaryControls": 39
   },
-  "qualification": "UMF0.8 CoreKeyTuple3, Weft source mapping0.1; native PostgreSQL18.6 on merged runtime0.38 with separately qualified original0.37 mapping extension. Owner-only unit inspector callbacks are doubles; native fixtures invoke original Weft inspector. Callback code/runtime/built-ins remain trusted; ordinary Promise observation does not sandbox arbitrary callbacks or modified Promise constructors/species."
+  "qualification": "UMF0.8 CoreKeyTuple3, Weft source mapping0.1; native PostgreSQL18.6 on merged runtime0.38 with separately qualified original0.37 mapping extension. Owner-only unit inspector callbacks are doubles; native fixtures invoke original Weft inspector. Callback code/runtime/built-ins remain trusted; ordinary Promise observation does not sandbox arbitrary callbacks or modified Promise constructors/species.",
+  "mergedTrussOwnerMain": "dc346679",
+  "mergedValidation": "Host build and21 owner/wire tests pass after preserving3 concurrent owner commits; native13 groups replay final cross-realm guard."
 }
