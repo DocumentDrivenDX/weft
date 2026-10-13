@@ -78,6 +78,7 @@ pub struct Runtime {
     exact_numbers: bool,
     relationships: bool,
     pages: bool,
+    release_030: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -103,7 +104,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.pages {
+        if self.release_030 {
+            "0.4.1"
+        } else if self.pages {
             "0.4.0"
         } else if self.relationships {
             "0.3.0"
@@ -243,7 +246,9 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.pages {
+                != if self.release_030 {
+                    "truss-catalog-runtime/0.30-candidate"
+                } else if self.pages {
                     "truss-catalog-runtime/0.29-candidate"
                 } else if self.relationships {
                     "truss-catalog-runtime/0.28-candidate"
@@ -889,7 +894,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let pages = version.as_deref() == Some("0.4.0");
+    let release_030 = version.as_deref() == Some("0.4.1");
+    let pages = release_030 || version.as_deref() == Some("0.4.0");
     let relationships = pages || version.as_deref() == Some("0.3.0");
     let numeric = relationships || version.as_deref() == Some("0.2.0");
     let mut factory =
@@ -898,6 +904,7 @@ pub fn compile_json(request: &str) -> String {
                 exact_numbers: numeric,
                 relationships,
                 pages,
+                release_030,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()

@@ -40,7 +40,7 @@ inherited PG17 native evidence.
 
 The same feature also exports `compile_truss_runtime_json(request_json)` for the
 actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
-`0.4.0`, binding `truss-runtime-binding/0.4` and target
+`0.4.1`, binding `truss-runtime-binding/0.4` and target
 `truss-runtime-pg18.6/0.4`. Truss constructs the binding from its accepted source
 bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
 This separate adapter uses Weft's application-read frontend and typed IR, then
@@ -57,3 +57,7 @@ source uniqueness checked by Truss before filtering. Ungrouped count-summary is
 also supported. Multi-hop relationships, structured properties, non-string page
 keys and grouped summaries remain unsupported
 in that consumer. All new declarations retain Candidate status.
+
+The runtime compiler retains explicit release selection: backend0.4.1 admits
+Truss runtime0.30; backend0.4.0 remains the0.29 realization. Binding/target0.4
+and query semantics are unchanged by this release compatibility patch.

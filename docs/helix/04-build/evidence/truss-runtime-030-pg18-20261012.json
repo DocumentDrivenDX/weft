@@ -1,0 +1,13 @@
+{
+  "scope": "Explicit current release selection; query grammar/target/binding unchanged",
+  "backendVersion": "0.4.1",
+  "runtimeRelease": "truss-catalog-runtime/0.30-candidate",
+  "priorBackend": "0.4.0 remains .29 only",
+  "binding": "truss-runtime-binding/0.4",
+  "target": "truss-runtime-pg18.6/0.4",
+  "nativeExtensionSha256": "83c9692add502b71b20b19cd7a41070a5e116313ef92dd2323c7468a1b89214c",
+  "installedTrussWorkflowsPassed": 7,
+  "seconds": 39.056,
+  "review": "Astra Ultra source review",
+  "status": "Candidate"
+}
