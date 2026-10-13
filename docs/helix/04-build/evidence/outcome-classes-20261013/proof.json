@@ -1,0 +1,6 @@
+{
+  "z3": "4.15.4",
+  "scope": "three abstract normalized transform identities only; no SQL/literal normalization/result-contract/authentication implementation proof",
+  "classCorrespondenceCounterexample": "unsat",
+  "perRuleClassCounterexample": "[id1 = 0, id0 = 0]"
+}
