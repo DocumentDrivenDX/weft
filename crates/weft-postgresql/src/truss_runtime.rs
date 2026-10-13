@@ -82,6 +82,7 @@ pub struct Runtime {
     groups: bool,
     selected_metadata: bool,
     exact_scalars: bool,
+    retained_metadata: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -107,7 +108,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.exact_scalars {
+        if self.retained_metadata {
+            "0.4.5"
+        } else if self.exact_scalars {
             "0.4.4"
         } else if self.selected_metadata {
             "0.4.3"
@@ -262,7 +265,9 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.selected_metadata {
+                != if self.retained_metadata {
+                    "truss-catalog-runtime/0.32-candidate"
+                } else if self.selected_metadata {
                     "truss-catalog-runtime/0.31-candidate"
                 } else if self.release_030 {
                     "truss-catalog-runtime/0.30-candidate"
@@ -946,7 +951,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let exact_scalars = version.as_deref() == Some("0.4.4");
+    let retained_metadata = version.as_deref() == Some("0.4.5");
+    let exact_scalars = retained_metadata || version.as_deref() == Some("0.4.4");
     let selected_metadata = exact_scalars || version.as_deref() == Some("0.4.3");
     let groups = selected_metadata || version.as_deref() == Some("0.4.2");
     let release_030 = groups || version.as_deref() == Some("0.4.1");
@@ -963,6 +969,7 @@ pub fn compile_json(request: &str) -> String {
                 groups,
                 selected_metadata,
                 exact_scalars,
+                retained_metadata,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
