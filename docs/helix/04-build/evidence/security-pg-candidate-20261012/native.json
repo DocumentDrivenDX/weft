@@ -1,0 +1,190 @@
+{
+  "kind": "weft.postgresql-placeholder-native-lexical-evidence/0.1.0",
+  "generatedAt": "2026-10-13T00:23:20.804088+00:00",
+  "purpose": "Independent native parameter inventory and lexical boundary regression observations.",
+  "method": "PREPARE without supplied parameter types; inspect pg_prepared_statements; EXECUTE accepted cases using a text sentinel for each inferred parameter.",
+  "limits": [
+    "Finite lexical regression cases only; no application query equivalence or security lowering qualification.",
+    "Native preparation also parses statements; errors retain native SQLSTATE and message rather than being classified as all scanner errors.",
+    "Native parameter inventory reflects prepared parameter type array length; queries intentionally avoid gaps between used parameter positions.",
+    "The project profile independently forbids noncanonical and zero ordinals even where native PostgreSQL accepts leading zeros."
+  ],
+  "sourceReference": "https://github.com/postgres/postgres/blob/REL_18_STABLE/src/backend/parser/scan.l",
+  "cases": [
+    {
+      "id": "undeclared-ordinal",
+      "sql": "SELECT $1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "zero-ordinal",
+      "sql": "SELECT $0",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42P02",
+        "message": "there is no parameter $0",
+        "statementPosition": "29",
+        "context": null
+      }
+    },
+    {
+      "id": "noncanonical-ordinal",
+      "sql": "SELECT $01",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 1,
+        "parameterTypes": "{text}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "native-sentinel"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "ascii-junk",
+      "sql": "SELECT $1abc",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "trailing junk after parameter at or near \"$1abc\"",
+        "statementPosition": "29",
+        "context": null
+      }
+    },
+    {
+      "id": "unicode-junk",
+      "sql": "SELECT $1é",
+      "prepare": {
+        "status": "rejected",
+        "sqlstate": "42601",
+        "message": "trailing junk after parameter at or near \"$1é\"",
+        "statementPosition": "29",
+        "context": null
+      }
+    },
+    {
+      "id": "string-hides-slot",
+      "sql": "SELECT '$1'",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            "$1"
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "comment-hides-slot",
+      "sql": "SELECT 1 /* $1 */",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "dollar-string-hides-slot",
+      "sql": "SELECT $$ $1 $$",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            " $1 "
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    },
+    {
+      "id": "baseline",
+      "sql": "SELECT 1",
+      "prepare": {
+        "status": "accepted",
+        "parameterCount": 0,
+        "parameterTypes": "{}"
+      },
+      "execute": {
+        "status": "accepted",
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "columnNames": [
+          "?column?"
+        ]
+      }
+    }
+  ],
+  "engine": {
+    "name": "PostgreSQL",
+    "version": "18.6",
+    "serverVersionNum": 180006,
+    "versionDescription": "PostgreSQL 18.6 on aarch64-apple-darwin23.6.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit",
+    "binarySha256": "0bc46289c80eeb3402138f3bc9653b3422d4de98a24dd3d4f0682affcce6cc95",
+    "runtimeDistribution": "pgserver-pg18",
+    "runtimeDistributionVersion": "18.6.1",
+    "driverDistribution": "psycopg",
+    "driverVersion": "3.3.6"
+  },
+  "sessionSettings": {
+    "standard_conforming_strings": "on",
+    "backslash_quote": "safe_encoding",
+    "server_encoding": "UTF8",
+    "client_encoding": "UTF8"
+  },
+  "summary": {
+    "caseCount": 9,
+    "prepared": 6,
+    "refused": 3
+  }
+}

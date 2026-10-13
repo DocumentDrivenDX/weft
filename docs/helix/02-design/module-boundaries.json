@@ -1282,6 +1282,7 @@
             "struct:SecurityRegistry",
             "fn:register",
             "fn:check_candidate_declaration",
+            "fn:check_postgresql_candidate_declaration",
             "type:SecurityRegistryFactory"
           ],
           "pathReferences": []

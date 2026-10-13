@@ -1486,6 +1486,33 @@ fn combined_candidate_checks_borrow_original_registration_without_backend_dispat
   let mut registry=SecurityRegistry::default();registry.register(RegistrationFixture(manifest.to_string()))?;
   assert!(registry.check_candidate_declaration(ctx,&candidate,false).is_err());
   registry.check_candidate_declaration(ctx,&candidate,true)?;
+  assert!(registry.check_postgresql_candidate_declaration(ctx,&candidate,true).is_err());
+  let mut pg_manifest=manifest.clone();pg_manifest["targetProfiles"][0]["engine"]=json!("postgresql");pg_manifest["targetProfiles"][0]["engineVersion"]=json!("18.6");pg_manifest["targetProfiles"][0]["sessionSettings"]=json!({"standard_conforming_strings":"on","backslash_quote":"safe_encoding","server_encoding":"UTF8","client_encoding":"UTF8"});
+  let mut pg=SecurityRegistry::default();pg.register(RegistrationFixture(pg_manifest.to_string()))?;
+  pg.check_postgresql_candidate_declaration(ctx,&candidate,true)?;
+  for sql in ["SELECT $1","SELECT $0","SELECT $01","SELECT $1abc","SELECT $1é"] {
+   let mut bad=candidate.clone();bad.lowering.execution.sql=sql.into();
+   // Generic declaration shape cannot establish native ordinal coverage.
+   registry.check_candidate_declaration(ctx,&bad,true)?;
+   assert!(pg.check_postgresql_candidate_declaration(ctx,&bad,true).is_err(),"{sql}");
+  }
+  for sql in ["SELECT '$1'","SELECT 1 /* $1 */","SELECT $$ $1 $$"] {
+   let mut quoted=candidate.clone();quoted.lowering.execution.sql=sql.into();
+   pg.check_postgresql_candidate_declaration(ctx,&quoted,true)?;
+  }
+  for key in ["standard_conforming_strings","backslash_quote","server_encoding","client_encoding"] {
+   for missing in [true,false] {
+    let mut changed=pg_manifest.clone();if missing {changed["targetProfiles"][0]["sessionSettings"].as_object_mut().unwrap().remove(key);}else{changed["targetProfiles"][0]["sessionSettings"][key]=json!("unqualified");}
+    let mut other=SecurityRegistry::default();other.register(RegistrationFixture(changed.to_string()))?;
+    assert!(other.check_postgresql_candidate_declaration(ctx,&candidate,true).is_err(),"{key} missing={missing}");
+   }
+  }
+  for (engine,version) in [("fixture-only","18.6"),("postgresql","18.5"),("PostgreSQL","18.6")] {
+   let mut changed=pg_manifest.clone();changed["targetProfiles"][0]["engine"]=json!(engine);changed["targetProfiles"][0]["engineVersion"]=json!(version);
+   let mut other=SecurityRegistry::default();other.register(RegistrationFixture(changed.to_string()))?;
+   assert!(other.check_postgresql_candidate_declaration(ctx,&candidate,true).is_err());
+  }
+
   for mutation in 0..8{
    let mut bad=candidate.clone();match mutation{
     0=>bad.capability_ids.clear(),1=>bad.capability_ids.push("unknown".into()),2=>bad.lowering.execution.sql.clear(),

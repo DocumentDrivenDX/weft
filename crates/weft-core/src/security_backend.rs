@@ -181,6 +181,18 @@ impl SecurityRegistry {
         context.check_semantic_source_coverage(&candidate.obligations)?;
         Ok(())
     }
+    /// PostgreSQL18.6 declaration prerequisites, including actual execution ordinal
+    /// coverage. Exact registered target selection is required; no native semantic,
+    /// source/codec, deployment, dispatch or release admission is established.
+    pub fn check_postgresql_candidate_declaration(&self, context: &SecurityBackendContext<'_>, candidate: &SecurityLowering, allow_candidate: bool) -> Result<()> {
+        let declaration=self.select_declaration(context)?;
+        if declaration.target().engine!="postgresql" || declaration.target().engine_version!="18.6"
+            || declaration.target().session_settings!=serde_json::json!({"standard_conforming_strings":"on","backslash_quote":"safe_encoding","server_encoding":"UTF8","client_encoding":"UTF8"}) {
+            return Err(fail("Exact PostgreSQL18.6 target declaration required"));
+        }
+        self.check_candidate_declaration(context,candidate,allow_candidate)?;
+        context.check_postgresql_query_placeholders(&candidate.lowering)
+    }
     pub(crate) fn select_declaration(&self, context: &SecurityBackendContext<'_>) -> Result<RegisteredSecurityDeclaration<'_>> {
         self.declaration_for(context.backend_id,context.backend_version,context.target_profile)
     }

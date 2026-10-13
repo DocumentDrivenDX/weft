@@ -1,0 +1,34 @@
+{
+  "component": "Exact registered PostgreSQL18.6/four-setting lexical profile plus combined candidate declaration/ordinal checks. No native query equivalence, deployment admission, dispatch or release authority.",
+  "rust": "1.90.0 offline locked release",
+  "tests": {
+    "counts": [
+      258,
+      74,
+      3
+    ],
+    "total": 335,
+    "result": "pass"
+  },
+  "native": {
+    "engine": "PostgreSQL18.6",
+    "driver": "psycopg3.3.6",
+    "cases": 9,
+    "prepared": 6,
+    "nativeRefused": 3,
+    "qualification": "Native $01 accepted with one parameter; declaration requires canonical ordinal. Zero-slot strings/comments match native count0; SQL semantics/output matching unqualified."
+  },
+  "boundaries": "11packages and16controls pass",
+  "review": {
+    "model": "gpt-6-astra",
+    "reasoning": "ultra",
+    "result": "Initial missing lexer session-settings premises fixed; final no actionable findings. Readonly plus focused Rust tests and retained native report inspection."
+  },
+  "acceptanceScope": "CONTRACT-006/007 physical parameter prerequisites only. Original132 backend/semantic cases retained; zero case promotion. Complete result/dependency/source/authority/publication coverage remains missing.",
+  "sourceSha256": {
+    "crates/weft-core/src/security_backend.rs": "a53e09231f27267341c1779e0759b94d23bfe00469774656a0c3b8de1e01c2e2",
+    "crates/weft-core/src/security_physical_check.rs": "336d2e18ece334c031f429668dd762282c4efdc9bd805cae9d90abd84e11a6cd",
+    "crates/weft-core/tests/security_admission.rs": "f58ee47297a380d1978275ff4b47a21e2a24544068e7ec7b5e0b5ab796b0b98a",
+    "docs/helix/02-design/module-boundaries.json": "1a56d9aa15ac66cde2d79e1807bfbdc5779f020b184b014ebbd4c6f9ee78b552"
+  }
+}

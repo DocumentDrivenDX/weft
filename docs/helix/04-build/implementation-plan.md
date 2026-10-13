@@ -1243,3 +1243,10 @@ Current shared case inventory still has132 required cases and106 null commands:
 components do not implement those missing original runners. No backend case is
 promoted; the full goal and every required native/authority/publication duty
 remain active. Trace S04/S11/S12, CONTRACT-006/007 and shared STP-056/057.
+
+
+### PostgreSQL candidate physical prerequisite composition — 2026-10-12
+
+The explicit registry PostgreSQL candidate check now requires the selected immutable target to declare exact postgresql/18.6 with UTF8 client/server encoding, standard_conforming_strings=on and backslash_quote=safe_encoding. It composes existing candidate declaration correspondence with execution ordinal coverage, so a caller cannot omit that physical prerequisite by invoking the combined entrypoint. Generic declaration checks retain their existing dialect-neutral scope. Neither method admits SQL/query/result equivalence or calls backend lowering.
+
+[Evidence](evidence/security-pg-candidate-20261012/receipt.json) retains335 passing targeted Rust1.90.0 tests, nine original native PostgreSQL18.6 parameter-inventory controls, exact sources,11-package ownership and16 boundary controls, and Astra Ultra review. Initial missing session-setting premises were fixed with eight omission/mismatch controls. Native PostgreSQL accepts $01 while the selected declaration profile requires canonical ordinals. All132 required cases remain; no backend case is promoted. Complete physical/result/dependency/native-source coverage and authenticated authority/publication remain open.
