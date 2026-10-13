@@ -1,0 +1,147 @@
+{
+  "status": "passed",
+  "modulePath": "/private/tmp/subject-consumer-python/weft.so",
+  "moduleSha256": "1c00e384e7d20211809f10514943f5bcc8b8c32d6f3ab7f29c70f845cbfd6d7c",
+  "count": 22,
+  "results": [
+    {
+      "name": "original-subject",
+      "passed": true,
+      "status": "inspected",
+      "responseSha256": "474144eac55a1735f5b8fc66bafb8cd0c46347f9685630b970b23883cad705f5"
+    },
+    {
+      "name": "foreign-module",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "foreign-element",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "foreign-key",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "foreign-source",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "nested-extra",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "extra",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "duplicate-selection",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "stale-policyJson",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "71cbb12e5578353cc12abbcc3c70ad42b70ebf975050f160240324407f82b885"
+    },
+    {
+      "name": "stale-ontologyJson",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "71cbb12e5578353cc12abbcc3c70ad42b70ebf975050f160240324407f82b885"
+    },
+    {
+      "name": "stale-model",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "49b301dd0a2c8e7c809e2f3f9f5bd456817dc1d08c81728d3eca04ddbcbf75bf"
+    },
+    {
+      "name": "invalid-sql",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "2d816e502403eef11849cf107fab8aadd10446894d23c7484bd81142451010ef"
+    },
+    {
+      "name": "selection-size",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "malformed-request",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "80dbff682bffde7c9824454e0cd6f5a22044b00479d45c4aaf92de317e5b85db"
+    },
+    {
+      "name": "selection-empty",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "selection-null",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "selection-array",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "selection-exact-16384",
+      "passed": true,
+      "status": "inspected",
+      "responseSha256": "474144eac55a1735f5b8fc66bafb8cd0c46347f9685630b970b23883cad705f5"
+    },
+    {
+      "name": "selection-over-16384",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "a309f8f4a1f962da4f21f715aec8ea47b60210ae265c9346c3667c51b5d4df4f"
+    },
+    {
+      "name": "request-exact-4000000",
+      "passed": true,
+      "status": "inspected",
+      "responseSha256": "474144eac55a1735f5b8fc66bafb8cd0c46347f9685630b970b23883cad705f5"
+    },
+    {
+      "name": "request-over-4000000",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "80dbff682bffde7c9824454e0cd6f5a22044b00479d45c4aaf92de317e5b85db"
+    },
+    {
+      "name": "duplicate-request",
+      "passed": true,
+      "status": "refused",
+      "responseSha256": "80dbff682bffde7c9824454e0cd6f5a22044b00479d45c4aaf92de317e5b85db"
+    }
+  ],
+  "retainedBrowserCorrespondence": {
+    "count": 14,
+    "chromium": "151.0.7922.34",
+    "externalRequests": 0,
+    "artifactHashesVerified": true,
+    "rerunByReviewer": false
+  }
+}

@@ -134,6 +134,16 @@ pub fn inspect_security_mapping_subject_key(raw:&str,selection_json:&str)->Resul
     Ok(())
 }
 /// Preserve the separate API and fail-closed ordinary security compile boundary.
+/// Pure source correspondence response; never a protected execution credential.
+pub fn inspect_security_mapping_subject_key_json(raw: &str, selection_json: &str) -> String {
+    match inspect_security_mapping_subject_key(raw, selection_json) {
+        Ok(()) => json!({"interfaceVersion":"weft-security-subject-selection/0.1.0",
+            "status":"inspected","securityReady":false}).to_string(),
+        Err(diagnostic) => json!({"interfaceVersion":"weft-security-subject-selection/0.1.0",
+            "status":"refused","securityReady":false,"diagnostics":[diagnostic]}).to_string(),
+    }
+}
+
 /// Input strings retain original sources; successful output is a mapping input,
 /// not authenticated issuance, native SQL or a credential.
 pub fn prepare_security_mapping_json(raw: &str) -> String {
@@ -194,12 +204,18 @@ mod tests {
         let selection=json!({"sourceSha256":request["modules"][0]["pin"]["sha256"],
             "identity":{"module":subject["moduleId"],"element":subject["elementId"],"key":entity["keyId"]}});
         assert!(inspect_security_mapping_subject_key(&request.to_string(),&selection.to_string()).is_ok());
+        let response:Value=serde_json::from_str(&inspect_security_mapping_subject_key_json(&request.to_string(),&selection.to_string())).unwrap();
+        assert_eq!(response,json!({"interfaceVersion":"weft-security-subject-selection/0.1.0","status":"inspected","securityReady":false}));
         for member in ["module","element","key"] {
             let mut changed=selection.clone();changed["identity"][member]=json!("foreign");
             assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
         }
         let mut changed=selection.clone();changed["sourceSha256"]=json!("0".repeat(64));
         assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
+        let response:Value=serde_json::from_str(&inspect_security_mapping_subject_key_json(&request.to_string(),&changed.to_string())).unwrap();
+        assert_eq!(response["status"],"refused");assert_eq!(response["securityReady"],false);
+        assert_eq!(response.as_object().unwrap().len(),4);
+        assert_eq!(response["diagnostics"][0]["code"],"WFT-SECURITY-SUBJECT-KEY");
         let mut changed=selection.clone();changed["identity"]["extra"]=json!(true);
         assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
         let mut changed=request.clone();changed["sql"]=json!("SELECT absent FROM Resource");

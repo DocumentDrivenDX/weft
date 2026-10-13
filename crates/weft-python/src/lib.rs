@@ -1,4 +1,9 @@
 use pyo3::prelude::*;
+/// Original ontology Subject/Record/Key source selection only; no authority.
+#[pyfunction]
+fn inspect_security_mapping_subject_key_json(request: &str, selection: &str) -> String {
+    weft_runtime::inspect_security_mapping_subject_key_json(request, selection)
+}
 #[pyfunction]
 fn prepare_security_mapping_json(request: &str) -> String {
     weft_runtime::prepare_security_mapping_json(request)
@@ -26,6 +31,7 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 }
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(inspect_security_mapping_subject_key_json, m)?)?;
     m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]

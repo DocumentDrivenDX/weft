@@ -1,0 +1,26 @@
+{
+  "scope": "Original source selection inspection only, not policy authority/native admission/protected release",
+  "sourceSha256": {
+    "crates/weft-core/src/security_mapping_transport.rs": "713c4733ce967864353f903ad97a9fa2c97b54a4b42d44ef27731611ee382f46",
+    "crates/weft-runtime/src/lib.rs": "cd486a208937e9fb58997d9b19cc4bcca85771d84001b194747465bc60d4a1eb",
+    "crates/weft-python/src/lib.rs": "00127cebcb0180f1fcce8bfed531b7fd5c8031dd1abad73db377ea9fcc8719bf",
+    "crates/weft-wasm/src/lib.rs": "46d822d610e4ea93d1b78f3e8399bda6741958c1ae46bf59b1312b8c3f73fc29",
+    "docs/helix/02-design/module-boundaries.json": "52496c0060451b8ebe523fa880b033b0bd9976c9d3a45dfae57aa931c1ed9ed2"
+  },
+  "checks": {
+    "coreTransport": 7,
+    "boundaries": 16,
+    "actualPythonExtension": 14,
+    "actualChromiumWasm": 14
+  },
+  "responseCorrespondence": "All14 complete browser response strings match original Python extension byte-for-byte",
+  "builds": "Rust1.90.0, PyO3 abi3-py39 macOS arm64 dynamic_lookup, wasm32-unknown-unknown wasm-bindgen web; bounded original mapping0.1.0/Core0.8 sources",
+  "promotedBackendCases": 0,
+  "remainingRequiredCases": 132,
+  "capture": "Pure source checks only. Native here denotes an imported Python machine-code extension, not native database qualification. Evidence scripts retain exact local paths. Core final test assertions postdate binding builds but production implementation is unchanged.",
+  "acceptanceTraceability": {
+    "US-056-AC1": "Original subject model/key correspondence prerequisite for flat PostgreSQL; does not prove ordinary-role protected row results",
+    "US-056-AC2": "Same original subject correspondence prerequisite for Truss graph; does not prove graph native admission",
+    "US-056-AC10": "Exact original source/profile correspondence prerequisite; no current held authority or semantic-to-native release refinement"
+  }
+}

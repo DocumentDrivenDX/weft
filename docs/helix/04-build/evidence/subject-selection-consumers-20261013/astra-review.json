@@ -1,0 +1,140 @@
+{
+  "review": "subject-selection-consumer-transport",
+  "reviewer": "independent Astra Ultra agent",
+  "reviewedAtUtc": "2026-10-13T12:56:43.395001+00:00",
+  "status": "no_actionable_findings_in_reviewed_scope",
+  "repository": "/private/tmp/weft-security-main-integration",
+  "head": "e844cf61a0c9f8672acef52d6ff97c732c01fe7e",
+  "sourcePins": [
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-core/src/security_mapping_transport.rs",
+      "sha256": "713c4733ce967864353f903ad97a9fa2c97b54a4b42d44ef27731611ee382f46",
+      "bytes": 21010
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-runtime/src/lib.rs",
+      "sha256": "cd486a208937e9fb58997d9b19cc4bcca85771d84001b194747465bc60d4a1eb",
+      "bytes": 22548
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-python/src/lib.rs",
+      "sha256": "00127cebcb0180f1fcce8bfed531b7fd5c8031dd1abad73db377ea9fcc8719bf",
+      "bytes": 3024
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-wasm/src/lib.rs",
+      "sha256": "46d822d610e4ea93d1b78f3e8399bda6741958c1ae46bf59b1312b8c3f73fc29",
+      "bytes": 1424
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/docs/helix/02-design/module-boundaries.json",
+      "sha256": "52496c0060451b8ebe523fa880b033b0bd9976c9d3a45dfae57aa931c1ed9ed2",
+      "bytes": 107407
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md",
+      "sha256": "c3bc768e204ee555eb213482d0aa36eaeaa256f39ab4f8e8e47608f31719438c",
+      "bytes": 113995
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-core/src/error.rs",
+      "sha256": "aef90fed252a4edb716b3ba3c06cec8ecbb6bf711d30c5640bf660006af105aa",
+      "bytes": 780
+    }
+  ],
+  "independentControls": {
+    "count": 22,
+    "allPassed": true,
+    "exactImportedModulePathVerified": true,
+    "results": {
+      "path": "/private/tmp/subject-consumer-review-20261013/results.json",
+      "sha256": "a3b7c9fbe03208687d57a1d66864daf2a5492ce62395cc72de00b0af858153f6",
+      "bytes": 4497
+    },
+    "runner": {
+      "path": "/private/tmp/subject-consumer-review-20261013/check.py",
+      "sha256": "c554dad3c4b659aa3d289f941242ceba0e2e2ce4a49de9faa1b7d03d38086e75",
+      "bytes": 2663
+    },
+    "scope": "Original loaded Python extension responses, closed envelopes, original owner refusal delegation, exact/over16,384 selection and4,000,000 request bytes, malformed/duplicate structures."
+  },
+  "retainedBrowserEvidence": {
+    "independentBrowserRerun": false,
+    "responsesComparedByteForByte": 14,
+    "artifactHashesVerifiedAgainstDisk": true,
+    "chromium": "151.0.7922.34",
+    "externalRequests": 0,
+    "receipt": {
+      "path": "/private/tmp/subject-consumer-browser.json",
+      "sha256": "02435d622882e4ac705bac1f4df342a26e58625bf12a2b0e997dd2598008df87",
+      "bytes": 4978
+    }
+  },
+  "parentEvidence": [
+    {
+      "path": "/private/tmp/subject-consumer-python.json",
+      "sha256": "74f944a6eb4b3916aa1f48324120741ab2d4ef0f42a2872d5d9008f598b09947",
+      "bytes": 216368
+    },
+    {
+      "path": "/private/tmp/subject-consumer-check.py",
+      "sha256": "254ffd971db8f6dfabcc3369521763e8eb8efd15c93ce8f3ec6c84f2640e8a7d",
+      "bytes": 2431
+    },
+    {
+      "path": "/private/tmp/subject-consumer-browser.ts",
+      "sha256": "9670188a2bbff49e805938813547fb390f39ddd88c2580919c0d5db38a1e3509",
+      "bytes": 2045
+    },
+    {
+      "path": "/private/tmp/subject-consumer-core.log",
+      "sha256": "c3015227745547b07e833ea6f7b330ea5cee0c8ca3de17b1bdda006dbe0cea09",
+      "bytes": 11487
+    },
+    {
+      "path": "/private/tmp/subject-consumer-boundaries.log",
+      "sha256": "9d22c75aae6d251dc85e127c7aa1fa7272b110c2b7d6aff69e031c6e1761d3e7",
+      "bytes": 1878
+    },
+    {
+      "path": "/private/tmp/subject-consumer-python-build.log",
+      "sha256": "ad4cb64e009608ec088343f63d41c15a34c689fe83f632a7421ba759357659da",
+      "bytes": 5978
+    },
+    {
+      "path": "/private/tmp/subject-consumer-wasm-build.log",
+      "sha256": "675dcf77d9e8d09f032390166d6880d5cecb9cb8e8f5a52870d3b800730bc420",
+      "bytes": 9051
+    }
+  ],
+  "binaryPins": [
+    {
+      "path": "/private/tmp/subject-consumer-python/weft.so",
+      "sha256": "1c00e384e7d20211809f10514943f5bcc8b8c32d6f3ab7f29c70f845cbfd6d7c",
+      "bytes": 14364352
+    },
+    {
+      "path": "/private/tmp/subject-consumer-wasm/weft_wasm.js",
+      "sha256": "98351e4f54ba24381e47658af029eeb4b356c02270e75bd89afd88741583ade8",
+      "bytes": 8041
+    },
+    {
+      "path": "/private/tmp/subject-consumer-wasm/weft_wasm_bg.wasm",
+      "sha256": "8c458986c3cbda48cd68baab7cf888cc1a236402b559e1e6b4c995a1788dbe54",
+      "bytes": 13281875
+    }
+  ],
+  "reviewConclusion": "Thin wrappers call the same existing source-bound inspector. JSON reports inspected/refused and securityReady false; no alternative model interpretation or authority payload is introduced. Exact declared public inventory additions match owner crates. No remaining actionable correctness or transport defect found.",
+  "scopeLimitations": [
+    "Arguments are the two declared UTF-8 string transports; language-level type conversion errors are outside the JSON result protocol.",
+    "Configured source/profile/owner authenticity remains a premise. Inspected is source correspondence, not authenticated principal issuance, key existence, current authority, native SQL admission or protected release.",
+    "Input bounds do not establish total transport allocation, heap, CPU or database bounds.",
+    "No browser rerun, database mutation, runtime/compiler build, generic formal proof or implementation edit by this reviewer.",
+    "No backend acceptance case promotion."
+  ],
+  "findings": [],
+  "finalTestOnlyRefresh": {
+    "sourceChanges": [],
+    "note": "Final exact inspected/refused envelope assertions in existing core subject test reviewed; wrapper implementation unchanged. Independent extension22 and retained browser14 evidence remain applicable."
+  }
+}

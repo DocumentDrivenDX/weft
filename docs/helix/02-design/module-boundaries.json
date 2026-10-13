@@ -1559,6 +1559,7 @@
             "fn:inspect_security_mapping_result_cells",
             "fn:inspect_security_mapping_result_facts",
             "fn:inspect_security_mapping_subject_key",
+            "fn:inspect_security_mapping_subject_key_json",
             "fn:prepare_security_mapping_json"
           ],
           "pathReferences": []
@@ -2791,6 +2792,7 @@
         {
           "path": "crates/weft-runtime/src/lib.rs",
           "publicDeclarations": [
+            "fn:inspect_security_mapping_subject_key_json",
             "fn:prepare_security_mapping_json",
             "mod:paths_keys",
             "mod:paths",
@@ -2984,6 +2986,7 @@
         {
           "path": "crates/weft-wasm/src/lib.rs",
           "publicDeclarations": [
+            "fn:inspect_security_mapping_subject_key_json",
             "fn:prepare_security_mapping_json",
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",

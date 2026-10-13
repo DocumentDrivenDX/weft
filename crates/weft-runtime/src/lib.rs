@@ -1,4 +1,8 @@
 //! Pure build-time composition. Hosts explicitly select trusted adapter versions.
+/// Original ontology Subject/Record/Key source selection only; no authority.
+pub fn inspect_security_mapping_subject_key_json(request: &str, selection: &str) -> String {
+    weft_core::security_mapping_transport::inspect_security_mapping_subject_key_json(request, selection)
+}
 /// Source-bound logical mapping input only; no backend registration or permission.
 pub fn prepare_security_mapping_json(request: &str) -> String {
     weft_core::security_mapping_transport::prepare_security_mapping_json(request)

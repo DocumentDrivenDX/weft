@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "chromium": "151.0.7922.34",
+  "cases": [
+    {
+      "id": "original-subject",
+      "response": "{\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"inspected\"}"
+    },
+    {
+      "id": "foreign-module",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "foreign-element",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "foreign-key",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "foreign-source",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "nested-extra",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "extra",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "duplicate-selection",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "stale-policyJson",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-QUERY-PROFILE\",\"message\":\"Security query profile admission refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "stale-ontologyJson",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-QUERY-PROFILE\",\"message\":\"Security query profile admission refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "stale-model",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-PIN\",\"message\":\"Owning document digest mismatch\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "invalid-sql",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-UNSUPPORTED\",\"message\":\"Expected dialect punctuation\",\"phase\":\"parse\",\"severity\":\"error\",\"sourceSpan\":{\"end\":19,\"start\":15}}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "selection-size",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-SUBJECT-KEY\",\"message\":\"Original ontology subject key selection refused\",\"phase\":\"model\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    },
+    {
+      "id": "malformed-request",
+      "response": "{\"diagnostics\":[{\"code\":\"WFT-SECURITY-MAPPING-TRANSPORT\",\"message\":\"Security mapping transport refused\",\"phase\":\"input\",\"severity\":\"error\"}],\"interfaceVersion\":\"weft-security-subject-selection/0.1.0\",\"securityReady\":false,\"status\":\"refused\"}"
+    }
+  ],
+  "artifactHashes": {
+    "weft_wasm.js": "98351e4f54ba24381e47658af029eeb4b356c02270e75bd89afd88741583ade8",
+    "weft_wasm_bg.wasm": "8c458986c3cbda48cd68baab7cf888cc1a236402b559e1e6b4c995a1788dbe54"
+  },
+  "externalRequests": 0,
+  "scope": "Actual browser WASM source inspector;14 byte-identical Python responses; no database/native admission"
+}

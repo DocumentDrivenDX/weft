@@ -1,3 +1,8 @@
+/// Original ontology Subject/Record/Key source selection only; no authority.
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn inspect_security_mapping_subject_key_json(request: &str, selection: &str) -> String {
+    weft_runtime::inspect_security_mapping_subject_key_json(request, selection)
+}
 /// Pure logical preparation; never native execution admission.
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn prepare_security_mapping_json(request: &str) -> String {
