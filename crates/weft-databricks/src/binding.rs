@@ -61,6 +61,8 @@ pub struct Record {
     pub source_system: String,
     pub type_id: String,
     pub schema_revision: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub compatible_schema_revisions: Vec<String>,
     pub properties: Vec<Property>,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -253,6 +255,14 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding>
     if binding.records.is_empty() || binding.records.len() > 4096 {
         return Err(fail("Missing or excessive record mappings"));
     }
+    if let Some(records) = value["records"].as_array() {
+        for record in records {
+            if let Some(revisions) = record.get("compatibleSchemaRevisions") {
+                let list = revisions.as_array().ok_or_else(|| fail("Compatible revisions must be an array"))?;
+                if list.is_empty() { return Err(fail("Compatible revisions must be nonempty")); }
+            }
+        }
+    }
     let mut records = BTreeSet::new();
     for record in &binding.records {
         if !records.insert(identity_key(&record.logical))
@@ -263,6 +273,15 @@ fn admit_mode(catalog:&Catalog,value:&Value,native_null03:bool)->Result<Binding>
             || record.properties.len() > 4096
         {
             return Err(fail("Invalid or duplicate original record mapping"));
+        }
+        if !record.compatible_schema_revisions.is_empty() {
+            let revisions = &record.compatible_schema_revisions;
+            let mut unique = BTreeSet::new();
+            if revisions.len() > 32 || !revisions.iter().all(|r| text(r) && r.len() <= 256 && unique.insert(r))
+                || !revisions.contains(&record.schema_revision)
+                || !matches!(record.kind, RecordKind::Object | RecordKind::Edge) {
+                return Err(fail("Invalid compatible schema revisions"));
+            }
         }
         let authored = catalog
             .record_by_identity(&record.logical)

@@ -17,6 +17,7 @@ pub mod paths;
         feature = "truss-postgresql-candidate",
         feature = "truss-postgresql-qualified"
     ),
+    all(feature = "ashlar-databricks-compatible-revisions-candidate", any(feature = "ashlar-databricks-candidate", feature = "ashlar-databricks-qualified", feature="ashlar-databricks-arithmetic", feature="ashlar-databricks-count-having", feature="ashlar-databricks-count-distinct", feature="ashlar-databricks-left-join", feature="ashlar-databricks-mathematical-integer", feature="ashlar-databricks-paths", feature="ashlar-databricks-paths-keys", feature="ashlar-databricks-implicit-arithmetic")),
     all(
         feature = "ashlar-databricks-candidate",
         feature = "ashlar-databricks-qualified"
@@ -47,6 +48,12 @@ pub fn compile_json(request: &str) -> String {
         registry
             .register(weft_databricks::candidate::Candidate)
             .expect("build-time candidate backend registration must be unique");
+        registry
+    };
+    #[cfg(feature = "ashlar-databricks-compatible-revisions-candidate")]
+    let registry = {
+        let mut registry = registry;
+        registry.register(weft_databricks::compatible_profile::CompatibleRevisions).expect("explicit compatible revision registration must be unique");
         registry
     };
     #[cfg(feature = "truss-postgresql-qualified")]

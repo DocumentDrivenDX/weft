@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-13",
+  "baseCommit": "5d46d297d3b251155686e43a543fce99cbf59875",
+  "backendVersion": "0.1.1-compatible-revisions-candidate",
+  "targetProfile": "dbsql-compatible-revisions-candidate",
+  "compilerTests": {
+    "passed": 3,
+    "filtered": 55
+  },
+  "bindingTests": {
+    "passed": 7
+  },
+  "runtimeTests": {
+    "passed": 1
+  },
+  "checks": [
+    "native Python feature including current package version 0.4.3",
+    "WASM crate feature on native compile target (not browser/native-WASM execution)",
+    "conflicting compatible/qualified runtime features refuse compilation"
+  ],
+  "sourceSha256": {
+    "crates/weft-databricks/src/binding.rs": "86681404537d89286befc8e69b132762d751fb31b931cfae1a97016dd8e821b7",
+    "crates/weft-databricks/src/candidate.rs": "99d1ff6797669bdb9b96e7ebbd8e438d353f52c613c2b6801bf917b32741de33",
+    "crates/weft-databricks/src/lib.rs": "6f8d5385f8e41c46a32991204ae96bc39235fdd875a771146459335b90b83123",
+    "crates/weft-databricks/src/compatible_profile.rs": "1d0d4041f1d24890b7531898d64d44a72bb062d1f97abf8622239227930a6db7",
+    "crates/weft-databricks/COMPATIBLE-REVISIONS.md": "6b51fc4e16d06a89436bea69167d53fa589c29690f0f51be43ef58626d8ca32b",
+    "crates/weft-runtime/Cargo.toml": "47e349a40835149804a27f81e6c7df3fb08aafcb97645c0a2ba40666d3dc94da",
+    "crates/weft-runtime/src/lib.rs": "4d8fae1e4ec63ea2492843971ae4d24cd1da7788a57a50cd0be4087cef331b5a",
+    "crates/weft-runtime/tests/compatible_revisions.rs": "2a345a88c75343f4b3ddb77592487449cfe7447212a4334af1f221e8366958db",
+    "crates/weft-python/Cargo.toml": "93499c0834bef7c2701bd568b336641951e305a197a8e4420314a79a19501a09",
+    "crates/weft-wasm/Cargo.toml": "461ff977e5d131c14386c2236b25adb53e71d051d3ed17c4865e09e1694de24a",
+    "tests/ashlar-databricks/compiler.rs": "3ef8f539ea3c9a1598739808ccb5024cbe47b629c3cd5cee47044882cc626430"
+  },
+  "qualification": "Source-distributed candidate only; no new native Databricks qualification or published package. Legacy omission retains SQL/parameters/columns/obligations; old Candidate, NativeReview and Qualified refuse explicit revision selections."
+}

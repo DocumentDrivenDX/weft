@@ -1012,3 +1012,55 @@ fn object_enum_carriers_cannot_substitute_native_record_kinds(){
         }
     }
 }
+
+#[test]
+fn compatible_revisions_legacy_guard_is_unchanged() {
+    let response = run_compatible(&common::request("SELECT c.name FROM Customer c"));
+    assert_eq!(response["status"], "compiled");
+    let checks = response["obligations"].to_string();
+    assert!(checks.contains("schema_revision COLLATE UTF8_BINARY"));
+    assert!(!checks.contains("COLLATE UTF8_BINARY) OR (r.schema_revision"));
+    let legacy=run(&common::request("SELECT c.name FROM Customer c"));
+    for member in ["sql","parameters","columns","obligations"] {assert_eq!(response[member],legacy[member],"{member}");}
+}
+#[test]
+fn compatible_revisions_are_exact_bounded_parameterized_selection() {
+    let mut request = common::request("SELECT c.name FROM Customer c");
+    let mut binding: Value = serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();
+    binding["records"][0]["compatibleSchemaRevisions"] = json!(["fixture-schema-1", "fixture-schema-2"]);
+    let encode = |request: &mut Value, binding: &Value| {
+        let raw = binding.to_string(); request["target"]["bindingSha256"] = json!(sha256(raw.as_bytes()));
+        request["target"]["bindingJson"] = json!(raw);
+    };
+    encode(&mut request, &binding);
+    let response = run_compatible(&request);
+    assert_eq!(response["status"], "compiled", "{response}");
+    let checks = response["obligations"].to_string();
+    assert!(checks.contains("COLLATE UTF8_BINARY) OR (r.schema_revision"));
+    assert!(response.to_string().contains("fixture-schema-1") && response.to_string().contains("fixture-schema-2"));
+    assert!(!checks.contains("fixture-schema-3"));
+    for invalid in [json!([]), json!(["fixture-schema-2"]), json!(["fixture-schema-1","fixture-schema-1"]), json!(["fixture-schema-1",""]), Value::Null, json!(vec!["fixture-schema-1";33]), json!(["fixture-schema-1", "x".repeat(257)])] {
+        binding["records"][0]["compatibleSchemaRevisions"] = invalid;
+        encode(&mut request, &binding);
+        assert_ne!(run_compatible(&request)["status"], "compiled");
+    }
+}
+
+fn run_compatible(request:&Value)->Value {
+ let mut request=request.clone();request["target"]["backendVersion"]=json!(weft_databricks::compatible_profile::VERSION);request["target"]["targetProfile"]=json!(weft_databricks::compatible_profile::PROFILE);
+ let mut registry=Registry::default();registry.register(weft_databricks::compatible_profile::CompatibleRevisions).unwrap();
+ serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap()
+}
+#[test]
+fn compatible_revisions_historical_registrations_refuse() {
+ use weft_databricks::{native_profile::NativeReview,qualified_profile::Qualified};
+ let mut request=common::request("SELECT c.name FROM Customer c");
+ let mut b:Value=serde_json::from_str(request["target"]["bindingJson"].as_str().unwrap()).unwrap();b["records"][0]["compatibleSchemaRevisions"]=json!(["fixture-schema-1","fixture-schema-2"]);
+ let raw=b.to_string();request["target"]["bindingJson"]=json!(raw);request["target"]["bindingSha256"]=json!(sha256(raw.as_bytes()));
+ let mut registries=Vec::new();let mut registry=Registry::default();registry.register(Candidate).unwrap();registries.push((registry,"0.1.0-candidate","dbsql-candidate"));
+ let mut registry=Registry::default();registry.register(NativeReview).unwrap();registries.push((registry,weft_databricks::native_profile::VERSION,weft_databricks::native_profile::PROFILE));
+ let mut registry=Registry::default();registry.register(Qualified).unwrap();registries.push((registry,weft_databricks::qualified_profile::VERSION,weft_databricks::qualified_profile::PROFILE));
+ for (registry,version,profile) in registries {request["target"]["backendVersion"]=json!(version);request["target"]["targetProfile"]=json!(profile);let response:Value=serde_json::from_str(&Compiler{registry}.compile_json(&request.to_string())).unwrap();assert_eq!(response["status"],"blocked","{response}");assert!(response.get("sql").is_none());}
+ let response=run_compatible(&request);assert_eq!(response["status"],"compiled","{response}");assert!(response.to_string().contains("binding.compatibleSchemaRevisions"));assert!(response["obligations"].to_string().contains("ashlar.compatibleSchemaRevisions"));
+ request["options"]["allowCandidate"]=json!(false);let response=run_compatible(&request);assert_eq!(response["status"],"blocked","{response}");
+}
