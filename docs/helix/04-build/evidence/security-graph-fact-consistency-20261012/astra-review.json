@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "weft-core",
+    "--lib",
+    "security_candidate_incidence",
+    "--offline"
+  ],
+  "exitCode": 0,
+  "sourceSha256Before": "25ad0e35f4b349dbd0d02e5c25ab92c75a23e5d11facf52f2c68ac5b302cb4f6",
+  "sourceSha256After": "25ad0e35f4b349dbd0d02e5c25ab92c75a23e5d11facf52f2c68ac5b302cb4f6",
+  "log": "/private/tmp/weft-incidence-consistency-astra-final-yptk__qn/tests.log"
+}

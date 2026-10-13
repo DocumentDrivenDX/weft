@@ -1,0 +1,122 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: method `terminal_key` is never used
+   --> crates/weft-core/src/path_ir.rs:122:12
+    |
+ 54 | impl PathRead {
+    | ------------- method in this implementation
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: `weft-core` (lib test) generated 3 warnings (run `cargo fix --lib -p weft-core --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.18s
+     Running unittests src/lib.rs (/private/tmp/weft-042-release-target-a/debug/deps/weft_core-29a6c4b4d0a5a952)
+
+running 22 tests
+test security_candidate_incidence::tests::empty_unused_populations_require_declared_supported_relationships ... ok
+test security_candidate_incidence::tests::equal_numeric_carriers_retain_distinct_domains_and_catalog_custody ... ok
+test security_candidate_incidence::tests::empty_graph_quantifier_cannot_hide_unsupported_nested_profiles ... ok
+test security_candidate_incidence::tests::fact_budget_accumulates_across_coherent_fields_in_both_orders ... ok
+test security_candidate_incidence::tests::aggregate_normalized_storage_is_bounded_before_retention ... ok
+test security_candidate_incidence::tests::matching_first_bundle_cannot_hide_later_source_substitution ... ok
+test security_candidate_incidence::tests::entity_identity_preserves_key_order_exact_numbers_and_domains ... ok
+test security_candidate_incidence::tests::raw_composite_endpoint_retains_order_domain_and_source_custody ... ok
+test security_candidate_incidence::tests::identity_payload_budgets_and_unused_binding_checks_are_isolated ... ok
+test security_candidate_incidence::tests::graph_ir_budgets_are_charged_after_a_first_matching_witness ... ok
+test security_candidate_incidence::tests::bundle_requires_complete_distinct_role_specific_endpoints ... ok
+test security_candidate_incidence::tests::original_graph_ir_preserves_nested_outer_witness_correlation ... ok
+test security_candidate_incidence::tests::candidate_subject_resource_projections_agree_without_filling_unknown_fields ... ok
+test security_candidate_incidence::tests::graph_rule_matches_subject_and_resource_exact_logical_identities ... ok
+test security_candidate_incidence::tests::raw_witness_projects_endpoints_from_one_source_bound_record ... ok
+test security_candidate_incidence::tests::raw_population_admission_budgets_identity_and_all_sources ... ok
+test security_candidate_incidence::tests::existential_simulation_keeps_both_endpoints_on_the_same_bundle ... ok
+test security_candidate_incidence::tests::authored_abac_graph_rule_uses_exact_resource_fields_and_subject_identity ... ok
+test security_candidate_incidence::tests::stored_and_context_same_field_are_independent_channels ... ok
+test security_candidate_incidence::tests::mixed_raw_ownership_and_graph_membership_keep_project_correlation ... ok
+test security_candidate_incidence::tests::record_backed_graph_fields_stay_with_their_edge_endpoints ... ok
+test security_candidate_incidence::tests::existential_simulation_matches_independent_finite_edge_oracle ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 240 filtered out; finished in 1.15s
+

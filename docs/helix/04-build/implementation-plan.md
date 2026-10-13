@@ -1318,3 +1318,10 @@ Rust/Python build; original backend0.4.3 consumers remain usable. Astra Ultra
 reviewed the plan, implementation and merge. [Receipt](evidence/truss-exact-projections-20261012.json)
 records scoped native results and artifact hashes. Timestamp arithmetic, binary
 comparison, new browser packages and protected security activation are not claimed.
+
+
+### Candidate graph fact consistency — 2026-10-12
+
+[Retained regression and implementation evidence](evidence/security-graph-fact-consistency-20261012/receipt.json) closes the draft graph simulator's known-field agreement gap relative to the previously corrected record simulator. The public prechange test demonstrates acceptance of conflicting same-identity subject/resource projections. The fix checks all supplied stored projections before interpretation, including unused raw and record-backed graph witnesses, while preserving context separation and missing-field refusal on the actual evaluated projection.
+
+162 core security tests, all74 admission tests and11 workspace boundary checks pass. The separately bounded borrowed preflight supplies no native source/authentication, physical lowering, ready profile, null/absence extension or backend case admission. All132 original required cases remain in scope.

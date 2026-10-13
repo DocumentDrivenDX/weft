@@ -1363,3 +1363,10 @@ established. Public compilation/dispatch remains unchanged and blocked. Receipt:
 General and scoped simulated-fact routes require agreement of known attributes for each exact typed record identity/field across subjects, inventories and requested resources. Omitted attributes remain unknown; explicit absence and null differ. Consistent partial projections may overlap, but the fold never supplies an omitted attribute to another row: each actual policy dependency and original/absent output field remains independently required on its selected projection. Duplicate inventory facts still refuse.
 
 The fold borrows normalized identities and values without cloning their payload, charges row/field work and overlapping scalar comparisons to the existing conservative budget. This is logical consistency only, not authentication, full inventory or native snapshot proof, a total heap ceiling or Rust source refinement. Actual graph variants remain refused by the record-fact simulator. Public security compilation remains closed pending complete native coverage/admission.
+
+
+## Candidate graph projection agreement — 2026-10-12
+
+Draft graph and mixed raw/graph-record rule simulation applies known-field agreement across every supplied subject, resource and record witness, including unused witnesses. Grouping uses the original typed target, declared key and ordered normalized components. Missing fields remain unknown and never enrich the projection used for actual policy evaluation. Context is a distinct channel. This candidate subset still has only its existing non-null scalar fields; it does not gain explicit absence/null support.
+
+The borrowed preflight has a separate1,000,000 row/field step and16,000,000 conservative reference/scalar payload-unit ceiling, in addition to existing evaluation budgets. It does not establish a total heap/time ceiling, Rust source refinement, authenticated source or native cut. Public security compilation remains closed. Retained regression, mixed witness, no-enrichment and exact-limit controls: `../../04-build/evidence/security-graph-fact-consistency-20261012/receipt.json`.
