@@ -1,0 +1,6 @@
+test_import_load_and_ordinary_creation_in_public_sql (test_import_load_query_native.ImportLoadQueryTests.test_import_load_and_ordinary_creation_in_public_sql) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 8.133s
+
+OK
