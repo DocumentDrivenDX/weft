@@ -421,12 +421,12 @@ fn emission_bounds_slots_and_column_provenance_refuse() {
         fn lower(&self,c:&Context<'_>,m:&Mapping)->weft_core::error::Result<Select>{self.inner.lower(c,m)}
         fn emit(&self,c:&Context<'_>,p:&Select)->weft_core::error::Result<Emission>{
             let mut e=self.inner.emit(c,p)?;
-            let slot=ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false},value:"safe".into(),origin:json!({"kind":"fixture"})};
+            let slot=ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false}.into(),value:"safe".into(),origin:json!({"kind":"fixture"})};
             match self.mode {
                 0=>e.sql=" \n\t".into(),1=>e.sql="x".repeat(1024*1024+1),2=>e.sql.push('\0'),
                 3=>e.parameters=vec![slot;1025],
                 4=>{let mut s=slot;s.origin=json!([]);e.parameters.push(s);},
-                5=>{let mut s=slot;s.logical_type.nullable=true;e.parameters.push(s);},
+                5=>{let mut s=slot;if let weft_core::backend::ParameterType::Atomic(t)=&mut s.logical_type {t.nullable=true;} else {panic!("atomic test fixture required")};e.parameters.push(s);},
                 6=>e.columns[0].position=2,7=>e.columns[0].source_identities.clear(),_=>unreachable!()
             }
             Ok(e)

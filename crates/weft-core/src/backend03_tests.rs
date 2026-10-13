@@ -351,7 +351,7 @@ fn ordinary_type_and_exact_parameter_domains_remain_closed() {
             family: crate::ir::Family::Boolean,
             facets: json!({}),
             nullable: false,
-        },
+        }.into(),
         origin: json!({"kind":"literal"}),
     });
     emission::validate(
@@ -386,7 +386,7 @@ fn ordinary_type_and_exact_parameter_domains_remain_closed() {
         family: crate::ir::Family::Integer,
         facets: json!({}),
         nullable: false,
-    };
+    }.into();
     assert!(emission::validate(
         view,
         &e,
@@ -399,7 +399,7 @@ fn ordinary_type_and_exact_parameter_domains_remain_closed() {
         &[]
     )
     .is_err());
-    e.parameters[0].logical_type.facets = json!({"integerWidth":{"bits":64,"signed":true}});
+    if let crate::backend::ParameterType::Atomic(t)=&mut e.parameters[0].logical_type { t.facets=json!({"integerWidth":{"bits":64,"signed":true}}); } else { panic!("atomic test fixture required"); }
     emission::validate(
         view,
         &e,

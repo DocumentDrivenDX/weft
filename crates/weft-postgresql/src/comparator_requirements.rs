@@ -117,7 +117,8 @@ fn predicate(
     p: &app::Predicate,
 ) -> Result<()> {
     match p {
-        app::Predicate::Equal { left, right } => {
+        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
+                    app::Predicate::Equal { left, right } => {
             field(all, owners, left, Operation::Equality)?;
             if let app::Value::Field { field: f } = right {
                 field(all, owners, f, Operation::Equality)?;

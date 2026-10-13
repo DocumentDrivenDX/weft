@@ -48,8 +48,24 @@ pub enum Value {
     },
 }
 #[derive(Debug, Clone, Serialize)]
+pub struct ExactField {
+    pub scan: String,
+    pub identity: Identity,
+    #[serde(rename="scalarType")]
+    pub scalar_type: crate::application_model::ExactScalarType,
+    pub span: Span,
+}
+#[derive(Debug, Clone, Serialize)]
+#[serde(tag="kind",rename_all="camelCase")]
+pub enum ExactValue {
+    Literal { value:String, #[serde(rename="scalarType")] scalar_type:crate::application_model::ExactScalarType, span:Span },
+    Parameter { name:String, value:String, #[serde(rename="scalarType")] scalar_type:crate::application_model::ExactScalarType, span:Span },
+    Field { field:ExactField },
+}
+#[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {
+    ExactEqual { left:ExactField, right:ExactValue },
     Equal {
         left: Field,
         right: Value,

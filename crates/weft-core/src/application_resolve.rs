@@ -18,6 +18,11 @@ pub struct Parameter {
     pub value: String,
 }
 pub type Parameters = BTreeMap<String, Parameter>;
+#[derive(Debug,Clone,Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+pub struct ExactParameter { pub scalar_type:crate::application_model::ExactScalarType, pub value:String }
+pub type ExactParameters=BTreeMap<String,ExactParameter>;
+
 fn fail(code: &str, message: &str) -> Diagnostic {
     Diagnostic::new(code, "resolve", message)
 }
@@ -36,6 +41,19 @@ pub fn resolve(
     q: ast::Query,
     parameters: Parameters,
     profile: Option<ir::ReadProfile>,
+) -> Result<ir::Plan> {
+    resolve_inner(catalog,q,parameters,profile,ExactParameters::new(),false)
+}
+pub(crate) fn resolve_with_exact(catalog:&Catalog,q:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,profile:Option<ir::ReadProfile>)->Result<ir::Plan> {
+    resolve_inner(catalog,q,parameters,profile,exact_parameters,true)
+}
+fn resolve_inner(
+    catalog: &Catalog,
+    q: ast::Query,
+    parameters: Parameters,
+    profile: Option<ir::ReadProfile>,
+    exact_parameters:ExactParameters,
+    binary_equality:bool,
 ) -> Result<ir::Plan> {
     let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
     if profile.as_ref().is_some_and(|p| match p.subset {
@@ -62,10 +80,20 @@ pub fn resolve(
             ));
         }
     }
+    let mut normalized_exact=ExactParameters::new();
+    if normalized.len()+exact_parameters.len()>1024 {return Err(fail("WFT-LIMIT","Combined source parameter count exceeds1024"));}
+    for (name,value) in exact_parameters {
+        if !name.as_bytes().first().is_some_and(|b|b.is_ascii_alphabetic()||*b==b'_') || !name.bytes().all(|b|b.is_ascii_alphanumeric()||b==b'_')
+            || normalized.contains_key(&name.to_ascii_lowercase()) || normalized_exact.insert(name.to_ascii_lowercase(),value).is_some() {
+            return Err(fail("WFT-PARAMETER","Parameter names must be distinct across atomic and exact maps"));
+        }
+    }
     let mut s = Scope {
         catalog,
         records: vec![],
         parameters: normalized,
+        exact_parameters:normalized_exact,
+        binary_equality,
         used: BTreeSet::new(),
         caps: BTreeSet::new(),
         graph: vec![],
@@ -425,12 +453,12 @@ pub fn resolve(
             }
         }
     }
-    if s.used.len() != s.parameters.len() {
+    if s.used.len() != s.parameters.len()+s.exact_parameters.len() {
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
     }
     s.caps.insert("project".into());
     Ok(ir::Plan {
-        ir_version: if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
+        ir_version: if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),
@@ -469,14 +497,17 @@ pub fn resolve_page(
     page_size: u16,
     after: Option<&[String]>,
 ) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false)
 }
 
 pub fn resolve_typed_page(catalog:&Catalog,query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,true)
+    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false)
 }
 
-fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool) -> Result<PagePlan> {
+pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool)->Result<PagePlan> {
+    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true)
+}
+fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool) -> Result<PagePlan> {
     if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
         || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_) | ast::Output::Related { .. }))
@@ -508,8 +539,8 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     }
     query.order = columns;
     query.limit = Some(page_size + 1);
-    let mut plan = resolve(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }))?;
-    plan.ir_version = "weft-ir/0.2.2".into();
+    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality)?;
+    plan.ir_version = if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();
     let continuation_values = if after.is_some() {

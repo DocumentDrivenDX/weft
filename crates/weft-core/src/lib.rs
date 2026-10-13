@@ -1,6 +1,7 @@
 pub mod arithmetic_plan;
 mod arithmetic_application_resolve;
 mod application_scope;
+mod application_binary;
 pub mod arithmetic_resolve;
 mod arithmetic_query;
 mod arithmetic_syntax;

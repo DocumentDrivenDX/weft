@@ -20,9 +20,10 @@ fn operation_shape(operation:&SecurityOperation,budget:&mut Budget)->Result<()> 
  if operation.sql.len()>1024*1024||operation.sql.contains('\0')||operation.sql.trim().is_empty()||operation.parameters.len()>1024{return Err(fail());}
  budget.charge(operation.sql.len()).map_err(|_|fail())?;
  for (index,p) in operation.parameters.iter().enumerate(){
-  if p.position!=index+1||!p.origin.is_object()||p.logical_type.nullable||p.value.len()>1024*1024{return Err(fail());}
+  let logical_type=p.logical_type.atomic().map_err(|_|fail())?;
+  if p.position!=index+1||!p.origin.is_object()||logical_type.nullable||p.value.len()>1024*1024{return Err(fail());}
   budget.charge(p.value.len()).map_err(|_|fail())?;
-  budget.literal(&p.logical_type.facets).map_err(|_|fail())?;
+  budget.literal(&logical_type.facets).map_err(|_|fail())?;
   budget.literal(&p.origin).map_err(|_|fail())?;
  }
  Ok(())
@@ -33,8 +34,9 @@ pub(crate) fn check_domains(ctx:&SecurityBackendContext<'_>,plan:&SecurityPhysic
  check(ctx,plan)?;
  for operation in plan.installation.iter().chain(std::iter::once(&plan.execution)) {
   for p in &operation.parameters {
-   let facets=p.logical_type.facets.as_object().ok_or_else(fail)?;
-   match p.logical_type.family {
+   let logical_type=p.logical_type.atomic().map_err(|_|fail())?;
+   let facets=logical_type.facets.as_object().ok_or_else(fail)?;
+   match logical_type.family {
     crate::ir::Family::String|crate::ir::Family::Boolean=>{if !facets.is_empty(){return Err(fail());}},
     crate::ir::Family::Integer=>{
      if facets.len()!=1{return Err(fail());}
@@ -43,7 +45,7 @@ pub(crate) fn check_domains(ctx:&SecurityBackendContext<'_>,plan:&SecurityPhysic
     },
     crate::ir::Family::Decimal=>{if facets.len()!=2||!facets.contains_key("precision")||!facets.contains_key("scale"){return Err(fail());}}
    }
-   crate::backend_emission::validate_parameter_domain(&p.value,&p.logical_type,false).map_err(|_|fail())?;
+   crate::backend_emission::validate_parameter_domain(&p.value,logical_type,false).map_err(|_|fail())?;
   }
  }
  Ok(())
@@ -58,6 +60,7 @@ pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPh
  fn collect<'a>(p:&'a Predicate,path:String,out:&mut Vec<(String,&'a Value)>)->Result<()>{
   fn push<'a>(path:String,v:&'a Value,out:&mut Vec<(String,&'a Value)>)->Result<()>{if matches!(v,Value::Field{..}){return Ok(());}if out.len()>=1024{return Err(fail());}out.push((path,v));Ok(())}
   match p {
+   Predicate::ExactEqual{..}=>return Err(fail()),
    Predicate::Equal{right,..}=>push(format!("{path}/right"),right,out)?,
    Predicate::LexicographicGreater{values,..}=>for(i,v)in values.iter().enumerate(){push(format!("{path}/values/{i}"),v,out)?;},
    Predicate::HasRelated{key,..}=>for(i,v)in key.iter().enumerate(){push(format!("{path}/key/{i}"),v,out)?;}

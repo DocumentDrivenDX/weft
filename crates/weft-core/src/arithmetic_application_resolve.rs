@@ -483,6 +483,8 @@ pub(crate) fn resolve_parts<X: QueryExtension>(
         catalog,
         records: vec![],
         parameters: normalized,
+        exact_parameters: BTreeMap::new(),
+        binary_equality: false,
         used: BTreeSet::new(),
         caps: BTreeSet::new(),
         graph: vec![],

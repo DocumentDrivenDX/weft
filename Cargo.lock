@@ -1026,6 +1026,7 @@ dependencies = [
 name = "weft-core"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "jsonschema",
  "num-bigint",
  "proptest",
@@ -1065,7 +1066,7 @@ dependencies = [
 
 [[package]]
 name = "weft-python"
-version = "0.4.18"
+version = "0.4.19"
 dependencies = [
  "pyo3",
  "weft-runtime",

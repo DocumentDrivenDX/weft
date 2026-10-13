@@ -39,7 +39,7 @@ pub enum Shape {
         members: Vec<Member>,
     },
 }
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub enum ExactScalarType { Timestamp, Binary }
 #[derive(Debug, Clone, Serialize)]

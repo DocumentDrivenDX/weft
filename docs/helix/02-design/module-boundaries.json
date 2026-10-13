@@ -394,9 +394,26 @@
           ],
           "defaultFeatures": false,
           "path": null
+        },
+        {
+          "name": "base64",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.22.1",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
         }
       ],
       "sources": [
+        {
+          "path": "crates/weft-core/src/application_binary.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
         {
           "path": "crates/weft-core/src/application_ir.rs",
           "publicDeclarations": [
@@ -410,6 +427,12 @@
             "field:logical_type",
             "field:span",
             "enum:Value",
+            "struct:ExactField",
+            "field:scan",
+            "field:identity",
+            "field:scalar_type",
+            "field:span",
+            "enum:ExactValue",
             "enum:Predicate",
             "struct:Scan",
             "field:occurrence",
@@ -491,6 +514,10 @@
             "field:family",
             "field:value",
             "type:Parameters",
+            "struct:ExactParameter",
+            "field:scalar_type",
+            "field:value",
+            "type:ExactParameters",
             "fn:resolve",
             "struct:PagePlan",
             "field:plan",
@@ -743,6 +770,9 @@
             "field:status",
             "field:evidence",
             "field:obligations",
+            "enum:ParameterType",
+            "enum:ExactParameterKind",
+            "fn:atomic",
             "struct:ParameterSlot",
             "field:position",
             "field:logical_type",
@@ -1033,7 +1063,8 @@
         {
           "path": "crates/weft-core/src/exact.rs",
           "publicDeclarations": [
-            "fn:literal"
+            "fn:literal",
+            "fn:validate_binary_token"
           ],
           "pathReferences": []
         },
@@ -2072,6 +2103,7 @@
             "fn:qualified",
             "struct:Parameters",
             "fn:push",
+            "fn:push_binary",
             "fn:into_slots",
             "enum:CatalogDomain",
             "fn:catalog",

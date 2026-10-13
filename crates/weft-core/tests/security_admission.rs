@@ -1293,12 +1293,12 @@ fn physical_plan_shape_is_bounded_and_never_emits_security_sql() {
    }assert!(ctx.check_physical_shape(&bad).is_err(),"mutation {mutation}");
   }
   let mut bounded=plan.clone();bounded.execution.sql="x".repeat(1024*1024);ctx.check_physical_shape(&bounded)?;
-  let slot=weft_core::backend::ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false},value:"".into(),origin:json!({"kind":"parameter","name":"p"})};
+  let slot=weft_core::backend::ParameterSlot{position:1,logical_type:weft_core::ir::LogicalType{family:weft_core::ir::Family::String,facets:json!({}),nullable:false}.into(),value:"".into(),origin:json!({"kind":"parameter","name":"p"})};
   let mut parameterized=plan.clone();parameterized.execution.parameters=vec![slot.clone()];ctx.check_physical_shape(&parameterized)?;
   for mutation in 0..6 {
    let mut bad=parameterized.clone();match mutation {
     0=>bad.execution.parameters[0].position=2,1=>bad.execution.parameters[0].origin=json!([]),
-    2=>bad.execution.parameters[0].logical_type.nullable=true,3=>bad.execution.parameters[0].value="x".repeat(1024*1024+1),
+    2=>if let weft_core::backend::ParameterType::Atomic(t)=&mut bad.execution.parameters[0].logical_type {t.nullable=true;} else {panic!("atomic test fixture required")},3=>bad.execution.parameters[0].value="x".repeat(1024*1024+1),
     4=>bad.execution.parameters=(0..1025).map(|i|{let mut p=slot.clone();p.position=i+1;p}).collect(),
     5=>{let mut origin=json!("leaf");for _ in 0..65{origin=json!({"next":origin});}bad.execution.parameters[0].origin=origin;},_=>unreachable!()
    }assert!(ctx.check_physical_shape(&bad).is_err(),"parameter mutation {mutation}");
@@ -1333,7 +1333,7 @@ fn physical_parameter_domains_reject_reinterpretation_without_emission() {
    (Family::Integer,json!({"integerWidth":{"bits":8,"signed":true,"unknown":true}}),"1",false),
    (Family::Decimal,json!({"precision":3,"scale":1,"unknown":true}),"1",false),
   ] {
-   let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family,facets,nullable:false},value:value.into(),origin:json!({"kind":"parameter","name":"p"})}]}};
+   let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family,facets,nullable:false}.into(),value:value.into(),origin:json!({"kind":"parameter","name":"p"})}]}};
    ctx.check_physical_shape(&plan)?;
    assert_eq!(ctx.check_physical_parameter_domains(&plan).is_ok(),expected,"{value}");
   }
@@ -1347,7 +1347,7 @@ fn execution_slots_bind_original_query_values_not_only_domains(){
  let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE r.resourceId='r1'");let mut calls=0;
  let raw=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
   calls+=1;
-  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false}.into(),value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
   ctx.check_execution_query_slots(&plan)?;
   ctx.check_postgresql_query_placeholders(&plan)?;
   for(sql,expected)in [
@@ -1381,7 +1381,7 @@ fn query_slot_context_preserves_exact_source_bytes_across_equivalent_queries(){
  let mut req=security04_request();req["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE r.resourceId='r1'");
  let mut retained=None;
  let first=Compiler::default().compile_json_with_security_factory(&req.to_string(),&mut |ctx|{
-  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false},value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
+  let plan=SecurityPhysicalPlan{version:"weft.security.physical-plan/0.1.0".into(),installation:vec![],execution:SecurityOperation{id:"execute".into(),sql:"SELECT $1".into(),parameters:vec![ParameterSlot{position:1,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false}.into(),value:"r1".into(),origin:json!({"kind":"queryValue","sourcePath":"filters/0/right","sourceContextSha256":ctx.execution_query_context_sha256()})}]}};
   ctx.check_execution_query_slots(&plan)?;retained=Some(plan);Ok(SecurityRegistry::default())
  });refused(serde_json::from_str(&first).unwrap(),"WFT-SECURITY-BACKEND-REQUIRED");
  req["sql"]=json!(req["sql"].as_str().unwrap().to_owned()+" ");

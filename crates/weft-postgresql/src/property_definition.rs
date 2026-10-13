@@ -2754,6 +2754,7 @@ mod tests {
             for (i, d) in descriptors.iter().enumerate() {
                 let mut codec = empty.clone();
                 let shape = match &d.shape {
+                    Shape::ExactScalar { .. } => panic!("This property-definition fixture admits atomic scalar descriptors only"),
                     Shape::Scalar { logical_type } => {
                         let numeric = logical_type.family == weft_core::ir::Family::Integer;
                         assert!(numeric || logical_type.family == weft_core::ir::Family::String);

@@ -81,3 +81,12 @@ pub(crate) fn validate_mathematical_decimal(value:&str)->Result<()> {
       return Err(Diagnostic::new("WFT-NUMERIC-DOMAIN","type","Finite fixed-point decimal token required"));
     }Ok(())
 }
+
+/// Byte values use bounded canonical standard base64; original tokens are retained.
+pub fn validate_binary_token(value:&str)->Result<()> {
+    use base64::Engine;
+    if value.len()>1048576 {return Err(Diagnostic::new("WFT-LIMIT","type","Binary token exceeds one MiB"));}
+    let bytes=base64::engine::general_purpose::STANDARD.decode(value).map_err(|_|Diagnostic::new("WFT-BINARY-DOMAIN","type","Canonical base64 required"))?;
+    if base64::engine::general_purpose::STANDARD.encode(bytes)!=value {return Err(Diagnostic::new("WFT-BINARY-DOMAIN","type","Canonical base64 required"));}
+    Ok(())
+}

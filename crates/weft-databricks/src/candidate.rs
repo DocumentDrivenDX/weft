@@ -272,7 +272,7 @@ impl<'a> Lower<'a> {
         let position = self.parameters.len() + 1;
         self.parameters.push(ParameterSlot {
             position,
-            logical_type: ty,
+            logical_type: ty.into(),
             value,
             origin,
         });

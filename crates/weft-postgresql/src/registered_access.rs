@@ -104,6 +104,7 @@ pub fn requests(plan: Plan<'_>) -> Result<Vec<Request>> {
                 .chain(plan.joins.iter().flat_map(|join| &join.on));
             for predicate in predicates {
                 match predicate {
+                    app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
                     app::Predicate::Equal { left, right } => {
                         add_field(left);
                         if let app::Value::Field { field } = right {

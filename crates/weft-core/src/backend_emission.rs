@@ -61,22 +61,47 @@ pub(crate) fn validate(
     {
         return Err(fail("Emission SQL or parameter bounds are invalid"));
     }
+    if let Plan::V02(p) = plan {
+        use crate::application_ir::{Predicate, ExactValue};
+        let originals = p.joins.iter().flat_map(|j| &j.on).chain(&p.filters)
+            .filter_map(|predicate| match predicate {
+                Predicate::ExactEqual { right, .. } if !matches!(right, ExactValue::Field { .. }) => Some(right),
+                _ => None,
+            }).collect::<Vec<_>>();
+        let slots = emission.parameters.iter().filter(|s| matches!(s.logical_type, crate::backend::ParameterType::Exact { .. })).collect::<Vec<_>>();
+        if originals.len() != slots.len() { return Err(fail("Every exact binary occurrence requires its original typed slot")); }
+        for (original, slot) in originals.iter().zip(slots) {
+            let (value, scalar_type) = match original {
+                ExactValue::Literal { value, scalar_type, .. } | ExactValue::Parameter { value, scalar_type, .. } => (value, scalar_type),
+                _ => unreachable!(),
+            };
+            if *scalar_type != crate::application_model::ExactScalarType::Binary || slot.value != **value || slot.origin != serde_json::json!(original) {
+                return Err(fail("Exact binary slot changed original token, type or occurrence"));
+            }
+        }
+    }
     for (index, p) in emission.parameters.iter().enumerate() {
-        if p.position != index + 1 || !p.origin.is_object() || p.logical_type.nullable {
+        if let crate::backend::ParameterType::Exact {scalar_type:crate::application_model::ExactScalarType::Binary,..}=&p.logical_type {
+            if p.position!=index+1 || !p.origin.is_object() || !matches!(plan,Plan::V02(p) if p.ir_version=="weft-ir/0.2.5")
+                || !assessments.iter().any(|a|a.id=="compare.binary.equal"&&a.status!=crate::backend::Status::Unsupported) {return Err(fail("Exact binary parameter requires typed admitted equality"));}
+            crate::exact::validate_binary_token(&p.value)?;continue;
+        }
+        let logical_type=p.logical_type.atomic()?;
+        if p.position != index + 1 || !p.origin.is_object() || logical_type.nullable {
             return Err(fail(
                 "Parameter slots require contiguous positions, typed origins and non-null values",
             ));
         }
-        let unbounded=p.logical_type.family==Family::Integer && p.logical_type.facets==serde_json::json!({});
+        let unbounded=logical_type.family==Family::Integer && logical_type.facets==serde_json::json!({});
         let admitted=assessments.iter().any(|a| (a.id=="type.integer.unbounded" || (matches!(plan,Plan::V03(_)) && (a.id=="arithmetic.exact.integer" || a.id=="aggregate.havingCountDistinctGreater"))) && a.status!=crate::backend::Status::Unsupported);
         if unbounded && !admitted { return Err(fail("Unbounded integer parameter requires explicit capability admission")); }
-        if p.logical_type.family == Family::Decimal && p.logical_type.facets.get("precision").is_none() {
-            if p.logical_type.facets==serde_json::json!({}) && assessments.iter().any(|a|a.id=="type.decimal.unbounded"&&a.status!=crate::backend::Status::Unsupported) {
+        if logical_type.family == Family::Decimal && logical_type.facets.get("precision").is_none() {
+            if logical_type.facets==serde_json::json!({}) && assessments.iter().any(|a|a.id=="type.decimal.unbounded"&&a.status!=crate::backend::Status::Unsupported) {
                 crate::exact::validate_mathematical_decimal(&p.value)?;continue;
             }
             let admitted = matches!(plan, Plan::V03(_)) && assessments.iter().any(|a| a.id == "arithmetic.exact.decimal" && a.status != crate::backend::Status::Unsupported);
-            let scale = p.logical_type.facets["scale"].as_u64().ok_or_else(|| fail("Arithmetic decimal parameter requires its exact lexical scale"))?;
-            if !admitted || p.logical_type.facets != serde_json::json!({"scale":scale}) {
+            let scale = logical_type.facets["scale"].as_u64().ok_or_else(|| fail("Arithmetic decimal parameter requires its exact lexical scale"))?;
+            if !admitted || logical_type.facets != serde_json::json!({"scale":scale}) {
                 return Err(fail("Arithmetic decimal parameter requires explicit 0.3 capability admission"));
             }
             let domain = crate::arithmetic_resolve::token_domain(&p.value, Some(&Family::Decimal), &crate::ir::Span {start:0,end:0})
@@ -85,7 +110,7 @@ pub(crate) fn validate(
                 return Err(fail("Arithmetic decimal parameter changes its original lexical scale"));
             }
         } else {
-            validate_parameter_domain(&p.value, &p.logical_type, admitted)?;
+            validate_parameter_domain(&p.value, logical_type, admitted)?;
         }
     }
     if let Plan::V03(p)=plan {
@@ -352,14 +377,14 @@ mod tests {
         validate(Plan::V03(&plan), &baseline, &selection, &[]).unwrap();
         let mut parameterized = baseline.clone();
         parameterized.parameters.push(crate::backend::ParameterSlot {
-            position:1, logical_type:LogicalType {family:Family::Decimal,facets:json!({"scale":4}),nullable:false},
+            position:1, logical_type:LogicalType {family:Family::Decimal,facets:json!({"scale":4}),nullable:false}.into(),
             value:"12.5000".into(),origin:json!({"kind":"literal"}),
         });
         let assessment = crate::backend::Assessment {id:"arithmetic.exact.decimal".into(),status:crate::backend::Status::Candidate,evidence:vec![],obligations:vec![]};
         assert!(validate(Plan::V03(&plan),&parameterized,&selection,&[]).is_err());
         validate(Plan::V03(&plan),&parameterized,&selection,&[assessment.clone()]).unwrap();
         for (value,facets) in [("12.5000",json!({"scale":3})),("12.5e1",json!({"scale":4})),("12.5000",json!({"scale":4,"nativeWidth":38}))] {
-            let mut bad=parameterized.clone();bad.parameters[0].value=value.into();bad.parameters[0].logical_type.facets=facets;
+            let mut bad=parameterized.clone();bad.parameters[0].value=value.into();if let crate::backend::ParameterType::Atomic(t)=&mut bad.parameters[0].logical_type { t.facets=facets; } else { panic!("atomic test fixture required"); }
             assert!(validate(Plan::V03(&plan),&bad,&selection,&[assessment.clone()]).is_err());
         }
         for mutation in 0..4 {

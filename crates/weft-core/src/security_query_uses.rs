@@ -33,7 +33,7 @@ impl SecurityResolvedQuery{
   fn predicate(p:&app::Predicate,operator:QueryOperator,uses:&mut BTreeSet<QueryUse>,scans:&BTreeMap<String,SecurityRef>,closure:&SecurityOntologyClosure,catalog:&Catalog)->Result<()>{match p{
    app::Predicate::Equal{left,right}=>{add(left,operator,uses,scans,closure,catalog)?;value(right,operator,uses,scans,closure,catalog)?;},
    app::Predicate::LexicographicGreater{columns,values}=>{for f in columns{add(f,operator,uses,scans,closure,catalog)?;}for v in values{value(v,operator,uses,scans,closure,catalog)?;}},
-   app::Predicate::HasRelated{..}=>return Err(unsupported())
+   app::Predicate::HasRelated{..}|app::Predicate::ExactEqual{..}=>return Err(unsupported())
   }Ok(())}
   let mut uses=BTreeSet::new();let mut projections=BTreeSet::new();
   for join in &query.joins{for p in &join.on{predicate(p,QueryOperator::Join,&mut uses,&scans,&closure,catalog)?;}}

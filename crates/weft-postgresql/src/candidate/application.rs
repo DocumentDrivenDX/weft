@@ -713,7 +713,8 @@ impl Build<'_> {
     }
     fn application_fields(&mut self, p: &app::Predicate) -> Result<()> {
         match p {
-            app::Predicate::Equal { left, right } => {
+            app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
+                    app::Predicate::Equal { left, right } => {
                 self.field(&legacy(left))?;
                 if let app::Value::Field { field } = right {
                     self.field(&legacy(field))?;
@@ -769,6 +770,7 @@ impl Build<'_> {
     }
     fn application_predicate(&mut self, p: &app::Predicate) -> Result<String> {
         Ok(match p {
+            app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
             app::Predicate::Equal { left, right } => format!(
                 "({} = {})",
                 self.expression(&legacy(left))?,

@@ -496,7 +496,7 @@ fn predicate(p: &crate::application_ir::Predicate, b: &mut Budget) -> Result<()>
                 application_value(v, b)?;
             }
         }
-        P::HasRelated { .. } => return Err(fail()),
+        P::HasRelated { .. } | P::ExactEqual { .. } => return Err(fail()),
     }
     Ok(())
 }

@@ -209,7 +209,7 @@ pub(super) fn validate(
         return Err(fail("WFT-EMIT", "Invalid bounded SQL/parameters"));
     }
     for (i, p) in emitted.parameters.iter().enumerate() {
-        if p.position != i + 1 || !p.origin.is_object() || p.logical_type.nullable {
+        if p.position != i + 1 || !p.origin.is_object() || p.logical_type.atomic()?.nullable {
             return Err(fail("WFT-EMIT", "Invalid parameter positions/origins"));
         }
         validate_parameter(p, qualifications)?;
@@ -682,18 +682,19 @@ fn validate_parameter(
     p: &ParameterSlot,
     qualifications: &[crate::backend::Qualification],
 ) -> Result<()> {
+    let logical_type = p.logical_type.atomic()?;
     let admitted = |ids: &[&str]| {
         qualifications.iter().any(|q| {
             ids.contains(&q.assessment.id.as_str()) && q.assessment.status != Status::Unsupported
         })
     };
-    if p.logical_type.family == Family::Decimal && p.logical_type.facets.get("precision").is_none()
+    if logical_type.family == Family::Decimal && logical_type.facets.get("precision").is_none()
     {
-        let scale = p.logical_type.facets["scale"]
+        let scale = logical_type.facets["scale"]
             .as_u64()
             .ok_or_else(|| fail("WFT-EMIT", "Exact decimal scale missing"))?;
         if !admitted(&["arithmetic.exact.decimal"])
-            || p.logical_type.facets != json!({"scale":scale})
+            || logical_type.facets != json!({"scale":scale})
         {
             return Err(fail(
                 "WFT-EMIT",
@@ -713,7 +714,7 @@ fn validate_parameter(
     } else {
         validate_parameter_domain(
             &p.value,
-            &p.logical_type,
+            logical_type,
             admitted(&[
                 "type.integer.unbounded",
                 "arithmetic.exact.integer",

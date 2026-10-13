@@ -89,6 +89,7 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
                 profile_key(p),
                 ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
             ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+                || (interface == "weft-backend/0.2.5" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.5"))
                 || (interface == "weft-backend/0.2.4" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.4"))
                 || (interface == "weft-backend/0.2.3" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.3"))
                 || (interface == "weft-backend/0.2.2" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.2"))
@@ -144,7 +145,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4") || !valid_languages(&m.language_profiles, &m.interface_version) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
@@ -327,11 +328,30 @@ pub struct Assessment {
     pub evidence: Vec<String>,
     pub obligations: Vec<Obligation>,
 }
+#[derive(Debug, Clone, PartialEq, Serialize)]
+#[serde(untagged)]
+pub enum ParameterType {
+    Atomic(crate::ir::LogicalType),
+    Exact { kind: ExactParameterKind, #[serde(rename="scalarType")] scalar_type:crate::application_model::ExactScalarType },
+}
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub enum ExactParameterKind { #[serde(rename="exactScalar")] ExactScalar }
+impl From<crate::ir::LogicalType> for ParameterType {
+    fn from(value:crate::ir::LogicalType)->Self { Self::Atomic(value) }
+}
+impl ParameterType {
+    pub fn atomic(&self)->Result<&crate::ir::LogicalType> {
+        match self { Self::Atomic(value)=>Ok(value), _=>Err(failure("WFT-EMISSION","Atomic parameter required by this backend")) }
+    }
+}
+impl PartialEq<crate::ir::LogicalType> for ParameterType {
+    fn eq(&self,other:&crate::ir::LogicalType)->bool { matches!(self,Self::Atomic(value) if value==other) }
+}
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterSlot {
     pub position: usize,
-    pub logical_type: crate::ir::LogicalType,
+    pub logical_type: ParameterType,
     pub value: String,
     pub origin: Value,
 }
@@ -806,6 +826,12 @@ fn selected(plan: Plan<'_>) -> Selection {
     }
     fn predicate(p: &AP, s: &mut Selection) {
         match p {
+            AP::ExactEqual { left, right } => {
+                s.fields.push(left.identity.clone());
+                if let crate::application_ir::ExactValue::Field { field } = right {
+                    s.fields.push(field.identity.clone());
+                }
+            }
             AP::Equal { left, right } => {
                 s.fields.push(left.identity.clone());
                 value(right, s);

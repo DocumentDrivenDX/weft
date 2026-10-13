@@ -71,10 +71,19 @@ impl Parameters {
         let position = self.0.len() + 1;
         self.0.push(ParameterSlot {
             position,
-            logical_type,
+            logical_type:logical_type.into(),
             value,
             origin,
         });
+        Ok(format!("${position}"))
+    }
+    pub fn push_binary(&mut self,value:String,origin:serde_json::Value)->Result<String> {
+        use base64::Engine;
+        if value.len()>1048576 || self.0.len()>=1024 { return Err(Diagnostic::new("WFT-LIMIT","emit","Binary parameter bounds exceeded")); }
+        let bytes=base64::engine::general_purpose::STANDARD.decode(&value).map_err(|_|Diagnostic::new("WFT-BINARY-DOMAIN","emit","Canonical base64 required"))?;
+        if base64::engine::general_purpose::STANDARD.encode(bytes)!=value {return Err(Diagnostic::new("WFT-BINARY-DOMAIN","emit","Canonical base64 required"));}
+        let position=self.0.len()+1;
+        self.0.push(ParameterSlot {position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Binary},value,origin});
         Ok(format!("${position}"))
     }
     pub fn into_slots(self) -> Vec<ParameterSlot> {
@@ -182,11 +191,11 @@ mod tests {
         assert_eq!(slots.len(), 6);
         assert_eq!(slots[0].value, "-2147483648");
         assert_eq!(
-            slots[0].logical_type.facets,
+            slots[0].logical_type.atomic().unwrap().facets,
             json!({"integerWidth":{"bits":32,"signed":true}})
         );
         assert_eq!(
-            slots[3].logical_type.facets,
+            slots[3].logical_type.atomic().unwrap().facets,
             json!({"integerWidth":{"bits":16,"signed":true}})
         );
     }

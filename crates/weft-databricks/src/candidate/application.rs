@@ -20,6 +20,7 @@ fn values(lower: &mut Lower<'_>, v: &app::Value) {
 }
 fn collect_predicate(lower: &mut Lower<'_>, p: &app::Predicate) -> Result<()> {
     match p {
+        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => {
             field(lower, left);
             values(lower, right);
@@ -73,6 +74,7 @@ fn predicate(
     p: &app::Predicate,
 ) -> Result<String> {
     match p {
+        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => Ok(format!(
             "({} = {})",
             lower.expression(&legacy(left))?,
