@@ -2614,6 +2614,8 @@
             "const:NUMERIC_TARGET",
             "const:RELATIONSHIP_PROFILE",
             "const:RELATIONSHIP_TARGET",
+            "const:PAGE_PROFILE",
+            "const:PAGE_TARGET",
             "struct:Runtime",
             "struct:Mapping",
             "struct:TargetPlan",

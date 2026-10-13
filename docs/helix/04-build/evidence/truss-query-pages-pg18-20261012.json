@@ -12,5 +12,13 @@
     "Live caller-managed continuation, no frozen snapshot/exactly-once enumeration",
     "Required facetless string page keys only",
     "No page joins, grouped summary or opaque cursors"
-  ]
+  ],
+  "mergedWeftMain": {
+    "securitySourceHead": "cd06efc",
+    "nativeExtensionSha256": "1fbb8454695e8d91b1f7834407c89fe4716d4857e3916487b8dcd8ce0bd65fcf",
+    "publicPageAndAdopterWorkflowsPassed": 2,
+    "seconds": 15.098,
+    "workspaceBoundaryPackages": 11,
+    "review": "Astra Ultra approved merge/inventory; two focused public workflows passed"
+  }
 }
