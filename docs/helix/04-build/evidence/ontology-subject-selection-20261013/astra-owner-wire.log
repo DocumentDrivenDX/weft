@@ -1,0 +1,21 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/pg-principal-wire.test.ts:
+(pass) ParameterStatus preserves original UTF-8 name/value bytes [0.51ms]
+(pass) ParameterStatus cannot manufacture command or Ready completion [0.38ms]
+(pass) Fragmented ParameterStatus interleaves with confirmed reset without changing completion [0.20ms]
+(pass) Malformed, non-UTF8 and over-budget parameter reports refuse [0.08ms]
+(pass) pending reset cannot publish a lease after another reset closes admission [25.76ms]
+
+tests/pg-subject-key.test.ts:
+(pass) native string subject uses exact original UMF key receipt and bytes [20.49ms]
+(pass) all scalar key families and ordered exact numeric/binary literals stay with owner [6.61ms]
+(pass) owner rejects arity/domain/null/unknown key and literal JSON errors [7.86ms]
+(pass) binding selection is captured; column mismatch and byte limits refuse [3.64ms]
+(pass) source byte identity rejects lossy raw Unicode but preserves escaped JSON [5.64ms]
+(pass) declared deferred inspectors refuse without invocation; ordinary rejected promises are observed [1.34ms]
+
+ 11 pass
+ 0 fail
+ 41 expect() calls
+Ran 11 tests across 2 files. [573.00ms]

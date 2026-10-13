@@ -1,0 +1,183 @@
+{
+  "review": "ontology-subject-selection",
+  "reviewer": "independent Astra Ultra agent",
+  "reviewedAtUtc": "2026-10-13T12:49:03.878699+00:00",
+  "status": "no_remaining_actionable_findings_within_qualified_scope",
+  "repositories": {
+    "/private/tmp/truss-security-main-integration": "ef670e466004b2a3b56d93c4ebffb13fca644e83",
+    "/private/tmp/weft-security-main-integration": "a577588e69c694f333301e1a340984382e674400"
+  },
+  "sourcePins": [
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-core/src/security_mapping_transport.rs",
+      "sha256": "1c3b4b13062b44b667c5686d175e30b17c44edc826d590298145741695001401",
+      "bytes": 19743
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/crates/weft-postgresql/examples/security_predicate_spike.rs",
+      "sha256": "005518e419ef8d2e0d5d10d10352a95c56c67951004fdb462d4155916b2e9a5d",
+      "bytes": 10562
+    },
+    {
+      "path": "/private/tmp/weft-security-main-integration/docs/helix/02-design/module-boundaries.json",
+      "sha256": "dd6c47d1bb9f9bff64e02ec46f55b181dee0e7d091271573c7bd195bae5a2c26",
+      "bytes": 107227
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/subject-key.ts",
+      "sha256": "a9533b93352c88cd601273b1c686d1a8b1b8c9486eb6f63b77b09e7a36c19562",
+      "bytes": 5008
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/pg-runtime/src/index.ts",
+      "sha256": "3c8623a7096131255fb956c74bacb492165e57f146709e5c1e7eb16b2b0650b4",
+      "bytes": 16690
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/pg-runtime/dist/index.js",
+      "sha256": "8d2c18d99c75c34c3846a3fbd75b58d4e17cbf0f5c4923887dd436dfd2fdaa5b",
+      "bytes": 36776
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/pg-runtime/dist/subject-key.d.ts",
+      "sha256": "a9aa529832e478a4f88761d71b556d9658a36e3b924fdb7ebab38b0182ff3a0c",
+      "bytes": 2032
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/tests/pg-subject-key.test.ts",
+      "sha256": "d4cdd2a0c55620830390fd3cd85f519557286d1531bbc7f8af33a754c2fe82e6",
+      "bytes": 5891
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/tests/pg-principal-native-runner.ts",
+      "sha256": "c83155f173894e33371358e43085952f5a2b73802a02199e7f213cd4b98007fd",
+      "bytes": 11435
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/python/tests/test_pg_principal_runtime_native.py",
+      "sha256": "4c4e73f150247a9ebb87ab580db131301dd04840c79441a6241d7aa1468e6b28",
+      "bytes": 3551
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/python/tests/fixtures/security-mapping-request.json",
+      "sha256": "daf8c9310e0a2c4b8c1bb436cb37df855c95b6592acfe2134d7ac80d064dad87",
+      "bytes": 11439
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/python/src/truss/_umf_keys08/producer.js",
+      "sha256": "a6499fcebc2eb14a006512c4963a4568843443eff35d5b07f6d007debe553651",
+      "bytes": 611721
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/packages/python/src/truss/_umf_keys08/manifest.json",
+      "sha256": "1db61eb244a0acf73992fb942ea52fd12ee1a4c9a41c5033b3d6c4db9d976b80",
+      "bytes": 1858
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/docs/helix/02-design/contracts/CONTRACT-007-embedding-and-execution.md",
+      "sha256": "110c89f7bf53f8c9de7a36abd2c9cdfe652b24ef759a215fe9567428493dd3d7",
+      "bytes": 296210
+    },
+    {
+      "path": "/private/tmp/truss-security-main-integration/docs/helix/04-build/implementation-plan.md",
+      "sha256": "5ddcbf6eda4538993eb2294b9470ccc2e5039ef81f541e5a3a22f1f317b3a5fe",
+      "bytes": 1055369
+    }
+  ],
+  "binaryPin": {
+    "path": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+    "sha256": "365f06659b6e46a46365a15c66e370501e09d1326d2e96dc7414a077c402fe8c",
+    "bytes": 15348952
+  },
+  "independentEvidence": {
+    "actualOriginalBinaryControls": 39,
+    "allPassed": true,
+    "allRefusalsRequireNonzeroAndEmptyStdout": true,
+    "binaryResults": {
+      "path": "/private/tmp/ontology-subject-review-20261013/binary-results.json",
+      "sha256": "f7ea5e00ca3a8afe7d25f39505d3cc6e6c84f54d1cb06e6d7b47a7be1e0572df",
+      "bytes": 8172
+    },
+    "binaryControls": {
+      "path": "/private/tmp/ontology-subject-review-20261013/binary-controls.py",
+      "sha256": "976bb21d2b41b26bb9c83b68d0296100584d75e693bba73c6ea9a1c2b0915aaf",
+      "bytes": 5603
+    },
+    "finalOwnerWireTestLog": {
+      "path": "/private/tmp/ontology-subject-review-20261013/final-owner-wire.log",
+      "sha256": "f0f79cf7669615e2022167f225bf1f53cb88243decc96b74f6346414c33eb4aa",
+      "bytes": 1150
+    },
+    "crossRealmDeclaredAsync": {
+      "exitCode": 0,
+      "result": {
+        "mode": "foreign-async",
+        "refused": true,
+        "entered": 0,
+        "species": 0,
+        "isAsyncFunction": true,
+        "error": "Error: Original subject key binding refused"
+      },
+      "stdout": {
+        "path": "/private/tmp/ontology-subject-review-20261013/foreign-async-final.stdout.log",
+        "sha256": "8f62036264d745ecdc253db3c8e1240dcb767e0ff4312d635712a4458076777e",
+        "bytes": 141
+      },
+      "stderr": {
+        "path": "/private/tmp/ontology-subject-review-20261013/foreign-async-final.stderr.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  },
+  "resolvedFindings": [
+    "Reject declared async/generator/async-generator inspectors before invocation with native function classification, including cross-realm functions.",
+    "Observe returned ordinary unmodified Promise rejection before refusing a deferred result; require undefined synchronous return."
+  ],
+  "limitations": [
+    "Original configured inspector/owner/host code authenticity is a premise, not established by interface shapes or receipts.",
+    "Ordinary Promise handling is not a sandbox or universal deferred-work containment guarantee. Modified Promise constructors/species can execute getters and prevent rejection-handler attachment; historical counterexamples remain retained and expressly outside the final trusted-code scope. Hidden asynchronous wrappers and arbitrary configured callback effects are also excluded.",
+    "Selection correspondence establishes original ontology Subject Record/Key/source selection only; original UMF owns ordered typed literal and tuple semantics.",
+    "No referenced-record existence, current principal-to-subject authority, helper deployment authentication, source/writer closure, issuer, protected release, security readiness, or backend acceptance promotion.",
+    "No native test rerun by this reviewer. Parent native and predicate logs inspected as separately produced evidence.",
+    "Request/output/component limits are not total heap or CPU proofs."
+  ],
+  "parentEvidence": [
+    {
+      "path": "/private/tmp/ontology-subject-native.json",
+      "sha256": "a3abaa5ae45a27d70a8d8b2e20c75d525a71a9a12fa1a8786d77e83aec117d25",
+      "bytes": 827
+    },
+    {
+      "path": "/private/tmp/ontology-subject-native.log",
+      "sha256": "7ddb51cfc7e7af137186f3db248f38d0d4b8932ebbfef034d42abdf5a5f89560",
+      "bytes": 98
+    },
+    {
+      "path": "/private/tmp/ontology-subject-owner.log",
+      "sha256": "d0c4434a3074cbdb9ac7993a887a30acec686d286c8deeaddc705a437bccecfa",
+      "bytes": 2030
+    },
+    {
+      "path": "/private/tmp/ontology-subject-core.log",
+      "sha256": "9a72376992b9aa8e74623ddce451c72ffd955c41070a667f4b84e3a2bfcda516",
+      "bytes": 11487
+    },
+    {
+      "path": "/private/tmp/ontology-subject-predicate.log",
+      "sha256": "2c8fd00b140d70a691fcf2c1a50fb2656562e6c9bc662056a9a36a08c8203d3f",
+      "bytes": 107
+    },
+    {
+      "path": "/private/tmp/ontology-subject-merged-build.log",
+      "sha256": "81d1866f72122091dd91b14ac26561de43621f09f687774b974c0034116a757c",
+      "bytes": 102
+    },
+    {
+      "path": "/private/tmp/ontology-subject-merged-tests.log",
+      "sha256": "ef15c7ed69d578f7d791576caae2d2a5e96722547b9d89ed2207b7c5da3f4c00",
+      "bytes": 2030
+    }
+  ],
+  "remainingFindings": []
+}
