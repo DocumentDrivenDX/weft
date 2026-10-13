@@ -1556,6 +1556,7 @@
           "path": "crates/weft-core/src/security_mapping_transport.rs",
           "publicDeclarations": [
             "const:MAX_REQUEST_BYTES",
+            "fn:inspect_security_mapping_result_cells",
             "fn:prepare_security_mapping_json"
           ],
           "pathReferences": []
