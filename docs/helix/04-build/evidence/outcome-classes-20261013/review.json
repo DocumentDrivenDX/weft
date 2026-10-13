@@ -1,0 +1,198 @@
+{
+  "review": "Independent Astra Ultra read-only diagnostic0.6 normalized outcome-class review",
+  "head": "36437f93b868d0c4f508086e9a950fb7d783a11e",
+  "findings": [],
+  "conclusion": "No actionable defect found in the selected normalized-class grouping, provenance retention or bounds change. Full ResultContract construction/checking and protected host integration remain open.",
+  "sourceDigests": {
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "fd6c710284030b88e32396e424bccaea53c840738e986794579143f0d888bb43",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "ab3a1f87e1df9dec9048f31ef3d18bf9a578ef2a4c3292276cb0046931613515",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_result_check.rs": "72b8858a7d3afcd1acc11c2189bcf9053e20d3c36e658039430ad011e3e1340c",
+    "crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "crates/weft-core/src/security_budget.rs": "a96d32840b01dce893ce181c0fed6109a45e4e1b0f3d9b6d1f2f551b756e7322",
+    "docs/helix/04-build/evidence/outcome-classes-20261013/proof.py": "14c6264f1eca1f8e4c2888e775166f0d32eb8c5913dfadc39c9c6c4a8b29ac62",
+    "docs/helix/04-build/implementation-plan.md": "d98ba86b0231c408174e2e1eb94b03c71c0ff6e1f60b1885a9a0d0f15f66a684"
+  },
+  "nativeHarnessDigest": "ec9dbfe51fb7eb5b07d9748b601c347094e1a1c2e981775ea944afa8319476dd",
+  "independentControls": {
+    "scope": "Actual admitted diagnostic renderer, original owner pair composer, selected class/provenance/parameter checks and emitted CASE/JSON-envelope branch controls in SQLite. Native validity supplied as Boolean premise; not PostgreSQL or ResultContract checker integration.",
+    "passedControls": 22,
+    "cellEvaluations": 1195,
+    "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+    "binarySha256": "014e4d8edf8af16a552882aaaa42b4cac0a5226f37ea8c9011fb71cd077dc310",
+    "cases": [
+      {
+        "case": "threeEquivalent0",
+        "passed": true,
+        "inputBytes": 21203,
+        "exit": 0
+      },
+      {
+        "case": "threeEquivalent1",
+        "passed": true,
+        "inputBytes": 21203,
+        "exit": 0
+      },
+      {
+        "case": "interleaved0",
+        "passed": true,
+        "inputBytes": 22219,
+        "exit": 0
+      },
+      {
+        "case": "interleaved1",
+        "passed": true,
+        "inputBytes": 22219,
+        "exit": 0
+      },
+      {
+        "case": "interleaved2",
+        "passed": true,
+        "inputBytes": 22219,
+        "exit": 0
+      },
+      {
+        "case": "interleaved3",
+        "passed": true,
+        "inputBytes": 22219,
+        "exit": 0
+      },
+      {
+        "case": "allDifferent0",
+        "passed": true,
+        "inputBytes": 21198,
+        "exit": 0
+      },
+      {
+        "case": "allDifferent1",
+        "passed": true,
+        "inputBytes": 21198,
+        "exit": 0
+      },
+      {
+        "case": "negativeEquivalent0",
+        "passed": true,
+        "inputBytes": 21209,
+        "exit": 0
+      },
+      {
+        "case": "negativeEquivalent1",
+        "passed": true,
+        "inputBytes": 21209,
+        "exit": 0
+      },
+      {
+        "case": "exponentEquivalent0",
+        "passed": true,
+        "inputBytes": 21207,
+        "exit": 0
+      },
+      {
+        "case": "exponentEquivalent1",
+        "passed": true,
+        "inputBytes": 21207,
+        "exit": 0
+      },
+      {
+        "case": "sameValueDifferentOutputField",
+        "passed": true,
+        "inputBytes": 20683,
+        "exit": 0
+      },
+      {
+        "case": "stringClasses",
+        "passed": true,
+        "inputBytes": 21178,
+        "exit": 0
+      },
+      {
+        "case": "nullClasses",
+        "passed": true,
+        "inputBytes": 20660,
+        "exit": 0
+      },
+      {
+        "case": "withheldProvenance",
+        "passed": true,
+        "inputBytes": 21030,
+        "exit": 0
+      },
+      {
+        "case": "asciiMetadataSizing",
+        "passed": true,
+        "inputBytes": 20179,
+        "exit": 0
+      },
+      {
+        "case": "asciiMetadata1048576",
+        "passed": true,
+        "inputBytes": 1068433,
+        "exit": 0
+      },
+      {
+        "case": "asciiMetadata1048577",
+        "passed": true,
+        "inputBytes": 1068434,
+        "exit": 1
+      },
+      {
+        "case": "unicodeMetadataSizing",
+        "passed": true,
+        "inputBytes": 20625,
+        "exit": 0
+      },
+      {
+        "case": "unicodeMetadata1048576",
+        "passed": true,
+        "inputBytes": 1068753,
+        "exit": 0
+      },
+      {
+        "case": "unicodeMetadata1048577",
+        "passed": true,
+        "inputBytes": 1068754,
+        "exit": 1
+      }
+    ]
+  },
+  "independentFormalReplay": {
+    "z3": "4.15.4",
+    "scope": "three abstract normalized transform identities only; no SQL/literal normalization/result-contract/authentication implementation proof",
+    "classCorrespondenceCounterexample": "unsat",
+    "perRuleClassCounterexample": "[id1 = 0, id0 = 0]"
+  },
+  "reviewControlDigests": {
+    "controls.py": "3e8389dea3d3e5980422ddae66bf7769c2f9380ace68dc9eb99ad73c7a490075",
+    "proof.py": "14c6264f1eca1f8e4c2888e775166f0d32eb8c5913dfadc39c9c6c4a8b29ac62",
+    "receipt.py": "672ab4f9291474192bc4dc03b401bbcaf8e56321f2acebef756f3a88f9f526ab"
+  },
+  "parentNativeEvidence": [
+    {
+      "path": "/private/tmp/truss-outcome-class-native.log",
+      "sha256": "c0a236963f6a22b6a675748ded965abca324d7e0dbc6578c08c3775349cd0194",
+      "provenance": "Parent native log inspected. Reviewer did not rerun or mutate native PostgreSQL."
+    },
+    {
+      "path": "/private/tmp/truss-outcome-class-full-native.log",
+      "sha256": "fb5535429bc2caf62d0f9ef5fa408cec5d763a27257e9916ca65458e859c7bea",
+      "provenance": "Parent native log inspected. Reviewer did not rerun or mutate native PostgreSQL."
+    }
+  ],
+  "reviewedCorrespondence": [
+    "Original compose isolates each transformed pair with both permits true, requires true and forbids false; no active withholding rule can mask pair equality/conflict. Permit is admitted normalized transform identity equality, Conflict preserves separate classes, unexpected decisions fail closed.",
+    "Original admitted output-field identity supplies the domain, so composer equality over transform/version/output field/normalized value agrees with security_result_check classes over output field/version/domain/normalized value. No competing normalization is introduced.",
+    "Each class uses the minimum previous canonical class. Under transitive normalized identity equality, existing class labels never need backward union. Five-transform interleaved cases and permutations preserve expected classes.",
+    "Per-rule slot, ruleId and original disposition remain separate metadata entries, including equivalent inactive rules. The selected original lexical payload remains a separate JSONB parameter even when outcomeId is shared.",
+    "Added ruleId UTF-8 bytes consume the shared1MiB metadata ledger before retained cloning. Exact1048576 passes and one over refuses for ASCII and non-ASCII rule IDs. Existing pair work, parameter count/payload and SQL/output limits remain unchanged.",
+    "22 actual diagnostic controls and1195 emitted-cell branch evaluations passed. Parent focused10.403s and full8-test40.314s native runs passed."
+  ],
+  "formalScope": "Copied exact original proof script independently replayed with Z3 4.15.4: one UNSAT discrepancy for three abstract normalized identities and one SAT counterexample to per-rule classes. Equality is supplied as a premise; this is not unbounded induction, literal normalization, Rust/SQL source refinement or result-contract checking.",
+  "limitations": [
+    "Cell envelopes and outcome metadata remain diagnostic. No registered ResultContract object is built or checked by this increment, and no protected result batch/release coordinator is established.",
+    "Independent emitted SQL branch evaluation uses SQLite with explicit JSON-operation translation and native validity supplied as a Boolean premise. It is not native PostgreSQL execution or scalar validator qualification.",
+    "Original source/plan admission, authentic native helper/safe path, complete domain-valid fact population and truthful native mapping remain premises.",
+    "No issuer/principal/source/writer lifetime, production profile activation, acceptance-case promotion or security readiness claim.",
+    "Retained metadata and selected-work bounds are not total CPU/process/native heap guarantees."
+  ]
+}

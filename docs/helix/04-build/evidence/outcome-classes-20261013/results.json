@@ -1,0 +1,141 @@
+{
+  "scope": "Actual admitted diagnostic renderer, original owner pair composer, selected class/provenance/parameter checks and emitted CASE/JSON-envelope branch controls in SQLite. Native validity supplied as Boolean premise; not PostgreSQL or ResultContract checker integration.",
+  "passedControls": 22,
+  "cellEvaluations": 1195,
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "014e4d8edf8af16a552882aaaa42b4cac0a5226f37ea8c9011fb71cd077dc310",
+  "cases": [
+    {
+      "case": "threeEquivalent0",
+      "passed": true,
+      "inputBytes": 21203,
+      "exit": 0
+    },
+    {
+      "case": "threeEquivalent1",
+      "passed": true,
+      "inputBytes": 21203,
+      "exit": 0
+    },
+    {
+      "case": "interleaved0",
+      "passed": true,
+      "inputBytes": 22219,
+      "exit": 0
+    },
+    {
+      "case": "interleaved1",
+      "passed": true,
+      "inputBytes": 22219,
+      "exit": 0
+    },
+    {
+      "case": "interleaved2",
+      "passed": true,
+      "inputBytes": 22219,
+      "exit": 0
+    },
+    {
+      "case": "interleaved3",
+      "passed": true,
+      "inputBytes": 22219,
+      "exit": 0
+    },
+    {
+      "case": "allDifferent0",
+      "passed": true,
+      "inputBytes": 21198,
+      "exit": 0
+    },
+    {
+      "case": "allDifferent1",
+      "passed": true,
+      "inputBytes": 21198,
+      "exit": 0
+    },
+    {
+      "case": "negativeEquivalent0",
+      "passed": true,
+      "inputBytes": 21209,
+      "exit": 0
+    },
+    {
+      "case": "negativeEquivalent1",
+      "passed": true,
+      "inputBytes": 21209,
+      "exit": 0
+    },
+    {
+      "case": "exponentEquivalent0",
+      "passed": true,
+      "inputBytes": 21207,
+      "exit": 0
+    },
+    {
+      "case": "exponentEquivalent1",
+      "passed": true,
+      "inputBytes": 21207,
+      "exit": 0
+    },
+    {
+      "case": "sameValueDifferentOutputField",
+      "passed": true,
+      "inputBytes": 20683,
+      "exit": 0
+    },
+    {
+      "case": "stringClasses",
+      "passed": true,
+      "inputBytes": 21178,
+      "exit": 0
+    },
+    {
+      "case": "nullClasses",
+      "passed": true,
+      "inputBytes": 20660,
+      "exit": 0
+    },
+    {
+      "case": "withheldProvenance",
+      "passed": true,
+      "inputBytes": 21030,
+      "exit": 0
+    },
+    {
+      "case": "asciiMetadataSizing",
+      "passed": true,
+      "inputBytes": 20179,
+      "exit": 0
+    },
+    {
+      "case": "asciiMetadata1048576",
+      "passed": true,
+      "inputBytes": 1068433,
+      "exit": 0
+    },
+    {
+      "case": "asciiMetadata1048577",
+      "passed": true,
+      "inputBytes": 1068434,
+      "exit": 1
+    },
+    {
+      "case": "unicodeMetadataSizing",
+      "passed": true,
+      "inputBytes": 20625,
+      "exit": 0
+    },
+    {
+      "case": "unicodeMetadata1048576",
+      "passed": true,
+      "inputBytes": 1068753,
+      "exit": 0
+    },
+    {
+      "case": "unicodeMetadata1048577",
+      "passed": true,
+      "inputBytes": 1068754,
+      "exit": 1
+    }
+  ]
+}
