@@ -1,5 +1,9 @@
 use pyo3::prelude::*;
 #[pyfunction]
+fn prepare_security_mapping_json(request: &str) -> String {
+    weft_runtime::prepare_security_mapping_json(request)
+}
+#[pyfunction]
 fn compile_json(request: &str) -> String {
     weft_runtime::compile_json(request)
 }
@@ -22,6 +26,7 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 }
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;

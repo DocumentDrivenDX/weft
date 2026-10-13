@@ -7,6 +7,7 @@ mod arithmetic_syntax;
 pub mod security_scan_obligations;
 pub mod security_query_uses;
 pub mod security_query_profile;
+pub mod security_mapping_transport;
 pub mod security_evaluation;
 pub mod security_composition;
 pub mod security_ir;
