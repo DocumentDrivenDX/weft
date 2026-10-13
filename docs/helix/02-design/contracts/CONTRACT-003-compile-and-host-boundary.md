@@ -351,3 +351,11 @@ MUST remain unchanged; host SQL rewriting is not a substitute for compiler
 capability. Distribution admission requires separately reviewed fresh products,
 exact historical parity and cross-embedding evidence, preserving every existing
 index entry and trust boundary.
+
+## Explicit Truss SQL page composition — 2026-10-13
+
+The Python `compile_truss_runtime_page_json(request, page_size, after=None)` entrypoint selects the fixed runtime0.4.6 page composition. It takes an unchanged validated compile0.2.2 request plus a page size1–999 and an optional complete required-string key tuple (at most64KiB total). It refuses request readProfile/security, caller ordering/limits, joins/aggregates/relationship page predicates and unsupported key domains. Generic compile entrypoints are unchanged.
+
+Successful output is a separate `weft-sql-page/0.1` wrapper with status compiled, `artifact` (the unchanged closed compile0.2.2 response) and `page`. Page metadata contains visibleOutputs, trailing keyOutputs, pageSize, generatedContinuationFilter (null initially), generatedOutputPositions, generatedOrderPositions and generatedSpans=`diagnostic-anchors`. These positions explicitly identify compiler-derived nodes; their source spans anchor diagnostics and do not assert authored SQL syntax. Continuation parameter origins are `{kind:page-continuation,component:index}`, assigned by occurrence during lowering before normal emission validation. Existing blocked compile responses remain the refusal carrier.
+
+The host verifies hidden positions and required-string key types, buffers size+1 rows, removes hidden outputs and creates continuation from the last retained row only if lookahead exists. Hosts own cursor context, current authorization and transaction execution. A cursor never adds accepted identities or native storage mappings. The original consumer two-page SQL case passes on DocumentDrivenDX PostgreSQL18.6 through Truss’s public Python page call; broader paging shapes remain explicit refusals.

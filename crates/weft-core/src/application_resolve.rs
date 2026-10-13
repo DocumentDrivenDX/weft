@@ -447,6 +447,8 @@ pub struct PagePlan {
     pub visible_outputs: usize,
     pub key_outputs: Vec<usize>,
     pub page_size: u16,
+    /// Exact generated continuation values; never authored SQL provenance.
+    pub continuation_values: Vec<ir::Value>,
 }
 
 pub fn resolve_page(
@@ -491,5 +493,11 @@ pub fn resolve_page(
     plan.ir_version = "weft-ir/0.2.2".into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();
-    Ok(PagePlan { plan, visible_outputs, key_outputs, page_size })
+    let continuation_values = if after.is_some() {
+        match plan.filters.last() {
+            Some(ir::Predicate::LexicographicGreater { values, .. }) => values.clone(),
+            _ => return Err(fail("WFT-IR", "Generated continuation predicate missing")),
+        }
+    } else { Vec::new() };
+    Ok(PagePlan { plan, visible_outputs, key_outputs, page_size, continuation_values })
 }

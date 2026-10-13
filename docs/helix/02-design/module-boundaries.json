@@ -485,6 +485,7 @@
             "field:visible_outputs",
             "field:key_outputs",
             "field:page_size",
+            "field:continuation_values",
             "fn:resolve_page"
           ],
           "pathReferences": []
@@ -955,6 +956,7 @@
             "fn:compile_json_with_factory",
             "fn:compile_json_with_exact_numbers_factory",
             "fn:compile_json_with_security_factory",
+            "fn:compile_page_json_with_exact_numbers_factory",
             "mod:v04",
             "mod:v041",
             "mod:v042"
@@ -1073,6 +1075,7 @@
             "mod:security_scan_obligations",
             "mod:security_query_uses",
             "mod:security_query_profile",
+            "mod:security_mapping_transport",
             "mod:security_evaluation",
             "mod:security_composition",
             "mod:security_ir",
@@ -1546,6 +1549,14 @@
             "field:result_contract",
             "field:obligations",
             "field:capability_ids"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_mapping_transport.rs",
+          "publicDeclarations": [
+            "const:MAX_REQUEST_BYTES",
+            "fn:prepare_security_mapping_json"
           ],
           "pathReferences": []
         },
@@ -2628,7 +2639,8 @@
             "struct:Runtime",
             "struct:Mapping",
             "struct:TargetPlan",
-            "fn:compile_json"
+            "fn:compile_json",
+            "fn:compile_page_json"
           ],
           "pathReferences": []
         },
@@ -2768,13 +2780,15 @@
         {
           "path": "crates/weft-runtime/src/lib.rs",
           "publicDeclarations": [
+            "fn:prepare_security_mapping_json",
             "mod:paths_keys",
             "mod:paths",
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",
             "mod:implicit_arithmetic",
             "fn:compile_truss_postgresql_json",
-            "fn:compile_truss_runtime_json"
+            "fn:compile_truss_runtime_json",
+            "fn:compile_truss_runtime_page_json"
           ],
           "pathReferences": []
         },
@@ -2804,6 +2818,11 @@
         },
         {
           "path": "crates/weft-runtime/src/paths_keys_cli.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-runtime/src/security_mapping_cli.rs",
           "publicDeclarations": [],
           "pathReferences": []
         }
@@ -2954,6 +2973,7 @@
         {
           "path": "crates/weft-wasm/src/lib.rs",
           "publicDeclarations": [
+            "fn:prepare_security_mapping_json",
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",
             "fn:compile_paths_keys_json",
@@ -3270,6 +3290,9 @@
         "scripts/run-b005-embeddings.sh",
         "scripts/run-b005-full-corpus.sh",
         "scripts/run-b006-embeddings.sh",
+        "scripts/security/check-mapping-browser.ts",
+        "scripts/security/check-mapping-transports.py",
+        "scripts/security/mapping-transport-fixture.py",
         "scripts/security/prove-field-event-addresses.py",
         "scripts/security/prove-key-event-addresses.py",
         "scripts/security/run-case-catalog-checkpoint.py",

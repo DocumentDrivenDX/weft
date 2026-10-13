@@ -479,3 +479,8 @@ pub fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 
 #[cfg(feature="truss-postgresql-pg18")]
 pub fn compile_truss_runtime_json(request:&str)->String{weft_postgresql::truss_runtime::compile_json(request)}
+
+#[cfg(feature="truss-postgresql-pg18")]
+pub fn compile_truss_runtime_page_json(request:&str,page_size:u16,after:Option<Vec<String>>)->String{
+    weft_postgresql::truss_runtime::compile_page_json(request,page_size,after)
+}

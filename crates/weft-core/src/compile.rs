@@ -77,25 +77,32 @@ pub struct Compiler {
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None, None, false)
+        self.compile_json_internal(raw, None, None, false, None)
     }
     pub fn compile_json_with_factory(
         &self,
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, false)
+        self.compile_json_internal(raw, Some(factory), None, false, None)
     }
     /// Only a trusted embedding selects this additional numeric interpretation.
     pub fn compile_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String{
-        self.compile_json_internal(raw,Some(factory),None,true)
+        self.compile_json_internal(raw,Some(factory),None,true, None)
     }
     pub fn compile_json_with_security_factory(
         &self,
         raw: &str,
         factory: &mut crate::security_backend::SecurityRegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, None, Some(factory), false)
+        self.compile_json_internal(raw, None, Some(factory), false, None)
+    }
+    /// Explicit host-selected authored-key page composition; ordinary compilation is unchanged.
+    pub fn compile_page_json_with_exact_numbers_factory(
+        &self, raw: &str, page_size: u16, after: Option<Vec<String>>,
+        factory: &mut RegistryFactory<'_>,
+    ) -> String {
+        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after)))
     }
     fn compile_json_internal(
         &self,
@@ -103,9 +110,15 @@ impl Compiler {
         factory: Option<&mut RegistryFactory<'_>>,
         security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
         exact_numbers: bool,
+        page: Option<(u16, Option<Vec<String>>)>,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
+            if let Some((size, after)) = page.as_ref() {
+                if !(1..=999).contains(size) || after.as_ref().is_some_and(|items| items.len()>1024 || items.iter().try_fold(0usize, |total, value| total.checked_add(value.len())).is_none_or(|bytes| bytes>65536)) {
+                    return Err(Diagnostic::new("WFT-LIMIT", "input", "Page size or continuation exceeds its bounds"));
+                }
+            }
             if raw.len() > MAX_REQUEST_BYTES {
                 return Err(Diagnostic::new(
                     "WFT-LIMIT",
@@ -170,6 +183,9 @@ impl Compiler {
                     "input",
                     "Request violates its versioned envelope",
                 ));
+            }
+            if page.is_some() && version != "weft-compile/0.2.2" {
+                return Err(Diagnostic::new("WFT-VERSION", "input", "SQL page composition requires compile/0.2.2"));
             }
             let req: Request = serde_json::from_value(input)
                 .map_err(|_| Diagnostic::new("WFT-INPUT", "input", "Malformed request members"))?;
@@ -247,26 +263,34 @@ impl Compiler {
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
-                let mut plan = crate::application_resolve::resolve(
-                    &catalog,
-                    query,
-                    req.parameters.unwrap_or_default(),
-                    req.read_profile,
-                )?;
+                let page_plan = if let Some((size, after)) = page {
+                    if req.read_profile.is_some() || req.security.is_some() {
+                        return Err(Diagnostic::new("WFT-PROFILE", "input", "Page entrypoint owns its read profile"));
+                    }
+                    Some(crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())?)
+                } else { None };
+                let mut plan = match page_plan.as_ref() {
+                    Some(page) => page.plan.clone(),
+                    None => crate::application_resolve::resolve(&catalog, query, req.parameters.unwrap_or_default(), req.read_profile)?,
+                };
                 if req.interface_version == "weft-compile/0.2.2" {
                     plan.ir_version = "weft-ir/0.2.2".into();
                     let value = serde_json::to_value(&plan).map_err(|_| Diagnostic::new("WFT-IR", "resolve", "Invalid resolved entity plan"))?;
                     if !Plan022::is_valid(&value) { return Err(Diagnostic::new("WFT-IR", "resolve", "Resolved plan violates versioned entity semantics")); }
                 } else if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
-                self.emit(
-                    &req.interface_version,
-                    &req.dialect,
-                    &catalog,
-                    Plan::V02(&plan),
-                    req.target,
-                    req.options.allow_candidate,
-                    factory,
-                )
+                let artifact = self.emit(
+                    &req.interface_version, &req.dialect, &catalog, Plan::V02(&plan),
+                    req.target, req.options.allow_candidate, factory,
+                )?;
+                if let Some(page) = page_plan {
+                    return Ok(json!({"interfaceVersion":"weft-sql-page/0.1", "status":"compiled", "artifact":artifact,
+                        "page":{"visibleOutputs":page.visible_outputs,"keyOutputs":page.key_outputs,"pageSize":page.page_size,
+                            "generatedContinuationFilter":if page.continuation_values.is_empty(){None}else{Some(page.plan.filters.len()-1)},
+                            "generatedOutputPositions":page.key_outputs,
+                            "generatedOrderPositions":(0..page.plan.order.len()).collect::<Vec<_>>(),
+                            "generatedSpans":"diagnostic-anchors"}}));
+                }
+                Ok(artifact)
             }
         })();
         let output = match result {

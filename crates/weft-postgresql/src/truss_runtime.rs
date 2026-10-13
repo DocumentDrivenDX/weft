@@ -84,6 +84,7 @@ pub struct Runtime {
     exact_scalars: bool,
     retained_metadata: bool,
     complete_entities: bool,
+    continuation_filter: Option<usize>,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -577,7 +578,7 @@ impl Backend for Runtime {
             let predicates = join
                 .on
                 .iter()
-                .map(|p| build.predicate(p))
+                .map(|p| build.predicate(p, false))
                 .collect::<Result<Vec<_>>>()?;
             if predicates.is_empty() {
                 return Err(unsupported("Typed join predicate required"));
@@ -591,7 +592,7 @@ impl Backend for Runtime {
         let filters = plan
             .filters
             .iter()
-            .map(|p| build.predicate(p))
+            .enumerate().map(|(index, p)| build.predicate(p, self.continuation_filter == Some(index)))
             .collect::<Result<Vec<_>>>()?;
         let mut projections = vec![];
         let mut columns = vec![];
@@ -837,6 +838,9 @@ impl Build<'_> {
         Ok(format!("CASE WHEN NOT ({present}) THEN pg_catalog.jsonb_build_object('state','absent') WHEN {cell}->>'kind'='null' THEN pg_catalog.jsonb_build_object('state','null') ELSE pg_catalog.jsonb_build_object('state','value','value',{jsonvalue}) END"))
     }
     fn value(&mut self, v: &app::Value) -> Result<String> {
+        self.value_with_origin(v, None)
+    }
+    fn value_with_origin(&mut self, v: &app::Value, origin: Option<serde_json::Value>) -> Result<String> {
         match v {
             app::Value::Field { field } => Ok(self
                 .scalar(&field.scan, &field.identity, &field.logical_type)?
@@ -853,7 +857,7 @@ impl Build<'_> {
             } => {
                 let slot = self
                     .parameters
-                    .push(logical_type.clone(), value.clone(), json!(v))?;
+                    .push(logical_type.clone(), value.clone(), origin.unwrap_or_else(|| json!(v)))?;
                 Ok(match logical_type.family {
                     Family::String => format!("{slot}::pg_catalog.text COLLATE pg_catalog.\"C\""),
                     Family::Boolean => format!("{slot}::pg_catalog.bool"),
@@ -924,7 +928,7 @@ impl Build<'_> {
         let bounded = self.related(scan, relationship, None, Some(bound))?;
         Ok(format!("\"truss\".\"query_complete_related_keys\"(({bounded})::pg_catalog.jsonb,{bound}::pg_catalog.int4,{}::pg_catalog.int4)::pg_catalog.text", relationship.target_key.fields.len()))
     }
-    fn predicate(&mut self, p: &app::Predicate) -> Result<String> {
+    fn predicate(&mut self, p: &app::Predicate, continuation: bool) -> Result<String> {
         match p {
             app::Predicate::Equal { left, right } => {
                 let (l, _) = self.scalar(&left.scan, &left.identity, &left.logical_type)?;
@@ -956,7 +960,8 @@ impl Build<'_> {
                     .collect::<Result<Vec<_>>>()?;
                 let right = values
                     .iter()
-                    .map(|v| self.value(v))
+                    .enumerate().map(|(component, v)| self.value_with_origin(v,
+                        continuation.then(|| json!({"kind":"page-continuation","component":component}))))
                     .collect::<Result<Vec<_>>>()?;
                 Ok(format!(
                     "(ROW({})>ROW({}))",
@@ -974,6 +979,13 @@ impl Build<'_> {
     }
 }
 pub fn compile_json(request: &str) -> String {
+    compile_internal(request, None)
+}
+/// Authored-key SQL page composition over the same accepted Truss runtime binding.
+pub fn compile_page_json(request: &str, page_size: u16, after: Option<Vec<String>>) -> String {
+    compile_internal(request, Some((page_size, after)))
+}
+fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
@@ -987,7 +999,7 @@ pub fn compile_json(request: &str) -> String {
     let relationships = pages || version.as_deref() == Some("0.3.0");
     let numeric = relationships || version.as_deref() == Some("0.2.0");
     let mut factory =
-        |_: &Catalog, _: Plan<'_>, target: weft_core::compile::CompositionInput<'_>| {
+        |_: &Catalog, plan: Plan<'_>, target: weft_core::compile::CompositionInput<'_>| {
             let backend = Runtime {
                 exact_numbers: numeric,
                 relationships,
@@ -998,7 +1010,11 @@ pub fn compile_json(request: &str) -> String {
                 exact_scalars,
                 retained_metadata,
                 complete_entities,
+                continuation_filter: if page.as_ref().is_some_and(|(_, after)| after.is_some()) {
+                    match plan { Plan::V02(p) => Some(p.filters.len()-1), _ => return Err(fail("Page application plan required")) }
+                } else { None },
             };
+            if page.is_some() && !complete_entities { return Err(fail("SQL page transport requires runtime backend 0.4.6")); }
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
                 || target.target_profile != backend.target()
@@ -1010,7 +1026,9 @@ pub fn compile_json(request: &str) -> String {
             Ok(r)
         };
     let compiler = weft_core::compile::Compiler::default();
-    if numeric {
+    if let Some((size, after)) = page.clone() {
+        compiler.compile_page_json_with_exact_numbers_factory(request, size, after, &mut factory)
+    } else if numeric {
         compiler.compile_json_with_exact_numbers_factory(request, &mut factory)
     } else {
         compiler.compile_json_with_factory(request, &mut factory)
