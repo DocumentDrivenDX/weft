@@ -395,7 +395,7 @@ impl Backend for Runtime {
                     }
                 })
                 .chain(plan.outputs.iter().filter_map(|o| {
-                    if let app::Expression::RelatedKeys { relationship, .. } = &o.expression {
+                    if let app::Expression::RelatedKeys { relationship, .. } | app::Expression::CompleteRelatedKeys { relationship, .. } = &o.expression {
                         Some(relationship)
                     } else {
                         None
@@ -663,6 +663,17 @@ impl Backend for Runtime {
                         _ => return Err(unsupported("Structured property unavailable")),
                     }
                 }
+                app::Expression::NativeMetadata { scan, record, metadata, logical_type } if self.complete_entities => {
+                    if build.aliases.get(scan) != Some(record) { return Err(fail("Metadata source occurrence changed")); }
+                    let name = match metadata {
+                        app::NativeMetadata::Version => "_version", app::NativeMetadata::CreatedBy => "_created_by",
+                        app::NativeMetadata::UpdatedBy => "_updated_by", app::NativeMetadata::OriginalAuthor => "_original_author",
+                        app::NativeMetadata::OriginalAt => "_original_at",
+                    };
+                    let sql = format!("(\"truss\".\"query_object_attribution\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4,{}.id)->{})::pg_catalog.text", m.record(record)?.type_id, Identifier::new(scan)?.sql(), literal(name)?);
+                    (sql, Representation::NativeMetadata { metadata: metadata.clone(), logical_type: logical_type.clone(), carrier: ScalarCarrier::Text,
+                        decoder: if matches!(metadata, app::NativeMetadata::Version) { ScalarDecoder::ExactInteger } else { ScalarDecoder::Text } }, vec![record.clone()])
+                },
                 app::Expression::CompleteRelatedKeys { scan, relationship, bound } if self.complete_entities => (
                     build.complete_related(scan, relationship, *bound)?,
                     Representation::CompleteRelatedKeys { relationship: relationship.identity.clone(), key: relationship.target_key.clone(), bound: *bound },

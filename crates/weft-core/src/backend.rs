@@ -355,6 +355,13 @@ pub struct OuterJoin {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "kind", rename_all = "camelCase")]
 pub enum Representation {
+    NativeMetadata {
+        metadata: crate::application_ir::NativeMetadata,
+        #[serde(rename = "logicalType")]
+        logical_type: crate::ir::LogicalType,
+        carrier: ScalarCarrier,
+        decoder: ScalarDecoder,
+    },
     Scalar {
         #[serde(rename = "logicalType")]
         logical_type: crate::ir::LogicalType,
