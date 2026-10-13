@@ -944,6 +944,7 @@
             "field:registry",
             "fn:compile_json",
             "fn:compile_json_with_factory",
+            "fn:compile_json_with_exact_numbers_factory",
             "fn:compile_json_with_security_factory",
             "mod:v04",
             "mod:v041",
@@ -1111,6 +1112,7 @@
             "field:value",
             "field:document",
             "fn:inputs",
+            "fn:prepare_exact_numbers",
             "fn:prepare",
             "fn:prepare_security",
             "fn:pins",
@@ -2008,6 +2010,8 @@
         {
           "path": "crates/weft-postgresql/src/lib.rs",
           "publicDeclarations": [
+            "mod:truss_runtime",
+            "mod:pg18",
             "mod:access",
             "mod:binding",
             "mod:candidate",
@@ -2170,6 +2174,15 @@
             "struct:TargetPlan",
             "fn:new",
             "fn:with_relationships"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/pg18.rs",
+          "publicDeclarations": [
+            "const:TARGET_PROFILE",
+            "const:COMPOSITION_VERSION",
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -2562,6 +2575,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/storage_composition.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/structured.rs",
           "publicDeclarations": [
             "struct:Member",
@@ -2584,6 +2602,22 @@
           "path": "crates/weft-postgresql/src/tree.rs",
           "publicDeclarations": [
             "fn:integrity"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/truss_runtime.rs",
+          "publicDeclarations": [
+            "const:PROFILE",
+            "const:TARGET",
+            "const:NUMERIC_PROFILE",
+            "const:NUMERIC_TARGET",
+            "const:RELATIONSHIP_PROFILE",
+            "const:RELATIONSHIP_TARGET",
+            "struct:Runtime",
+            "struct:Mapping",
+            "struct:TargetPlan",
+            "fn:compile_json"
           ],
           "pathReferences": []
         },
@@ -2727,7 +2761,9 @@
             "mod:paths",
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",
-            "mod:implicit_arithmetic"
+            "mod:implicit_arithmetic",
+            "fn:compile_truss_postgresql_json",
+            "fn:compile_truss_runtime_json"
           ],
           "pathReferences": []
         },

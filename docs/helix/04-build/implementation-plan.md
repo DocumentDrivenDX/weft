@@ -1292,3 +1292,6 @@ snapshots, current context checks and exact decoding. Real installed consumer
 workflows and the .25→.26 migration have passed on pgserver-pg18==18.6.1/PG18.6.
 The evidence is scoped to string/boolean fields and integer COUNT; it does not
 close wider numeric/relationship/page-key support or security-compiler activation.
+
+
+Post-merge validation preserves upstream8129b19's ordinary Truss PostgreSQL/runtime additions. [Merged workspace evidence](evidence/security-pg-candidate-20261012/merged-workspace/receipt.json) records624 passing tests across46 groups, zero failed/ignored/filtered. The strict inventory initially exposed seven upstream source/API entries missing from main's map. Astra independently checked those exact files/declarations against upstream before the explicit seven-entry repair; generic whole-inventory regeneration was rejected and not executed. Ownership now passes11 packages and16 controls. This does not qualify ordinary runtime additions as security admission or refresh installed bindings.
