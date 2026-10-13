@@ -109,7 +109,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.retained_metadata {
+        if self.complete_entities {
+            "0.4.6"
+        } else if self.retained_metadata {
             "0.4.5"
         } else if self.exact_scalars {
             "0.4.4"
@@ -235,9 +237,9 @@ impl Backend for Runtime {
     fn describe(&self) -> Result<Manifest> {
         let language = vec![LanguageProfile {
             dialect_profile: "weft-sql/0.2.0".into(),
-            ir_version: if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
+            ir_version: if self.complete_entities { "weft-ir/0.2.2" } else if self.exact_scalars { "weft-ir/0.2.1" } else { "weft-ir/0.2.0" }.into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:if self.complete_entities{"weft-backend/0.2.2"}else if self.exact_scalars{"weft-backend/0.2.1"}else{"weft-backend/0.2.0"}.into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.complete_entities{vec!["project.nativeMetadata".into(),"relationship.completeKeys".into()]}else{vec![]}).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).chain(if self.exact_scalars{vec!["type.timestamp".into(),"type.binary".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.complete_entities{"Explicit complete entity metadata and complete required-string relationship key lists; maximum100 per list, excess refuses the whole query; original attribution evidence required; rootless scalar records only".into()}else if self.exact_scalars{"Projection-only timestamp/binary exact text tokens; no temporal/binary comparison, grouping, parameters or keys".into()}else if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -266,7 +268,9 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.retained_metadata {
+                != if self.complete_entities {
+                    "truss-catalog-runtime/0.33-candidate"
+                } else if self.retained_metadata {
                     "truss-catalog-runtime/0.32-candidate"
                 } else if self.selected_metadata {
                     "truss-catalog-runtime/0.31-candidate"
@@ -973,7 +977,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let retained_metadata = version.as_deref() == Some("0.4.5");
+    let complete_entities = version.as_deref() == Some("0.4.6");
+    let retained_metadata = complete_entities || version.as_deref() == Some("0.4.5");
     let exact_scalars = retained_metadata || version.as_deref() == Some("0.4.4");
     let selected_metadata = exact_scalars || version.as_deref() == Some("0.4.3");
     let groups = selected_metadata || version.as_deref() == Some("0.4.2");
@@ -992,7 +997,7 @@ pub fn compile_json(request: &str) -> String {
                 selected_metadata,
                 exact_scalars,
                 retained_metadata,
-                complete_entities: false,
+                complete_entities,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
