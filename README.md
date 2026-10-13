@@ -40,7 +40,7 @@ inherited PG17 native evidence.
 
 The same feature also exports `compile_truss_runtime_json(request_json)` for the
 actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
-`0.4.1`, binding `truss-runtime-binding/0.4` and target
+`0.4.2`, binding `truss-runtime-binding/0.4` and target
 `truss-runtime-pg18.6/0.4`. Truss constructs the binding from its accepted source
 bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
 This separate adapter uses Weft's application-read frontend and typed IR, then
@@ -53,11 +53,14 @@ relationships support HAS_RELATED and bounded RELATED_KEYS, forward/inverse,
 with authored required string keys. Edge bags and composite key ordering are
 preserved. Explicit entity/related-entity page profiles use exact authored
 required-string native keys and typed C-collated continuation, with complete
-source uniqueness checked by Truss before filtering. Ungrouped count-summary is
-also supported. Multi-hop relationships, structured properties, non-string page
-keys and grouped summaries remain unsupported
+source uniqueness checked by Truss before filtering. Count-summary supports
+ungrouped counts and grouped counts over required, non-nullable string/boolean
+fields, with complete grouping order and an explicit LIMIT. Duplicate rows count
+individually; string grouping uses C collation. Multi-hop relationships, structured
+properties, non-string page keys and optional/numeric grouping remain unsupported
 in that consumer. All new declarations retain Candidate status.
 
-The runtime compiler retains explicit release selection: backend0.4.1 admits
-Truss runtime0.30; backend0.4.0 remains the0.29 realization. Binding/target0.4
-and query semantics are unchanged by this release compatibility patch.
+The runtime compiler retains explicit release selection: backend0.4.2 adds the
+group capability for Truss runtime0.30. Backend0.4.1 retains its ungrouped0.30
+semantics; backend0.4.0 remains the0.29 realization. Binding/target0.4 and native
+query sources are unchanged.

@@ -79,6 +79,7 @@ pub struct Runtime {
     relationships: bool,
     pages: bool,
     release_030: bool,
+    groups: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -104,7 +105,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.release_030 {
+        if self.groups {
+            "0.4.2"
+        } else if self.release_030 {
             "0.4.1"
         } else if self.pages {
             "0.4.0"
@@ -217,7 +220,7 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: "weft-ir/0.2.0".into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -484,10 +487,20 @@ impl Backend for Runtime {
         let Plan::V02(plan) = c.plan else {
             return Err(unsupported("Runtime requires application-read IR"));
         };
-        if !plan.groups.is_empty()
+        if (!self.groups && !plan.groups.is_empty())
             || (!self.pages && (plan.read_profile.is_some() || plan.page_key.is_some()))
         {
             return Err(unsupported("Runtime page-key/group profile unavailable"));
+        }
+        for field in &plan.groups {
+            let descriptor = plan.type_graph.iter().find(|d| d.identity == field.identity)
+                .ok_or_else(|| unsupported("Original group descriptor required"))?;
+            if descriptor.availability.as_deref() != Some("required")
+                || field.logical_type.nullable
+                || !matches!(field.logical_type.family, Family::String | Family::Boolean)
+            {
+                return Err(unsupported("Required non-null string/boolean group keys only"));
+            }
         }
         let mut build = Build {
             mapping: m,
@@ -665,6 +678,12 @@ impl Backend for Runtime {
         let mut sql = format!("SELECT {} FROM {from}", projections.join(","));
         if !filters.is_empty() {
             sql.push_str(&format!(" WHERE {}", filters.join(" AND ")));
+        }
+        if !plan.groups.is_empty() {
+            let groups = plan.groups.iter().map(|f| {
+                build.scalar(&f.scan, &f.identity, &f.logical_type).map(|v| v.0)
+            }).collect::<Result<Vec<_>>>()?;
+            sql.push_str(&format!(" GROUP BY {}", groups.join(",")));
         }
         if !order.is_empty() {
             sql.push_str(&format!(" ORDER BY {}", order.join(",")));
@@ -894,7 +913,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let release_030 = version.as_deref() == Some("0.4.1");
+    let groups = version.as_deref() == Some("0.4.2");
+    let release_030 = groups || version.as_deref() == Some("0.4.1");
     let pages = release_030 || version.as_deref() == Some("0.4.0");
     let relationships = pages || version.as_deref() == Some("0.3.0");
     let numeric = relationships || version.as_deref() == Some("0.2.0");
@@ -905,6 +925,7 @@ pub fn compile_json(request: &str) -> String {
                 relationships,
                 pages,
                 release_030,
+                groups,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
