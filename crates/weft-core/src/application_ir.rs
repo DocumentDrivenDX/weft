@@ -120,6 +120,7 @@ pub enum NativeMetadata {
     UpdatedAt,
     OriginalAuthor,
     OriginalAt,
+    LoadId,
 }
 #[derive(Debug, Clone, Serialize)]
 pub struct Output {

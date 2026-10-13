@@ -39,7 +39,7 @@ pub fn resolve(
 ) -> Result<ir::Plan> {
     let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
     if profile.as_ref().is_some_and(|p| match p.subset {
-        ir::Subset::CompleteEntity => !matches!(p.version.as_str(), "weft-truss-entity-read/0.1.0" | "weft-truss-entity-read/0.2.0"),
+        ir::Subset::CompleteEntity => !matches!(p.version.as_str(), "weft-truss-entity-read/0.1.0" | "weft-truss-entity-read/0.2.0" | "weft-truss-entity-read/0.3.0"),
         _ => p.version != "weft-application-read/0.2.0",
     }) {
         return Err(fail("WFT-VERSION", "Unsupported application recognizer profile version"));
@@ -161,11 +161,15 @@ pub fn resolve(
                             logical_type: LogicalType { family, facets: json!({}), nullable },
                         }));
                     }
-                    if profile.as_ref().is_some_and(|p| p.version=="weft-truss-entity-read/0.2.0") {
+                    if profile.as_ref().is_some_and(|p| matches!(p.version.as_str(),"weft-truss-entity-read/0.2.0"|"weft-truss-entity-read/0.3.0")) {
                         for (name, metadata) in [("_created_at",ir::NativeMetadata::CreatedAt),("_updated_at",ir::NativeMetadata::UpdatedAt)] {
                             if expressions.iter().any(|(label,_)|label.eq_ignore_ascii_case(name)) { return Err(fail("WFT-NAME-AMBIGUOUS","Authored member collides with Truss entity timestamp")); }
                             expressions.push((name.into(),ir::Expression::NativeMetadata{scan:scan.clone(),record:record_identity.clone(),metadata,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:false}}));
                         }
+                    }
+                    if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") {
+                        if expressions.iter().any(|(label,_)|label.eq_ignore_ascii_case("_load_id")) { return Err(fail("WFT-NAME-AMBIGUOUS","Authored member collides with Truss import load metadata")); }
+                        expressions.push(("_load_id".into(),ir::Expression::NativeMetadata{scan:scan.clone(),record:record_identity.clone(),metadata:ir::NativeMetadata::LoadId,logical_type:LogicalType{family:Family::String,facets:json!({}),nullable:true}}));
                     }
                     s.caps.insert("project.nativeMetadata".into());
                     for (name, relationship) in relationships {
@@ -426,7 +430,7 @@ pub fn resolve(
     }
     s.caps.insert("project".into());
     Ok(ir::Plan {
-        ir_version: if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
+        ir_version: if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),
