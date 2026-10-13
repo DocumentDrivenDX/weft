@@ -2072,7 +2072,8 @@
             "mod:value_traversal",
             "mod:original_backend",
             "mod:native_profile",
-            "mod:qualified_profile"
+            "mod:qualified_profile",
+            "mod:security_predicate_spike"
           ],
           "pathReferences": []
         },
@@ -2574,6 +2575,13 @@
             "fn:decode_property",
             "fn:decode_logical_property",
             "fn:decode"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_predicate_spike.rs",
+          "publicDeclarations": [
+            "fn:render"
           ],
           "pathReferences": []
         },
