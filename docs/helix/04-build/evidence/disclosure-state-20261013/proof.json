@@ -1,0 +1,6 @@
+{
+  "z3": "4.15.4",
+  "scope": "two-permit abstract original/withheld states, protected field; no transformation/value/null/absence/authentication or SQL implementation proof",
+  "equivalenceCounterexample": "unsat",
+  "ungatedWitness": "[withheld = 0, original = 1]"
+}

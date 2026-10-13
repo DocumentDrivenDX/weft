@@ -1,0 +1,802 @@
+{
+  "review": "Independent Astra Ultra read-only diagnostic0.3 original/withheld field-state review",
+  "head": "ebb4e0ab837dcd00ed3f70e674db72e871400f8f",
+  "findings": [],
+  "resolvedConcerns": [
+    "Every state is gated by emitted row eligibility; deny/unknown returns not-applicable rather than an apparent disclosure",
+    "Original association Record targets now resolve through the same original entity/association binding union using borrowed exact qualified identities",
+    "Every selected-rule visit is charged even for nonpermit/empty disclosure; fields and disclosure incidences share renderer budget; field identity UTF-8 bytes precharged before clone"
+  ],
+  "independentControls": {
+    "renderer": {
+      "scope": "Actual diagnostic renderer with original admitted sources. In-memory SQLite executes only emitted CASE/state SQL; this is not an independent PostgreSQL oracle. No native DB mutation.",
+      "passedControls": 117,
+      "stateEvaluations": 164,
+      "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+      "binarySha256": "5ce0dc98554f2cac933291cb8c4f6a3ea3f0ec9c4e52a711b8e592b68d34ac16",
+      "cases": [
+        {
+          "case": "originalDispositionVector0",
+          "passed": true,
+          "inputBytes": 20370,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector0",
+          "passed": true,
+          "inputBytes": 20370,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector1",
+          "passed": true,
+          "inputBytes": 20368,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector1",
+          "passed": true,
+          "inputBytes": 20368,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector2",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector2",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector3",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector3",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector4",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector4",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector5",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector5",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector6",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector6",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector7",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector7",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector8",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector8",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector9",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector9",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector10",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector10",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector11",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector11",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector12",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector12",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector13",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector13",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector14",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector14",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector15",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector15",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector16",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector16",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector17",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector17",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector18",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector18",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector19",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector19",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector20",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector20",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector21",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector21",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector22",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector22",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector23",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector23",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector24",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector24",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector25",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector25",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector26",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector26",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector27",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector27",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector28",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector28",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector29",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector29",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector30",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector30",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector31",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector31",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector32",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector32",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector33",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector33",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector34",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector34",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector35",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector35",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector36",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector36",
+          "passed": true,
+          "inputBytes": 20511,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector37",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector37",
+          "passed": true,
+          "inputBytes": 20509,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector38",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector38",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector39",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector39",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector40",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector40",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector41",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector41",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector42",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector42",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector43",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector43",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector44",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector44",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector45",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector45",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector46",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector46",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector47",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector47",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector48",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector48",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector49",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector49",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector50",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector50",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector51",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector51",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector52",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector52",
+          "passed": true,
+          "inputBytes": 20793,
+          "exit": 0
+        },
+        {
+          "case": "originalDispositionVector53",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "reorderedDispositionVector53",
+          "passed": true,
+          "inputBytes": 20791,
+          "exit": 0
+        },
+        {
+          "case": "activePermitFoldFalse",
+          "passed": true,
+          "inputBytes": 20652,
+          "exit": 0
+        },
+        {
+          "case": "activePermitFoldTrue",
+          "passed": true,
+          "inputBytes": 20650,
+          "exit": 0
+        },
+        {
+          "case": "associationTargetFields",
+          "passed": true,
+          "inputBytes": 19973,
+          "exit": 0
+        },
+        {
+          "case": "transformRefusesEvenInactiveFalse",
+          "passed": true,
+          "inputBytes": 20281,
+          "exit": 1
+        },
+        {
+          "case": "transformRefusesEvenInactiveTrue",
+          "passed": true,
+          "inputBytes": 20280,
+          "exit": 1
+        },
+        {
+          "case": "work8192",
+          "passed": true,
+          "inputBytes": 46351,
+          "exit": 0
+        },
+        {
+          "case": "work8193",
+          "passed": true,
+          "inputBytes": 46376,
+          "exit": 1
+        },
+        {
+          "case": "metadataExact",
+          "passed": true,
+          "inputBytes": 2117035,
+          "exit": 0
+        },
+        {
+          "case": "metadataOneOver",
+          "passed": true,
+          "inputBytes": 2117037,
+          "exit": 1
+        }
+      ]
+    },
+    "simulation": {
+      "scope": "Original evaluator synthetic cut; actual example disclosure serialization, no native fact/source authority claim",
+      "cases": [
+        {
+          "case": "original",
+          "passed": true,
+          "disclosures": [
+            [
+              [
+                {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                },
+                "original"
+              ]
+            ]
+          ]
+        },
+        {
+          "case": "withheld",
+          "passed": true,
+          "disclosures": [
+            [
+              [
+                {
+                  "documentId": "domain",
+                  "elementId": "salary",
+                  "moduleId": "m"
+                },
+                "withheld"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    "totalPassedControls": 119,
+    "stateEvaluations": 164
+  },
+  "sourceDigests": {
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "3c3b9944d87f64ece27fdb3eca5f8d0f75947e8e997b615722f05ae36521e419",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "ab3a1f87e1df9dec9048f31ef3d18bf9a578ef2a4c3292276cb0046931613515",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/src/security_ontology.rs": "a1e19a2605a2d247b6c58f252886d0ab45077cd2e3d53f0bffb995a2ae2a7d19",
+    "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6"
+  },
+  "nativeHarnessDigest": "809b0f51c3def5e6b5628839752c452fc8ab8c4b8d7337da3f65953208d58ed8",
+  "parentNativeEvidence": [
+    {
+      "path": "/private/tmp/truss-disclosure-state-native.log",
+      "sha256": "e869c5e5ba54bb9c73032f3c155a4323dcad53544066a5e8beee91e6b950aa42",
+      "provenance": "Parent actual native run; reviewer inspected log and source, did not rerun"
+    },
+    {
+      "path": "/private/tmp/truss-disclosure-gated-full-native.log",
+      "sha256": "0f5dee8536e92a140a9037ea75c2c86c0bc214de43a710fad9b7138359e54e78",
+      "provenance": "Parent actual native run; reviewer inspected log and source, did not rerun"
+    },
+    {
+      "path": "/private/tmp/truss-disclosure-final-work-native.log",
+      "sha256": "6b3b0064c2b5260b5f2d694212061cfba13f746568397b0ba33d33f98042b746",
+      "provenance": "Parent actual native run; reviewer inspected log and source, did not rerun"
+    }
+  ],
+  "scope": [
+    "Selected matched-rule target/action groups; absence explicitly unsupported_refuse",
+    "Original/withheld field states conditional on row permit; withheld dominates only active permits, original requires active declaration for protected field, missing protected disclosure is indeterminate",
+    "indeterminateField=projection_must_refuse; transformations reject the diagnostic even when condition inactive; no native value projection",
+    "Original disposition oracle subset54 cases checked in both rule orders; active/inactive/unknown permit fold and association-target native-home metadata checked",
+    "Exact8192/8193 work and1048576/1048577 metadata-byte boundaries verified with final field-loop accounting",
+    "Final serialized JSON payload ceiling checked after simulation; this is not a total heap/CPU or all intermediate allocations bound"
+  ],
+  "limitations": [
+    "In-memory SQLite CASE controls are not PostgreSQL native execution evidence; parent native6 tests27.052sec and final1test9.370sec inspected separately",
+    "No complete disclosure, transform/mask/conflict, protected execution, issuer/authenticated principal, source/writer lifetime, release/sink or backend acceptance theorem",
+    "Truthful native assessment, original valid complete facts and keys, safe native path/helpers remain premises; no acceptance-case promotion"
+  ]
+}

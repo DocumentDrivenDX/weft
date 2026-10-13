@@ -24,6 +24,7 @@ fn run() -> Result<()> {
     if object.contains_key("cut") {
         let results = weft_core::security_evaluation::simulate_json(&plan, &catalog,
             &value["cut"].to_string(), &value["evaluationRequest"].to_string())?;
+        output["simulationDisclosures"] = serde_json::to_value(results.iter().map(|r| &r.disclosure).collect::<Vec<_>>()).map_err(|_| refused())?;
         output["simulationDecisions"] = serde_json::json!(results.iter().map(|r| format!("{:?}", r.decision).to_lowercase()).collect::<Vec<_>>());
     }
     let encoded = serde_json::to_vec(&output).map_err(|_| refused())?;

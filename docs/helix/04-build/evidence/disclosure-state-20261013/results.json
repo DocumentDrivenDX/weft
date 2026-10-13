@@ -1,0 +1,711 @@
+{
+  "scope": "Actual diagnostic renderer with original admitted sources. In-memory SQLite executes only emitted CASE/state SQL; this is not an independent PostgreSQL oracle. No native DB mutation.",
+  "passedControls": 117,
+  "stateEvaluations": 164,
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "5ce0dc98554f2cac933291cb8c4f6a3ea3f0ec9c4e52a711b8e592b68d34ac16",
+  "cases": [
+    {
+      "case": "originalDispositionVector0",
+      "passed": true,
+      "inputBytes": 20370,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector0",
+      "passed": true,
+      "inputBytes": 20370,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector1",
+      "passed": true,
+      "inputBytes": 20368,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector1",
+      "passed": true,
+      "inputBytes": 20368,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector2",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector2",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector3",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector3",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector4",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector4",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector5",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector5",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector6",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector6",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector7",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector7",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector8",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector8",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector9",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector9",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector10",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector10",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector11",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector11",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector12",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector12",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector13",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector13",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector14",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector14",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector15",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector15",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector16",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector16",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector17",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector17",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector18",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector18",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector19",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector19",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector20",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector20",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector21",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector21",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector22",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector22",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector23",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector23",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector24",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector24",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector25",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector25",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector26",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector26",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector27",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector27",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector28",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector28",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector29",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector29",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector30",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector30",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector31",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector31",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector32",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector32",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector33",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector33",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector34",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector34",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector35",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector35",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector36",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector36",
+      "passed": true,
+      "inputBytes": 20511,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector37",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector37",
+      "passed": true,
+      "inputBytes": 20509,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector38",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector38",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector39",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector39",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector40",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector40",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector41",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector41",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector42",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector42",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector43",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector43",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector44",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector44",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector45",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector45",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector46",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector46",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector47",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector47",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector48",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector48",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector49",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector49",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector50",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector50",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector51",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector51",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector52",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector52",
+      "passed": true,
+      "inputBytes": 20793,
+      "exit": 0
+    },
+    {
+      "case": "originalDispositionVector53",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "reorderedDispositionVector53",
+      "passed": true,
+      "inputBytes": 20791,
+      "exit": 0
+    },
+    {
+      "case": "activePermitFoldFalse",
+      "passed": true,
+      "inputBytes": 20652,
+      "exit": 0
+    },
+    {
+      "case": "activePermitFoldTrue",
+      "passed": true,
+      "inputBytes": 20650,
+      "exit": 0
+    },
+    {
+      "case": "associationTargetFields",
+      "passed": true,
+      "inputBytes": 19973,
+      "exit": 0
+    },
+    {
+      "case": "transformRefusesEvenInactiveFalse",
+      "passed": true,
+      "inputBytes": 20281,
+      "exit": 1
+    },
+    {
+      "case": "transformRefusesEvenInactiveTrue",
+      "passed": true,
+      "inputBytes": 20280,
+      "exit": 1
+    },
+    {
+      "case": "work8192",
+      "passed": true,
+      "inputBytes": 46351,
+      "exit": 0
+    },
+    {
+      "case": "work8193",
+      "passed": true,
+      "inputBytes": 46376,
+      "exit": 1
+    },
+    {
+      "case": "metadataExact",
+      "passed": true,
+      "inputBytes": 2117035,
+      "exit": 0
+    },
+    {
+      "case": "metadataOneOver",
+      "passed": true,
+      "inputBytes": 2117037,
+      "exit": 1
+    }
+  ]
+}

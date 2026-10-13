@@ -2,7 +2,7 @@
 //! Not a registered security backend, result contract, or execution permit.
 use std::collections::BTreeMap;
 use serde_json::{Value,json};
-use weft_core::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,Effect},security_ontology::SecurityRef};
+use weft_core::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,Effect,Disposition},security_ontology::SecurityRef};
 fn reference(v:&Value)->Result<SecurityRef>{serde_json::from_value(v.clone()).map_err(|_|fail())}
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-PREDICATE-SPIKE","capability","Native predicate correspondence unavailable")}
 #[derive(Clone)]
@@ -63,8 +63,26 @@ pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Res
   let obligation=if obligations.is_empty(){"TRUE".into()}else{obligations.join(" AND ")};
   let decision=format!("CASE WHEN ({unknown}) THEN 'indeterminate' WHEN ({permit}) AND ({obligation}) THEN 'permit' ELSE 'deny' END");
   total+=decision.len();if total>4_000_000{return Err(fail());}
-  eligibility.push(json!({"target":target,"action":action,"decisionExpression":decision}));
+  let bindings=plan.source().ontology()["entities"].as_array().ok_or_else(fail)?;
+  let associations=plan.source().ontology()["associations"].as_array().ok_or_else(fail)?;
+  let binding=renderer.one(bindings.iter().chain(associations).filter(|e|e["type"]["documentId"].as_str()==Some(target.document_id.as_str())&&e["type"]["moduleId"].as_str()==Some(target.module_id.as_str())&&e["type"]["elementId"].as_str()==Some(target.element_id.as_str())).collect())?;
+  let mut disclosure=Vec::new();
+  for field in binding["fields"].as_array().ok_or_else(fail)? {
+   renderer.step()?;for key in ["documentId","moduleId","elementId"] {group_bytes=group_bytes.checked_add(field["ref"][key].as_str().ok_or_else(fail)?.len()).ok_or_else(fail)?;}if group_bytes>1_048_576{return Err(fail());}let field_ref=reference(&field["ref"])?;let mut declared=Vec::new();let mut withheld=Vec::new();
+   for (index,effect) in &selected {renderer.step()?;if *effect!=Effect::Permit{continue;}for (declared_field,disposition) in &plan.rules()[*index].disclosure {
+    renderer.step()?;if declared_field!=&field_ref{continue;}declared.push(format!("q{index} IS TRUE"));
+    match disposition {Disposition::Withheld=>withheld.push(format!("q{index} IS TRUE")),Disposition::Original=>{},Disposition::Transformed{..}=>return Err(fail())}
+   }}
+   let declared=if declared.is_empty(){"FALSE".into()}else{declared.join(" OR ")};let withheld=if withheld.is_empty(){"FALSE".into()}else{withheld.join(" OR ")};
+   let fallback=if field["protection"]=="protected"{"indeterminate"}else{"original"};
+   let field_state=format!("CASE WHEN ({withheld}) THEN 'withheld' WHEN ({declared}) THEN 'original' ELSE '{fallback}' END");
+   let state=format!("CASE WHEN ({decision}) <> 'permit' THEN 'not-applicable' ELSE ({field_state}) END");
+   if state.len()>1_048_576{return Err(fail());}
+   total+=state.len();if total>4_000_000{return Err(fail());}
+   disclosure.push(json!({"field":field_ref,"stateExpression":state}));
+  }
+  eligibility.push(json!({"target":target,"action":action,"decisionExpression":decision,"disclosure":disclosure}));
  }
- let output=json!({"version":"weft.truss.predicate-spike/0.2","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
+ let output=json!({"version":"weft.truss.predicate-spike/0.3","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","indeterminateField":"projection_must_refuse","disclosureScope":"row_permit_gated_original_withheld_states_only_transformations_refuse_no_value_projection","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
  if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(output)
 }
