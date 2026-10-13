@@ -8,7 +8,7 @@ fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-PREDICATE-SPIKE","capability
 #[derive(Clone)]
 struct Cell{known:String,sql:String,family:String}
 struct Tuple{cells:Vec<Cell>,identity:Option<(SecurityRef,String)>}
-struct Render<'a>{inventory:&'a Value,ontology:&'a Value,documents:Vec<Value>,parameters:Vec<Value>,parameter_bytes:usize,work:usize}
+struct Render<'a>{inventory:&'a Value,ontology:&'a Value,documents:Vec<Value>,parameters:Vec<Value>,parameter_bytes:usize,parameter_types:Vec<String>,work:usize}
 impl Render<'_>{
  fn step(&mut self)->Result<()>{if self.work==0{return Err(fail());}self.work-=1;Ok(())}
  fn one<'a>(&self,rows:Vec<&'a Value>)->Result<&'a Value>{if rows.len()!=1{return Err(fail());}Ok(rows[0])}
@@ -23,6 +23,17 @@ impl Render<'_>{
   let sql=if family=="string"{format!("(CASE WHEN {raw}->>'kind'='null' THEN NULL ELSE {raw}->>'text' END) COLLATE pg_catalog.\"C\"")}else{format!("CASE WHEN {raw}->>'kind'='null' THEN NULL ELSE {raw}->'value' END")};
   Ok(Cell{known,sql,family:family.into()})
  }
+ fn projection_cell(&self,target:&SecurityRef,r:&SecurityRef)->Result<(String,String,bool)> {
+  let tid=self.type_id(target)?;
+  let row=self.one(self.inventory["properties"].as_array().ok_or_else(fail)?.iter().filter(|p|p["retired_rev"].is_null()&&p["type_id"]==tid&&p["definition_document_id"]==r.document_id&&p["declaration_module"]==r.module_id&&p["element"]==r.element_id&&p["home"]=="json").collect())?;
+  let id=row["prop_id"].as_i64().ok_or_else(fail)?;if !(1..=i32::MAX as i64).contains(&id){return Err(fail());}
+  let source=self.field(r)?;let family=source["scalarType"].as_str().ok_or_else(fail)?;
+  let wrapper=match family{"string"=>"string","boolean"=>"boolean","integer"=>"integerToken","decimal"=>"decimalToken","binary"=>"binaryHex",_=>return Err(fail())};
+  let raw=format!("r.props->'{id}'");
+  let payload=if family=="boolean"{format!("{raw}->'value'")}else if family=="binary"{format!("pg_catalog.to_jsonb(pg_catalog.encode(pg_catalog.decode({raw}->>'text','base64'),'hex'))")}else{format!("{raw}->'text'")};
+  let literal=format!("CASE WHEN {raw}->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('{wrapper}',{payload}) END");
+  Ok((raw,literal,source["nullability"]=="absent-allowed"))
+ }
  fn key(&self,target:&SecurityRef,key:&str)->Result<Vec<SecurityRef>>{
   let tid=self.type_id(target)?;let row=self.one(self.inventory["keys"].as_array().ok_or_else(fail)?.iter().filter(|k|k["type_id"]==tid&&k["key_id"]==key&&k["retired_rev"].is_null()).collect())?;
   let mut result=Vec::new();for id in row["prop_ids"].as_array().ok_or_else(fail)?{let p=self.one(self.inventory["properties"].as_array().ok_or_else(fail)?.iter().filter(|p|p["type_id"]==tid&&p["prop_id"]==*id&&p["retired_rev"].is_null()).collect())?;result.push(SecurityRef{document_id:p["definition_document_id"].as_str().ok_or_else(fail)?.into(),module_id:p["declaration_module"].as_str().ok_or_else(fail)?.into(),element_id:p["element"].as_str().ok_or_else(fail)?.into()});}if result.is_empty()||result.len()>64{return Err(fail());}Ok(result)
@@ -30,7 +41,7 @@ impl Render<'_>{
  fn binding(&self,b:&Binding,resource:&SecurityRef,vars:&BTreeMap<usize,SecurityRef>)->Result<(SecurityRef,String)>{Ok(match b{Binding::Subject=>(reference(&self.ontology["subject"])? ,"s".into()),Binding::Resource=>(resource.clone(),"r".into()),Binding::Variable(slot)=>(vars.get(slot).ok_or_else(fail)?.clone(),format!("v{slot}"))})}
  fn term(&mut self,t:&Term,resource:&SecurityRef,vars:&BTreeMap<usize,SecurityRef>)->Result<Tuple>{self.step()?;match t{
   Term::Field{binding,field,..}=>{let (owner,alias)=self.binding(binding,resource,vars)?;Ok(Tuple{cells:vec![self.cell(&owner,field,&alias)?],identity:None})},
-  Term::Constant{domain,literal,..}=>{let family=domain["scalarType"].as_str().ok_or_else(fail)?;if !matches!(family,"string"|"boolean")||self.parameters.len()>=1024{return Err(fail());}let original=if literal.is_null(){literal}else{&literal[family]};let bytes=match original{Value::String(text)=>text.bytes().try_fold(2usize,|n,b|n.checked_add(if b<32{6}else if b==b'"'||b==b'\\'{2}else{1})).ok_or_else(fail)?,Value::Bool(_)=>5,Value::Null=>4,_=>return Err(fail())};self.parameter_bytes=self.parameter_bytes.checked_add(bytes).ok_or_else(fail)?;if self.parameter_bytes>1_048_576{return Err(fail());}let value=original.clone();if !(value.is_null()||family=="string"&&value.is_string()||family=="boolean"&&value.is_boolean()){return Err(fail());}self.parameters.push(value);let slot=self.parameters.len();let sql=if family=="string"{format!("${slot}::pg_catalog.text COLLATE pg_catalog.\"C\"")}else{format!("pg_catalog.to_jsonb(${slot}::pg_catalog.bool)")};Ok(Tuple{cells:vec![Cell{known:"TRUE".into(),sql,family:family.into()}],identity:None})},
+  Term::Constant{domain,literal,..}=>{let family=domain["scalarType"].as_str().ok_or_else(fail)?;if !matches!(family,"string"|"boolean")||self.parameters.len()>=1024{return Err(fail());}let original=if literal.is_null(){literal}else{&literal[family]};let bytes=match original{Value::String(text)=>text.bytes().try_fold(2usize,|n,b|n.checked_add(if b<32{6}else if b==b'"'||b==b'\\'{2}else{1})).ok_or_else(fail)?,Value::Bool(_)=>5,Value::Null=>4,_=>return Err(fail())};self.parameter_bytes=self.parameter_bytes.checked_add(bytes).ok_or_else(fail)?;if self.parameter_bytes>1_048_576{return Err(fail());}let value=original.clone();if !(value.is_null()||family=="string"&&value.is_string()||family=="boolean"&&value.is_boolean()){return Err(fail());}self.parameters.push(value);self.parameter_types.push(if family=="string"{"text"}else{"boolean"}.into());let slot=self.parameters.len();let sql=if family=="string"{format!("${slot}::pg_catalog.text COLLATE pg_catalog.\"C\"")}else{format!("pg_catalog.to_jsonb(${slot}::pg_catalog.bool)")};Ok(Tuple{cells:vec![Cell{known:"TRUE".into(),sql,family:family.into()}],identity:None})},
   Term::Identity{binding,target,key_id}=>{let (owner,alias)=self.binding(binding,resource,vars)?;if &owner!=target{return Err(fail());}let refs=self.key(target,key_id)?;Ok(Tuple{cells:refs.iter().map(|r|self.cell(target,r,&alias)).collect::<Result<_>>()?,identity:Some((target.clone(),key_id.clone()))})},
   Term::Endpoint{binding,association,role,target,key_id}=>{let a=association.record().ok_or_else(fail)?;let (owner,alias)=self.binding(binding,resource,vars)?;if &owner!=a{return Err(fail());}let declaration=self.one(self.ontology["associations"].as_array().ok_or_else(fail)?.iter().filter(|v|reference(&v["type"]).ok().as_ref()==Some(a)).collect())?;let endpoint=self.one(declaration["endpoints"].as_array().ok_or_else(fail)?.iter().filter(|e|e["role"]==*role).collect())?;if reference(&endpoint["target"])?!=*target{return Err(fail());}let refs=endpoint["fields"].as_array().ok_or_else(fail)?.iter().map(reference).collect::<Result<Vec<_>>>()?;if refs.len()!=self.key(target,key_id)?.len(){return Err(fail());}Ok(Tuple{cells:refs.iter().map(|r|self.cell(a,r,&alias)).collect::<Result<_>>()?,identity:Some((target.clone(),key_id.clone()))})},
   Term::Context{..}=>Err(fail())}}
@@ -49,7 +60,7 @@ impl Render<'_>{
 pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Result<Value>{
  plan.require_catalog(catalog)?;if assessment["modelPins"]!=serde_json::to_value(catalog.pins()).map_err(|_|fail())?{return Err(fail());}
  let documents=catalog.inputs().iter().map(|i|weft_core::json::checked_json(&i.document_json).map_err(|_|fail())).collect::<Result<Vec<_>>>()?;
- let mut renderer=Render{inventory:&assessment["inventory"],ontology:plan.source().ontology(),documents,parameters:vec![],parameter_bytes:0,work:8192};let mut rules=Vec::new();let mut total=0;
+ let mut renderer=Render{inventory:&assessment["inventory"],ontology:plan.source().ontology(),documents,parameters:vec![],parameter_bytes:0,parameter_types:vec![],work:8192};let mut rules=Vec::new();let mut total=0;
  for (index,rule) in plan.rules().iter().enumerate(){let expression=renderer.expression(&rule.condition,&rule.target,&BTreeMap::new(),0)?;total+=expression.len();if total>4_000_000{return Err(fail());}rules.push(json!({"id":rule.id,"target":rule.target,"effect":rule.effect,"actions":rule.actions,"expression":expression,"truthColumn":format!("q{index}")}));}
  let mut group_bytes=0usize;
  let mut groups:BTreeMap<(SecurityRef,String),Vec<(usize,Effect)>>=BTreeMap::new();
@@ -74,10 +85,15 @@ pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Res
     match disposition {Disposition::Withheld=>withheld.push(format!("q{index} IS TRUE")),Disposition::Original=>{},Disposition::Transformed{..}=>transforms.push((*index,disposition))}
    }}
    let declared=if declared.is_empty(){"FALSE".into()}else{declared.join(" OR ")};let withheld=if withheld.is_empty(){"FALSE".into()}else{withheld.join(" OR ")};
-   let mut transform_metadata=Vec::new();let mut choices=Vec::new();let mut conflicts=Vec::new();
+   let mut transform_metadata=Vec::new();let mut choices=Vec::new();let mut conflicts=Vec::new();let mut value_choices=Vec::new();
    for (slot,(index,disposition)) in transforms.iter().enumerate() {
     renderer.step()?;let encoded=serde_json::to_vec(disposition).map_err(|_|fail())?;
     group_bytes=group_bytes.checked_add(encoded.len()).ok_or_else(fail)?;if group_bytes>1_048_576{return Err(fail());}
+    let Disposition::Transformed{literal,..}=disposition else{return Err(fail());};
+    let bytes=serde_json::to_vec(literal).map_err(|_|fail())?.len();renderer.parameter_bytes=renderer.parameter_bytes.checked_add(bytes).ok_or_else(fail)?;
+    if renderer.parameter_bytes>1_048_576||renderer.parameters.len()>=1024{return Err(fail());}
+    renderer.parameters.push(literal.clone());renderer.parameter_types.push("jsonb".into());let parameter=renderer.parameters.len();
+    value_choices.push(format!("WHEN {slot} THEN pg_catalog.jsonb_build_object('outcomeId','transform{slot}','disposition','transformed','value',${parameter}::pg_catalog.jsonb)"));
     transform_metadata.push(json!({"slot":slot,"disposition":disposition}));choices.push(format!("WHEN q{index} IS TRUE THEN {slot}"));
     for (other,_) in transforms.iter().take(slot) {
      renderer.step()?;
@@ -97,10 +113,17 @@ pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Res
    let transform_choice=format!("CASE WHEN ({state})='transformed' THEN ({transform_choice}) ELSE NULL::pg_catalog.int4 END");
    if transform_choice.len()>1_048_576{return Err(fail());}
    total+=transform_choice.len();if total>4_000_000{return Err(fail());}
-   disclosure.push(json!({"field":field_ref,"stateExpression":state,"transformationChoiceExpression":transform_choice,"transformations":transform_metadata}));
+   let (raw,literal,nullable)=renderer.projection_cell(&target,&field_ref)?;
+   let family=renderer.field(&field_ref)?["scalarType"].as_str().ok_or_else(fail)?;
+   let missing=if nullable{"absent"}else{"refuse"};
+   let original=format!("CASE WHEN ({raw}) IS NULL THEN pg_catalog.jsonb_build_object('outcomeId','{missing}','disposition','{missing}') WHEN truss.valid_scalar_cell({raw},'{family}',{nullable}) IS NOT TRUE THEN pg_catalog.jsonb_build_object('disposition','refuse') ELSE pg_catalog.jsonb_build_object('outcomeId','original','disposition','original','value',({literal})) END");
+   let transformed=if value_choices.is_empty(){"pg_catalog.jsonb_build_object('disposition','refuse')".into()}else{format!("CASE ({transform_choice}) {} ELSE pg_catalog.jsonb_build_object('disposition','refuse') END",value_choices.join(" "))};
+   let projection=format!("CASE ({state}) WHEN 'original' THEN ({original}) WHEN 'withheld' THEN pg_catalog.jsonb_build_object('outcomeId','withheld','disposition','withheld') WHEN 'transformed' THEN ({transformed}) ELSE pg_catalog.jsonb_build_object('disposition',({state})) END");
+   if projection.len()>1_048_576{return Err(fail());}total+=projection.len();if total>4_000_000{return Err(fail());}
+   disclosure.push(json!({"field":field_ref,"stateExpression":state,"cellExpression":projection,"transformationChoiceExpression":transform_choice,"transformations":transform_metadata}));
   }
   eligibility.push(json!({"target":target,"action":action,"decisionExpression":decision,"disclosure":disclosure}));
  }
- let output=json!({"version":"weft.truss.predicate-spike/0.4","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","indeterminateField":"projection_must_refuse","conflictingField":"projection_must_refuse","disclosureScope":"row_permit_gated_original_withheld_transformed_conflict_states_no_value_projection","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
+ let output=json!({"version":"weft.truss.predicate-spike/0.5","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","indeterminateField":"projection_must_refuse","conflictingField":"projection_must_refuse","disclosureScope":"row_permit_gated_original_withheld_transformed_conflict_states_diagnostic_value_projection","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameterTypes":renderer.parameter_types,"projectionScope":"diagnostic_cell_envelopes_not_registered_result_contract","refusedProjectionStates":["conflict","indeterminate","refuse","not-applicable"],"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
  if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(output)
 }

@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "case": "nullable",
+      "sameRenderedPacket": true,
+      "originalModelDigestsMatch": true,
+      "projectedCellsMatch": true,
+      "note": "Native projected cells retained by parent; reviewer independently replayed rendering only"
+    },
+    {
+      "case": "binary",
+      "sameRenderedPacket": true,
+      "originalModelDigestsMatch": true,
+      "projectedCellsMatch": true,
+      "note": "Native projected cells retained by parent; reviewer independently replayed rendering only"
+    }
+  ],
+  "packetDigests": {
+    "assessment.json": "5e843dee47d08fac097ea28de22dae6aed48eae64b185748ae8e3a01d7824dff",
+    "binary/nullable-assessment.json": "a47c6b49a332139ec2e898565c5c8f070de82f59ae494861af6ce1676f535d64",
+    "binary/nullable-projected.json": "5ed4cf7196efaf01d87f399feea95ff0ac8c77a965e4182391ad8febcd919bc6",
+    "binary/nullable-rendered.json": "dc5ec573475915d1e8afea66212ffa1a79b37e04f11c4f5d7e679852119a69c6",
+    "binary/nullable-request.json": "549458495805a592757be67b22a92ca842cdd5a026ec52bf125d40278c22260c",
+    "native-eligibility.json": "d0b25ef8f5223f34fef730cdd90892dd7fda61fba399b1123ebac9597d5d30d3",
+    "native-truths.json": "cca68101af93beb868466353a6ecae4cda1db48da11de3c328c0598ea0095df8",
+    "nullable/nullable-assessment.json": "950f59a462d6393466fd38dd0d8b4e2389a395f73dc2d721da785cce31a5ce90",
+    "nullable/nullable-projected.json": "d143bb4e6e36067ca7088214ac200ac073100fc807defbf2809968dce46a7dcd",
+    "nullable/nullable-rendered.json": "4f4913e4486eb8830bb0ec5e4a978fd779bfe255ce72fe390d217eefc8e0f7eb",
+    "nullable/nullable-request.json": "5ecccc2178766950cb087481b1b52c490ca5a80dd4332cd0242d5a41d7ff7dd6",
+    "original-simulator-comparisons.json": "0697d0a6a5915c5cde47df44a33089b67dbfc8ac5d2e0be52dabf59a7acff5a2",
+    "rendered.json": "2c7346611e293b6ee7731594648ccfaa2c0d178294fafe6e0856056ac94f0d98",
+    "request.json": "daf8c9310e0a2c4b8c1bb436cb37df855c95b6592acfe2134d7ac80d064dad87"
+  }
+}

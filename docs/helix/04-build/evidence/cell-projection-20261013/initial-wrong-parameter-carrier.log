@@ -1,0 +1,19 @@
+test_nullable_and_absent_projection_from_original_writer (test_security_predicate_native.NativePredicateTests.test_nullable_and_absent_projection_from_original_writer) ... FAIL
+
+======================================================================
+FAIL: test_nullable_and_absent_projection_from_original_writer (test_security_predicate_native.NativePredicateTests.test_nullable_and_absent_projection_from_original_writer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/truss-security-main-integration/packages/python/tests/test_security_predicate_native.py", line 42, in test_nullable_and_absent_projection_from_original_writer
+    self.population(nullable=True)
+  File "/private/tmp/truss-security-main-integration/packages/python/tests/test_security_predicate_native.py", line 113, in population
+    self.assertEqual(owner_response['status'],'prepared',str(owner_response))
+AssertionError: 'refused' != 'prepared'
+- refused
++ prepared
+ : {'diagnostics': [{'code': 'WFT-SECURITY-MAPPING-TRANSPORT', 'message': 'Security mapping transport refused', 'phase': 'input', 'severity': 'error'}], 'interfaceVersion': 'weft-security-mapping/0.1.0', 'securityReady': False, 'status': 'refused'}
+
+----------------------------------------------------------------------
+Ran 1 test in 7.572s
+
+FAILED (failures=1)

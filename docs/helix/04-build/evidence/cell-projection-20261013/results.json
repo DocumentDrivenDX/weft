@@ -1,0 +1,135 @@
+{
+  "scope": "Actual admitted diagnostic renderer plus emitted CASE/JSON-envelope branch controls in SQLite; JSON operations translated explicitly, native validity supplied as a Boolean premise. Not native PostgreSQL execution, scalar-validator proof, fact admission or result-contract qualification.",
+  "passedControls": 21,
+  "cellEvaluations": 211,
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "902a5ce7043b0f6127c53ebd65c536a3435ffdcb688032f33e1b085e7e8e24bc",
+  "cases": [
+    {
+      "case": "original_stringquoted\"\\\u00e9\n",
+      "passed": true,
+      "inputBytes": 20011,
+      "exit": 0
+    },
+    {
+      "case": "original_booleanFalse",
+      "passed": true,
+      "inputBytes": 20013,
+      "exit": 0
+    },
+    {
+      "case": "original_booleanTrue",
+      "passed": true,
+      "inputBytes": 20013,
+      "exit": 0
+    },
+    {
+      "case": "original_integer-0",
+      "passed": true,
+      "inputBytes": 20013,
+      "exit": 0
+    },
+    {
+      "case": "original_decimal1.2300e+1",
+      "passed": true,
+      "inputBytes": 20079,
+      "exit": 0
+    },
+    {
+      "case": "original_binaryAQI=",
+      "passed": true,
+      "inputBytes": 20011,
+      "exit": 0
+    },
+    {
+      "case": "original_binary",
+      "passed": true,
+      "inputBytes": 20011,
+      "exit": 0
+    },
+    {
+      "case": "nullabilityFalse",
+      "passed": true,
+      "inputBytes": 20013,
+      "exit": 0
+    },
+    {
+      "case": "nullabilityTrue",
+      "passed": true,
+      "inputBytes": 20025,
+      "exit": 0
+    },
+    {
+      "case": "transform_0_-0False",
+      "passed": true,
+      "inputBytes": 21030,
+      "exit": 0
+    },
+    {
+      "case": "transform_0_-0True",
+      "passed": true,
+      "inputBytes": 21030,
+      "exit": 0
+    },
+    {
+      "case": "transform_100_1e2False",
+      "passed": true,
+      "inputBytes": 21033,
+      "exit": 0
+    },
+    {
+      "case": "transform_100_1e2True",
+      "passed": true,
+      "inputBytes": 21033,
+      "exit": 0
+    },
+    {
+      "case": "transform_1_2False",
+      "passed": true,
+      "inputBytes": 21029,
+      "exit": 0
+    },
+    {
+      "case": "transform_1_2True",
+      "passed": true,
+      "inputBytes": 21029,
+      "exit": 0
+    },
+    {
+      "case": "transformExplicitNull",
+      "passed": true,
+      "inputBytes": 20174,
+      "exit": 0
+    },
+    {
+      "case": "mixedOrdinalTypes",
+      "passed": true,
+      "inputBytes": 20508,
+      "exit": 0
+    },
+    {
+      "case": "sharedParameterBytes1048576",
+      "passed": true,
+      "inputBytes": 1068987,
+      "exit": 0
+    },
+    {
+      "case": "sharedParameterBytes1048577",
+      "passed": true,
+      "inputBytes": 1068988,
+      "exit": 1
+    },
+    {
+      "case": "sharedParameterCount1024",
+      "passed": true,
+      "inputBytes": 311154,
+      "exit": 0
+    },
+    {
+      "case": "sharedParameterCount1025",
+      "passed": true,
+      "inputBytes": 311438,
+      "exit": 1
+    }
+  ]
+}

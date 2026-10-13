@@ -1,0 +1,238 @@
+{
+  "review": "Independent Astra Ultra read-only diagnostic0.5 cell projection review",
+  "head": "3c766768d4bf1dfa9c4cabb523f2cb252ee19c5b",
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "severity": "P2",
+      "problem": "Initial binary projection copied native canonical base64 text into CoreLiteral binaryHex, which requires hexadecimal. This changed or invalidated binary meaning.",
+      "resolution": "Current emitted expression uses qualified pg_catalog.decode(base64) then encode(hex), under native scalar validation and row/original-state gates. Independent genuine model/renderer probe and parent actual ordinary-writer native AQI=\u21920102 control pass.",
+      "evidenceQualification": "Original defect established by inspected source; diagnostic binary had been rebuilt with correction before the attempted prechange binary replay. No claim of independently reproduced prechange native execution."
+    }
+  ],
+  "conclusion": "No remaining actionable blocker found within the conditional diagnostic cell-envelope scope. This review does not qualify a registered result contract or protected execution.",
+  "sourceDigests": {
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "dcecf0819d529cc49f0124d1135499df3bb25a1ead783600a0ed87909a694edb",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "ab3a1f87e1df9dec9048f31ef3d18bf9a578ef2a4c3292276cb0046931613515",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "crates/weft-core/src/security_budget.rs": "a96d32840b01dce893ce181c0fed6109a45e4e1b0f3d9b6d1f2f551b756e7322",
+    "crates/weft-core/tests/security-disposition-oracle.json": "c60ef55a566930401f9c89b9f51440706f96363049d594021cb675a625b323b6",
+    "docs/helix/04-build/implementation-plan.md": "ad2d51326077846a85287b6e89bce29bb544cfa404c2d031b479263b6a53183c"
+  },
+  "nativeSourceDigests": {
+    "packages/python/tests/test_security_predicate_native.py": "e86f3bb6ec99091d14907788f4cbe77e333c026e13095bc4403207f6240e5bd1",
+    "packages/python/src/truss/_catalog_runtime/scalars.sql": "48877cb2562e8616d53a3f09f11afa59ee99d7ad33149ebe9b3932ec4db19906",
+    "packages/python/src/truss/_catalog_runtime/read.sql": "aa809d274f541031907e6000ce6441142fc77c455eb57526529099de324cb2a9"
+  },
+  "independentControls": {
+    "scope": "Actual admitted diagnostic renderer plus emitted CASE/JSON-envelope branch controls in SQLite; JSON operations translated explicitly, native validity supplied as a Boolean premise. Not native PostgreSQL execution, scalar-validator proof, fact admission or result-contract qualification.",
+    "passedControls": 21,
+    "cellEvaluations": 211,
+    "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+    "binarySha256": "902a5ce7043b0f6127c53ebd65c536a3435ffdcb688032f33e1b085e7e8e24bc",
+    "cases": [
+      {
+        "case": "original_stringquoted\"\\\u00e9\n",
+        "passed": true,
+        "inputBytes": 20011,
+        "exit": 0
+      },
+      {
+        "case": "original_booleanFalse",
+        "passed": true,
+        "inputBytes": 20013,
+        "exit": 0
+      },
+      {
+        "case": "original_booleanTrue",
+        "passed": true,
+        "inputBytes": 20013,
+        "exit": 0
+      },
+      {
+        "case": "original_integer-0",
+        "passed": true,
+        "inputBytes": 20013,
+        "exit": 0
+      },
+      {
+        "case": "original_decimal1.2300e+1",
+        "passed": true,
+        "inputBytes": 20079,
+        "exit": 0
+      },
+      {
+        "case": "original_binaryAQI=",
+        "passed": true,
+        "inputBytes": 20011,
+        "exit": 0
+      },
+      {
+        "case": "original_binary",
+        "passed": true,
+        "inputBytes": 20011,
+        "exit": 0
+      },
+      {
+        "case": "nullabilityFalse",
+        "passed": true,
+        "inputBytes": 20013,
+        "exit": 0
+      },
+      {
+        "case": "nullabilityTrue",
+        "passed": true,
+        "inputBytes": 20025,
+        "exit": 0
+      },
+      {
+        "case": "transform_0_-0False",
+        "passed": true,
+        "inputBytes": 21030,
+        "exit": 0
+      },
+      {
+        "case": "transform_0_-0True",
+        "passed": true,
+        "inputBytes": 21030,
+        "exit": 0
+      },
+      {
+        "case": "transform_100_1e2False",
+        "passed": true,
+        "inputBytes": 21033,
+        "exit": 0
+      },
+      {
+        "case": "transform_100_1e2True",
+        "passed": true,
+        "inputBytes": 21033,
+        "exit": 0
+      },
+      {
+        "case": "transform_1_2False",
+        "passed": true,
+        "inputBytes": 21029,
+        "exit": 0
+      },
+      {
+        "case": "transform_1_2True",
+        "passed": true,
+        "inputBytes": 21029,
+        "exit": 0
+      },
+      {
+        "case": "transformExplicitNull",
+        "passed": true,
+        "inputBytes": 20174,
+        "exit": 0
+      },
+      {
+        "case": "mixedOrdinalTypes",
+        "passed": true,
+        "inputBytes": 20508,
+        "exit": 0
+      },
+      {
+        "case": "sharedParameterBytes1048576",
+        "passed": true,
+        "inputBytes": 1068987,
+        "exit": 0
+      },
+      {
+        "case": "sharedParameterBytes1048577",
+        "passed": true,
+        "inputBytes": 1068988,
+        "exit": 1
+      },
+      {
+        "case": "sharedParameterCount1024",
+        "passed": true,
+        "inputBytes": 311154,
+        "exit": 0
+      },
+      {
+        "case": "sharedParameterCount1025",
+        "passed": true,
+        "inputBytes": 311438,
+        "exit": 1
+      }
+    ]
+  },
+  "retainedNativePacketChecks": {
+    "checks": [
+      {
+        "case": "nullable",
+        "sameRenderedPacket": true,
+        "originalModelDigestsMatch": true,
+        "projectedCellsMatch": true,
+        "note": "Native projected cells retained by parent; reviewer independently replayed rendering only"
+      },
+      {
+        "case": "binary",
+        "sameRenderedPacket": true,
+        "originalModelDigestsMatch": true,
+        "projectedCellsMatch": true,
+        "note": "Native projected cells retained by parent; reviewer independently replayed rendering only"
+      }
+    ],
+    "packetDigests": {
+      "assessment.json": "5e843dee47d08fac097ea28de22dae6aed48eae64b185748ae8e3a01d7824dff",
+      "binary/nullable-assessment.json": "a47c6b49a332139ec2e898565c5c8f070de82f59ae494861af6ce1676f535d64",
+      "binary/nullable-projected.json": "5ed4cf7196efaf01d87f399feea95ff0ac8c77a965e4182391ad8febcd919bc6",
+      "binary/nullable-rendered.json": "dc5ec573475915d1e8afea66212ffa1a79b37e04f11c4f5d7e679852119a69c6",
+      "binary/nullable-request.json": "549458495805a592757be67b22a92ca842cdd5a026ec52bf125d40278c22260c",
+      "native-eligibility.json": "d0b25ef8f5223f34fef730cdd90892dd7fda61fba399b1123ebac9597d5d30d3",
+      "native-truths.json": "cca68101af93beb868466353a6ecae4cda1db48da11de3c328c0598ea0095df8",
+      "nullable/nullable-assessment.json": "950f59a462d6393466fd38dd0d8b4e2389a395f73dc2d721da785cce31a5ce90",
+      "nullable/nullable-projected.json": "d143bb4e6e36067ca7088214ac200ac073100fc807defbf2809968dce46a7dcd",
+      "nullable/nullable-rendered.json": "4f4913e4486eb8830bb0ec5e4a978fd779bfe255ce72fe390d217eefc8e0f7eb",
+      "nullable/nullable-request.json": "5ecccc2178766950cb087481b1b52c490ca5a80dd4332cd0242d5a41d7ff7dd6",
+      "original-simulator-comparisons.json": "0697d0a6a5915c5cde47df44a33089b67dbfc8ac5d2e0be52dabf59a7acff5a2",
+      "rendered.json": "2c7346611e293b6ee7731594648ccfaa2c0d178294fafe6e0856056ac94f0d98",
+      "request.json": "daf8c9310e0a2c4b8c1bb436cb37df855c95b6592acfe2134d7ac80d064dad87"
+    }
+  },
+  "reviewControlSourceDigests": {
+    "controls.py": "e7a848abc7827ccb907fd12f76e90b38918980358a5ad7bd21d058fa218ff6c4",
+    "retained_packets.py": "c0f596b767221766110df04b1784216d7bd6816d2bff01df580a8c5ebe21caed",
+    "receipt.py": "3cc4d91e23cc58ceb4a632e87b80f51886a75dc41fe3173bcd406961e37e5b3b"
+  },
+  "parentNativeEvidence": [
+    {
+      "path": "/private/tmp/truss-cell-projection-native.log",
+      "sha256": "e34685d7d9cdf9668a26d25edb4a9e498c2ecd454f7c8006e04d4f78c0ddefd9",
+      "provenance": "Parent native run log inspected; reviewer did not rerun or mutate native PostgreSQL"
+    },
+    {
+      "path": "/private/tmp/truss-null-binary-projection-native-final.log",
+      "sha256": "74fd0b740ba85cc3ec5b2b3d34aa4064f4e99c4f0c3b13bf4f062004066b58a8",
+      "provenance": "Parent native run log inspected; reviewer did not rerun or mutate native PostgreSQL"
+    },
+    {
+      "path": "/private/tmp/truss-cell-projection-full-native.log",
+      "sha256": "938ee06d5691ac02fba6aee456af051561ce2325bc90bf1ca1fb73be149a0553",
+      "provenance": "Parent native run log inspected; reviewer did not rerun or mutate native PostgreSQL"
+    }
+  ],
+  "reviewedCorrespondence": [
+    "Exact original CoreLiteral wrappers preserve string, boolean, integer and decimal lexical payloads; binary canonical base64 converts to hexadecimal before wrapping. Native validation remains a separate premise.",
+    "Required missing cells and failed/unknown validator observations produce refusal markers. Optional absence and explicit null remain distinct. Withheld, absent, conflict, indeterminate and non-applicable branches carry no value member.",
+    "Transformation values retain original admitted literal JSON and ordinal JSONB types. Explicit transformed null is JSON null when encoded through the stated JSONB host contract; independent ordinal test mixes text and JSONB.",
+    "Shared parameter retention bounds are checked before clone. Actual diagnostic exact1048576-byte/1024-slot controls pass and one-over controls refuse; prior scalar constants consume the same ledgers as transformed literals.",
+    "Independent emitted-cell branch checks cover 211 cases, with native validity supplied explicitly; they are not a native scalar-validator or PostgreSQL execution oracle.",
+    "Retained native nullable and binary request/assessment/rendered packets re-render identically. Original module bytes match their SHA pins; parent projected evidence preserves JSON null versus absent and native AQI=\u21920102.",
+    "Parent completed native8-test suite38.851s includes qualified original ordinary-writer null/absence/binary fixtures, actual scalar withholding and transformed integer parameter payloads."
+  ],
+  "limitations": [
+    "No registered or authenticated result contract, batch-level refusal coordinator, protected SQL execution/publication, issuer/principal/current-authority qualification, complete source/writer lifetime or admitted backend profile.",
+    "Native helpers and pg_catalog,pg_temp safe search path are explicit premises. Scalar-domain/key-valid complete facts and truthful native mapping remain premises; valid_scalar_cell is not a substitute for complete field refinement admission.",
+    "Emitted marker values are diagnostic; consumers must apply refusal/filtering and ordinal type binding correctly. This change supplies no host sink/release implementation.",
+    "Independent SQLite evaluation explicitly translates emitted JSON operators/builders and supplies validator booleans. It establishes selected branch/envelope correspondence, not PostgreSQL or implementation refinement.",
+    "Retained payload/parameter/SQL limits do not establish total native/libpq/process heap, complete-result cardinality or CPU bounds.",
+    "Nullable aggregate/join original query fixture remains owner-refused; positive native nullable/binary fixture uses an original admitted identity query. No query capability widening or backend acceptance case promotion."
+  ]
+}
