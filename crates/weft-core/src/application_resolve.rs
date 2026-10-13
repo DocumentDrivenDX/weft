@@ -201,6 +201,7 @@ fn resolve_inner(
                     }
                     s.caps.insert("project.nativeMetadata".into());
                     for (name, relationship) in relationships {
+                        s.relationship_capabilities(&relationship);
                         if expressions.iter().any(|(label, _)| label.eq_ignore_ascii_case(&name)) {
                             return Err(fail("WFT-NAME-AMBIGUOUS", "Relationship label collides with an entity output"));
                         }
@@ -289,6 +290,7 @@ fn resolve_inner(
                 }
                 let (r, scan) = s.record(&relationship.alias)?;
                 let rel = catalog.relationship_read(r, &relationship.field)?;
+                s.relationship_capabilities(&rel);
                 s.caps.insert("relationship.boundedKeys".into());
                 if rel.inverse {
                     s.caps.insert("relationship.inverse".into());
@@ -519,7 +521,7 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
         .iter().filter(|key| key["primary"] == true).collect::<Vec<_>>();
     if primary.len() != 1 { return Err(fail("WFT-PROFILE", "SQL page requires exactly one authored primary key")); }
     let key = catalog.authored_key(&record, primary[0]["id"].as_str().unwrap())?;
-    if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || t.facets != json!({"precision":18,"scale":4}) }) {
+    if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || (t.facets != json!({"precision":18,"scale":4}) && !(binary_equality && t.facets == json!({"precision":18,"scale":2}))) }) {
         return Err(fail("WFT-PROFILE", "SQL page requires complete required-string key components"));
     }
     let mut columns = Vec::new();

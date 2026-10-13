@@ -72,9 +72,18 @@ impl<'a> Scope<'a> {
         }
         Ok(selected.unwrap())
     }
+    pub(crate) fn decimal_capability(&mut self, t: &LogicalType) {
+        if self.binary_equality && t.family == Family::Decimal && t.facets == json!({"precision":18,"scale":2}) {
+            self.caps.insert("type.decimal.scale2".into());
+        }
+    }
+    pub(crate) fn relationship_capabilities(&mut self, rel: &crate::application_model::RelationshipRead) {
+        for t in rel.source_key.types.iter().chain(&rel.target_key.types) { self.decimal_capability(t); }
+    }
     pub(crate) fn field(&mut self, c: &Column) -> Result<ir::Field> {
         let (r, s) = self.record_for_column(c)?;
         let (id, t, _) = self.catalog.field(r, &c.field)?;
+        self.decimal_capability(&t);
         if t.family == Family::Integer && t.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
         if t.family == Family::Decimal && t.facets == json!({}) { self.caps.insert("type.decimal.unbounded".into()); }
         self.caps.insert(format!(
@@ -110,6 +119,7 @@ impl<'a> Scope<'a> {
             match &d.shape {
                 Shape::Scalar { logical_type } => {
                     if logical_type.family == Family::Integer && logical_type.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
+                    if self.binary_equality && logical_type.family == Family::Decimal && logical_type.facets == json!({"precision":18,"scale":2}) { self.caps.insert("type.decimal.scale2".into()); }
                     if logical_type.family == Family::Decimal && logical_type.facets == json!({}) { self.caps.insert("type.decimal.unbounded".into()); }
                     self.caps.insert(format!(
                         "type.{}",
@@ -284,6 +294,7 @@ impl<'a> Scope<'a> {
                 }
                 let (r, scan) = self.record(&relationship.alias)?;
                 let rel = self.catalog.relationship_read(r, &relationship.field)?;
+                self.relationship_capabilities(&rel);
                 if key.len() != rel.target_key.types.len() {
                     return Err(fail("WFT-TYPE", "Related key tuple arity mismatch"));
                 }

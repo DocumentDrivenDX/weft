@@ -565,6 +565,12 @@ impl<B: Backend> Registered for Adapter<B> {
                 && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
             return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit optional binary equality"));
         }
+        if plan.capabilities().iter().any(|id| id == "type.decimal.scale2")
+            && !self.manifest.capabilities.iter().any(|c| c.id == "type.decimal.scale2"
+                && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
+                && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
+            return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit declared decimal18,2"));
+        }
         let context = Context {
             catalog,
             plan,
