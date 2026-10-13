@@ -102,6 +102,7 @@ pub struct Runtime {
     binary_equality: bool,
     optional_binary: bool,
     decimal_scale2: bool,
+    field_names: bool,
     parallel_edges: bool,
     engine_imports: bool,
     typed_page_mode: bool,
@@ -131,7 +132,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.field_names { "0.4.27" } else if self.decimal_scale2 { "0.4.26" } else if self.optional_binary { "0.4.25" } else if self.binary_equality { "0.4.24" } else if self.relationship_names { "0.4.23" } else if self.parallel_edges { "0.4.22" } else if self.engine_imports { "0.4.21" } else if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -294,7 +295,7 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.decimal_scale2 { "truss-catalog-runtime/0.56-candidate" } else if self.optional_binary { "truss-catalog-runtime/0.55-candidate" } else if self.binary_equality { "truss-catalog-runtime/0.54-candidate" } else if self.relationship_names { "truss-catalog-runtime/0.53-candidate" } else if self.parallel_edges { "truss-catalog-runtime/0.52-candidate" } else if self.engine_imports { "truss-catalog-runtime/0.51-candidate" } else if self.container_tightening { "truss-catalog-runtime/0.50-candidate" } else if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
+                != if self.field_names { "truss-catalog-runtime/0.57-candidate" } else if self.decimal_scale2 { "truss-catalog-runtime/0.56-candidate" } else if self.optional_binary { "truss-catalog-runtime/0.55-candidate" } else if self.binary_equality { "truss-catalog-runtime/0.54-candidate" } else if self.relationship_names { "truss-catalog-runtime/0.53-candidate" } else if self.parallel_edges { "truss-catalog-runtime/0.52-candidate" } else if self.engine_imports { "truss-catalog-runtime/0.51-candidate" } else if self.container_tightening { "truss-catalog-runtime/0.50-candidate" } else if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
                     "truss-catalog-runtime/0.33-candidate"
                 } else if self.retained_metadata {
                     "truss-catalog-runtime/0.32-candidate"
@@ -1078,7 +1079,8 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let decimal_scale2 = version.as_deref() == Some("0.4.26");
+    let field_names = version.as_deref() == Some("0.4.27");
+    let decimal_scale2 = field_names || version.as_deref() == Some("0.4.26");
     let optional_binary = decimal_scale2 || version.as_deref() == Some("0.4.25");
     let binary_equality = optional_binary || version.as_deref() == Some("0.4.24");
     let relationship_names = binary_equality || version.as_deref() == Some("0.4.23");
@@ -1137,6 +1139,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                 binary_equality,
                 optional_binary,
                 decimal_scale2,
+                field_names,
                 parallel_edges,
                 engine_imports,
                 typed_page_mode: typed_key_pages && page.is_some(),
