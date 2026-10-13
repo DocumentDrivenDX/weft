@@ -12,6 +12,7 @@ enum Expected<'a> {
     Arithmetic(&'a crate::arithmetic_resolve::Domain),
     Field(&'a str, &'a Identity),
     Related(&'a crate::application_model::RelationshipRead, u16),
+    CompleteRelated(&'a crate::application_model::RelationshipRead, u16),
 }
 fn scalar(column: &Column, expected: &LogicalType) -> bool {
     match &column.representation {
@@ -133,6 +134,7 @@ pub(crate) fn validate(
                         crate::application_ir::Expression::Field { scan, identity } => {
                             Expected::Field(scan, identity)
                         }
+                        crate::application_ir::Expression::CompleteRelatedKeys { relationship, bound, .. } => Expected::CompleteRelated(relationship, *bound),
                         crate::application_ir::Expression::NativeMetadata { logical_type, .. }
                         | crate::application_ir::Expression::Count { logical_type }
                         | crate::application_ir::Expression::Sum { logical_type, .. } => {
@@ -228,6 +230,13 @@ pub(crate) fn validate(
                     _ => false,
                 }
             }
+            Expected::CompleteRelated(r, bound) => match &column.representation {
+                Representation::CompleteRelatedKeys { relationship, key, bound: b } => {
+                    relationship == &r.identity && *b == bound && key.id == r.target_key.id
+                        && key.fields == r.target_key.fields && key.types == r.target_key.types && !column.nullable
+                }
+                _ => false,
+            },
             Expected::Related(r, bound) => match &column.representation {
                 Representation::RelatedKeys {
                     relationship,

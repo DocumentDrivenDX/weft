@@ -98,6 +98,11 @@ pub enum Expression {
         #[serde(rename = "type")]
         logical_type: LogicalType,
     },
+    CompleteRelatedKeys {
+        scan: String,
+        relationship: RelationshipRead,
+        bound: u16,
+    },
     RelatedKeys {
         scan: String,
         relationship: RelationshipRead,

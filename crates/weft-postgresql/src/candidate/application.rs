@@ -116,7 +116,7 @@ pub(super) fn lower(
     }
     for output in &plan.outputs {
         match &output.expression {
-            app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
+            app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
                 if !matches!(d.shape, Shape::Scalar { .. })
@@ -186,7 +186,7 @@ pub(super) fn lower(
     let mut columns = vec![];
     for (i, output) in plan.outputs.iter().enumerate() {
         let (value, representation, nullable, identities) = match &output.expression {
-            app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
+            app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
                 if let Shape::Sequence { .. } | Shape::Map { .. } | Shape::Structured { .. } =

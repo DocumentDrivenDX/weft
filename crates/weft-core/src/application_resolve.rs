@@ -128,6 +128,7 @@ pub fn resolve(
                 }
                 let (r, scan) = s.record(n)?;
                 let record_identity = r.identity.clone();
+                let relationships = if complete_entity { catalog.entity_relationships(r)? } else { vec![] };
                 let e = catalog.entity_descriptor(r)?;
                 s.descriptors(e.graph);
                 s.caps.insert("project.entity".into());
@@ -161,6 +162,14 @@ pub fn resolve(
                         }));
                     }
                     s.caps.insert("project.nativeMetadata".into());
+                    for (name, relationship) in relationships {
+                        if expressions.iter().any(|(label, _)| label.eq_ignore_ascii_case(&name)) {
+                            return Err(fail("WFT-NAME-AMBIGUOUS", "Relationship label collides with an entity output"));
+                        }
+                        if relationship.inverse { s.caps.insert("relationship.inverse".into()); }
+                        expressions.push((name, ir::Expression::CompleteRelatedKeys { scan: scan.clone(), relationship, bound: 100 }));
+                        s.caps.insert("relationship.completeKeys".into());
+                    }
                 }
                 (String::new(), expressions)
             }

@@ -368,6 +368,11 @@ pub enum Representation {
         #[serde(rename = "outerJoin", skip_serializing_if = "Option::is_none")]
         outer_join: Option<OuterJoin>,
     },
+    CompleteRelatedKeys {
+        relationship: crate::application_model::RelationshipIdentity,
+        key: crate::application_model::AuthoredKey,
+        bound: u16,
+    },
     RelatedKeys {
         relationship: crate::application_model::RelationshipIdentity,
         key: crate::application_model::AuthoredKey,
@@ -873,7 +878,7 @@ fn selected(plan: Plan<'_>) -> Selection {
                 match &output.expression {
                     AE::Field { identity, .. } => s.fields.push(identity.clone()),
                     AE::Sum { argument, .. } => s.fields.push(argument.identity.clone()),
-                    AE::RelatedKeys { relationship, .. } => rel(relationship, &mut s),
+                    AE::CompleteRelatedKeys { relationship, .. } | AE::RelatedKeys { relationship, .. } => rel(relationship, &mut s),
                     AE::Count { .. } => {},
                     AE::NativeMetadata { record, .. } => s.types.push(record.clone()),
                 }
