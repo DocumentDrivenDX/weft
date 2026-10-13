@@ -1,4 +1,8 @@
 //! Pure build-time composition. Hosts explicitly select trusted adapter versions.
+/// Source-bound logical mapping input only; no backend registration or permission.
+pub fn prepare_security_mapping_json(request: &str) -> String {
+    weft_core::security_mapping_transport::prepare_security_mapping_json(request)
+}
 #[cfg(feature = "ashlar-databricks-paths-keys")]
 pub mod paths_keys;
 #[cfg(feature = "ashlar-databricks-paths")]

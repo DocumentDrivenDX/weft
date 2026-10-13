@@ -1,0 +1,107 @@
+{
+  "status": "passed",
+  "observations": [
+    {
+      "id": "five-operators",
+      "status": "prepared",
+      "responseSha256": "dfe6fcffb104a89bacd8b87500f26bc6c702c7bc988c43053e159628f02f515a",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "bindingJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "policyJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "ontologyJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "backendId-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "backendVersion-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "targetProfile-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "originalAction-forgery",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "handoff-forgery",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "numeric-carrier",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "missing-bindings",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "profile-bytes-not-authentication",
+      "status": "prepared",
+      "responseSha256": "655dab6fad8a09f130f78bcba273eb4dffb9e931512fd0c0f7c63a41d055945d",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "repeated-parameter-budget",
+      "status": "refused",
+      "responseSha256": "8dbfc530e74fdbb0b9dbfe25c7dc697ae59c0202ce48512b26745bb5cc2c0a59",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "complete-entity-not-admitted",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "relationship-model-baseline",
+      "status": "prepared",
+      "responseSha256": "b2708f7e4b850c7c0c167d912f05afa2789bdd16c27b171cefd056d18c557bf4",
+      "correspondence": "byte-identical"
+    },
+    {
+      "id": "relationship-shorthand-not-admitted",
+      "status": "refused",
+      "responseSha256": "0e0a061683040f0723ab7b9179a3ff7cbda14a2c0285dc26dcc3d89c623c102b",
+      "correspondence": "byte-identical"
+    }
+  ],
+  "python": "3.11.17",
+  "binaries": {
+    "/private/tmp/weft-security-mapping-native-20261013/weft.so": "2c62713f8b0b2f06d8537267405cad027cf44db3d832faefbd37920ba958bc0f",
+    "/private/tmp/weft-042-release-target-a/debug/weft-security-mapping": "130626bfe5f60150ff100f2477b686bbc4c0caca6294b7a274478de229efe5e1"
+  },
+  "scope": "Imported original native cdylib and original CLI share Rust core mapping preparation. Opaque unqualified fixture mapping. No installed wheel, native SQL/role/effects, profile issuer, execution credential or B08 acceptance."
+}

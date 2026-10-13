@@ -1,0 +1,79 @@
+{
+  "status": "reviewed-no-actionable-findings",
+  "head": "c7b9635a39607d5cf8c9a6c37b6c57f75d5ad970",
+  "scope": "Read-only review of three merged-owner integration controls, full 16-response browser/native correspondence, and STP prerequisite mapping. Parent reran actual native/browser controls; reviewer independently verified artifact hashes and correspondence but did not rerun or recompile.",
+  "priorSourceIntegrationReview": {
+    "path": "/private/tmp/weft-mapping-merge-astra-20261013-_btdh_ax/review.json",
+    "sha256": "02dde031abfdda77cb6a87b778ad617cc820f943aae0cbbb630960e012783507"
+  },
+  "sourceDigests": {
+    "crates/weft-core/src/security_mapping_transport.rs": "6c2187586d24578cca216c86156eb3dd830f8e44ce41be015c44fc4a1925fbc0",
+    "crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "crates/weft-core/src/security_query_uses.rs": "0098ab937ed5dc2927a7f6c4ea8a98dcd3c0c748ff7a59b9b4136285a75807ea",
+    "crates/weft-core/src/application_syntax.rs": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7",
+    "crates/weft-core/src/application_resolve.rs": "51bff0e4567d54bd66b3dd9b1f4f53ab19aef548c29473a84bc7ac5db8028713",
+    "crates/weft-core/src/application_scope.rs": "eeca06a6e53cc0ecf65f9ca4e36d3fe7a2c45b6eb512c8fd635da2499498b029",
+    "crates/weft-core/src/json.rs": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75",
+    "crates/weft-core/src/lib.rs": "2b43b46410c2a3bdc8daee9ce995050297e868c0a4bad76e2f23aa075cd8c741",
+    "crates/weft-runtime/src/lib.rs": "5de0d4eb86b4cc72d33aa7684327c052f0b987eb88fe8584a238093ab5e4b193",
+    "crates/weft-runtime/src/security_mapping_cli.rs": "d81af3f83522077899072c21be1fd429ebab7e871ca37eb343bb4bb177f2240d",
+    "crates/weft-runtime/Cargo.toml": "c62b6dabc33ea919a8520a0c28a0cd07956b3dd840f03aff7064d2978b5afdd3",
+    "crates/weft-python/src/lib.rs": "fb06c8485274a8eeb7700a802fc9adf12df76a97e2563397cfc20b6af9f025c3",
+    "crates/weft-wasm/src/lib.rs": "c4b7918425b7f3c7c95bc199d901c6c3d823f88156250b6ffefdbd214ddec7d5",
+    "docs/helix/02-design/contracts/security-mapping-request-v0.1.schema.json": "fde090ebfdb09b5997970f48b74c7df24cb6dd1c6504185ee85a35b716fdd20c",
+    "scripts/security/mapping-transport-fixture.py": "0ed29c64d7dee9e3a9e884cf29ee67b2da298ab6b98ccaec29ab679e2caf3afc",
+    "scripts/security/check-mapping-transports.py": "f160dc35f33195fc8cc37f7a5f90c3242357b68dfaa28bdbe2f60bf86bbafdee",
+    "scripts/security/check-mapping-browser.ts": "f7de8813c9db91862057b6e5659d0636f6fc957cbd44f5f7e77881c7bb8de152",
+    "docs/helix/02-design/contracts/CONTRACT-007-security-compilation.md": "82fb90daa95056f8e86049a0bd304857d950229edf2a6c5b591fc42b1c842b85",
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": "64c9aa429bc0d9d80814b909e832ab43b29b1285cdd3d165fd62c07044c810b9",
+    "docs/helix/01-frame/user-stories/US-009-security-compilation.md": "b9f98972e9803c693b6ed7253e6ec75e88813c50177b0f3b682e1377d4d816d7",
+    "crates/weft-core/src/application_ir.rs": "1f232952f6dd888b4aaa2cc079421cf9c78e2cffbe23530b64cc934202ca268a",
+    "crates/weft-core/src/application_model.rs": "69c79c7a90cdb09fb5cc9fc578cc7e36209a3b257ea0cea578e949a4cd369a8b",
+    "crates/weft-core/src/model.rs": "6427b32fe0008c6df70757b7296e79d0e936825938f8b3dc6827d7610537c4b2",
+    "crates/weft-core/src/security_payload_applicability.rs": "7633a9d03420dd5b3b005bc48018b4dd7bdb3717080197add85e217dc9a1989e",
+    "crates/weft-core/src/compile.rs": "f1e788dffc9352d2e0e33a7500c2cd6c2d16605dd6705050c826dec9461307aa",
+    "crates/weft-core/src/backend.rs": "eed53e0795cfd963abcc3239fcb7e62c9156e1b07a89a686fc6ca900311327f2",
+    "crates/weft-core/src/backend_emission.rs": "27603edb33672ecc0eaa73e17e2d3247ddbe72972e11d3324e0baf620b5ce5ac",
+    "crates/weft-postgresql/src/truss_runtime.rs": "28646f37961a9a5ccf9044876f5e7d70c8a06967cba77f912a8155fe701694bf"
+  },
+  "changedSinceSourceIntegrationReview": {
+    "scripts/security/check-mapping-transports.py": {
+      "previous": "0200f2056f087b8bf437d2083e9d70c052dccba204f2c6292893586581910d24",
+      "current": "f160dc35f33195fc8cc37f7a5f90c3242357b68dfaa28bdbe2f60bf86bbafdee"
+    },
+    "scripts/security/check-mapping-browser.ts": {
+      "previous": "60ee27f36dc33ec0db6ac8ca6a66a87411a1031ba87010802701392266042529",
+      "current": "f7de8813c9db91862057b6e5659d0636f6fc957cbd44f5f7e77881c7bb8de152"
+    },
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": {
+      "previous": "b0106d09ad9103e01edddc138724bc3525ea0469d977a92d1f2530189ddd7a1d",
+      "current": "64c9aa429bc0d9d80814b909e832ab43b29b1285cdd3d165fd62c07044c810b9"
+    }
+  },
+  "allLibraryRuntimeSchemaSourcesUnchanged": true,
+  "resolvedReviewFinding": "Complete-entity control now supplies the valid upstream weft-truss-entity-read/0.1.0 profile and SELECT r.*; exact transport diagnostic is asserted, eliminating the independently invalid old-version/new-subset pair.",
+  "checks": {
+    "validRelationshipModelStillPreparesOrdinaryFieldQuery": true,
+    "actualRelationshipShorthandAssertsSecurityQueryUnsupported": true,
+    "validNewCompleteEntityProfileAssertsTransportSchemaRefusal": true,
+    "browserChecksAll16NativeResponseHashes": true,
+    "nativeAndBrowserArtifactDigestsVerified": true,
+    "all16ResponseHashesAgree": true,
+    "externalRequests": 0
+  },
+  "parentEvidence": {
+    "/private/tmp/weft-security-mapping-native-20261013/receipt.json": "6be218b5005ace58d4bc305ed62e1e1cdbfde262d1e250e2a6c2f7bf04b290ed",
+    "/private/tmp/weft-security-mapping-browser-20261013/receipt.json": "ebfaa85eb333a7a58c1dafc33130fd1d788122bd3518f59d5688abfe3415b127"
+  },
+  "parentReportedIntegrationRegression": {
+    "passed": 357,
+    "breakdown": {
+      "coreLibrary": 268,
+      "applicationResolve": 9,
+      "applicationSyntax": 6,
+      "securityAdmission": 74
+    },
+    "independentlyReplayedByThisReviewer": false
+  },
+  "conclusion": "No remaining actionable findings in logical mapping transport integration and scoped evidence. Complete native/backend authorization remains unqualified as stated."
+}

@@ -1,0 +1,86 @@
+{
+  "status": "logical-mapping-transport-component",
+  "integrationRevision": "c7b9635a39607d5cf8c9a6c37b6c57f75d5ad970",
+  "implementationRevision": "122f5ec",
+  "sourceDigests": {
+    "Cargo.lock": "9297c055e95ee4e2b1e48768cc9cdd637bdb9efee6f11a76fada3c451cd9f196",
+    "Cargo.toml": "c27253232c3d1d17536c2c1006546c20b09d6872f1a87c379dc9f0699eb44ca5",
+    "crates/weft-core/src/security_mapping_transport.rs": "6c2187586d24578cca216c86156eb3dd830f8e44ce41be015c44fc4a1925fbc0",
+    "crates/weft-core/src/lib.rs": "2b43b46410c2a3bdc8daee9ce995050297e868c0a4bad76e2f23aa075cd8c741",
+    "crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "crates/weft-core/src/security_query_uses.rs": "0098ab937ed5dc2927a7f6c4ea8a98dcd3c0c748ff7a59b9b4136285a75807ea",
+    "crates/weft-core/src/security_scan_obligations.rs": "4d9bf60f49ab0d16be173573f6d36349110d45b0a73e2513e70dfed21ca2b113",
+    "crates/weft-core/src/security_source.rs": "04656ce56aa905217e9217afac55d61a7748cb1ba3e2f8ddfbcffae613a8df41",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/application_syntax.rs": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7",
+    "crates/weft-core/src/application_ir.rs": "1f232952f6dd888b4aaa2cc079421cf9c78e2cffbe23530b64cc934202ca268a",
+    "crates/weft-core/src/application_model.rs": "69c79c7a90cdb09fb5cc9fc578cc7e36209a3b257ea0cea578e949a4cd369a8b",
+    "crates/weft-core/src/application_resolve.rs": "51bff0e4567d54bd66b3dd9b1f4f53ab19aef548c29473a84bc7ac5db8028713",
+    "crates/weft-core/src/application_scope.rs": "eeca06a6e53cc0ecf65f9ca4e36d3fe7a2c45b6eb512c8fd635da2499498b029",
+    "crates/weft-core/src/json.rs": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75",
+    "crates/weft-core/tests/security-source-fixture.json": "733a07134423c759a540623e9f996d406024d9848c62b68c0a14f1a1a6f57150",
+    "crates/weft-core/tests/security-evaluation-oracle.json": "900cc8d2fbc4d637908d9223a0aaa823951e9a1875759ac3efb26c1d1e05274b",
+    "crates/weft-runtime/src/lib.rs": "5de0d4eb86b4cc72d33aa7684327c052f0b987eb88fe8584a238093ab5e4b193",
+    "crates/weft-runtime/src/security_mapping_cli.rs": "d81af3f83522077899072c21be1fd429ebab7e871ca37eb343bb4bb177f2240d",
+    "crates/weft-runtime/Cargo.toml": "c62b6dabc33ea919a8520a0c28a0cd07956b3dd840f03aff7064d2978b5afdd3",
+    "crates/weft-python/src/lib.rs": "fb06c8485274a8eeb7700a802fc9adf12df76a97e2563397cfc20b6af9f025c3",
+    "crates/weft-python/Cargo.toml": "f5d8d275bb544e65c66dc5b6dfb5660eaa96d5f00b4a35ce7a702c80ee8904d5",
+    "crates/weft-wasm/src/lib.rs": "c4b7918425b7f3c7c95bc199d901c6c3d823f88156250b6ffefdbd214ddec7d5",
+    "crates/weft-wasm/Cargo.toml": "973926db43198b82c8c198b20809cefa203b3932e4c7dcfd33fb86714bb12dc7",
+    "docs/helix/02-design/contracts/security-mapping-request-v0.1.schema.json": "fde090ebfdb09b5997970f48b74c7df24cb6dd1c6504185ee85a35b716fdd20c",
+    "scripts/security/mapping-transport-fixture.py": "0ed29c64d7dee9e3a9e884cf29ee67b2da298ab6b98ccaec29ab679e2caf3afc",
+    "scripts/security/check-mapping-transports.py": "f160dc35f33195fc8cc37f7a5f90c3242357b68dfaa28bdbe2f60bf86bbafdee",
+    "scripts/security/check-mapping-browser.ts": "f7de8813c9db91862057b6e5659d0636f6fc957cbd44f5f7e77881c7bb8de152"
+  },
+  "validation": {
+    "mergedCoreLibrary": 268,
+    "mergedApplicationResolve": 9,
+    "mergedApplicationSyntax": 6,
+    "mergedAdmission": 74,
+    "mergedRegressionTotal": 357,
+    "cliBoundary": 1,
+    "nativePythonCLI": 16,
+    "actualChromiumWASM": 16,
+    "all16ResponseHashesIdentical": true,
+    "workspaceBoundaryModules": 11,
+    "independentPremergeCore": 6,
+    "independentCLI": 18
+  },
+  "versions": {
+    "rust": "1.90.0",
+    "python": "3.11.17",
+    "wasmBindgen": "0.2.105",
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12"
+  },
+  "traceability": [
+    {
+      "criterion": "US-009-AC1",
+      "scope": "separate original-source transport and native/browser correspondence",
+      "closed": false
+    },
+    {
+      "criterion": "US-009-AC2",
+      "scope": "owner query-profile and SQL-derived mapping handoff prerequisites",
+      "closed": false
+    },
+    {
+      "case": "pg-raw.B08",
+      "scope": "backend composition prerequisite",
+      "closed": false
+    }
+  ],
+  "resourceScope": "4M request UTF-8 bytes;16M returned response bytes. Separate16M cumulative selected-parameter JSON-escaped-text preflight on owner AST before per-occurrence substitution. Not a total heap/CPU, all metadata expansion or source refinement proof.",
+  "scope": "Prepared mapping input only; securityReady alwaysfalse. Original source checks and query-profile designation; supplied profiles are not authenticated. Opaque fixture mapping proves no native storage mapping, SQL parameter/effect/role/caller/guard/issuer/settlement/release correctness. Actual imported native cdylib, CLI and Chromium WASM; installed wheel/distribution not qualified. Ordinary security compile remains closed. All132 cases remain required, with no backend promotion.",
+  "attempts": "Initial profile-whitespace refusal expectation corrected: newly supplied valid profile bytes are accepted andhashed, not authenticated. Initial direct Python cargo build lacked macOSdynamic_lookup; explicit final-crate cargo rustc flags corrected link; merged rebuildpassed. Independent prechange repetition control supplies no RSSmeasurement or native bypass. Completeentity integrationcontrol corrected to valid upstreamprofile+SQL andschema-stage diagnostic.",
+  "commands": [
+    "cargo test --offline --locked -p weft-core --lib --test security_admission --test application-resolve --test application-syntax",
+    "cargo rustc --offline --locked -p weft-python --features truss-postgresql-pg18 --lib -- -C link-arg=-undefined -C link-arg=dynamic_lookup",
+    "cargo build --offline --locked -p weft-runtime --bin weft-security-mapping",
+    "cargo build --offline --locked -p weft-wasm --release --target wasm32-unknown-unknown",
+    "wasm-bindgen weft_wasm.wasm --target web --out-dir OWNED_OUTPUT",
+    "python scripts/security/check-mapping-transports.py OWNED_MODULE_DIR ORIGINAL_CLI ORIGINAL_REQUEST RECEIPT",
+    "bun scripts/security/check-mapping-browser.ts OWNED_WASM_DIR ORIGINAL_REQUEST RECEIPT PLAYWRIGHT_MODULE NATIVE_HANDOFF NATIVE_RECEIPT"
+  ],
+  "independentFinal": "Astra Ultra verified merged source custody, valid-upstreamprofile schema refusal, exact imported native path, all16native/browser responsehashes and pinned artifacts. Independent6coretests/18CLIcontrols are premerge; final integration source/evidence review reran no tests."
+}

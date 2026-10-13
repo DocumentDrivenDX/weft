@@ -1,3 +1,9 @@
+/// Pure logical preparation; never native execution admission.
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn prepare_security_mapping_json(request: &str) -> String {
+    weft_runtime::prepare_security_mapping_json(request)
+}
+
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn compile_json(request: &str) -> String {
     weft_runtime::compile_json(request)
