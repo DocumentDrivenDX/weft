@@ -1,0 +1,254 @@
+{
+  "scope": "Actual original diagnostic/fact inspector with original admitted source plus caller-declared oracle facts. No native execution, facts authentication, native SQL lineage, complete result enumeration or release proof.",
+  "passedControls": 41,
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "2b4c0461e2ce391b96c7c8936105a32781a5e9a5e7b620c931414d3a76ddaf96",
+  "cases": [
+    {
+      "case": "originalOracleValidMembership",
+      "passed": true,
+      "status": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "legacyCellOnly",
+      "passed": true,
+      "status": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "missingPairedfactCut",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "nullfactCut",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "missingPairedscopedFacts",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "nullscopedFacts",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "inactive",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-RESULT-SELECTION"
+    },
+    {
+      "case": "unknownRequiredFact",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "noWitness",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-RESULT-SELECTION"
+    },
+    {
+      "case": "untrusted",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "generationMismatch",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "policyMismatch",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "ontologyMismatch",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "zeroSubjects",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "ambiguousSubject",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "incompleteOwnership",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "duplicateWitnessIdentity",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "badResourceKey",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "wrongScanName",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "missingScan",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "extraScan",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "wrongScopedType",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "scopedCountMismatch",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "badScopedVersion",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "extraScopedProperty",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "extraCutProperty",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "extraProbeProperty",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "factBudget",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "stepBudget",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "consistentInventoryResource",
+      "passed": true,
+      "status": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "conflictingInventoryResource",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "scopedOriginalValue",
+      "passed": true,
+      "status": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "originalValueForgery",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "missingOriginalValue",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "missingOriginalCoverage",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "noInventoryEnrichment",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "emptyRowsConditional",
+      "passed": true,
+      "status": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "emptyRowsIncompleteDependency",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "combinedFactPayloadOverflow",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "sourceHashDrift",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "case": "callerTruthOverride",
+      "passed": true,
+      "status": 1,
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    }
+  ]
+}

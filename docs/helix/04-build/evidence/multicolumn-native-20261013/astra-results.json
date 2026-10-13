@@ -1,0 +1,211 @@
+{
+  "scope": "Actual current diagnostic with original source/owner checkers; synthetic declared facts. No native SQL execution by reviewer or protected release qualification.",
+  "passedControls": 34,
+  "binarySha256": "2b4c0461e2ce391b96c7c8936105a32781a5e9a5e7b620c931414d3a76ddaf96",
+  "cases": [
+    {
+      "case": "pairedColumnsAndFacts",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "pairedColumnsCellsOnly",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "oneColumnArrayAndFacts",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "emptyColumns",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "257Columns",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "columnsObject",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "columnsNull",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specExtra",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specMissing",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specPositional",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specNull",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specNameNumber",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "specReferenceExtra",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "mixedLegacyTarget",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "mixedLegacyField",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "probeExtra",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingRows",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingCut",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "missingScopedFacts",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "nullCut",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "swappedCells",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "swappedColumns",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "missingCell",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "extraCell",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "wrongName",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "wrongField",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "withheldCarriesValue",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "firstOriginalForgery",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "twoMatchingRows",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "lateSecondRowForgery",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-EVALUATION"
+    },
+    {
+      "case": "256OriginalColumns",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "sourceCopyBudget16000000",
+      "passed": true,
+      "exit": 0,
+      "diagnostic": null
+    },
+    {
+      "case": "sourceCopyBudget16000008",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "duplicateColumns",
+      "passed": true,
+      "exit": 1,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    }
+  ]
+}
