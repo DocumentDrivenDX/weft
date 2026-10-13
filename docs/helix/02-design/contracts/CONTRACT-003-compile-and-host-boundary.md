@@ -369,3 +369,8 @@ The installed public create/update/no-op query agrees with public object-read ti
 ## Truss import load projection candidate — 2026-10-13
 
 Compile/IR/backend interface0.2.4 and runtime backend0.4.8 target Truss0.35 with explicit entity-read0.3. LoadId is nullable string metadata projected only by that profile; its text carrier contains a JSON string or JSON null. Lowering calls the host-owned query_object_load_id helper; no source document field identity or provenance is synthesized. Older schemas/profiles are unchanged. Rust checking is source evidence only; native Truss installation/Python activation remains pending.
+
+Runtime backend0.4.8 also admits Truss0.38's additive source ACK receipt release.
+The existing0.35/0.36/0.37 branches remain admitted; SQL, IR, binding and entity
+projection semantics are unchanged. A rebuilt Python extension executes the
+public Truss0.38 import-load query alongside its populated upgrade test.
