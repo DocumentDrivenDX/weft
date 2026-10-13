@@ -83,6 +83,7 @@ pub struct Runtime {
     selected_metadata: bool,
     exact_scalars: bool,
     retained_metadata: bool,
+    complete_entities: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -662,6 +663,11 @@ impl Backend for Runtime {
                         _ => return Err(unsupported("Structured property unavailable")),
                     }
                 }
+                app::Expression::CompleteRelatedKeys { scan, relationship, bound } if self.complete_entities => (
+                    build.complete_related(scan, relationship, *bound)?,
+                    Representation::CompleteRelatedKeys { relationship: relationship.identity.clone(), key: relationship.target_key.clone(), bound: *bound },
+                    vec![relationship.from.clone(), relationship.to.clone()],
+                ),
                 app::Expression::RelatedKeys {
                     scan,
                     relationship,
@@ -898,6 +904,11 @@ impl Build<'_> {
         let inner=format!("SELECT pg_catalog.jsonb_build_array({order}) AS k,pg_catalog.row_number() OVER (ORDER BY {order}) AS ord FROM {from} WHERE {} ORDER BY {order} LIMIT {}",predicates.join(" AND "),u32::from(bound)+1);
         Ok(format!("(SELECT pg_catalog.jsonb_build_object('items',COALESCE(pg_catalog.jsonb_agg(k ORDER BY ord) FILTER (WHERE ord<={bound}),'[]'::pg_catalog.jsonb),'truncated',pg_catalog.count(*)>{bound})::pg_catalog.text FROM ({inner}) AS weft_runtime_related_{}_bounded)",self.relationship_scope))
     }
+    fn complete_related(&mut self, scan: &str, relationship: &RelationshipRead, bound: u16) -> Result<String> {
+        if !(1..=100).contains(&bound) { return Err(unsupported("Complete relationship bound requires 1 through 100")); }
+        let bounded = self.related(scan, relationship, None, Some(bound))?;
+        Ok(format!("\"truss\".\"query_complete_related_keys\"(({bounded})::pg_catalog.jsonb,{bound}::pg_catalog.int4,{}::pg_catalog.int4)::pg_catalog.text", relationship.target_key.fields.len()))
+    }
     fn predicate(&mut self, p: &app::Predicate) -> Result<String> {
         match p {
             app::Predicate::Equal { left, right } => {
@@ -970,6 +981,7 @@ pub fn compile_json(request: &str) -> String {
                 selected_metadata,
                 exact_scalars,
                 retained_metadata,
+                complete_entities: false,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
