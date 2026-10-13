@@ -1,0 +1,323 @@
+{
+  "review": "Independent Astra Ultra read-only source-bound fact-selection extension review",
+  "head": "b741dbbebbeaef0630f6dd190e451a75a82cc937",
+  "findings": [],
+  "conclusion": "No actionable blocker found within pure conditional source/declaration/fact/cell correspondence. No authenticated selection, enumeration, SQL lineage or release authority is established.",
+  "sourceDigests": {
+    "crates/weft-core/src/security_mapping_transport.rs": "5115d2de75bc18d59d972016197930e15d9ff07561c422ee806acf69049e592b",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "4709dff9c6d70680094ccde81f4668fefb936a4bc05433f4abe2e119543d0a98",
+    "docs/helix/02-design/module-boundaries.json": "293b8a0aed831eff25eebd27e6d528c81e55bf5a0bf6159f7191e4f3e3e59bb5",
+    "crates/weft-core/src/security_backend.rs": "a53e09231f27267341c1779e0759b94d23bfe00469774656a0c3b8de1e01c2e2",
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/src/security_result_selection.rs": "a9892f3a6bfe152624a81869c9d18b0f5086dcdba49e2d98648d4c072cd9b58f",
+    "crates/weft-core/src/security_result_cells.rs": "f6c5c4c456381e11a6dc2b0daee09fd4339dd724bd66b95164998f7a0716658d",
+    "crates/weft-core/src/security_result_check.rs": "72b8858a7d3afcd1acc11c2189bcf9053e20d3c36e658039430ad011e3e1340c",
+    "crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "crates/weft-core/src/security_query_uses.rs": "0098ab937ed5dc2927a7f6c4ea8a98dcd3c0c748ff7a59b9b4136285a75807ea",
+    "crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "docs/helix/02-design/contracts/security-mapping-request-v0.1.schema.json": "fde090ebfdb09b5997970f48b74c7df24cb6dd1c6504185ee85a35b716fdd20c"
+  },
+  "nativeHarnessDigest": "61985ab5a91ef2eeb5f6709dee339feadf08780f2fedf620a27d2548ad8629bf",
+  "independentControls": {
+    "scope": "Actual original diagnostic/fact inspector with original admitted source plus caller-declared oracle facts. No native execution, facts authentication, native SQL lineage, complete result enumeration or release proof.",
+    "passedControls": 41,
+    "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+    "binarySha256": "438e4b3507d7f12f7f9c66e26b7ffd2c3b23b12c4fd8cea3ab469059ab88aad3",
+    "cases": [
+      {
+        "case": "originalOracleValidMembership",
+        "passed": true,
+        "status": 0,
+        "diagnostic": null
+      },
+      {
+        "case": "legacyCellOnly",
+        "passed": true,
+        "status": 0,
+        "diagnostic": null
+      },
+      {
+        "case": "missingPairedfactCut",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "nullfactCut",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "missingPairedscopedFacts",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "nullscopedFacts",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "inactive",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-RESULT-SELECTION"
+      },
+      {
+        "case": "unknownRequiredFact",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "noWitness",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-RESULT-SELECTION"
+      },
+      {
+        "case": "untrusted",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "generationMismatch",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "policyMismatch",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "ontologyMismatch",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "zeroSubjects",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "ambiguousSubject",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "incompleteOwnership",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "duplicateWitnessIdentity",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "badResourceKey",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "wrongScanName",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "missingScan",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "extraScan",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "wrongScopedType",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "scopedCountMismatch",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "badScopedVersion",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "extraScopedProperty",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "extraCutProperty",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "extraProbeProperty",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "factBudget",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "stepBudget",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "consistentInventoryResource",
+        "passed": true,
+        "status": 0,
+        "diagnostic": null
+      },
+      {
+        "case": "conflictingInventoryResource",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "scopedOriginalValue",
+        "passed": true,
+        "status": 0,
+        "diagnostic": null
+      },
+      {
+        "case": "originalValueForgery",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "missingOriginalValue",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "missingOriginalCoverage",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "noInventoryEnrichment",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "emptyRowsConditional",
+        "passed": true,
+        "status": 0,
+        "diagnostic": null
+      },
+      {
+        "case": "emptyRowsIncompleteDependency",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "combinedFactPayloadOverflow",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-EVALUATION"
+      },
+      {
+        "case": "sourceHashDrift",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+      },
+      {
+        "case": "callerTruthOverride",
+        "passed": true,
+        "status": 1,
+        "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+      }
+    ]
+  },
+  "reviewControlDigests": {
+    "controls.py": "aedf7b042c17e2fd13af89d96e1c1212d067931e47f6c66427c8f262def4822f",
+    "receipt.py": "19965a35bb8e6dfe759572c2f7ae449346f6459383867430cccb4710e2ac7119"
+  },
+  "parentSourceReceipt": {
+    "path": "/private/tmp/weft-security-main-integration/docs/helix/04-build/evidence/fact-selection-20261013/receipt.json",
+    "sha256": "5fdf6365bbb5a5be98c8b9de81f0cea563ed7ebf28591018b4d2abb4a201c4c0",
+    "allFourPinsIndependentlyMatched": true
+  },
+  "parentCompletedEvidence": [
+    {
+      "path": "/private/tmp/fact-selection-native-final.log",
+      "sha256": "bfceb5137c5c33ddc40b5ba2062c14784bd2d178ad7c6a9680a0980ec5f92518",
+      "provenance": "Completed parent log inspected. Reviewer performed no native DB mutation or replay."
+    },
+    {
+      "path": "/private/tmp/fact-selection-owner-tests.log",
+      "sha256": "4fd4b30900f9919c6047ddc69b3c33183567541579b073b7059ab1bf70c80e24",
+      "provenance": "Completed parent log inspected. Reviewer performed no native DB mutation or replay."
+    },
+    {
+      "path": "/private/tmp/fact-selection-boundaries.log",
+      "sha256": "97b4e015016e3955aa10bbe8980e648b9a634397968e768cb43eb91cf7011528",
+      "provenance": "Completed parent log inspected. Reviewer performed no native DB mutation or replay."
+    },
+    {
+      "path": "/private/tmp/fact-selection-transport.log",
+      "sha256": "dd1bc3b09ab28949ba8714078d393f1335294a0844ee58f3286e7b83642351a0",
+      "provenance": "Completed parent log inspected. Reviewer performed no native DB mutation or replay."
+    }
+  ],
+  "reviewedCorrespondence": [
+    "Public facts wrapper shares the existing original closed request/schema/profile/resolver/preflight/context pipeline. Its Some(cut,rows) branch invokes the existing owner check_simulated_fact_selection; cell-only wrapper remains None and preserves previous behavior. No context constructor visibility changes.",
+    "Diagnostic accepts exactly four legacy members or six members including both factCut and scopedFacts. A single optional member, null payload, unknown member or missing required content refuses; no unchecked fallback occurs. Success facts metadata is added only after owner checking succeeds.",
+    "Existing owner validates exact result declaration/bytes/hash/cells, combined4M fact/scoped payload, scoped row arity/scan identities, subject/generation/source metadata, coverage, fact consistency and budgets; evaluates all actual rule dependencies and compares Original/Absent outcomes with scoped values.",
+    "41 independent current-binary controls pass: original oracle membership; legacy cell-only route; paired-input closure; false/unknown/missing membership; trust/generation/policy/ontology declarations; subject/coverage/fact conflicts; scoped keys/type/scan names/count; original-value forgery; no inventory enrichment; empty-batch dependency preflight; joint fact payload overflow and source drift.",
+    "Boundary-map change adds only the new public inspect_security_mapping_result_facts declaration to its existing core module. Existing owner-scoped test1, boundaries16 and transport6 pass in retained parent logs.",
+    "Final native8 suite40.117s passes with actual original resourceId cell correspondence and in-domain forged-string refusal, plus denied resource and incoherent scoped-key controls. Native tests reuse fixture capture and do not establish authenticated facts."
+  ],
+  "limitations": [
+    "Caller-declared trusted/completeness/generation values are premises, not authenticated custody or issuer evidence.",
+    "Successful inspection checks the supplied result/scoped-row correspondence and owner policy fold. It does not enumerate all native rows, prove native SQL lineage/query predicate execution, establish a held source/writer cut, or grant protected release authority.",
+    "Empty conditional batches can pass when dependencies are complete; this is not a completeness or non-omission theorem.",
+    "The new diagnostic path is single-column fixture composition; no registered production result transport or full multi-scan/native qualification is claimed.",
+    "Existing retained payload/work bounds are reused and no total CPU/process/native heap guarantee is inferred.",
+    "No security-ready status or required backend acceptance case is promoted."
+  ]
+}
