@@ -446,6 +446,7 @@
             "field:id",
             "field:fields",
             "field:types",
+            "fn:record_members",
             "fn:entity_descriptor",
             "fn:member_descriptor",
             "fn:member_descriptor_by_identity",

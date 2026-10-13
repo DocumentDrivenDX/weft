@@ -131,6 +131,10 @@ impl Catalog {
         }
         Ok(members)
     }
+    /// Original ordered membership metadata, without interpreting unselected values.
+    pub fn record_members(&self, record: &Record) -> Result<Vec<Member>> {
+        self.members(record, &record.value)
+    }
     pub fn entity_descriptor(&self, record: &Record) -> Result<EntityDescriptor> {
         Ok(EntityDescriptor {
             members: self.members(record, &record.value)?,

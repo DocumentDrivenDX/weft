@@ -40,7 +40,7 @@ inherited PG17 native evidence.
 
 The same feature also exports `compile_truss_runtime_json(request_json)` for the
 actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
-`0.4.2`, binding `truss-runtime-binding/0.4` and target
+`0.4.3`, binding `truss-runtime-binding/0.4` and target
 `truss-runtime-pg18.6/0.4`. Truss constructs the binding from its accepted source
 bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
 This separate adapter uses Weft's application-read frontend and typed IR, then
@@ -60,7 +60,15 @@ individually; string grouping uses C collation. Multi-hop relationships, structu
 properties, non-string page keys and optional/numeric grouping remain unsupported
 in that consumer. All new declarations retain Candidate status.
 
-The runtime compiler retains explicit release selection: backend0.4.2 adds the
-group capability for Truss runtime0.30. Backend0.4.1 retains its ungrouped0.30
-semantics; backend0.4.0 remains the0.29 realization. Binding/target0.4 and native
-query sources are unchanged.
+Backend0.4.3 retains the complete authored Record member/native-ID mapping while
+interpreting only selected query fields. Supported scalar projections and counts
+can therefore read Truss runtime0.31 records/documents containing timestamp or
+binary siblings. Truss still validates every source cell before filtering.
+Selecting those unsupported SQL types, or an entity projection containing them,
+refuses without omitting values. This adds no timestamp/binary SQL semantics.
+
+The runtime compiler retains explicit release selection: backend0.4.3 selects
+runtime0.31; backend0.4.2 retains the group capability for Truss runtime0.30.
+Backend0.4.1 retains its ungrouped0.30
+semantics; backend0.4.0 remains the0.29 realization. Binding/target identifiers
+stay0.4, and legacy backend selections retain their original native profiles.

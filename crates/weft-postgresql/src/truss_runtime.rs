@@ -80,6 +80,7 @@ pub struct Runtime {
     pages: bool,
     release_030: bool,
     groups: bool,
+    selected_metadata: bool,
 }
 impl Runtime {
     fn profile(&self) -> &'static str {
@@ -105,7 +106,9 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.groups {
+        if self.selected_metadata {
+            "0.4.3"
+        } else if self.groups {
             "0.4.2"
         } else if self.release_030 {
             "0.4.1"
@@ -220,7 +223,7 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: "weft-ir/0.2.0".into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.pages{"truss-runtime-keyset-query/0.4".into()}else if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).chain(if self.pages{vec!["key.uniqueStable".into(),"compare.lexicographicGreater".into()]}else{vec![]}).chain(if self.groups{vec!["group".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.selected_metadata{"Complete original member mapping with only selected scalar semantics admitted; timestamp/binary projections unsupported; required non-nullable string/boolean grouping, with complete order and LIMIT for count-summary".into()}else if self.groups{"Required non-nullable string/boolean grouping; count-summary requires complete grouping order and LIMIT; no optional/numeric group keys or structured properties".into()}else if self.pages{"Required string authored-key entity pages, related entity pages and ungrouped count summary; no grouped summary or structured properties".into()}else if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -249,7 +252,9 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.release_030 {
+                != if self.selected_metadata {
+                    "truss-catalog-runtime/0.31-candidate"
+                } else if self.release_030 {
                     "truss-catalog-runtime/0.30-candidate"
                 } else if self.pages {
                     "truss-catalog-runtime/0.29-candidate"
@@ -297,26 +302,38 @@ impl Backend for Runtime {
                 return Err(fail("Duplicate record mapping"));
             }
             let original = c.catalog.record_by_identity(&r.identity)?;
-            let descriptor = c.catalog.entity_descriptor(&original)?;
-            if descriptor.members.len() != r.fields.len() {
+            let members = if self.selected_metadata {
+                c.catalog.record_members(&original)?
+            } else {
+                c.catalog.entity_descriptor(&original)?.members
+            };
+            if members.len() != r.fields.len() {
                 return Err(fail("Complete original record member mapping required"));
             }
-            for member in &descriptor.members {
-                let f = r
-                    .fields
-                    .iter()
-                    .find(|f| f.identity == member.identity)
+            // Entity selections carry the Record root and require its whole graph.
+            if self.selected_metadata && c.selection.types.contains(&r.identity) {
+                let entity = c.catalog.entity_descriptor(&original)?;
+                for descriptor in &entity.graph {
+                    if descriptor.identity != r.identity {
+                        scalar_type(descriptor, self.exact_numbers)?;
+                    }
+                }
+            }
+            for member in &members {
+                let f = r.fields.iter().find(|f| f.identity == member.identity)
                     .ok_or_else(|| fail("Original member mapping missing"))?;
                 native(&f.property_id)?;
                 if !native_fields.insert(&f.property_id) {
                     return Err(fail("Duplicate native property mapping"));
                 }
-                let d = descriptor
-                    .graph
-                    .iter()
-                    .find(|d| d.identity == f.identity)
-                    .ok_or_else(|| fail("Original member descriptor missing"))?;
-                scalar_type(d, self.exact_numbers)?;
+                if !self.selected_metadata || c.selection.fields.contains(&f.identity)
+                    || c.selection.types.contains(&f.identity)
+                {
+                    let (_, graph) = c.catalog.member_descriptor_by_identity(&original, &f.identity)?;
+                    let descriptor = graph.iter().find(|d| d.identity == f.identity)
+                        .ok_or_else(|| fail("Original member descriptor missing"))?;
+                    scalar_type(descriptor, self.exact_numbers)?;
+                }
                 fields.insert(key(&f.identity));
             }
         }
@@ -913,7 +930,8 @@ pub fn compile_json(request: &str) -> String {
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let groups = version.as_deref() == Some("0.4.2");
+    let selected_metadata = version.as_deref() == Some("0.4.3");
+    let groups = selected_metadata || version.as_deref() == Some("0.4.2");
     let release_030 = groups || version.as_deref() == Some("0.4.1");
     let pages = release_030 || version.as_deref() == Some("0.4.0");
     let relationships = pages || version.as_deref() == Some("0.3.0");
@@ -926,6 +944,7 @@ pub fn compile_json(request: &str) -> String {
                 pages,
                 release_030,
                 groups,
+                selected_metadata,
             };
             if target.backend_id != BACKEND
                 || target.backend_version != backend.version()
