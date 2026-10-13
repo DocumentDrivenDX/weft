@@ -87,6 +87,7 @@ pub struct Runtime {
     entity_times: bool,
     import_loads: bool,
     numeric_facets: bool,
+    typed_keys: bool,
     continuation_filter: Option<usize>,
 }
 impl Runtime {
@@ -113,7 +114,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -272,7 +273,7 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
+                != if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
                     "truss-catalog-runtime/0.33-candidate"
                 } else if self.retained_metadata {
                     "truss-catalog-runtime/0.32-candidate"
@@ -1001,7 +1002,8 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let numeric_facets = version.as_deref() == Some("0.4.9");
+    let typed_keys = version.as_deref() == Some("0.4.10");
+    let numeric_facets = typed_keys || version.as_deref() == Some("0.4.9");
     let import_loads = numeric_facets || version.as_deref() == Some("0.4.8");
     let entity_times = import_loads || version.as_deref() == Some("0.4.7");
     let complete_entities = entity_times || version.as_deref() == Some("0.4.6");
@@ -1028,6 +1030,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                 entity_times,
                 import_loads,
                 numeric_facets,
+                typed_keys,
                 continuation_filter: if page.as_ref().is_some_and(|(_, after)| after.is_some()) {
                     match plan { Plan::V02(p) => Some(p.filters.len()-1), _ => return Err(fail("Page application plan required")) }
                 } else { None },
