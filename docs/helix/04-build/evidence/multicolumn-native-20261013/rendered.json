@@ -1,0 +1,141 @@
+{
+  "conflictingField": "projection_must_refuse",
+  "disclosureScope": "row_permit_gated_original_withheld_transformed_conflict_states_diagnostic_value_projection",
+  "eligibility": [
+    {
+      "action": "query-original",
+      "decisionExpression": "CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END",
+      "disclosure": [
+        {
+          "cellExpression": "CASE (CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END) WHEN 'original' THEN (CASE WHEN (r.props->'9') IS NULL THEN pg_catalog.jsonb_build_object('outcomeId','refuse','disposition','refuse') WHEN truss.valid_scalar_cell(r.props->'9','string',false) IS NOT TRUE THEN pg_catalog.jsonb_build_object('disposition','refuse') ELSE pg_catalog.jsonb_build_object('outcomeId','original','disposition','original','value',(CASE WHEN r.props->'9'->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('string',r.props->'9'->'text') END)) END) WHEN 'withheld' THEN pg_catalog.jsonb_build_object('outcomeId','withheld','disposition','withheld') WHEN 'transformed' THEN (pg_catalog.jsonb_build_object('disposition','refuse')) ELSE pg_catalog.jsonb_build_object('disposition',(CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END)) END",
+          "field": {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          },
+          "stateExpression": "CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END",
+          "transformationChoiceExpression": "CASE WHEN (CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END)='transformed' THEN (NULL::pg_catalog.int4) ELSE NULL::pg_catalog.int4 END",
+          "transformations": []
+        },
+        {
+          "cellExpression": "CASE (CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'indeterminate' END) END) WHEN 'original' THEN (CASE WHEN (r.props->'10') IS NULL THEN pg_catalog.jsonb_build_object('outcomeId','refuse','disposition','refuse') WHEN truss.valid_scalar_cell(r.props->'10','integer',false) IS NOT TRUE THEN pg_catalog.jsonb_build_object('disposition','refuse') ELSE pg_catalog.jsonb_build_object('outcomeId','original','disposition','original','value',(CASE WHEN r.props->'10'->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('integerToken',r.props->'10'->'text') END)) END) WHEN 'withheld' THEN pg_catalog.jsonb_build_object('outcomeId','withheld','disposition','withheld') WHEN 'transformed' THEN (pg_catalog.jsonb_build_object('disposition','refuse')) ELSE pg_catalog.jsonb_build_object('disposition',(CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'indeterminate' END) END)) END",
+          "field": {
+            "documentId": "domain",
+            "elementId": "salary",
+            "moduleId": "m"
+          },
+          "stateExpression": "CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'indeterminate' END) END",
+          "transformationChoiceExpression": "CASE WHEN (CASE WHEN (CASE WHEN (q2 IS NULL) THEN 'indeterminate' WHEN (q2 IS TRUE) AND (TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'indeterminate' END) END)='transformed' THEN (NULL::pg_catalog.int4) ELSE NULL::pg_catalog.int4 END",
+          "transformations": []
+        }
+      ],
+      "target": {
+        "documentId": "domain",
+        "elementId": "Resource",
+        "moduleId": "m"
+      }
+    },
+    {
+      "action": "read",
+      "decisionExpression": "CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END",
+      "disclosure": [
+        {
+          "cellExpression": "CASE (CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END) WHEN 'original' THEN (CASE WHEN (r.props->'9') IS NULL THEN pg_catalog.jsonb_build_object('outcomeId','refuse','disposition','refuse') WHEN truss.valid_scalar_cell(r.props->'9','string',false) IS NOT TRUE THEN pg_catalog.jsonb_build_object('disposition','refuse') ELSE pg_catalog.jsonb_build_object('outcomeId','original','disposition','original','value',(CASE WHEN r.props->'9'->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('string',r.props->'9'->'text') END)) END) WHEN 'withheld' THEN pg_catalog.jsonb_build_object('outcomeId','withheld','disposition','withheld') WHEN 'transformed' THEN (pg_catalog.jsonb_build_object('disposition','refuse')) ELSE pg_catalog.jsonb_build_object('disposition',(CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END)) END",
+          "field": {
+            "documentId": "domain",
+            "elementId": "resourceId",
+            "moduleId": "m"
+          },
+          "stateExpression": "CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END",
+          "transformationChoiceExpression": "CASE WHEN (CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (FALSE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (FALSE) THEN 'original' ELSE 'original' END) END)='transformed' THEN (NULL::pg_catalog.int4) ELSE NULL::pg_catalog.int4 END",
+          "transformations": []
+        },
+        {
+          "cellExpression": "CASE (CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (q0 IS TRUE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (q0 IS TRUE) THEN 'original' ELSE 'indeterminate' END) END) WHEN 'original' THEN (CASE WHEN (r.props->'10') IS NULL THEN pg_catalog.jsonb_build_object('outcomeId','refuse','disposition','refuse') WHEN truss.valid_scalar_cell(r.props->'10','integer',false) IS NOT TRUE THEN pg_catalog.jsonb_build_object('disposition','refuse') ELSE pg_catalog.jsonb_build_object('outcomeId','original','disposition','original','value',(CASE WHEN r.props->'10'->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('integerToken',r.props->'10'->'text') END)) END) WHEN 'withheld' THEN pg_catalog.jsonb_build_object('outcomeId','withheld','disposition','withheld') WHEN 'transformed' THEN (pg_catalog.jsonb_build_object('disposition','refuse')) ELSE pg_catalog.jsonb_build_object('disposition',(CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (q0 IS TRUE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (q0 IS TRUE) THEN 'original' ELSE 'indeterminate' END) END)) END",
+          "field": {
+            "documentId": "domain",
+            "elementId": "salary",
+            "moduleId": "m"
+          },
+          "stateExpression": "CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (q0 IS TRUE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (q0 IS TRUE) THEN 'original' ELSE 'indeterminate' END) END",
+          "transformationChoiceExpression": "CASE WHEN (CASE WHEN (CASE WHEN (q0 IS NULL OR q1 IS NULL) THEN 'indeterminate' WHEN (q0 IS TRUE) AND (q1 IS TRUE) THEN 'permit' ELSE 'deny' END) <> 'permit' THEN 'not-applicable' ELSE (CASE WHEN (q0 IS TRUE) THEN 'withheld' WHEN (FALSE) THEN 'conflict' WHEN (FALSE) THEN 'transformed' WHEN (q0 IS TRUE) THEN 'original' ELSE 'indeterminate' END) END)='transformed' THEN (NULL::pg_catalog.int4) ELSE NULL::pg_catalog.int4 END",
+          "transformations": []
+        }
+      ],
+      "target": {
+        "documentId": "domain",
+        "elementId": "Resource",
+        "moduleId": "m"
+      }
+    }
+  ],
+  "eligibilityScope": "selected_rule_groups_empty_disclosure_only_no_missing_group_authorization",
+  "indeterminateField": "projection_must_refuse",
+  "missingEligibilityGroup": "unsupported_refuse",
+  "parameterTypes": [
+    "boolean"
+  ],
+  "parameters": [
+    true
+  ],
+  "prerequisites": [
+    "original_fact_domain_and_declared_key_validation",
+    "complete_fact_population",
+    "truthful_current_native_mapping",
+    "pg_catalog_pg_temp_search_path_and_authentic_native_helpers"
+  ],
+  "projectionScope": "diagnostic_cell_envelopes_not_registered_result_contract",
+  "refusedProjectionStates": [
+    "conflict",
+    "indeterminate",
+    "refuse",
+    "not-applicable"
+  ],
+  "rules": [
+    {
+      "actions": [
+        "read"
+      ],
+      "effect": "permit",
+      "expression": "TRUE",
+      "id": "reader",
+      "target": {
+        "documentId": "domain",
+        "elementId": "Resource",
+        "moduleId": "m"
+      },
+      "truthColumn": "q0"
+    },
+    {
+      "actions": [
+        "read"
+      ],
+      "effect": "require",
+      "expression": "(SELECT CASE WHEN pg_catalog.bool_or(t.truth IS TRUE) THEN TRUE WHEN pg_catalog.bool_or(t.truth IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END FROM (SELECT ((CASE WHEN (truss.valid_scalar_cell(v0.props->'7','string',false) IS TRUE) AND (truss.valid_scalar_cell(r.props->'9','string',false) IS TRUE) THEN (((CASE WHEN v0.props->'7'->>'kind'='null' THEN NULL ELSE v0.props->'7'->>'text' END) COLLATE pg_catalog.\"C\") IS NOT DISTINCT FROM ((CASE WHEN r.props->'9'->>'kind'='null' THEN NULL ELSE r.props->'9'->>'text' END) COLLATE pg_catalog.\"C\")) ELSE NULL::pg_catalog.bool END) AND ((SELECT CASE WHEN pg_catalog.bool_or(t.truth IS TRUE) THEN TRUE WHEN pg_catalog.bool_or(t.truth IS NULL) THEN NULL::pg_catalog.bool ELSE FALSE END FROM (SELECT ((CASE WHEN (truss.valid_scalar_cell(v1.props->'4','string',false) IS TRUE) AND (truss.valid_scalar_cell(s.props->'11','string',false) IS TRUE) THEN (((CASE WHEN v1.props->'4'->>'kind'='null' THEN NULL ELSE v1.props->'4'->>'text' END) COLLATE pg_catalog.\"C\") IS NOT DISTINCT FROM ((CASE WHEN s.props->'11'->>'kind'='null' THEN NULL ELSE s.props->'11'->>'text' END) COLLATE pg_catalog.\"C\")) ELSE NULL::pg_catalog.bool END) AND (CASE WHEN (truss.valid_scalar_cell(v1.props->'3','string',false) IS TRUE) AND (truss.valid_scalar_cell(v0.props->'6','string',false) IS TRUE) THEN (((CASE WHEN v1.props->'3'->>'kind'='null' THEN NULL ELSE v1.props->'3'->>'text' END) COLLATE pg_catalog.\"C\") IS NOT DISTINCT FROM ((CASE WHEN v0.props->'6'->>'kind'='null' THEN NULL ELSE v0.props->'6'->>'text' END) COLLATE pg_catalog.\"C\")) ELSE NULL::pg_catalog.bool END) AND (CASE WHEN (truss.valid_scalar_cell(v1.props->'1','boolean',false) IS TRUE) AND (TRUE) THEN ((CASE WHEN v1.props->'1'->>'kind'='null' THEN NULL ELSE v1.props->'1'->'value' END) IS NOT DISTINCT FROM (pg_catalog.to_jsonb($1::pg_catalog.bool))) ELSE NULL::pg_catalog.bool END)) AS truth FROM truss.object AS v1 WHERE v1.type_id=1) AS t))) AS truth FROM truss.object AS v0 WHERE v0.type_id=2) AS t)",
+      "id": "membership",
+      "target": {
+        "documentId": "domain",
+        "elementId": "Resource",
+        "moduleId": "m"
+      },
+      "truthColumn": "q1"
+    },
+    {
+      "actions": [
+        "query-original"
+      ],
+      "effect": "permit",
+      "expression": "TRUE",
+      "id": "query-original",
+      "target": {
+        "documentId": "domain",
+        "elementId": "Resource",
+        "moduleId": "m"
+      },
+      "truthColumn": "q2"
+    }
+  ],
+  "scope": "conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only",
+  "securityReady": false,
+  "version": "weft.truss.predicate-spike/0.6"
+}

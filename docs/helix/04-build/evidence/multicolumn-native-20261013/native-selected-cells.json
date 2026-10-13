@@ -1,0 +1,80 @@
+{
+  "salary": [
+    {
+      "subject": 1,
+      "resource": 5,
+      "cell": {
+        "outcomeId": "withheld",
+        "disposition": "withheld"
+      }
+    },
+    {
+      "subject": 2,
+      "resource": 6,
+      "cell": {
+        "outcomeId": "withheld",
+        "disposition": "withheld"
+      }
+    }
+  ],
+  "resourceId": [
+    {
+      "subject": 1,
+      "resource": 5,
+      "cell": {
+        "value": {
+          "string": "ra"
+        },
+        "outcomeId": "original",
+        "disposition": "original"
+      }
+    },
+    {
+      "subject": 2,
+      "resource": 6,
+      "cell": {
+        "value": {
+          "string": "rb"
+        },
+        "outcomeId": "original",
+        "disposition": "original"
+      }
+    }
+  ],
+  "combined": [
+    {
+      "subject": 1,
+      "resource": 5,
+      "cell": [
+        {
+          "value": {
+            "string": "ra"
+          },
+          "outcomeId": "original",
+          "disposition": "original"
+        },
+        {
+          "outcomeId": "withheld",
+          "disposition": "withheld"
+        }
+      ]
+    },
+    {
+      "subject": 2,
+      "resource": 6,
+      "cell": [
+        {
+          "value": {
+            "string": "rb"
+          },
+          "outcomeId": "original",
+          "disposition": "original"
+        },
+        {
+          "outcomeId": "withheld",
+          "disposition": "withheld"
+        }
+      ]
+    }
+  ]
+}

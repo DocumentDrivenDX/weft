@@ -1,0 +1,38 @@
+[
+  {
+    "subject": 1,
+    "resource": 5,
+    "nativeTruth": true,
+    "originalDecision": "permit"
+  },
+  {
+    "subject": 1,
+    "resource": 6,
+    "nativeTruth": false,
+    "originalDecision": "filtered"
+  },
+  {
+    "subject": 1,
+    "resource": 7,
+    "nativeTruth": false,
+    "originalDecision": "filtered"
+  },
+  {
+    "subject": 2,
+    "resource": 5,
+    "nativeTruth": false,
+    "originalDecision": "filtered"
+  },
+  {
+    "subject": 2,
+    "resource": 6,
+    "nativeTruth": true,
+    "originalDecision": "permit"
+  },
+  {
+    "subject": 2,
+    "resource": 7,
+    "nativeTruth": false,
+    "originalDecision": "filtered"
+  }
+]

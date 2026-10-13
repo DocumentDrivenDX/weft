@@ -1,0 +1,819 @@
+{
+  "request": {
+    "interfaceVersion": "weft-security-mapping/0.1.0",
+    "modules": [
+      {
+        "documentJson": "{\"umf\":\"0.8.0\",\"id\":\"domain\",\"vocabularies\":{},\"modules\":[{\"id\":\"m\",\"namespace\":\"\",\"elements\":[{\"id\":\"Staff\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"staffId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"staffId\"}]}],\"extensions\":{},\"name\":\"Staff\"},{\"id\":\"staffId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"staffId\"},{\"id\":\"Project\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"projectId\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"projectId\"}]}],\"extensions\":{},\"name\":\"Project\"},{\"id\":\"projectId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"projectId\"},{\"id\":\"Resource\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"resourceId\"},{\"module\":\"m\",\"element\":\"salary\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"resourceId\"}]}],\"extensions\":{},\"name\":\"Resource\"},{\"id\":\"resourceId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"resourceId\"},{\"id\":\"salary\",\"kind\":\"field\",\"scalarType\":\"integer\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"salary\",\"facets\":{\"integerWidth\":{\"bits\":64,\"signed\":true}}},{\"id\":\"Ownership\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"ownerId\"},{\"module\":\"m\",\"element\":\"ownerResource\"},{\"module\":\"m\",\"element\":\"ownerProject\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"ownerId\"}]}],\"extensions\":{},\"name\":\"Ownership\"},{\"id\":\"ownerId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerId\"},{\"id\":\"ownerResource\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerResource\"},{\"id\":\"ownerProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"ownerProject\"},{\"id\":\"Assignment\",\"kind\":\"record\",\"members\":[{\"module\":\"m\",\"element\":\"assignmentId\"},{\"module\":\"m\",\"element\":\"assignmentStaff\"},{\"module\":\"m\",\"element\":\"assignmentProject\"},{\"module\":\"m\",\"element\":\"active\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"Key\",\"fields\":[{\"module\":\"m\",\"element\":\"assignmentId\"}]}],\"extensions\":{},\"name\":\"Assignment\"},{\"id\":\"assignmentId\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentId\"},{\"id\":\"assignmentStaff\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentStaff\"},{\"id\":\"assignmentProject\",\"kind\":\"field\",\"scalarType\":\"string\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"assignmentProject\"},{\"id\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"nullability\":\"required\",\"cardinality\":\"one\",\"extensions\":{},\"name\":\"active\"}]}]}",
+        "pin": {
+          "documentId": "domain",
+          "revision": "schema-1",
+          "umfVersion": "0.8.0",
+          "sha256": "005db769cca65703cad146f6805ddf2ef1a074dfeb8840e49e9cec96828709fb"
+        },
+        "selectedModuleIds": [
+          "m"
+        ]
+      }
+    ],
+    "policyJson": "{\"vocabulary\":\"umf.security\",\"version\":\"0.1.0\",\"id\":\"project-access\",\"revision\":\"policy-1\",\"ontology\":{\"documentId\":\"domain\",\"revision\":\"ontology-1\"},\"rules\":[{\"id\":\"reader\",\"effect\":\"permit\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true},\"disclosure\":[{\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"disposition\":{\"kind\":\"withheld\"}}]},{\"id\":\"membership\",\"effect\":\"require\",\"actions\":[\"read\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"as\":\"o\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"resource\"},\"right\":{\"kind\":\"resource\",\"identity\":true}},{\"op\":\"exists\",\"association\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"as\":\"a\",\"where\":{\"op\":\"and\",\"args\":[{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"staff\"},\"right\":{\"kind\":\"subject\",\"identity\":true}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"endpoint\":\"project\"},\"right\":{\"kind\":\"variable\",\"name\":\"o\",\"endpoint\":\"project\"}},{\"op\":\"eq\",\"left\":{\"kind\":\"variable\",\"name\":\"a\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"}},\"right\":{\"kind\":\"constant\",\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"value\":{\"boolean\":true}}}]}}]}}},{\"id\":\"query-original\",\"effect\":\"permit\",\"actions\":[\"query-original\"],\"target\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"condition\":{\"op\":\"literal\",\"value\":true}}]}",
+    "ontologyJson": "{\"version\":\"0.1.0\",\"documentId\":\"domain\",\"revision\":\"ontology-1\",\"documents\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\"}],\"subject\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"entities\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"staffId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"projectId\"},\"protection\":\"unprotected\"}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"resourceId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"protection\":\"protected\",\"queryUse\":{\"predicate\":\"original-authorized\",\"order\":\"original-authorized\",\"group\":\"original-authorized\",\"join\":\"original-authorized\",\"aggregate\":\"original-authorized\"}}]}],\"associations\":[{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Ownership\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"resource\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerResource\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"ownerProject\"}]}]},{\"type\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Assignment\"},\"keyId\":\"pk\",\"fields\":[{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentId\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"},\"protection\":\"unprotected\"},{\"ref\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"active\"},\"protection\":\"unprotected\"}],\"endpoints\":[{\"role\":\"staff\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Staff\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentStaff\"}]},{\"role\":\"project\",\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Project\"},\"fields\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"assignmentProject\"}]}]}],\"context\":[],\"actions\":[\"read\",\"update\",\"query-original\"]}",
+    "queryProfileJson": "{\"version\":\"weft.security.query-profile/0.1.0\",\"id\":\"fixture-profile\",\"revision\":\"p1\",\"action\":\"read\",\"modelPins\":[{\"documentId\":\"domain\",\"revision\":\"schema-1\",\"umfVersion\":\"0.8.0\",\"sha256\":\"005db769cca65703cad146f6805ddf2ef1a074dfeb8840e49e9cec96828709fb\"}],\"policySha256\":\"f274bfb3ab441188d0a47e286f75c8d9a991ca84290695efad4d9cb561adc428\",\"ontologySha256\":\"8b99af02a91439ec6d204aad3a02d8d9629d79a194821caef8d98a3d14793f9f\",\"binding\":{\"backendId\":\"truss.postgresql\",\"backendVersion\":\"unqualified\",\"targetProfile\":\"fixture-only\",\"sha256\":\"47f9f7eca0d35353ba8d0bcca077c1f9365d45f78623d3a93ab521dc640ba6e6\"},\"targets\":[{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"}],\"bindings\":[{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"predicate\",\"originalAction\":\"query-original\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"order\",\"originalAction\":\"query-original\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"group\",\"originalAction\":\"query-original\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"join\",\"originalAction\":\"query-original\"},{\"target\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"Resource\"},\"field\":{\"documentId\":\"domain\",\"moduleId\":\"m\",\"elementId\":\"salary\"},\"operator\":\"aggregate\",\"originalAction\":\"query-original\"}]}",
+    "bindingJson": "{\"version\":\"fixture-only\",\"layout\":\"opaque-unqualified-storage\"}",
+    "backendId": "truss.postgresql",
+    "backendVersion": "unqualified",
+    "targetProfile": "fixture-only",
+    "sql": "SELECT r.salary AS amount FROM Resource r",
+    "parameters": {}
+  },
+  "assessment": {
+    "installationId": "735e56e4-a25e-4707-8903-8ed6783c39da",
+    "inventory": {
+      "endpoints": [],
+      "keys": [
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "is_primary": false,
+          "key_id": "pk",
+          "key_num": 1,
+          "prop_ids": [
+            2
+          ],
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "is_primary": false,
+          "key_id": "pk",
+          "key_num": 1,
+          "prop_ids": [
+            5
+          ],
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 2
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "is_primary": false,
+          "key_id": "pk",
+          "key_num": 1,
+          "prop_ids": [
+            8
+          ],
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 3
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "is_primary": false,
+          "key_id": "pk",
+          "key_num": 1,
+          "prop_ids": [
+            9
+          ],
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 4
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "is_primary": false,
+          "key_id": "pk",
+          "key_num": 1,
+          "prop_ids": [
+            11
+          ],
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 5
+        }
+      ],
+      "properties": [
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "active",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "active",
+          "nullability": "required",
+          "prop_id": 1,
+          "retired_rev": null,
+          "scalar_type": "boolean",
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "assignmentId",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "assignmentId",
+          "nullability": "required",
+          "prop_id": 2,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "assignmentProject",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "assignmentProject",
+          "nullability": "required",
+          "prop_id": 3,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "assignmentStaff",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "assignmentStaff",
+          "nullability": "required",
+          "prop_id": 4,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "ownerId",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "ownerId",
+          "nullability": "required",
+          "prop_id": 5,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 2
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "ownerProject",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "ownerProject",
+          "nullability": "required",
+          "prop_id": 6,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 2
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "ownerResource",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "ownerResource",
+          "nullability": "required",
+          "prop_id": 7,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 2
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "projectId",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "projectId",
+          "nullability": "required",
+          "prop_id": 8,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 3
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "resourceId",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "resourceId",
+          "nullability": "required",
+          "prop_id": 9,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 4
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "salary",
+          "facets": {
+            "integerWidth": {
+              "bits": 64,
+              "signed": true
+            }
+          },
+          "home": "json",
+          "item": null,
+          "name": "salary",
+          "nullability": "required",
+          "prop_id": 10,
+          "retired_rev": null,
+          "scalar_type": "integer",
+          "since_rev": 1,
+          "type_id": 4
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "cardinality": "one",
+          "declaration_module": "m",
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "element": "staffId",
+          "facets": null,
+          "home": "json",
+          "item": null,
+          "name": "staffId",
+          "nullability": "required",
+          "prop_id": 11,
+          "retired_rev": null,
+          "scalar_type": "string",
+          "since_rev": 1,
+          "type_id": 5
+        }
+      ],
+      "relationships": [],
+      "types": [
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "document_id": "domain",
+          "element": "Assignment",
+          "kind": "record",
+          "lineage_bytes": "\\x74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b22646f6d61696e222c226d222c2241737369676e6d656e74225d",
+          "lineage_profile": "truss-type-lineage/0.1.0",
+          "lineage_sha256": "\\xbb20d87790a380a04aabae4a6c4b295a9e04952eb8a3b4fae851aea69e6e0491",
+          "module": "m",
+          "provisional": false,
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 1
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "document_id": "domain",
+          "element": "Ownership",
+          "kind": "record",
+          "lineage_bytes": "\\x74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b22646f6d61696e222c226d222c224f776e657273686970225d",
+          "lineage_profile": "truss-type-lineage/0.1.0",
+          "lineage_sha256": "\\x886155ca65a0976366e03ec58d24b60fadb4d1474a077071d9a7986874231155",
+          "module": "m",
+          "provisional": false,
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 2
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "document_id": "domain",
+          "element": "Project",
+          "kind": "record",
+          "lineage_bytes": "\\x74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b22646f6d61696e222c226d222c2250726f6a656374225d",
+          "lineage_profile": "truss-type-lineage/0.1.0",
+          "lineage_sha256": "\\xb5fae0af82fbc1d5dcc5027a8f5bd9afdb6b1861a428e40844f12b1f28dfe6a9",
+          "module": "m",
+          "provisional": false,
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 3
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "document_id": "domain",
+          "element": "Resource",
+          "kind": "record",
+          "lineage_bytes": "\\x74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b22646f6d61696e222c226d222c225265736f75726365225d",
+          "lineage_profile": "truss-type-lineage/0.1.0",
+          "lineage_sha256": "\\x5732981991efb2ad8df000858310fde523c5389f795b01479172191d347aae41",
+          "module": "m",
+          "provisional": false,
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 4
+        },
+        {
+          "binding_source_bytes": null,
+          "binding_source_pointer": null,
+          "binding_source_rev": null,
+          "definition_doc_ord": 0,
+          "definition_document_id": "domain",
+          "definition_rev": 1,
+          "definition_source_kind": "accepted_document",
+          "doc_ord": 0,
+          "document_id": "domain",
+          "element": "Staff",
+          "kind": "record",
+          "lineage_bytes": "\\x74727573732d63616e6f6e6963616c2f302e312e300a74727573732d747970652d6c696e656167652f302e312e300a5b22646f6d61696e222c226d222c225374616666225d",
+          "lineage_profile": "truss-type-lineage/0.1.0",
+          "lineage_sha256": "\\x24cc2ee3664a9137ab249c7f873dbe8e84585bd581b10b0104a8ebfeb20be0bc",
+          "module": "m",
+          "provisional": false,
+          "retired_rev": null,
+          "since_rev": 1,
+          "type_id": 5
+        }
+      ]
+    },
+    "modelPins": [
+      {
+        "documentId": "domain",
+        "revision": "schema-1",
+        "sha256": "005db769cca65703cad146f6805ddf2ef1a074dfeb8840e49e9cec96828709fb",
+        "umfVersion": "0.8.0"
+      }
+    ],
+    "releaseId": "truss-catalog-runtime/0.37-candidate",
+    "releaseSha256": "9284d22d9f7f070d557111c2c2a310a9444b6e3d6ae0254b8d30df88470933ea",
+    "revision": "1",
+    "scope": "accepted_source_and_native_definition_correspondence_only",
+    "securityReady": false,
+    "version": "truss.accepted-catalog-assessment/0.1"
+  },
+  "resultProbe": {
+    "target": {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "Resource"
+    },
+    "field": {
+      "documentId": "domain",
+      "moduleId": "m",
+      "elementId": "salary"
+    },
+    "outputName": "amount",
+    "rows": [
+      [
+        {
+          "outcomeId": "withheld",
+          "disposition": "withheld"
+        }
+      ]
+    ],
+    "factCut": {
+      "trusted": true,
+      "generation": "g1",
+      "expectedGeneration": "g1",
+      "policyId": "project-access",
+      "policyRevision": "policy-1",
+      "ontologyDocumentId": "domain",
+      "ontologyRevision": "ontology-1",
+      "subjects": [
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Staff"
+          },
+          "key": [
+            {
+              "string": "alice"
+            }
+          ],
+          "fields": [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "staffId"
+              },
+              "value": {
+                "string": "alice"
+              }
+            }
+          ],
+          "absent": []
+        }
+      ],
+      "facts": [
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "key": [
+            {
+              "string": "o1"
+            }
+          ],
+          "fields": [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerId"
+              },
+              "value": {
+                "string": "o1"
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerResource"
+              },
+              "value": {
+                "string": "r1"
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "ownerProject"
+              },
+              "value": {
+                "string": "p1"
+              }
+            }
+          ],
+          "absent": []
+        },
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          "key": [
+            {
+              "string": "a1"
+            }
+          ],
+          "fields": [
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentId"
+              },
+              "value": {
+                "string": "a1"
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentStaff"
+              },
+              "value": {
+                "string": "alice"
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "assignmentProject"
+              },
+              "value": {
+                "string": "p1"
+              }
+            },
+            {
+              "field": {
+                "documentId": "domain",
+                "moduleId": "m",
+                "elementId": "active"
+              },
+              "value": {
+                "boolean": true
+              }
+            }
+          ],
+          "absent": []
+        }
+      ],
+      "coverage": [
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Staff"
+          },
+          "complete": true,
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "staffId"
+            }
+          ]
+        },
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Project"
+          },
+          "complete": true,
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "projectId"
+            }
+          ]
+        },
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Resource"
+          },
+          "complete": true,
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "resourceId"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "salary"
+            }
+          ]
+        },
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Ownership"
+          },
+          "complete": true,
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerId"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerResource"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "ownerProject"
+            }
+          ]
+        },
+        {
+          "type": {
+            "documentId": "domain",
+            "moduleId": "m",
+            "elementId": "Assignment"
+          },
+          "complete": true,
+          "fields": [
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentId"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentStaff"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "assignmentProject"
+            },
+            {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "active"
+            }
+          ]
+        }
+      ],
+      "context": [],
+      "maxFacts": 100,
+      "maxSteps": 10000
+    },
+    "scopedFacts": {
+      "version": "weft.security.scoped-facts/0.1.0",
+      "rows": [
+        {
+          "s0": {
+            "type": {
+              "documentId": "domain",
+              "moduleId": "m",
+              "elementId": "Resource"
+            },
+            "key": [
+              {
+                "string": "r1"
+              }
+            ],
+            "fields": [
+              {
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "resourceId"
+                },
+                "value": {
+                  "string": "r1"
+                }
+              },
+              {
+                "field": {
+                  "documentId": "domain",
+                  "moduleId": "m",
+                  "elementId": "salary"
+                },
+                "value": {
+                  "integerToken": "100"
+                }
+              }
+            ],
+            "absent": []
+          }
+        }
+      ]
+    }
+  }
+}

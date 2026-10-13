@@ -4,11 +4,11 @@ use weft_core::error::{Diagnostic, Result};
 fn refused() -> Diagnostic {
     Diagnostic::new("WFT-SECURITY-PREDICATE-SPIKE", "capability", "Bounded closed diagnostic input required")
 }
-// Single-column inspection fixture. Owner checking rejects query/source drift.
-fn inspect_probe(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value)->Result<()> {
+// Fixture declarations only; original owner checking admits exact query correspondence.
+fn inspect_column(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value,position:usize)->Result<weft_core::security_lowering::SecurityResultColumn> {
  use weft_core::security_lowering::*;
  let object=probe.as_object().ok_or_else(refused)?;
- if !matches!(object.len(),4|6)||object.contains_key("factCut")!=object.contains_key("scopedFacts")||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName"|"rows"|"factCut"|"scopedFacts")){return Err(refused());}
+ if object.len()!=3||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName")){return Err(refused());}
  fn identity(input:&serde_json::Value,r:&serde_json::Value)->Result<SecurityIdentity>{
   let document=r["documentId"].as_str().ok_or_else(refused)?;
   let pins=input["modules"].as_array().ok_or_else(refused)?;
@@ -39,7 +39,27 @@ fn inspect_probe(input:&serde_json::Value,output:&serde_json::Value,probe:&serde
   entry.2.push(SecurityDispositionSource{rule_id:t["ruleId"].as_str().ok_or_else(refused)?.into(),target:target.clone(),field:field.clone()});
  }
  for (id,(transform,domain,disposition_sources)) in classes{outcomes.push(SecurityResultOutcome::Transformed{id,transform,domain,disposition_sources});}
- let contract=SecurityResultContract{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns:vec![SecurityResultColumn{position:1,output_name:probe["outputName"].as_str().ok_or_else(refused)?.into(),source_fields:vec![field],outcomes}]};
+ Ok(SecurityResultColumn{position,output_name:probe["outputName"].as_str().ok_or_else(refused)?.into(),source_fields:vec![field],outcomes})
+}
+fn inspect_probe(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value)->Result<()> {
+ use weft_core::security_lowering::*;
+ let object=probe.as_object().ok_or_else(refused)?;
+ if object.contains_key("factCut")!=object.contains_key("scopedFacts")||!object.contains_key("rows"){return Err(refused());}
+ let paired=usize::from(object.contains_key("factCut"))*2;
+ let columns=if let Some(specs)=object.get("columns") {
+  if object.len()!=2+paired||object.keys().any(|k|!matches!(k.as_str(),"columns"|"rows"|"factCut"|"scopedFacts")){return Err(refused());}
+  let specs=specs.as_array().ok_or_else(refused)?;
+  if specs.is_empty()||specs.len()>256{return Err(refused());}
+  // Conservative source expansion reservation before repeated declaration copies.
+  let bytes=input.to_string().len().checked_add(output.to_string().len()).ok_or_else(refused)?;
+  if bytes.checked_mul(specs.len()).ok_or_else(refused)?>16_000_000{return Err(refused());}
+  specs.iter().enumerate().map(|(i,spec)|inspect_column(input,output,spec,i+1)).collect::<Result<Vec<_>>>()?
+ } else {
+  if object.len()!=4+paired||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName"|"rows"|"factCut"|"scopedFacts")){return Err(refused());}
+  let spec=serde_json::json!({"target":probe["target"],"field":probe["field"],"outputName":probe["outputName"]});
+  vec![inspect_column(input,output,&spec,1)?]
+ };
+ let contract=SecurityResultContract{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns};
  let contract_json=serde_json::to_string(&contract).map_err(|_|refused())?;let hash=weft_core::json::sha256(contract_json.as_bytes());
  let batch=serde_json::json!({"version":"weft.security.cells/0.1.0","resultContractSha256":hash,"rows":probe["rows"]});
  if let (Some(cut),Some(rows))=(object.get("factCut"),object.get("scopedFacts")) {

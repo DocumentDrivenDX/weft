@@ -1,0 +1,24 @@
+{
+  "scope": "Actual simultaneous two-column native projection plus original owner conditional fact/cell batch checks. No authenticated caller, complete production enumeration, compiler provenance, writer closure or guarded release; no required case promotion.",
+  "tests": 8,
+  "seconds": 42.528,
+  "runtime": "Truss0.38/PostgreSQL18.6; separately qualified original0.37 source mapper",
+  "artifactScope": "Retained top-level packets are final nonnullable fixture overwritten during full8 suite.",
+  "sources": {
+    "/private/tmp/weft-security-main-integration/crates/weft-postgresql/examples/security_predicate_spike.rs": "4b29fcf5ad68361066ff0d864239fe9031118bd5ed593b6fb3bb641e726befad",
+    "/private/tmp/truss-security-main-integration/packages/python/tests/test_security_predicate_native.py": "63d64541d9c4e686e463be13900bb5b68a64551afa21001b0975e425a5fe8983"
+  },
+  "binarySha256": "2b4c0461e2ce391b96c7c8936105a32781a5e9a5e7b620c931414d3a76ddaf96",
+  "artifacts": {
+    "request.json": "daf8c9310e0a2c4b8c1bb436cb37df855c95b6592acfe2134d7ac80d064dad87",
+    "original-simulator-comparisons.json": "0697d0a6a5915c5cde47df44a33089b67dbfc8ac5d2e0be52dabf59a7acff5a2",
+    "assessment.json": "7ec2c31b0b5acecff2971e7509fd602e383a0c58b871db65c1c98808ea252eea",
+    "native-eligibility.json": "d0b25ef8f5223f34fef730cdd90892dd7fda61fba399b1123ebac9597d5d30d3",
+    "native-truths.json": "cca68101af93beb868466353a6ecae4cda1db48da11de3c328c0598ea0095df8",
+    "boundaries.log": "4020217b6dcfe2a9914447405966fb83ad16a99cd42bd2b78335300cb04ff89f",
+    "native-selection-sql.json": "40a3f2f01fa3bdfc9a189fda4a6697ac2acf8a2dbde48a0f2f8b130aa7f93ce3",
+    "native.log": "d761d7c8a23b180bc89735bd858fe54da6ae74bf61549bf5a264d1b62342a949",
+    "rendered.json": "ef3fae41ed1065eec391d979841851c29f5827173235ac1728f88e1198b79642",
+    "native-selected-cells.json": "e445cc6057c01b6ed27cbf5a31c2e00aac192baba38aee3cbfc33c7db4234a7d"
+  }
+}
