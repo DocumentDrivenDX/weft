@@ -1,0 +1,320 @@
+{
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "365f06659b6e46a46365a15c66e370501e09d1326d2e96dc7414a077c402fe8c",
+  "scope": "Actual original rebuilt Weft diagnostic binary; source-only selection correspondence, no native execution or authority. Every refusal requires nonzero exit and empty stdout.",
+  "count": 39,
+  "results": [
+    {
+      "name": "original source-only subject succeeds",
+      "passed": true,
+      "exitCode": 0,
+      "inputBytes": 11462,
+      "stdoutBytes": 58,
+      "diagnostic": null
+    },
+    {
+      "name": "wrong selected module",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11466,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong selected element",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11465,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong selected key",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11467,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong source hash <class 'str'>",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11462,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong source hash <class 'int'>",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11397,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong source hash <class 'NoneType'>",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11400,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "wrong source hash <class 'dict'>",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11473,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 8",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11328,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 9",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11326,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 10",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11326,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 11",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11407,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 12",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11475,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 13",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11475,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 14",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11462,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 15",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11460,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 16",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11468,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "closed selection 17",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 15557,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "duplicate selection member",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11544,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "duplicate escaped identity member",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11478,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "closed outer extra extra",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11475,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "closed outer extra cut",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11471,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "closed outer extra evaluationRequest",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11485,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "closed outer extra resultProbe",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11479,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "name": "request override ir",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11470,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    },
+    {
+      "name": "request override actions",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11475,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    },
+    {
+      "name": "request override resolvedQuery",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11481,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    },
+    {
+      "name": "invalid owner SQL cannot pass selection",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11322,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-UNSUPPORTED"
+    },
+    {
+      "name": "valid SQL outside admitted target refuses",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11339,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "name": "missing query profile refuses",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 9538,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "name": "stale ontologyJson pin refuses",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11463,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "name": "rehashed original ontologyJson whitespace passes",
+      "passed": true,
+      "exitCode": 0,
+      "inputBytes": 11463,
+      "stdoutBytes": 58,
+      "diagnostic": null
+    },
+    {
+      "name": "stale policyJson pin refuses",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11463,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "name": "rehashed original policyJson whitespace passes",
+      "passed": true,
+      "exitCode": 0,
+      "inputBytes": 11463,
+      "stdoutBytes": 58,
+      "diagnostic": null
+    },
+    {
+      "name": "stale original model pin refuses",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11463,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-PIN"
+    },
+    {
+      "name": "changed model hash refuses old subject selection",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 11463,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-SUBJECT-KEY"
+    },
+    {
+      "name": "matching changed original source selection passes",
+      "passed": true,
+      "exitCode": 0,
+      "inputBytes": 11463,
+      "stdoutBytes": 58,
+      "diagnostic": null
+    },
+    {
+      "name": "exact 4000000-byte original request admitted",
+      "passed": true,
+      "exitCode": 0,
+      "inputBytes": 4000169,
+      "stdoutBytes": 58,
+      "diagnostic": null
+    },
+    {
+      "name": "4000001-byte original request refused",
+      "passed": true,
+      "exitCode": 1,
+      "inputBytes": 4000170,
+      "stdoutBytes": 0,
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    }
+  ]
+}

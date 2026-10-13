@@ -74,7 +74,15 @@ fn run() -> Result<()> {
     if raw.len() > 16_000_000 { return Err(refused()); }
     let value = weft_core::json::checked_json(&raw).map_err(|_| refused())?;
     let object = value.as_object().ok_or_else(refused)?;
-    if object.keys().any(|k| !matches!(k.as_str(), "request" | "assessment" | "cut" | "evaluationRequest" | "resultProbe"))
+    // Source-only semantic inspection does not need a physical assessment/render.
+    if object.len()==2&&object.contains_key("request")&&object.contains_key("subjectKeyProbe") {
+        weft_core::security_mapping_transport::inspect_security_mapping_subject_key(&value["request"].to_string(),&value["subjectKeyProbe"].to_string())?;
+        let output=serde_json::json!({"securityReady":false,"subjectKeyInspectionPassed":true});
+        let encoded=serde_json::to_vec(&output).map_err(|_|refused())?;
+        std::io::stdout().lock().write_all(&encoded).and_then(|_|std::io::stdout().lock().write_all(b"\n")).map_err(|_|refused())?;
+        return Ok(());
+    }
+    if object.keys().any(|k| !matches!(k.as_str(), "request" | "assessment" | "cut" | "evaluationRequest" | "resultProbe" | "subjectKeyProbe"))
         || !object.contains_key("request") || !object.contains_key("assessment")
         || object.contains_key("cut") != object.contains_key("evaluationRequest") { return Err(refused()); }
     let input = &value["request"];
@@ -92,6 +100,10 @@ fn run() -> Result<()> {
         output["simulationDecisions"] = serde_json::json!(results.iter().map(|r| format!("{:?}", r.decision).to_lowercase()).collect::<Vec<_>>());
     }
     if let Some(probe)=object.get("resultProbe") { inspect_probe(input,&output,probe)?;output["resultCellInspectionPassed"]=serde_json::json!(true);if probe.get("factCut").is_some(){output["conditionalFactSelectionPassed"]=serde_json::json!(true);} }
+    if let Some(selection)=object.get("subjectKeyProbe") {
+        weft_core::security_mapping_transport::inspect_security_mapping_subject_key(&input.to_string(),&selection.to_string())?;
+        output["subjectKeyInspectionPassed"]=serde_json::json!(true);
+    }
     let encoded = serde_json::to_vec(&output).map_err(|_| refused())?;
     if encoded.len() > 16_000_000 { return Err(refused()); }
     let mut stdout = std::io::stdout().lock();

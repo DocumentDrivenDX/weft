@@ -111,6 +111,28 @@ fn inspect_result(raw:&str,contract:&crate::security_lowering::SecurityResultCon
         None=>context.check_result_cells(contract,contract_json,contract_sha256,batch_json)
     }
 }
+/// Pure original-ontology subject Record/Key/source selection correspondence.
+/// No native principal binding, key existence, issuer or release authority.
+pub fn inspect_security_mapping_subject_key(raw:&str,selection_json:&str)->Result<()> {
+    let refused=||crate::error::Diagnostic::new("WFT-SECURITY-SUBJECT-KEY","model","Original ontology subject key selection refused");
+    let selection=crate::json::checked_json_bounded(selection_json,16_384,8,64).map_err(|_|refused())?;
+    let object=selection.as_object().ok_or_else(refused)?;
+    let identity=selection["identity"].as_object().ok_or_else(refused)?;
+    if object.len()!=2||!object.contains_key("sourceSha256")||identity.len()!=3||!["module","element","key"].iter().all(|k|identity.get(*k).is_some_and(|v|v.as_str().is_some_and(|s|!s.is_empty()&&s.len()<=4096&&!s.contains('\0')))){return Err(refused());}
+    let request=read_request(raw)?;
+    let catalog=Catalog::prepare_security(request.modules)?;
+    let packet=SecuritySourcePacket::read(&request.policy_json,&request.ontology_json,&catalog)?;
+    let plan=SecurityLogicalPlan::read(packet,&catalog)?;
+    let profile=SecurityQueryProfile::read(&request.query_profile_json,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    parameter_payload_budget(&request.sql,&request.parameters,MAX_RESPONSE_BYTES)?;
+    let query=SecurityResolvedQuery::resolve(&request.sql,&catalog,&plan,request.parameters,request.read_profile)?;
+    profile.admit_resolved_query(&query,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    let ontology=crate::security_ontology::SecurityOntologyClosure::read(plan.source(),&catalog)?;
+    let subject=ontology.subject();let binding=ontology.types.get(subject).ok_or_else(refused)?;
+    let pin=catalog.pins().into_iter().find(|p|p.document_id==subject.document_id).ok_or_else(refused)?;
+    if selection["sourceSha256"]!=pin.sha256||selection["identity"]["module"]!=subject.module_id||selection["identity"]["element"]!=subject.element_id||selection["identity"]["key"]!=binding.source["keyId"]{return Err(refused());}
+    Ok(())
+}
 /// Preserve the separate API and fail-closed ordinary security compile boundary.
 /// Input strings retain original sources; successful output is a mapping input,
 /// not authenticated issuance, native SQL or a credential.
@@ -163,6 +185,26 @@ mod tests {
             "parameters":{}})
     }
     fn response(request:&Value)->Value {serde_json::from_str(&prepare_security_mapping_json(&request.to_string())).unwrap()}
+    #[test]
+    fn subject_selection_is_original_ontology_bound_and_closed() {
+        let request=fixture();
+        let ontology:Value=serde_json::from_str(request["ontologyJson"].as_str().unwrap()).unwrap();
+        let subject=&ontology["subject"];
+        let entity=ontology["entities"].as_array().unwrap().iter().find(|e|e["type"]==*subject).unwrap();
+        let selection=json!({"sourceSha256":request["modules"][0]["pin"]["sha256"],
+            "identity":{"module":subject["moduleId"],"element":subject["elementId"],"key":entity["keyId"]}});
+        assert!(inspect_security_mapping_subject_key(&request.to_string(),&selection.to_string()).is_ok());
+        for member in ["module","element","key"] {
+            let mut changed=selection.clone();changed["identity"][member]=json!("foreign");
+            assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
+        }
+        let mut changed=selection.clone();changed["sourceSha256"]=json!("0".repeat(64));
+        assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
+        let mut changed=selection.clone();changed["identity"]["extra"]=json!(true);
+        assert!(inspect_security_mapping_subject_key(&request.to_string(),&changed.to_string()).is_err());
+        let mut changed=request.clone();changed["sql"]=json!("SELECT absent FROM Resource");
+        assert!(inspect_security_mapping_subject_key(&changed.to_string(),&selection.to_string()).is_err());
+    }
     #[test]
     fn actual_sql_derives_all_five_operators_and_separate_action_closures() {
         let request=fixture();let result=response(&request);

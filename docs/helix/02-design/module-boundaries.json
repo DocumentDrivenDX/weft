@@ -1558,6 +1558,7 @@
             "const:MAX_REQUEST_BYTES",
             "fn:inspect_security_mapping_result_cells",
             "fn:inspect_security_mapping_result_facts",
+            "fn:inspect_security_mapping_subject_key",
             "fn:prepare_security_mapping_json"
           ],
           "pathReferences": []

@@ -1,0 +1,33 @@
+bun test v1.4.2 (43848b5a7)
+
+tests/pg-principal-wire.test.ts:
+(pass) ParameterStatus preserves original UTF-8 name/value bytes [0.52ms]
+(pass) ParameterStatus cannot manufacture command or Ready completion [0.37ms]
+(pass) Fragmented ParameterStatus interleaves with confirmed reset without changing completion [0.19ms]
+(pass) Malformed, non-UTF8 and over-budget parameter reports refuse [0.07ms]
+(pass) pending reset cannot publish a lease after another reset closes admission [30.98ms]
+
+tests/pg-wire.test.ts:
+(pass) original command count text beyond host precision remains exact [0.21ms]
+(pass) raw data preserves NULL/empty/binary distinctions and frame boundaries [0.09ms]
+(pass) fragmented original frame forwards once only after full admission [0.12ms]
+(pass) oversized header refuses before body allocation or forwarding and remains closed [0.04ms]
+(pass) invalid text row refuses before forwarding to original parser [0.11ms]
+(pass) query completion requires original command then ready and matching SELECT rows [0.10ms]
+(pass) error response retains ordered fields and ends only on original ready [0.07ms]
+(pass) notice is retained without replacing original command completion [0.04ms]
+(pass) unnamed extended response requires parse/bind before no-data completion [0.06ms]
+(pass) matching command cannot conceal wrong original transaction status [0.07ms]
+
+tests/pg-subject-key.test.ts:
+(pass) native string subject uses exact original UMF key receipt and bytes [20.64ms]
+(pass) all scalar key families and ordered exact numeric/binary literals stay with owner [7.01ms]
+(pass) owner rejects arity/domain/null/unknown key and literal JSON errors [8.07ms]
+(pass) binding selection is captured; column mismatch and byte limits refuse [3.79ms]
+(pass) source byte identity rejects lossy raw Unicode but preserves escaped JSON [5.57ms]
+(pass) declared deferred inspectors refuse without invocation; ordinary rejected promises are observed [1.39ms]
+
+ 21 pass
+ 0 fail
+ 78 expect() calls
+Ran 21 tests across 3 files. [590.00ms]

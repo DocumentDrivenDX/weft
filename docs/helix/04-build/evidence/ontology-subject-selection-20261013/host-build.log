@@ -1,0 +1,2 @@
+$ bun scripts/build-pg-runtime.ts
+Built host PostgreSQL package against canonical public Truss types.

@@ -1,0 +1,19 @@
+{
+  "cases": [
+    "direct native caller",
+    "observer and text subject",
+    "observer and name subject",
+    "ordered exact TEXT composite subject",
+    "wrong pinned caller",
+    "unbound native subject",
+    "wrong subject columns",
+    "wrong subject output OID",
+    "native superuser refused",
+    "native five-family CoreLiteral JSON binds original semantic key",
+    "native failed transaction invalidates observation and fresh begin recaptures",
+    "committed role change reset before pooled reuse",
+    "five invalid constructions before acquisition"
+  ],
+  "scope": "Original native caller/subject preflight and quarantine in isolated local fixture. Helpers explicitly fixture-trusted; no installed deployment, writer closure, authenticated application issuer or protected release.",
+  "serverVersion": "18.6"
+}
