@@ -1,0 +1,374 @@
+{
+  "scope": "Production diagnostic probe and temporary direct-API harness linked to current original weft-core. Pure source/declaration/cell correspondence, no native DB execution or selection/authority proof.",
+  "passedControls": 52,
+  "binaries": {
+    "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike": "34b4cecf035510f1b79095efb47c565762ccb25eafbde29d3c306f79ef834f30",
+    "/private/tmp/weft-042-release-target-a/debug/astra-result-inspection-probe": "075f680e675183517bafa4d49cb901474572f5dc927072eb1d911e0d87c1deb3"
+  },
+  "cases": [
+    {
+      "case": "equivalentNormalizedClass",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "direct_baseline",
+      "passed": true,
+      "exit": 0,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": null
+    },
+    {
+      "case": "direct_typed-position",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-name",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-outcomes-empty",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-source",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-transform-value",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-provenance-missing",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_typed-provenance-duplicate",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "direct_contract-bytes-mismatch",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "direct_contract-whitespace-current-hash",
+      "passed": true,
+      "exit": 0,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": null
+    },
+    {
+      "case": "direct_contract-whitespace-stale-hash",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "direct_wrong-hash",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "direct_wrong-batch-hash",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "direct_batch-extra-key",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "direct_batch-wrong-version",
+      "passed": true,
+      "exit": 1,
+      "api": "temporaryDirectApiHarness",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "forgedValue",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "unknownOutcome",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "wrongDisposition",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "extraCellMember",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "missingValue",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "wrongScalarFamily",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "nullRequiredValue",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "missingColumn",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "extraColumn",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "rowNotArray",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "rowsNotArray",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "probeUnknownKey",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "probeMissingKey",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "wrongOutputName",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "wrongOutputField",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "wrongTarget",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "queryDifferentColumn",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "queryDifferentAlias",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "queryTwoColumns",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+    },
+    {
+      "case": "policyWhitespaceStaleProfile",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "case": "ontologyWhitespaceStaleProfile",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "case": "bindingWhitespaceStaleProfile",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+    },
+    {
+      "case": "closedSourceRequest",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    },
+    {
+      "case": "requestVersion",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+    },
+    {
+      "case": "sourcePinDrift",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-PIN"
+    },
+    {
+      "case": "rows4097",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "withheld",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "equivalentDifferentLexeme",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "withheldValueForbidden",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "rows4096",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "emptyBatchCorrespondence",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "duplicateProbeRows",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+    },
+    {
+      "case": "distinctSecond",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "distinctSecondEquivalent",
+      "passed": true,
+      "exit": 0,
+      "api": "productionDiagnostic",
+      "diagnostic": null
+    },
+    {
+      "case": "distinctWrongClass",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    },
+    {
+      "case": "distinctWrongValue",
+      "passed": true,
+      "exit": 1,
+      "api": "productionDiagnostic",
+      "diagnostic": "WFT-SECURITY-RESULT"
+    }
+  ]
+}

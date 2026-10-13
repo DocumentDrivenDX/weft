@@ -59,12 +59,16 @@ fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usize)->Result
     }
     Ok(())
 }
-fn prepare(raw: &str) -> Result<Value> {
+fn read_request(raw: &str) -> Result<Request> {
     if raw.len() > MAX_REQUEST_BYTES { return Err(fail()); }
     let value = checked_json(raw).map_err(|_| fail())?;
     if !RequestSchema::is_valid(&value) { return Err(fail()); }
     let request: Request = serde_json::from_value(value).map_err(|_| fail())?;
     if request.interface_version != "weft-security-mapping/0.1.0" { return Err(fail()); }
+    Ok(request)
+}
+fn prepare(raw: &str) -> Result<Value> {
+    let request=read_request(raw)?;
     let catalog = Catalog::prepare_security(request.modules)?;
     let packet = SecuritySourcePacket::read(&request.policy_json, &request.ontology_json, &catalog)?;
     let plan = SecurityLogicalPlan::read(packet, &catalog)?;
@@ -81,6 +85,20 @@ fn prepare(raw: &str) -> Result<Value> {
     // scan annotations, action overrides, manifests or execution receipts.
     Ok(json!({"interfaceVersion":"weft-security-mapping/0.1.0", "status":"prepared",
         "securityReady":false, "handoff":serde_json::from_str::<Value>(&handoff).map_err(|_| fail())?}))
+}
+/// Pure original-source-bound cell/declaration inspection. This does not admit
+/// backend registration, physical plans, source cuts, selection or release.
+pub fn inspect_security_mapping_result_cells(raw:&str,contract:&crate::security_lowering::SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str)->Result<()> {
+    let request=read_request(raw)?;
+    let catalog=Catalog::prepare_security(request.modules)?;
+    let packet=SecuritySourcePacket::read(&request.policy_json,&request.ontology_json,&catalog)?;
+    let plan=SecurityLogicalPlan::read(packet,&catalog)?;
+    let profile=SecurityQueryProfile::read(&request.query_profile_json,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    parameter_payload_budget(&request.sql,&request.parameters,MAX_RESPONSE_BYTES)?;
+    let query=SecurityResolvedQuery::resolve(&request.sql,&catalog,&plan,request.parameters,request.read_profile)?;
+    let profiled=profile.admit_resolved_query(&query,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    let context=crate::security_backend::SecurityBackendContext::new(&catalog,&plan,&query,&profiled,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    context.check_result_cells(contract,contract_json,contract_sha256,batch_json)
 }
 /// Preserve the separate API and fail-closed ordinary security compile boundary.
 /// Input strings retain original sources; successful output is a mapping input,

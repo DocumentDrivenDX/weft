@@ -1,0 +1,13 @@
+test_binary_projection_round_trip_from_original_writer (test_security_predicate_native.NativePredicateTests.test_binary_projection_round_trip_from_original_writer) ... ok
+test_native_k3_primitives_and_unknown_existential_witnesses (test_security_predicate_native.NativePredicateTests.test_native_k3_primitives_and_unknown_existential_witnesses) ... ok
+test_nullable_and_absent_projection_from_original_writer (test_security_predicate_native.NativePredicateTests.test_nullable_and_absent_projection_from_original_writer) ... ok
+test_original_policy_membership_predicates_match_native_population (test_security_predicate_native.NativePredicateTests.test_original_policy_membership_predicates_match_native_population) ... ok
+test_signed64_boundaries_through_ordinary_writer (test_security_predicate_native.NativePredicateTests.test_signed64_boundaries_through_ordinary_writer) ... ok
+test_signed64_overflow_refuses_entire_original_group (test_security_predicate_native.NativePredicateTests.test_signed64_overflow_refuses_entire_original_group) ... ok
+test_signed64_underflow_refuses_entire_original_group (test_security_predicate_native.NativePredicateTests.test_signed64_underflow_refuses_entire_original_group) ... ok
+test_signed64_updates_refuse_overflow_and_preserve_prior_update (test_security_predicate_native.NativePredicateTests.test_signed64_updates_refuse_overflow_and_preserve_prior_update) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 38.702s
+
+OK

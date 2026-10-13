@@ -1,0 +1,442 @@
+{
+  "review": "Independent Astra Ultra read-only original-source-bound result-cell inspector review",
+  "head": "3f09a1aa95548845cb7b2ff767cfcb7bee058e82",
+  "findings": [],
+  "conclusion": "No actionable defect found in the new pure source/declaration/cell inspection route or closed diagnostic probe. This remains correspondence checking, not result selection or release authority.",
+  "sourceDigests": {
+    "crates/weft-core/src/security_mapping_transport.rs": "73f98295b253b98f8cf3297c0503ecb6ee3df2ae6e5d54f8a34aa7c20ce4ce6e",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "799be228702016c9c7b416cdfb67b07aa1d409a1c00d1875c50685793c9b533c",
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "fd6c710284030b88e32396e424bccaea53c840738e986794579143f0d888bb43",
+    "crates/weft-core/src/security_backend.rs": "a53e09231f27267341c1779e0759b94d23bfe00469774656a0c3b8de1e01c2e2",
+    "crates/weft-core/src/security_result_check.rs": "72b8858a7d3afcd1acc11c2189bcf9053e20d3c36e658039430ad011e3e1340c",
+    "crates/weft-core/src/security_result_cells.rs": "f6c5c4c456381e11a6dc2b0daee09fd4339dd724bd66b95164998f7a0716658d",
+    "crates/weft-core/src/security_lowering.rs": "1921ba60fcd7d56cce6e510198f20b6e1eb887845db6f8b2ff3234c73bf51d72",
+    "crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "crates/weft-core/src/security_query_uses.rs": "0098ab937ed5dc2927a7f6c4ea8a98dcd3c0c748ff7a59b9b4136285a75807ea",
+    "crates/weft-core/src/security_requirements.rs": "937f259ae5cdca5afbee653d89f7882e6f0bb2a454a6703256d14625e8fe2711",
+    "crates/weft-core/src/security_literals.rs": "8bd7995326ab3c544800f59980e8a60b0b83d81ba5138bc42ffeb351f82c7cd4",
+    "crates/weft-core/src/security_budget.rs": "a96d32840b01dce893ce181c0fed6109a45e4e1b0f3d9b6d1f2f551b756e7322",
+    "docs/helix/02-design/contracts/security-mapping-request-v0.1.schema.json": "fde090ebfdb09b5997970f48b74c7df24cb6dd1c6504185ee85a35b716fdd20c"
+  },
+  "nativeHarnessDigest": "6a132679dd0c2df247824fe0ce48662133b05e172e7b81e588ac7948220492ff",
+  "independentControls": {
+    "scope": "Production diagnostic probe and temporary direct-API harness linked to current original weft-core. Pure source/declaration/cell correspondence, no native DB execution or selection/authority proof.",
+    "passedControls": 52,
+    "binaries": {
+      "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike": "34b4cecf035510f1b79095efb47c565762ccb25eafbde29d3c306f79ef834f30",
+      "/private/tmp/weft-042-release-target-a/debug/astra-result-inspection-probe": "075f680e675183517bafa4d49cb901474572f5dc927072eb1d911e0d87c1deb3"
+    },
+    "cases": [
+      {
+        "case": "equivalentNormalizedClass",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "direct_baseline",
+        "passed": true,
+        "exit": 0,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": null
+      },
+      {
+        "case": "direct_typed-position",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-name",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-outcomes-empty",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-source",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-transform-value",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-provenance-missing",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_typed-provenance-duplicate",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "direct_contract-bytes-mismatch",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "direct_contract-whitespace-current-hash",
+        "passed": true,
+        "exit": 0,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": null
+      },
+      {
+        "case": "direct_contract-whitespace-stale-hash",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "direct_wrong-hash",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "direct_wrong-batch-hash",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "direct_batch-extra-key",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "direct_batch-wrong-version",
+        "passed": true,
+        "exit": 1,
+        "api": "temporaryDirectApiHarness",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "forgedValue",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "unknownOutcome",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "wrongDisposition",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "extraCellMember",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "missingValue",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "wrongScalarFamily",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "nullRequiredValue",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "missingColumn",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "extraColumn",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "rowNotArray",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "rowsNotArray",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "probeUnknownKey",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "probeMissingKey",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "wrongOutputName",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "wrongOutputField",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "wrongTarget",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "queryDifferentColumn",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "queryDifferentAlias",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "queryTwoColumns",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-LOWERING-UNSUPPORTED"
+      },
+      {
+        "case": "policyWhitespaceStaleProfile",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+      },
+      {
+        "case": "ontologyWhitespaceStaleProfile",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+      },
+      {
+        "case": "bindingWhitespaceStaleProfile",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-QUERY-PROFILE"
+      },
+      {
+        "case": "closedSourceRequest",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+      },
+      {
+        "case": "requestVersion",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-MAPPING-TRANSPORT"
+      },
+      {
+        "case": "sourcePinDrift",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-PIN"
+      },
+      {
+        "case": "rows4097",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "withheld",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "equivalentDifferentLexeme",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "withheldValueForbidden",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "rows4096",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "emptyBatchCorrespondence",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "duplicateProbeRows",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-PREDICATE-SPIKE"
+      },
+      {
+        "case": "distinctSecond",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "distinctSecondEquivalent",
+        "passed": true,
+        "exit": 0,
+        "api": "productionDiagnostic",
+        "diagnostic": null
+      },
+      {
+        "case": "distinctWrongClass",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      },
+      {
+        "case": "distinctWrongValue",
+        "passed": true,
+        "exit": 1,
+        "api": "productionDiagnostic",
+        "diagnostic": "WFT-SECURITY-RESULT"
+      }
+    ]
+  },
+  "reviewControlDigests": {
+    "controls.py": "7ea684bf88bab844bd7b4b0cfad03c1e0e5bbcf102f0617904561b983b39759f",
+    "harness/Cargo.toml": "75bd67c7fcdbc1a40f33ab171ec9546f157aa2e12b0a560a2d3d9b1e5c89331a",
+    "harness/Cargo.lock": "9d82a9da0d6e70991fc5d6a79e989896826b98c406a0d29d54208b4f8923a990",
+    "harness/src/main.rs": "8b9581808d1ac1e6c3011ee3603f08eb7fd16a62c115bb9e656d33d5056fb371",
+    "receipt.py": "75a1019d97abaed916d890d95d24d4debc18d758dee39ddfd8d453fd53dec92b"
+  },
+  "independentBuild": {
+    "log": "/private/tmp/weft-result-inspection-astra-20261013/build.log",
+    "sha256": "66d07d06def0244c0416c522b5ffa8dedb8d3eea2287cdf621b1f6ae3c5d02d2",
+    "scope": "Owned temporary Rust harness with current original weft-core and weft-postgresql path dependencies. Repository sources were not edited."
+  },
+  "parentEvidence": [
+    {
+      "path": "/private/tmp/truss-result-cell-inspection-native-final.log",
+      "sha256": "a8fa9f73d0f232ee04512a9fda4e24f4515a0a41c79594be60c36d9023d08955",
+      "provenance": "Parent completed log inspected; native database not rerun or mutated by reviewer."
+    },
+    {
+      "path": "/private/tmp/truss-result-cell-inspection-negatives-native.log",
+      "sha256": "81a6d08aca8016bf36c8afa66d9433efc66f3a0a8aa2bf10acc75c13bb1e5376",
+      "provenance": "Parent completed log inspected; native database not rerun or mutated by reviewer."
+    },
+    {
+      "path": "/private/tmp/weft-source-result-core-tests.log",
+      "sha256": "269ee4e7ecd780cc712979f0ca898ab08f448f8903009d191ee2688924398b57",
+      "provenance": "Parent completed log inspected; native database not rerun or mutated by reviewer."
+    }
+  ],
+  "reviewedCorrespondence": [
+    "read_request retains existing closed4M source schema, duplicate-key checked JSON and exact interface validation. prepare and inspection share this parser; the inspector independently prepares original catalog/policy/query profile and SQL resolution with parameter expansion preflight.",
+    "SecurityBackendContext::new remains crate-private. The public inspector constructs genuine owner objects locally and delegates to existing context.check_result_cells; no forged context fields or alternate semantic interpreter are introduced.",
+    "Existing declaration validation runs against exact resolved output names/positions/source fields, original normalized transformation classes and complete rule provenance. Contract bytes are hashed as supplied then parsed and compared with the typed declaration; batch hash is bound to those exact bytes.",
+    "The optional diagnostic probe is closed to four members and constructs one original declaration column. Classes aggregate all emitted rule provenance under canonical class IDs; the first retained class literal is representative while cells may carry any original-normalized equivalent literal.",
+    "52 independent pure controls passed through actual diagnostic and direct-API harness: typed position/name/source/outcome/transform/provenance drift; exact retained byte/hash behavior; batch/source/query/probe/cell drift; normalized equivalent and conflicting classes; rows4096 pass/4097 refuse. All expected failures produced empty stdout in the tested executable surfaces.",
+    "Contract whitespace with refreshed exact hash passes; whitespace with stale hash refuses. Equivalent0/-0 and1/1e0 cells pass their original classes, mismatched class constants refuse.",
+    "Parent native focused9.354s and expanded9.233s runs pass for genuine first/second projected cells in equivalent0/-0 and distinct1/2 cases, forged values and selected malformed cells. Existing six mapping transport unit tests pass."
+  ],
+  "limitations": [
+    "No authenticated issuer/profile/principal, held source/authority cut, native physical-plan admission, complete result selection, protected execution or publication/release authority is established.",
+    "The inspector intentionally checks correspondence: empty rows and source-declared withheld cells can pass without evaluating a fact cut or rule truths. Such success is not authorization or proof of row completeness.",
+    "The diagnostic probe constructs one-column declarations only; no multi-column execution/result transport qualification is claimed.",
+    "Original request source admission and selected parameter preflight are shared with existing mapping preparation; typed contract/batch limits remain those of the original result checkers. Outer probe serialization is bounded by existing diagnostic input/output ceilings, not a total CPU/process/native heap proof.",
+    "The temporary harness copies diagnostic contract construction only to inject direct API refusals and links the actual unchanged core implementation. It does not emulate native PostgreSQL.",
+    "No backend acceptance case or security-ready status is promoted."
+  ]
+}

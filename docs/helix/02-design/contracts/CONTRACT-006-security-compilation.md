@@ -1673,3 +1673,7 @@ check. Native interpretation, complete authenticated profiles, original case
 procedure adequacy and complete backend qualification remain open. The existing
 conditional requirement-matching laws are not a Rust or database refinement
 proof. No public lowering or required acceptance promotion follows.
+
+### Original-source diagnostic result inspection — 2026-10-13
+
+The Rust-only `security_mapping_transport::inspect_security_mapping_result_cells` reconstructs original model/policy/query-profile/SQL context from the existing closed mapping request and applies the existing declaration/cell checks to a typed result contract plus exact contract JSON/hash and cell batch. Source parsing, parameter preflight and private context construction remain owner-controlled. Success is conditional correspondence, never backend registration, native provenance, selection, authentication or a release credential. The ordinary mapping JSON protocol and blocked public security compile boundary are unchanged. The separate PostgreSQL diagnostic example's single-column resultProbe is a fixture producer, not an admitted compiled response; mismatched output/source/provenance/batch refuses without stdout. Complete selection and native lifecycle obligations remain required.
