@@ -89,6 +89,7 @@
             "field:source_system",
             "field:type_id",
             "field:schema_revision",
+            "field:compatible_schema_revisions",
             "field:properties",
             "enum:RecordKind",
             "struct:Property",
@@ -164,6 +165,16 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/compatible_profile.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "const:PROFILE",
+            "const:CAPABILITY",
+            "struct:CompatibleRevisions"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/count_distinct.rs",
           "publicDeclarations": [
             "const:ID",
@@ -216,7 +227,8 @@
             "mod:paths",
             "mod:paths_keys",
             "mod:paths_keys_having",
-            "mod:implicit_arithmetic"
+            "mod:implicit_arithmetic",
+            "mod:compatible_profile"
           ],
           "pathReferences": []
         },
@@ -485,8 +497,10 @@
             "field:visible_outputs",
             "field:key_outputs",
             "field:page_size",
+            "field:typed_keys",
             "field:continuation_values",
-            "fn:resolve_page"
+            "fn:resolve_page",
+            "fn:resolve_typed_page"
           ],
           "pathReferences": []
         },
@@ -957,6 +971,7 @@
             "fn:compile_json_with_exact_numbers_factory",
             "fn:compile_json_with_security_factory",
             "fn:compile_page_json_with_exact_numbers_factory",
+            "fn:compile_typed_page_json_with_exact_numbers_factory",
             "mod:v04",
             "mod:v041",
             "mod:v042"

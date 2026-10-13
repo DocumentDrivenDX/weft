@@ -1065,7 +1065,7 @@ dependencies = [
 
 [[package]]
 name = "weft-python"
-version = "0.4.10"
+version = "0.4.11"
 dependencies = [
  "pyo3",
  "weft-runtime",

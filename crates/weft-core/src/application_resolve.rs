@@ -457,17 +457,26 @@ pub struct PagePlan {
     pub visible_outputs: usize,
     pub key_outputs: Vec<usize>,
     pub page_size: u16,
+    pub typed_keys: bool,
     /// Exact generated continuation values; never authored SQL provenance.
     pub continuation_values: Vec<ir::Value>,
 }
 
 pub fn resolve_page(
     catalog: &Catalog,
-    mut query: ast::Query,
+    query: ast::Query,
     parameters: Parameters,
     page_size: u16,
     after: Option<&[String]>,
 ) -> Result<PagePlan> {
+    resolve_page_inner(catalog,query,parameters,page_size,after,false)
+}
+
+pub fn resolve_typed_page(catalog:&Catalog,query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>) -> Result<PagePlan> {
+    resolve_page_inner(catalog,query,parameters,page_size,after,true)
+}
+
+fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool) -> Result<PagePlan> {
     if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
         || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_) | ast::Output::Related { .. }))
@@ -479,7 +488,7 @@ pub fn resolve_page(
         .iter().filter(|key| key["primary"] == true).collect::<Vec<_>>();
     if primary.len() != 1 { return Err(fail("WFT-PROFILE", "SQL page requires exactly one authored primary key")); }
     let key = catalog.authored_key(&record, primary[0]["id"].as_str().unwrap())?;
-    if key.fields.is_empty() || key.types.iter().any(|t| t.family != Family::String || t.nullable || t.facets != json!({})) {
+    if key.fields.is_empty() || key.types.iter().any(|t| t.nullable || match t.family { Family::String => t.facets != json!({}), Family::Boolean => !typed_keys || t.facets != json!({}), Family::Integer => !typed_keys || (t.facets != json!({}) && t.facets != json!({"integerWidth":{"bits":64,"signed":true}})), Family::Decimal => !typed_keys || t.facets != json!({"precision":18,"scale":4}) }) {
         return Err(fail("WFT-PROFILE", "SQL page requires complete required-string key components"));
     }
     let mut columns = Vec::new();
@@ -494,7 +503,7 @@ pub fn resolve_page(
     if let Some(after) = after {
         if after.len() != columns.len() { return Err(fail("WFT-TYPE", "SQL page continuation key arity differs")); }
         query.predicates.push(ast::Predicate::Compare { columns: columns.clone(), greater: true,
-            values: after.iter().map(|value| ast::Value::Literal(Literal { value: value.clone(), kind: LiteralKind::String,
+            values: after.iter().zip(&key.types).map(|(value,t)| ast::Value::Literal(Literal { value: value.clone(), kind: match t.family { Family::String=>LiteralKind::String,Family::Boolean=>LiteralKind::Boolean,_=>LiteralKind::Number },
                 span: query.source.name.span.clone() })).collect() });
     }
     query.order = columns;
@@ -509,5 +518,5 @@ pub fn resolve_page(
             _ => return Err(fail("WFT-IR", "Generated continuation predicate missing")),
         }
     } else { Vec::new() };
-    Ok(PagePlan { plan, visible_outputs, key_outputs, page_size, continuation_values })
+    Ok(PagePlan { plan, visible_outputs, key_outputs, page_size, typed_keys, continuation_values })
 }

@@ -110,19 +110,23 @@ impl Compiler {
         &self, raw: &str, page_size: u16, after: Option<Vec<String>>,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after)))
+        self.compile_json_internal(raw, Some(factory), None, true, Some((page_size, after, false)))
     }
+    pub fn compile_typed_page_json_with_exact_numbers_factory(&self,raw:&str,page_size:u16,after:Option<Vec<String>>,factory:&mut RegistryFactory<'_>) -> String {
+        self.compile_json_internal(raw,Some(factory),None,true,Some((page_size,after,true)))
+    }
+
     fn compile_json_internal(
         &self,
         raw: &str,
         factory: Option<&mut RegistryFactory<'_>>,
         security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
         exact_numbers: bool,
-        page: Option<(u16, Option<Vec<String>>)>,
+        page: Option<(u16, Option<Vec<String>>, bool)>,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
-            if let Some((size, after)) = page.as_ref() {
+            if let Some((size, after, _)) = page.as_ref() {
                 if !(1..=999).contains(size) || after.as_ref().is_some_and(|items| items.len()>1024 || items.iter().try_fold(0usize, |total, value| total.checked_add(value.len())).is_none_or(|bytes| bytes>65536)) {
                     return Err(Diagnostic::new("WFT-LIMIT", "input", "Page size or continuation exceeds its bounds"));
                 }
@@ -275,11 +279,11 @@ impl Compiler {
                 )
             } else {
                 let query = crate::application_syntax::parse(&req.sql)?;
-                let page_plan = if let Some((size, after)) = page {
+                let page_plan = if let Some((size, after, typed)) = page {
                     if req.read_profile.is_some() || req.security.is_some() {
                         return Err(Diagnostic::new("WFT-PROFILE", "input", "Page entrypoint owns its read profile"));
                     }
-                    Some(crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())?)
+                    Some(if typed { crate::application_resolve::resolve_typed_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? } else { crate::application_resolve::resolve_page(&catalog, query.clone(), req.parameters.clone().unwrap_or_default(), size, after.as_deref())? })
                 } else { None };
                 let mut plan = match page_plan.as_ref() {
                     Some(page) => page.plan.clone(),
@@ -301,7 +305,7 @@ impl Compiler {
                     req.target, req.options.allow_candidate, factory,
                 )?;
                 if let Some(page) = page_plan {
-                    return Ok(json!({"interfaceVersion":"weft-sql-page/0.1", "status":"compiled", "artifact":artifact,
+                    return Ok(json!({"interfaceVersion":if page.typed_keys {"weft-sql-page/0.2"} else {"weft-sql-page/0.1"}, "status":"compiled", "artifact":artifact,
                         "page":{"visibleOutputs":page.visible_outputs,"keyOutputs":page.key_outputs,"pageSize":page.page_size,
                             "generatedContinuationFilter":if page.continuation_values.is_empty(){None}else{Some(page.plan.filters.len()-1)},
                             "generatedOutputPositions":page.key_outputs,
