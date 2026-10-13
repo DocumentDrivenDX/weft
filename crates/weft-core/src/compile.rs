@@ -45,6 +45,10 @@ struct Request01;
 struct Request02;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.2.1.schema.json")]
 struct Request021;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.2.2.schema.json")]
+struct Request022;
+#[jsonschema::validator(path = "../../docs/helix/02-design/contracts/logical-plan-v0.2.2.schema.json")]
+struct Plan022;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/compile-request-v0.3.schema.json")]
 struct Request03;
 #[jsonschema::validator(path = "../../docs/helix/02-design/contracts/security-compile-request-v0.1.schema.json")]
@@ -118,7 +122,7 @@ impl Compiler {
                     "Compile and dialect versions must be supplied strings",
                 ));
             }
-            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.2.1" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
+            if let Some(v @ ("weft-compile/0.2.0" | "weft-compile/0.2.1" | "weft-compile/0.2.2" | "weft-compile/0.3.0" | "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0")) = input["interfaceVersion"].as_str() {
                 version = v.into();
             }
             if security_factory.is_some() && version != "weft-security-compile/0.2.0" {
@@ -132,6 +136,7 @@ impl Compiler {
                 (Some("weft-compile/0.1.0"), Some("weft-sql/0.1.0"))
                     | (Some("weft-compile/0.2.0"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.2.1"), Some("weft-sql/0.2.0"))
+                    | (Some("weft-compile/0.2.2"), Some("weft-sql/0.2.0"))
                     | (Some("weft-compile/0.3.0"), Some("weft-sql/0.3.0"))
                     | (Some("weft-security-compile/0.1.0"), Some("weft-sql/0.2.0"))
                     | (Some("weft-security-compile/0.2.0"), Some("weft-sql/0.2.0"))
@@ -151,6 +156,8 @@ impl Compiler {
                 RequestSecurity02::is_valid(&input)
             } else if version == "weft-security-compile/0.1.0" {
                 RequestSecurity01::is_valid(&input)
+            } else if version == "weft-compile/0.2.2" {
+                Request022::is_valid(&input)
             } else if version == "weft-compile/0.2.1" {
                 Request021::is_valid(&input)
             } else if version == "weft-compile/0.2.0" {
@@ -193,7 +200,7 @@ impl Compiler {
             } else {
                 crate::model::Catalog::prepare(req.modules)?
             };
-            catalog.exact_scalars = req.interface_version == "weft-compile/0.2.1";
+            catalog.exact_scalars = matches!(req.interface_version.as_str(), "weft-compile/0.2.1" | "weft-compile/0.2.2");
             if let Some(source)=req.security.as_ref() {
                 let packet=crate::security_source::SecuritySourcePacket::read(
                     source["policyJson"].as_str().expect("security request schema"),
@@ -246,7 +253,11 @@ impl Compiler {
                     req.parameters.unwrap_or_default(),
                     req.read_profile,
                 )?;
-                if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
+                if req.interface_version == "weft-compile/0.2.2" {
+                    plan.ir_version = "weft-ir/0.2.2".into();
+                    let value = serde_json::to_value(&plan).map_err(|_| Diagnostic::new("WFT-IR", "resolve", "Invalid resolved entity plan"))?;
+                    if !Plan022::is_valid(&value) { return Err(Diagnostic::new("WFT-IR", "resolve", "Resolved plan violates versioned entity semantics")); }
+                } else if catalog.exact_scalars { plan.ir_version = "weft-ir/0.2.1".into(); }
                 self.emit(
                     &req.interface_version,
                     &req.dialect,

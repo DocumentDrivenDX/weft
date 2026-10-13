@@ -37,14 +37,12 @@ pub fn resolve(
     parameters: Parameters,
     profile: Option<ir::ReadProfile>,
 ) -> Result<ir::Plan> {
-    if profile
-        .as_ref()
-        .is_some_and(|p| p.version != "weft-application-read/0.2.0")
-    {
-        return Err(fail(
-            "WFT-VERSION",
-            "Unsupported application recognizer profile version",
-        ));
+    let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
+    if profile.as_ref().is_some_and(|p| match p.subset {
+        ir::Subset::CompleteEntity => p.version != "weft-truss-entity-read/0.1.0",
+        _ => p.version != "weft-application-read/0.2.0",
+    }) {
+        return Err(fail("WFT-VERSION", "Unsupported application recognizer profile version"));
     }
     let mut normalized = BTreeMap::new();
     if parameters.len() > 1024 {
@@ -129,10 +127,12 @@ pub fn resolve(
                     ));
                 }
                 let (r, scan) = s.record(n)?;
+                let record_identity = r.identity.clone();
+                let relationships = if complete_entity { catalog.entity_relationships(r)? } else { vec![] };
                 let e = catalog.entity_descriptor(r)?;
                 s.descriptors(e.graph);
                 s.caps.insert("project.entity".into());
-                let expressions = e
+                let mut expressions = e
                     .members
                     .into_iter()
                     .map(|m| {
@@ -145,6 +145,32 @@ pub fn resolve(
                         )
                     })
                     .collect::<Vec<_>>();
+                if complete_entity {
+                    for (name, metadata, family, nullable) in [
+                        ("_version", ir::NativeMetadata::Version, Family::Integer, false),
+                        ("_created_by", ir::NativeMetadata::CreatedBy, Family::String, false),
+                        ("_updated_by", ir::NativeMetadata::UpdatedBy, Family::String, false),
+                        ("_original_author", ir::NativeMetadata::OriginalAuthor, Family::String, true),
+                        ("_original_at", ir::NativeMetadata::OriginalAt, Family::String, true),
+                    ] {
+                        if expressions.iter().any(|(label, _)| label.eq_ignore_ascii_case(name)) {
+                            return Err(fail("WFT-NAME-AMBIGUOUS", "Authored member collides with Truss entity metadata"));
+                        }
+                        expressions.push((name.into(), ir::Expression::NativeMetadata {
+                            scan: scan.clone(), record: record_identity.clone(), metadata,
+                            logical_type: LogicalType { family, facets: json!({}), nullable },
+                        }));
+                    }
+                    s.caps.insert("project.nativeMetadata".into());
+                    for (name, relationship) in relationships {
+                        if expressions.iter().any(|(label, _)| label.eq_ignore_ascii_case(&name)) {
+                            return Err(fail("WFT-NAME-AMBIGUOUS", "Relationship label collides with an entity output"));
+                        }
+                        if relationship.inverse { s.caps.insert("relationship.inverse".into()); }
+                        expressions.push((name, ir::Expression::CompleteRelatedKeys { scan: scan.clone(), relationship, bound: 100 }));
+                        s.caps.insert("relationship.completeKeys".into());
+                    }
+                }
                 (String::new(), expressions)
             }
             ast::Output::Field(c) => {
@@ -284,6 +310,11 @@ pub fn resolve(
     let mut page_key = None;
     if let Some(p) = &profile {
         match p.subset {
+            ir::Subset::CompleteEntity => {
+                if aggregate || !joins.is_empty() || !q.outputs.iter().any(|p| matches!(p.output, ast::Output::Entity(_))) {
+                    return Err(fail("WFT-PROFILE", "Complete entity requires a nonaggregated single-source entity projection"));
+                }
+            }
             ir::Subset::CountSummary => {
                 if !q
                     .outputs
@@ -389,7 +420,7 @@ pub fn resolve(
     }
     s.caps.insert("project".into());
     Ok(ir::Plan {
-        ir_version: "weft-ir/0.2.0".into(),
+        ir_version: if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),

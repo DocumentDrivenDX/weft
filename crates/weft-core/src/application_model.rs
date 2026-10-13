@@ -402,6 +402,28 @@ pub struct RelationshipRead {
     pub target_lifecycle: String,
 }
 impl Catalog {
+    pub(crate) fn entity_relationships(&self, source: &Record) -> Result<Vec<(String, RelationshipRead)>> {
+        let mut names = Vec::new();
+        for module in self.documents[source.document]["modules"].as_array().unwrap() {
+            if !self.inputs()[source.document].selected_module_ids.iter().any(|id| module["id"] == id.as_str()) { continue; }
+            let Some(relationships) = module["relationships"].as_array() else { continue; };
+            for relationship in relationships {
+                for (side, label) in [("source", "name"), ("target", "inverse")] {
+                    if let Some(name) = relationship[label].as_str() {
+                        if relationship[side].as_array().unwrap().iter().any(|endpoint|
+                            endpoint["module"] == source.identity.module && endpoint["element"] == source.identity.element)
+                        {
+                            names.push(name.to_owned());
+                        }
+                    }
+                }
+            }
+        }
+        names.into_iter().map(|value| {
+            let name = Name { value: value.clone(), quoted: true, span: Span { start: 0, end: 0 } };
+            self.relationship_read(source, &name).map(|read| (value, read))
+        }).collect()
+    }
     pub fn relationship_read(&self, source: &Record, name: &Name) -> Result<RelationshipRead> {
         let mut matches = Vec::new();
         for module in self.documents[source.document]["modules"]

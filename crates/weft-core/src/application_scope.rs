@@ -224,6 +224,23 @@ impl<'a> Scope<'a> {
                 values,
                 greater,
             } => {
+                // A qualified relationship compared with one key value is an
+                // existential predicate. Authored members retain field semantics.
+                if !on && !*greater && columns.len() == 1 && values.len() == 1
+                    && !columns[0].unqualified
+                    && !matches!(values[0], ast::Value::Field(_))
+                {
+                    let (record, _) = self.record(&columns[0].alias)?;
+                    if self.catalog.member_name_matches(record, &columns[0].field)? == 0 {
+                        let relationship = self.catalog.relationship_read(record, &columns[0].field)?;
+                        if relationship.target_key.types.len() != 1 {
+                            return Err(fail("WFT-UNSUPPORTED", "Relationship equality requires a single-component key"));
+                        }
+                        return self.predicate(&ast::Predicate::HasRelated {
+                            relationship: columns[0].clone(), key: values.clone(),
+                        }, false);
+                    }
+                }
                 let fields = columns
                     .iter()
                     .map(|c| self.field(c))

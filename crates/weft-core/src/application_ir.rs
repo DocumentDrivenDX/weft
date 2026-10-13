@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Subset {
+    CompleteEntity,
     EntityPage,
     CountSummary,
     RelatedEntityPage,
@@ -77,6 +78,13 @@ pub struct Join {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Expression {
+    NativeMetadata {
+        scan: String,
+        record: Identity,
+        metadata: NativeMetadata,
+        #[serde(rename = "type")]
+        logical_type: LogicalType,
+    },
     Field {
         scan: String,
         identity: Identity,
@@ -90,11 +98,26 @@ pub enum Expression {
         #[serde(rename = "type")]
         logical_type: LogicalType,
     },
+    CompleteRelatedKeys {
+        scan: String,
+        relationship: RelationshipRead,
+        bound: u16,
+    },
     RelatedKeys {
         scan: String,
         relationship: RelationshipRead,
         bound: u16,
     },
+}
+/// Explicit backend-owned facts, never synthetic authored UMF Field identities.
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub enum NativeMetadata {
+    Version,
+    CreatedBy,
+    UpdatedBy,
+    OriginalAuthor,
+    OriginalAt,
 }
 #[derive(Debug, Clone, Serialize)]
 pub struct Output {

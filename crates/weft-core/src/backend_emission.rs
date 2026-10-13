@@ -9,9 +9,11 @@ fn fail(message: &str) -> Diagnostic {
 }
 enum Expected<'a> {
     Scalar(&'a LogicalType),
+    Native(&'a crate::application_ir::NativeMetadata, &'a LogicalType, &'a Identity),
     Arithmetic(&'a crate::arithmetic_resolve::Domain),
     Field(&'a str, &'a Identity),
     Related(&'a crate::application_model::RelationshipRead, u16),
+    CompleteRelated(&'a crate::application_model::RelationshipRead, u16),
 }
 fn scalar(column: &Column, expected: &LogicalType) -> bool {
     match &column.representation {
@@ -133,7 +135,9 @@ pub(crate) fn validate(
                         crate::application_ir::Expression::Field { scan, identity } => {
                             Expected::Field(scan, identity)
                         }
-                        crate::application_ir::Expression::Count { logical_type }
+                        crate::application_ir::Expression::CompleteRelatedKeys { relationship, bound, .. } => Expected::CompleteRelated(relationship, *bound),
+                        crate::application_ir::Expression::NativeMetadata { metadata, logical_type, record, .. } => Expected::Native(metadata, logical_type, record),
+                         crate::application_ir::Expression::Count { logical_type }
                         | crate::application_ir::Expression::Sum { logical_type, .. } => {
                             Expected::Scalar(logical_type)
                         }
@@ -182,6 +186,17 @@ pub(crate) fn validate(
         }
         let valid = match expected {
             Expected::Scalar(t) => scalar(column, t),
+            Expected::Native(expected, t, record) => match &column.representation {
+                Representation::NativeMetadata { metadata, logical_type, carrier, decoder } => {
+                    metadata == expected && logical_type == t && !column.nullable
+                        && column.source_identities == vec![record.clone()]
+                        && matches!(carrier, ScalarCarrier::Text)
+                        && if matches!(expected, crate::application_ir::NativeMetadata::Version) {
+                            matches!(decoder, ScalarDecoder::ExactInteger)
+                        } else { matches!(decoder, ScalarDecoder::Text) }
+                }
+                _ => false,
+            },
             Expected::Arithmetic(domain) => {
                 let (family,facets)=match domain {crate::arithmetic_resolve::Domain::Integer=>(Family::Integer,serde_json::json!({})),crate::arithmetic_resolve::Domain::Decimal{scale}=>(Family::Decimal,serde_json::json!({"scale":scale}))};
                 scalar(column,&LogicalType{family,facets,nullable:false})
@@ -227,6 +242,13 @@ pub(crate) fn validate(
                     _ => false,
                 }
             }
+            Expected::CompleteRelated(r, bound) => match &column.representation {
+                Representation::CompleteRelatedKeys { relationship, key, bound: b } => {
+                    relationship == &r.identity && *b == bound && key.id == r.target_key.id
+                        && key.fields == r.target_key.fields && key.types == r.target_key.types && !column.nullable
+                }
+                _ => false,
+            },
             Expected::Related(r, bound) => match &column.representation {
                 Representation::RelatedKeys {
                     relationship,

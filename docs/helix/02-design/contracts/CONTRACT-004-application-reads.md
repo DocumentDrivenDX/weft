@@ -191,3 +191,9 @@ The Truss runtime backend0.4.4 maps these descriptors to its existing validated
 JSON-home text cells on runtime0.31/PostgreSQL18.6. Truss returns its existing
 `TextValue` Python carrier. This scoped native path does not qualify timestamp
 arithmetic, binary comparison, other database profiles or new browser artifacts.
+
+## Relationship equality shorthand — 2026-10-13
+
+A qualified single-column WHERE equality `s.addresses = 'key'` (or a named parameter) resolves to existing HAS_RELATED semantics when the actual Record has no authored member with that name and its direction-specific relationship target key has one component. The inverse name resolves from its actual target endpoint. Literal/parameter admission, exact key type and existential multiplicity follow HAS_RELATED unchanged. An authored member retains field semantics, including its existing refusal rules. Composite keys require explicit KEY tuples; ON, greater/tuple comparisons, bare names and field operands gain no shorthand meaning.
+
+This is additive application-frontend support through the shared resolver, including existing application backend versions that already implement the resulting IR. It changes no transport or logical-plan schema and does not imply new backend capabilities or deployment qualification.
