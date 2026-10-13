@@ -1,0 +1,16 @@
+{
+  "scope": "Existing application IR relationship operators lowered against actual Truss mapping",
+  "backendVersion": "0.3.0",
+  "binding": "truss-runtime-binding/0.3",
+  "target": "truss-runtime-pg18.6/0.3",
+  "nativeExtensionSha256": "a361fc530ed5a64f772f9a48d672546be1e6307b9fc298303b3771a488782952",
+  "installedTrussTestsPassed": 5,
+  "seconds": 29.031,
+  "review": "Astra Ultra approved",
+  "status": "Candidate",
+  "limits": [
+    "Independent directed monomorphic relationships",
+    "Required authored string keys",
+    "No multi-hop, association Record or composed/owned lowering"
+  ]
+}

@@ -40,14 +40,17 @@ inherited PG17 native evidence.
 
 The same feature also exports `compile_truss_runtime_json(request_json)` for the
 actual Truss runtime mapping. It uses backend `truss.postgresql.runtime` version
-`0.2.0`, binding `truss-runtime-binding/0.2` and target
-`truss-runtime-pg18.6/0.2`. Truss constructs the binding from its accepted source
+`0.3.0`, binding `truss-runtime-binding/0.3` and target
+`truss-runtime-pg18.6/0.3`. Truss constructs the binding from its accepted source
 bytes and actual catalog IDs; consumers do not construct per-field codec graphs.
 This separate adapter uses Weft's application-read frontend and typed IR, then
 lowers to Truss's fixed, independently authorized query source. The current
 installed consumer demonstrates string/boolean filters, exact integer/decimal
 fields and parameters, counts, `alias.*`, optional/null values and read-only
 execution on PG18.6. Decimal projections retain original tokens; the native
-finite numeric domain is explicitly checked. Relationships, structured properties
-and page-key profiles remain unsupported
+finite numeric domain is explicitly checked. Independent directed monomorphic
+relationships support HAS_RELATED and bounded RELATED_KEYS, forward/inverse,
+with authored required string keys. Edge bags and composite key ordering are
+preserved. Multi-hop relationships, structured properties and page-key profiles
+remain unsupported
 in that consumer. All new declarations retain Candidate status.

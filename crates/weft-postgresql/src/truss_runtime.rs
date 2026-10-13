@@ -6,7 +6,7 @@ use serde_json::json;
 use std::collections::{BTreeMap, BTreeSet};
 use weft_core::{
     application_ir as app,
-    application_model::{Descriptor, Shape},
+    application_model::{Descriptor, RelationshipRead, Shape},
     backend::*,
     error::{Diagnostic, Result},
     ir::{Family, Identity, LogicalType},
@@ -14,8 +14,10 @@ use weft_core::{
 };
 pub const PROFILE: &str = "truss-runtime-binding/0.1";
 pub const TARGET: &str = "truss-runtime-pg18.6/0.1";
-pub const NUMERIC_PROFILE:&str="truss-runtime-binding/0.2";
-pub const NUMERIC_TARGET:&str="truss-runtime-pg18.6/0.2";
+pub const NUMERIC_PROFILE: &str = "truss-runtime-binding/0.2";
+pub const NUMERIC_TARGET: &str = "truss-runtime-pg18.6/0.2";
+pub const RELATIONSHIP_PROFILE: &str = "truss-runtime-binding/0.3";
+pub const RELATIONSHIP_TARGET: &str = "truss-runtime-pg18.6/0.3";
 const BACKEND: &str = "truss.postgresql.runtime";
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -31,6 +33,8 @@ struct Binding {
     maximum_bytes: u32,
     documents: Vec<DocumentPin>,
     records: Vec<RecordBinding>,
+    #[serde(default)]
+    relationships: Vec<RelationshipBinding>,
 }
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -52,12 +56,56 @@ struct FieldBinding {
     identity: Identity,
     property_id: String,
 }
-pub struct Runtime { exact_numbers: bool }
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct RelationshipBinding {
+    identity: serde_json::Value,
+    relationship_type_id: String,
+    source_type_id: String,
+    target_type_id: String,
+}
+pub struct Runtime {
+    exact_numbers: bool,
+    relationships: bool,
+}
 impl Runtime {
- fn profile(&self)->&'static str {if self.exact_numbers{NUMERIC_PROFILE}else{PROFILE}}
- fn target(&self)->&'static str {if self.exact_numbers{NUMERIC_TARGET}else{TARGET}}
- fn version(&self)->&'static str {if self.exact_numbers{"0.2.0"}else{"0.1.0"}}
- fn additions(&self)->Vec<String> {let mut v=vec!["value.nativeNull".into()];if self.exact_numbers{v.extend(["type.integer.unbounded".into(),"type.decimal.unbounded".into()]);}v}
+    fn profile(&self) -> &'static str {
+        if self.relationships {
+            RELATIONSHIP_PROFILE
+        } else if self.exact_numbers {
+            NUMERIC_PROFILE
+        } else {
+            PROFILE
+        }
+    }
+    fn target(&self) -> &'static str {
+        if self.relationships {
+            RELATIONSHIP_TARGET
+        } else if self.exact_numbers {
+            NUMERIC_TARGET
+        } else {
+            TARGET
+        }
+    }
+    fn version(&self) -> &'static str {
+        if self.relationships {
+            "0.3.0"
+        } else if self.exact_numbers {
+            "0.2.0"
+        } else {
+            "0.1.0"
+        }
+    }
+    fn additions(&self) -> Vec<String> {
+        let mut v = vec!["value.nativeNull".into()];
+        if self.exact_numbers {
+            v.extend([
+                "type.integer.unbounded".into(),
+                "type.decimal.unbounded".into(),
+            ]);
+        }
+        v
+    }
 }
 pub struct Mapping {
     binding: Binding,
@@ -99,7 +147,7 @@ fn obligation() -> Obligation {
         failure_code: "WFT-OBLIGATION".into(),
     }
 }
-fn scalar_type(d: &Descriptor, exact_numbers:bool) -> Result<&LogicalType> {
+fn scalar_type(d: &Descriptor, exact_numbers: bool) -> Result<&LogicalType> {
     match &d.shape {
         Shape::Scalar { logical_type } => {
             let facets = &logical_type.facets;
@@ -149,7 +197,7 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: "weft-ir/0.2.0".into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec!["No relationship or structured-property lowering; no page-key profile".into()],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.relationships{"truss-runtime-relationship-query/0.3".into()}else if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).chain(if self.relationships{vec!["relationship.exists".into(),"relationship.boundedKeys".into(),"relationship.inverse".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec![if self.relationships{"Independent directed monomorphic relationships with required string keys only; no structured-property or page-key profile".into()}else{"No relationship or structured-property lowering; no page-key profile".into()}],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
         if c.binding.profile != self.profile()
@@ -157,15 +205,24 @@ impl Backend for Runtime {
         {
             return Err(fail("Exact runtime binding pin required"));
         }
-        let binding: Binding = serde_json::from_value(
-            weft_core::json::checked_json(&c.binding.json)
-                .map_err(|_| fail("Runtime binding JSON refused"))?,
-        )
-        .map_err(|_| fail("Runtime binding shape refused"))?;
+        let original_binding = weft_core::json::checked_json(&c.binding.json)
+            .map_err(|_| fail("Runtime binding JSON refused"))?;
+        if original_binding.get("relationships").is_some() != self.relationships {
+            return Err(fail("Exact versioned relationship binding shape required"));
+        }
+        let binding: Binding = serde_json::from_value(original_binding)
+            .map_err(|_| fail("Runtime binding shape refused"))?;
         if binding.interface_version != self.profile()
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
-            || binding.release_id != if self.exact_numbers{"truss-catalog-runtime/0.27-candidate"}else{"truss-catalog-runtime/0.26-candidate"}
+            || binding.release_id
+                != if self.relationships {
+                    "truss-catalog-runtime/0.28-candidate"
+                } else if self.exact_numbers {
+                    "truss-catalog-runtime/0.27-candidate"
+                } else {
+                    "truss-catalog-runtime/0.26-candidate"
+                }
             || binding.release_sha256.len() != 64
             || !binding
                 .release_sha256
@@ -222,7 +279,7 @@ impl Backend for Runtime {
                     .iter()
                     .find(|d| d.identity == f.identity)
                     .ok_or_else(|| fail("Original member descriptor missing"))?;
-                scalar_type(d,self.exact_numbers)?;
+                scalar_type(d, self.exact_numbers)?;
                 fields.insert(key(&f.identity));
             }
         }
@@ -231,13 +288,89 @@ impl Backend for Runtime {
             .iter()
             .any(|r| !records.contains(&key(r)))
             || c.selection.fields.iter().any(|f| !fields.contains(&key(f)))
-            || !c.selection.relationships.is_empty()
+            || (!self.relationships && !c.selection.relationships.is_empty())
             || c.selection
                 .types
                 .iter()
                 .any(|t| !fields.contains(&key(t)) && !records.contains(&key(t)))
         {
             return Err(fail("Resolved selection lacks complete runtime mapping"));
+        }
+        if self.relationships {
+            let mut seen = BTreeSet::new();
+            let mut native_seen = BTreeSet::new();
+            for rel in &binding.relationships {
+                native(&rel.relationship_type_id)?;
+                native(&rel.source_type_id)?;
+                native(&rel.target_type_id)?;
+                if !seen.insert(rel.identity.to_string())
+                    || !native_seen.insert(&rel.relationship_type_id)
+                {
+                    return Err(fail("Duplicate relationship mapping"));
+                }
+            }
+            let Plan::V02(plan) = c.plan else {
+                return Err(unsupported(
+                    "Relationship mapping requires application-read IR",
+                ));
+            };
+            let selected = plan
+                .filters
+                .iter()
+                .filter_map(|p| {
+                    if let app::Predicate::HasRelated { relationship, .. } = p {
+                        Some(relationship)
+                    } else {
+                        None
+                    }
+                })
+                .chain(plan.outputs.iter().filter_map(|o| {
+                    if let app::Expression::RelatedKeys { relationship, .. } = &o.expression {
+                        Some(relationship)
+                    } else {
+                        None
+                    }
+                }));
+            for rel in selected {
+                if rel.target_lifecycle != "independent" {
+                    return Err(unsupported("Independent relationship required"));
+                }
+                let mapped = binding
+                    .relationships
+                    .iter()
+                    .find(|r| r.identity == json!(rel.identity))
+                    .ok_or_else(|| fail("Original relationship mapping missing"))?;
+                let from = binding
+                    .records
+                    .iter()
+                    .find(|r| r.identity == rel.from)
+                    .ok_or_else(|| fail("Relationship source record missing"))?;
+                let to = binding
+                    .records
+                    .iter()
+                    .find(|r| r.identity == rel.to)
+                    .ok_or_else(|| fail("Relationship target record missing"))?;
+                if (if rel.inverse {
+                    (&mapped.target_type_id, &mapped.source_type_id)
+                } else {
+                    (&mapped.source_type_id, &mapped.target_type_id)
+                }) != (&from.type_id, &to.type_id)
+                {
+                    return Err(fail("Relationship endpoint mapping differs from original"));
+                }
+                for authored in [&rel.source_key, &rel.target_key] {
+                    if authored.fields.is_empty()
+                        || authored.fields.len() != authored.types.len()
+                        || authored.types.iter().any(|t| {
+                            t.family != Family::String || t.facets != json!({}) || t.nullable
+                        })
+                    {
+                        return Err(unsupported(
+                            "Required string relationship key components required",
+                        ));
+                    }
+                }
+            }
         }
         Ok(Validated {
             mapping: Mapping {
@@ -251,8 +384,13 @@ impl Backend for Runtime {
     }
     fn assess(&self, c: &Context<'_>, _: &Mapping) -> Result<Vec<Assessment>> {
         let manifest = self.describe()?;
-        let additions=self.additions();
-        c.plan.capabilities().iter().chain(additions.iter()).collect::<BTreeSet<_>>().into_iter()
+        let additions = self.additions();
+        c.plan
+            .capabilities()
+            .iter()
+            .chain(additions.iter())
+            .collect::<BTreeSet<_>>()
+            .into_iter()
             .map(|id| {
                 if !manifest.capabilities.iter().any(|cap| &cap.id == id) {
                     return Err(unsupported("Operation has no runtime lowering"));
@@ -278,6 +416,8 @@ impl Backend for Runtime {
             plan,
             aliases: BTreeMap::new(),
             parameters: Parameters::default(),
+            binding_slot: String::new(),
+            relationship_scope: 0,
         };
         build
             .aliases
@@ -296,6 +436,7 @@ impl Backend for Runtime {
             m.original.clone(),
             json!({"kind":"runtime-binding"}),
         )?;
+        build.binding_slot = binding_slot.clone();
         let source = |s: &app::Scan| -> Result<String> {
             Ok(format!("\"truss\".\"query_objects\"({binding_slot}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {}",m.record(&s.record)?.type_id,Identifier::new(&s.occurrence)?.sql()))
         };
@@ -337,10 +478,10 @@ impl Backend for Runtime {
                     let d = build.descriptor(identity)?;
                     match &d.shape {
                         Shape::Scalar { logical_type } => {
-                            let (value, _) = build.scalar(scan, identity, logical_type)?;
+                            let (_value, _) = build.scalar(scan, identity, logical_type)?;
                             if d.availability.as_deref() == Some("required") {
                                 (
-                                    build.projected_scalar(scan,identity,logical_type)?,
+                                    build.projected_scalar(scan, identity, logical_type)?,
                                     Representation::Scalar {
                                         logical_type: logical_type.clone(),
                                         carrier: ScalarCarrier::Text,
@@ -375,7 +516,10 @@ impl Backend for Runtime {
                                 pairs.push(literal(&member.name)?);
                                 pairs.push(if field.availability.as_deref() == Some("required") {
                                     match logical_type.family {
-                                        Family::Integer | Family::Decimal => {let(cell,_)=build.cell(scan,&member.identity)?;format!("pg_catalog.to_jsonb({cell}->>'text')")},
+                                        Family::Integer | Family::Decimal => {
+                                            let (cell, _) = build.cell(scan, &member.identity)?;
+                                            format!("pg_catalog.to_jsonb({cell}->>'text')")
+                                        }
                                         _ => format!("pg_catalog.to_jsonb({value})"),
                                     }
                                 } else {
@@ -398,6 +542,19 @@ impl Backend for Runtime {
                         _ => return Err(unsupported("Structured property unavailable")),
                     }
                 }
+                app::Expression::RelatedKeys {
+                    scan,
+                    relationship,
+                    bound,
+                } if self.relationships => (
+                    build.related(scan, relationship, None, Some(*bound))?,
+                    Representation::RelatedKeys {
+                        relationship: relationship.identity.clone(),
+                        key: relationship.target_key.clone(),
+                        bound: *bound,
+                    },
+                    vec![relationship.from.clone()],
+                ),
                 _ => {
                     return Err(unsupported(
                         "Selected aggregate or relationship unavailable",
@@ -465,6 +622,8 @@ struct Build<'a> {
     plan: &'a app::Plan,
     aliases: BTreeMap<String, Identity>,
     parameters: Parameters,
+    binding_slot: String,
+    relationship_scope: u32,
 }
 impl Build<'_> {
     fn descriptor(&self, id: &Identity) -> Result<&Descriptor> {
@@ -495,9 +654,14 @@ impl Build<'_> {
         };
         Ok((sql, present))
     }
-    fn projected_scalar(&self,scan:&str,id:&Identity,logical:&LogicalType)->Result<String>{
-        if logical.family==Family::Decimal {let(cell,_)=self.cell(scan,id)?;Ok(format!("{cell}->>'text'"))}
-        else {let(value,_)=self.scalar(scan,id,logical)?;Ok(format!("({value})::pg_catalog.text"))}
+    fn projected_scalar(&self, scan: &str, id: &Identity, logical: &LogicalType) -> Result<String> {
+        if logical.family == Family::Decimal {
+            let (cell, _) = self.cell(scan, id)?;
+            Ok(format!("{cell}->>'text'"))
+        } else {
+            let (value, _) = self.scalar(scan, id, logical)?;
+            Ok(format!("({value})::pg_catalog.text"))
+        }
     }
     fn envelope(&self, scan: &str, id: &Identity) -> Result<String> {
         let d = self.descriptor(id)?;
@@ -538,6 +702,63 @@ impl Build<'_> {
             }
         }
     }
+    fn related(
+        &mut self,
+        scan: &str,
+        rel: &RelationshipRead,
+        key_values: Option<&[app::Value]>,
+        bound: Option<u16>,
+    ) -> Result<String> {
+        let mapped = self
+            .mapping
+            .binding
+            .relationships
+            .iter()
+            .find(|r| r.identity == json!(rel.identity))
+            .ok_or_else(|| fail("Relationship mapping missing"))?;
+        if self.aliases.get(scan) != Some(&rel.from) {
+            return Err(fail("Relationship source occurrence changed"));
+        }
+        self.relationship_scope += 1;
+        let target = format!("weft_runtime_related_{}_target", self.relationship_scope);
+        let edge = format!("weft_runtime_related_{}_edge", self.relationship_scope);
+        self.aliases.insert(target.clone(), rel.to.clone());
+        let target_alias = Identifier::new(&target)?.sql();
+        let edge_alias = Identifier::new(&edge)?.sql();
+        let outer = Identifier::new(scan)?.sql();
+        let (source_column, target_column) = if rel.inverse {
+            ("target_id", "source_id")
+        } else {
+            ("source_id", "target_id")
+        };
+        let from=format!("\"truss\".\"query_edges\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {edge_alias} JOIN \"truss\".\"query_objects\"({}::pg_catalog.jsonb,{}::pg_catalog.int4) AS {target_alias} ON {target_alias}.id={edge_alias}.{target_column}",self.binding_slot,mapped.relationship_type_id,self.binding_slot,self.mapping.record(&rel.to)?.type_id);
+        let mut predicates = vec![format!("{edge_alias}.{source_column}={outer}.id")];
+        let ordered = rel
+            .target_key
+            .fields
+            .iter()
+            .zip(&rel.target_key.types)
+            .map(|(id, t)| self.scalar(&target, id, t).map(|v| v.0))
+            .collect::<Result<Vec<_>>>()?;
+        if let Some(values) = key_values {
+            if values.len() != ordered.len() {
+                return Err(fail("Relationship key arity mismatch"));
+            }
+            for (left, right) in ordered.iter().zip(values) {
+                predicates.push(format!("({left})=({})", self.value(right)?));
+            }
+            return Ok(format!(
+                "EXISTS (SELECT 1 FROM {from} WHERE {})",
+                predicates.join(" AND ")
+            ));
+        }
+        let bound = bound
+            .filter(|b| (1..=1000).contains(b))
+            .ok_or_else(|| unsupported("Related key bound requires 1 through 1000"))?;
+        let order = ordered.join(",");
+        let inner=format!("SELECT pg_catalog.jsonb_build_array({order}) AS k,pg_catalog.row_number() OVER (ORDER BY {order}) AS ord FROM {from} WHERE {} ORDER BY {order} LIMIT {}",predicates.join(" AND "),u32::from(bound)+1);
+        Ok(format!("(SELECT pg_catalog.jsonb_build_object('items',COALESCE(pg_catalog.jsonb_agg(k ORDER BY ord) FILTER (WHERE ord<={bound}),'[]'::pg_catalog.jsonb),'truncated',pg_catalog.count(*)>{bound})::pg_catalog.text FROM ({inner}) AS weft_runtime_related_{}_bounded)",self.relationship_scope))
+    }
     fn predicate(&mut self, p: &app::Predicate) -> Result<String> {
         match p {
             app::Predicate::Equal { left, right } => {
@@ -545,17 +766,41 @@ impl Build<'_> {
                 let r = self.value(right)?;
                 Ok(format!("({l} = {r})"))
             }
+            app::Predicate::HasRelated {
+                scan,
+                relationship,
+                key,
+            } => self.related(scan, relationship, Some(key), None),
             _ => Err(unsupported("Runtime predicate requires typed equality")),
         }
     }
 }
-pub fn compile_json(request:&str)->String {
-    let numeric=weft_core::json::checked_json(request).ok().is_some_and(|v|v["target"]["backendVersion"]=="0.2.0");
-    let mut factory=|_:&Catalog,_:Plan<'_>,target:weft_core::compile::CompositionInput<'_>|{
-        let backend=Runtime{exact_numbers:numeric};
-        if target.backend_id!=BACKEND || target.backend_version!=backend.version() || target.target_profile!=backend.target(){return Err(fail("Explicit runtime backend/version/target required"));}
-        let mut r=Registry::default();r.register(backend)?;Ok(r)
-    };
-    let compiler=weft_core::compile::Compiler::default();
-    if numeric {compiler.compile_json_with_exact_numbers_factory(request,&mut factory)} else {compiler.compile_json_with_factory(request,&mut factory)}
+pub fn compile_json(request: &str) -> String {
+    let version = weft_core::json::checked_json(request)
+        .ok()
+        .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
+    let relationships = version.as_deref() == Some("0.3.0");
+    let numeric = relationships || version.as_deref() == Some("0.2.0");
+    let mut factory =
+        |_: &Catalog, _: Plan<'_>, target: weft_core::compile::CompositionInput<'_>| {
+            let backend = Runtime {
+                exact_numbers: numeric,
+                relationships,
+            };
+            if target.backend_id != BACKEND
+                || target.backend_version != backend.version()
+                || target.target_profile != backend.target()
+            {
+                return Err(fail("Explicit runtime backend/version/target required"));
+            }
+            let mut r = Registry::default();
+            r.register(backend)?;
+            Ok(r)
+        };
+    let compiler = weft_core::compile::Compiler::default();
+    if numeric {
+        compiler.compile_json_with_exact_numbers_factory(request, &mut factory)
+    } else {
+        compiler.compile_json_with_factory(request, &mut factory)
+    }
 }
