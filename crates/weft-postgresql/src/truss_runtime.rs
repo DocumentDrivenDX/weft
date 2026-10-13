@@ -97,6 +97,7 @@ pub struct Runtime {
     record_evolution: bool,
     required_tightening: bool,
     relationship_tightening: bool,
+    container_tightening: bool,
     typed_page_mode: bool,
     continuation_filter: Option<usize>,
 }
@@ -124,7 +125,7 @@ impl Runtime {
         }
     }
     fn version(&self) -> &'static str {
-        if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
+        if self.container_tightening { "0.4.20" } else if self.relationship_tightening { "0.4.19" } else if self.required_tightening { "0.4.18" } else if self.record_evolution { "0.4.17" } else if self.typed_key_pages { "0.4.16" } else if self.typed_relationship_keys { "0.4.15" } else if self.container_queries { "0.4.14" } else if self.scalar_containers { "0.4.13" } else if self.facet_evolution { "0.4.12" } else if self.live_traversal { "0.4.11" } else if self.typed_keys { "0.4.10" } else if self.numeric_facets { "0.4.9" } else if self.import_loads { "0.4.8" } else if self.entity_times { "0.4.7" } else if self.complete_entities {
             "0.4.6"
         } else if self.retained_metadata {
             "0.4.5"
@@ -287,7 +288,7 @@ impl Backend for Runtime {
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
             || binding.release_id
-                != if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
+                != if self.container_tightening { "truss-catalog-runtime/0.50-candidate" } else if self.relationship_tightening { "truss-catalog-runtime/0.49-candidate" } else if self.required_tightening { "truss-catalog-runtime/0.48-candidate" } else if self.record_evolution { "truss-catalog-runtime/0.47-candidate" } else if self.typed_key_pages { "truss-catalog-runtime/0.46-candidate" } else if self.typed_relationship_keys { "truss-catalog-runtime/0.45-candidate" } else if self.container_queries { "truss-catalog-runtime/0.44-candidate" } else if self.scalar_containers { "truss-catalog-runtime/0.43-candidate" } else if self.facet_evolution { "truss-catalog-runtime/0.42-candidate" } else if self.live_traversal { "truss-catalog-runtime/0.41-candidate" } else if self.typed_keys { "truss-catalog-runtime/0.40-candidate" } else if self.numeric_facets { "truss-catalog-runtime/0.39-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.38-candidate" { "truss-catalog-runtime/0.38-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.37-candidate" { "truss-catalog-runtime/0.37-candidate" } else if self.import_loads && binding.release_id == "truss-catalog-runtime/0.36-candidate" { "truss-catalog-runtime/0.36-candidate" } else if self.import_loads { "truss-catalog-runtime/0.35-candidate" } else if self.entity_times { "truss-catalog-runtime/0.34-candidate" } else if self.complete_entities {
                     "truss-catalog-runtime/0.33-candidate"
                 } else if self.retained_metadata {
                     "truss-catalog-runtime/0.32-candidate"
@@ -1057,7 +1058,8 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
     let version = weft_core::json::checked_json(request)
         .ok()
         .and_then(|v| v["target"]["backendVersion"].as_str().map(str::to_owned));
-    let relationship_tightening = version.as_deref() == Some("0.4.19");
+    let container_tightening = version.as_deref() == Some("0.4.20");
+    let relationship_tightening = container_tightening || version.as_deref() == Some("0.4.19");
     let required_tightening = relationship_tightening || version.as_deref() == Some("0.4.18");
     let record_evolution = required_tightening || version.as_deref() == Some("0.4.17");
     let typed_key_pages = record_evolution || version.as_deref() == Some("0.4.16");
@@ -1104,6 +1106,7 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
                 record_evolution,
                 required_tightening,
                 relationship_tightening,
+                container_tightening,
                 typed_page_mode: typed_key_pages && page.is_some(),
                 continuation_filter: if page.as_ref().is_some_and(|(_, after)| after.is_some()) {
                     match plan { Plan::V02(p) => Some(p.filters.len()-1), _ => return Err(fail("Page application plan required")) }
