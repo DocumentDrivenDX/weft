@@ -559,6 +559,12 @@ impl<B: Backend> Registered for Adapter<B> {
                 }
             }
         }
+        if plan.capabilities().iter().any(|id| id == "compare.binary.optionalEqual")
+            && !self.manifest.capabilities.iter().any(|c| c.id == "compare.binary.optionalEqual"
+                && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
+                && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
+            return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit optional binary equality"));
+        }
         let context = Context {
             catalog,
             plan,

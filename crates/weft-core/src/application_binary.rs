@@ -7,7 +7,11 @@ impl Scope<'_> {
         let (member,graph)=self.catalog.member_descriptor(record,&column.field)?;
         let descriptor=graph.iter().find(|d|d.identity==member.identity).ok_or_else(||fail("WFT-TYPE","Original binary descriptor required"))?;
         if !matches!(&descriptor.shape,Shape::ExactScalar{scalar_type:ExactScalarType::Binary}) {return Ok(None);}
-        if descriptor.availability.as_deref()!=Some("required") {return Err(fail("WFT-PROFILE","Binary equality initially requires a singular required field"));}
+        match descriptor.availability.as_deref() {
+            Some("required") => {},
+            Some("absent-allowed") => {self.caps.insert("compare.binary.optionalEqual".into());},
+            _ => return Err(fail("WFT-PROFILE","Binary equality requires a singular required or absent-allowed field")),
+        }
         let field=ir::ExactField{scan,identity:member.identity,scalar_type:ExactScalarType::Binary,span:column.span.clone()};
         self.descriptors(graph);Ok(Some(field))
     }
