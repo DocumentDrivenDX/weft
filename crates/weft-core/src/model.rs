@@ -32,6 +32,7 @@ pub struct ModuleInput {
 
 pub struct Catalog {
     inputs: Vec<ModuleInput>,
+    pub(crate) exact_numbers: bool,
     pub(crate) documents: Vec<Value>,
 }
 #[derive(Debug, Clone)]
@@ -80,6 +81,11 @@ impl Catalog {
     /// Read-only original inputs. Clone and prepare a new Catalog to change them.
     pub fn inputs(&self) -> &[ModuleInput] {
         &self.inputs
+    }
+    /// Explicit host-selected admission of facetless mathematical numeric fields.
+    /// Source bytes/pins remain original; default preparation is unchanged.
+    pub fn prepare_exact_numbers(inputs: Vec<ModuleInput>) -> Result<Self> {
+        let mut catalog=Self::prepare(inputs)?;catalog.exact_numbers=true;Ok(catalog)
     }
     pub fn prepare(inputs: Vec<ModuleInput>) -> Result<Self> {
         Self::prepare_version(inputs, None)
@@ -158,7 +164,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents })
+        Ok(Self { inputs, documents, exact_numbers:false })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -308,7 +314,7 @@ impl Catalog {
             // Derive the ideal scalar domain, leaving original selected source bytes untouched.
             ideal={let mut v=field.clone();v["nullability"]=Value::String("required".into());v};&ideal
         } else {field};
-        let logical_type = scalar_type(selected, name, record.pin.umf_version == "0.8.0")?;
+        let logical_type = scalar_type(selected, name, self.exact_numbers || record.pin.umf_version == "0.8.0", self.exact_numbers)?;
         Ok((
             identity,
             logical_type,
@@ -317,7 +323,7 @@ impl Catalog {
     }
 }
 
-pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool) -> Result<LogicalType> {
+pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool, mathematical_decimal: bool) -> Result<LogicalType> {
     let err = || {
         Diagnostic::new("WFT-TYPE", "type", "Selected field meaning is unsupported").at(&name.span)
     };
@@ -363,7 +369,7 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
             return Err(err());
         }
     }
-    if family == Family::Decimal {
+    if family == Family::Decimal && !(mathematical_decimal && facets==json!({})) {
         let p = facets["precision"].as_u64().ok_or_else(err)?;
         let s = facets["scale"].as_u64().ok_or_else(err)?;
         if !(1..=28).contains(&p) || s > p {
@@ -375,4 +381,27 @@ pub(crate) fn scalar_type(field: &Value, name: &Name, mathematical_integer: bool
         facets,
         nullable: false,
     })
+}
+
+#[cfg(test)]
+mod numeric_preparation_tests {
+    use super::*;
+    #[test]
+    fn exact_numeric_mode_is_explicit_and_preserves_original_source() {
+        let source = r#" {"umf":"0.7.0","id":"numeric-owner","vocabularies":{},"extensions":{},"modules":[{"id":"m","namespace":"m","extensions":{},"elements":[{"id":"row","name":"Row","kind":"record","members":[{"module":"m","element":"amount"},{"module":"m","element":"units"}],"extensions":{}},{"id":"amount","name":"amount","kind":"field","scalarType":"decimal","nullability":"required","cardinality":"one","extensions":{}},{"id":"units","name":"units","kind":"field","scalarType":"integer","nullability":"required","cardinality":"one","extensions":{}}]}]} "#;
+        let input=ModuleInput{document_json:source.into(),pin:ModelPin{document_id:"numeric-owner".into(),revision:"r1".into(),sha256:sha256(source.as_bytes()),umf_version:"0.7.0".into()},selected_module_ids:vec!["m".into()]};
+        let owner=Identity{document_id:"numeric-owner".into(),revision:"r1".into(),module:"m".into(),element:"row".into()};
+        let default=Catalog::prepare(vec![input.clone()]).unwrap();
+        assert!(default.entity_descriptor(&default.record_by_identity(&owner).unwrap()).is_err());
+        let exact=Catalog::prepare_exact_numbers(vec![input.clone()]).unwrap();
+        let graph=exact.entity_descriptor(&exact.record_by_identity(&owner).unwrap()).unwrap().graph;
+        assert_eq!(exact.inputs(),&[input]);
+        for id in ["amount","units"] {
+            let descriptor=graph.iter().find(|d|d.identity.element==id).unwrap();
+            let crate::application_model::Shape::Scalar{logical_type}=&descriptor.shape else{panic!()};
+            assert_eq!(logical_type.facets,json!({}));
+            let value=if id=="amount"{"9007199254740993.1234567890123456789000"}else{"900719925474099312345678901234567890"};
+            crate::exact::literal(&crate::syntax::Literal{value:value.into(),kind:crate::syntax::LiteralKind::Number,span:crate::ir::Span{start:0,end:0}},logical_type).unwrap();
+        }
+    }
 }

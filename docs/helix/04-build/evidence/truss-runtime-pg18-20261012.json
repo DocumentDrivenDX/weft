@@ -1,0 +1,69 @@
+{
+  "scope": "Public Python scalar query workflows and additive upgrade; no full engine/domain qualification",
+  "driver": {
+    "psycopg": "3.3.6",
+    "libpq": "18.6",
+    "postgresql": "18.6",
+    "localRuntime": "DocumentDrivenDX pgserver-pg18==18.6.1"
+  },
+  "weft": {
+    "backend": "truss.postgresql.runtime",
+    "version": "0.1.0",
+    "binding": "truss-runtime-binding/0.1",
+    "target": "truss-runtime-pg18.6/0.1",
+    "feature": "truss-postgresql-pg18",
+    "nativeExtensionSha256": "6d14821ef604e02424661666a581eaa8bfa975fb713031c637cb968a3c7afd88"
+  },
+  "trussWheelSha256": "d6352925f49952624ab851403bb0224c73f09a52960691649a5080c00f83c56c",
+  "tests": {
+    "installedFinalWheel": {
+      "modules": [
+        "test_compiled_query_native",
+        "test_runtime_upgrade_native"
+      ],
+      "passed": 3,
+      "seconds": 33.524,
+      "retainedUpgradeSource": "0.25"
+    },
+    "addedPropertyJoinWorkflow": {
+      "passed": 1,
+      "seconds": 11.868
+    },
+    "ownerSqlRoundtrips": 21,
+    "pythonModuleBoundaries": 810,
+    "typingFixtures": 5,
+    "expectedNegativeTypingErrors": 20
+  },
+  "behaviors": [
+    "public accepted named UMF documents and native mappings",
+    "public grouped writes supply query data",
+    "named parameters and string filtering",
+    "property join",
+    "integer COUNT",
+    "alias.* complete columns",
+    "boolean values",
+    "distinct absent/null/empty values",
+    "caller commit and read-only query without assigned xid",
+    "unauthorized document refusal",
+    "no raw object SELECT grant",
+    "additive .25->.26 preserves report bytes/data/receipt/token/feed and permits new mutation"
+  ],
+  "review": "Astra Ultra approved current source for scoped commit/push",
+  "remaining": [
+    "numeric query fields beyond COUNT",
+    "relationship lowering",
+    "structured/composed properties",
+    "page-key profiles",
+    "archive/retention",
+    "engine-owned import batches",
+    "managed-service qualification",
+    "full shared corpus/native interchange closure"
+  ],
+  "consumerEvidence": "https://github.com/DocumentDrivenDX/truss/blob/main/docs/helix/04-build/evidence/python-compiled-query-20261012.json",
+  "sourceFiles": {
+    "crates/weft-postgresql/src/truss_runtime.rs": "cfb1f976c5f4b13d32c803f8180a5ecb6759f595c1c1c8b662e4a0642b78c686",
+    "crates/weft-postgresql/src/lib.rs": "b7ce347d488364685a6754a941a25566f381b4f07f5e7b5e24fc2193b3fa44fb",
+    "crates/weft-runtime/src/lib.rs": "9018381169a3503265bf0ea5d3de3df6073cc0bb3d4a7f54f7c22447927978f6",
+    "crates/weft-python/src/lib.rs": "9781cf102cf2f7581783034bdbb7a9599bef8a45ad14a830160766dc964a3598"
+  }
+}

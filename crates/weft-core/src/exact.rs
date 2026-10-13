@@ -39,6 +39,10 @@ pub fn literal(input: &Literal, expected: &LogicalType) -> Result<Expression> {
             }
         }
         (LiteralKind::Number, Family::Decimal) => {
+            if expected.facets == serde_json::json!({}) {
+                validate_mathematical_decimal(&input.value).map_err(|_|error("WFT-NUMERIC-DOMAIN","Decimal literal must be exact finite base-ten text"))?;
+                return Ok(Expression::Literal{value:input.value.clone(),logical_type:expected.clone(),span:input.span.clone()});
+            }
             let scale = expected.facets["scale"].as_u64().unwrap() as usize;
             let precision = expected.facets["precision"].as_u64().unwrap() as usize;
             let unsigned = input.value.strip_prefix('-').unwrap_or(&input.value);
@@ -66,4 +70,14 @@ pub fn literal(input: &Literal, expected: &LogicalType) -> Result<Expression> {
         logical_type: expected.clone(),
         span: input.span.clone(),
     })
+}
+
+/// Fixed-point finite token grammar; no conversion through native floats.
+pub(crate) fn validate_mathematical_decimal(value:&str)->Result<()> {
+    let unsigned=value.strip_prefix('-').unwrap_or(value);let mut parts=unsigned.split('.');
+    let whole=parts.next().unwrap_or("");let fraction=parts.next();
+    if value.len()>1048576 || whole.is_empty() || !whole.bytes().all(|b|b.is_ascii_digit())
+      || fraction.is_some_and(|f|f.is_empty()||!f.bytes().all(|b|b.is_ascii_digit())) || parts.next().is_some(){
+      return Err(Diagnostic::new("WFT-NUMERIC-DOMAIN","type","Finite fixed-point decimal token required"));
+    }Ok(())
 }

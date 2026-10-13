@@ -76,6 +76,7 @@ impl Resolver<'_> {
             Family::Decimal => "type.decimal",
         });
         if logical_type.family == Family::Integer && logical_type.facets == json!({}) { self.cap("type.integer.unbounded"); }
+        if logical_type.family == Family::Decimal && logical_type.facets == json!({}) { self.cap("type.decimal.unbounded"); }
         Ok((expression, name))
     }
     fn predicates(&mut self, predicates: &[Predicate]) -> Result<Expression> {

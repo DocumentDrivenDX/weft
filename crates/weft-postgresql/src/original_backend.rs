@@ -87,6 +87,21 @@ impl OriginalBackend {
             relationships: BTreeMap::new(),
         })
     }
+    /// Host-selected PG18 live projection target. This is a new candidate
+    /// declaration; historical PG17 evidence is never relabelled as PG18.
+    pub(crate) fn with_pg18_target(mut self) -> Self {
+        self.manifest.backend_version="0.2.0".into();
+        self.manifest.target_profiles=vec![TargetProfile{
+            id:crate::pg18::TARGET_PROFILE.into(),engine:"postgresql".into(),engine_version:"18.6".into(),
+            session_settings:serde_json::json!({"server_encoding":"UTF8","comparison":"C","domain":"exact-or-error","read_context":"live","search_path":"pg_catalog,pg_temp"}),
+            storage_layout_revision:"truss-logical-query-views/0.1".into(),publication_revision:"host-enforced-live/0.1".into()}];
+        self.manifest.evidence.clear();
+        for capability in &mut self.manifest.capabilities {
+            capability.target_profiles=vec![crate::pg18::TARGET_PROFILE.into()];
+            capability.evidence.clear();
+        }
+        self
+    }
     pub fn with_relationships(
         mut self,
         relationships: BTreeMap<String, crate::relationship_definition::RelationshipAdmission>,
