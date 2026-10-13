@@ -1,0 +1,15 @@
+{
+  "scope": "Conditional source-bound scoped-fact/cell selection only; no authenticated issuer, native SQL lineage, complete enumeration or guarded release. No required backend case promotion.",
+  "runtime": "Truss 0.38; PostgreSQL 18.6; original source mapper separately qualified 0.37 extension",
+  "nativeTests": 8,
+  "nativeSeconds": 40.117,
+  "ownerScopedFactTests": 1,
+  "boundaryTests": 16,
+  "sources": {
+    "/private/tmp/weft-security-main-integration/crates/weft-core/src/security_mapping_transport.rs": "5115d2de75bc18d59d972016197930e15d9ff07561c422ee806acf69049e592b",
+    "/private/tmp/weft-security-main-integration/crates/weft-postgresql/examples/security_predicate_spike.rs": "4709dff9c6d70680094ccde81f4668fefb936a4bc05433f4abe2e119543d0a98",
+    "/private/tmp/weft-security-main-integration/docs/helix/02-design/module-boundaries.json": "293b8a0aed831eff25eebd27e6d528c81e55bf5a0bf6159f7191e4f3e3e59bb5",
+    "/private/tmp/truss-security-main-integration/packages/python/tests/test_security_predicate_native.py": "61985ab5a91ef2eeb5f6709dee339feadf08780f2fedf620a27d2548ad8629bf"
+  },
+  "originalMappingTransportTests": 6
+}

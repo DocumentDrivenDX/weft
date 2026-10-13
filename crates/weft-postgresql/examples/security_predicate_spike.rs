@@ -8,7 +8,7 @@ fn refused() -> Diagnostic {
 fn inspect_probe(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value)->Result<()> {
  use weft_core::security_lowering::*;
  let object=probe.as_object().ok_or_else(refused)?;
- if object.len()!=4||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName"|"rows")){return Err(refused());}
+ if !matches!(object.len(),4|6)||object.contains_key("factCut")!=object.contains_key("scopedFacts")||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName"|"rows"|"factCut"|"scopedFacts")){return Err(refused());}
  fn identity(input:&serde_json::Value,r:&serde_json::Value)->Result<SecurityIdentity>{
   let document=r["documentId"].as_str().ok_or_else(refused)?;
   let pins=input["modules"].as_array().ok_or_else(refused)?;
@@ -42,7 +42,11 @@ fn inspect_probe(input:&serde_json::Value,output:&serde_json::Value,probe:&serde
  let contract=SecurityResultContract{version:"weft.security.result-contract/0.1.0".into(),encoding:"weft.security.cells/0.1.0".into(),columns:vec![SecurityResultColumn{position:1,output_name:probe["outputName"].as_str().ok_or_else(refused)?.into(),source_fields:vec![field],outcomes}]};
  let contract_json=serde_json::to_string(&contract).map_err(|_|refused())?;let hash=weft_core::json::sha256(contract_json.as_bytes());
  let batch=serde_json::json!({"version":"weft.security.cells/0.1.0","resultContractSha256":hash,"rows":probe["rows"]});
- weft_core::security_mapping_transport::inspect_security_mapping_result_cells(&input.to_string(),&contract,&contract_json,&hash,&batch.to_string())
+ if let (Some(cut),Some(rows))=(object.get("factCut"),object.get("scopedFacts")) {
+  weft_core::security_mapping_transport::inspect_security_mapping_result_facts(&input.to_string(),&contract,&contract_json,&hash,&batch.to_string(),&cut.to_string(),&rows.to_string())
+ } else {
+  weft_core::security_mapping_transport::inspect_security_mapping_result_cells(&input.to_string(),&contract,&contract_json,&hash,&batch.to_string())
+ }
 }
 fn run() -> Result<()> {
     let mut raw = String::new();
@@ -67,7 +71,7 @@ fn run() -> Result<()> {
         output["simulationDisclosures"] = serde_json::to_value(results.iter().map(|r| &r.disclosure).collect::<Vec<_>>()).map_err(|_| refused())?;
         output["simulationDecisions"] = serde_json::json!(results.iter().map(|r| format!("{:?}", r.decision).to_lowercase()).collect::<Vec<_>>());
     }
-    if let Some(probe)=object.get("resultProbe") { inspect_probe(input,&output,probe)?;output["resultCellInspectionPassed"]=serde_json::json!(true); }
+    if let Some(probe)=object.get("resultProbe") { inspect_probe(input,&output,probe)?;output["resultCellInspectionPassed"]=serde_json::json!(true);if probe.get("factCut").is_some(){output["conditionalFactSelectionPassed"]=serde_json::json!(true);} }
     let encoded = serde_json::to_vec(&output).map_err(|_| refused())?;
     if encoded.len() > 16_000_000 { return Err(refused()); }
     let mut stdout = std::io::stdout().lock();

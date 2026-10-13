@@ -89,6 +89,14 @@ fn prepare(raw: &str) -> Result<Value> {
 /// Pure original-source-bound cell/declaration inspection. This does not admit
 /// backend registration, physical plans, source cuts, selection or release.
 pub fn inspect_security_mapping_result_cells(raw:&str,contract:&crate::security_lowering::SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str)->Result<()> {
+    inspect_result(raw,contract,contract_json,contract_sha256,batch_json,None)
+}
+/// Conditional original-owner selection from declared facts, without native
+/// provenance, population authentication or protected release authority.
+pub fn inspect_security_mapping_result_facts(raw:&str,contract:&crate::security_lowering::SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str,cut_json:&str,rows_json:&str)->Result<()> {
+    inspect_result(raw,contract,contract_json,contract_sha256,batch_json,Some((cut_json,rows_json)))
+}
+fn inspect_result(raw:&str,contract:&crate::security_lowering::SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str,facts:Option<(&str,&str)>)->Result<()> {
     let request=read_request(raw)?;
     let catalog=Catalog::prepare_security(request.modules)?;
     let packet=SecuritySourcePacket::read(&request.policy_json,&request.ontology_json,&catalog)?;
@@ -98,7 +106,10 @@ pub fn inspect_security_mapping_result_cells(raw:&str,contract:&crate::security_
     let query=SecurityResolvedQuery::resolve(&request.sql,&catalog,&plan,request.parameters,request.read_profile)?;
     let profiled=profile.admit_resolved_query(&query,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
     let context=crate::security_backend::SecurityBackendContext::new(&catalog,&plan,&query,&profiled,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
-    context.check_result_cells(contract,contract_json,contract_sha256,batch_json)
+    match facts {
+        Some((cut,rows))=>context.check_simulated_fact_selection(contract,contract_json,contract_sha256,batch_json,cut,rows),
+        None=>context.check_result_cells(contract,contract_json,contract_sha256,batch_json)
+    }
 }
 /// Preserve the separate API and fail-closed ordinary security compile boundary.
 /// Input strings retain original sources; successful output is a mapping input,

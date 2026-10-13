@@ -1557,6 +1557,7 @@
           "publicDeclarations": [
             "const:MAX_REQUEST_BYTES",
             "fn:inspect_security_mapping_result_cells",
+            "fn:inspect_security_mapping_result_facts",
             "fn:prepare_security_mapping_json"
           ],
           "pathReferences": []
