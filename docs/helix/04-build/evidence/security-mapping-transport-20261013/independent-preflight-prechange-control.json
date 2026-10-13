@@ -1,0 +1,32 @@
+{
+  "binary": "/private/tmp/weft-042-release-target-a/debug/weft-security-mapping",
+  "binarySha256": "a0ad3e1902147d90a6787c4e1558bb4bd84dc70bed7fa665fed9051ab92324c5",
+  "controls": [
+    {
+      "repetitions": 1,
+      "requestBytes": 75684,
+      "substitutedParameterBytes": 65536,
+      "exitCode": 1,
+      "status": "prepared",
+      "responseBytes": 72863,
+      "diagnostics": null
+    },
+    {
+      "repetitions": 300,
+      "requestBytes": 81664,
+      "substitutedParameterBytes": 19660800,
+      "exitCode": 1,
+      "status": "refused",
+      "responseBytes": 234,
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-QUERY-PROFILE",
+          "message": "Security query profile admission refused",
+          "phase": "model",
+          "severity": "error"
+        }
+      ]
+    }
+  ],
+  "scope": "Bounded direct no-database process probe. RSS, when available, is one native process observation, not a resource theorem. Source correspondence requires rebuild/source pins."
+}

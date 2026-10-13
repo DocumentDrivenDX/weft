@@ -1,0 +1,285 @@
+{
+  "scope": "Independent read-only review and bounded actual CLI controls; no database, native authority, profile authenticity, total heap or CPU theorem.",
+  "targetedCoreTest": {
+    "command": "cargo test -p weft-core security_mapping_transport -- --nocapture",
+    "exitCode": 0,
+    "passed": 6
+  },
+  "executableSha256": "e0faf5a47f33996fc176dac54ebb9d150c7d5c2306fbb2f31fcfbd45ac980b28",
+  "sourceDigests": {
+    "crates/weft-core/src/security_mapping_transport.rs": "6c2187586d24578cca216c86156eb3dd830f8e44ce41be015c44fc4a1925fbc0",
+    "crates/weft-core/src/security_query_profile.rs": "6c360bf2c83c61d06245c07ad771f7de580b801f81f058cff7b6ff179d21f569",
+    "crates/weft-core/src/security_query_uses.rs": "4d5d7c3996a57ba1c6ce0b3ee715a4fc0a6905ef458f35202f94887aa0e8f1fa",
+    "crates/weft-core/src/application_syntax.rs": "0390812f76b9d7d59f278bef0da98af96801e2c8a3ad4824a1722b2f73ac31c7",
+    "crates/weft-core/src/application_resolve.rs": "5c272ef21eadf10a2192095e03b82442b74deb81935e4a016f9a632043c48be1",
+    "crates/weft-core/src/application_scope.rs": "7d0772f70271c96a395652c19230d38afc9a7c71e4a47545e8d5f574d7727d6b",
+    "crates/weft-core/src/json.rs": "f29336c58ced205722e32f2ba18f535cf8e46c1638fc61bf40d9860a435d7e75",
+    "crates/weft-core/src/lib.rs": "2b43b46410c2a3bdc8daee9ce995050297e868c0a4bad76e2f23aa075cd8c741",
+    "crates/weft-runtime/src/lib.rs": "5de0d4eb86b4cc72d33aa7684327c052f0b987eb88fe8584a238093ab5e4b193",
+    "crates/weft-runtime/src/security_mapping_cli.rs": "d81af3f83522077899072c21be1fd429ebab7e871ca37eb343bb4bb177f2240d",
+    "crates/weft-runtime/Cargo.toml": "c62b6dabc33ea919a8520a0c28a0cd07956b3dd840f03aff7064d2978b5afdd3",
+    "crates/weft-python/src/lib.rs": "fb06c8485274a8eeb7700a802fc9adf12df76a97e2563397cfc20b6af9f025c3",
+    "crates/weft-wasm/src/lib.rs": "c4b7918425b7f3c7c95bc199d901c6c3d823f88156250b6ffefdbd214ddec7d5",
+    "docs/helix/02-design/contracts/security-mapping-request-v0.1.schema.json": "fde090ebfdb09b5997970f48b74c7df24cb6dd1c6504185ee85a35b716fdd20c",
+    "scripts/security/mapping-transport-fixture.py": "0ed29c64d7dee9e3a9e884cf29ee67b2da298ab6b98ccaec29ab679e2caf3afc",
+    "scripts/security/check-mapping-transports.py": "c6cee69d617ca8f635e18e1a6e0b2cdfc1f81fb6d34b6b98996eeae4f1d4e3fa"
+  },
+  "controls": [
+    {
+      "name": "exact-integer-9007199254740993",
+      "requestBytes": 10157,
+      "responseBytes": 8165,
+      "exitCode": 0,
+      "status": "prepared",
+      "diagnostics": null
+    },
+    {
+      "name": "exact-integer-9223372036854775807",
+      "requestBytes": 10160,
+      "responseBytes": 8168,
+      "exitCode": 0,
+      "status": "prepared",
+      "diagnostics": null
+    },
+    {
+      "name": "exact-integer-minus9223372036854775808",
+      "requestBytes": 10161,
+      "responseBytes": 8169,
+      "exitCode": 0,
+      "status": "prepared",
+      "diagnostics": null
+    },
+    {
+      "name": "unsupported-integer-9223372036854775808",
+      "requestBytes": 10160,
+      "responseBytes": 259,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-NUMERIC-DOMAIN",
+          "message": "Integer literal exceeds selected domain",
+          "phase": "type",
+          "severity": "error",
+          "sourceSpan": {
+            "end": 49,
+            "start": 48
+          }
+        }
+      ]
+    },
+    {
+      "name": "unsupported-integer-minus9223372036854775809",
+      "requestBytes": 10161,
+      "responseBytes": 259,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-NUMERIC-DOMAIN",
+          "message": "Integer literal exceeds selected domain",
+          "phase": "type",
+          "severity": "error",
+          "sourceSpan": {
+            "end": 49,
+            "start": 48
+          }
+        }
+      ]
+    },
+    {
+      "name": "unsupported-integer-100e0",
+      "requestBytes": 10146,
+      "responseBytes": 275,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-PARAMETER",
+          "message": "Source parameter value violates the exact lexical grammar",
+          "phase": "resolve",
+          "severity": "error",
+          "sourceSpan": {
+            "end": 49,
+            "start": 48
+          }
+        }
+      ]
+    },
+    {
+      "name": "nonstring-carrier-0",
+      "requestBytes": 10162,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "nonstring-carrier-1",
+      "requestBytes": 10197,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "nonstring-carrier-2",
+      "requestBytes": 10150,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "nonstring-carrier-3",
+      "requestBytes": 10150,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "escaped-string",
+      "requestBytes": 10156,
+      "responseBytes": 7335,
+      "exitCode": 0,
+      "status": "prepared",
+      "diagnostics": null
+    },
+    {
+      "name": "casefold-collision",
+      "requestBytes": 141255,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "enum-object-refused",
+      "requestBytes": 75691,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "profile-enum-object-refused",
+      "requestBytes": 75770,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "profile-version-refused",
+      "requestBytes": 75763,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "parameter-action-refused",
+      "requestBytes": 75708,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "nested-duplicate-parameter",
+      "requestBytes": 75739,
+      "responseBytes": 232,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-TRANSPORT",
+          "message": "Security mapping transport refused",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    },
+    {
+      "name": "amplification-fixed",
+      "requestBytes": 81664,
+      "responseBytes": 265,
+      "exitCode": 0,
+      "status": "refused",
+      "diagnostics": [
+        {
+          "code": "WFT-SECURITY-MAPPING-PARAMETER-LIMIT",
+          "message": "Selected parameter payload exceeds mapping preparation budget",
+          "phase": "input",
+          "severity": "error"
+        }
+      ]
+    }
+  ],
+  "previousProbe": "/private/tmp/weft-mapping-transport-astra-_ix2q3nd/amplification.json",
+  "priorProbeLimitation": "time -l wrapper returned exit1 because sandbox sysctl denied; no RSS conclusion"
+}

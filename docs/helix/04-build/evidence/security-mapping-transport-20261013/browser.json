@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "chromium": "153.0.8010.12",
+  "bun": "1.4.2",
+  "sourceDigests": {
+    "/private/tmp/weft-security-main-integration/scripts/security/check-mapping-browser.ts": "f7de8813c9db91862057b6e5659d0636f6fc957cbd44f5f7e77881c7bb8de152",
+    "/private/tmp/weft-security-mapping-request.json": "c30baacc48fc4e8e37406d1813d6f89d30ca9bacad7043fb1267d731ec9805f4",
+    "/private/tmp/weft-security-mapping-native-20261013/receipt.json": "6be218b5005ace58d4bc305ed62e1e1cdbfde262d1e250e2a6c2f7bf04b290ed",
+    "/private/tmp/weft-security-mapping-native-20261013/handoff.json": "5bf00a9672dea4871b35999b1ee3af4d1123dd40adb8db32f51c6344c9b32fc6",
+    "/private/tmp/weft-security-mapping-browser-20261013/weft_wasm.js": "27f71b54116797a88312c39d2e8f61d0e054cd4d55e581f3f7ed2892bd7e97d5",
+    "/private/tmp/weft-security-mapping-browser-20261013/weft_wasm_bg.wasm": "c0592d3fad892cf5219a86dadf02c3ed486972ba4ed37f453f10bea88b308a7f"
+  },
+  "observations": [
+    {
+      "id": "five-operators",
+      "status": "prepared",
+      "responseSha256": "dfe6fcffb104a89bacd8b87500f26bc6c702c7bc988c43053e159628f02f515a"
+    },
+    {
+      "id": "bindingJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "policyJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "ontologyJson-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "backendId-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "backendVersion-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "targetProfile-drift",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "originalAction-forgery",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7"
+    },
+    {
+      "id": "handoff-forgery",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7"
+    },
+    {
+      "id": "numeric-carrier",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7"
+    },
+    {
+      "id": "missing-bindings",
+      "status": "refused",
+      "responseSha256": "49182dcb6b7557e0e3403ebf5def9baf3826f28bb769a88ebac34ddf404e36c0"
+    },
+    {
+      "id": "profile-bytes-not-authentication",
+      "status": "prepared",
+      "responseSha256": "655dab6fad8a09f130f78bcba273eb4dffb9e931512fd0c0f7c63a41d055945d"
+    },
+    {
+      "id": "repeated-parameter-budget",
+      "status": "refused",
+      "responseSha256": "8dbfc530e74fdbb0b9dbfe25c7dc697ae59c0202ce48512b26745bb5cc2c0a59"
+    },
+    {
+      "id": "complete-entity-not-admitted",
+      "status": "refused",
+      "responseSha256": "c81ab2d33c20e8cf8261641cdbbdfa49315f938459ee496cb190fa0722257aa7"
+    },
+    {
+      "id": "relationship-model-baseline",
+      "status": "prepared",
+      "responseSha256": "b2708f7e4b850c7c0c167d912f05afa2789bdd16c27b171cefd056d18c557bf4"
+    },
+    {
+      "id": "relationship-shorthand-not-admitted",
+      "status": "refused",
+      "responseSha256": "0e0a061683040f0723ab7b9179a3ff7cbda14a2c0285dc26dcc3d89c623c102b"
+    }
+  ],
+  "externalRequests": 0,
+  "baselineCorrespondence": "byte-identical to imported native Python/CLI",
+  "allResponseCorrespondence": "all16 response hashes identical",
+  "scope": "Actual Chromium WASM logical mapping preparation with opaque fixture sources. No native SQL/issuer/profile/caller/guard/release admission."
+}

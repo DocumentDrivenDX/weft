@@ -16,6 +16,13 @@ changed=copy.deepcopy(request);changed['parameters']={'p':{'family':'integer','v
 changed=copy.deepcopy(request);profile=json.loads(changed['queryProfileJson']);profile['bindings']=[];changed['queryProfileJson']=json.dumps(profile);cases.append(('missing-bindings',changed,'refused'))
 changed=copy.deepcopy(request);changed['queryProfileJson']+=' ';cases.append(('profile-bytes-not-authentication',changed,'prepared'))
 changed=copy.deepcopy(request);changed['parameters']={'p':{'family':'string','value':'x'*65536}};changed['sql']='SELECT r.resourceId FROM Resource r WHERE '+' AND '.join(['r.resourceId=:p']*300);cases.append(('repeated-parameter-budget',changed,'refused'))
+changed=copy.deepcopy(request);changed['readProfile']={'version':'weft-truss-entity-read/0.1.0','subset':'complete-entity'};changed['sql']='SELECT r.* FROM Resource r';cases.append(('complete-entity-not-admitted',changed,'refused'))
+related=copy.deepcopy(request);document=json.loads(related['modules'][0]['documentJson'])
+document['modules'][0]['relationships']=[{'id':'resource-peer','name':'peer','source':[{'module':'m','element':'Resource'}],'target':[{'module':'m','element':'Resource','key':'pk'}],'sourceMultiplicity':{'min':0,'max':'*'},'targetMultiplicity':{'min':0,'max':'*'},'targetLifecycle':'independent','directed':True}]
+model=json.dumps(document,separators=(',',':'),ensure_ascii=False);related['modules'][0]['documentJson']=model;related['modules'][0]['pin']['sha256']=hashlib.sha256(model.encode()).hexdigest()
+profile=json.loads(related['queryProfileJson']);profile['modelPins']=[related['modules'][0]['pin']];related['queryProfileJson']=json.dumps(profile,separators=(',',':'),ensure_ascii=False)
+related['sql']='SELECT r.resourceId FROM Resource r';related['parameters']={};cases.append(('relationship-model-baseline',copy.deepcopy(related),'prepared'))
+related['sql']='SELECT r.resourceId FROM Resource r WHERE r.peer=:p';related['parameters']={'p':{'family':'string','value':'r1'}};cases.append(('relationship-shorthand-not-admitted',related,'refused'))
 observations=[]
 for identity,value,status in cases:
  raw=json.dumps(value,separators=(',',':'),ensure_ascii=False)
@@ -29,8 +36,11 @@ for identity,value,status in cases:
   assert h['profile']['sha256']==hashlib.sha256(value['queryProfileJson'].encode()).hexdigest()
   actual={(u['scan'],u['operator'],u['originalAction']) for u in h['uses']}
   expected={('s0',op,'query-original') for op in ['predicate','order','group','join','aggregate']}|{('s1','join','query-original')}
-  assert actual==expected and len(h['uses'])==6
+  if identity=='relationship-model-baseline':assert actual==set()
+  else:assert actual==expected and len(h['uses'])==6
  observations.append({'id':identity,'status':status,'responseSha256':hashlib.sha256(native.encode()).hexdigest(),'correspondence':'byte-identical'})
+ if identity=='complete-entity-not-admitted':assert response['diagnostics'][0]['code']=='WFT-SECURITY-MAPPING-TRANSPORT'
+ if identity=='relationship-shorthand-not-admitted':assert response['diagnostics'][0]['code']=='WFT-SECURITY-QUERY-UNSUPPORTED'
  if identity=='five-operators':(output.parent/'handoff.json').write_text(native+'\n')
 receipt={'status':'passed','observations':observations,'python':sys.version.split()[0],
  'binaries':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [module_dir/'weft.so',cli]},

@@ -1,0 +1,322 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling pyo3-macros-backend v0.27.1
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Column`, `Descriptor`, `LiteralKind`, `Literal`, `Name`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+9 |     syntax::{Column, Literal, LiteralKind, Name},
+  |              ^^^^^^  ^^^^^^^  ^^^^^^^^^^^  ^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:834:8
+    |
+834 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 8 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-postgresql)
+   Compiling pyo3-macros v0.27.1
+warning: unreachable pattern
+   --> crates/weft-postgresql/src/truss_runtime.rs:941:13
+    |
+941 |             _ => Err(unsupported("Runtime predicate requires typed equality")),
+    |             ^ no value can reach this
+    |
+note: multiple earlier patterns match some of the same values
+   --> crates/weft-postgresql/src/truss_runtime.rs:941:13
+    |
+898 |               app::Predicate::Equal { left, right } => {
+    |               ------------------------------------- matches some of the same values
+...
+903 |               app::Predicate::LexicographicGreater { columns, values } => {
+    |               -------------------------------------------------------- matches some of the same values
+...
+936 | /             app::Predicate::HasRelated {
+937 | |                 scan,
+938 | |                 relationship,
+939 | |                 key,
+940 | |             } => self.related(scan, relationship, Some(key), None),
+    | |_____________- matches some of the same values
+941 |               _ => Err(unsupported("Runtime predicate requires typed equality")),
+    |               ^ collectively making this unreachable
+    = note: `#[warn(unreachable_patterns)]` on by default
+
+   Compiling pyo3 v0.27.1
+   Compiling weft-runtime v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-runtime)
+warning: `weft-postgresql` (lib) generated 1 warning
+   Compiling weft-python v0.1.0 (/private/tmp/weft-security-main-integration/crates/weft-python)
+error: linking with `cc` failed: exit status: 1
+  |
+  = note:  "cc" "-Wl,-exported_symbols_list" "-Wl,/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/rustcemmNxP/list" "/var/folders/z0/kv_wlyps77b_txh08w55z99w0000gn/T/rustcemmNxP/symbols.o" "<45 object files omitted>" "/private/tmp/weft-042-release-target-a/debug/deps/{libweft_runtime-d7f75250ce906b49,libweft_postgresql-10c804591f43a030,libbase64-ac0e04d584580346,libweft_core-878e0c455b4e67b1,libjsonschema-37779292157c2d5e,libregex-37640cd2f0c85f4c,libjsonschema_regex-c6fdbdc46da96166,libfancy_regex-56bea882d8a8c4c7,libbit_set-aa588ff8ddc45c92,libbit_vec-26f7f43dedcb006c,libregex_automata-78b86676292d3126,libaho_corasick-abce3b0569279eea,libregex_syntax-ec5d8e461442cdcb,libuuid_simd-d3ea0c1dfde264d1,liboutref-d1c5643359069fa2,libvsimd-41ec75b71716b67f,libunicode_general_category-a8a676320a21f8ef,libemail_address-7fa56b2e4d59b910,libdata_encoding-80b683a8a3d2109a,libstrum-b3ef2932acc92279,libreferencing-cdaf3d6b0dc12bdb,libmicromap-70a9a5c4f5721ada,libpercent_encoding-87187a00e96964f1,libparking_lot-50426a71b1a9eb14,libparking_lot_core-f2aa3024d4c857ae,libsmallvec-c2d2b25411c6b58b,liblock_api-9dee836f1c190701,libscopeguard-c5e2066aa5b2edb6,libhashbrown-5839e30d7bfc9839,libequivalent-aa10dc46ff144348,libfoldhash-4dbe159f14726646,liballocator_api2-d2d40edbc9708475,libfluent_uri-755402e4cee2cb5c,libborrow_or_share-f5c7617be70b522e,libref_cast-dff1250ca1b5472a,libjsonschema_value-ee6a9848eedd7b54,libbytecount-c2cf19adf2dc8447,libzmij-cbbb58751470697b,libfraction-5d5b508419ab6f34,libnum-dac825416672abce,libnum_iter-6e503c5de746687e,libnum_rational-81c26220854812b3,libnum_complex-2812fbdf9ec2e759,libnum_cmp-4f9acdbf45177870,libahash-d83ac031f748bcc3,libzerocopy-3af37a93a10f644a,libsqlparser-ec9896215d99b846,liblog-627b2b3b7cdd0c0d,libsha2-aa310adbb0902281,libcfg_if-6ac0a837eec0a7ff,libdigest-ab7cd0102b7b8a3a,libblock_buffer-cadc0d37cb68bdf7,libcrypto_common-c923b9fe7318f434,libgeneric_array-dc82406d6f83ec61,libtypenum-76f7219993c1886d,libnum_bigint-e2c8475e10d3a8bc,libnum_integer-467116017ea59d56,libnum_traits-5b3727eb05374f25,libserde_json-726cd9772bc9d5bc,libmemchr-d5183004c2b283c0,libryu-153d4eb10237dace,libitoa-54a9b745856cf7b0,libserde-8cd2290b40274082,libserde_core-39ed5d2bdf565c18,libpyo3-76dbef8429ac6f98,libonce_cell-0e8e5c006d4ee06f,libpyo3_ffi-3f417eaea47b4f44,liblibc-818174e9c8275163,libmemoffset-49028bdffce14780,libunindent-a856dee5d28a4822}.rlib" "<sysroot>/lib/rustlib/aarch64-apple-darwin/lib/{libstd-*,libpanic_unwind-*,libobject-*,libmemchr-*,libaddr2line-*,libgimli-*,librustc_demangle-*,libstd_detect-*,libhashbrown-*,librustc_std_workspace_alloc-*,libminiz_oxide-*,libadler2-*,libunwind-*,libcfg_if-*,liblibc-*,librustc_std_workspace_core-*,liballoc-*,libcore-*,libcompiler_builtins-*}.rlib" "-liconv" "-lSystem" "-lc" "-lm" "-arch" "arm64" "-mmacosx-version-min=11.0.0" "-o" "/private/tmp/weft-042-release-target-a/debug/deps/libweft.dylib" "-Wl,-dead_strip" "-dynamiclib" "-nodefaultlibs"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note: Undefined symbols for architecture arm64:
+            "_PyBytes_AsString", referenced from:
+                pyo3::types::bytes::_$LT$impl$u20$pyo3..instance..Borrowed$LT$pyo3..types..bytes..PyBytes$GT$$GT$::as_bytes::h4de5336aff5462a1 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyBytes_Size", referenced from:
+                pyo3::types::bytes::_$LT$impl$u20$pyo3..instance..Borrowed$LT$pyo3..types..bytes..PyBytes$GT$$GT$::as_bytes::h4de5336aff5462a1 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyCMethod_New", referenced from:
+                pyo3_ffi::methodobject::PyCFunction_NewEx::h717b01804a4b1747 in libpyo3-76dbef8429ac6f98.rlib[13](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.10.rcgu.o)
+            "_PyDict_Next", referenced from:
+                _$LT$pyo3..types..dict..borrowed_iter..BorrowedDictIter$u20$as$u20$core..iter..traits..iterator..Iterator$GT$::next::h00859130d841d194 in weft.duxp8dmk05p5xsi5snqqnhcdj.0k2j8ek.rcgu.o
+            "_PyDict_Size", referenced from:
+                pyo3::types::dict::dict_len::h373dcbbdb05d731b in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_Fetch", referenced from:
+                pyo3::err::err_state::PyErrStateNormalized::take::hdcb9fd4c6be12503 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+                pyo3::err::err_state::lazy_into_normalized_ffi_tuple::h8060bcbc51468098 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_GivenExceptionMatches", referenced from:
+                pyo3::err::PyErr::is_instance::haa79621d767057bb in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyErr_NewExceptionWithDoc", referenced from:
+                pyo3::err::PyErr::new_type::h74c6ba3719984c98 in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyErr_NormalizeException", referenced from:
+                pyo3::err::err_state::PyErrStateNormalized::take::hdcb9fd4c6be12503 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+                pyo3::err::err_state::lazy_into_normalized_ffi_tuple::h8060bcbc51468098 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_Print", referenced from:
+                pyo3::err::panic_after_error::hee7f6d1a309a314f in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyErr_PrintEx", referenced from:
+                pyo3::err::PyErr::print_panic_and_unwind::h8374c2f3febba9eb in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyErr_Restore", referenced from:
+                pyo3::err::err_state::PyErrStateInner::restore::h05b7dbb71fc5a653 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_SetObject", referenced from:
+                pyo3::err::err_state::raise_lazy::h9d6eef2eb206e0d6 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_SetString", referenced from:
+                pyo3::err::err_state::raise_lazy::h9d6eef2eb206e0d6 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyErr_WriteUnraisable", referenced from:
+                pyo3::err::PyErr::write_unraisable::h5b2e12147d5b70d1 in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyEval_RestoreThread", referenced from:
+                _$LT$pyo3..internal..state..SuspendAttach$u20$as$u20$core..ops..drop..Drop$GT$::drop::h3447ebff7c33d7e3 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyEval_SaveThread", referenced from:
+                pyo3::internal::state::SuspendAttach::new::hbe43bd1915844e95 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+                pyo3::interpreter_lifecycle::initialize::_$u7b$$u7b$closure$u7d$$u7d$::h68048e8f522e7e16 in libpyo3-76dbef8429ac6f98.rlib[11](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.08.rcgu.o)
+            "_PyExc_AttributeError", referenced from:
+                _$LT$pyo3..exceptions..PyAttributeError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h80f3dbdc44e73b38 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+                _$LT$pyo3..exceptions..PyAttributeError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h80f3dbdc44e73b38 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyExc_BaseException", referenced from:
+                _$LT$pyo3..exceptions..PyBaseException$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h3ba625878d3c5b5b in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+                _$LT$pyo3..exceptions..PyBaseException$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h3ba625878d3c5b5b in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyExc_ImportError", referenced from:
+                _$LT$pyo3..exceptions..PyImportError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::hcf7ac033de39c9d1 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+                _$LT$pyo3..exceptions..PyImportError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::hcf7ac033de39c9d1 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyExc_TypeError", referenced from:
+                _$LT$pyo3..exceptions..PyTypeError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h688593b7db5c6da5 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+                _$LT$pyo3..exceptions..PyTypeError$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h688593b7db5c6da5 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyException_GetCause", referenced from:
+                pyo3::err::PyErr::cause::h13147e5044b019b5 in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyException_GetTraceback", referenced from:
+                pyo3::err::err_state::PyErrStateNormalized::new::h056c9727dc374f29 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyException_SetCause", referenced from:
+                pyo3::err::PyErr::set_cause::h1eeb01085231ba23 in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyException_SetTraceback", referenced from:
+                pyo3::err::PyErr::into_value::h52f3eb1c66ac94ee in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyGILState_Ensure", referenced from:
+                pyo3_ffi::pystate::PyGILState_Ensure::h1f4dd28ac08e53bd in libpyo3_ffi-3f417eaea47b4f44.rlib[3](pyo3_ffi-3f417eaea47b4f44.pyo3_ffi.756c9d29e5bc9400-cgu.0.rcgu.o)
+            "_PyGILState_Release", referenced from:
+                _$LT$pyo3..internal..state..AttachGuard$u20$as$u20$core..ops..drop..Drop$GT$::drop::hef7dd2ad089e604b in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyImport_Import", referenced from:
+                pyo3::types::module::PyModule::import::h8c42a5233400853c in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyInterpreterState_Get", referenced from:
+                pyo3::impl_::pymodule::ModuleDef::make_module::h7e70451c1e03c4a1 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyInterpreterState_GetID", referenced from:
+                pyo3::impl_::pymodule::ModuleDef::make_module::h7e70451c1e03c4a1 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyList_Append", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..list..PyList$GT$$u20$as$u20$pyo3..types..list..PyListMethods$GT$::append::inner::hcdb6374bc84a8249 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyList_New", referenced from:
+                pyo3::types::list::PyList::empty::h0626bcf9d8c4faa5 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyList_Type", referenced from:
+                _$LT$pyo3..types..list..PyList$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h9865c7c068b45d7c in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyModule_Create2", referenced from:
+                pyo3_ffi::modsupport::PyModule_Create::h1e5492f892630e18 in libpyo3-76dbef8429ac6f98.rlib[9](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.06.rcgu.o)
+            "_PyModule_GetNameObject", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..module..PyModule$GT$$u20$as$u20$pyo3..types..module..PyModuleMethods$GT$::name::h45ccf1f019224808 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyObject_CallObject", referenced from:
+                pyo3_ffi::compat::py_3_9::PyObject_CallNoArgs::hccd57c18fcc8065f in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyObject_GetAttr", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..any..PyAny$GT$$u20$as$u20$pyo3..types..any..PyAnyMethods$GT$::getattr::inner::h0551c95e99971ffb in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyObject_Repr", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..any..PyAny$GT$$u20$as$u20$pyo3..types..any..PyAnyMethods$GT$::repr::hc9f364b83696fb36 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyObject_SetAttr", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..any..PyAny$GT$$u20$as$u20$pyo3..types..any..PyAnyMethods$GT$::setattr::inner::h960adb043f429549 in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyObject_Str", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..any..PyAny$GT$$u20$as$u20$pyo3..types..any..PyAnyMethods$GT$::str::h887926eea51621bc in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyTraceBack_Print", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..traceback..PyTraceback$GT$$u20$as$u20$pyo3..types..traceback..PyTracebackMethods$GT$::format::h55da1cce2fa3b535 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyTuple_GetItem", referenced from:
+                pyo3::types::tuple::_$LT$impl$u20$pyo3..instance..Borrowed$LT$pyo3..types..tuple..PyTuple$GT$$GT$::get_borrowed_item::h91fd6946d0ff1415 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyTuple_New", referenced from:
+                pyo3::types::tuple::array_into_tuple::h0d0d57afbcee9d2a in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyTuple_SetItem", referenced from:
+                pyo3::types::tuple::array_into_tuple::h0d0d57afbcee9d2a in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyTuple_Size", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..tuple..PyTuple$GT$$u20$as$u20$pyo3..types..tuple..PyTupleMethods$GT$::len::h28a322ed68d12872 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyTuple_Type", referenced from:
+                _$LT$pyo3..types..tuple..PyTuple$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h1552de1ee9bbb140 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+            "_PyType_GetFlags", referenced from:
+                pyo3_ffi::object::PyType_HasFeature::hc6b0e48eea3c8963 in libpyo3-76dbef8429ac6f98.rlib[8](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.05.rcgu.o)
+            "_PyType_Type", referenced from:
+                _$LT$pyo3..types..typeobject..PyType$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h31689fd5930cbd4f in libpyo3-76dbef8429ac6f98.rlib[14](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.11.rcgu.o)
+            "_PyUnicode_AsEncodedString", referenced from:
+                pyo3::types::string::_$LT$impl$u20$pyo3..instance..Borrowed$LT$pyo3..types..string..PyString$GT$$GT$::to_string_lossy::h8dc4bc80f443d25b in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyUnicode_AsUTF8String", referenced from:
+                _$LT$pyo3..instance..Bound$LT$pyo3..types..string..PyString$GT$$u20$as$u20$pyo3..types..string..PyStringMethods$GT$::encode_utf8::h5ae4505e1dea26f6 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+            "_PyUnicode_FromStringAndSize", referenced from:
+                pyo3::types::string::PyString::new::h2a13c80813c53f19 in libpyo3-76dbef8429ac6f98.rlib[7](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.04.rcgu.o)
+                pyo3::types::string::PyString::intern::hb2f1e248acd152d8 in libpyo3-76dbef8429ac6f98.rlib[7](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.04.rcgu.o)
+            "_PyUnicode_InternInPlace", referenced from:
+                pyo3::types::string::PyString::intern::hb2f1e248acd152d8 in libpyo3-76dbef8429ac6f98.rlib[7](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.04.rcgu.o)
+            "_PyUnicode_Type", referenced from:
+                _$LT$pyo3..types..string..PyString$u20$as$u20$pyo3..type_object..PyTypeInfo$GT$::type_object_raw::_$u7b$$u7b$closure$u7d$$u7d$::h488084cb32984508 in libpyo3-76dbef8429ac6f98.rlib[7](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.04.rcgu.o)
+            "_Py_DecRef", referenced from:
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h178c1822b617ee48 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h1b174b091ca872b8 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h200ab686f68cdadd in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h3f89b12c2b339406 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h43984df4a8eeb2d0 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h77948068ed965c5d in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                _$LT$pyo3..instance..Bound$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$::drop::h9e8ff51993312736 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                ...
+            "_Py_IncRef", referenced from:
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h1b3d7fbbae166aae in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h1ec05d4155b8cb9c in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h31e0e70128432dae in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h48e2653b27a4586d in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h6ae05b1ca53a97c8 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::h8a33ee86652bfb51 in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                pyo3::instance::Py$LT$T$GT$::clone_ref::hecf94a725768c2ee in libpyo3-76dbef8429ac6f98.rlib[3](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.00.rcgu.o)
+                ...
+            "_Py_InitializeEx", referenced from:
+                pyo3::interpreter_lifecycle::initialize::_$u7b$$u7b$closure$u7d$$u7d$::h68048e8f522e7e16 in libpyo3-76dbef8429ac6f98.rlib[11](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.08.rcgu.o)
+            "_Py_IsInitialized", referenced from:
+                pyo3::internal::state::AttachGuard::try_attach::hde67dac0fdcf8aa3 in libpyo3-76dbef8429ac6f98.rlib[6](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.03.rcgu.o)
+                pyo3::interpreter_lifecycle::initialize::_$u7b$$u7b$closure$u7d$$u7d$::h68048e8f522e7e16 in libpyo3-76dbef8429ac6f98.rlib[11](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.08.rcgu.o)
+                pyo3::interpreter_lifecycle::ensure_initialized::_$u7b$$u7b$closure$u7d$$u7d$::h5255644a2f0f23b8 in libpyo3-76dbef8429ac6f98.rlib[11](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.08.rcgu.o)
+            "__Py_NoneStruct", referenced from:
+                pyo3_ffi::object::Py_None::h6f00deb103945bb3 in libpyo3-76dbef8429ac6f98.rlib[8](pyo3-76dbef8429ac6f98.pyo3.1b0f4085fc864ebc-cgu.05.rcgu.o)
+          ld: symbol(s) not found for architecture arm64
+          clang: error: linker command failed with exit code 1 (use -v to see invocation)
+          
+
+error: could not compile `weft-python` (lib) due to 1 previous error
