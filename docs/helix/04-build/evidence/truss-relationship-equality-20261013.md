@@ -1,0 +1,5 @@
+# Truss consumer relationship equality — 2026-10-13
+
+The original consumer forward equality query refused WFT-NAME-MISSING because it attempted scalar member resolution. The shared application resolver now maps qualified single-column WHERE equality with one literal/parameter to existing HasRelated only when there are no authored member matches and the direction-specific target key has one component. Scalar fields keep existing behavior; composite keys require explicit tuples. This is additive frontend behavior with no IR/transport schema change.
+
+The Python extension built successfully. On Truss runtime0.32-candidate / DocumentDrivenDX pgserver-pg18 18.6.1 / PostgreSQL18.6 / psycopg3.3.6, unchanged original forward, inverse and absent-key queries passed. Two basic Truss native tests passed17.018s, including existing scalar equality, composite shorthand refusal, explicit composite HAS_RELATED, read-only related reads and unlink. Module boundaries passed11packages. Extension SHA256: `154674f561a04f362071988e1c1d4a0eb14343c09e0e53f8d030b63f8fecaebe`. Astra Ultra reviewed the plan and implementation. No replica or full consumer-corpus qualification is claimed.
