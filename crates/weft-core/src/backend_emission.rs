@@ -69,6 +69,9 @@ pub(crate) fn validate(
         let admitted=assessments.iter().any(|a| (a.id=="type.integer.unbounded" || (matches!(plan,Plan::V03(_)) && (a.id=="arithmetic.exact.integer" || a.id=="aggregate.havingCountDistinctGreater"))) && a.status!=crate::backend::Status::Unsupported);
         if unbounded && !admitted { return Err(fail("Unbounded integer parameter requires explicit capability admission")); }
         if p.logical_type.family == Family::Decimal && p.logical_type.facets.get("precision").is_none() {
+            if p.logical_type.facets==serde_json::json!({}) && assessments.iter().any(|a|a.id=="type.decimal.unbounded"&&a.status!=crate::backend::Status::Unsupported) {
+                crate::exact::validate_mathematical_decimal(&p.value)?;continue;
+            }
             let admitted = matches!(plan, Plan::V03(_)) && assessments.iter().any(|a| a.id == "arithmetic.exact.decimal" && a.status != crate::backend::Status::Unsupported);
             let scale = p.logical_type.facets["scale"].as_u64().ok_or_else(|| fail("Arithmetic decimal parameter requires its exact lexical scale"))?;
             if !admitted || p.logical_type.facets != serde_json::json!({"scale":scale}) {

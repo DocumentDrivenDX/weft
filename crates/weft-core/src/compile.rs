@@ -71,27 +71,32 @@ pub struct Compiler {
 }
 impl Compiler {
     pub fn compile_json(&self, raw: &str) -> String {
-        self.compile_json_internal(raw, None, None)
+        self.compile_json_internal(raw, None, None, false)
     }
     pub fn compile_json_with_factory(
         &self,
         raw: &str,
         factory: &mut RegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, Some(factory), None)
+        self.compile_json_internal(raw, Some(factory), None, false)
+    }
+    /// Only a trusted embedding selects this additional numeric interpretation.
+    pub fn compile_json_with_exact_numbers_factory(&self,raw:&str,factory:&mut RegistryFactory<'_>)->String{
+        self.compile_json_internal(raw,Some(factory),None,true)
     }
     pub fn compile_json_with_security_factory(
         &self,
         raw: &str,
         factory: &mut crate::security_backend::SecurityRegistryFactory<'_>,
     ) -> String {
-        self.compile_json_internal(raw, None, Some(factory))
+        self.compile_json_internal(raw, None, Some(factory), false)
     }
     fn compile_json_internal(
         &self,
         raw: &str,
         factory: Option<&mut RegistryFactory<'_>>,
         security_factory: Option<&mut crate::security_backend::SecurityRegistryFactory<'_>>,
+        exact_numbers: bool,
     ) -> String {
         let mut version = "weft-compile/0.1.0".to_string();
         let result = (|| -> Result<Value> {
@@ -178,6 +183,8 @@ impl Compiler {
                 .map_err(|code| Diagnostic::new(code, "input", "Invalid supplied binding JSON"))?;
             let catalog = if matches!(req.interface_version.as_str(), "weft-security-compile/0.1.0" | "weft-security-compile/0.2.0" | "weft-compile/0.5.0") {
                 crate::model::Catalog::prepare_security(req.modules)?
+            } else if exact_numbers {
+                crate::model::Catalog::prepare_exact_numbers(req.modules)?
             } else {
                 crate::model::Catalog::prepare(req.modules)?
             };

@@ -1,0 +1,11 @@
+{
+  "backendVersion": "0.2.0",
+  "target": "truss-runtime-pg18.6/0.2",
+  "binding": "truss-runtime-binding/0.2",
+  "review": "Astra Ultra approved",
+  "coreNumericPreparationTestPassed": 1,
+  "installedTrussPublicQueryAndUpgradeTestsPassed": 4,
+  "postgresql": "18.6",
+  "nativeExtensionSha256": "83416d12bedd146db3ca60cca5d55895434a6dc5335dc3c3c1b0544c41cd8c28",
+  "scope": "Exact numeric opt-in, explicit capability admission and original decimal token projections; Candidate"
+}

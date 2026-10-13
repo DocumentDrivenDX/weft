@@ -74,6 +74,7 @@ impl<'a> Scope<'a> {
         let (r, s) = self.record_for_column(c)?;
         let (id, t, _) = self.catalog.field(r, &c.field)?;
         if t.family == Family::Integer && t.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
+        if t.family == Family::Decimal && t.facets == json!({}) { self.caps.insert("type.decimal.unbounded".into()); }
         self.caps.insert(format!(
             "type.{}",
             match t.family {
@@ -107,6 +108,7 @@ impl<'a> Scope<'a> {
             match &d.shape {
                 Shape::Scalar { logical_type } => {
                     if logical_type.family == Family::Integer && logical_type.facets == json!({}) { self.caps.insert("type.integer.unbounded".into()); }
+                    if logical_type.family == Family::Decimal && logical_type.facets == json!({}) { self.caps.insert("type.decimal.unbounded".into()); }
                     self.caps.insert(format!(
                         "type.{}",
                         match logical_type.family {

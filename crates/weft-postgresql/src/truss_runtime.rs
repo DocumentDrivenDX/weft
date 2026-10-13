@@ -14,6 +14,8 @@ use weft_core::{
 };
 pub const PROFILE: &str = "truss-runtime-binding/0.1";
 pub const TARGET: &str = "truss-runtime-pg18.6/0.1";
+pub const NUMERIC_PROFILE:&str="truss-runtime-binding/0.2";
+pub const NUMERIC_TARGET:&str="truss-runtime-pg18.6/0.2";
 const BACKEND: &str = "truss.postgresql.runtime";
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -50,7 +52,13 @@ struct FieldBinding {
     identity: Identity,
     property_id: String,
 }
-pub struct Runtime;
+pub struct Runtime { exact_numbers: bool }
+impl Runtime {
+ fn profile(&self)->&'static str {if self.exact_numbers{NUMERIC_PROFILE}else{PROFILE}}
+ fn target(&self)->&'static str {if self.exact_numbers{NUMERIC_TARGET}else{TARGET}}
+ fn version(&self)->&'static str {if self.exact_numbers{"0.2.0"}else{"0.1.0"}}
+ fn additions(&self)->Vec<String> {let mut v=vec!["value.nativeNull".into()];if self.exact_numbers{v.extend(["type.integer.unbounded".into(),"type.decimal.unbounded".into()]);}v}
+}
 pub struct Mapping {
     binding: Binding,
     original: String,
@@ -91,14 +99,14 @@ fn obligation() -> Obligation {
         failure_code: "WFT-OBLIGATION".into(),
     }
 }
-fn scalar_type(d: &Descriptor) -> Result<&LogicalType> {
+fn scalar_type(d: &Descriptor, exact_numbers:bool) -> Result<&LogicalType> {
     match &d.shape {
         Shape::Scalar { logical_type } => {
             let facets = &logical_type.facets;
             let accepted = match logical_type.family {
                 Family::String | Family::Boolean => facets == &json!({}),
                 Family::Integer => facets == &json!({}),
-                Family::Decimal => false,
+                Family::Decimal => exact_numbers && facets == &json!({}),
             };
             if !accepted
                 || !matches!(
@@ -141,10 +149,10 @@ impl Backend for Runtime {
             dialect_profile: "weft-sql/0.2.0".into(),
             ir_version: "weft-ir/0.2.0".into(),
         }];
-        Ok(Manifest{backend_id:BACKEND.into(),backend_version:"0.1.0".into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:PROFILE.into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:TARGET.into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:"truss-runtime-scalar-query/0.1".into(),publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|Capability{id:(*id).into(),target_profiles:vec![TARGET.into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar string/boolean/mathematical-integer records; equality joins/filters, counts, exact complete records"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec!["No relationship or structured-property lowering; no page-key profile".into()],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
+        Ok(Manifest{backend_id:BACKEND.into(),backend_version:self.version().into(),interface_version:"weft-backend/0.2.0".into(),binding_profile:self.profile().into(),language_profiles:language.clone(),target_profiles:vec![TargetProfile{id:self.target().into(),engine:"postgresql".into(),engine_version:"18.6".into(),session_settings:json!({"server_encoding":"UTF8","search_path":"pg_catalog,pg_temp","read_context":"live"}),storage_layout_revision:if self.exact_numbers{"truss-runtime-scalar-query/0.2".into()}else{"truss-runtime-scalar-query/0.1".into()},publication_revision:"caller-transaction/0.1".into()}],capabilities:["scan","project","filter","innerJoin","equal","and","type.string","type.boolean","type.integer","aggregate","aggregate.count","parameter.named","order.asc","limit","value.presence","value.nativeNull","value.structured","project.entity"].iter().map(|id|(*id).to_owned()).chain(if self.exact_numbers{vec!["type.decimal".into(),"type.integer.unbounded".into(),"type.decimal.unbounded".into()]}else{vec![]}).map(|id|Capability{id:id.clone(),target_profiles:vec![self.target().into()],language_profiles:language.clone(),logical_domain:json!({"subset":"rootless scalar records; exact string/boolean and explicitly admitted mathematical integer/decimal domains; native-domain refusal remains host-owned"}),result_domain:json!({"transport":"exact text and presence envelopes"}),constraints:vec!["No relationship or structured-property lowering; no page-key profile".into()],obligations:vec![obligation()],status:Status::Candidate,evidence:vec![]}).collect(),evidence:vec![]})
     }
     fn validate_binding(&self, c: &Context<'_>) -> Result<Validated<Mapping>> {
-        if c.binding.profile != PROFILE
+        if c.binding.profile != self.profile()
             || weft_core::json::sha256(c.binding.json.as_bytes()) != c.binding.sha256
         {
             return Err(fail("Exact runtime binding pin required"));
@@ -154,10 +162,10 @@ impl Backend for Runtime {
                 .map_err(|_| fail("Runtime binding JSON refused"))?,
         )
         .map_err(|_| fail("Runtime binding shape refused"))?;
-        if binding.interface_version != PROFILE
+        if binding.interface_version != self.profile()
             || binding.schema != "truss"
             || binding.installation_id.is_empty()
-            || binding.release_id != "truss-catalog-runtime/0.26-candidate"
+            || binding.release_id != if self.exact_numbers{"truss-catalog-runtime/0.27-candidate"}else{"truss-catalog-runtime/0.26-candidate"}
             || binding.release_sha256.len() != 64
             || !binding
                 .release_sha256
@@ -214,7 +222,7 @@ impl Backend for Runtime {
                     .iter()
                     .find(|d| d.identity == f.identity)
                     .ok_or_else(|| fail("Original member descriptor missing"))?;
-                scalar_type(d)?;
+                scalar_type(d,self.exact_numbers)?;
                 fields.insert(key(&f.identity));
             }
         }
@@ -236,17 +244,15 @@ impl Backend for Runtime {
                 binding,
                 original: c.binding.json.clone(),
             },
-            additional_capabilities: vec!["value.nativeNull".into()],
+            additional_capabilities: self.additions(),
             coverage: c.selection.clone(),
             obligations: vec![obligation()],
         })
     }
     fn assess(&self, c: &Context<'_>, _: &Mapping) -> Result<Vec<Assessment>> {
         let manifest = self.describe()?;
-        c.plan
-            .capabilities()
-            .iter()
-            .chain(std::iter::once(&"value.nativeNull".to_owned()))
+        let additions=self.additions();
+        c.plan.capabilities().iter().chain(additions.iter()).collect::<BTreeSet<_>>().into_iter()
             .map(|id| {
                 if !manifest.capabilities.iter().any(|cap| &cap.id == id) {
                     return Err(unsupported("Operation has no runtime lowering"));
@@ -334,7 +340,7 @@ impl Backend for Runtime {
                             let (value, _) = build.scalar(scan, identity, logical_type)?;
                             if d.availability.as_deref() == Some("required") {
                                 (
-                                    format!("({value})::pg_catalog.text"),
+                                    build.projected_scalar(scan,identity,logical_type)?,
                                     Representation::Scalar {
                                         logical_type: logical_type.clone(),
                                         carrier: ScalarCarrier::Text,
@@ -369,9 +375,7 @@ impl Backend for Runtime {
                                 pairs.push(literal(&member.name)?);
                                 pairs.push(if field.availability.as_deref() == Some("required") {
                                     match logical_type.family {
-                                        Family::Integer | Family::Decimal => format!(
-                                            "pg_catalog.to_jsonb(({value})::pg_catalog.text)"
-                                        ),
+                                        Family::Integer | Family::Decimal => {let(cell,_)=build.cell(scan,&member.identity)?;format!("pg_catalog.to_jsonb({cell}->>'text')")},
                                         _ => format!("pg_catalog.to_jsonb({value})"),
                                     }
                                 } else {
@@ -491,6 +495,10 @@ impl Build<'_> {
         };
         Ok((sql, present))
     }
+    fn projected_scalar(&self,scan:&str,id:&Identity,logical:&LogicalType)->Result<String>{
+        if logical.family==Family::Decimal {let(cell,_)=self.cell(scan,id)?;Ok(format!("{cell}->>'text'"))}
+        else {let(value,_)=self.scalar(scan,id,logical)?;Ok(format!("({value})::pg_catalog.text"))}
+    }
     fn envelope(&self, scan: &str, id: &Identity) -> Result<String> {
         let d = self.descriptor(id)?;
         let Shape::Scalar { logical_type } = &d.shape else {
@@ -541,18 +549,13 @@ impl Build<'_> {
         }
     }
 }
-pub fn compile_json(request: &str) -> String {
-    let mut factory =
-        |_: &Catalog, _: Plan<'_>, target: weft_core::compile::CompositionInput<'_>| {
-            if target.backend_id != BACKEND
-                || target.backend_version != "0.1.0"
-                || target.target_profile != TARGET
-            {
-                return Err(fail("Explicit runtime backend/version/target required"));
-            }
-            let mut r = Registry::default();
-            r.register(Runtime)?;
-            Ok(r)
-        };
-    weft_core::compile::Compiler::default().compile_json_with_factory(request, &mut factory)
+pub fn compile_json(request:&str)->String {
+    let numeric=weft_core::json::checked_json(request).ok().is_some_and(|v|v["target"]["backendVersion"]=="0.2.0");
+    let mut factory=|_:&Catalog,_:Plan<'_>,target:weft_core::compile::CompositionInput<'_>|{
+        let backend=Runtime{exact_numbers:numeric};
+        if target.backend_id!=BACKEND || target.backend_version!=backend.version() || target.target_profile!=backend.target(){return Err(fail("Explicit runtime backend/version/target required"));}
+        let mut r=Registry::default();r.register(backend)?;Ok(r)
+    };
+    let compiler=weft_core::compile::Compiler::default();
+    if numeric {compiler.compile_json_with_exact_numbers_factory(request,&mut factory)} else {compiler.compile_json_with_factory(request,&mut factory)}
 }

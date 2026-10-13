@@ -503,6 +503,12 @@ impl<B: Backend> Registered for Adapter<B> {
                 && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
             return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit mathematical integer source domains"));
         }
+        if plan.capabilities().iter().any(|c| c == "type.decimal.unbounded")
+            && !self.manifest.capabilities.iter().any(|c| c.id == "type.decimal.unbounded"
+                && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
+                && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
+            return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit mathematical decimal source domains"));
+        }
         // New 0.3 comparisons must be admitted before any backend binding callback.
         // Retain the ordering of older operations; do not retroactively preflight them.
         if matches!(plan, Plan::V03(_)) {
