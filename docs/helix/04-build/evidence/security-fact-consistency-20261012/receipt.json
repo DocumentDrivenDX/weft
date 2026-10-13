@@ -1,0 +1,35 @@
+{
+  "status": "logical-component-only",
+  "sourceDigests": {
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/tests/security_admission.rs": "2427463bb17506fc59f696a34bbf34b2d4be68cfc985ac41738906693b2adfc5"
+  },
+  "semantics": "Subject, inventory, general resource collections and scoped row projections share one known-projection fold. Overlapping normalized values must agree; explicit absence differs from null; omitted fields are unknown. Partial projections do not fill missing policy/output attributes in another row.",
+  "resources": "Borrow normalized identities/scalars; no extra payload clones. Every row/field charged to work budget and both overlapping scalars charged to existing payload budget; no total-heap/native-resource claim.",
+  "prechange": "General simulation lacked cross-projection consistency; scoped simulation rejected entire unequal field maps even when differences were omissions. Retained prechange source.",
+  "validation": {
+    "coreFilteredSecurityTests": 171,
+    "workspaceTests": 626,
+    "workspaceGroups": 46,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0,
+    "strictBoundaries": "11 packages passed",
+    "manifestBoundaries": "11 modules /12 edges passed"
+  },
+  "review": "Astra Ultra final: corrected scoped integration passes all four join/masked combinations, common-fold unit passes; no remaining actionable findings",
+  "formalContext": "UMF conditional unbounded known-projection fold2UNSAT2SAT is retained separately. Exact grouping/typed equality/traversal are premises; this change establishes no Rust source/native refinement theorem.",
+  "traceability": [
+    {
+      "criterion": "US-057-AC7",
+      "scope": "logical inconsistent cut refusal prerequisite",
+      "caseClosed": false
+    },
+    {
+      "criterion": "US-079-AC3",
+      "scope": "logical keyed fact coherence prerequisite",
+      "caseClosed": false
+    }
+  ],
+  "scope": "Record-fact simulation only. Public security compilation remains WFT-SECURITY-LOWERING-UNSUPPORTED; graph variants not silently reinterpreted. No authenticated source/native snapshot, backend profile or release admission; no required case promoted and all132 remain in scope."
+}

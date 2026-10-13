@@ -1356,3 +1356,10 @@ empty SQL and obligation omission. A deliberately semantically unproved `SELECT 
 can pass declaration comparison; SQL equivalence and native disclosure are not
 established. Public compilation/dispatch remains unchanged and blocked. Receipt:
 `../../04-build/evidence/security-matched-candidate-20261012/receipt.json`.
+
+
+## Known projection agreement in logical simulation — 2026-10-12
+
+General and scoped simulated-fact routes require agreement of known attributes for each exact typed record identity/field across subjects, inventories and requested resources. Omitted attributes remain unknown; explicit absence and null differ. Consistent partial projections may overlap, but the fold never supplies an omitted attribute to another row: each actual policy dependency and original/absent output field remains independently required on its selected projection. Duplicate inventory facts still refuse.
+
+The fold borrows normalized identities and values without cloning their payload, charges row/field work and overlapping scalar comparisons to the existing conservative budget. This is logical consistency only, not authentication, full inventory or native snapshot proof, a total heap ceiling or Rust source refinement. Actual graph variants remain refused by the record-fact simulator. Public security compilation remains closed pending complete native coverage/admission.

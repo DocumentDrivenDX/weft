@@ -1119,7 +1119,8 @@ fn owner_scoped_fact_selection_evaluates_membership_and_original_values_without_
    population["facts"][3]["fields"][1]["value"]=json!({"integerToken":"1e2"});ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&population.to_string(),&rows.to_string())?;
    population["facts"][3]["fields"][1]["value"]=json!({"integerToken":"999"});assert_eq!(ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&population.to_string(),&rows.to_string()).unwrap_err().code,"WFT-SECURITY-EVALUATION");
    let mut subject_population=cut.clone();let subject=cut["subjects"][0].clone();subject_population["facts"].as_array_mut().unwrap().push(subject);ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&subject_population.to_string(),&rows.to_string())?;
-   subject_population["facts"][3]["fields"]=json!([]);assert_eq!(ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&subject_population.to_string(),&rows.to_string()).unwrap_err().code,"WFT-SECURITY-EVALUATION");
+   // Omission is unknown, not a contradictory subject assignment. Actual used fields remain required.
+   subject_population["facts"][3]["fields"]=json!([]);ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&batch.to_string(),&subject_population.to_string(),&rows.to_string())?;
    let empty_rows=json!({"version":"weft.security.scoped-facts/0.1.0","rows":[]});let mut empty_batch=batch.clone();empty_batch["rows"]=json!([]);ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&empty_batch.to_string(),&cut_bytes,&empty_rows.to_string())?;
    let mut incomplete=cut.clone();incomplete["coverage"][4]["complete"]=json!(false);assert!(ctx.check_simulated_fact_selection(&contract,&bytes,&hash,&empty_batch.to_string(),&incomplete.to_string(),&empty_rows.to_string()).is_err());
    Ok(SecurityRegistry::default())
