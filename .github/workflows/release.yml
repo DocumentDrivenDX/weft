@@ -104,7 +104,7 @@ jobs:
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':['truss-postgresql-pg18'],'trussBackend':'0.4.13','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':['truss-postgresql-pg18'],'trussBackend':'0.4.14','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft; then
             test "$(cat /tmp/release-draft)" = true
