@@ -121,6 +121,31 @@ impl CandidateEntityFact{
 }
 
 
+/// Same-cut known fields must agree across raw and graph projections. Missing
+/// fields stay unknown: this borrowed index never enriches an evaluated row.
+fn check_candidate_fact_consistency<'a>(facts:impl IntoIterator<Item=&'a CandidateEntityFact>,mut steps:usize,mut bytes:usize)->Result<()>{
+ use std::collections::BTreeMap;
+ type Key<'a>=(&'a SecurityRef,&'a str,&'a [ScalarLiteral]);
+ let mut known:BTreeMap<Key<'a>,BTreeMap<&'a SecurityRef,&'a ScalarLiteral>>=BTreeMap::new();
+ fn cost(value:&ScalarLiteral)->usize{match value{ScalarLiteral::String(v)|ScalarLiteral::Binary(v)=>v.len().max(1),ScalarLiteral::Number(v)=>(v.magnitude().bits().div_ceil(8) as usize).max(1),_=>1}}
+ for fact in facts{
+  steps=steps.checked_sub(1).ok_or_else(fail)?;
+  let identity=&fact.identity;
+  for text in [&identity.target.document_id,&identity.target.module_id,&identity.target.element_id,&identity.key_id]{bytes=bytes.checked_sub(text.len()).ok_or_else(fail)?;}
+  for value in &identity.components{bytes=bytes.checked_sub(cost(value)).ok_or_else(fail)?;}
+  let fields=known.entry((&identity.target,&identity.key_id,&identity.components)).or_default();
+  for (field,value) in &fact.fields{
+   steps=steps.checked_sub(1).ok_or_else(fail)?;
+   for text in [&field.document_id,&field.module_id,&field.element_id]{bytes=bytes.checked_sub(text.len()).ok_or_else(fail)?;}
+   bytes=bytes.checked_sub(cost(value)).ok_or_else(fail)?;
+   if let Some(previous)=fields.get(field){bytes=bytes.checked_sub(cost(previous)).ok_or_else(fail)?;if *previous!=value{return Err(fail());}}
+   else{fields.insert(field,value);}
+  }
+ }
+ Ok(())
+}
+
+
 /// One original raw association row and its complete declared endpoint projection.
 /// Does not authenticate row provenance or association population completeness.
 #[derive(Debug)]
@@ -225,6 +250,13 @@ fn simulate_graph_rule_with_identities_bounded(plan:&SecurityCandidateLogicalPla
   if data.insert(population.association,RulePopulation{rows:population.witnesses.iter().map(BoundWitness::GraphRecord).collect(),coverage:population.coverage,record:true}).is_some(){return Err(fail());}
  }}
 
+ // Separate bounded preflight across every supplied stored projection, including
+ // unused witnesses. Context is deliberately a distinct channel, not a fact.
+ check_candidate_fact_consistency(
+  identities.subject_fact.into_iter().chain(identities.resource_fact)
+   .chain(data.values().flat_map(|population|population.rows.iter().filter_map(|row|match row{BoundWitness::Record(w)=>Some(&w.fact),BoundWitness::GraphRecord(w)=>Some(&w.fact),BoundWitness::Graph(_)=>None}))),
+  1_000_000,16_000_000)?;
+
  fn preflight(e:&E,data:&BTreeMap<&SecurityAssociationRef,RulePopulation<'_>>,identities:GraphIdentities<'_>,vars:&BTreeMap<usize,&SecurityAssociationRef>)->Result<()>{match e{E::Literal(_)=>{},E::Equal(a,b)=>for term in [a,b]{match term{
  T::Endpoint{binding:Binding::Variable(slot),association,..} if vars.get(slot).is_some_and(|a|*a==association)=>{},
  T::Value(crate::security_ir::Term::Identity{binding:Binding::Subject,..}) if identities.subject.is_some()=>{},T::Value(crate::security_ir::Term::Identity{binding:Binding::Resource,..}) if identities.resource.is_some()=>{},T::Value(crate::security_ir::Term::Identity{binding:Binding::Variable(slot),..}) if vars.get(slot).is_some_and(|a|data[*a].record)=>{},
@@ -270,6 +302,29 @@ mod tests {
   let relationship=json!({"documentId":"domain","moduleId":"m","relationshipId":"WorksOn"});let target=json!({"documentId":"domain","moduleId":"m","elementId":"Staff"});ontology["associations"][1]=json!({"kind":"core-relationship","relationship":relationship,"witness":{"kind":"opaque-existential"},"endpoints":[{"role":"staff","side":"source","target":target,"keyId":"pk"},{"role":"project","side":"target","target":{"documentId":"domain","moduleId":"m","elementId":"Project"},"keyId":"pk"}]});
   let text=doc.to_string();let input:ModuleInput=serde_json::from_value(json!({"documentJson":text,"pin":{"documentId":"domain","revision":"schema-1","umfVersion":"0.8.0","sha256":crate::json::sha256(text.as_bytes())},"selectedModuleIds":["m"]})).unwrap();let catalog=Catalog::prepare_security(vec![input]).unwrap();let packet=SecurityCandidateSourcePacket::read(&policy.to_string(),&ontology.to_string(),&catalog).unwrap();let plan=SecurityCandidateLogicalPlan::read(packet,&catalog).unwrap();(catalog,plan,SecurityAssociationRef::read(&relationship).unwrap(),SecurityRef::read(&target).unwrap())
  }
+ #[test]
+ fn candidate_subject_resource_projections_agree_without_filling_unknown_fields(){
+  let (c,baseline,_,_)=fixture(false,false);
+  let reference=|id:&str|SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:id.into()};
+  let mut ontology=baseline.source().ontology().clone();ontology["subject"]=serde_json::to_value(reference("Resource")).unwrap();
+  let packet=SecurityCandidateSourcePacket::read(baseline.source().policy_json(),&ontology.to_string(),&c).unwrap();let p=SecurityCandidateLogicalPlan::read(packet,&c).unwrap();
+  let fact=|id:&str,value:Option<&str>|CandidateEntityFact::read(&p,&c,&reference("Resource"),"pk",&[json!({"string":id})],&value.map(|v|vec![(reference("salary"),json!({"integerToken":v}))]).unwrap_or_default()).unwrap();
+  let a=fact("r1",Some("100"));let equal=fact("r1",Some("1e2"));let conflict=fact("r1",Some("200"));let partial=fact("r1",None);let other=fact("r2",Some("200"));
+  assert!(check_candidate_fact_consistency([&a],1,16_000_000).is_err());assert!(check_candidate_fact_consistency([&a],2,16_000_000).is_ok());assert!(check_candidate_fact_consistency([&a],2,0).is_err());
+  assert!(check_candidate_fact_consistency([&a],2,32).is_err());assert!(check_candidate_fact_consistency([&a],2,33).is_ok());
+  assert!(check_candidate_fact_consistency([&a,&a],3,67).is_err());assert!(check_candidate_fact_consistency([&a,&a],4,66).is_err());assert!(check_candidate_fact_consistency([&a,&a],4,67).is_ok());
+  let run=|subject,resource|simulate_graph_rule_with_facts(&p,&c,0,&[],Some(subject),Some(resource));
+  assert!(run(&a,&conflict).is_err());assert!(run(&conflict,&a).is_err());
+  for (subject,resource) in [(&a,&equal),(&equal,&a),(&a,&partial),(&partial,&a),(&a,&other)]{assert_eq!(run(subject,resource).unwrap(),crate::security_composition::Truth::True);}
+  let mut used_policy=p.source().policy().clone();used_policy["rules"][0]["condition"]=json!({"op":"eq","left":{"kind":"resource","field":serde_json::to_value(reference("salary")).unwrap()},"right":{"kind":"constant","field":serde_json::to_value(reference("salary")).unwrap(),"value":{"integerToken":"100"}}});
+  let packet=SecurityCandidateSourcePacket::read(&used_policy.to_string(),&ontology.to_string(),&c).unwrap();let used=SecurityCandidateLogicalPlan::read(packet,&c).unwrap();
+  let full=CandidateEntityFact::read(&used,&c,&reference("Resource"),"pk",&[json!({"string":"r1"})],&[(reference("salary"),json!({"integerToken":"100"}))]).unwrap();
+  let missing=CandidateEntityFact::read(&used,&c,&reference("Resource"),"pk",&[json!({"string":"r1"})],&[]).unwrap();
+  assert!(simulate_graph_rule_with_facts(&used,&c,0,&[],Some(&full),Some(&missing)).is_err());
+  assert_eq!(simulate_graph_rule_with_facts(&used,&c,0,&[],Some(&missing),Some(&full)).unwrap(),crate::security_composition::Truth::True);
+
+ }
+
  #[test]
  fn aggregate_normalized_storage_is_bounded_before_retention(){
   let (c,p,a,t)=fixture(false,true);let values=[json!({"integerToken":"1"}),json!({"integerToken":"2"})];
@@ -395,6 +450,12 @@ mod tests {
  #[test]
  fn raw_witness_projects_endpoints_from_one_source_bound_record(){
   let (c,p,_,_)=fixture(false,false);let reference=|id:&str|SecurityRef{document_id:"domain".into(),module_id:"m".into(),element_id:id.into()};let owner=reference("Ownership");let association=SecurityAssociationRef::Record(owner.clone());let make=|fields:&[(SecurityRef,Value)]|CandidateEntityFact::read(&p,&c,&owner,"pk",&[json!({"string":"o1"})],fields).unwrap();let fields=[(reference("ownerResource"),json!({"string":"r1"})),(reference("ownerProject"),json!({"string":"p1"}))];let witness=CandidateRecordWitness::read(&p,&c,&association,make(&fields)).unwrap();assert_eq!(witness.association(),&association);assert!(witness.require_plan(&p,&c).is_ok());let resource=CandidateEntityIdentity::read(&p,&c,&reference("Resource"),"pk",&[json!({"string":"r1"})]).unwrap();let project=CandidateEntityIdentity::read(&p,&c,&reference("Project"),"pk",&[json!({"string":"p1"})]).unwrap();assert_eq!(witness.endpoint("resource").unwrap().target,resource.target);assert_eq!(witness.endpoint("resource").unwrap().components,resource.components);assert_eq!(witness.endpoint("project").unwrap().target,project.target);assert_eq!(witness.endpoint("project").unwrap().components,project.components);assert_eq!(witness.identity().target,owner);assert_ne!(witness.identity().components,witness.endpoint("resource").unwrap().components);assert!(witness.endpoint("missing").is_none());
+  let mut ontology=p.source().ontology().clone();ontology["subject"]=serde_json::to_value(&owner).unwrap();
+  let packet=SecurityCandidateSourcePacket::read(p.source().policy_json(),&ontology.to_string(),&c).unwrap();let alias_plan=SecurityCandidateLogicalPlan::read(packet,&c).unwrap();
+  let alias_fact=|project:&str|CandidateEntityFact::read(&alias_plan,&c,&owner,"pk",&[json!({"string":"o1"})],&[(reference("ownerProject"),json!({"string":project}))]).unwrap();
+  let raw_fact=CandidateEntityFact::read(&alias_plan,&c,&owner,"pk",&[json!({"string":"o1"})],&fields).unwrap();let raw_rows=[CandidateRecordWitness::read(&alias_plan,&c,&association,raw_fact).unwrap()];
+  let run_alias=|subject:&CandidateEntityFact|simulate_candidate_rule(&alias_plan,&c,0,&[],&[CandidateRecordPopulation{association:&association,witnesses:&raw_rows,coverage:SimulatedIncidenceCoverage::Complete}],Some(subject),None,None);
+  assert!(run_alias(&alias_fact("p2")).is_err());assert_eq!(run_alias(&alias_fact("p1")).unwrap(),crate::security_composition::Truth::True);
   assert!(CandidateRecordWitness::read(&p,&c,&association,make(&fields[..1])).is_err());let wrong_owner=CandidateEntityFact::read(&p,&c,&reference("Resource"),"pk",&[json!({"string":"r1"})],&[]).unwrap();assert!(CandidateRecordWitness::read(&p,&c,&association,wrong_owner).is_err());let graph=SecurityAssociationRef::Relationship(SecurityRelationshipRef{document_id:"domain".into(),module_id:"m".into(),relationship_id:"Ownership".into()});assert!(CandidateRecordWitness::read(&p,&c,&graph,make(&fields)).is_err());assert!(CandidateRecordWitness::read_bounded(&p,&c,&association,make(&fields),3).is_err());assert!(CandidateRecordWitness::read_bounded(&p,&c,&association,make(&fields),4).is_ok());
  }
 
@@ -472,6 +533,12 @@ mod tests {
   let stale=[row(&p,"e1","1",Some(true)),row(&other,"e2","1",Some(true))];assert!(run(&stale,SimulatedIncidenceCoverage::Complete).is_err());
   assert!(simulate_graph_rule_with_facts(&p,&c,0,&[CandidateGraphPopulation{association:&graph,bundles:&[bundle(&p,"1")],coverage:SimulatedIncidenceCoverage::Complete}],Some(&subject),None).is_err());
   let mut literal_policy=policy.clone();literal_policy["rules"][0]["condition"]=json!({"op":"literal","value":true});let packet=SecurityCandidateSourcePacket::read(&literal_policy.to_string(),&ontology.to_string(),&c).unwrap();let literal=SecurityCandidateLogicalPlan::read(packet,&c).unwrap();
+  let mut alias_ontology=ontology.clone();alias_ontology["subject"]=serde_json::to_value(reference("Assignment")).unwrap();
+  let packet=SecurityCandidateSourcePacket::read(&literal_policy.to_string(),&alias_ontology.to_string(),&c).unwrap();let alias_plan=SecurityCandidateLogicalPlan::read(packet,&c).unwrap();
+  let alias_rows=[row(&alias_plan,"e1","1",Some(true))];
+  let alias_run=|subject:&CandidateEntityFact|simulate_candidate_rule_with_graph_records(&alias_plan,&c,0,&[],&[],&[CandidateGraphRecordPopulation{association:&graph,witnesses:&alias_rows,coverage:SimulatedIncidenceCoverage::Complete}],Some(subject),None,None);
+  assert!(alias_run(&fact(&alias_plan,"e1",Some(false))).is_err());
+  for subject in [fact(&alias_plan,"e1",Some(true)),fact(&alias_plan,"e1",None),fact(&alias_plan,"e2",Some(false))]{assert_eq!(alias_run(&subject).unwrap(),Truth::True);}
   let literal_rows=[row(&literal,"e1","1",Some(true)),row(&literal,"e2","1",Some(true))];let populations=[CandidateGraphRecordPopulation{association:&graph,witnesses:&literal_rows,coverage:SimulatedIncidenceCoverage::Complete}];
   let bounded=|budget|simulate_graph_rule_with_identities_bounded(&literal,&c,0,&[],GraphIdentities{subject:None,resource:None,subject_fact:None,resource_fact:None,context:None,records:None,graph_records:Some(&populations)},1,budget);
   assert!(bounded(3).is_err());assert_eq!(bounded(4).unwrap(),Truth::True);

@@ -1,0 +1,40 @@
+{
+  "status": "logical-component-only",
+  "sourceDigests": {
+    "crates/weft-core/src/security_candidate_incidence.rs": "25ad0e35f4b349dbd0d02e5c25ab92c75a23e5d11facf52f2c68ac5b302cb4f6"
+  },
+  "scope": "Draft candidate graph/mixed logical simulation; supplied normalized non-null known scalar fields only. Exact typed identity grouping includes target/key identifier/ordered normalized components under original catalog custody. Missing fields remain unknown. Context stays separate.",
+  "validation": {
+    "coreSecurityTests": 162,
+    "admissionTests": 74,
+    "boundaries": "11 workspace packages passed",
+    "review": "Astra Ultra: no actionable findings;22 incidence tests independently passed against unchanged source bytes"
+  },
+  "controls": [
+    "Prechange public conflicting subject/resource projection regression fails because simulator accepted it",
+    "Equal numeric100/1e2 and consistent partial projections in both orders accepted",
+    "Distinct identities retain independent conflicting values",
+    "Unused raw Ownership witness and graph-record Assignment witness conflicting with same typed subject refuse through public mixed entry points",
+    "Full subject projection does not supply missing policy-used resource field; inverse known resource control succeeds",
+    "Exact1row2steps33bytes and2aliases4steps67bytes pass; each one-less step/byte refuses"
+  ],
+  "budget": "Separate preflight ceiling1,000,000 row/field steps and16,000,000 conservative reference/scalar payload units in addition to existing evaluator limits. Borrowed values, no normalized payload clones or evaluated-row enrichment. Not a total heap or wall-clock ceiling.",
+  "formalScope": "Existing UMF conditional unbounded per-identity/field projection-fold proof applies to the present/unknown abstract subset under exact grouping/equality/full traversal premises. No new Rust source refinement, native authority or null/absence support proof.",
+  "exclusions": [
+    "No authenticated fact source, complete native inventory or snapshot",
+    "No physical lowering/dispatch/admission or backend case closure",
+    "Public security compilation remains closed; original132 cases remain in scope"
+  ],
+  "traceability": [
+    {
+      "criterion": "US-057-AC7",
+      "scope": "logical inconsistent cut refusal prerequisite for mixed raw/graph simulation",
+      "caseClosed": false
+    },
+    {
+      "criterion": "US-079-AC3",
+      "scope": "logical keyed known-fact coherence prerequisite across raw/graph projections",
+      "caseClosed": false
+    }
+  ]
+}
