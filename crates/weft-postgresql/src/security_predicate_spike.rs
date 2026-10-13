@@ -2,7 +2,7 @@
 //! Not a registered security backend, result contract, or execution permit.
 use std::collections::BTreeMap;
 use serde_json::{Value,json};
-use weft_core::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding},security_ontology::SecurityRef};
+use weft_core::{error::{Diagnostic,Result},model::Catalog,security_ir::{SecurityLogicalPlan,Expression,Term,Binding,Effect},security_ontology::SecurityRef};
 fn reference(v:&Value)->Result<SecurityRef>{serde_json::from_value(v.clone()).map_err(|_|fail())}
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-PREDICATE-SPIKE","capability","Native predicate correspondence unavailable")}
 #[derive(Clone)]
@@ -50,7 +50,21 @@ pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Res
  plan.require_catalog(catalog)?;if assessment["modelPins"]!=serde_json::to_value(catalog.pins()).map_err(|_|fail())?{return Err(fail());}
  let documents=catalog.inputs().iter().map(|i|weft_core::json::checked_json(&i.document_json).map_err(|_|fail())).collect::<Result<Vec<_>>>()?;
  let mut renderer=Render{inventory:&assessment["inventory"],ontology:plan.source().ontology(),documents,parameters:vec![],parameter_bytes:0,work:8192};let mut rules=Vec::new();let mut total=0;
- for rule in plan.rules(){let expression=renderer.expression(&rule.condition,&rule.target,&BTreeMap::new(),0)?;total+=expression.len();if total>4_000_000{return Err(fail());}rules.push(json!({"id":rule.id,"target":rule.target,"effect":rule.effect,"actions":rule.actions,"expression":expression}));}
- let output=json!({"version":"weft.truss.predicate-spike/0.1","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
+ for (index,rule) in plan.rules().iter().enumerate(){let expression=renderer.expression(&rule.condition,&rule.target,&BTreeMap::new(),0)?;total+=expression.len();if total>4_000_000{return Err(fail());}rules.push(json!({"id":rule.id,"target":rule.target,"effect":rule.effect,"actions":rule.actions,"expression":expression,"truthColumn":format!("q{index}")}));}
+ let mut group_bytes=0usize;
+ let mut groups:BTreeMap<(SecurityRef,String),Vec<(usize,Effect)>>=BTreeMap::new();
+ for (index,rule) in plan.rules().iter().enumerate(){for action in &rule.actions{renderer.step()?;group_bytes=group_bytes.checked_add(rule.target.document_id.len()+rule.target.module_id.len()+rule.target.element_id.len()+action.len()).ok_or_else(fail)?;if group_bytes>1_048_576{return Err(fail());}groups.entry((rule.target.clone(),action.clone())).or_default().push((index,rule.effect.clone()));}}
+ let mut eligibility=Vec::new();
+ for ((target,action),selected) in groups {
+  let unknown=selected.iter().map(|(i,_)|format!("q{i} IS NULL")).collect::<Vec<_>>().join(" OR ");
+  let permits=selected.iter().filter(|(_,e)|*e==Effect::Permit).map(|(i,_)|format!("q{i} IS TRUE")).collect::<Vec<_>>();
+  let obligations=selected.iter().filter(|(_,e)|*e!=Effect::Permit).map(|(i,e)|format!("q{i} IS {}",if *e==Effect::Require{"TRUE"}else{"FALSE"})).collect::<Vec<_>>();
+  let permit=if permits.is_empty(){"FALSE".into()}else{permits.join(" OR ")};
+  let obligation=if obligations.is_empty(){"TRUE".into()}else{obligations.join(" AND ")};
+  let decision=format!("CASE WHEN ({unknown}) THEN 'indeterminate' WHEN ({permit}) AND ({obligation}) THEN 'permit' ELSE 'deny' END");
+  total+=decision.len();if total>4_000_000{return Err(fail());}
+  eligibility.push(json!({"target":target,"action":action,"decisionExpression":decision}));
+ }
+ let output=json!({"version":"weft.truss.predicate-spike/0.2","securityReady":false,"scope":"conditional_rule_truths_on_originally_validated_string_boolean_record_facts_only","rules":rules,"missingEligibilityGroup":"unsupported_refuse","eligibilityScope":"selected_rule_groups_empty_disclosure_only_no_missing_group_authorization","eligibility":eligibility,"parameters":renderer.parameters,"prerequisites":["original_fact_domain_and_declared_key_validation","complete_fact_population","truthful_current_native_mapping","pg_catalog_pg_temp_search_path_and_authentic_native_helpers"]});
  if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(output)
 }

@@ -1,0 +1,86 @@
+{
+  "scope": "Actual built diagnostic renderer. CASE truth vectors executed in memory only, not PostgreSQL, and compared with original retained composition oracle or explicit empty-output fold. No native DB mutation.",
+  "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+  "binarySha256": "e650ca588950c370b7874b0cba21b18cdd7032bc606fcb288dcbfc6657a1b98a",
+  "passedControls": 13,
+  "truthVectorEvaluations": 141,
+  "cases": [
+    {
+      "case": "threeEffectRender",
+      "passed": true,
+      "inputBytes": 20558,
+      "exit": 0
+    },
+    {
+      "case": "reorderedThreeEffectRender",
+      "passed": true,
+      "inputBytes": 20558,
+      "exit": 0
+    },
+    {
+      "case": "original27TruthVectorsBothRuleOrders",
+      "passed": true,
+      "vectors": 54,
+      "engine": "in-memory SQLite for emitted CASE/IS TRUE/IS FALSE/IS NULL only; not a PostgreSQL native oracle"
+    },
+    {
+      "case": "fourEffectRender",
+      "passed": true,
+      "inputBytes": 20756,
+      "exit": 0
+    },
+    {
+      "case": "multiplePermitOR81Vectors",
+      "passed": true,
+      "vectors": 81
+    },
+    {
+      "case": "noPermit_require",
+      "passed": true,
+      "inputBytes": 20164,
+      "exit": 0
+    },
+    {
+      "case": "noPermit_forbid",
+      "passed": true,
+      "inputBytes": 20163,
+      "exit": 0
+    },
+    {
+      "case": "noRulesScopedUnsupported",
+      "passed": true,
+      "inputBytes": 19967,
+      "exit": 0
+    },
+    {
+      "case": "targetActionIsolation",
+      "passed": true,
+      "inputBytes": 20441,
+      "exit": 0
+    },
+    {
+      "case": "exact8192Work",
+      "passed": true,
+      "inputBytes": 140092,
+      "exit": 0
+    },
+    {
+      "case": "oneOver8192Work",
+      "passed": true,
+      "inputBytes": 140106,
+      "exit": 1
+    },
+    {
+      "case": "metadataExact",
+      "passed": true,
+      "inputBytes": 2117286,
+      "exit": 0
+    },
+    {
+      "case": "metadataOneOver",
+      "passed": true,
+      "inputBytes": 2117288,
+      "exit": 1
+    }
+  ]
+}

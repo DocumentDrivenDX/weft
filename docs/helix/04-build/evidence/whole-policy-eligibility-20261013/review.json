@@ -1,0 +1,123 @@
+{
+  "review": "Independent Astra Ultra read-only selected-rule-group row eligibility diagnostic review",
+  "head": "c727a6b2502b47376d8b54318bb4d8371b38ebe8",
+  "findings": [],
+  "resolvedConcerns": [
+    "Each rule/action incidence now consumes shared renderer work and cumulative1MiB identity/action UTF-8 payload before clone/push",
+    "Eligibility is explicitly partial matched-rule-group/empty-disclosure; absent groups carry unsupported_refuse policy, not authorization"
+  ],
+  "independentControls": {
+    "scope": "Actual built diagnostic renderer. CASE truth vectors executed in memory only, not PostgreSQL, and compared with original retained composition oracle or explicit empty-output fold. No native DB mutation.",
+    "binary": "/private/tmp/weft-042-release-target-a/debug/examples/security_predicate_spike",
+    "binarySha256": "e650ca588950c370b7874b0cba21b18cdd7032bc606fcb288dcbfc6657a1b98a",
+    "passedControls": 13,
+    "truthVectorEvaluations": 141,
+    "cases": [
+      {
+        "case": "threeEffectRender",
+        "passed": true,
+        "inputBytes": 20558,
+        "exit": 0
+      },
+      {
+        "case": "reorderedThreeEffectRender",
+        "passed": true,
+        "inputBytes": 20558,
+        "exit": 0
+      },
+      {
+        "case": "original27TruthVectorsBothRuleOrders",
+        "passed": true,
+        "vectors": 54,
+        "engine": "in-memory SQLite for emitted CASE/IS TRUE/IS FALSE/IS NULL only; not a PostgreSQL native oracle"
+      },
+      {
+        "case": "fourEffectRender",
+        "passed": true,
+        "inputBytes": 20756,
+        "exit": 0
+      },
+      {
+        "case": "multiplePermitOR81Vectors",
+        "passed": true,
+        "vectors": 81
+      },
+      {
+        "case": "noPermit_require",
+        "passed": true,
+        "inputBytes": 20164,
+        "exit": 0
+      },
+      {
+        "case": "noPermit_forbid",
+        "passed": true,
+        "inputBytes": 20163,
+        "exit": 0
+      },
+      {
+        "case": "noRulesScopedUnsupported",
+        "passed": true,
+        "inputBytes": 19967,
+        "exit": 0
+      },
+      {
+        "case": "targetActionIsolation",
+        "passed": true,
+        "inputBytes": 20441,
+        "exit": 0
+      },
+      {
+        "case": "exact8192Work",
+        "passed": true,
+        "inputBytes": 140092,
+        "exit": 0
+      },
+      {
+        "case": "oneOver8192Work",
+        "passed": true,
+        "inputBytes": 140106,
+        "exit": 1
+      },
+      {
+        "case": "metadataExact",
+        "passed": true,
+        "inputBytes": 2117286,
+        "exit": 0
+      },
+      {
+        "case": "metadataOneOver",
+        "passed": true,
+        "inputBytes": 2117288,
+        "exit": 1
+      }
+    ]
+  },
+  "sourceDigests": {
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "2290191aa1a9ef5db44bd5193044be36625cdfccbb8b6304264c720a6f026743",
+    "crates/weft-postgresql/examples/security_predicate_spike.rs": "dfa35f35d3669ffc48e57c7af6283dad9036f8868088f0a64eef318f1fb553fb",
+    "crates/weft-core/src/security_composition.rs": "6a441f7e5842f2d2d610d57c419646dfe94983019a6d8daf94c0411a905ed432",
+    "crates/weft-core/src/security_ir.rs": "422e4b2641a276fefc8d2dc97a4414cdb8db960ed42c6fd5d28bd52671cf4e9f",
+    "crates/weft-core/src/security_evaluation.rs": "735ceabac3d129c017e1d0ef16966d45c5b584667d538dfacb0e958ac95ec65d",
+    "crates/weft-core/tests/security-composition-oracle.json": "78cd2edefebb73f4228756197c0e12509d77213fb3e0df7162baf05cb730a08e"
+  },
+  "nativeHarnessDigest": "74feff04b46a3e2bf84d1d19513b4921620da829c3f630c40f73d368bca3429a",
+  "parentNativeEvidence": {
+    "path": "/private/tmp/truss-eligibility-forbid-native.log",
+    "sha256": "852b8b0c4481fd91bbbe3c698d02de2e66e9b38a629752c2db4e4f844f8d0a30",
+    "result": "Actual emitted native CASE:27 vectors in both rule orders, six populated eligibility outcomes, and original simulator comparison; parent-run1test passed8.742s, inspected not rerun"
+  },
+  "qualification": [
+    "Original composition correspondence is only for empty requested output fields; transforms/withholding/conflict and whole-collection outcome handling are not emitted here",
+    "141 in-memory SQL CASE evaluations:54 retained original three-effect vectors,81 two-permit vectors and6 no-permit controls; in-memory SQLite is not a PostgreSQL oracle",
+    "Exact8192 shared-work and exact1048576 metadata-byte boundaries pass; each one-over refuses before group allocation beyond budget",
+    "No rule group is emitted for zero matching rules; output expressly says unsupported_refuse for absent groups",
+    "No native profile/admission/ready claim; original complete valid facts, declared witness keys, truthful current mapping and safe operator/helper environment remain premises",
+    "No total process CPU/heap/source-refinement theorem or complete writer/source lifetime proof"
+  ],
+  "initialControlCorrection": "First reviewer work-bound fixture accidentally exceeded existing ontology256-action cap; corrected fixture accounts for all original action names, final exact/one-over controls pass",
+  "finalParentNativeSuite": {
+    "path": "/private/tmp/truss-selected-eligibility-full-native.log",
+    "sha256": "a0d93618634995de7b7d6490a8fc44bd89f587cd51128ee95e35c41b1ae66689",
+    "result": "6tests passed27.386sec; parent-run, log inspected not independently rerun"
+  }
+}
