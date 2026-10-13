@@ -1,0 +1,77 @@
+{
+  "scope": "Basic public exact timestamp/binary projections and optional presence; not full corpus/interchange",
+  "profile": "DocumentDrivenDX pgserver-pg18==18.6.1 / PostgreSQL18.6 / psycopg3.3.6 binary libpq18.6 / Bun1.4.2",
+  "runtime": "truss-catalog-runtime/0.31-candidate",
+  "weftBackend": "0.4.4",
+  "versions": {
+    "compile": "0.2.1",
+    "ir": "0.2.1",
+    "backendInterface": "0.2.1",
+    "sql": "0.2.0"
+  },
+  "sourceHeads": {
+    "truss": "8cfbec23976a96de45a6954094e7566cfe172f7e",
+    "weft": "1981befb50fa4d19a493bcdc4c85f3d1ac4c8d5e"
+  },
+  "wheelSha256": "a9e8346c2f8fe66c2e4a73eb8037089918aafcbf358f39cd2d6f786e7dcda0f9",
+  "weftExtensionSha256": "1919b03a24b1ea3985f86c698c4446711ab8c72bbc1e7d93cafac531e25fe5ff",
+  "validation": {
+    "mergedInstalledPublicWorkflows": {
+      "tests": 2,
+      "seconds": 16.979,
+      "result": "OK",
+      "previewFormat": "truss-public-python-preview/0.4",
+      "previewObservations": 22
+    },
+    "original043ConsumerOnRebuiltExtension": {
+      "tests": 1,
+      "seconds": 6.379,
+      "result": "OK"
+    },
+    "rustPythonBuild": "passed",
+    "typingFixtures": 5,
+    "expectedNegativeErrors": 20,
+    "pythonModuleImports": 873,
+    "weftPackages": 11
+  },
+  "observed": [
+    "Public create/commit and read-only direct/query reads",
+    "20-digit timestamp fractional text and original offset/spelling retained",
+    "Exact binary base64 text retained",
+    "Complete alias.* fields",
+    "Optional exact token, explicit null and absent values distinguished",
+    "Timestamp comparison/grouping and binary ordering refused",
+    "Read-only caller transaction remains without assigned xid",
+    "Public preview install/catalog/mutation/replay/precondition/dry-run/import/feed/ack/reached workflow"
+  ],
+  "preservation": [
+    "Old closed schemas unchanged",
+    "Original backend0.4.3 remains on compile/IR/backend interface0.2.0",
+    "Original runtime0.31 manifest/SQL and physical layout unchanged",
+    "Preview0.1\u20130.3 retained",
+    "Security-owner main changes integrated without activating protected admission"
+  ],
+  "open": [
+    "Complete required corpus and independent bidirectional interchange",
+    "Stable published layout",
+    "Structured/owned values and wider key/group domains",
+    "Timestamp/binary comparisons and parameters",
+    "Aurora/Lakebase deployment qualification",
+    "Protected security activation"
+  ],
+  "review": "Astra Ultra approved plan, source/version correction and merge intersections",
+  "files": {
+    "packages/python/src/truss/_query_runtime.py": "16bdd1a47daab9b72f8d6125bba5de90c830a7cbb271c3bbe7ed9e9952fab104",
+    "packages/python/src/truss/query.py": "b09a76bdef2c8f8905fce80f24ff08fc6c4e9a6171bef5054721acc6436e9dfe",
+    "packages/python/tests/test_compiled_query_native.py": "ca4d7a2542604fe78582ac5060e1ecb656abebc15aa2b5b50a4c029560ff325c",
+    "packages/python/src/truss/_catalog_runtime/manifest.json": "c597f15730f41f65411a8125ba218b35e797555f33ec7259f15b4b036b15fb2d",
+    "docs/helix/04-build/corpus/public-python/0.4/adopter-basic.json": "4c403ab1f471929734392fe8044c389116141f427daa2adb5703f272537d902b"
+  },
+  "weftFiles": {
+    "crates/weft-core/src/application_model.rs": "89ee21bdbef54a19c2e2f62abefcdb4cb007acedeac07bc33e3ea35ce5a608d2",
+    "crates/weft-core/src/backend.rs": "7fdff1c5c06ef11851b4c633f7b238c3f835cada4abe2ad2fd14f86ce67e3e2d",
+    "crates/weft-core/src/compile.rs": "80d4fbc6d334b91c4e6cd7461bb1e4b28badfc99344b59385e840079eac35794",
+    "crates/weft-postgresql/src/truss_runtime.rs": "c0a12ae9fc4ec38953e0a3e060e9471ce1ec09e2b95533ee4dd891e5599ac2cc",
+    "docs/helix/02-design/contracts/logical-plan-v0.2.1.schema.json": "309b0c10288d51d3ad7b1dd5132de9bae799ee33ab7881a716e067e04ad9189a"
+  }
+}

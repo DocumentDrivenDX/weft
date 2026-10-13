@@ -1304,3 +1304,17 @@ Post-merge validation preserves upstream8129b19's ordinary Truss PostgreSQL/runt
 Astra independently verified scoped join/masked combinations and the common fold after correcting one obsolete partial-subject rejection assertion. Native/compiler admission remains closed: no source/refinement/native-snapshot proof or required backend acceptance case is supplied by this logical change. All132 required cases remain in scope.
 
 Full workspace validation passes626 tests across46 groups, zero failed/ignored/filtered. Strict ownership passes11 packages and the independent Cargo manifest boundary check passes11 modules/12 edges. No inventory regeneration was required; the new fold is private.
+
+### Truss exact token projections — 2026-10-12
+
+Backend0.4.4 extends the public PG18 integration with projection-only timestamp
+and binary descriptors under compile/IR/backend interfaces0.2.1. Comparable
+families and SQL dialect0.2.0 stay unchanged; old schemas/backends remain closed.
+The existing backend traits and pure compiler dispatch are reused. Generic
+backend codecs explicitly refuse these values rather than treat them as strings.
+
+The installed Truss mixed scalar workflow and preview0.4 pass on the merged
+Rust/Python build; original backend0.4.3 consumers remain usable. Astra Ultra
+reviewed the plan, implementation and merge. [Receipt](evidence/truss-exact-projections-20261012.json)
+records scoped native results and artifact hashes. Timestamp arithmetic, binary
+comparison, new browser packages and protected security activation are not claimed.
