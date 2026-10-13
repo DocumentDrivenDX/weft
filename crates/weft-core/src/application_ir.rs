@@ -115,7 +115,9 @@ pub enum Expression {
 pub enum NativeMetadata {
     Version,
     CreatedBy,
+    CreatedAt,
     UpdatedBy,
+    UpdatedAt,
     OriginalAuthor,
     OriginalAt,
 }

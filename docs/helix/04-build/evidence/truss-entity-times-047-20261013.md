@@ -1,0 +1,5 @@
+# Truss entity timestamps, backend0.4.7 — 2026-10-13
+
+New immutable compile-request/compile-response/logical-plan/backend-manifest schemas0.2.3 admit the timestamp metadata alternatives. Explicit entity-read profile0.2 adds creation/update timestamps and collision checks. Old2.2 bytes and profile0.1 behavior remain unchanged. Runtime backend0.4.7 selects Truss0.34; timestamp lowering calls the verified additive owned native helper. Page compilation accepts the new transport while retaining its explicit generated-node provenance.
+
+Native Python build/check passed with truss-postgresql-pg18. Truss's installed public timestamp/direct-reader create/update/no-op workflow passed (one test9.476seconds); seven original SQL/output variants and populated upgrade/rollback/replay/feed checks passed(two tests18.136seconds); existing preview basic22/exact-scalar10 passed(two tests18.242seconds). Weft boundaries11 passed. These are basic scoped interface observations on PostgreSQL18.6, not full corpus/interchange qualification. Astra Ultra approved the corrected schemas and .33 preservation coverage.

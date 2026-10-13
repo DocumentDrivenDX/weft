@@ -89,6 +89,7 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
                 profile_key(p),
                 ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
             ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+                || (interface == "weft-backend/0.2.3" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.3"))
                 || (interface == "weft-backend/0.2.2" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.2"))
         }) && profiles.iter().all(|p| seen.insert(profile_key(p)))
 }
@@ -142,7 +143,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2") || !valid_languages(&m.language_profiles, &m.interface_version) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
