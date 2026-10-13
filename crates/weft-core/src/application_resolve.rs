@@ -436,3 +436,60 @@ pub fn resolve(
         limit: q.limit,
     })
 }
+
+/// Resolved page with compiler-owned hidden authored key outputs.
+/// The caller must remove exactly these trailing outputs after keyset lookahead.
+/// Generated AST spans are diagnostic anchors, not authored SQL provenance.
+/// This source increment is not a public page compiler: page emission must label
+/// continuation bindings explicitly before exposing a backend artifact.
+pub struct PagePlan {
+    pub plan: ir::Plan,
+    pub visible_outputs: usize,
+    pub key_outputs: Vec<usize>,
+    pub page_size: u16,
+}
+
+pub fn resolve_page(
+    catalog: &Catalog,
+    mut query: ast::Query,
+    parameters: Parameters,
+    page_size: u16,
+    after: Option<&[String]>,
+) -> Result<PagePlan> {
+    if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
+        || !query.joins.is_empty() || !query.groups.is_empty()
+        || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_) | ast::Output::Related { .. }))
+    {
+        return Err(fail("WFT-PROFILE", "SQL page requires a single nonaggregated source without caller ORDER BY or LIMIT"));
+    }
+    let record = catalog.record(query.source.namespace.as_ref(), &query.source.name)?;
+    let primary = record.value["keys"].as_array().ok_or_else(|| fail("WFT-PROFILE", "SQL page requires an authored primary key"))?
+        .iter().filter(|key| key["primary"] == true).collect::<Vec<_>>();
+    if primary.len() != 1 { return Err(fail("WFT-PROFILE", "SQL page requires exactly one authored primary key")); }
+    let key = catalog.authored_key(&record, primary[0]["id"].as_str().unwrap())?;
+    if key.fields.is_empty() || key.types.iter().any(|t| t.family != Family::String || t.nullable || t.facets != json!({})) {
+        return Err(fail("WFT-PROFILE", "SQL page requires complete required-string key components"));
+    }
+    let mut columns = Vec::new();
+    for (index, identity) in key.fields.iter().enumerate() {
+        let (member, _) = catalog.member_descriptor_by_identity(&record, identity)?;
+        let column = Column { unqualified: false, alias: query.source.alias.clone(),
+            field: Name { value: member.name, quoted: true, span: query.source.name.span.clone() }, span: query.source.name.span.clone() };
+        query.outputs.push(ast::Projection { output: ast::Output::Field(column.clone()),
+            alias: Some(Name { value: format!("__weft_page_key_{index}"), quoted: true, span: query.source.name.span.clone() }) });
+        columns.push(column);
+    }
+    if let Some(after) = after {
+        if after.len() != columns.len() { return Err(fail("WFT-TYPE", "SQL page continuation key arity differs")); }
+        query.predicates.push(ast::Predicate::Compare { columns: columns.clone(), greater: true,
+            values: after.iter().map(|value| ast::Value::Literal(Literal { value: value.clone(), kind: LiteralKind::String,
+                span: query.source.name.span.clone() })).collect() });
+    }
+    query.order = columns;
+    query.limit = Some(page_size + 1);
+    let mut plan = resolve(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }))?;
+    plan.ir_version = "weft-ir/0.2.2".into();
+    let visible_outputs = plan.outputs.len() - key.fields.len();
+    let key_outputs = (visible_outputs..plan.outputs.len()).collect();
+    Ok(PagePlan { plan, visible_outputs, key_outputs, page_size })
+}

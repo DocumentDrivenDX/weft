@@ -115,3 +115,28 @@ fn schema_identity_and_dependency_guards() {
     assert_eq!(run(&req)["status"], "resolved");
     assert_eq!(run(&req)["retainedModules"], req["modules"]);
 }
+
+#[test]
+fn sql_page_uses_original_primary_key_and_hidden_continuation() {
+    use weft_core::{application_resolve::{resolve_page, Parameters}, application_syntax, model::{Catalog, ModuleInput}};
+    let text = include_str!("../../../tests/fixtures/original-commerce-0.8/ontology.json");
+    let document: Value = serde_json::from_str(text).unwrap();
+    let input: ModuleInput = serde_json::from_value(serde_json::json!({
+        "documentJson": text,
+        "pin": {"documentId":document["id"],"revision":"original-commerce0.8","umfVersion":"0.8.0","sha256":weft_core::json::sha256(text.as_bytes())},
+        "selectedModuleIds":["domain"]
+    })).unwrap();
+    let catalog = Catalog::prepare_exact_numbers(vec![input]).unwrap();
+    let sql = "SELECT c.name FROM customers c";
+    let first = resolve_page(&catalog, application_syntax::parse(sql).unwrap(), Parameters::new(), 1, None).unwrap();
+    assert_eq!(first.visible_outputs, 1);
+    assert_eq!(first.key_outputs, vec![1]);
+    assert_eq!(first.plan.order[0].identity.element, "customers.id");
+    assert_eq!(first.plan.limit, Some(2));
+    let after = vec!["c1".to_owned()];
+    let second = resolve_page(&catalog, application_syntax::parse(sql).unwrap(), Parameters::new(), 1, Some(&after)).unwrap();
+    let weft_core::application_ir::Predicate::LexicographicGreater { columns, values } = &second.plan.filters[0] else { panic!("original key continuation required") };
+    assert_eq!(columns[0].identity.element, "customers.id");
+    let weft_core::application_ir::Value::Literal { value, .. } = &values[0] else { panic!("exact key value required") };
+    assert_eq!(value, "c1");
+}

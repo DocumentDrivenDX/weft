@@ -479,7 +479,13 @@
             "field:family",
             "field:value",
             "type:Parameters",
-            "fn:resolve"
+            "fn:resolve",
+            "struct:PagePlan",
+            "field:plan",
+            "field:visible_outputs",
+            "field:key_outputs",
+            "field:page_size",
+            "fn:resolve_page"
           ],
           "pathReferences": []
         },
