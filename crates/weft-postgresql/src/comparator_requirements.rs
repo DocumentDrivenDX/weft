@@ -256,6 +256,7 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
             }
             for output in &plan.outputs {
                 match &output.expression {
+                    app::Expression::NativeMetadata { .. } => return Err(fail("Native entity metadata requires an explicit Truss profile")),
                     app::Expression::Sum { argument, .. } => {
                         field(&mut all, &owners, argument, Operation::Sum)?
                     }

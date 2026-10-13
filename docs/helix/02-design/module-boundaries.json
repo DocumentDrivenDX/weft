@@ -407,6 +407,7 @@
             "field:right",
             "field:on",
             "enum:Expression",
+            "enum:NativeMetadata",
             "struct:Output",
             "field:name",
             "field:expression",

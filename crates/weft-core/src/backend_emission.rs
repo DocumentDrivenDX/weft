@@ -133,7 +133,8 @@ pub(crate) fn validate(
                         crate::application_ir::Expression::Field { scan, identity } => {
                             Expected::Field(scan, identity)
                         }
-                        crate::application_ir::Expression::Count { logical_type }
+                        crate::application_ir::Expression::NativeMetadata { logical_type, .. }
+                        | crate::application_ir::Expression::Count { logical_type }
                         | crate::application_ir::Expression::Sum { logical_type, .. } => {
                             Expected::Scalar(logical_type)
                         }

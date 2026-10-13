@@ -874,7 +874,8 @@ fn selected(plan: Plan<'_>) -> Selection {
                     AE::Field { identity, .. } => s.fields.push(identity.clone()),
                     AE::Sum { argument, .. } => s.fields.push(argument.identity.clone()),
                     AE::RelatedKeys { relationship, .. } => rel(relationship, &mut s),
-                    AE::Count { .. } => {}
+                    AE::Count { .. } => {},
+                    AE::NativeMetadata { record, .. } => s.types.push(record.clone()),
                 }
             }
             s.types

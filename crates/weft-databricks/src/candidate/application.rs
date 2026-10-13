@@ -152,6 +152,7 @@ pub(super) fn lower(
     }
     for output in &plan.outputs {
         match &output.expression {
+            app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
                 let Shape::Scalar { logical_type } = &d.shape else {
@@ -250,6 +251,7 @@ pub(super) fn lower(
             continue;
         }
         let (sql, ty, ids) = match &output.expression {
+            app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => {
                 let Shape::Scalar { logical_type } = &descriptor(plan, identity)?.shape else {
                     unreachable!()
@@ -290,6 +292,7 @@ pub(super) fn lower(
             app::Expression::RelatedKeys { .. } => unreachable!(),
         };
         let optional = match &output.expression {
+            app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => lower
                 .presence
                 .get(&(scan.clone(), serde_json::to_string(identity).unwrap()))
