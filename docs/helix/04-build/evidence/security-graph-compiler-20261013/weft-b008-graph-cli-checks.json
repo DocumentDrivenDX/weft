@@ -1,0 +1,91 @@
+{
+  "scope": "Actual source producer positive/refusal controls; not native authority. Authored revision names remain opaque, native counter is distinct.",
+  "binarySha256": "818def80d7df4569466030916b1afaf8acae5145f03ca2ed73175956a9adc976",
+  "checks": [
+    {
+      "case": "SELECT r.resourceId FROM Resource r",
+      "status": "prepared",
+      "contextSha256": "cb85302dc858aee791d7bcfbabc046ed4abf37567cfec81a18fda8bfad2a308e",
+      "outputSha256": "4c80fa4a88f164978e60430174125e6e3804ad99f58fbff16d753b623a3fbea2"
+    },
+    {
+      "case": "SELECT r.resourceId,r.salary FROM Resource r",
+      "status": "prepared",
+      "contextSha256": "88ec06cacef66b7cb084bab2dd05e547c8a784ab9b0801b12fc5b0ea2ace7462",
+      "outputSha256": "aafc5fd8a946606472588d6882c2bac6623a01a98ce59819b19ed57f9fcac23c"
+    },
+    {
+      "case": "SELECT r.resourceId AS second,r.resourceId AS first FROM Resource r",
+      "status": "prepared",
+      "contextSha256": "46d2e75c909affc582d669c0046058e39ae4c4e5390cf56349e01be0a2aa6a75",
+      "outputSha256": "954ecc6954da2904cfec78d5de4c93c63b890b1c46a0612a5e918fdc1701b718"
+    },
+    {
+      "case": "SELECT COUNT(*) FROM Resource r",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-QUERY\",\"severity\":\"error\",\"message\":\"Original direct graph projection required\",\"phase\":\"capability\"}\n"
+    },
+    {
+      "case": "SELECT r.resourceId FROM Resource r WHERE r.resourceId = :key",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-MAPPING-TRANSPORT\",\"severity\":\"error\",\"message\":\"Security mapping transport refused\",\"phase\":\"input\"}\n"
+    },
+    {
+      "case": "SELECT r.resourceId FROM Resource r ORDER BY r.resourceId",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-QUERY\",\"severity\":\"error\",\"message\":\"Original direct graph projection required\",\"phase\":\"capability\"}\n"
+    },
+    {
+      "case": "SELECT r.resourceId FROM Resource r LIMIT 1",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-QUERY\",\"severity\":\"error\",\"message\":\"Original direct graph projection required\",\"phase\":\"capability\"}\n"
+    },
+    {
+      "case": "SELECT r.resourceId FROM Resource r JOIN Resource q ON r.resourceId=q.resourceId",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-QUERY\",\"severity\":\"error\",\"message\":\"Original direct graph projection required\",\"phase\":\"capability\"}\n"
+    },
+    {
+      "case": "separate-authored-revision-correspondence-only",
+      "status": "prepared",
+      "contextSha256": "4756c4fd59ad45a4647c229b6a2c1fd9f65ac15d469adec32eb37603cb614f4c",
+      "outputSha256": "0cfc4e85481dff003f78c32abbad5312b4fed3bbf337a9671503d72e73bfc84e"
+    },
+    {
+      "case": "original-authored-revision",
+      "status": "prepared",
+      "contextSha256": "cb85302dc858aee791d7bcfbabc046ed4abf37567cfec81a18fda8bfad2a308e",
+      "outputSha256": "4c80fa4a88f164978e60430174125e6e3804ad99f58fbff16d753b623a3fbea2"
+    },
+    {
+      "case": "corruption-1",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-BINDING\",\"severity\":\"error\",\"message\":\"Original typed graph correspondence required\",\"phase\":\"model\"}\n"
+    },
+    {
+      "case": "corruption-2",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-BINDING\",\"severity\":\"error\",\"message\":\"Original typed graph correspondence required\",\"phase\":\"model\"}\n"
+    },
+    {
+      "case": "corruption-3",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-BINDING\",\"severity\":\"error\",\"message\":\"Original typed graph correspondence required\",\"phase\":\"model\"}\n"
+    },
+    {
+      "case": "corruption-4",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-BINDING\",\"severity\":\"error\",\"message\":\"Original typed graph correspondence required\",\"phase\":\"model\"}\n"
+    },
+    {
+      "case": "corruption-5",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-BINDING\",\"severity\":\"error\",\"message\":\"Original typed graph correspondence required\",\"phase\":\"model\"}\n"
+    },
+    {
+      "case": "corruption-6",
+      "status": "refused",
+      "stderr": "{\"code\":\"WFT-SECURITY-GRAPH-INPUT\",\"severity\":\"error\",\"message\":\"Original graph source mapping request refused\",\"phase\":\"input\"}\n"
+    }
+  ]
+}

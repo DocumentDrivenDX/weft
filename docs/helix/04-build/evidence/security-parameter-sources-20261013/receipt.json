@@ -1,0 +1,49 @@
+{
+  "baseline": "5cc48c6f5f9db7517ce81e75202459b0a52e33de",
+  "rust": "1.90.0",
+  "commands": [
+    "cargo test --locked --offline -p weft-core --lib --test security_admission --test security_parameter_sources",
+    "bun run modules:check",
+    "cargo test --locked --offline -p weft-core --doc security_parameter_sources",
+    "bun run specs:check"
+  ],
+  "tests": {
+    "core": 272,
+    "admission": 75,
+    "parameterSources": 6,
+    "moduleBoundaries": 16,
+    "privacyCompileFail": 1
+  },
+  "ignored": 0,
+  "failed": 0,
+  "privacyFilteredUnrelatedDocTests": 4,
+  "workspacePackages": 11,
+  "logs": {
+    "core": {
+      "rawSha256": "8dfbf3c02d6d1518da0384b3a59a839ea32304f416bd6d1f17486e1862cfef93",
+      "bytes": 41737
+    },
+    "modules": {
+      "rawSha256": "dbdc011e5cf8d8de45829baeb933bb7c48620ca5ce49a4151eaab68c30c70322",
+      "bytes": 1878
+    },
+    "privacy": {
+      "rawSha256": "93abb7e03fa384ee1307116ed9782c4c4bfec51ecd7e3d0b68adc2c39a1f9731",
+      "bytes": 6160
+    },
+    "specs": {
+      "rawSha256": "c939fae1050c6bf671ea4801e6943dc8f552260449045860469fa57e3108bf50",
+      "bytes": 253
+    }
+  },
+  "scope": "Original borrowed parameter-source inventory and original object correspondence, distinct query/policy/context/subject channels; no native issuer, physical slot/codec, execution, or release admission.",
+  "moduleInventoryReconciliation": [
+    "core lib/backend/mapping/ontology source APIs",
+    "new core parameter source inventory",
+    "PostgreSQL lib/graph source/query/predicate APIs"
+  ],
+  "remaining": "B-008 and all132 original shared/native cases remain open; graph physical slot binding and registered native issuers/dispatch are next.",
+  "governedArtifacts": 61,
+  "schemas": 62,
+  "specCheckerExecutionQualification": "Schema/artifact/allocated-case shape only; no compiler/native/embedding tests."
+}

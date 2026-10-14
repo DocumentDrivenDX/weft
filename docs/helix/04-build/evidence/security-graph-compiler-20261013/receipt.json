@@ -1,0 +1,39 @@
+{
+  "baseCommit": "0dc4a83a92a61c98da2c0e1e815a1095146982ca",
+  "scope": "Original source-bound graph compiler/result preparation only. Native/public security activation remains closed; all132 backend cases remain open.",
+  "sourceSha256": {
+    "crates/weft-core/src/security_ontology.rs": "7f45e6250db66e1c1a7de900e2631f23a8fb75a42f1cc393619c01f3cef098eb",
+    "crates/weft-core/src/security_mapping_transport.rs": "380924bc3c683bb0440e50d95c731b40972b50fcf0652cf584986104a1698b8a",
+    "crates/weft-postgresql/src/lib.rs": "87cb6790df4398fcdc5b73643f2f8ff9be72ecff02f9bf984d136bf0829be58b",
+    "crates/weft-postgresql/src/security_predicate_spike.rs": "cc308858345fb7d7119e0ceaa1ed7cd01867f1a35bf6875cd22087da81ab2c98",
+    "crates/weft-postgresql/src/security_graph_binding.rs": "8f3b5da864fa32a1e674e30dc249082b9aaf637b9bc0b7fc477f544849bed685",
+    "crates/weft-postgresql/src/security_graph_query.rs": "8c4ffc5cb4d2a3b1d2e4a7a8eb5c6e84ba3071535477d2a1ad76147dddca237a",
+    "crates/weft-postgresql/tests/security_graph.rs": "a8f5d08ee584a9b265c4f2ba4e54b75ae84528e80c20c30bdae65b1fadad7358",
+    "crates/weft-postgresql/examples/security_graph_candidate.rs": "fb4646a87876658b8f687625880b492d5b07ac6e7c4034641e342af27913c374",
+    "crates/weft-postgresql/examples/security_graph_result.rs": "63ac7d05df6f0864c51e93195b6182161b066fc514cd612f5e305032a90200b1",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "28fe3f32e15a508723e62f00331c07300a4ed4d7aa455e34abcca232f1a42fc4",
+    "docs/helix/04-build/implementation-plan.md": "b7281024e346e30629ff998ea59a459a2843a2057ea29c8410ebb95955e1de92",
+    "docs/helix/03-test/fixtures/security-graph-source/adoc.json": "37ba63adcfb8c618902fd708d09b5a0837674e393bc8817373b92e78a5bcfd73",
+    "docs/helix/03-test/fixtures/security-graph-source/binding-correspondence.json": "bf63104b7ab83b4eeaf60b08b1543341dd9a24100bf4ca13b606f3a5cff84fe1",
+    "docs/helix/03-test/fixtures/security-graph-source/resolution.json": "d6591a68b48b4f4a56b1631fce26dd66ac99a9d4f1f60c02c77c178bb3636e74",
+    "docs/helix/03-test/fixtures/security-graph-source/native-inventory.json": "4160caee59523a7a5fd33f21a6cf039b7004cd0bf0034028ef478b06df9035df",
+    "docs/helix/03-test/fixtures/security-graph-source/transport.json": "83ce25c40a5840b09c5eb4e95d1b4f756e4cb57c8d3429ba5c2e4dc850df48c6",
+    "docs/helix/03-test/fixtures/security-graph-source/mapping-request.json": "723e7855b33d46843837a55eb426a23df661bfa8ca2e62a20362491a6caaaa53",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/weft-b008-graph-cli-checks.json": "eb06d4d8d1ff80770845598288d80658ecec2aa4a7d9e7d5b82ec910c1bcf00f",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/check-b008-graph-cli.py": "f590dbbfd3a864c51c1c131cfc65c4893ca0e76e4a75cf6be3a26773d6d4d962",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/weft-b008-graph-tests-revision.log.gz": "b72294bdbce7fedc0f20097580e1de41a42530a93a6a747faadf60b8c1184f5d",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/weft-b008-graph-core.log.gz": "b22857b1a7b6350877d1c6e8bb8d94d0dda47d6827f092796cf1854967118a66",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/weft-b008-graph-admission.log.gz": "5d517e83cb7a968bf0a483df6f357f81ed93a31b82fcd00d6baba203efd5ff12",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/check-b008-graph-results.py": "7ab3d8cc840b55f7c57ec0970d9163bfb67ee7af15bd600b8b659c1c780c219b",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/weft-b008-graph-result-checks.json": "2a8ae251e4159f675d35156c78b5069372fedd71c5d91299bc3aede0aa1115b9",
+    "docs/helix/04-build/evidence/security-graph-compiler-20261013/receipt.json": "98798836326378938da93c8f9a6772ce755d52de99692ee672d13c43fbcf026f"
+  },
+  "checks": {
+    "coreLibrary": 269,
+    "securityAdmission": 74,
+    "graphSourceTests": 2,
+    "actualProducerControls": 16,
+    "actualResultControls": 8
+  },
+  "date": "2026-10-13"
+}

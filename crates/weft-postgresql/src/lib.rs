@@ -273,3 +273,9 @@ pub mod native_profile;
 pub mod qualified_profile;
 
 pub mod security_predicate_spike;
+
+/// Explicit reified graph correspondence, not protected execution admission.
+pub mod security_graph_binding;
+
+/// Owner-derived direct graph projection; native admission remains mandatory.
+pub mod security_graph_query;

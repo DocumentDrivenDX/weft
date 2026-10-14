@@ -1,0 +1,8 @@
+{
+  "date": "2026-10-13",
+  "scope": "Restore original timestamp parameter helper omitted by older graph snapshot. Original graph/source proofs remain candidate-only; no native activation.",
+  "sourceBefore": "6de199f98f0f93b4025a3436519f7a18df20c160",
+  "sourceAfterSha256": "db0d20e66cf02485bb4b3a92e899754ce0d88202e1b0b32b01e94bdb63a33e4f",
+  "tests": "Both original graph examples rebuild; 16 producer and 8 result controls replay successfully.",
+  "audit": "Compared all touched preexisting code/contract paths against true initial snapshot385d372 and graph parent0dc4a83; timestamp helper is the only lost code. Existing preparation contract section retained."
+}

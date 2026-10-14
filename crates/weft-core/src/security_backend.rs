@@ -128,6 +128,8 @@ impl<'a> SecurityBackendContext<'a> {
     pub fn check_simulated_result_selection(&self, contract: &crate::security_lowering::SecurityResultContract, contract_json: &str, hash: &str, batch_json: &str, truth_rows: &[SecuritySimulatedRowTruths]) -> Result<()> { crate::security_result_selection::check(self,contract,contract_json,hash,batch_json,truth_rows) }
     /// Conditional evaluated facts and Original values; caller facts are not credentials.
     pub fn check_simulated_fact_selection(&self, contract: &crate::security_lowering::SecurityResultContract, contract_json: &str, hash: &str, batch_json: &str, cut_json: &str, rows_json: &str) -> Result<()> { crate::security_evaluation::check_owner_rows(self,contract,contract_json,hash,batch_json,cut_json,rows_json) }
+    /// Original parameter provenance only; no native caller/context value or permission.
+    pub fn parameter_sources(&self) -> Result<crate::security_parameter_sources::SecurityParameterSources<'_, 'a>> { crate::security_parameter_sources::issue(self) }
     pub fn requirements(&self) -> &crate::security_requirements::SecurityRequirements<'a> { &self.requirements }
     pub fn catalog(&self) -> &Catalog { self.catalog }
     pub fn logical_plan(&self) -> &SecurityLogicalPlan { self.logical_plan }
@@ -266,7 +268,7 @@ pub type SecurityRegistryFactory<'host> = dyn for<'context> FnMut(&SecurityBacke
 /// bounded error-shaped output even if a trusted callback supplies bad fields.
 pub(crate) fn callback_error(d: Diagnostic, sql_bytes: usize) -> Diagnostic {
     let code=d.code.strip_prefix("WFT-").is_some_and(|tail| !tail.is_empty() && tail.bytes().all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b==b'-'));
-    let phase=matches!(d.phase.as_str(),"input"|"model"|"parse"|"resolve"|"type"|"capability"|"lower"|"emit"|"host");
+    let phase=matches!(d.phase.as_str(),"input"|"model"|"parse"|"resolve"|"type"|"capability"|"lower"|"emit"|"host"|"result");
     let span=d.source_span.as_ref().is_none_or(|s|s.start<=s.end && s.end<=sql_bytes);
     if d.severity=="error" && code && d.code.len()<=4096 && phase && !d.message.is_empty() && d.message.len()<=4096 && !d.message.contains('\0') && span { d }
     else { fail("Security callback returned an invalid or unbounded error diagnostic") }

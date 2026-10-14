@@ -642,6 +642,31 @@ fn manifest_status_and_candidate_option_never_upgrade_unqualified_lowering(){
 }
 
 #[test]
+fn security_callback_preserves_bounded_original_result_refusals() {
+ use weft_core::error::Diagnostic;
+ for code in ["WFT-SECURITY-RESULT", "WFT-LIMIT"] {
+  let diagnostic = Diagnostic::new(code, "result", "Original result checker refused the complete batch");
+  let mut calls = 0;
+  let raw = Compiler::default().compile_json_with_security_factory(&security04_request().to_string(), &mut |_| {
+   calls += 1;
+   Err(diagnostic.clone())
+  });
+  assert_eq!(calls, 1);
+  let value: Value = serde_json::from_str(&raw).unwrap();
+  refused(value.clone(), code);
+  assert_eq!(value["diagnostics"][0]["phase"], "result");
+  assert_eq!(value["diagnostics"][0]["message"], diagnostic.message);
+  assert_eq!(value.as_object().unwrap().len(), 3);
+  let request = include_str!("../../../docs/helix/03-test/fixtures/security-graph-source/mapping-request.json");
+  let result: weft_core::error::Result<()> = weft_core::security_mapping_transport::with_security_mapping_context(request, |_| Err(diagnostic.clone()));
+  let error = result.expect_err("mapping callback must retain the original result refusal");
+  assert_eq!(error.code, code);
+  assert_eq!(error.phase, "result");
+  assert_eq!(error.message, diagnostic.message);
+ }
+}
+
+#[test]
 fn security_callback_malformed_diagnostics_still_produce_bounded_error_refusals(){
  use weft_core::error::Diagnostic;
  let req=security04_request();
