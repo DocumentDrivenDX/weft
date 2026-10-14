@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-guarded-result-input-v0.1-candidate.schema.json",
+  "description": "Pure original source/query/parameter/result correspondence only; no native caller/source/current-authority admission or release permit.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.truss.security.guarded-result/0.1-candidate"
+    },
+    "sourceRequestJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "sourceOutputJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16000000
+    },
+    "batchJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    }
+  },
+  "required": [
+    "version",
+    "sourceRequestJson",
+    "sourceOutputJson",
+    "batchJson"
+  ],
+  "additionalProperties": false
+}

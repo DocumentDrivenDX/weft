@@ -2186,7 +2186,8 @@
             "mod:security_predicate_spike",
             "mod:security_graph_binding",
             "mod:security_graph_query",
-            "mod:security_graph_parameters"
+            "mod:security_graph_parameters",
+            "mod:security_guarded_transport"
           ],
           "pathReferences": []
         },
@@ -2742,6 +2743,19 @@
             "fn:parameter_bindings",
             "fn:prepare_graph_query",
             "fn:prepare_graph_query_checked"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_guarded_transport.rs",
+          "publicDeclarations": [
+            "struct:GuardedGraphCandidate",
+            "fn:json",
+            "fn:source",
+            "fn:query_context_sha256",
+            "fn:query",
+            "fn:prepare_guarded_graph_candidate",
+            "fn:inspect_guarded_graph_result"
           ],
           "pathReferences": []
         },

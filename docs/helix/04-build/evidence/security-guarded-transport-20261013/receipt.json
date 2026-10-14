@@ -1,0 +1,76 @@
+{
+  "baseline": "22914f11646a95473df19ad547a4debcfc05ff19",
+  "scope": "Pure original source/query/policy-ordinal/subject-demand/result correspondence transport; no native source/actor/current-authority/selection/permit/release qualification.",
+  "tests": {
+    "guardedIntegration": 4,
+    "graphRegression": 6,
+    "guardedBufferUnit": 1,
+    "privacyCompileFail": 1,
+    "moduleBoundary": 16,
+    "actualCliControls": 15
+  },
+  "failed": 0,
+  "ignored": 0,
+  "commands": [
+    "cargo test --locked --offline -p weft-postgresql --test security_guarded_transport --test security_graph",
+    "cargo build --locked --offline -p weft-postgresql --example security_guarded_candidate --example security_guarded_result",
+    "cargo test --locked --offline -p weft-postgresql --lib security_guarded_transport",
+    "cargo test --locked --offline -p weft-postgresql --doc security_guarded_transport",
+    "python check-cli.py",
+    "bun run modules:check",
+    "bun run specs:check"
+  ],
+  "remaining": "B-008 and all132 original required cases remain open. Registered guarded dispatch, full SQL semantics and all native/lifecycle qualification remain required.",
+  "reviewFix": "Explicit object carrier check rejects Serde positional arrays before struct deserialization; final Rust/CLI controls retained.",
+  "specs": {
+    "governedArtifacts": 61,
+    "schemas": 66,
+    "shapeOnly": true
+  },
+  "filtered": {
+    "unitUnrelated": 80,
+    "privacyUnrelated": 1
+  },
+  "logs": {
+    "final-modules": {
+      "rawSha256": "901b50f6934d17f02e1713acc60d4e58f956186d978ad38831b68aa607aa20e9",
+      "bytes": 1888
+    },
+    "privacy": {
+      "rawSha256": "c46aafd2171c62ff7aecb6c9fc3640acd9b6ab6373e36bbe5e12e8e12b84c0b0",
+      "bytes": 6170
+    },
+    "guarded-unit": {
+      "rawSha256": "458aa0b57be405cbfd761c1c3958e76d3920f5d000ffcb1993e18f6194783464",
+      "bytes": 7179
+    },
+    "transport": {
+      "rawSha256": "85bc296c37351bf79099bd4623775de841114c5580ac363cc625eddeb2352623",
+      "bytes": 7354
+    },
+    "modules": {
+      "rawSha256": "216c1a029620e0e454e8fbfb0c89f4415887280eb958f7f8a2872236f0ed8c81",
+      "bytes": 1888
+    },
+    "final-transport": {
+      "rawSha256": "fbba5275b406c86ae6b327b1aa936694b97b730f55ae80e0d1302c893736e8a3",
+      "bytes": 7354
+    },
+    "final-specs": {
+      "rawSha256": "0bf6390b2124830f97611466d5b48eea4085f47bda2e8a2ae7902ddbbf284b70",
+      "bytes": 253
+    },
+    "examples": {
+      "rawSha256": "565bdc5767af69bbfb13bff6314b6358d54680aaad76eb4aa5ba50e8ddda95b3",
+      "bytes": 5984
+    },
+    "specs": {
+      "rawSha256": "0bf6390b2124830f97611466d5b48eea4085f47bda2e8a2ae7902ddbbf284b70",
+      "bytes": 253
+    },
+    "final-examples": {
+      "rawSha256": "ea69d1b07201590a4fba1e5dcd34dfa992b35858ef63b967fca7d071e14728b7",
+      "bytes": 5983
+    }
+  }
+}

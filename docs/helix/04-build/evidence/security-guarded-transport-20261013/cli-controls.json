@@ -1,0 +1,82 @@
+{
+  "scope": "Actual guarded producer/inspector and old-inspector compatibility controls only; no native source/actor/selection/release proof.",
+  "producerSha256": "b5334eceef00c86ded7c4a93c138a93461d58d2849d927a0b402d6fc5f05325c",
+  "checkerSha256": "6ed5623c8f21d267e55d919b28d6009a2a6a4c3a1bc69d4db659a3445693b7ae",
+  "checks": [
+    {
+      "case": 0,
+      "status": "inspected",
+      "stdoutEmpty": false
+    },
+    {
+      "case": 1,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 2,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 3,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 4,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 5,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 6,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 7,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": 8,
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "positional-carrier",
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "old-inspector-rejects-guarded-output",
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "input-subject",
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "input-epoch",
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "input-permit",
+      "status": "refused",
+      "stdoutEmpty": true
+    },
+    {
+      "case": "distinct-query-same-sources",
+      "status": "prepared",
+      "securityReady": false
+    }
+  ]
+}
