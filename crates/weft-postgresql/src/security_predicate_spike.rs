@@ -86,6 +86,13 @@ pub(crate) fn render_graph_with_sources(plan:&SecurityLogicalPlan,catalog:&Catal
  output["graphSourceSha256"]=json!(graph.source_sha256());output["integrityChecks"]=json!(graph.integrity_checks());
  if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(rendered)
 }
+pub(crate) fn render_graph_context(ctx:&weft_core::security_backend::SecurityBackendContext<'_>,source:&crate::security_graph_binding::GraphSource)->Result<RenderedGraph>{
+ let graph=crate::security_graph_binding::GraphBinding::read_context(ctx,source)?;
+ let assessment=json!({"modelPins":ctx.catalog().pins(),"inventory":graph.inventory});
+ let mut rendered=render_inner(ctx.logical_plan(),ctx.catalog(),&assessment,Some(&graph))?;let output=&mut rendered.value;
+ output["graphSourceSha256"]=json!(graph.source_sha256());output["integrityChecks"]=json!(graph.integrity_checks());
+ if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(rendered)
+}
 fn render_inner(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value,graph:Option<&crate::security_graph_binding::GraphBinding>)->Result<RenderedGraph>{
  plan.require_catalog(catalog)?;if assessment["modelPins"]!=serde_json::to_value(catalog.pins()).map_err(|_|fail())?{return Err(fail());}
  let documents=catalog.inputs().iter().map(|i|weft_core::json::checked_json(&i.document_json).map_err(|_|fail())).collect::<Result<Vec<_>>>()?;

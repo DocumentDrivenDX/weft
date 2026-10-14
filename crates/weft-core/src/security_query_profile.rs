@@ -36,6 +36,11 @@ pub struct SecurityProfiledQuery<'a>{query:&'a crate::security_query_uses::Secur
 impl SecurityProfiledQuery<'_>{
  pub(crate) fn profile_source_json(&self)->&str{self.profile.source_json()}
  pub fn primary_action(&self)->&str{&self.profile.spec.action}
+ pub fn relationship_observation_action(&self,index:usize)->Result<&str>{
+  if !self.query.relationship_filters().contains(&index){return Err(fail());}
+  let crate::application_ir::Predicate::HasRelated{relationship,..}=&self.query.application_plan().filters[index] else{return Err(fail());};
+  self.profile.spec.relationships.iter().find(|e|e.relationship.document_id==relationship.identity.document_id&&e.relationship.module_id==relationship.identity.module&&e.relationship.relationship_id==relationship.identity.relationship).map(|e|e.observation_action.as_str()).ok_or_else(fail)
+ }
  pub fn obligations(&self)->&[crate::security_scan_obligations::ScanObligations]{&self.obligations}
  pub fn query(&self)->&crate::security_query_uses::SecurityResolvedQuery{self.query}
  pub fn uses(&self)->&[(crate::security_query_uses::QueryUse,Option<String>)]{&self.uses}

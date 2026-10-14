@@ -448,3 +448,25 @@ fn security_descending_order_retains_guarded_selection_and_old_registration_refu
   assert!(prepare_guarded_graph_candidate(&raw).is_err());
  }
 }
+
+#[test]
+fn relationship_candidate_keeps_source_observation_terminal_and_closed_old_protocols(){
+ use weft_postgresql::security_relational_transport::*;
+ for raw in [include_str!("security-public-relationship/compiler-request.json"),include_str!("security-public-relationship/compiler-request-observation-denied.json")] {
+  assert!(prepare_guarded_relational_candidate(raw).is_err());assert!(prepare_guarded_graph_candidate(raw).is_err());
+  let candidate=prepare_guarded_relationship_candidate(raw).unwrap();let wire:Value=serde_json::from_str(candidate.json()).unwrap();
+  assert_eq!(wire["version"],"weft.truss.security.relational-candidate/0.2-candidate");assert_eq!(wire["securityReady"],false);
+  for key in ["nativeAdmission","nativeCodecAdmission","nativePopulationAndSelection","releaseProtection"]{assert_eq!(wire[key],"required");}
+  let sql=wire["executionSql"].as_str().unwrap();assert!(sql.contains("EXISTS (SELECT 1 FROM truss.edge public_edge"));assert!(sql.contains("observation_0 IS TRUE"));assert!(sql.contains("public_edge.source_type=5 AND public_edge.target_type=5"));
+  assert_eq!(wire["operandReads"].as_array().unwrap().iter().map(|s|s["scan"].as_str().unwrap()).collect::<Vec<_>>(),vec!["s0","t0"]);
+  assert!(wire["checks"].as_array().unwrap().iter().any(|c|c["failureCode"]=="WFT-SECURITY-PUBLIC-RELATIONSHIP-INTEGRITY"));
+  assert!(wire["checks"].as_array().unwrap().iter().any(|c|c["failureCode"]=="WFT-SECURITY-RELATIONSHIP-OBSERVATION"));
+  let operands=json!({"version":"weft.security.operand-values/0.1-candidate","contextSha256":wire["queryContextSha256"],"scans":[{"scan":"s0","rows":[]},{"scan":"t0","rows":[]}]});
+  let batch=json!({"version":"weft.security.cells/0.1.0","resultContractSha256":wire["resultContractSha256"],"rows":[]});
+  let input=json!({"version":"weft.truss.security.relational-result/0.2-candidate","sourceRequestJson":raw,"sourceOutputJson":candidate.json(),"operandBatchJson":operands.to_string(),"batchJson":batch.to_string()});
+  let inspected=inspect_guarded_relationship_result(&input.to_string()).unwrap();assert_eq!(inspected["securityReady"],false);assert_eq!(inspected["nativeAdmission"],"required");
+  assert!(inspect_guarded_relational_result(&input.to_string()).is_err());assert!(inspect_guarded_graph_result(&input.to_string()).is_err());
+  let mut changed=input.clone();changed["sourceOutputJson"]=json!(candidate.json().trim_end());assert!(inspect_guarded_relationship_result(&changed.to_string()).is_err());
+  changed=input.clone();let mut bad=wire.clone();bad["executionSql"]=json!("SELECT secret");changed["sourceOutputJson"]=json!(bad.to_string()+"\n");assert!(inspect_guarded_relationship_result(&changed.to_string()).is_err());
+ }
+}

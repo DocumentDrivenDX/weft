@@ -91,12 +91,8 @@ pub fn prepare_relational_graph_parameters<'a, 'owner>(
     if binding != serde_json::to_value(source).map_err(|_| fail())? {
         return Err(fail());
     }
-    let native = GraphBinding::read(ctx.logical_plan(), ctx.catalog(), source)?;
-    let rendered = crate::security_predicate_spike::render_graph_with_sources(
-        ctx.logical_plan(),
-        ctx.catalog(),
-        source,
-    )?;
+    let native = GraphBinding::read_context(ctx, source)?;
+    let rendered = crate::security_predicate_spike::render_graph_context(ctx,source)?;
     let ontology = SecurityOntologyClosure::read(ctx.logical_plan().source(), ctx.catalog())?;
     let values = rendered.value["parameters"].as_array().ok_or_else(fail)?;
     let graph = crate::security_graph_parameters::issue_channels(

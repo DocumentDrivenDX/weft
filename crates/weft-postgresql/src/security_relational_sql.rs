@@ -205,13 +205,21 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
     source: &GraphSource,
 ) -> Result<RelationalGraphSql<'a, 'owner>> {
     let parameters = prepare_relational_graph_parameters(ctx, source)?;
-    let binding = GraphBinding::read(ctx.logical_plan(), ctx.catalog(), source)?;
+    let binding = GraphBinding::read_context(ctx, source)?;
     let graph =
-        crate::security_predicate_spike::render_graph(ctx.logical_plan(), ctx.catalog(), source)?;
+        crate::security_predicate_spike::render_graph_context(ctx,source)?.value;
     let guards = crate::security_query_use_guards::prepare_graph_query_use_guards(ctx, source)?;
     let app = ctx.query().application_plan();
     if app.outputs.is_empty() || app.outputs.len() > 64 || guards.scans().len() > 64 {
         return Err(fail());
+    }
+    for index in ctx.query().relationship_filters(){
+        let app::Predicate::HasRelated{relationship,..}=&app.filters[*index] else{return Err(fail());};
+        // This first public native profile admits unrestricted participation only.
+        // Finite/minimum degrees need independent complete distinct-neighbor guards.
+        for multiplicity in [&relationship.source_multiplicity,&relationship.target_multiplicity]{
+            if multiplicity["min"]!=0||multiplicity["max"]!="*"{return Err(fail());}
+        }
     }
     let subject = parameters.graph().subject();
     let subject_tid = subject.native_type_id();
@@ -274,9 +282,19 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
             .collect::<Vec<_>>();
         let base=format!("{truth} AS MATERIALIZED (SELECT r.id,r.props{} FROM truss.object r CROSS JOIN truss.object s WHERE r.type_id={tid} AND s.type_id={subject_tid} AND s.id=${slot}::pg_catalog.int8)",if truth_fields.is_empty(){String::new()}else{format!(",{}",truth_fields.join(","))});
         checks.push(json!({"failureCode":"WFT-SECURITY-QUERY-USE","sql":format!("WITH {base} SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {truth} r WHERE {}",scan.refusal_expression())}));
-        ctes.push(base);
+        ctes.push(base.clone());
         let mut fields = Vec::new();
         let mut captured = Vec::new();
+        for index in ctx.query().relationship_filters(){
+            let app::Predicate::HasRelated{scan:owner,..}=&app.filters[*index] else{return Err(fail());};
+            if owner!=scan.scan(){continue;}
+            let action=ctx.profiled_query().relationship_observation_action(*index)?;
+            let observation=graph["eligibility"].as_array().ok_or_else(fail)?.iter().find(|g|g["target"]==json!(scan.target())&&g["action"]==action);
+            let expression=observation.map(|g|g["decisionExpression"].as_str().ok_or_else(fail)).transpose()?.unwrap_or("'deny'");
+            checks.push(json!({"failureCode":"WFT-SECURITY-RELATIONSHIP-OBSERVATION","sql":format!("WITH {base} SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {truth} r WHERE ({decision})='permit' AND ({expression})='indeterminate'")}));
+            fields.push(format!("(({expression})='permit') AS observation_{index}"));
+        }
+
         for output in &app.outputs {
             if let app::Expression::Field {
                 scan: occurrence,
@@ -418,7 +436,16 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
         .filters
         .iter()
         .enumerate()
-        .map(|(i, p)| build.predicate(p, &format!("filters/{i}"), QueryOperator::Predicate))
+        .map(|(i,p)| {
+            if let app::Predicate::HasRelated{scan,relationship,key}=p {
+                let mapped=binding.query_relationship(&relationship.identity)?;
+                let source_alias=&targets.get(scan).ok_or_else(fail)?.0;
+                let terminal=format!("t{i}");let target_alias=&targets.get(&terminal).ok_or_else(fail)?.0;
+                let mut compared=Vec::new();
+                for (j,(field,value)) in relationship.target_key.fields.iter().zip(key).enumerate(){compared.push(format!("({})=({})",build.field(&terminal,field,Some(QueryOperator::Predicate))?,build.value(value,&format!("filters/{i}/key/{j}"),QueryOperator::Predicate)?));}
+                Ok(format!("EXISTS (SELECT 1 FROM truss.edge public_edge JOIN {target_alias} ON {target_alias}.id=public_edge.target_id WHERE public_edge.rel_type_id={} AND public_edge.source_type={} AND public_edge.target_type={} AND public_edge.source_id={source_alias}.id AND {source_alias}.observation_{i} IS TRUE AND ({}))",mapped.relation,mapped.source,mapped.target,compared.join(" AND ")))
+            }else{build.predicate(p,&format!("filters/{i}"),QueryOperator::Predicate)}
+        })
         .collect::<Result<Vec<_>>>()?;
     let relation = format!(
         "FROM {from}{}",

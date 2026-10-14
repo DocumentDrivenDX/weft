@@ -125,7 +125,7 @@ pub fn prepare_graph_query_use_guards(
         return Err(fail());
     }
     let graph =
-        crate::security_predicate_spike::render_graph(ctx.logical_plan(), ctx.catalog(), source)?;
+        crate::security_predicate_spike::render_graph_context(ctx,source)?.value;
     derive(
         ctx,
         &graph,

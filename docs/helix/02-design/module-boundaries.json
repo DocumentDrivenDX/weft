@@ -1757,6 +1757,7 @@
             "struct:SecurityQueryProfile",
             "struct:SecurityProfiledQuery",
             "fn:primary_action",
+            "fn:relationship_observation_action",
             "fn:obligations",
             "fn:query",
             "fn:uses",
@@ -2879,7 +2880,9 @@
             "struct:GuardedRelationalCandidate",
             "fn:json",
             "fn:prepare_guarded_relational_candidate",
-            "fn:inspect_guarded_relational_result"
+            "fn:inspect_guarded_relational_result",
+            "fn:prepare_guarded_relationship_candidate",
+            "fn:inspect_guarded_relationship_result"
           ],
           "pathReferences": []
         },

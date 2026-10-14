@@ -35,6 +35,10 @@ pub struct GraphBinding {
  source_sha256:String,guards:Vec<Value>,
 }
 impl GraphBinding {
+ pub(crate) fn read_context(ctx:&weft_core::security_backend::SecurityBackendContext<'_>,source:&GraphSource)->Result<Self>{
+  if ctx.query().relationship_filters().is_empty(){Self::read(ctx.logical_plan(),ctx.catalog(),source)}else{Self::read_relationship_candidate(ctx.logical_plan(),ctx.catalog(),source)}
+ }
+ pub(crate) fn query_relationship(&self,identity:&weft_core::application_model::RelationshipIdentity)->Result<&QueryRelationship>{self.query_relationships.get(&(identity.document_id.clone(),identity.module.clone(),identity.relationship.clone())).ok_or_else(fail)}
  pub fn source_sha256(&self)->&str{&self.source_sha256}
  pub fn integrity_checks(&self)->&[Value]{&self.guards}
  pub(crate) fn type_id(&self,r:&SecurityRef)->Result<i64>{Ok(self.entities.get(r).ok_or_else(fail)?.tid)}
@@ -157,6 +161,8 @@ impl GraphBinding {
     if row["directed"]!=true||row["composition"]!=false||row["lifecycle"]!="independent"||row["target_key"]!=n.target_key.id||!row["assoc_type_id"].is_null(){return Err(fail());}
     for (side,m) in [("source",&n.source_multiplicity),("target",&n.target_multiplicity)] {if row[format!("{side}_min")]!=m["min"]||row[format!("{side}_max")]!=if m["max"]=="*"{Value::Null}else{m["max"].clone()}{return Err(fail());}}
     one(rows(&out.inventory,"endpoints")?,|v|v["rel_type_id"]==relation&&v["source_type"]==source_id&&v["target_type"]==target_id)?;
+    let sp=src.prop;let tp=dst.prop;
+    out.guards.push(json!({"failureCode":"WFT-SECURITY-PUBLIC-RELATIONSHIP-INTEGRITY","sql":format!("SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM truss.edge e LEFT JOIN truss.object src ON src.id=e.source_id AND src.type_id=e.source_type LEFT JOIN truss.object dst ON dst.id=e.target_id AND dst.type_id=e.target_type WHERE e.rel_type_id={relation} AND (e.source_type IS DISTINCT FROM {source_id} OR e.target_type IS DISTINCT FROM {target_id} OR src.id IS NULL OR dst.id IS NULL OR truss.valid_scalar_cell(src.props->'{sp}','string',FALSE) IS NOT TRUE OR truss.valid_scalar_cell(dst.props->'{tp}','string',FALSE) IS NOT TRUE)")}));
     let key=(l.identity.document_id,l.identity.module,l.identity.relationship);if out.query_relationships.insert(key,QueryRelationship{relation,source:source_id,target:target_id}).is_some(){return Err(fail());}
    }
   }

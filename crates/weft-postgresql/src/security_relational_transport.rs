@@ -173,3 +173,81 @@ pub fn inspect_guarded_relational_result(raw: &str) -> Result<Value> {
         )
     })
 }
+
+/// Separate authored relationship producer; historical relational entrypoints stay closed.
+pub fn prepare_guarded_relationship_candidate(raw: &str) -> Result<GuardedRelationalCandidate> {
+    if raw.len() > 4_000_000 {
+        return Err(fail());
+    }
+    weft_core::security_mapping_transport::with_security_relationship_context(raw, |ctx| {
+        let graph: GraphSource = serde_json::from_str(ctx.binding_json()).map_err(|_| fail())?;
+        let source = ctx.source_context()?;
+        source.require_sources(ctx)?;
+        crate::security_native_codecs::check_postgresql_parameter_codecs(ctx,&graph)?;
+        let program = prepare_relational_graph_sql(ctx, &graph)?;
+        Ok(GuardedRelationalCandidate {
+            json: wire(ctx, &program, raw, &source)?,
+        })
+    })
+}
+
+/// Separate original relationship result inspection, never native capture or release authority.
+pub fn inspect_guarded_relationship_result(raw: &str) -> Result<Value> {
+    if raw.len() > 32_000_000 {
+        return Err(fail());
+    }
+    let v = checked_json(raw).map_err(|_| fail())?;
+    let o = v.as_object().ok_or_else(fail)?;
+    let keys = [
+        "version",
+        "sourceRequestJson",
+        "sourceOutputJson",
+        "operandBatchJson",
+        "batchJson",
+    ];
+    if o.len() != keys.len()
+        || keys.iter().any(|k| !o.contains_key(*k))
+        || v["version"] != "weft.truss.security.relational-result/0.2-candidate"
+    {
+        return Err(fail());
+    }
+    let request = v["sourceRequestJson"].as_str().ok_or_else(fail)?;
+    let output = v["sourceOutputJson"].as_str().ok_or_else(fail)?;
+    let operands = v["operandBatchJson"].as_str().ok_or_else(fail)?;
+    let batch = v["batchJson"].as_str().ok_or_else(fail)?;
+    if request.len() > 4_000_000
+        || output.len() > 16_000_000
+        || operands.len() > 4_000_000
+        || batch.len() > 4_000_000
+    {
+        return Err(fail());
+    }
+    weft_core::security_mapping_transport::with_security_relationship_context(request, |ctx| {
+        let graph: GraphSource = serde_json::from_str(ctx.binding_json()).map_err(|_| fail())?;
+        let source = ctx.source_context()?;
+        source.require_sources(ctx)?;
+        crate::security_native_codecs::check_postgresql_parameter_codecs(ctx,&graph)?;
+        let program = prepare_relational_graph_sql(ctx, &graph)?;
+        if wire(ctx, &program, request, &source)? != output {
+            return Err(fail());
+        }
+        crate::security_native_codecs::check_postgresql_operand_codecs(ctx,&graph,operands)?;
+        let checked = weft_core::security_operand_values::check_operand_values(ctx, operands)?;
+        let contract = serde_json::to_string(program.result_contract()).map_err(|_| fail())?;
+        let hash = sha256(contract.as_bytes());
+        if ctx.query().application_plan().aggregate {
+            weft_core::security_aggregate_results::check_aggregate_result_cells(
+                ctx,
+                program.result_contract(),
+                &contract,
+                &hash,
+                batch,
+            )?;
+        } else {
+            ctx.check_result_cells(program.result_contract(), &contract, &hash, batch)?;
+        }
+        Ok(
+            json!({"version":"weft.truss.security.relational-result.inspected/0.2-candidate","securityReady":false,"inspected":true,"sourceRequestSha256":sha256(request.as_bytes()),"sourceOutputSha256":sha256(output.as_bytes()),"sourceContextSha256":source.sha256(),"queryContextSha256":program.context_sha256(),"operandBatchSha256":checked.batch_sha256(),"operandCounts":checked.counts(),"batchSha256":sha256(batch.as_bytes()),"nativeAdmission":"required"}),
+        )
+    })
+}
