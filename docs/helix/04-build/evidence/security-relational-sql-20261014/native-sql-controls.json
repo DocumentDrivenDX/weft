@@ -1,0 +1,111 @@
+{
+  "version": "weft.relational.sql-controlled-probe/0.1",
+  "engine": "postgres (PostgreSQL) 18.6 (Homebrew)",
+  "securityReady": false,
+  "qualification": "Excluded administrator, partial synthetic graph layout, original scalar helper bodies; no installed source/caller/current-authority or guarded release proof; no native acceptance case promotion",
+  "helperSha256": "03fd6a50ed7676e855959fb80887a8c733f3965b5958fda632967e3b961d244c",
+  "binarySha256": "3c4116f427fca69b4ac39921ce881b5aeb82febc1a50f2308904bdfa9e2d9398",
+  "durationSeconds": 4.012,
+  "controls": [
+    {
+      "case": "count",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "3"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6
+    },
+    {
+      "case": "sum",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6
+    },
+    {
+      "case": "all-operators",
+      "rows": [
+        [
+          {
+            "outcomeId": "withheld",
+            "disposition": "withheld"
+          },
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          },
+          {
+            "value": {
+              "integerToken": "4"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 8
+    },
+    {
+      "case": "keyset",
+      "rows": [
+        [
+          {
+            "value": {
+              "string": "RB"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          }
+        ]
+      ],
+      "guards": 6
+    },
+    {
+      "case": "named-value",
+      "rows": [],
+      "guards": 6
+    },
+    {
+      "case": "withheld-before-empty-filter",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "case": "missing-original-grant",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    }
+  ]
+}

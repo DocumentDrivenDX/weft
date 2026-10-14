@@ -291,3 +291,6 @@ pub mod security_query_use_guards;
 
 /// Separate original relational query, policy and unvalued Subject ordinal channels.
 pub mod security_relational_parameters;
+
+/// Original relational graph SQL candidate; native operand/cut admission remains required.
+pub mod security_relational_sql;

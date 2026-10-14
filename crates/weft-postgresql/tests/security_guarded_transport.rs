@@ -306,3 +306,47 @@ fn relational_parameters_refuse_foreign_graph_sources_without_binding_native_sub
  let raw=query_use_request("SELECT COUNT(*) FROM Resource r",None,false);
  with_security_mapping_context(&raw,|ctx|{let mut source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let p=prepare_relational_graph_parameters(ctx,&source)?;assert!(p.query().is_empty());assert_eq!(p.graph().subject().ordinal(),2);source.native_schema_revision="2".into();assert!(prepare_relational_graph_parameters(ctx,&source).is_err());Ok(())}).unwrap();
 }
+#[test]
+fn relational_sql_emits_all_owner_stages_with_pre_query_guards_and_computed_lineage(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_ir::QueryOperator};use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let raw=query_use_request("SELECT r.salary, SUM(s.salary), COUNT(*) FROM Resource r JOIN Resource s ON r.salary=s.salary WHERE r.salary=100 GROUP BY r.salary ORDER BY r.salary LIMIT 1",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;
+ for fragment in ["AS MATERIALIZED","JOIN a1 ON","WHERE (","GROUP BY","pg_catalog.sum(","pg_catalog.count(*)","ORDER BY","LIMIT 1","'computed'"]{assert!(plan.sql().contains(fragment),"{fragment}");}
+ assert!(plan.checks().iter().filter(|c|c["failureCode"]=="WFT-SECURITY-QUERY-USE").count()==2);
+ assert!(plan.checks().iter().any(|c|c["failureCode"]=="WFT-SECURITY-GROUP-DISCLOSURE"));
+ let ops=plan.operand_demands().iter().map(|o|serde_json::from_value::<QueryOperator>(o["operator"].clone()).unwrap()).collect::<std::collections::BTreeSet<_>>();assert_eq!(ops.len(),5);
+ assert_eq!(plan.result_contract().version,weft_core::security_aggregate_results::VERSION);assert_eq!(plan.result_contract().columns.len(),3);
+ assert_eq!(plan.parameters().query().len(),1);assert_eq!(plan.parameters().query()[0].ordinal(),3);assert!(plan.sql().contains("$3::pg_catalog.numeric"));
+ assert!(ctx.check_result_declaration(plan.result_contract()).is_err());assert!(prepare_guarded_graph_candidate(&raw).is_err());Ok(())
+ }).unwrap();
+}
+#[test]
+fn relational_sql_keeps_named_input_out_of_sql_and_retains_query_only_operand_guards(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let mut raw:Value=serde_json::from_str(&query_use_request("SELECT r.resourceId FROM Resource r WHERE r.resourceId=:id ORDER BY r.resourceId LIMIT 2",None,false)).unwrap();let hostile="RA';SELECT private_password;--";raw["parameters"]=json!({"id":{"family":"string","value":hostile}});
+ with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;assert!(!plan.sql().contains(hostile));assert!(plan.sql().contains("$3::pg_catalog.text"));assert_eq!(plan.result_contract().columns.len(),1);assert_eq!(plan.operand_demands().len(),2);assert_eq!(plan.result_contract().version,"weft.security.result-contract/0.1.0");ctx.check_result_declaration(plan.result_contract())?;assert!(plan.checks().iter().all(|c|c["sql"].as_str().unwrap().contains("parameter_types AS")));Ok(())}).unwrap();
+}
+#[test]
+fn relational_sql_count_preserves_subject_and_rule_checks_without_fabricated_field_operands(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let raw=query_use_request("SELECT COUNT(*) FROM Resource r",None,false);
+ with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;assert!(plan.operand_demands().is_empty());assert!(plan.parameters().query().is_empty());assert!(plan.result_contract().columns[0].source_fields.is_empty());assert!(plan.checks().iter().any(|c|c["failureCode"]=="WFT-SECURITY-SUBJECT"));assert!(plan.checks().iter().any(|c|c["failureCode"]=="WFT-SECURITY-QUERY-USE"));assert!(!plan.sql().contains("GROUP BY"));Ok(())}).unwrap();
+}
+#[test]
+fn relational_boolean_group_order_uses_bool_or_and_keeps_absence_key(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let mut raw:Value=serde_json::from_str(&query_use_request("SELECT a.active,COUNT(*) FROM Assignment a GROUP BY a.active ORDER BY a.active",None,false)).unwrap();
+ let assignment=json!({"documentId":"domain","moduleId":"m","elementId":"Assignment"});let mut policy:Value=serde_json::from_str(raw["policyJson"].as_str().unwrap()).unwrap();policy["rules"]=json!([{"id":"read-assignment","effect":"permit","actions":["read"],"target":[assignment],"condition":{"op":"literal","value":true}}]);raw["policyJson"]=json!(policy.to_string());
+ let mut source:GraphSource=serde_json::from_str(raw["bindingJson"].as_str().unwrap()).unwrap();let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();correspondence["logicalSourceDigests"]["policy"]=json!(sha256(policy.to_string().as_bytes()));source.correspondence_json=correspondence.to_string();raw["bindingJson"]=json!(serde_json::to_string(&source).unwrap());
+ let mut profile:Value=serde_json::from_str(raw["queryProfileJson"].as_str().unwrap()).unwrap();profile["targets"]=json!([assignment]);profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["binding"]["sha256"]=json!(sha256(raw["bindingJson"].as_str().unwrap().as_bytes()));raw["queryProfileJson"]=json!(profile.to_string());
+ with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let p=prepare_relational_graph_sql(ctx,&source)?;assert!(p.sql().contains("ROW(("));assert!(p.sql().contains("ORDER BY pg_catalog.bool_or("));assert!(!p.sql().contains("pg_catalog.min("));assert!(p.checks().iter().find(|c|c["failureCode"]=="WFT-SECURITY-GROUP-DISCLOSURE").unwrap()["sql"].as_str().unwrap().contains("IS NULL"));Ok(())}).unwrap();
+}
+#[test]
+fn relational_disclosed_cross_family_transform_refuses_before_silent_null_conversion(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let mut raw:Value=serde_json::from_str(&query_use_request("SELECT COUNT(*) FROM Resource r WHERE r.salary=100",Some("disclosed"),false)).unwrap();let mut policy:Value=serde_json::from_str(raw["policyJson"].as_str().unwrap()).unwrap();policy["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":{"documentId":"domain","moduleId":"m","elementId":"resourceId"},"value":{"string":"redacted"}});raw["policyJson"]=json!(policy.to_string());
+ let mut source:GraphSource=serde_json::from_str(raw["bindingJson"].as_str().unwrap()).unwrap();let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();correspondence["logicalSourceDigests"]["policy"]=json!(sha256(policy.to_string().as_bytes()));source.correspondence_json=correspondence.to_string();raw["bindingJson"]=json!(serde_json::to_string(&source).unwrap());
+ let mut profile:Value=serde_json::from_str(raw["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["binding"]["sha256"]=json!(sha256(raw["bindingJson"].as_str().unwrap().as_bytes()));raw["queryProfileJson"]=json!(profile.to_string());
+ with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();assert!(prepare_relational_graph_sql(ctx,&source).is_err());Ok(())}).unwrap();
+}

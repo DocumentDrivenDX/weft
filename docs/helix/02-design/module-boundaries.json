@@ -2200,7 +2200,8 @@
             "mod:security_graph_parameters",
             "mod:security_guarded_transport",
             "mod:security_query_use_guards",
-            "mod:security_relational_parameters"
+            "mod:security_relational_parameters",
+            "mod:security_relational_sql"
           ],
           "pathReferences": []
         },
@@ -2820,6 +2821,20 @@
             "fn:query",
             "fn:require_context",
             "fn:prepare_relational_graph_parameters"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_relational_sql.rs",
+          "publicDeclarations": [
+            "struct:RelationalGraphSql",
+            "fn:sql",
+            "fn:checks",
+            "fn:result_contract",
+            "fn:parameters",
+            "fn:operand_demands",
+            "fn:context_sha256",
+            "fn:prepare_relational_graph_sql"
           ],
           "pathReferences": []
         },
@@ -3480,6 +3495,7 @@
       ],
       "sources": [
         "scripts/build-site.mjs",
+        "scripts/check-security-relational-sql-native.py",
         "scripts/check-site.mjs",
         "scripts/check-specs.ts",
         "scripts/checks/check-module-boundaries.py",

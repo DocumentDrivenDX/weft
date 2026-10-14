@@ -1,0 +1,34 @@
+{
+  "version": "weft.security.relational-sql.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "3901106df090a7a2491d7fe9de4966ca808b19ae",
+  "securityReady": false,
+  "checks": {
+    "compiler_integrations": 18,
+    "graph_regressions": 6,
+    "privacy_compile_fail": 1,
+    "module_controls": 16,
+    "controlled_postgresql_sql_probes": 7
+  },
+  "qualification": "Immutable original relational SQL/guard/result/parameter declaration plus controlled PostgreSQL18.6 semantics; no genuine installed source/caller/current-authority or guarded release admission",
+  "native_cases_promoted": 0,
+  "remaining": [
+    "native complete operand domain/presence and parameter codec qualification",
+    "separate guarded relational transport and original result inspection",
+    "genuine source/Subject/current-authority dispatch",
+    "native parity/refusal matrix across all132 cases",
+    "Databricks endpoint and scoped callers",
+    "registered/public security activation"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/lib.rs": "f55253062b4c3f4726af48e45a71bc22fa2007a8c7b582e7df23c84f57ef609a",
+    "crates/weft-postgresql/src/security_graph_query.rs": "0b497cbe7d0a7c05fc779db9671868d9d84968560d8abea3e1c9fc9fd6e92a51",
+    "crates/weft-postgresql/src/security_relational_sql.rs": "fe1f6c60f2388eab023d00f721ca865a686ce904fd0d74fc372060fd54b36578",
+    "crates/weft-postgresql/examples/security_relational_probe.rs": "a4b1021a838a990ea1f2cf73276a074cea16799240bc3cd34e3d23c71875980c",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "e7b6b05f285d934b22ca6e938bc572d450d4f2959f60fa0ffbe864e10ea3aff8",
+    "scripts/check-security-relational-sql-native.py": "66858f7e62b4bcc289a2296127cea5653f62f25abea9d7b9a6ff4cf6d0817f98",
+    "docs/helix/02-design/module-boundaries.json": "e7b3045185fa8fc0c8b558d027a946d8eb79254d1a4f1b3b61468a256dbf0ef8",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "7fd840f64984cd59be1414fa73ad13abb873335dd52a4c8dd21fe0ad5997fb60",
+    "docs/helix/04-build/implementation-plan.md": "97a09d22a10cd437fdb9083b668717c0d96a3993c4e67d2dd4d5c049d737e8a5"
+  }
+}
