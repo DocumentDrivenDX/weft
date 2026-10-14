@@ -41,10 +41,11 @@ fn column(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::
 }
 /// Original owner-checked graph query declaration. No constructor/deserializer
 /// or native release authority is exposed.
-pub struct GraphQueryCandidate {value:Value,contract:SecurityResultContract}
+pub struct GraphQueryCandidate {value:Value,contract:SecurityResultContract,parameter_bindings:crate::security_graph_parameters::GraphParameterBindings}
 impl GraphQueryCandidate {
  pub fn value(&self)->&Value {&self.value}
  pub fn result_contract(&self)->&SecurityResultContract {&self.contract}
+ pub fn parameter_bindings(&self)->&crate::security_graph_parameters::GraphParameterBindings {&self.parameter_bindings}
 }
 pub fn prepare_graph_query(ctx:&SecurityBackendContext<'_>,source:&GraphSource)->Result<Value>{Ok(prepare_graph_query_checked(ctx,source)?.value)}
 /// Source-only candidate. Subject locator values must come from the authenticated
@@ -56,13 +57,13 @@ pub fn prepare_graph_query_checked(ctx:&SecurityBackendContext<'_>,source:&Graph
  if !app.joins.is_empty()||!app.filters.is_empty()||!app.groups.is_empty()||app.aggregate||!app.order.is_empty()||app.limit.is_some()||app.outputs.is_empty()||app.outputs.len()>64{return Err(fail());}
  let target=SecurityRef{document_id:app.source.record.document_id.clone(),module_id:app.source.record.module.clone(),element_id:app.source.record.element.clone()};
  let graph_binding=GraphBinding::read(ctx.logical_plan(),ctx.catalog(),source)?;
- let graph=crate::security_predicate_spike::render_graph(ctx.logical_plan(),ctx.catalog(),source)?;
+ let rendered=crate::security_predicate_spike::render_graph_with_sources(ctx.logical_plan(),ctx.catalog(),source)?;let graph=rendered.value;
  let ontology=SecurityOntologyClosure::read(ctx.logical_plan().source(),ctx.catalog())?;
  let subject=ontology.subject();let subject_tid=graph_binding.type_id(subject)?;let target_tid=graph_binding.type_id(&target)?;
  let rules=graph["rules"].as_array().ok_or_else(fail)?;
  let selected:Vec<_>=rules.iter().filter(|r|r["target"]==json!(target)&&r["actions"].as_array().is_some_and(|a|a.contains(&json!(ctx.profiled_query().primary_action())))).collect();
  if selected.is_empty(){return Err(fail());}
- let parameters=graph["parameters"].as_array().ok_or_else(fail)?;let subject_slot=parameters.len()+1;
+ let parameters=graph["parameters"].as_array().ok_or_else(fail)?;let parameter_bindings=crate::security_graph_parameters::issue(ctx,&rendered.policy_source_paths,parameters,graph["parameterTypes"].as_array().ok_or_else(fail)?,subject_tid)?;let subject_slot=parameter_bindings.subject().ordinal();
  let truth_columns=selected.iter().map(|r|Ok(format!("({}) AS {}",r["expression"].as_str().ok_or_else(fail)?,r["truthColumn"].as_str().ok_or_else(fail)?))).collect::<Result<Vec<_>>>()?;
  let unknown=selected.iter().map(|r|format!("{} IS NULL",r["truthColumn"].as_str().unwrap())).collect::<Vec<_>>().join(" OR ");
  let groups=graph["eligibility"].as_array().ok_or_else(fail)?;let matches:Vec<_>=groups.iter().filter(|g|g["target"]==json!(target)&&g["action"]==ctx.profiled_query().primary_action()).collect();if matches.len()!=1{return Err(fail());}let group=matches[0];
@@ -83,5 +84,5 @@ pub fn prepare_graph_query_checked(ctx:&SecurityBackendContext<'_>,source:&Graph
  let truth_guard=format!("{cte} SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM rule_truths r WHERE {unknown}");
  let subject_guard=format!("SELECT CASE WHEN pg_catalog.count(*)=1 THEN '0' ELSE '1' END::pg_catalog.text AS violations FROM truss.object s WHERE s.type_id={subject_tid} AND s.id=${subject_slot}::pg_catalog.int8");
  let result=json!({"version":"weft.truss.security.graph-query/0.1-candidate","securityReady":false,"contextSha256":ctx.execution_query_context_sha256(),"graphSourceSha256":graph_binding.source_sha256(),"execution":{"sql":sql,"policyParameters":parameters,"policyParameterTypes":graph["parameterTypes"],"subjectSlot":{"ordinal":subject_slot,"physicalType":"int8","nativeTypeId":subject_tid,"logicalSubject":subject,"supplier":"original_authenticated_guarded_host_only"}},"integrityChecks":graph_binding.integrity_checks(),"subjectCheck":{"sql":subject_guard,"failureCode":"WFT-SECURITY-SUBJECT"},"truthCheck":{"sql":truth_guard,"failureCode":"WFT-SECURITY-INDETERMINATE"},"resultContract":contract,"resultContractJson":contract_json,"resultContractSha256":weft_core::json::sha256(contract_json.as_bytes()),"nativeAdmission":"required"});
- if serde_json::to_vec(&result).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(GraphQueryCandidate{value:result,contract})
+ if serde_json::to_vec(&result).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(GraphQueryCandidate{value:result,contract,parameter_bindings})
 }

@@ -62,6 +62,15 @@ fn graph_query_preserves_actual_output_occurrences_contract_and_subject_slot() {
    assert_eq!(value["contextSha256"], ctx.execution_query_context_sha256());
    assert_eq!(value["execution"]["subjectSlot"]["ordinal"], 2);
    assert_eq!(value["execution"]["subjectSlot"]["supplier"], "original_authenticated_guarded_host_only");
+   let bindings=query.parameter_bindings();
+   assert_eq!(bindings.policy().len(),1);
+   assert_eq!(bindings.policy()[0].ordinal(),1);
+   assert_eq!(bindings.policy()[0].source_path(),"logicalRules/1/condition/where/args/1/where/args/2/right");
+   assert_eq!(bindings.policy()[0].codec(),weft_postgresql::security_graph_parameters::GraphPolicyParameterCodec::Boolean);
+   assert_eq!(bindings.subject().ordinal(),2);
+   assert_eq!(bindings.subject().native_type_id(),value["execution"]["subjectSlot"]["nativeTypeId"].as_i64().unwrap());
+   assert_eq!(bindings.subject().key_id(),"pk");
+   assert_eq!(bindings.subject().key_fields()[0].element_id,"staffId");
    assert_eq!(value["integrityChecks"].as_array().unwrap().len(), 4);
    assert!(value["truthCheck"]["sql"].as_str().unwrap().contains("IS NULL"));
    let columns = &query.result_contract().columns;
@@ -133,5 +142,30 @@ fn graph_result_checks_complete_ordered_batch_and_rejects_hidden_values() {
    assert_eq!(error.phase, "result");
   }
   Ok(())
+ }).unwrap();
+}
+#[test]
+fn graph_ordinals_preserve_distinct_constant_sources_and_exact_transformation_payloads() {
+ use weft_core::security_mapping_transport::with_security_mapping_context;
+ use weft_postgresql::{security_graph_query::prepare_graph_query_checked,security_graph_parameters::GraphPolicyParameterCodec};
+ let mut request:Value=serde_json::from_str(&graph_request("SELECT r.resourceId, r.salary FROM Resource r")).unwrap();
+ let field=json!({"documentId":"domain","moduleId":"m","elementId":"resourceId"});
+ let salary=json!({"documentId":"domain","moduleId":"m","elementId":"salary"});
+ let mut policy:Value=serde_json::from_str(request["policyJson"].as_str().unwrap()).unwrap();
+ policy["rules"][0]["condition"]=json!({"op":"eq","left":{"kind":"constant","field":field,"value":{"string":"RA"}},"right":{"kind":"constant","field":field,"value":{"string":"RA"}}});
+ policy["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":salary,"value":{"integerToken":"1e2"}});
+ let bytes=policy.to_string();request["policyJson"]=json!(bytes);
+ let mut source:GraphSource=serde_json::from_str(request["bindingJson"].as_str().unwrap()).unwrap();
+ let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();correspondence["logicalSourceDigests"]["policy"]=json!(sha256(bytes.as_bytes()));source.correspondence_json=correspondence.to_string();
+ let binding=serde_json::to_string(&source).unwrap();request["bindingJson"]=json!(binding);
+ let mut profile:Value=serde_json::from_str(request["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(bytes.as_bytes()));profile["binding"]["sha256"]=json!(sha256(binding.as_bytes()));request["queryProfileJson"]=json!(profile.to_string());
+ with_security_mapping_context(&request.to_string(),|ctx|{
+  let query=prepare_graph_query_checked(ctx,&source)?;let bindings=query.parameter_bindings();
+  assert_eq!(bindings.policy().iter().map(|p|p.codec()).collect::<Vec<_>>(),vec![GraphPolicyParameterCodec::Text,GraphPolicyParameterCodec::Text,GraphPolicyParameterCodec::Boolean,GraphPolicyParameterCodec::CoreLiteralJson]);
+  assert_eq!(bindings.policy().iter().map(|p|p.ordinal()).collect::<Vec<_>>(),vec![1,2,3,4]);
+  assert_eq!(bindings.policy()[0].source_path(),"logicalRules/0/condition/left");assert_eq!(bindings.policy()[1].source_path(),"logicalRules/0/condition/right");
+  assert_eq!(bindings.policy()[3].source_path(),"logicalRules/0/disclosure/0/transformed");assert_eq!(bindings.policy()[3].field().element_id,"salary");
+  assert_eq!(bindings.subject().ordinal(),5);assert_eq!(query.value()["execution"]["policyParameters"],json!(["RA","RA",true,{"integerToken":"1e2"}]));
+  ctx.check_result_declaration(query.result_contract())?;Ok(())
  }).unwrap();
 }

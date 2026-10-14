@@ -279,3 +279,9 @@ pub mod security_graph_binding;
 
 /// Owner-derived direct graph projection; native admission remains mandatory.
 pub mod security_graph_query;
+
+/// Original graph parameter source/ordinal correspondence; no native credential.
+pub mod security_graph_parameters;
+
+/// Separate guarded candidate handoff and original result correspondence; no native permit.
+pub mod security_guarded_transport;

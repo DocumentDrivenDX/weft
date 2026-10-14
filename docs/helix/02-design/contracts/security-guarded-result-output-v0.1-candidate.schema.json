@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-guarded-result-output-v0.1-candidate.schema.json",
+  "description": "Pure original source/query/parameter/result correspondence only; no native caller/source/current-authority admission or release permit.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.truss.security.guarded-result/0.1-candidate"
+    },
+    "status": {
+      "const": "inspected"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sourceOutputSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sourceContextSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "queryContextSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "batchSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "version",
+    "status",
+    "securityReady",
+    "sourceRequestSha256",
+    "sourceOutputSha256",
+    "sourceContextSha256",
+    "queryContextSha256",
+    "batchSha256"
+  ],
+  "additionalProperties": false
+}

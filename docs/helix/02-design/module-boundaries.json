@@ -1158,7 +1158,8 @@
             "mod:security_backend",
             "mod:security_lowering",
             "mod:security_requirements",
-            "mod:security_parameter_sources"
+            "mod:security_parameter_sources",
+            "mod:security_source_context"
           ],
           "pathReferences": []
         },
@@ -1336,6 +1337,7 @@
             "fn:check_simulated_result_selection",
             "fn:check_simulated_fact_selection",
             "fn:parameter_sources",
+            "fn:source_context",
             "fn:requirements",
             "fn:catalog",
             "fn:logical_plan",
@@ -1867,6 +1869,17 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_source_context.rs",
+          "publicDeclarations": [
+            "const:MAX_SOURCE_CONTEXT_BYTES",
+            "struct:SecuritySourceContext",
+            "fn:json",
+            "fn:sha256",
+            "fn:require_sources"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/syntax.rs",
           "publicDeclarations": [
             "struct:Name",
@@ -2172,7 +2185,9 @@
             "mod:qualified_profile",
             "mod:security_predicate_spike",
             "mod:security_graph_binding",
-            "mod:security_graph_query"
+            "mod:security_graph_query",
+            "mod:security_graph_parameters",
+            "mod:security_guarded_transport"
           ],
           "pathReferences": []
         },
@@ -2696,13 +2711,51 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/security_graph_parameters.rs",
+          "publicDeclarations": [
+            "enum:GraphPolicyParameterCodec",
+            "struct:GraphPolicyParameterBinding",
+            "fn:ordinal",
+            "fn:source_path",
+            "fn:kind",
+            "fn:field",
+            "fn:domain",
+            "fn:codec",
+            "struct:GraphSubjectParameterBinding",
+            "fn:ordinal",
+            "fn:native_type_id",
+            "fn:subject",
+            "fn:key_id",
+            "fn:key_fields",
+            "fn:physical_type",
+            "struct:GraphParameterBindings",
+            "fn:policy",
+            "fn:subject"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/security_graph_query.rs",
           "publicDeclarations": [
             "struct:GraphQueryCandidate",
             "fn:value",
             "fn:result_contract",
+            "fn:parameter_bindings",
             "fn:prepare_graph_query",
             "fn:prepare_graph_query_checked"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_guarded_transport.rs",
+          "publicDeclarations": [
+            "struct:GuardedGraphCandidate",
+            "fn:json",
+            "fn:source",
+            "fn:query_context_sha256",
+            "fn:query",
+            "fn:prepare_guarded_graph_candidate",
+            "fn:inspect_guarded_graph_result"
           ],
           "pathReferences": []
         },

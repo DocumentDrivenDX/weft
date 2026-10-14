@@ -1,0 +1,25 @@
+{
+  "mainComposition": "ef8f663a6fe8103dda47ac004c747fc748ddefd3",
+  "scope": "Original producer byte comparison after concurrent native61 integration; no native execution qualification.",
+  "producerSha256": "78a28724b8ef3c6813499a671f83b8c3683048cd9ef92125b5d4ab037bf3a0b0",
+  "checks": [
+    {
+      "case": 0,
+      "requestSha256": "3ba7c38e29071dc25afa2e393364569f1c50b9d24442ecedaddd8bbdacbbb347",
+      "outputSha256": "4c80fa4a88f164978e60430174125e6e3804ad99f58fbff16d753b623a3fbea2",
+      "byteExact": true
+    },
+    {
+      "case": 1,
+      "requestSha256": "c9586d09d71ea8bb890c6f07689e952ee2c8767b041560feff2e842a68119659",
+      "outputSha256": "4455f7eb16a493ae933bd3014ee94f300cd26bf731936c313a3bcb173b4ab36e",
+      "byteExact": true
+    },
+    {
+      "case": 2,
+      "requestSha256": "f85b6b50db5e379c02dcd675848edf2451f6537fcfc9958167171a5a5a52181f",
+      "outputSha256": "c9e38ed52515d6595c617f264b1c1b2312257d740776355b6c92b7909e9fcd89",
+      "byteExact": true
+    }
+  ]
+}

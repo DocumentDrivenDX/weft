@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-guarded-candidate-v0.1-candidate.schema.json",
+  "description": "Pure original source/query/parameter/result correspondence only; no native caller/source/current-authority admission or release permit.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.truss.security.guarded-candidate/0.1-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "sourceContextJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16000000
+    },
+    "sourceContextSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "queryContextSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "query": {
+      "type": "object",
+      "description": "Original owner checked graph query declaration, not a caller-admitted plan; result inspection regenerates its exact producer bytes."
+    },
+    "policyParameterBindings": {
+      "type": "array",
+      "maxItems": 1024,
+      "items": {
+        "type": "object",
+        "properties": {
+          "ordinal": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1024
+          },
+          "sourcePath": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "sourceKind": {
+            "enum": [
+              "conditionConstant",
+              "transformationConstant"
+            ]
+          },
+          "field": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "moduleId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "elementId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "documentId",
+              "moduleId",
+              "elementId"
+            ],
+            "additionalProperties": false
+          },
+          "domain": {
+            "type": "object"
+          },
+          "physicalCodec": {
+            "enum": [
+              "boolean",
+              "text",
+              "coreLiteralJsonb"
+            ]
+          }
+        },
+        "required": [
+          "ordinal",
+          "sourcePath",
+          "sourceKind",
+          "field",
+          "domain",
+          "physicalCodec"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "subjectParameterBinding": {
+      "type": "object",
+      "properties": {
+        "ordinal": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1025
+        },
+        "nativeTypeId": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "logicalSubject": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "moduleId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "elementId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "documentId",
+            "moduleId",
+            "elementId"
+          ],
+          "additionalProperties": false
+        },
+        "logicalKeyId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "logicalKeyFields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "moduleId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "elementId": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "documentId",
+              "moduleId",
+              "elementId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "physicalType": {
+          "const": "int8"
+        },
+        "supplier": {
+          "const": "original_authenticated_guarded_host_only"
+        }
+      },
+      "required": [
+        "ordinal",
+        "nativeTypeId",
+        "logicalSubject",
+        "logicalKeyId",
+        "logicalKeyFields",
+        "physicalType",
+        "supplier"
+      ],
+      "additionalProperties": false
+    },
+    "nativeAdmission": {
+      "const": "required"
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "sourceRequestSha256",
+    "sourceContextJson",
+    "sourceContextSha256",
+    "queryContextSha256",
+    "query",
+    "policyParameterBindings",
+    "subjectParameterBinding",
+    "nativeAdmission"
+  ],
+  "additionalProperties": false
+}

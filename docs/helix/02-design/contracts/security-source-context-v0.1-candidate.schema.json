@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-source-context-v0.1-candidate.schema.json",
+  "description": "Pure original source correspondence only; no SQL, native caller/source authentication, epoch or execution/release credential.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.source-context/0.1-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentJson": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pin": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1
+              },
+              "umfVersion": {
+                "const": "0.8.0"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "umfVersion",
+              "sha256"
+            ],
+            "additionalProperties": false
+          },
+          "selectedModuleIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "documentJson",
+          "pin",
+          "selectedModuleIds"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "policyJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "ontologyJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "queryProfileJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "bindingJson": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000000
+    },
+    "backendId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "backendVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "targetProfile": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "modules",
+    "policyJson",
+    "ontologyJson",
+    "queryProfileJson",
+    "bindingJson",
+    "backendId",
+    "backendVersion",
+    "targetProfile"
+  ],
+  "additionalProperties": false
+}

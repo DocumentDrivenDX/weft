@@ -1,0 +1,80 @@
+{
+  "baseline": "ed76fa1a5c57d2debb3328e9159e8b57a6606721",
+  "composition": "ef8f663a6fe8103dda47ac004c747fc748ddefd3",
+  "rust": "1.90.0",
+  "scope": "Original graph policy source/value/codec/ordinal correspondence and separate unvalued logical/native subject demand; no native issuer, admission, or release credential.",
+  "tests": {
+    "postgresqlUnit": 80,
+    "initialGraph": 5,
+    "finalGraph": 6,
+    "finalParameterUnit": 2,
+    "privacyCompileFail": 1,
+    "moduleBoundary": 16,
+    "producerControls": 16,
+    "resultControls": 8,
+    "originalProjectionByteComparisons": 3,
+    "composedGraph": 6,
+    "composedProjectionByteComparisons": 3
+  },
+  "failed": 0,
+  "ignored": 0,
+  "finalParameterUnitUnrelatedFiltered": 78,
+  "commands": [
+    "cargo test --locked --offline -p weft-postgresql --lib --test security_graph",
+    "cargo test --locked --offline -p weft-postgresql --test security_graph",
+    "cargo test --locked --offline -p weft-postgresql --lib security_graph_parameters",
+    "cargo test --locked --offline -p weft-postgresql --doc security_graph_parameters",
+    "cargo build --locked --offline -p weft-postgresql --example security_graph_candidate --example security_graph_result",
+    "bun run modules:check",
+    "bun run specs:check"
+  ],
+  "fullPostgresqlUnitSeconds": 525.66,
+  "remaining": "B-008 and all132 original required cases remain open; registered guarded transport/dispatch, genuine Subject issuer/profile and full native/lifecycle qualification are required.",
+  "specs": {
+    "governedArtifacts": 61,
+    "schemas": 62,
+    "shapeOnly": true
+  },
+  "logs": {
+    "parameter-unit": {
+      "rawSha256": "52fdae34841f8b7aee35ba8612ff52bac3f7f364b56a436ca81ae6b0f9b14d4c",
+      "bytes": 7298
+    },
+    "privacy": {
+      "rawSha256": "e1a27b506098b596236420e97c0ef3d7cf3ffc675f06ec03ee4e5a8312d55509",
+      "bytes": 6168
+    },
+    "graph": {
+      "rawSha256": "04bf6d492431d682a797496efdecbc61ed638e4ba588eb0413565c620005cb31",
+      "bytes": 6736
+    },
+    "modules": {
+      "rawSha256": "1cfc5d5a67f09d1e9cfc7745ddba5b74c3c11b1fd706b6ee846c1e845fe0ba5f",
+      "bytes": 1878
+    },
+    "postgresql-unit": {
+      "rawSha256": "fe8cde31d5797271616ee7f1a63e8f509485e4bacc9d3cebb24fabaad9f48c4c",
+      "bytes": 16354
+    },
+    "examples": {
+      "rawSha256": "baccd34915710b8973b0c8663e52f67e3ee2418402c13151496711b878818e74",
+      "bytes": 5982
+    },
+    "composed-modules": {
+      "rawSha256": "a3f61f9d6bfcee34eca58cc1cdf9f841633bb2ab256dcbe5a4c1b231fee26a12",
+      "bytes": 1878
+    },
+    "specs": {
+      "rawSha256": "c939fae1050c6bf671ea4801e6943dc8f552260449045860469fa57e3108bf50",
+      "bytes": 253
+    },
+    "composed-graph": {
+      "rawSha256": "820fc5ea434af11f012d79d1d75a0c9ce48f222a8cb652881000469acc73f474",
+      "bytes": 6736
+    },
+    "composed-examples": {
+      "rawSha256": "34ad67dae31657958032e33118a9c1544e070604aba1c6320dcc37dd3a547757",
+      "bytes": 5982
+    }
+  }
+}
