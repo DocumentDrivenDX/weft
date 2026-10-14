@@ -5,6 +5,9 @@ use serde_json::Value;
 use std::collections::{BTreeMap,BTreeSet};
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json")]
 struct ProfileSchema;
+#[cfg(test)]
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-query-profile-v0.2-candidate.schema.json")]
+struct RelationshipProfileSchema;
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-QUERY-PROFILE","model","Security query profile admission refused")}
 #[derive(Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -124,6 +127,30 @@ mod tests{
   let binding=json!({"version":"fixture-only","layout":"opaque-unqualified-storage"}).to_string();
   let profile=json!({"version":"weft.security.query-profile/0.1.0","id":"fixture-profile","revision":"p1","action":"read","modelPins":catalog.pins(),"policySha256":sha256(plan.source().policy_json().as_bytes()),"ontologySha256":sha256(plan.source().ontology_json().as_bytes()),"binding":{"backendId":"fixture","backendVersion":"unqualified","targetProfile":"fixture-only","sha256":sha256(binding.as_bytes())},"targets":case["request"]["targets"],"bindings":[{"target":case["request"]["targets"][0],"field":case["request"]["queryUses"][0]["field"],"operator":"predicate","originalAction":"query-original"}]});
   (catalog,plan,profile,binding,case)
+ }
+ #[test]
+ fn relationship_profile_shape_is_separate_and_cannot_activate_old_owner(){
+  let (catalog,plan,mut p,binding,_)=fixture();
+  p["version"]=json!("weft.security.query-profile/0.2-candidate");
+  p["relationships"]=json!([{"relationship":{"documentId":"logical","moduleId":"m","relationshipId":"resource-link"},"operator":"hasRelated","observationAction":"observe-resource-link","targetAction":"read"}]);
+  assert!(RelationshipProfileSchema::is_valid(&p));
+  assert!(!ProfileSchema::is_valid(&p));
+  assert!(read(&p,&plan,&catalog,&binding).is_err());
+  for key in ["relationship","operator","observationAction","targetAction"] {
+   let mut changed=p.clone();changed["relationships"][0].as_object_mut().unwrap().remove(key);
+   assert!(!RelationshipProfileSchema::is_valid(&changed),"{key}");
+  }
+  for operator in ["relatedKeys","relatedPaths","join","policyExists"] {
+   let mut changed=p.clone();changed["relationships"][0]["operator"]=json!(operator);
+   assert!(!RelationshipProfileSchema::is_valid(&changed));
+  }
+  for flag in ["visible","authorized","permit","principal","securityReady"] {
+   let mut changed=p.clone();changed["relationships"][0][flag]=json!(true);
+   assert!(!RelationshipProfileSchema::is_valid(&changed));
+  }
+  let mut changed=p.clone();changed["relationships"][0]["relationship"]["elementId"]=json!("Resource");
+  assert!(!RelationshipProfileSchema::is_valid(&changed));
+  changed=p.clone();changed["relationships"]=json!([]);assert!(!RelationshipProfileSchema::is_valid(&changed));
  }
  fn read(p:&Value,plan:&SecurityLogicalPlan,catalog:&Catalog,binding:&str)->Result<SecurityQueryProfile>{SecurityQueryProfile::read(&p.to_string(),plan,catalog,binding,"fixture","unqualified","fixture-only")}
  #[test]
