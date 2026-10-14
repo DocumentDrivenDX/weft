@@ -1160,7 +1160,8 @@
             "mod:security_requirements",
             "mod:security_parameter_sources",
             "mod:security_source_context",
-            "mod:security_aggregate_results"
+            "mod:security_aggregate_results",
+            "mod:security_operand_values"
           ],
           "pathReferences": []
         },
@@ -1691,6 +1692,18 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/security_operand_values.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:CheckedOperandValues",
+            "fn:context_sha256",
+            "fn:batch_sha256",
+            "fn:counts",
+            "fn:check_operand_values"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/security_parameter_sources.rs",
           "publicDeclarations": [
             "enum:SecurityPolicyParameterKind",
@@ -2201,7 +2214,8 @@
             "mod:security_guarded_transport",
             "mod:security_query_use_guards",
             "mod:security_relational_parameters",
-            "mod:security_relational_sql"
+            "mod:security_relational_sql",
+            "mod:security_relational_transport"
           ],
           "pathReferences": []
         },
@@ -2832,9 +2846,20 @@
             "fn:checks",
             "fn:result_contract",
             "fn:parameters",
+            "fn:operand_reads",
             "fn:operand_demands",
             "fn:context_sha256",
             "fn:prepare_relational_graph_sql"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_relational_transport.rs",
+          "publicDeclarations": [
+            "struct:GuardedRelationalCandidate",
+            "fn:json",
+            "fn:prepare_guarded_relational_candidate",
+            "fn:inspect_guarded_relational_result"
           ],
           "pathReferences": []
         },

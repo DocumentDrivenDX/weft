@@ -1524,3 +1524,17 @@ The next relational graph path now retains all original query values separately 
 The separate immutable SQL candidate now emits the actual relational stages with original parameter/guard/result lineage and explicit operand-validation demands. Grouped disclosure/order consistency and absence-aware grouping prevent arbitrary representative selection or silent absence/null merging. Eighteen compiler integration tests plus six graph regressions qualify declaration correspondence. Seven controlled PostgreSQL18.6 probes qualify selected SQL behavior on a partial synthetic layout; their excluded administrator and missing source/actor/authority admission are recorded, with no native case promotion. Evidence: `evidence/security-relational-sql-20261014/`.
 
 Next: issue and verify original native operand/presence/codec evidence, define a separate guarded relational transport/result inspection, integrate with genuine source/Subject/current-authority dispatch, and expand native parity/refusal coverage across all132 original cases. Registered security activation and the full backend matrix remain open.
+
+
+### B-008 original operand checking — 2026-10-14
+
+Native SQL candidates now capture uncast original/disclosed operand cells on each primary-permitted scan before relational operations. The core checker validates actual owner-derived occurrences, domains/refinements, absence and exact constant-transform sources. Tests reject invalid later rows, missing/duplicate values, foreign contexts and changed masks while preserving unbounded integer domains. Controlled SQL execution routes actual captures through this checker and proves malformed later inputs refuse before an empty filter can hide them. Evidence: `evidence/security-operand-values-20261014/`.
+
+This closes value-correspondence plumbing, not native capture completeness/authenticity, policy selection, parameter codec qualification or guarded release. Next: separate guarded relational transport/result inspection and genuine native admission/capture integration; all132 original shared/native cases and cross-backend parity remain open.
+
+
+### B-008 guarded relational handoff — 2026-10-14
+
+The separate0.2 candidate/result transport now preserves original source/query/parameter/operand/result lineage, regenerates exact producer bytes and checks complete supplied cells. Twenty-two integration tests, six graph regressions, private-constructor and module checks, plus12 actual CLI controls qualify original correspondence only. Evidence: `evidence/security-relational-transport-20261014/`.
+
+Next integrate this exact protocol with genuine native source/Subject/current-authority admission, complete operand capture and native codec qualification. Preserve the existing direct dispatcher until the separate relational path is qualified; do not promote supplied hashes/cells into credentials. All132 shared/native cases, backend parity and public security activation remain required.

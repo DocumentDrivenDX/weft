@@ -162,3 +162,6 @@ mod security_physical_check;
 
 /// Separate aggregate result-domain candidate; no execution authority.
 pub mod security_aggregate_results;
+
+/// Original relational operand domain/presence checks; no native authority.
+pub mod security_operand_values;

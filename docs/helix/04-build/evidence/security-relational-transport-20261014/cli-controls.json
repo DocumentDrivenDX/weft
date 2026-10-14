@@ -1,0 +1,19 @@
+{
+  "controls": [
+    "original complete handoff",
+    "changed source bytes",
+    "omitted producer newline",
+    "old version",
+    "empty operand width",
+    "wrong result encoding",
+    "producer executionSql",
+    "producer securityReady",
+    "producer nativeAdmission",
+    "injected authority input",
+    "positional array input",
+    "legacy inspector refuses new input"
+  ],
+  "passed": 12,
+  "securityReady": false,
+  "binarySha256": "cb3077c186db83df0ec50d86b4d7d2f6e67fac325a0eb9859365044e361b4d96"
+}

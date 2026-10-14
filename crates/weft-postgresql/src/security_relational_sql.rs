@@ -44,6 +44,7 @@ pub struct RelationalGraphSql<'a, 'owner> {
     checks: Vec<Value>,
     contract: SecurityResultContract,
     operands: Vec<Value>,
+    operand_reads: Vec<Value>,
 }
 impl<'a, 'owner> RelationalGraphSql<'a, 'owner> {
     pub fn sql(&self) -> &str {
@@ -60,6 +61,9 @@ impl<'a, 'owner> RelationalGraphSql<'a, 'owner> {
     }
     /// Original model operand demands. The native host must validate complete
     /// primary-permitted original/disclosed operand populations before executing SQL.
+    pub fn operand_reads(&self) -> &[Value] {
+        &self.operand_reads
+    }
     pub fn operand_demands(&self) -> &[Value] {
         &self.operands
     }
@@ -248,6 +252,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
     let mut targets = BTreeMap::new();
     let mut groups = BTreeMap::new();
     let mut operands = Vec::new();
+    let mut operand_reads = Vec::new();
     for (i, scan) in guards.scans().iter().enumerate() {
         let alias = format!("a{i}");
         let tid = binding.type_id(scan.target())?;
@@ -271,6 +276,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
         checks.push(json!({"failureCode":"WFT-SECURITY-QUERY-USE","sql":format!("WITH {base} SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {truth} r WHERE {}",scan.refusal_expression())}));
         ctes.push(base);
         let mut fields = Vec::new();
+        let mut captured = Vec::new();
         for output in &app.outputs {
             if let app::Expression::Field {
                 scan: occurrence,
@@ -288,7 +294,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
                 }
             }
         }
-        for requirement in ctx.requirements().operators() {
+        for (operand_index, requirement) in ctx.requirements().operators().iter().enumerate() {
             let usage = requirement.usage();
             if usage.scan != scan.scan() {
                 continue;
@@ -319,6 +325,36 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
                     original_literal(&binding.raw_cell(scan.target(), r, "r")?, family)?
                 }
             };
+            let capture = match requirement.mode() {
+                SecurityOperatorMode::OriginalAuthorized(_) => {
+                    let raw = binding.raw_cell(scan.target(), r, "r")?;
+                    format!("CASE WHEN ({raw}) IS NULL THEN pg_catalog.jsonb_build_object('disposition','absent') ELSE pg_catalog.jsonb_build_object('disposition','original','value',({literal})) END")
+                }
+                SecurityOperatorMode::Disclosed => {
+                    let choices = disclosure["transformations"]
+                        .as_array()
+                        .ok_or_else(fail)?
+                        .iter()
+                        .map(|t| {
+                            let slot = t["slot"].as_u64().ok_or_else(fail)?;
+                            let id = t["ruleId"].as_str().ok_or_else(fail)?.replace("'", "''");
+                            Ok(format!("WHEN {slot} THEN '{id}'"))
+                        })
+                        .collect::<Result<Vec<_>>>()?;
+                    let base = cell(group, r)?;
+                    if choices.is_empty() {
+                        format!("({base})-'outcomeId'")
+                    } else {
+                        let choice = disclosure["transformationChoiceExpression"]
+                            .as_str()
+                            .ok_or_else(fail)?;
+                        format!("CASE WHEN ({base})->>'disposition'='transformed' THEN (({base})-'outcomeId') || pg_catalog.jsonb_build_object('ruleId',CASE ({choice}) {} ELSE NULL END) ELSE ({base})-'outcomeId' END",choices.join(" "))
+                    }
+                }
+            };
+            captured.push(format!(
+                "pg_catalog.jsonb_build_object('index',{operand_index},'cell',({capture}))"
+            ));
             let col = format!("c{}", fields.len());
             let scalar_value = scalar(&literal, family)?;
             let scalar_value = if usage.operator == QueryOperator::Group {
@@ -340,6 +376,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
             columns.insert(key, format!("{alias}.{col}"));
             operands.push(json!({"scan":usage.scan,"target":scan.target(),"field":r,"operator":usage.operator,"domain":model,"disclosureSources":disclosure,"mode":match requirement.mode(){SecurityOperatorMode::Disclosed=>"disclosed",SecurityOperatorMode::OriginalAuthorized(_)=>"original-authorized"},"validation":"complete_original_owner_domain_presence_before_query_evaluation"}));
         }
+        operand_reads.push(json!({"scan":scan.scan(),"sql":format!("WITH {} SELECT pg_catalog.jsonb_build_object('nativeRowId',r.id::pg_catalog.text,'operands',pg_catalog.jsonb_build_array({}))::pg_catalog.text AS operand_row FROM {truth} r WHERE ({decision})='permit' LIMIT 4097",ctes.last().ok_or_else(fail)?,captured.join(",")),"scope":"complete_primary_permitted_population_under_held_native_cuts","nativeAdmission":"required"}));
         ctes.push(format!(
             "{alias} AS MATERIALIZED (SELECT r.id{} FROM {truth} r WHERE ({decision})='permit')",
             if fields.is_empty() {
@@ -503,11 +540,16 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
         ctx.check_result_declaration(&contract)?;
     }
     let sql = anchor_sql(&sql, &anchor);
+    for read in &mut operand_reads {
+        let original = read["sql"].as_str().ok_or_else(fail)?;
+        read["sql"] = json!(anchor_sql(original, &anchor));
+    }
     for check in &mut checks {
         let original = check["sql"].as_str().ok_or_else(fail)?;
         check["sql"] = json!(anchor_sql(original, &anchor));
     }
     if sql.len() > 4_000_000
+        || serde_json::to_vec(&operand_reads).map_err(|_| fail())?.len() > 16_000_000
         || serde_json::to_vec(&checks).map_err(|_| fail())?.len() > 16_000_000
         || serde_json::to_vec(&operands).map_err(|_| fail())?.len() > 4_000_000
     {
@@ -521,5 +563,6 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
         checks,
         contract,
         operands,
+        operand_reads,
     })
 }

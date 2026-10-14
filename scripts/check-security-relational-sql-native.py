@@ -1,6 +1,6 @@
 import json,hashlib,subprocess,tempfile,os,time,argparse
 from pathlib import Path
-parser=argparse.ArgumentParser(description='Controlled SQL semantics only, no native security admission');parser.add_argument('--compiler',type=Path,required=True);parser.add_argument('--postgres-bin',type=Path,required=True);parser.add_argument('--truss-scalar-sql',type=Path,required=True);parser.add_argument('--evidence-dir',type=Path,required=True);args=parser.parse_args();root=Path(__file__).resolve().parents[1];f=root/'docs/helix/03-test/fixtures/security-graph-source';binary=args.compiler.resolve();pg=args.postgres_bin.resolve();ev=args.evidence_dir.resolve();ev.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser(description='Controlled SQL semantics only, no native security admission');parser.add_argument('--compiler',type=Path,required=True);parser.add_argument('--operand-inspector',type=Path,required=True);parser.add_argument('--postgres-bin',type=Path,required=True);parser.add_argument('--truss-scalar-sql',type=Path,required=True);parser.add_argument('--evidence-dir',type=Path,required=True);args=parser.parse_args();root=Path(__file__).resolve().parents[1];f=root/'docs/helix/03-test/fixtures/security-graph-source';binary=args.compiler.resolve();pg=args.postgres_bin.resolve();ev=args.evidence_dir.resolve();ev.mkdir(parents=True,exist_ok=True)
 sha=lambda s:hashlib.sha256(s.encode()).hexdigest()
 def request(sql,mode=None,grant=True,parameters=None):
  r=json.loads((f/'mapping-request.json').read_text());r['sql']=sql;r['parameters']=parameters or {};physical=(f/'adoc.json').read_text();o=json.loads(r['ontologyJson']);p=json.loads(r['policyJson']);profile=json.loads(r['queryProfileJson']);resource={'documentId':'domain','moduleId':'m','elementId':'Resource'};salary={'documentId':'domain','moduleId':'m','elementId':'salary'}
@@ -15,7 +15,7 @@ def request(sql,mode=None,grant=True,parameters=None):
  r['bindingJson']=json.dumps(source);profile['ontologySha256']=sha(r['ontologyJson']);profile['policySha256']=sha(r['policyJson']);profile['binding']['sha256']=sha(r['bindingJson']);r['queryProfileJson']=json.dumps(profile)
  raw=json.dumps(r);out=subprocess.run([str(binary)],input=raw,text=True,capture_output=True,timeout=20)
  if out.returncode:raise RuntimeError(out.stderr[:1000])
- return json.loads(out.stdout)
+ result=json.loads(out.stdout);result["_originalRequest"]=raw;return result
 def run(cmd,**kw):
  p=subprocess.run(cmd,text=True,capture_output=True,timeout=kw.pop('timeout',30),**kw)
  if p.returncode:raise RuntimeError(p.stderr[-2000:])
@@ -35,14 +35,24 @@ try:
   for p in params:
    v=1 if p['channel']=='subject' else p['value'];values.append('TRUE' if v is True else 'FALSE' if v is False else str(v) if isinstance(v,int) else "'"+str(v).replace("'","''")+"'")
   return sql('PREPARE probe ('+types+') AS '+statement+';EXECUTE probe ('+','.join(values)+');DEALLOCATE probe;')
- def check(name,query,mode=None,grant=True,parameters=None,expected=None,refused=False):
+ def check(name,query,mode=None,grant=True,parameters=None,expected=None,refused=False,operand_refused=False):
   program=request(query,mode,grant,parameters);violations=[int(execute(program,c['sql'])) for c in program['checks'] if c['failureCode']!='WFT-SECURITY-GROUP-DISCLOSURE']
   if refused:assert any(violations),name;results.append({'case':name,'refusedBeforeExecution':True,'violations':violations});return
   assert not any(violations),(name,violations)
+  captures=[]
+  for read in program['operandReads']:
+   captured=execute(program,read['sql']);captures.append({'scan':read['scan'],'rows':[json.loads(line) for line in captured.splitlines()] if captured else []})
+  batch={'version':'weft.security.operand-values/0.1-candidate','contextSha256':program['contextSha256'],'scans':captures}
+  inspected=subprocess.run([str(args.operand_inspector)],input=json.dumps({'requestJson':program['_originalRequest'],'batchJson':json.dumps(batch)}),text=True,capture_output=True,timeout=20)
+  if operand_refused:
+   assert inspected.returncode!=0,name
+   results.append({'case':name,'refusedBeforeExecution':True,'phase':'original_operand_values','diagnostic':json.loads(inspected.stderr)})
+   return
+  if inspected.returncode:raise RuntimeError(inspected.stderr[:1000])
   for c in program['checks']:
    if c['failureCode']=='WFT-SECURITY-GROUP-DISCLOSURE':assert int(execute(program,c['sql']))==0,name
   output=execute(program,program['sql']);rows=[json.loads(line) for line in output.splitlines()] if output else [];assert rows==expected,(name,rows,expected)
-  results.append({'case':name,'rows':rows,'guards':len(program['checks'])})
+  results.append({'case':name,'rows':rows,'guards':len(program['checks']),'operandCheck':json.loads(inspected.stdout)})
  computed=lambda n:{'outcomeId':'computed','disposition':'computed','value':{'integerToken':str(n)}}
  original=lambda s:{'outcomeId':'original','disposition':'original','value':{'string':s}}
  check('count','SELECT COUNT(*) FROM Resource r',expected=[[computed(3)]])
@@ -52,6 +62,8 @@ try:
  check('named-value','SELECT r.resourceId FROM Resource r WHERE r.resourceId=:id',parameters={'id':{'family':'string','value':"RA';SELECT secret;--"}},expected=[])
  check('withheld-before-empty-filter','SELECT COUNT(*) FROM Resource r WHERE r.salary=999','disclosed',refused=True)
  check('missing-original-grant','SELECT COUNT(*) FROM Resource r WHERE r.salary=999','original-authorized',False,refused=True)
+ sql("UPDATE truss.object SET props=pg_catalog.jsonb_set(props,'{7}','{\"kind\":\"integer\",\"text\":\"not-a-number\"}'::jsonb) WHERE id=4")
+ check('invalid-later-operand-before-empty-filter','SELECT COUNT(*) FROM Resource r WHERE r.salary=999','original-authorized',operand_refused=True)
  report={'version':'weft.relational.sql-controlled-probe/0.1','engine':run([str(pg/'postgres'),'--version']).strip(),'securityReady':False,'qualification':'Excluded administrator, partial synthetic graph layout, original scalar helper bodies; no installed source/caller/current-authority or guarded release proof; no native acceptance case promotion','helperSha256':sha(helpers),'binarySha256':hashlib.sha256(binary.read_bytes()).hexdigest(),'durationSeconds':round(time.monotonic()-begin,3),'controls':results}
  (ev/'native-sql-controls.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'passed':len(results),'durationSeconds':report['durationSeconds']}))
 finally:
