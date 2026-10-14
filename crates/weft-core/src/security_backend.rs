@@ -266,7 +266,7 @@ pub type SecurityRegistryFactory<'host> = dyn for<'context> FnMut(&SecurityBacke
 /// bounded error-shaped output even if a trusted callback supplies bad fields.
 pub(crate) fn callback_error(d: Diagnostic, sql_bytes: usize) -> Diagnostic {
     let code=d.code.strip_prefix("WFT-").is_some_and(|tail| !tail.is_empty() && tail.bytes().all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b==b'-'));
-    let phase=matches!(d.phase.as_str(),"input"|"model"|"parse"|"resolve"|"type"|"capability"|"lower"|"emit"|"host");
+    let phase=matches!(d.phase.as_str(),"input"|"model"|"parse"|"resolve"|"type"|"capability"|"lower"|"emit"|"host"|"result");
     let span=d.source_span.as_ref().is_none_or(|s|s.start<=s.end && s.end<=sql_bytes);
     if d.severity=="error" && code && d.code.len()<=4096 && phase && !d.message.is_empty() && d.message.len()<=4096 && !d.message.contains('\0') && span { d }
     else { fail("Security callback returned an invalid or unbounded error diagnostic") }

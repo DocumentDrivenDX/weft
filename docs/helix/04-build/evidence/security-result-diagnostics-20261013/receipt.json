@@ -1,0 +1,11 @@
+{
+  "baseline": "61865a6fe7f390c1baeaf4fba265e837e18db34b",
+  "scope": "Bounded original result refusal diagnostics across compiler factory and original mapping-context callbacks; no native admission or security capability activation.",
+  "command": "cargo test --locked --offline -p weft-core --test security_admission",
+  "rust": "1.90.0",
+  "tests": 75,
+  "failed": 0,
+  "ignored": 0,
+  "rawLogSha256": "d4897c27323392d5315404a00f6ba84ef58d47c5e68a6bac140328110de64336",
+  "remaining": "All original 132 shared/native security cases remain in scope; B-008 is open."
+}
