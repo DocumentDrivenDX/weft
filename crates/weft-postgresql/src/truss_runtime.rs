@@ -874,11 +874,7 @@ impl Build<'_> {
     }
     fn scalar(&self, scan: &str, id: &Identity, logical: &LogicalType) -> Result<(String, String)> {
         let (cell, present) = self.cell(scan, id)?;
-        let sql = match logical.family {
-            Family::String => format!("({cell}->>'text') COLLATE pg_catalog.\"C\""),
-            Family::Boolean => format!("({cell}->>'value')::pg_catalog.bool"),
-            Family::Integer | Family::Decimal => format!("({cell}->>'text')::pg_catalog.numeric"),
-        };
+        let sql = mutation_scalar_expression(&cell,logical);
         Ok((sql, present))
     }
     fn projected_scalar(&self, scan: &str, id: &Identity, logical: &LogicalType) -> Result<String> {
@@ -1223,4 +1219,25 @@ fn compile_internal(request: &str, page: Option<(u16, Option<Vec<String>>)>) -> 
     } else {
         compiler.compile_json_with_factory(request, &mut factory)
     }
+}
+
+// Same tagged scalar interpretation as ordinary current runtime reads.
+fn mutation_scalar_expression(cell:&str,logical:&LogicalType)->String {
+ match logical.family {
+ Family::String=>format!("({cell}->>'text') COLLATE pg_catalog.\"C\""),
+ Family::Boolean=>format!("({cell}->>'value')::pg_catalog.bool"),
+ Family::Integer|Family::Decimal=>format!("({cell}->>'text')::pg_catalog.numeric"),
+ }
+}
+pub(crate) fn admit_mutation_mapping(c:&Context<'_>)->Result<Mapping>{
+ let runtime=Runtime{exact_numbers: true,relationships: true,pages: true,release_030: true,groups: true,selected_metadata: true,exact_scalars: true,retained_metadata: true,complete_entities: true,entity_times: true,import_loads: true,numeric_facets: true,typed_keys: true,live_traversal: true,facet_evolution: true,scalar_containers: true,container_queries: true,typed_relationship_keys: true,typed_key_pages: true,record_evolution: true,required_tightening: true,relationship_tightening: true,container_tightening: true,relationship_names: true,binary_equality: true,optional_binary: true,decimal_scale2: true,field_names: true,source_references: true,timestamp_equality: true,catalog_rebinding: true,key_backfill: true,keyed_rebinding: true,recursive_containers: true,owned_runtime: true,required_rebinding: true,parallel_edges: true,engine_imports: true,typed_page_mode: false,continuation_filter: None};
+ Ok(runtime.validate_binding(c)?.mapping)
+}
+pub(crate) fn mutation_type(mapping:&Mapping,record:&Identity)->Result<String>{Ok(mapping.record(record)?.type_id.clone())}
+pub(crate) fn mutation_scalar(mapping:&Mapping,record:&Identity,field:&Identity,logical:&LogicalType)->Result<(String,String,String)>{
+ if logical.nullable||!matches!(logical.family,Family::String|Family::Boolean){return Err(unsupported("Current mutation selection requires required string/boolean fields"));}
+ let property=&mapping.field(record,field)?.property_id;
+ let cell=format!("\"weft_mutation\".props->'{property}'");
+ let family=match logical.family{Family::String=>"string",Family::Boolean=>"boolean",_=>return Err(unsupported("Mutation scalar family refused"))};
+ Ok((mutation_scalar_expression(&cell,logical),format!("({cell})->>'{}'",if family=="string"{"text"}else{"value"}),format!("truss.valid_scalar_cell(({cell}),'{family}',FALSE) IS TRUE")))
 }

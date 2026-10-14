@@ -1,0 +1,16 @@
+import {createHash} from 'node:crypto';
+const root=new URL('../../',import.meta.url).pathname;
+const playwright=process.env.WEFT_PLAYWRIGHT_MODULE??'playwright';
+const {chromium}=await import(playwright);
+const cases=await Bun.file(root+'target/mutation/parity-cases.json').json();
+const config=await Bun.file(root+'tests/mutation/fixtures/registry.json').text();
+const wrapper=await Bun.build({entrypoints:[root+'packages/weft-browser/src/index.ts'],target:'browser',format:'esm'});if(!wrapper.success)throw Error(String(wrapper.logs));
+const wrapperText=await wrapper.outputs[0]!.text();
+const server=Bun.serve({hostname:'127.0.0.1',port:0,fetch(request){const path=new URL(request.url).pathname;if(path==='/wrapper.js')return new Response(wrapperText,{headers:{'Content-Type':'text/javascript'}});if(path==='/weft_wasm.js'||path==='/weft_wasm_bg.wasm')return new Response(Bun.file(root+'target/mutation/web'+path),{headers:{'Content-Type':path.endsWith('.wasm')?'application/wasm':'text/javascript'}});return new Response('<!doctype html><title>Weft mutation binding proof</title>');}});
+let browser;
+try {
+ browser=await chromium.launch({headless:true,...(process.env.WEFT_CHROMIUM_PATH?{executablePath:process.env.WEFT_CHROMIUM_PATH}:{})});const page=await browser.newPage();const errors:string[]=[],external:string[]=[];page.on('pageerror',e=>errors.push(String(e)));await page.route('**/*',route=>{if(!route.request().url().startsWith('http://127.0.0.1:'+server.port)){external.push(route.request().url());return route.abort();}return route.continue();});await page.goto('http://127.0.0.1:'+server.port);
+ const result=await page.evaluate(async({config,cases})=>{const wasmPath='/weft_wasm.js',wrapperPath='/wrapper.js';const wasm=await import(wasmPath);await wasm.default();const wrapper=await import(wrapperPath);const compiler=wrapper.createMutationCompiler(wasm,config);for(const c of cases){const actual=compiler.compileMutationJson(c.request);if(actual!==c.response)throw Error('Native Python/WASM byte parity: '+c.id);const response=JSON.parse(actual);if(response.plan){const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(response.plan.utf8));if([...new Uint8Array(digest)].map(x=>x.toString(16).padStart(2,'0')).join('')!==response.plan.sha256)throw Error('WebCrypto plan digest');}}
+ let surrogateRefused=false;try{compiler.compileMutationJson('\ud800');}catch{surrogateRefused=true;}if(!surrogateRefused)throw Error('Host surrogate accepted');return {cases:cases.length,surrogateRefused,nodeGlobalsAbsent:!('process' in globalThis)&&!('Buffer' in globalThis)};},{config,cases});
+ if(errors.length||external.length||!result.nodeGlobalsAbsent)throw Error(JSON.stringify({errors,external,result}));const report={scope:'actual Chromium Rust WASM versus native Python full response bytes; no executor',...result,browser:browser.version(),passed:true,externalRequests:external,wasmSha256:createHash('sha256').update(await Bun.file(root+'target/mutation/web/weft_wasm_bg.wasm').bytes()).digest('hex')};await Bun.write(root+'target/mutation/browser-results.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+}finally{await browser?.close();server.stop(true);}

@@ -33,6 +33,7 @@ pub struct RecordAdmission {
     binding_sha256: String,
     catalog_id: String,
     mapping: OwnerMapping,
+    relation_physical_identity:String,
     original_record: weft_core::model::Record,
 }
 impl RecordAdmission {
@@ -114,6 +115,7 @@ impl RecordAdmission {
                     .ok_or_else(|| fail("Record document index missing"))?,
             },
             owner,
+            relation_physical_identity:selected.relation_identity.into(),
             model_pin: input.pin.clone(),
             binding_sha256: sha256(binding.original_json.as_bytes()),
             catalog_id: entity["typeId"]
@@ -198,6 +200,8 @@ impl RecordAdmission {
         }
         Ok(())
     }
+    pub(crate) fn mutation_relation_identity(&self)->&str{&self.relation_physical_identity}
+    pub(crate) fn mutation_mapping(&self)->(&OwnerMapping,&str){(&self.mapping,&self.catalog_id)}
     pub fn identity(&self) -> &Identity {
         &self.owner
     }

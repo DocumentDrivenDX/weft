@@ -20,7 +20,7 @@ use weft_core::{
 fn fail(message: &str) -> Diagnostic {
     Diagnostic::new("WFT-CAPABILITY", "compose", message)
 }
-fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
+pub fn configuration(raw: &str, catalog: &Catalog) -> Result<Configuration> {
     crate::storage_composition::configuration(raw,catalog,
         "weft-original-conformance-composition/0.1.0",
         Some(crate::row_tree_mapping::Procedures{

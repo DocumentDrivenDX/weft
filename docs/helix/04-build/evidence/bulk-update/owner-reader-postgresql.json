@@ -1,0 +1,385 @@
+{
+  "scope": "Original mapping/codecs plus actual Truss object-column declaration; native selection/preflight on synthetic rows, no protected authority/guard/seal/execution",
+  "nativeRepresentationControls": {
+    "hugeZeroExponentAccepted": true,
+    "longFractionAccepted": false
+  },
+  "serverVersion": "17.11",
+  "pgserver": "0.1.4+truss.pg17.11",
+  "cases": 30,
+  "passed": true,
+  "captureSha256": "98a0496189872b761bb52e429e93cdefb8a0e2568c6e36240dd9ccc18e89911a",
+  "harnessSha256": "c27f1efb7ba7986d76e799864084e75991c45b9ec79293f8997b46af55167daa",
+  "results": [
+    {
+      "id": "ordered-overflow",
+      "preflightViolations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "identities": [
+        "2",
+        "10",
+        "11"
+      ],
+      "overflow": true,
+      "sqlSha256": "00189ab4a5f0d357f3cad965f8c36481bfeb883dd6ef5961da88bde9b4c1f7d6"
+    },
+    {
+      "id": "mixed-precedence",
+      "preflightViolations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "identities": [
+        "2",
+        "10",
+        "11"
+      ],
+      "overflow": true,
+      "sqlSha256": "6ade3ad308e5bad7ee30c5f1b8078f892c2d5da2514f5acd8a2f24f1a938b53c"
+    },
+    {
+      "id": "unicode-scalar-order",
+      "preflightViolations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "identities": [],
+      "overflow": false,
+      "sqlSha256": "77e839e453020f2799f515af465d2d8024faba7f01e73fcb117b134f1b4a2be2"
+    },
+    {
+      "id": "native-large-identity",
+      "preflightViolations": [
+        0,
+        0,
+        0
+      ],
+      "queryExecuted": true,
+      "identities": [
+        "9007199254740993"
+      ],
+      "overflow": false,
+      "sqlSha256": "f72127e4ca5b08b87445ef3513a0b8f1898095656705312bb0f7ad03515aba09"
+    },
+    {
+      "id": "masked-missing",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "8229c1d654556712bb045894f5af145f1f998e9f82f2cb381ef6aa29026cb3ff"
+    },
+    {
+      "id": "masked-or-missing",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "9dc7cd40745097ba1097f89fdbc5adc8a5a5295aa635b4cb99547ca49abb8973"
+    },
+    {
+      "id": "masked-null",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "f4975583c598b577b68f8e2e7f84f70f518d63b0904b88eeb3d73043b0afca8b"
+    },
+    {
+      "id": "masked-or-null",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "f9bdfb6cf467f3ada4ff7cbffc51a958171d8e93fdd391921bb3c0032a462eb1"
+    },
+    {
+      "id": "masked-boolean",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "c023a056c8188050111831f92266bedbd290fe6e772d4408ba920f9daf6d6fee"
+    },
+    {
+      "id": "masked-or-boolean",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "2f0b4881490f52e6fea6ef883ae5a5001ba5038be69f574f76c72e3308807f84"
+    },
+    {
+      "id": "masked-fraction",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "f8ff83224f09d61ad86484b64a72510219005903747bbdeca2a3d24b70f1a0ca"
+    },
+    {
+      "id": "masked-or-fraction",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "090731efdacfe6ba4c707ab2fd4d40de95ffd2206bf3c0290ca914ba505d4ab2"
+    },
+    {
+      "id": "masked-malformed",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "75155b65cbe5c8f30ece3b7714966a7890bcbddbe0027b0a679efefb183a3d34"
+    },
+    {
+      "id": "masked-or-malformed",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "f9fa416f3a975405dc9b3604821c8c6f2c7fb65637391eeeea9be0e0eaaf1dfb"
+    },
+    {
+      "id": "masked-nonfinite",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "0f43afb126d47d9ad0e98ce4fbf61726bbefa0e297977acc5b9198a296e74e74"
+    },
+    {
+      "id": "masked-or-nonfinite",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "ccfe2685bdc92c47c6767bb4f25bb622dcccb3891d1e7375883215e01f7be8c6"
+    },
+    {
+      "id": "masked-unsigned-overflow",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "696b38a5ff1e9d85b14845c9213e896f0b62f3fb8b00998d8903b27cecbe342c"
+    },
+    {
+      "id": "masked-or-unsigned-overflow",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "40256e9f52dd157e9678e7d60d17cd8dd9af263f4d378fdff39a89de2237da68"
+    },
+    {
+      "id": "masked-root-array",
+      "preflightViolations": [
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "ef670712d142afa633e78edcff13ebcc46a598033714dfb5a6adbc2264e57216"
+    },
+    {
+      "id": "masked-or-root-array",
+      "preflightViolations": [
+        0,
+        1,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "e3f40b6fe629f3bedf6a3eab950dfe14d08c671a1d96543f886709e7477307d8"
+    },
+    {
+      "id": "masked-key-missing",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "8bf506fb9bcd26492d904793264ac5e151ef95d5a6dd8f30cc69716ddf76fe55"
+    },
+    {
+      "id": "masked-or-key-missing",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "e5fe62e048f364e31b760aff1649b3544bae4aad4fdbbaafe974dc2b7af36a48"
+    },
+    {
+      "id": "masked-key-null",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "913ff9ee294c13731daa54e8c8e79335847e8d81da6770f09d5b4d78adaca804"
+    },
+    {
+      "id": "masked-or-key-null",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "2b5a1662610737c6fae9f99a460515327f7c1363bfbd1e5def1ca190f9c72e90"
+    },
+    {
+      "id": "masked-key-wrong-kind",
+      "preflightViolations": [
+        0,
+        0,
+        1
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "4a330f7f526b76775fb2d94fdc5450dd88a2101147af6266d7a4bbd5c07bdd91"
+    },
+    {
+      "id": "masked-or-key-wrong-kind",
+      "preflightViolations": [
+        0,
+        1,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "3498d6558d17e4faa568bcf6c9af2e0e4e273c64cc8a558a3b9d7ed62350ff9c"
+    },
+    {
+      "id": "masked-version-zero",
+      "preflightViolations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "ed1dfdaa535d2117a2dce53a6bc6ba1383596dda4d28f2727ecd41a91e568bc5"
+    },
+    {
+      "id": "masked-or-version-zero",
+      "preflightViolations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "d2e2ca86a6bbad1767d920f889e0954c58db826301d76cde5f7936e02b2dfd80"
+    },
+    {
+      "id": "masked-identity-negative",
+      "preflightViolations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "7688b3de4eea878221334caf73022ba6bdab4de4b55c49ab0d62174539907c13"
+    },
+    {
+      "id": "masked-or-identity-negative",
+      "preflightViolations": [
+        1,
+        0,
+        0
+      ],
+      "queryExecuted": false,
+      "identities": null,
+      "overflow": false,
+      "sqlSha256": "9fd5c0a47ecaffc3a61f9db599312f374e5dcdb54c3f2a90a66aa9e67a63f5c0"
+    }
+  ]
+}

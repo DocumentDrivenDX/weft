@@ -1,0 +1,32 @@
+{
+  "baseline": "b1a90ddb40e6ee413953ec6780b5740f67abf883",
+  "sourceHandoff": "/private/tmp/umf-weft-mutation-owner-handoff-20261014",
+  "pythonModuleSha256": "2f91cbd5de07f04492d6fdbd964bf86cce84245adc18cd6debe3c17f61ef6843",
+  "files": {
+    "README.md": "815dd071166c0b69c347b28d655d2930ab51d2b1b5cc2d541226a4de7930b1ed",
+    "accepted-document.json": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+    "binding.json": "c5a6741adb7b18ee588de97610606903b0aad968c5cb63eaee87f396d9aaf907",
+    "compiled-plan.json": "98eae63e555de8ec79e5c8defaab004f75e53777386bfeb02f05d19cd03e80f6",
+    "export-receipt.json": "34f0f25d2250c40dc8b0107dccf16922a859ba7360ea7c10e50779d553b50cb0",
+    "failed-attempt.json": "91e881cebc4fcd33c122c20144cbaecea9b2ed8b45847e38426fa8b5e24c2843",
+    "lowering.json": "f3058d98c9dc29fd5aff62c494f90d33cede8b5443b9abee4a41d28a0cd19a15",
+    "native-binding.json": "c5a6741adb7b18ee588de97610606903b0aad968c5cb63eaee87f396d9aaf907",
+    "native-query-bundle.json": "cac06b398fec9e71c317f31816fa37cad87309daf5279fcf0c1563292217dd82",
+    "native-runtime-manifest.json": "aada6da87a2ff1cf522f846d463ce1ae3d883bb88d435de6f9c8ca2d2263daa6",
+    "original-demo-model.json": "b5ec19900e4355538395200f65e3f70a4edf2e6b9dd1753deac04a6d9ef41337",
+    "original-prepared-acceptance.json": "82de724c3eef3a2ed934c5bf483a85b06ea2bbdf3ea76fd958050123a162a6d1",
+    "python-current-bridge.json": "75722a3bd8aab742d3e45e6bc1830682a1a6a3f9f0effc15f4c65d6d12ae462a",
+    "python-parity.json": "5f36904e11777c23dc3854f7130a6a8c940e4d84500a7638abb28eccc42c5fd2",
+    "python-wheel-bridge.json": "75722a3bd8aab742d3e45e6bc1830682a1a6a3f9f0effc15f4c65d6d12ae462a",
+    "receipt.json": "4b041e28586518a98e637f5633fcbd8b6b724f972ca42f20703cc771108a10e7",
+    "source-hashes.json": "ec6f214e428440c86bb0859c1efa53370bdded43e537655dea7aecc87478308c"
+  },
+  "claims": "Same-store native compiler/driver/SDK effect correspondence only; no protected RR, queued action authority, sealing or full B-008 acceptance.",
+  "nativeRun": "final installed-wheel / fresh same-store installation",
+  "wheel": {
+    "name": "weft_sql-0.4.30-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "389b0da9d4816633be78ef7a581136aba1886e62dc690f4a4fbd6eb3e3b75bb4",
+    "installation": "pip --no-index --no-deps into isolated target",
+    "qualification": "macOS arm64/Python3.12.14; no publication"
+  }
+}

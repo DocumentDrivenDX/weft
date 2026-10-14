@@ -1,0 +1,10 @@
+{
+  "scope": "actual Chromium Rust WASM versus native Python full response bytes; no executor",
+  "cases": 32,
+  "surrogateRefused": true,
+  "nodeGlobalsAbsent": true,
+  "browser": "153.0.8010.12",
+  "passed": true,
+  "externalRequests": [],
+  "wasmSha256": "8192fe5e1aa92de6620e1af49bff266852b827deb9ccd87f477d11918409832d"
+}

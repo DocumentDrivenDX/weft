@@ -1,0 +1,215 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:243:19
+    |
+206 | impl Parser {
+    | ----------- method in this implementation
+...
+243 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:38
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                 ---- ^^^^^^^^
+  |                                 |
+  |                                 field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(()),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:58
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                --------- ^^^^^^^^^^^^^^
+  |                                                |
+  |                                                field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(()),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:82
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                          ------- ^^^^^^^^
+  |                                                                          |
+  |                                                                          field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(()),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: fields `field` and `disposition` are never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | ...,Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |                                                 ---------- ^^^^^                 ^^^^^^^^^^^
+  |                                                 |
+  |                                                 fields in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 5 warnings
+   Compiling weft-core v0.1.0 (/Users/erik/Projects/weft/crates/weft-core)
+warning: variant `Upgrade` is never constructed
+  --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:21:5
+   |
+ 9 | pub(crate) enum Behavior {
+   |                 -------- variant in this enum
+...
+21 |     Upgrade,
+   |     ^^^^^^^
+   |
+   = note: `Behavior` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: function `target` is never used
+   --> crates/weft-core/../../tests/compile/../register-backend/fixture.rs:296:15
+    |
+296 | pub(crate) fn target(candidate: bool) -> Target {
+    |               ^^^^^^
+
+warning: `weft-core` (test "compile-envelope") generated 2 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.21s
+     Running ../../tests/compile/envelope.rs (target/debug/deps/compile_envelope-be86de31a13f26fb)
+
+running 6 tests
+test exact_limits_and_binding_digest_precede_resolution ... ok
+test compiled_artifacts_keep_versions_types_pins_and_qualifications ... ok
+test plugin_failures_are_atomic_at_the_public_boundary ... ok
+test strict_envelope_and_atomic_refusals ... ok
+test supplied_factory_selection_and_failure_do_not_fall_back ... ok
+test request_admission_branches_refuse_atomically ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.38s
+
+     Running ../../tests/mutation/compiler.rs (target/debug/deps/mutation_compile-fb431ec291867b14)
+
+running 8 tests
+test independent_owner_golden ... ok
+test original_preparation_compiles_update ... ok
+test grouping_collapse_and_unknown_registry_payloads ... ok
+test source_order_and_same_family_markers ... ok
+test marker_reuse_and_source_pins_refuse ... ok
+test canonical_predicates_and_exact_parameter_carriers ... ok
+test case_sensitive_markers_and_exact_grouping_bounds ... ok
+test unsupported_and_malformed_requests_never_emit_a_plan ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running ../../tests/mutation/embedding.rs (target/debug/deps/mutation_embedding-1df61008ce68ebb2)
+
+running 10 tests
+test original_transport_profile_and_bounds_refuse_before_dispatch ... ok
+test independent_executor_registration_and_specific_refusal ... ok
+test owner_preparation_target_closure_and_original_key_domains ... ok
+test callback_error_diagnostics_and_supported_messages_are_not_lost ... ok
+test incomplete_lowering_and_assessment_never_fall_back ... ok
+test old_read_interface_and_no_implicit_mutation_upgrade ... ok
+test original_owner_key_component_transport_limit ... ok
+test selection_collection_metadata_and_registration_boundaries ... ok
+test binding_and_direct_selection_framing_limits_have_limit_codes ... ok
+test exact_lowering_utf8_literal_and_aggregate_byte_bounds ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.19s
+
+     Running ../../tests/qualify-and-evolve/properties.rs (target/debug/deps/qualification_properties-6c3f78d8e6de5b4b)
+
+running 7 tests
+test generated_sql_parser_text_and_spans ... ok
+test exact_guard_integer_text_overflow_and_integral_refusal ... ok
+test exact_guard_decimal_zero_padding_and_family_matrix ... ok
+test generated_hostile_json_and_multi_statement_inputs ... ok
+test generated_unicode_retention_pins_and_selected_meaning ... ok
+test generated_decimal_domains has been running for over 60 seconds
+test generated_integer_domains has been running for over 60 seconds
+test generated_decimal_domains ... ok
+test generated_integer_domains ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 142.59s
+
+     Running ../../tests/qualify-and-evolve/resources.rs (target/debug/deps/qualification_resources-f35d3727ef8e230d)
+
+running 5 tests
+test json_value_and_refusal_branches_are_explicit ... ok
+test parser_limits_have_explicit_boundary_branches ... ok
+test generated_truncated_json_and_nested_duplicates ... ok
+test json_node_and_request_byte_limits ... ok
+test sql_and_binding_byte_limits ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.20s
+

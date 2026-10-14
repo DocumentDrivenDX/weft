@@ -1,0 +1,25 @@
+{
+  "scope": "Fresh original UMF lossless-reader build/producer adoption; native selection only, no protected effects",
+  "sourceSha256": {
+    "spec/upstream/actions-plan/owner-pins.json": "b055c61c900e52b43397628353e52233d51804dd17077fc3dbb7ecd1640019fa",
+    "tests/mutation/fixtures/selection-key65.json": "021f2603411351ba8c1921bde721db6f2b9bda79d99bf32511f02e35d41035bd",
+    "tests/mutation/fixtures/registry.json": "47e8c972a5731db29280cb96c13e98d76219acb368ff3b1baae82dd0ae8a9794",
+    "tests/mutation/fixtures/selection-key64.json": "ff60c42c2efe361d9a88930a67d109d07103ff9529be32724e8a1c1d371844ef",
+    "tests/mutation/fixtures/multi-registry.json": "02c45192e45cc9e091c4c0dc7e837eefac60ae2971193de929b16a0795dac8d8",
+    "tests/mutation/fixtures/selection-binary.json": "10b68c48f23567fda77b18c9bdbe58e84048609c1f87b638f5148f4dcf05e4a8",
+    "tests/mutation/fixtures/selection-decimal.json": "3a248044263559c96600ed1779ca37900375c36d9b0dbe737adcd61d3fc4ad82",
+    "tests/mutation/fixtures/postgres-owner-plan.json": "67bbdc29334090c5ebcb20ab177abc418f8b0acb47a5b33f1a3758ee393ae62b",
+    "tests/mutation/fixtures/selection-other.json": "a1455bf2078ff766bb6bc699a97230a4cfb029495d7c26700a45d56c725d6be9"
+  },
+  "producer": {
+    "build": "sha256:bf743dbbd943f4bf3533c88f8e9547815a4d6a62b2ec9a67c5210d51975151ea",
+    "id": "umf.actions.plan-model",
+    "version": "1"
+  },
+  "coreTests": 18,
+  "loweringTests": 8,
+  "parityCases": 32,
+  "postgresqlCases": 30,
+  "reviewStatus": "Latest owner correction/pin refresh await Astra re-review after usage limit",
+  "nativeQualified": false
+}

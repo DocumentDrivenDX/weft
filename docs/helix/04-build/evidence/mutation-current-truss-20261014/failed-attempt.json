@@ -1,0 +1,8 @@
+{
+  "attempt": "r1",
+  "result": "failed before native selection/effects",
+  "sqlState": "42703",
+  "diagnostic": "column weft_mutation.version does not exist",
+  "correction": "Use original current-layout object.ver carrier, verified against Truss owner sources and fresh native replay",
+  "laterDiagnosticControl": "Unsupported NUL initially exposed uncontracted backend diagnostic phase; adapter corrected to contracted action phase, then final Python refusal controls passed"
+}

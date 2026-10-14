@@ -1605,3 +1605,36 @@ The separate relationship producer now emits HAS_RELATED as EXISTS over the actu
 Explicit entrypoints `prepare_guarded_relationship_candidate`, `inspect_guarded_relationship_result` and binaries `security_relationship_candidate`, `security_relationship_result`, `security_relationship_codecs` use the separate relationship context. The output remains the closed relational candidate/result 0.2 envelope with four required native duties and original source capsule 0.1. Historical producer/inspector/codec paths continue refusing the new profile/wrapper. Original producer-byte reconstruction, policy/Subject/query parameter separation, codec checks and result-cell correspondence are retained. Empty supplied operand/result batches in component tests are declarations, not evidence of a complete native population or authenticated selection.
 
 Both original permitted and observation-denied fresh Truss requests emit candidates. Seven graph and 28 guarded transport tests pass, including exact closed outputs, old-protocol rejection and SQL/newline tamper refusal; module/spec checks pass. The first native profile selects directed independent one-hop string-key relationships with unrestricted 0..* participation on both sides. Finite/minimum degrees refuse until complete distinct-neighbor checks are implemented; inverse, association paths and RELATED_KEYS remain separately unfinished. Protected native caller/source/epoch/fact/publication composition and all original 132 acceptance cases remain mandatory. No original case promotion or public activation is claimed.
+
+
+### Mutation API reconciliation and current Truss/Python bridge — 2026-10-14
+
+The frozen mutation-owner source package was reconciled onto current main,
+preserving its security and Truss runtime implementations. Existing main's
+CONTRACT-006/008 and US-009 identities remain unchanged. Imported mutation
+artifacts receive CONTRACT-009, US-010/011, TD-010/011 and STP-010/011 with
+explicit FR-23–26 allocation; older evidence remains historical source scope.
+No whole dirty checkout was adopted.
+
+The original products model was accepted/exported through actual Truss APIs.
+The current adapter reuses original runtime65/tagged mapping/scalar semantics,
+not older PostgreSQL17 SQL. Native Python now exposes original action compiler
+construction, explicit current renderer registration and original bounded
+selection lowering. All input source bytes/revisions/binding hashes remain
+checked. The first native attempt caught a wrong physical `version` assumption;
+current layout uses `ver`, verified in the native owner and corrected before the
+passing replay.
+
+Eight mutation compiler, ten embedding and eight historical lowering tests pass.
+Native Python passes32 independent golden/oracle cases. A fresh same-store
+PostgreSQL18.6 replay compiles the original UPDATE, runs complete preflight and
+typed selection through the Python bridge, and applies its assignment through
+the public version-checked Truss SDK: bar becomes Foo and baz remains keep.
+Overflow, stale revision, substituted binding and malformed filtered-out Key
+controls refuse. The ordinary person retains no raw table SELECT. Native raw
+selection uses an excluded test assessor; protected RR/current authority/bulk
+sealing remains independently owned work, with no B-008 completion claim.
+Evidence: [current native receipt](evidence/mutation-current-truss-20261014/receipt.json)
+and [source/transport manifest](evidence/mutation-current-truss-20261014/manifest.json).
+
+The final installable abi3 wheel was built with the pinned toolchain, installed offline into an isolated target, and passed the32-case Python oracle plus the same-store native replay on Python3.12.14/macOS arm64. The bridge also rejects caller SQL/principal/plugin members, unknown handles and PostgreSQL NUL parameters. No package was published.

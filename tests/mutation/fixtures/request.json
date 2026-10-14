@@ -1,0 +1,46 @@
+{
+  "interfaceVersion": "weft-mutation-compile/0.1.0",
+  "dialect": "weft-mutation/0.1.0",
+  "sql": "UPDATE Customer SET active=FALSE WHERE last_seen<:cutoff",
+  "parameters": {
+    "cutoff": {
+      "integerToken": "100"
+    }
+  },
+  "model": {
+    "mediaType": "application/json",
+    "utf8": "{\"umf\":\"0.8.0\",\"id\":\"bulk-update-owner-fixture\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"customer-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"active\",\"name\":\"active\",\"kind\":\"field\",\"scalarType\":\"boolean\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"last-seen\",\"name\":\"last_seen\",\"kind\":\"field\",\"scalarType\":\"integer\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"customer\",\"name\":\"Customer\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"customer-id\"},{\"module\":\"sales\",\"element\":\"active\"},{\"module\":\"sales\",\"element\":\"last-seen\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"customer-id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"set-active\",\"name\":\"Set active\",\"description\":\"Set one required active Field using a typed value input.\",\"parameters\":[{\"id\":\"customer\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"customer\",\"key\":\"pk\"},\"required\":true},{\"id\":\"active-value\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"active\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"customer-write\",\"record\":{\"module\":\"sales\",\"element\":\"customer\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"customer\\\"}\",\"references\":[{\"parameter\":\"customer\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"active\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"set-active\",\"kind\":\"set\",\"entity\":{\"parameter\":\"customer\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"active\"},\"value\":{\"parameter\":\"active-value\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"bulk-editor\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}",
+    "sha256": "ba223067bf5b7dabefce9d34f95b89516d4fcf17d6b5d9afec81f2164620d436"
+  },
+  "modelPin": {
+    "documentId": "bulk-update-owner-fixture",
+    "revision": "fixture1",
+    "umfVersion": "0.8.0",
+    "sha256": "ba223067bf5b7dabefce9d34f95b89516d4fcf17d6b5d9afec81f2164620d436"
+  },
+  "action": {
+    "identity": {
+      "module": "sales",
+      "action": "set-active"
+    },
+    "documentSha256": "ba223067bf5b7dabefce9d34f95b89516d4fcf17d6b5d9afec81f2164620d436",
+    "invocation": {
+      "id": "umf.actions.tx",
+      "version": "1"
+    }
+  },
+  "target": {
+    "module": "sales",
+    "element": "customer",
+    "key": "pk"
+  },
+  "selectionProfile": {
+    "id": "weft.update-selection",
+    "version": "1"
+  },
+  "batchSize": 2,
+  "limits": {
+    "maxItems": 10000,
+    "maxManifestBytes": 16777216
+  }
+}

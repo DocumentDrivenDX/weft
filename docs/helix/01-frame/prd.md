@@ -180,3 +180,12 @@ while authenticated native enforcement remains host/backend owned.
 
 All four remain open for full execution. CONTRACT-006's initial source/transport
 foundation is scoped evidence only; it emits no security-enabled artifact.
+
+## Mutation compilation and current native selection
+
+| Requirement | Priority | Meaning |
+| --- | --- | --- |
+| FR-23 | P0 | Compile the owner-prepared UPDATE subset to original pinned UMF action plans and inert typed selection artifacts; never discover targets or execute effects during compilation. |
+| FR-24 | P0 | Preserve exact field/key/parameter/source meanings and refuse unsupported mutations before emission. |
+| FR-25 | P0 | Trusted backend registrations lower bounded selection with complete-population preflight, original identity/version/key carriers, typed parameters and maxItems+1 overflow refusal. |
+| FR-26 | P0 | Native Python and browser bindings share the original mutation compiler core; host-owned renderer registration and native execution remain separately qualified. |

@@ -31,6 +31,7 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 }
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    m.add_class::<MutationCompiler>()?;
     m.add_function(wrap_pyfunction!(inspect_security_mapping_subject_key_json, m)?)?;
     m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
@@ -68,4 +69,20 @@ fn compile_truss_runtime_json(request:&str)->String{weft_runtime::compile_truss_
 #[pyo3(signature=(request,page_size,after=None))]
 fn compile_truss_runtime_page_json(request:&str,page_size:u16,after:Option<Vec<String>>)->String{
     weft_runtime::compile_truss_runtime_page_json(request,page_size,after)
+}
+
+/// Host-owned original mutation/action registry. This class executes no database effects.
+#[pyclass]
+struct MutationCompiler {registry:weft_runtime::MutationRegistry}
+fn mutation_error(e:impl std::fmt::Display)->PyErr{pyo3::exceptions::PyValueError::new_err(e.to_string())}
+#[pymethods]
+impl MutationCompiler {
+ #[new]
+ fn new(configuration:&str)->PyResult<Self>{
+  let registry=weft_runtime::MutationRegistry::from_json(configuration).map_err(|e|mutation_error(format!("{}: {}",e.code,e.message)))?;Ok(Self{registry})
+ }
+ fn compile_json(&self,request:&str)->String{self.registry.compile_json(request)}
+ #[cfg(feature="truss-postgresql-pg18")]
+ fn register_truss_selection(&mut self,configuration:&str)->PyResult<usize>{weft_runtime::install_truss_mutation_backend(&mut self.registry,configuration).map_err(|e|mutation_error(format!("{}: {}",e.code,e.message)))}
+ fn lower_selection_json(&self,handle:usize,request:&str)->PyResult<String>{weft_runtime::lower_mutation_selection_json(&self.registry,handle,request).map_err(|e|mutation_error(format!("{}: {}",e.code,e.message)))}
 }

@@ -1,0 +1,82 @@
+{
+  "configuration": {
+    "actions": [
+      {
+        "pin": {
+          "identity": {
+            "module": "sales",
+            "action": "set-name"
+          },
+          "documentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+          "invocation": {
+            "id": "umf.actions.tx",
+            "version": "1"
+          }
+        },
+        "snapshot": {
+          "mediaType": "application/json",
+          "utf8": "{\"umf\":\"0.8.0\",\"id\":\"product-action-demo\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"product-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"product-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"products\",\"name\":\"products\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"product-id\"},{\"module\":\"sales\",\"element\":\"product-name\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"product-id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"set-name\",\"name\":\"Set product name\",\"description\":\"Set one product name using a typed value input.\",\"parameters\":[{\"id\":\"products\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"products\",\"key\":\"pk\"},\"required\":true},{\"id\":\"name-value\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"customer-write\",\"record\":{\"module\":\"sales\",\"element\":\"products\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"products\\\"}\",\"references\":[{\"parameter\":\"products\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"product-name\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"set-name\",\"kind\":\"set\",\"entity\":{\"parameter\":\"products\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"value\":{\"parameter\":\"name-value\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"bulk-editor\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}",
+          "sha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5"
+        },
+        "preparation": {
+          "mediaType": "application/json",
+          "utf8": "{\"action\":{\"documentSha256\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"identity\":{\"action\":\"set-name\",\"module\":\"sales\"},\"invocation\":{\"id\":\"umf.actions.tx\",\"version\":\"1\"}},\"assignments\":[{\"field\":{\"element\":\"product-name\",\"module\":\"sales\"},\"input\":\"name-value\"}],\"entityParameter\":\"products\",\"frames\":[\"customer-write\"],\"model\":{\"documentId\":\"product-action-demo\",\"revision\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"sha256\":\"b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5\",\"umfVersion\":\"0.8.0\"},\"obligations\":[{\"id\":\"/modules/0/extensions/umf.actions/actions/0/parameters/0\",\"status\":\"checked\"},{\"id\":\"/modules/0/elements/2\",\"status\":\"checked\"},{\"id\":\"/modules/0/elements/0\",\"status\":\"checked\"},{\"id\":\"/modules/0/elements/1\",\"status\":\"checked\"},{\"id\":\"/modules/0/elements/2/keys/0\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/parameters/1\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/writes/0\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/writes/0/selector\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/authorization\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/attribution\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/atomicity\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/idempotency\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/result\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/binding\",\"status\":\"checked\"},{\"id\":\"/modules/0/extensions/umf.actions/actions/0/binding/effects/0\",\"status\":\"checked\"}],\"producer\":{\"build\":\"sha256:bf743dbbd943f4bf3533c88f8e9547815a4d6a62b2ec9a67c5210d51975151ea\",\"id\":\"umf.actions.plan-model\",\"version\":\"1\"},\"protocol\":\"umf.actions.plan-model/1\",\"schema\":{\"id\":\"urn:umf:actions:plan-model:1\",\"sha256\":\"b99226c6188624ec240fb1db96a5fcdfcb15c6fe2b8f2c60276e13f7003b9998\"},\"target\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"}}",
+          "sha256": "3a199a709d6274e1d50a6beb947e9a02b1727c4cc5b809e6e4fd4702adfdf281"
+        }
+      }
+    ],
+    "selectionBackends": []
+  },
+  "request": {
+    "interfaceVersion": "weft-mutation-compile/0.1.0",
+    "dialect": "weft-mutation/0.1.0",
+    "sql": "UPDATE products SET name = 'Foo' WHERE id = 'bar'",
+    "parameters": {},
+    "model": {
+      "mediaType": "application/json",
+      "utf8": "{\"umf\":\"0.8.0\",\"id\":\"product-action-demo\",\"vocabularies\":{\"umf.actions\":{\"version\":\"0.1.0\"}},\"modules\":[{\"id\":\"sales\",\"namespace\":\"sales\",\"elements\":[{\"id\":\"product-id\",\"name\":\"id\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"product-name\",\"name\":\"name\",\"kind\":\"field\",\"scalarType\":\"string\",\"cardinality\":\"one\",\"nullability\":\"required\",\"extensions\":{}},{\"id\":\"products\",\"name\":\"products\",\"kind\":\"record\",\"members\":[{\"module\":\"sales\",\"element\":\"product-id\"},{\"module\":\"sales\",\"element\":\"product-name\"}],\"keys\":[{\"id\":\"pk\",\"name\":\"primary\",\"primary\":true,\"fields\":[{\"module\":\"sales\",\"element\":\"product-id\"}]}],\"extensions\":{}}],\"extensions\":{\"umf.actions\":{\"actions\":[{\"id\":\"set-name\",\"name\":\"Set product name\",\"description\":\"Set one product name using a typed value input.\",\"parameters\":[{\"id\":\"products\",\"kind\":\"entity\",\"target\":{\"module\":\"sales\",\"element\":\"products\",\"key\":\"pk\"},\"required\":true},{\"id\":\"name-value\",\"kind\":\"value\",\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"required\":true}],\"outputs\":[],\"preconditions\":[],\"postconditions\":[],\"failures\":[],\"reads\":[],\"writes\":[{\"id\":\"customer-write\",\"record\":{\"module\":\"sales\",\"element\":\"products\"},\"selector\":{\"language\":\"umf.actions.keys\",\"version\":\"1\",\"expression\":\"{\\\"entity\\\":\\\"products\\\"}\",\"references\":[{\"parameter\":\"products\"}]},\"maxEntities\":1,\"fields\":[{\"module\":\"sales\",\"element\":\"product-name\"}],\"relationships\":[],\"create\":false,\"delete\":false}],\"binding\":{\"kind\":\"recipe\",\"profile\":{\"id\":\"graph-write\",\"version\":\"1\"},\"effects\":[{\"id\":\"set-name\",\"kind\":\"set\",\"entity\":{\"parameter\":\"products\"},\"values\":[{\"field\":{\"module\":\"sales\",\"element\":\"product-name\"},\"value\":{\"parameter\":\"name-value\"}}]}]},\"authorization\":{\"kind\":\"roles\",\"profile\":{\"id\":\"umf.actions.roles\",\"version\":\"1\"},\"roles\":[\"bulk-editor\"]},\"attribution\":{\"subject\":\"person-required\"},\"atomicity\":\"single-store\",\"idempotency\":\"caller-key-optional\",\"result\":{\"identities\":\"created-and-changed\",\"version\":\"store-opaque\",\"receipt\":\"read-at-least\"}}]}}}]}",
+      "sha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5"
+    },
+    "modelPin": {
+      "documentId": "product-action-demo",
+      "revision": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+      "umfVersion": "0.8.0",
+      "sha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5"
+    },
+    "action": {
+      "identity": {
+        "module": "sales",
+        "action": "set-name"
+      },
+      "documentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+      "invocation": {
+        "id": "umf.actions.tx",
+        "version": "1"
+      }
+    },
+    "target": {
+      "module": "sales",
+      "element": "products",
+      "key": "pk"
+    },
+    "selectionProfile": {
+      "id": "weft.update-selection",
+      "version": "1"
+    },
+    "batchSize": 2,
+    "limits": {
+      "maxItems": 10000,
+      "maxManifestBytes": 16777216
+    }
+  },
+  "samples": [
+    {
+      "id": "bar",
+      "name": "Bar"
+    },
+    {
+      "id": "baz",
+      "name": "Baz"
+    }
+  ]
+}

@@ -10,10 +10,10 @@ pub type Native =
     for<'a> fn(&Expression, &[String], Option<&Access<'a>>, &mut Parameters) -> Result<String>;
 pub struct OriginalBackend {
     manifest: Manifest,
-    binding_sha256: String,
-    records: BTreeMap<String, crate::record_definition::RecordAdmission>,
-    properties: BTreeMap<String, crate::property_definition::PropertyAdmission>,
-    comparators: BTreeMap<String, crate::native_comparator_definition::Definition>,
+    pub(crate) binding_sha256: String,
+    pub(crate) records: BTreeMap<String, crate::record_definition::RecordAdmission>,
+    pub(crate) properties: BTreeMap<String, crate::property_definition::PropertyAdmission>,
+    pub(crate) comparators: BTreeMap<String, crate::native_comparator_definition::Definition>,
     native: Native,
     relationships: BTreeMap<String, crate::relationship_definition::RelationshipAdmission>,
 }

@@ -1,0 +1,24 @@
+{
+  "scope": "Actual ordinary-person RC catalog/public mutation/readback and native binding export. No action, RR selection, bulk seal or security qualification.",
+  "runtime": "truss-catalog-runtime/0.65-candidate",
+  "runtimeSha256": "aada6da87a2ff1cf522f846d463ce1ae3d883bb88d435de6f9c8ca2d2263daa6",
+  "layout": {
+    "identity": "truss-layout",
+    "version": "1.0",
+    "sha256": "cf417e0af5d37dd61fa5f39f818d2e7282a29e6c6c6ab7fc0b26dcdde99e7dec"
+  },
+  "documentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+  "nativeObjectIds": [
+    "1",
+    "2"
+  ],
+  "preparationOwnerRevision": "7c0f0c98beee2cc1a5a407992b5c53cc2616da8e",
+  "files": {
+    "original-demo-model.json": "b5ec19900e4355538395200f65e3f70a4edf2e6b9dd1753deac04a6d9ef41337",
+    "accepted-document.json": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+    "original-prepared-acceptance.json": "82de724c3eef3a2ed934c5bf483a85b06ea2bbdf3ea76fd958050123a162a6d1",
+    "native-query-bundle.json": "cac06b398fec9e71c317f31816fa37cad87309daf5279fcf0c1563292217dd82",
+    "native-binding.json": "c5a6741adb7b18ee588de97610606903b0aad968c5cb63eaee87f396d9aaf907",
+    "native-runtime-manifest.json": "aada6da87a2ff1cf522f846d463ce1ae3d883bb88d435de6f9c8ca2d2263daa6"
+  }
+}

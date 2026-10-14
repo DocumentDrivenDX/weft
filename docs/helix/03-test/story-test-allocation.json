@@ -298,5 +298,94 @@
         "state": "open"
       }
     ]
+  },
+  {
+    "story": "US-010",
+    "testPrefix": "bulk-update-compile-bulk-update",
+    "criteria": [
+      {
+        "id": "US-010-AC1",
+        "plannedTest": "update_plan",
+        "assertion": "Given the registered set-active action and UPDATE Customer SET active=FALSE WHERE last_seen<:cutoff, when compiled, then output contains the exact UMF action/model pins, false assignment, typed lt selection and complete source provenance without target discovery or job submission.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-010-AC2",
+        "plannedTest": "name_and_input_resolution",
+        "assertion": "Given ambiguous names, missing/unused markers, marker reuse across different Fields or different-field action inputs, when compiled, then resolution/type/action correspondence refuses before any plan is emitted.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-010-AC3",
+        "plannedTest": "bounded_syntax",
+        "assertion": "Given missing WHERE, joins, arithmetic, nullable/null SET, key changes, handlers or unknown selected semantics, when compiled, then version-qualified refusal preserves the original source/model and does not fall back to read compilation.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-010-AC4",
+        "plannedTest": "predicate_exactness",
+        "assertion": "Given boolean/integer/string predicates with AND/OR parentheses and exact large-integer or Unicode values, when lowered to selection AST, then operator/precedence/dependency order agrees with an independently implemented evaluator; invalid stored-value behavior remains a backend obligation.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-010-AC5",
+        "plannedTest": "compiler_limits",
+        "assertion": "Given declared SQL/model/node/depth/assignment bounds, when exceeded, then deterministic bounded refusal produces no partial compiled plan; existing read fixtures remain unchanged.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-010-AC6",
+        "plannedTest": "selection_lowering",
+        "assertion": "Given original backend mappings and owner-prepared action input, when selection lowers and executes on independent native fixtures, then exact Key/identity/version decoding, numeric identity order and maxItems+1 overflow agree with the oracle; missing/null/malformed predicate values including masked nonmatching/AND-OR rows refuse in the admitted authorized view before filtering.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      }
+    ]
+  },
+  {
+    "story": "US-011",
+    "testPrefix": "bulk-update-portable-mutation-embedding",
+    "criteria": [
+      {
+        "id": "US-011-AC1",
+        "plannedTest": "python_no_sidecar",
+        "assertion": "Given the mutation corpus, when the installed native Python bridge compiles it, then the original Rust implementation is invoked in-process with no Node/Bun/subprocess compiler semantics.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-011-AC2",
+        "plannedTest": "browser_artifact_parity",
+        "assertion": "Given the same source/model/action bytes, when Rust, Python and actual Chromium WASM compile, then exact plan/source artifacts and ordered diagnostics agree, including large integer and non-ASCII cases.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-011-AC3",
+        "plannedTest": "independent_executor",
+        "assertion": "Given independently registered test executors, when they consume the unchanged selection/plan corpus, then no frontend backend-ID switch is needed and each either agrees with the independent expected effects or emits a specific capability refusal.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-011-AC4",
+        "plannedTest": "no_execution_claim",
+        "assertion": "Given missing native selection/guard/bulk evidence, when reporting capabilities, then compiler parity and synthetic executor agreement do not become Truss/Ashlar native support or authorization claims.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      },
+      {
+        "id": "US-011-AC5",
+        "plannedTest": "read_compatibility",
+        "assertion": "Given existing read artifacts and unsupported mutation/profile versions, when bindings run, then reads retain original interfaces/results and mutations refuse unsupported profiles without automatic migration.",
+        "state": "planned",
+        "layer": "compiler-conformance"
+      }
+    ]
   }
 ]

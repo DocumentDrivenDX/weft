@@ -1,0 +1,244 @@
+[
+  {
+    "id": "integer",
+    "lowered": {
+      "bounds": {
+        "fetchLimit": 3,
+        "maxItems": 2
+      },
+      "columns": [
+        {
+          "field": null,
+          "kind": "identity",
+          "name": "identity"
+        },
+        {
+          "field": null,
+          "kind": "version",
+          "name": "version"
+        },
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key0"
+        },
+        {
+          "field": {
+            "element": "customer-id",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key1"
+        }
+      ],
+      "obligations": [
+        "Original admitted authorized coherent snapshot and source correspondence before all preflight/selection",
+        "Host must abort on any nonzero preflight and refuse maxItems+1 overflow without trimming",
+        "Native column int8/nonreuse/version, CoreLiteral decoding and guard issuance remain separately qualified"
+      ],
+      "ordering": {
+        "direction": "asc",
+        "kind": "native-integer-identity"
+      },
+      "parameters": [
+        {
+          "field": {
+            "element": "customer-id",
+            "module": "sales"
+          },
+          "name": "p1",
+          "value": {
+            "integerToken": "100"
+          }
+        }
+      ],
+      "preflight": [
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (\"weft_mutation\".\"id\" IS NULL OR \"weft_mutation\".\"id\"<=0 OR \"weft_mutation\".\"ver\" IS NULL OR \"weft_mutation\".\"ver\"<=0)"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND ((((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '0'::pg_catalog.text))='string')) AND CASE WHEN ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)) ~ '^-?(0|[1-9][0-9]*)([.][0-9]+)?([eE][+-]?[0-9]+)?$' AND pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)),'pg_catalog.numeric') THEN CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END ELSE FALSE END) IS DISTINCT FROM TRUE"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '20'::pg_catalog.text))='string')) IS DISTINCT FROM TRUE"
+        }
+      ],
+      "sql": "SELECT \"weft_mutation\".\"id\"::pg_catalog.text AS identity, \"weft_mutation\".\"ver\"::pg_catalog.text AS version, ((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text AS key0, ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text AS key1 FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND ((((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric < $1::pg_catalog.numeric)) ORDER BY \"weft_mutation\".\"id\" ASC LIMIT 3",
+      "status": "lowered"
+    }
+  },
+  {
+    "id": "mixed",
+    "lowered": {
+      "bounds": {
+        "fetchLimit": 3,
+        "maxItems": 2
+      },
+      "columns": [
+        {
+          "field": null,
+          "kind": "identity",
+          "name": "identity"
+        },
+        {
+          "field": null,
+          "kind": "version",
+          "name": "version"
+        },
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key0"
+        },
+        {
+          "field": {
+            "element": "customer-id",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key1"
+        }
+      ],
+      "obligations": [
+        "Original admitted authorized coherent snapshot and source correspondence before all preflight/selection",
+        "Host must abort on any nonzero preflight and refuse maxItems+1 overflow without trimming",
+        "Native column int8/nonreuse/version, CoreLiteral decoding and guard issuance remain separately qualified"
+      ],
+      "ordering": {
+        "direction": "asc",
+        "kind": "native-integer-identity"
+      },
+      "parameters": [
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "name": "p1",
+          "value": {
+            "string": "Foo😀"
+          }
+        },
+        {
+          "field": {
+            "element": "customer-id",
+            "module": "sales"
+          },
+          "name": "p2",
+          "value": {
+            "integerToken": "100"
+          }
+        },
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "name": "p3",
+          "value": {
+            "string": "excluded"
+          }
+        }
+      ],
+      "preflight": [
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (\"weft_mutation\".\"id\" IS NULL OR \"weft_mutation\".\"id\"<=0 OR \"weft_mutation\".\"ver\" IS NULL OR \"weft_mutation\".\"ver\"<=0)"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '20'::pg_catalog.text))='string')) IS DISTINCT FROM TRUE"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND ((((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '0'::pg_catalog.text))='string')) AND CASE WHEN ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)) ~ '^-?(0|[1-9][0-9]*)([.][0-9]+)?([eE][+-]?[0-9]+)?$' AND pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)),'pg_catalog.numeric') THEN CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END ELSE FALSE END) IS DISTINCT FROM TRUE"
+        }
+      ],
+      "sql": "SELECT \"weft_mutation\".\"id\"::pg_catalog.text AS identity, \"weft_mutation\".\"ver\"::pg_catalog.text AS version, ((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text AS key0, ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text AS key1 FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (((((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text COLLATE pg_catalog.\"C\" = $1::pg_catalog.text COLLATE pg_catalog.\"C\") OR ((((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric < $2::pg_catalog.numeric) AND (((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text COLLATE pg_catalog.\"C\" <> $3::pg_catalog.text COLLATE pg_catalog.\"C\")))) ORDER BY \"weft_mutation\".\"id\" ASC LIMIT 3",
+      "status": "lowered"
+    }
+  },
+  {
+    "id": "string",
+    "lowered": {
+      "bounds": {
+        "fetchLimit": 3,
+        "maxItems": 2
+      },
+      "columns": [
+        {
+          "field": null,
+          "kind": "identity",
+          "name": "identity"
+        },
+        {
+          "field": null,
+          "kind": "version",
+          "name": "version"
+        },
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key0"
+        },
+        {
+          "field": {
+            "element": "customer-id",
+            "module": "sales"
+          },
+          "kind": "key",
+          "name": "key1"
+        }
+      ],
+      "obligations": [
+        "Original admitted authorized coherent snapshot and source correspondence before all preflight/selection",
+        "Host must abort on any nonzero preflight and refuse maxItems+1 overflow without trimming",
+        "Native column int8/nonreuse/version, CoreLiteral decoding and guard issuance remain separately qualified"
+      ],
+      "ordering": {
+        "direction": "asc",
+        "kind": "native-integer-identity"
+      },
+      "parameters": [
+        {
+          "field": {
+            "element": "customer-part",
+            "module": "sales"
+          },
+          "name": "p1",
+          "value": {
+            "string": "é"
+          }
+        }
+      ],
+      "preflight": [
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (\"weft_mutation\".\"id\" IS NULL OR \"weft_mutation\".\"id\"<=0 OR \"weft_mutation\".\"ver\" IS NULL OR \"weft_mutation\".\"ver\"<=0)"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND (((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '20'::pg_catalog.text))='string')) IS DISTINCT FROM TRUE"
+        },
+        {
+          "parameters": [],
+          "sql": "SELECT count(*)::pg_catalog.text AS violations FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND ((((\"weft_mutation\".\"props\" IS NOT NULL AND pg_catalog.jsonb_typeof(\"weft_mutation\".\"props\")='object') AND pg_catalog.jsonb_typeof((\"weft_mutation\".\"props\" -> '0'::pg_catalog.text))='string')) AND CASE WHEN ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)) ~ '^-?(0|[1-9][0-9]*)([.][0-9]+)?([eE][+-]?[0-9]+)?$' AND pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text)),'pg_catalog.numeric') THEN CASE WHEN pg_catalog.pg_input_is_valid(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text,'pg_catalog.numeric') THEN (((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric::pg_catalog.text NOT IN ('NaN','Infinity','-Infinity') AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric=pg_catalog.trunc(((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric) AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric>=0 AND ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.numeric<pg_catalog.power(2::pg_catalog.numeric,64)) ELSE FALSE END ELSE FALSE END) IS DISTINCT FROM TRUE"
+        }
+      ],
+      "sql": "SELECT \"weft_mutation\".\"id\"::pg_catalog.text AS identity, \"weft_mutation\".\"ver\"::pg_catalog.text AS version, ((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text AS key0, ((\"weft_mutation\".\"props\" ->> '0'::pg_catalog.text))::pg_catalog.text AS key1 FROM \"pg_temp\".\"object\" AS \"weft_mutation\" WHERE (\"weft_mutation\".\"type_id\" = -1::pg_catalog.int4) AND ((((\"weft_mutation\".\"props\" ->> '20'::pg_catalog.text))::pg_catalog.text COLLATE pg_catalog.\"C\" > $1::pg_catalog.text COLLATE pg_catalog.\"C\")) ORDER BY \"weft_mutation\".\"id\" ASC LIMIT 3",
+      "status": "lowered"
+    }
+  }
+]

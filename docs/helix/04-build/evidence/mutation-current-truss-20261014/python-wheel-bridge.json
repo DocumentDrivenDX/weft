@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "scope": "Native Python original source/registration/lowering controls only",
+  "checks": [
+    "original descriptors, preflight and overflow bounds",
+    "hostile string retained only as typed parameter",
+    "unsupported PostgreSQL NUL parameter refused",
+    "caller SQL/principal/backend fields rejected",
+    "uninstalled handle, stale pin, changed binding and plugin rejected"
+  ]
+}

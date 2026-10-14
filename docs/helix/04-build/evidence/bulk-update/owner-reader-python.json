@@ -1,0 +1,8 @@
+{
+  "scope": "native Python wrapper of Rust compiler; no executor",
+  "cases": 32,
+  "passed": true,
+  "ownerGolden": true,
+  "predicateOracle": true,
+  "nativeModule": "/private/tmp/weft-toolchain/venv/lib/python3.12/site-packages/weft/__init__.py"
+}

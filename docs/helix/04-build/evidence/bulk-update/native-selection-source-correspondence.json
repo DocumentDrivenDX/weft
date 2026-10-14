@@ -1,0 +1,27 @@
+{
+  "scope": "Original-admission PostgreSQL selection lowering with synthetic native rows; no protected engine effects",
+  "sourceSha256": {
+    "crates/weft-core/src/mutation_backend.rs": "d63399e11062490a931eeae047c9f9e82909b37285aa6f546101fcf0f5d6e30b",
+    "crates/weft-postgresql/src/mutation.rs": "4320b1115c47b4f80cbed115d5ec5018fade30d5b2f0725fd296b24bf0231e8b",
+    "crates/weft-postgresql/src/original_backend.rs": "ef214c0c70b44bd957ee5ea51be91fec8d3cbafd5a21de46f46ce272f02bfd41",
+    "crates/weft-postgresql/src/record_definition.rs": "a49db2071b3cac501881a539c9c94341b0e387d842b7ef5bf83d660a5ae9ad13",
+    "crates/weft-postgresql/src/conformance_original.rs": "7af2e446e130f7d1e924eaed50fed22702c4824590036bb26dc1a1d074ed89ef",
+    "crates/weft-postgresql/Cargo.toml": "8e30f20d6da74bf3146c31aa0a725429c62626d593c422dc4fe7136d1de11c24",
+    "crates/weft-postgresql/src/lib.rs": "810ab6549e580ebfcfee54edb3b39e24fbd5406fcdbf8252dcf7e659eaf525a4",
+    "tests/mutation/lowering.rs": "bf0a14a8ca2e8afff411976b3310673b3344b8d395540cf0f152663a6c186b47",
+    "tests/mutation/postgresql-native.py": "c27f1efb7ba7986d76e799864084e75991c45b9ec79293f8997b46af55167daa",
+    "tests/mutation/fixtures/postgres-original-input.json": "03470e45d0612233d43bb9cafeb5a54fd724dc7752a80b1973719553192808ea",
+    "tests/mutation/fixtures/postgres-model.json": "bf30a825218d9316124d0dfaa11efa112bdcefdf2e10d5d0893557066e7b8fde",
+    "tests/mutation/fixtures/postgres-owner-plan.json": "d924376765a48ab5bf2ce750998914e45cfb9644db7b6794c674a256043d314c"
+  },
+  "runtime": {
+    "rust": "1.90.0",
+    "postgresql": "17.11",
+    "pgserver": "0.1.4+truss.pg17.11",
+    "chromium": "153.0.8010.12"
+  },
+  "nativeCases": 30,
+  "loweringTests": 8,
+  "pythonChromiumParityCases": 32,
+  "nativeExecutionQualified": false
+}

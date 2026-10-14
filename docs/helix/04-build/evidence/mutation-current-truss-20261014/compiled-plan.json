@@ -1,0 +1,73 @@
+{
+  "action": {
+    "documentSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+    "identity": {
+      "action": "set-name",
+      "module": "sales"
+    },
+    "invocation": {
+      "id": "umf.actions.tx",
+      "version": "1"
+    }
+  },
+  "execution": {
+    "atomicity": "batch",
+    "batchSize": 2,
+    "conflict": "stop",
+    "partition": "manifest-order",
+    "selection": "frozen"
+  },
+  "inputs": {
+    "assignments": [
+      {
+        "field": {
+          "element": "product-name",
+          "module": "sales"
+        },
+        "input": "name-value",
+        "value": {
+          "string": "Foo"
+        }
+      }
+    ],
+    "entityParameter": "products"
+  },
+  "limits": {
+    "maxItems": 10000,
+    "maxManifestBytes": 16777216
+  },
+  "model": {
+    "documentId": "product-action-demo",
+    "revision": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+    "sha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+    "umfVersion": "0.8.0"
+  },
+  "protocol": "umf.actions.plan/1",
+  "selection": {
+    "artifact": {
+      "mediaType": "application/json",
+      "sha256": "f4309cc780955559ac8e11a6437bbb91b46366f88c1c1611c70f3cd9783f6d50",
+      "utf8": "{\"key\":{\"element\":\"products\",\"key\":\"pk\",\"module\":\"sales\"},\"predicate\":{\"compare\":{\"field\":{\"element\":\"product-id\",\"module\":\"sales\"},\"op\":\"eq\",\"value\":{\"string\":\"bar\"}}},\"protocol\":\"weft.update-selection/1\",\"record\":{\"element\":\"products\",\"module\":\"sales\"}}"
+    },
+    "dependencies": [
+      {
+        "element": "product-id",
+        "module": "sales"
+      }
+    ],
+    "profile": {
+      "id": "weft.update-selection",
+      "version": "1"
+    }
+  },
+  "source": {
+    "mediaType": "application/json",
+    "sha256": "fbd705cb33c37bd9f59570d0e79c9e6bac01968366569dc17774babcb7065294",
+    "utf8": "{\"dialect\":\"weft-mutation/0.1.0\",\"parameters\":{},\"sql\":\"UPDATE products SET name = 'Foo' WHERE id = 'bar'\"}"
+  },
+  "target": {
+    "element": "products",
+    "key": "pk",
+    "module": "sales"
+  }
+}

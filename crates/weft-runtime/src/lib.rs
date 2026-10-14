@@ -495,3 +495,31 @@ pub fn compile_truss_runtime_json(request:&str)->String{weft_postgresql::truss_r
 pub fn compile_truss_runtime_page_json(request:&str,page_size:u16,after:Option<Vec<String>>)->String{
     weft_postgresql::truss_runtime::compile_page_json(request,page_size,after)
 }
+
+/// Host-configured mutation compilation; no execution authority.
+pub use weft_core::mutation::MutationRegistry;
+
+/// Install the current original Truss renderer into a host-owned mutation registry.
+/// No request can choose executable SQL or load a renderer.
+#[cfg(feature="truss-postgresql-pg18")]
+pub fn install_truss_mutation_backend(registry:&mut MutationRegistry,configuration:&str)->weft_core::mutation::MResult<usize>{
+ #[derive(serde::Deserialize)]
+ #[serde(rename_all="camelCase",deny_unknown_fields)]
+ struct Configuration{model:weft_core::mutation::Artifact,model_pin:weft_core::ir::ModelPin,binding:weft_core::mutation::Artifact,evidence:Vec<String>}
+ let fail=||weft_core::mutation::MutationDiagnostic{code:"WFT-MUTATION-REGISTRATION".into(),phase:"input".into(),path:String::new(),message:"Bounded original Truss registration required".into()};
+ if configuration.len()>4194304{return Err(fail());}
+ let value=weft_core::json::checked_json(configuration).map_err(|_|fail())?;
+ let c:Configuration=serde_json::from_value(value).map_err(|_|fail())?;
+ registry.install_selection_backend(Box::new(weft_postgresql::truss_mutation::CurrentTrussMutationBackend::new(c.model,c.binding,c.model_pin,c.evidence)?))
+}
+/// Lower an original selection through a previously installed host registration.
+pub fn lower_mutation_selection_json(registry:&MutationRegistry,handle:usize,request:&str)->weft_core::mutation::MResult<String>{
+ #[derive(serde::Deserialize)]
+ #[serde(rename_all="camelCase",deny_unknown_fields)]
+ struct Request{selection:weft_core::mutation::Artifact,model:weft_core::mutation::Artifact,binding:weft_core::mutation::Artifact,max_items:u32}
+ let fail=||weft_core::mutation::MutationDiagnostic{code:"WFT-MUTATION-LOWERING".into(),phase:"input".into(),path:String::new(),message:"Bounded original selection request required".into()};
+ if request.len()>8388608{return Err(fail());}
+ let value=weft_core::json::checked_json(request).map_err(|_|fail())?;
+ let r:Request=serde_json::from_value(value).map_err(|_|fail())?;
+ serde_json::to_string(&registry.lower_selection(handle,&r.selection,&r.model,&r.binding,r.max_items)?).map_err(|_|fail())
+}

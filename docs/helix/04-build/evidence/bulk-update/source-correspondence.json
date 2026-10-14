@@ -1,0 +1,39 @@
+{
+  "scope": "Pure SQL UPDATE compiler and native Python/browser WASM transport, no backend execution",
+  "sourceSha256": {
+    "crates/weft-core/src/mutation.rs": "b67fd9b7a4eb03bcad1d10143c8e143547f75854dec8c89409b3292d8d1d24c6",
+    "crates/weft-core/src/mutation_selection.rs": "0c3c21eae74c2659eb82281387fd203eebcb0b8548b623e66d0093361a05db7f",
+    "crates/weft-core/src/mutation_syntax.rs": "b7eb34226cb90a52c99727c63a69846404620aac1c32f142567762fca9c93921",
+    "crates/weft-python/src/lib.rs": "91de82d7ecf91cf530c46d7b7d895dc75c87c585b76f4777488aa918fbd4fc65",
+    "crates/weft-runtime/src/lib.rs": "132c19a1352f3f9044ed5c59143710701d95f8340759bd8b9a4ccfc34969db40",
+    "crates/weft-wasm/src/lib.rs": "ebc859c3eb61bffa0bb21edf8c1a011b6cb3eb95316907e5fc2802f473b23cc3",
+    "packages/weft-browser/src/index.ts": "149c280c629fc553a79c116165f06f757e666a8bf4e3f4587e00e9d3604fb159",
+    "spec/upstream/actions-plan/core.schema.json": "79e72f2ebef434c7d1e09d372c74d330b24109bb8af9778745a8d41275acee6e",
+    "spec/upstream/actions-plan/owner-pins.json": "3e54fb9e52ad7f29b90aaf638751acfc2734ce14f8cd3988302690010205c61a",
+    "spec/upstream/actions-plan/plan-model.schema.json": "b99226c6188624ec240fb1db96a5fcdfcb15c6fe2b8f2c60276e13f7003b9998",
+    "spec/upstream/actions-plan/plan.schema.json": "6ab8bf676e60724792cf2ac41c7c3cd1c143a5c3173e9b63b334672e92547089",
+    "tests/mutation/browser-check.ts": "9e5a5fd58deaef4b21fd9303e9983c4060396b40c80faba402afb1e4ec55b330",
+    "tests/mutation/compiler.rs": "98a54106d08fe4da38509c1138e777340c1c08ceabb6de23854e83f7166a7e5c",
+    "tests/mutation/fixtures/golden.json": "31ac6e0d21e5227708553346154fa7694c8d72b894ed441c21329e5c0e29c4b0",
+    "tests/mutation/fixtures/multi-registry.json": "e78fb5a7ab57421eaf1c36822d767fda099f829356268d7cc55a769d4298bc40",
+    "tests/mutation/fixtures/multi-request.json": "3b089b5433ed1c9dcff9e59f03430e78dcea0d89ccbea0e3f6966accd698c0f3",
+    "tests/mutation/fixtures/registry.json": "afddde2b67047e98817ae66c6c569e8138149278ebbff6b71274eb7ab405adc6",
+    "tests/mutation/fixtures/request.json": "e03bd24075a880bd8b5c89ecf50894514553b822933f2d15fc3edbcd8f7e5eed",
+    "tests/mutation/python-check.py": "ccc7ecd027ea2bec85555f540f099e7f612fca60bdadec843bf60310a4f1a0c9"
+  },
+  "artifacts": {
+    "target/mutation/web/weft_wasm_bg.wasm": "8192fe5e1aa92de6620e1af49bff266852b827deb9ccd87f477d11918409832d",
+    "target/mutation/wheels/weft_sql-0.1.0-cp39-abi3-macosx_11_0_arm64.whl": "2f32904ec52df2596cdd0afacc008e2d89ea0cb7e0f3b0a381a912ee4ca7cebd"
+  },
+  "versions": {
+    "rust": "1.90.0",
+    "bun": "1.4.2",
+    "chromium": "153.0.8010.12",
+    "playwright": "1.63.0",
+    "core": "0.8.0",
+    "actions": "0.1.0",
+    "plan": "1",
+    "mutation": "0.1.0"
+  },
+  "nativeExecution": false
+}

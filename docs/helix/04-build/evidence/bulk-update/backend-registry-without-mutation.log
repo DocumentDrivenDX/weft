@@ -1,0 +1,165 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+   Compiling weft-core v0.1.0 (/private/tmp/weft-mutation-baseline/crates/weft-core)
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:243:19
+    |
+206 | impl Parser {
+    | ----------- method in this implementation
+...
+243 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:38
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                 ---- ^^^^^^^^
+  |                                 |
+  |                                 field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(()),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:58
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                --------- ^^^^^^^^^^^^^^
+  |                                                |
+  |                                                field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(()),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: field `0` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:82
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                          ------- ^^^^^^^^
+  |                                                                          |
+  |                                                                          field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+  |
+8 - pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+8 + pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(()),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |
+
+warning: fields `field` and `disposition` are never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | ...,Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&'a Disposition}}
+  |                                                 ---------- ^^^^^                 ^^^^^^^^^^^
+  |                                                 |
+  |                                                 fields in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 5 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.96s
+     Running ../../tests/register-backend/registry.rs (target/debug/deps/backend_registry-db4d7f9f49a2b1b7)
+
+running 8 tests
+test malformed_json_known_members_and_repeated_capability_languages_refuse ... ok
+test capability_declaration_guards_refuse_at_their_exact_phase ... FAILED
+test supported_requires_declared_evidence_candidate_remains_distinct ... ok
+test duplicate_declarations_and_unknown_shapes_refuse ... ok
+test manifest_versions_and_profile_capability_binding ... ok
+test target_profiles_require_each_identity_and_object_settings ... FAILED
+test manifest_identity_evidence_and_language_guards_are_independent ... ok
+test manifest_collection_and_byte_limits_admit_the_boundary ... ok
+
+failures:
+
+---- capability_declaration_guards_refuse_at_their_exact_phase stdout ----
+
+thread 'capability_declaration_guards_refuse_at_their_exact_phase' panicked at crates/weft-core/../../tests/register-backend/registry.rs:127:9:
+assertion `left == right` failed: logicalDomain
+  left: "WFT-BACKEND-VERSION"
+ right: "WFT-CAPABILITY"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- target_profiles_require_each_identity_and_object_settings stdout ----
+
+thread 'target_profiles_require_each_identity_and_object_settings' panicked at crates/weft-core/../../tests/register-backend/registry.rs:92:9:
+assertion `left == right` failed
+  left: "Opaque declaration member must be an object"
+ right: "Target profiles must be distinct, pinned and structurally explicit"
+
+
+failures:
+    capability_declaration_guards_refuse_at_their_exact_phase
+    target_profiles_require_each_identity_and_object_settings
+
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+error: test failed, to rerun pass `-p weft-core --test backend-registry`

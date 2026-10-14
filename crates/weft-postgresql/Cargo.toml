@@ -18,3 +18,8 @@ path = "../../tests/truss-postgresql/compiler.rs"
 
 [features]
 conformance-original=[]
+
+[[test]]
+name="mutation_lowering"
+path="../../tests/mutation/lowering.rs"
+required-features=["conformance-original"]

@@ -300,6 +300,18 @@
       "constructionAndIntegration": "Runtime and backend implementations consume explicit pure-library ports; src/bin/frontend.rs is a scoped host-owned probe with stdin/stdout IO.",
       "dependencies": [
         {
+          "name": "base64",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=0.22.1",
+          "rename": null,
+          "target": null,
+          "features": [],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
           "name": "jsonschema",
           "kind": "normal",
           "optional": false,
@@ -368,20 +380,6 @@
           "path": null
         },
         {
-          "name": "proptest",
-          "kind": "dev",
-          "optional": false,
-          "source": "registry+https://github.com/rust-lang/crates.io-index",
-          "req": "=1.11.0",
-          "rename": null,
-          "target": null,
-          "features": [
-            "std"
-          ],
-          "defaultFeatures": false,
-          "path": null
-        },
-        {
           "name": "sqlparser",
           "kind": "normal",
           "optional": false,
@@ -396,15 +394,17 @@
           "path": null
         },
         {
-          "name": "base64",
-          "kind": "normal",
+          "name": "proptest",
+          "kind": "dev",
           "optional": false,
           "source": "registry+https://github.com/rust-lang/crates.io-index",
-          "req": "=0.22.1",
+          "req": "=1.11.0",
           "rename": null,
           "target": null,
-          "features": [],
-          "defaultFeatures": true,
+          "features": [
+            "std"
+          ],
+          "defaultFeatures": false,
           "path": null
         }
       ],
@@ -1121,6 +1121,8 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:mutation_backend",
+            "mod:mutation",
             "mod:arithmetic_plan",
             "mod:arithmetic_resolve",
             "mod:security_scan_obligations",
@@ -1186,6 +1188,94 @@
             "fn:record_by_identity",
             "fn:record",
             "fn:field"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/mutation.rs",
+          "publicDeclarations": [
+            "struct:MutationDiagnostic",
+            "field:code",
+            "field:phase",
+            "field:path",
+            "field:message",
+            "type:MResult",
+            "struct:Artifact",
+            "field:media_type",
+            "field:utf8",
+            "field:sha256",
+            "fn:read",
+            "struct:ActionRegistration",
+            "field:pin",
+            "field:snapshot",
+            "field:preparation",
+            "struct:MutationRegistry",
+            "fn:new",
+            "fn:from_json",
+            "fn:install_selection_backend",
+            "fn:selection_capabilities",
+            "fn:lower_selection",
+            "fn:compile_json",
+            "fn:canonical"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/mutation_backend.rs",
+          "publicDeclarations": [
+            "enum:SelectionStatus",
+            "struct:SelectionProfile",
+            "field:id",
+            "field:version",
+            "struct:SelectionClaim",
+            "field:id",
+            "field:status",
+            "field:evidence",
+            "struct:SelectionCapabilities",
+            "field:profile",
+            "field:claims",
+            "struct:SelectionAssessment",
+            "field:status",
+            "field:diagnostics",
+            "struct:SelectionParameter",
+            "field:name",
+            "field:field",
+            "field:value",
+            "struct:SelectionColumn",
+            "field:name",
+            "field:kind",
+            "field:field",
+            "struct:SelectionPreflight",
+            "field:sql",
+            "field:parameters",
+            "struct:SelectionOrdering",
+            "field:kind",
+            "field:direction",
+            "struct:SelectionBounds",
+            "field:max_items",
+            "field:fetch_limit",
+            "enum:SelectionLowering",
+            "trait:SelectionBackend",
+            "fn:inspect_selection"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/mutation_selection.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/mutation_syntax.rs",
+          "publicDeclarations": [
+            "enum:Input",
+            "enum:Predicate",
+            "struct:Update",
+            "field:namespace",
+            "field:record",
+            "field:assignments",
+            "field:predicate",
+            "fn:parse"
           ],
           "pathReferences": []
         },
@@ -2124,6 +2214,7 @@
         {
           "path": "crates/weft-postgresql/src/conformance_original.rs",
           "publicDeclarations": [
+            "fn:configuration",
             "fn:registry",
             "fn:registry_with_configuration"
           ],
@@ -2169,6 +2260,8 @@
         {
           "path": "crates/weft-postgresql/src/lib.rs",
           "publicDeclarations": [
+            "mod:truss_mutation",
+            "mod:mutation",
             "mod:truss_runtime",
             "mod:pg18",
             "mod:access",
@@ -2224,6 +2317,20 @@
             "mod:security_relational_sql",
             "mod:security_relational_transport",
             "mod:security_native_codecs"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/mutation.rs",
+          "publicDeclarations": [
+            "struct:NativeObjectColumns",
+            "field:inventory",
+            "field:relation_identity",
+            "field:identity",
+            "field:version",
+            "field:evidence",
+            "struct:OriginalMutationBackend",
+            "fn:new"
           ],
           "pathReferences": []
         },
@@ -2935,6 +3042,14 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/truss_mutation.rs",
+          "publicDeclarations": [
+            "struct:CurrentTrussMutationBackend",
+            "fn:new"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/truss_runtime.rs",
           "publicDeclarations": [
             "const:PROFILE",
@@ -3010,6 +3125,35 @@
       "constructionAndIntegration": "constructs backend implementations; CLI alone owns stdin/stdout",
       "dependencies": [
         {
+          "name": "serde",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
+          "name": "serde_json",
+          "kind": "normal",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.145",
+          "rename": null,
+          "target": null,
+          "features": [
+            "arbitrary_precision",
+            "raw_value"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
           "name": "weft-backend-probe",
           "kind": "normal",
           "optional": true,
@@ -3058,6 +3202,20 @@
           "path": "crates/weft-postgresql"
         },
         {
+          "name": "serde",
+          "kind": "dev",
+          "optional": false,
+          "source": "registry+https://github.com/rust-lang/crates.io-index",
+          "req": "=1.0.228",
+          "rename": null,
+          "target": null,
+          "features": [
+            "derive"
+          ],
+          "defaultFeatures": true,
+          "path": null
+        },
+        {
           "name": "serde_json",
           "kind": "dev",
           "optional": false,
@@ -3098,7 +3256,10 @@
             "mod:implicit_arithmetic",
             "fn:compile_truss_postgresql_json",
             "fn:compile_truss_runtime_json",
-            "fn:compile_truss_runtime_page_json"
+            "fn:compile_truss_runtime_page_json",
+            "use:weft_core : : mutation : : MutationRegistry",
+            "fn:install_truss_mutation_backend",
+            "fn:lower_mutation_selection_json"
           ],
           "pathReferences": []
         },

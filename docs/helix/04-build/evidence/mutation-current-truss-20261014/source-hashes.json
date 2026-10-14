@@ -1,0 +1,12 @@
+{
+  "crates/weft-core/src/mutation.rs": "6a7bfb173deda707415a0f8817917e66ef10a1f61cd8d1b56c7c67265d8d9447",
+  "crates/weft-core/src/mutation_backend.rs": "d63399e11062490a931eeae047c9f9e82909b37285aa6f546101fcf0f5d6e30b",
+  "crates/weft-core/src/mutation_selection.rs": "0c3c21eae74c2659eb82281387fd203eebcb0b8548b623e66d0093361a05db7f",
+  "crates/weft-core/src/mutation_syntax.rs": "b7eb34226cb90a52c99727c63a69846404620aac1c32f142567762fca9c93921",
+  "crates/weft-postgresql/src/truss_mutation.rs": "f4a0e4434c9beaf7579e28f9d9f4dc494e316ee6959c6cf364e434533c517f3c",
+  "crates/weft-postgresql/src/truss_runtime.rs": "35311ea8f0c732876372fece872ce2ca5b5e77ccf5fb5158d9f432e7c8b1e515",
+  "crates/weft-runtime/src/lib.rs": "e046b4692b9066a4fac1fe0106227b2488957c614df6b2ad4773a4144c08b07f",
+  "crates/weft-python/src/lib.rs": "0b55eff16744822c5fec205c996e0ff24798913b2087fa101bfd8ad410d3b742",
+  "tests/mutation/current-truss-native.py": "980bd8d4e5d10ac2a198d3937276fc843613d4e502766c20eaa420571ea03979",
+  "tests/mutation/current-python-bridge.py": "05d95607e8686dc7ae567d7ea40dd29cbd5b72fe42d47bc90cf9d33d54eb5f30"
+}

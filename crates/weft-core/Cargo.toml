@@ -39,3 +39,11 @@ path = "../../tests/qualify-and-evolve/properties.rs"
 [[test]]
 name = "qualification-resources"
 path = "../../tests/qualify-and-evolve/resources.rs"
+
+[[test]]
+name="mutation_compile"
+path="../../tests/mutation/compiler.rs"
+
+[[test]]
+name="mutation_embedding"
+path="../../tests/mutation/embedding.rs"

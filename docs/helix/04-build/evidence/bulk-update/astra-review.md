@@ -1,0 +1,7 @@
+# Astra Ultra compiler component re-review
+
+No open implementation blockers remain in the reviewed pure compiler/transport component and UMF binding-set change. This is not a complete US-008/009 or native executor qualification.
+
+The first review found marker case folding, the grouping128 boundary and an undocumented token ceiling. All three were corrected with explicit controls. Fresh Chromium then exposed a recursive parser stack overflow at the admitted grouping bound; iterative precedence/group parsing fixes that host-dependent failure. Astra independently rebuilt eight native tests, checked152 precedence/order cases and12 malformed-input controls, and reproduced all32 browser parity responses through the current native Python extension. Current Chromium receipt covers grouping128/129, decoded depth24/25/128, comparison256/257, SQL65536/+1, Unicode and exact numbers; its WASM digest matches the retained artifact and external requests are empty. The UMF44-case public corpus passes, including reversed, duplicate, omitted and mismatched assignment bindings.
+
+Reviewed residuals: full criterion coverage, selected unknown semantics/name ambiguities and remaining model/assignment/resource boundaries, independent predicate evaluator coverage across all operators/families, backend selection lowering and native data/guard/execution remain gates. The registered second test executor and read binding parity are not proved by this component receipt. Original UMF preparation is a trusted host registration, never request-supplied authority.
