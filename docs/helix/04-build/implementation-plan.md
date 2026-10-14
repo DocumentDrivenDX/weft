@@ -1441,3 +1441,7 @@ The original source inspector now has a closed JSON response transport through r
 
 
 Astra Ultra independently passes22 actual loaded Python-extension controls, including exact/over selection16,384-byte and original request4,000,000-byte limits. It verifies all14 retained Chromium response strings and artifact hashes against disk, separately from a browser rerun. No actionable blocker remains in the pure source-inspection transport scope. Source-pinned review and independent controls are retained alongside the consumer evidence.
+
+### Shared exact timestamp equality — 2026-10-14
+
+Compile/IR/backend026 explicitly select committed UMF exact-instant1.0 without changing generic timestamp/facets/Key meaning. Backend0.4.29 binds native59, retains old28/58, dispatches exact equality by family, validates original operands before emission and preserves typed slot/occurrence custody. Basic public Truss07/08 workflows cover precise offset equality, optional values, joins/pages/read-only transactions; matching timestamp/binary/populated upgrade checks pass5/48.058s. Workspace Rust checking, one targeted exact-instant test and11-package boundaries pass. Astra source review is clear after the three Truss version/upgrade-custody fixes. Weft24 release uses the existing five-platform workflow; Ashlar admission remains unavailable.

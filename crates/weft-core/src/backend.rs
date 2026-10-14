@@ -89,6 +89,7 @@ fn valid_languages(profiles: &[LanguageProfile], interface: &str) -> bool {
                 profile_key(p),
                 ("weft-sql/0.1.0", "weft-ir/0.1.0") | ("weft-sql/0.2.0", "weft-ir/0.2.0") | ("weft-sql/0.3.0", "weft-ir/0.3.0")
             ) || (interface == "weft-backend/0.2.1" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.1"))
+                || (interface == "weft-backend/0.2.6" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.6"))
                 || (interface == "weft-backend/0.2.5" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.5"))
                 || (interface == "weft-backend/0.2.4" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.4"))
                 || (interface == "weft-backend/0.2.3" && profile_key(p) == ("weft-sql/0.2.0", "weft-ir/0.2.3"))
@@ -145,7 +146,7 @@ pub fn validate_manifest_json(raw: &str) -> Result<Manifest> {
     Ok(manifest)
 }
 pub fn validate_manifest(m: &Manifest) -> Result<()> {
-    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5") || !valid_languages(&m.language_profiles, &m.interface_version) {
+    if !matches!(m.interface_version.as_str(), "weft-backend/0.2.0" | "weft-backend/0.2.1" | "weft-backend/0.2.2" | "weft-backend/0.2.3" | "weft-backend/0.2.4" | "weft-backend/0.2.5" | "weft-backend/0.2.6") || !valid_languages(&m.language_profiles, &m.interface_version) {
         return Err(failure(
             "WFT-BACKEND-VERSION",
             "Unsupported backend interface or language/IR pair",
@@ -564,6 +565,13 @@ impl<B: Backend> Registered for Adapter<B> {
                 && (c.status == Status::Supported || (c.status == Status::Candidate && target.allow_candidate))
                 && c.target_profiles.contains(&target.profile_id) && c.language_profiles.contains(&language)) {
             return Err(failure("WFT-CAPABILITY", "Selected backend profile does not admit optional binary equality"));
+        }
+        for id in plan.capabilities().iter().filter(|id| matches!(id.as_str(),"compare.timestamp.instantEqual"|"compare.timestamp.optionalInstantEqual")) {
+            if !self.manifest.capabilities.iter().any(|c|&c.id==id
+                && (c.status==Status::Supported || (c.status==Status::Candidate&&target.allow_candidate))
+                && c.target_profiles.contains(&target.profile_id)&&c.language_profiles.contains(&language)) {
+                return Err(failure("WFT-CAPABILITY","Selected backend does not admit exact instant equality"));
+            }
         }
         if plan.capabilities().iter().any(|id| id == "type.decimal.scale2")
             && !self.manifest.capabilities.iter().any(|c| c.id == "type.decimal.scale2"

@@ -42,10 +42,10 @@ pub fn resolve(
     parameters: Parameters,
     profile: Option<ir::ReadProfile>,
 ) -> Result<ir::Plan> {
-    resolve_inner(catalog,q,parameters,profile,ExactParameters::new(),false)
+    resolve_inner(catalog,q,parameters,profile,ExactParameters::new(),false,false)
 }
-pub(crate) fn resolve_with_exact(catalog:&Catalog,q:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,profile:Option<ir::ReadProfile>)->Result<ir::Plan> {
-    resolve_inner(catalog,q,parameters,profile,exact_parameters,true)
+pub(crate) fn resolve_with_exact(catalog:&Catalog,q:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,profile:Option<ir::ReadProfile>,timestamp_equality:bool)->Result<ir::Plan> {
+    resolve_inner(catalog,q,parameters,profile,exact_parameters,true,timestamp_equality)
 }
 fn resolve_inner(
     catalog: &Catalog,
@@ -54,6 +54,7 @@ fn resolve_inner(
     profile: Option<ir::ReadProfile>,
     exact_parameters:ExactParameters,
     binary_equality:bool,
+    timestamp_equality:bool,
 ) -> Result<ir::Plan> {
     let complete_entity = profile.as_ref().is_some_and(|p| p.subset == ir::Subset::CompleteEntity);
     if profile.as_ref().is_some_and(|p| match p.subset {
@@ -94,6 +95,7 @@ fn resolve_inner(
         parameters: normalized,
         exact_parameters:normalized_exact,
         binary_equality,
+        timestamp_equality,
         used: BTreeSet::new(),
         caps: BTreeSet::new(),
         graph: vec![],
@@ -460,7 +462,7 @@ fn resolve_inner(
     }
     s.caps.insert("project".into());
     Ok(ir::Plan {
-        ir_version: if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
+        ir_version: if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),
@@ -499,17 +501,17 @@ pub fn resolve_page(
     page_size: u16,
     after: Option<&[String]>,
 ) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,false,ExactParameters::new(),false,false)
 }
 
 pub fn resolve_typed_page(catalog:&Catalog,query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>) -> Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false)
+    resolve_page_inner(catalog,query,parameters,page_size,after,true,ExactParameters::new(),false,false)
 }
 
-pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool)->Result<PagePlan> {
-    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true)
+pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,parameters:Parameters,exact_parameters:ExactParameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,timestamp_equality:bool)->Result<PagePlan> {
+    resolve_page_inner(catalog,query,parameters,page_size,after,typed_keys,exact_parameters,true,timestamp_equality)
 }
-fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool) -> Result<PagePlan> {
+fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool) -> Result<PagePlan> {
     if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
         || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_) | ast::Output::Related { .. }))
@@ -541,8 +543,8 @@ fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameter
     }
     query.order = columns;
     query.limit = Some(page_size + 1);
-    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality)?;
-    plan.ir_version = if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
+    let mut plan = resolve_inner(catalog, query, parameters, Some(ir::ReadProfile { version: "weft-application-read/0.2.0".into(), subset: ir::Subset::EntityPage }),exact_parameters,binary_equality,timestamp_equality)?;
+    plan.ir_version = if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else { "weft-ir/0.2.2" }.into();
     let visible_outputs = plan.outputs.len() - key.fields.len();
     let key_outputs = (visible_outputs..plan.outputs.len()).collect();
     let continuation_values = if after.is_some() {

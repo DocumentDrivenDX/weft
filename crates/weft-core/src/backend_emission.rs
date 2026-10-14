@@ -75,16 +75,24 @@ pub(crate) fn validate(
                 ExactValue::Literal { value, scalar_type, .. } | ExactValue::Parameter { value, scalar_type, .. } => (value, scalar_type),
                 _ => unreachable!(),
             };
-            if *scalar_type != crate::application_model::ExactScalarType::Binary || slot.value != **value || slot.origin != serde_json::json!(original) {
+            if slot.value != **value || slot.origin != serde_json::json!(original) || !matches!(&slot.logical_type,crate::backend::ParameterType::Exact{scalar_type:family,..} if family==scalar_type) {
                 return Err(fail("Exact binary slot changed original token, type or occurrence"));
             }
         }
     }
     for (index, p) in emission.parameters.iter().enumerate() {
-        if let crate::backend::ParameterType::Exact {scalar_type:crate::application_model::ExactScalarType::Binary,..}=&p.logical_type {
-            if p.position!=index+1 || !p.origin.is_object() || !matches!(plan,Plan::V02(p) if p.ir_version=="weft-ir/0.2.5")
-                || !assessments.iter().any(|a|a.id=="compare.binary.equal"&&a.status!=crate::backend::Status::Unsupported) {return Err(fail("Exact binary parameter requires typed admitted equality"));}
-            crate::exact::validate_binary_token(&p.value)?;continue;
+        if let crate::backend::ParameterType::Exact {scalar_type,..}=&p.logical_type {
+            let (capability,admitted_version)=match scalar_type {
+                crate::application_model::ExactScalarType::Binary=>("compare.binary.equal",matches!(plan,Plan::V02(p) if matches!(p.ir_version.as_str(),"weft-ir/0.2.5"|"weft-ir/0.2.6"))),
+                crate::application_model::ExactScalarType::Timestamp=>("compare.timestamp.instantEqual",matches!(plan,Plan::V02(p) if p.ir_version=="weft-ir/0.2.6")),
+            };
+            if p.position!=index+1 || !p.origin.is_object() || !admitted_version
+                || !assessments.iter().any(|a|a.id==capability&&a.status!=crate::backend::Status::Unsupported) {return Err(fail("Exact parameter requires typed admitted equality"));}
+            match scalar_type {
+                crate::application_model::ExactScalarType::Binary=>crate::exact::validate_binary_token(&p.value)?,
+                crate::application_model::ExactScalarType::Timestamp=>{crate::exact_instant::key(&p.value)?;},
+            }
+            continue;
         }
         let logical_type=p.logical_type.atomic()?;
         if p.position != index + 1 || !p.origin.is_object() || logical_type.nullable {

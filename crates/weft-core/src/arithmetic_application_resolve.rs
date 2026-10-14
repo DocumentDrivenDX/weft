@@ -485,6 +485,7 @@ pub(crate) fn resolve_parts<X: QueryExtension>(
         parameters: normalized,
         exact_parameters: BTreeMap::new(),
         binary_equality: false,
+        timestamp_equality: false,
         used: BTreeSet::new(),
         caps: BTreeSet::new(),
         graph: vec![],

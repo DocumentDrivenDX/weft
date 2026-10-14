@@ -31,6 +31,7 @@ mod backend_emission;
 pub mod compile;
 pub mod error;
 mod exact;
+mod exact_instant;
 pub mod ir;
 pub mod json;
 pub mod model;

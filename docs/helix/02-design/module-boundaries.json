@@ -1069,6 +1069,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/exact_instant.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/ir.rs",
           "publicDeclarations": [
             "struct:Span",
@@ -2104,6 +2109,7 @@
             "struct:Parameters",
             "fn:push",
             "fn:push_binary",
+            "fn:push_timestamp",
             "fn:into_slots",
             "enum:CatalogDomain",
             "fn:catalog",

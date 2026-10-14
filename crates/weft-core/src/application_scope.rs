@@ -22,6 +22,7 @@ pub(crate) struct Scope<'a> {
     pub(crate) parameters: Parameters,
     pub(crate) exact_parameters:crate::application_resolve::ExactParameters,
     pub(crate) binary_equality:bool,
+    pub(crate) timestamp_equality:bool,
     pub(crate) used: BTreeSet<String>,
     pub(crate) caps: BTreeSet<String>,
     pub(crate) graph: Vec<Descriptor>,
@@ -254,7 +255,7 @@ impl<'a> Scope<'a> {
                     }
                 }
                 if !*greater && columns.len()==1 && values.len()==1 {
-                    if let Some(predicate)=self.binary_equal(&columns[0],&values[0],on)? {return Ok(predicate);}
+                    if let Some(predicate)=self.exact_equal(&columns[0],&values[0],on)? {return Ok(predicate);}
                 }
                 let fields = columns
                     .iter()
