@@ -1160,7 +1160,8 @@
             "mod:security_requirements",
             "mod:security_parameter_sources",
             "mod:security_source_context",
-            "mod:security_aggregate_results"
+            "mod:security_aggregate_results",
+            "mod:security_operand_values"
           ],
           "pathReferences": []
         },
@@ -1687,6 +1688,18 @@
             "fn:type_count",
             "fn:field_count",
             "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_operand_values.rs",
+          "publicDeclarations": [
+            "const:VERSION",
+            "struct:CheckedOperandValues",
+            "fn:context_sha256",
+            "fn:batch_sha256",
+            "fn:counts",
+            "fn:check_operand_values"
           ],
           "pathReferences": []
         },
@@ -2832,6 +2845,7 @@
             "fn:checks",
             "fn:result_contract",
             "fn:parameters",
+            "fn:operand_reads",
             "fn:operand_demands",
             "fn:context_sha256",
             "fn:prepare_relational_graph_sql"

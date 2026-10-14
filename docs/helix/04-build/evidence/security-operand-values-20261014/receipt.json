@@ -1,0 +1,39 @@
+{
+  "version": "weft.security.operand-value.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "bc3a5b395cf0795684f8f0497edf333b2d61948d",
+  "composedParent": "41dbbf81312d23468b9f3b4802e92c92edb3a199",
+  "securityReady": false,
+  "checks": {
+    "core": 274,
+    "admission": 75,
+    "compiler_integration": 21,
+    "graph": 6,
+    "privacy_compile_fail": 1,
+    "module_controls": 16,
+    "controlled_sql": 8
+  },
+  "qualification": "Supplied original operand value/presence/domain correspondence and controlled synthetic PostgreSQL capture-before-evaluation only",
+  "native_cases_promoted": 0,
+  "remaining": [
+    "native capture completeness/authenticity",
+    "policy truth and disposition selection",
+    "native parameter/operand codec qualification",
+    "genuine source/caller/Subject/current authority",
+    "separate guarded relational transport/result inspection",
+    "all132 native/shared cases"
+  ],
+  "files": {
+    "crates/weft-core/src/lib.rs": "80fc4da63978870a291c49828768435374a791152b66a6a8964838577969d720",
+    "crates/weft-core/src/security_operand_values.rs": "bb39b95218d8ec270eb2c13496fc49f55833b7e59a6f559179738b9544e01435",
+    "crates/weft-postgresql/src/security_relational_sql.rs": "bb3f22bf5a87590b69a56742ab4e02b680df7fcfd85327faf41b501d9d3373ab",
+    "crates/weft-postgresql/examples/security_relational_probe.rs": "41cddc99849a3c970124bdf6aeb82b6a792cf3fddd277bfa17245d75a11d9411",
+    "crates/weft-postgresql/examples/security_operand_values.rs": "6029e48edf2345cab2275c7b5cb2e43254867aea7a246be6da50e496c7d966ca",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "c318369272b34aa816360a0d54df5fbeef8bcc2d491164fdf560a1dc2bc280fe",
+    "scripts/check-security-relational-sql-native.py": "d6ac42f4abb11337a5f8a9c1bdf2594a1396f2de052c868033f9bd4592b52912",
+    "docs/helix/02-design/module-boundaries.json": "1562820f0883a365cca8e48d30272a2cb1aee8cf375925e3d0a8fc5c1bbcc47a",
+    "docs/helix/02-design/contracts/security-operand-values-v0.1-candidate.schema.json": "12d8a90226c7b57607c5fc73bb3d118373ebeabc53f8859971b1eb349db875e6",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "3eed9968388a903f6d457ed79a5b14dfebfcf86d0ec1e442753803b90c3221a7",
+    "docs/helix/04-build/implementation-plan.md": "26825d3a5e792cdc638b84d2f47cae6c9acb2d4eb6ace55714728d17258efb55"
+  }
+}

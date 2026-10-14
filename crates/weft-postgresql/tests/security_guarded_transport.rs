@@ -350,3 +350,35 @@ fn relational_disclosed_cross_family_transform_refuses_before_silent_null_conver
  let mut profile:Value=serde_json::from_str(raw["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["binding"]["sha256"]=json!(sha256(raw["bindingJson"].as_str().unwrap().as_bytes()));raw["queryProfileJson"]=json!(profile.to_string());
  with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();assert!(prepare_relational_graph_sql(ctx,&source).is_err());Ok(())}).unwrap();
 }
+#[test]
+fn operand_values_refuse_invalid_later_rows_missing_occurrences_and_foreign_context(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_operand_values::*};use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let raw=query_use_request("SELECT COUNT(*) FROM Resource r WHERE r.salary=999",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;assert_eq!(plan.operand_reads().len(),1);let sql=plan.operand_reads()[0]["sql"].as_str().unwrap();assert!(sql.contains("LIMIT 4097"));assert!(!sql.contains("integerToken')::pg_catalog.numeric"));
+ let mut batch=json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":[{"index":0,"cell":{"disposition":"original","value":{"integerToken":"100"}}}]}]}]});
+ let checked=check_operand_values(ctx,&batch.to_string())?;assert_eq!(checked.counts()["s0"],1);
+ let mut large=batch.clone();large["scans"][0]["rows"][0]["operands"][0]["cell"]["value"]=json!({"integerToken":"9223372036854775808"});check_operand_values(ctx,&large.to_string())?;
+ for value in [json!({"integerToken":"not a number"}),json!({"integerToken":"1.5"}),Value::Null]{let mut bad=batch.clone();bad["scans"][0]["rows"].as_array_mut().unwrap().push(json!({"nativeRowId":"3","operands":[{"index":0,"cell":{"disposition":"original","value":value}}]}));assert!(check_operand_values(ctx,&bad.to_string()).is_err());}
+ for mutation in 0..6{let mut bad=batch.clone();match mutation{0=>bad["scans"][0]["rows"][0]["operands"]=json!([]),1=>bad["scans"][0]["rows"][0]["operands"][0]["index"]=json!(1),2=>bad["contextSha256"]=json!("0".repeat(64)),3=>bad["nativeAdmission"]=json!(true),4=>bad["scans"][0]["rows"][0]["operands"][0]["cell"]=json!({"disposition":"absent"}),_=>{let row=bad["scans"][0]["rows"][0].clone();bad["scans"][0]["rows"].as_array_mut().unwrap().push(row)}};assert!(check_operand_values(ctx,&bad.to_string()).is_err());}
+ batch["scans"][0]["rows"]=json!([]);assert_eq!(check_operand_values(ctx,&batch.to_string())?.counts()["s0"],0);
+ Ok(())
+ }).unwrap();
+}
+#[test]
+fn operand_value_checks_cover_every_operator_occurrence_on_both_scans(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_operand_values::*};
+ let raw=query_use_request("SELECT SUM(s.salary) FROM Resource r JOIN Resource s ON r.salary=s.salary WHERE r.salary=100 GROUP BY r.salary ORDER BY r.salary",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let scans=ctx.requirements().scans().iter().map(|scan|{let cells=ctx.requirements().operators().iter().enumerate().filter(|(_,o)|o.usage().scan==scan.inventory().scan()).map(|(i,_)|json!({"index":i,"cell":{"disposition":"original","value":{"integerToken":"100"}}})).collect::<Vec<_>>();json!({"scan":scan.inventory().scan(),"rows":[{"nativeRowId":"2","operands":cells}]})}).collect::<Vec<_>>();
+ let mut batch=json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":scans});assert_eq!(check_operand_values(ctx,&batch.to_string())?.counts().len(),2);batch["scans"][1]["rows"][0]["operands"].as_array_mut().unwrap().pop();assert!(check_operand_values(ctx,&batch.to_string()).is_err());Ok(())
+ }).unwrap();
+}
+#[test]
+fn operand_transform_values_require_original_constant_rule_and_exact_domain(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_operand_values::*};use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ let mut raw:Value=serde_json::from_str(&query_use_request("SELECT COUNT(*) FROM Resource r WHERE r.salary=7",Some("disclosed"),false)).unwrap();let mut policy:Value=serde_json::from_str(raw["policyJson"].as_str().unwrap()).unwrap();let rule=policy["rules"][0]["id"].as_str().unwrap().to_string();policy["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":{"documentId":"domain","moduleId":"m","elementId":"salary"},"value":{"integerToken":"7"}});raw["policyJson"]=json!(policy.to_string());
+ let mut source:GraphSource=serde_json::from_str(raw["bindingJson"].as_str().unwrap()).unwrap();let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();correspondence["logicalSourceDigests"]["policy"]=json!(sha256(policy.to_string().as_bytes()));source.correspondence_json=correspondence.to_string();raw["bindingJson"]=json!(serde_json::to_string(&source).unwrap());let mut profile:Value=serde_json::from_str(raw["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));profile["binding"]["sha256"]=json!(sha256(raw["bindingJson"].as_str().unwrap().as_bytes()));raw["queryProfileJson"]=json!(profile.to_string());
+ with_security_mapping_context(&raw.to_string(),|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let plan=prepare_relational_graph_sql(ctx,&source)?;assert!(plan.operand_reads()[0]["sql"].as_str().unwrap().contains("'ruleId'"));let batch=json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":[{"index":0,"cell":{"disposition":"transformed","ruleId":rule,"value":{"integerToken":"7e0"}}}]}]}]});check_operand_values(ctx,&batch.to_string())?;
+ for mutation in 0..4{let mut bad=batch.clone();let cell=&mut bad["scans"][0]["rows"][0]["operands"][0]["cell"];match mutation{0=>cell["value"]=json!({"integerToken":"8"}),1=>cell["ruleId"]=json!("foreign"),2=>cell["disposition"]=json!("withheld"),_=>cell["nativePermit"]=json!(true)}assert!(check_operand_values(ctx,&bad.to_string()).is_err());}Ok(())}).unwrap();
+}

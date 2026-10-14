@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-operand-values-v0.1-candidate.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.operand-values/0.1-candidate"
+    },
+    "contextSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "scans": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "object",
+        "properties": {
+          "scan": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "rows": {
+            "type": "array",
+            "maxItems": 4096,
+            "items": {
+              "type": "object",
+              "properties": {
+                "nativeRowId": {
+                  "type": "string",
+                  "pattern": "^[1-9][0-9]{0,18}$"
+                },
+                "operands": {
+                  "type": "array",
+                  "maxItems": 4096,
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 4095
+                      },
+                      "cell": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "disposition": {
+                                "const": "original"
+                              },
+                              "value": {
+                                "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                              }
+                            },
+                            "required": [
+                              "disposition",
+                              "value"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "disposition": {
+                                "const": "absent"
+                              }
+                            },
+                            "required": [
+                              "disposition"
+                            ],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "disposition": {
+                                "const": "transformed"
+                              },
+                              "value": {
+                                "$ref": "urn:umf:core:0.8.0#/$defs/literal"
+                              },
+                              "ruleId": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 4096
+                              }
+                            },
+                            "required": [
+                              "disposition",
+                              "value",
+                              "ruleId"
+                            ],
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "index",
+                      "cell"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "nativeRowId",
+                "operands"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "scan",
+          "rows"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "contextSha256",
+    "scans"
+  ],
+  "additionalProperties": false
+}

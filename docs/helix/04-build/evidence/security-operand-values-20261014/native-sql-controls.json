@@ -1,0 +1,168 @@
+{
+  "version": "weft.relational.sql-controlled-probe/0.1",
+  "engine": "postgres (PostgreSQL) 18.6 (Homebrew)",
+  "securityReady": false,
+  "qualification": "Excluded administrator, partial synthetic graph layout, original scalar helper bodies; no installed source/caller/current-authority or guarded release proof; no native acceptance case promotion",
+  "helperSha256": "03fd6a50ed7676e855959fb80887a8c733f3965b5958fda632967e3b961d244c",
+  "binarySha256": "99150ecd4a0cbef3f970c239f1872f6fee9daab9866f401c39f7246b5ce84197",
+  "durationSeconds": 5.317,
+  "controls": [
+    {
+      "case": "count",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "3"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "988ddc6eb651796108daa0ef79a5a6b245cc07db30be1938655aba646c50d867",
+        "contextSha256": "1e6b22db706d27fb4c271869f2b6801522ed669b4d790be4eee769387631e094",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      }
+    },
+    {
+      "case": "sum",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "5a617d281f4473006d3e8b495cb0a34c4056c08d6d5752e748447547619cd245",
+        "contextSha256": "ad2c7b085e5810d5257988389c0c83c3ad85c8e99f431714bb9caeb1784a31be",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      }
+    },
+    {
+      "case": "all-operators",
+      "rows": [
+        [
+          {
+            "outcomeId": "withheld",
+            "disposition": "withheld"
+          },
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          },
+          {
+            "value": {
+              "integerToken": "4"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 8,
+      "operandCheck": {
+        "batchSha256": "688a5f59926dd1821e0731bc1da33176741ce024a3efcc648ae9bdd022128a4b",
+        "contextSha256": "a28f900a861f1c4199b6024d6cc971f6a3f10a0eb3b665aa6d697beba982a5ee",
+        "counts": {
+          "s0": 3,
+          "s1": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      }
+    },
+    {
+      "case": "keyset",
+      "rows": [
+        [
+          {
+            "value": {
+              "string": "RB"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "2e649864b39ddeb41e98106fc8bd3632a507a3904510bb5f6d875b2154f9104b",
+        "contextSha256": "03c9242b6846b0562539d5651b2f2b4b4627d071008d19224f732771ff6018b0",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      }
+    },
+    {
+      "case": "named-value",
+      "rows": [],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "a3709fbd234345d6a75cf36fba066b937fed37c997280186003e6c587ef91e30",
+        "contextSha256": "4a6fb5eeb15844216ceb15ec76bf0d10e41a7500a71659c699918e7c05847546",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      }
+    },
+    {
+      "case": "withheld-before-empty-filter",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "case": "missing-original-grant",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "case": "invalid-later-operand-before-empty-filter",
+      "refusedBeforeExecution": true,
+      "phase": "original_operand_values",
+      "diagnostic": {
+        "code": "WFT-SECURITY-LOWERING-UNSUPPORTED",
+        "severity": "error",
+        "message": "Security result declaration correspondence refused",
+        "phase": "capability"
+      }
+    }
+  ]
+}
