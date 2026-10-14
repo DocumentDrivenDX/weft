@@ -1445,3 +1445,7 @@ Astra Ultra independently passes22 actual loaded Python-extension controls, incl
 ### Shared exact timestamp equality — 2026-10-14
 
 Compile/IR/backend026 explicitly select committed UMF exact-instant1.0 without changing generic timestamp/facets/Key meaning. Backend0.4.29 binds native59, retains old28/58, dispatches exact equality by family, validates original operands before emission and preserves typed slot/occurrence custody. Basic public Truss07/08 workflows cover precise offset equality, optional values, joins/pages/read-only transactions; matching timestamp/binary/populated upgrade checks pass5/48.058s. Workspace Rust checking, one targeted exact-instant test and11-package boundaries pass. Astra source review is clear after the three Truss version/upgrade-custody fixes. Weft24 release uses the existing five-platform workflow; Ashlar admission remains unavailable.
+
+### Registration-owned Truss rebinding — 2026-10-14
+
+Weft25 adds backend0.4.30/native60 through a separate selection flag, preserving backend29/native59 and inheriting exact timestamp/scalar/container/entity/page semantics. Truss24's seven basic PG18 cases pass, including UMF0.7/0.8 scalar and complete-entity queries after registration, and populated native59 upgrade. Workspace Rust checking and11-package boundaries pass. Astra Ultra approves the mapping. Publication uses the existing five-platform workflow; broader Truss rebinding and Ashlar admission remain separate.
