@@ -1,0 +1,30 @@
+{
+  "version": "weft.security.null-parity.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "c46a5a2ad284e3e0b6c7b5487eddc3da90842aa8",
+  "securityReady": false,
+  "checks": {
+    "controlled_postgresql18_6": 11,
+    "module_controls": 16
+  },
+  "qualification": "Partial synthetic graph layout excluded administrator; original operand/result inspection and source/query producer correspondence, no genuine native admission or release",
+  "native_cases_promoted": 0,
+  "controls": [
+    "optional grouped original SUM null",
+    "missing and present-null distinct groups",
+    "optional disclosed original SUM null",
+    "actual operands and complete results pass original inspectors",
+    "prior withheld/missing-grant/invalid-later-value refusal controls retained"
+  ],
+  "remaining": [
+    "genuine source/caller/Subject/current authority",
+    "capture completeness/authenticity",
+    "protected release",
+    "all132 cases"
+  ],
+  "files": {
+    "scripts/check-security-relational-sql-native.py": "99e1c21f33ab63faa0f4d38fe77f21b7a5bbef6b3edd054bd4fbf018e69281fc",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "961bf6069cb0879cd4737033e19eea33db83c898d2896140fdef4364e8e55125",
+    "docs/helix/04-build/implementation-plan.md": "1929def4e316b5034355fd34186e8d42fea39ca96804b836b0e2b4d2087ab3d4"
+  }
+}

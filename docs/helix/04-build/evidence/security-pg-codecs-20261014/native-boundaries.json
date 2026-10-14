@@ -1,0 +1,48 @@
+{
+  "engine": "postgres (PostgreSQL) 18.6 (Homebrew)",
+  "securityReady": false,
+  "qualification": "Excluded administrator isolated numeric type boundary probes, no source/caller/authority or release qualification",
+  "durationSeconds": 2.364,
+  "controls": [
+    {
+      "token": "1e131071",
+      "nativeAccepted": true
+    },
+    {
+      "token": "1e131072",
+      "nativeAccepted": false
+    },
+    {
+      "token": "1e-16383",
+      "nativeAccepted": true
+    },
+    {
+      "token": "1e-16384",
+      "nativeAccepted": false
+    },
+    {
+      "token": "0e1000000",
+      "nativeAccepted": true
+    },
+    {
+      "token": "0e-16384",
+      "nativeAccepted": false
+    },
+    {
+      "token": "0e1073741824",
+      "nativeAccepted": false
+    },
+    {
+      "token": "-9223372036854775809",
+      "nativeAccepted": true
+    },
+    {
+      "token": "0.00",
+      "nativeAccepted": true
+    },
+    {
+      "token": "1.2300e3",
+      "nativeAccepted": true
+    }
+  ]
+}

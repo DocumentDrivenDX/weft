@@ -105,6 +105,7 @@ pub fn prepare_guarded_relational_candidate(raw: &str) -> Result<GuardedRelation
         let graph: GraphSource = serde_json::from_str(ctx.binding_json()).map_err(|_| fail())?;
         let source = ctx.source_context()?;
         source.require_sources(ctx)?;
+        crate::security_native_codecs::check_postgresql_parameter_codecs(ctx,&graph)?;
         let program = prepare_relational_graph_sql(ctx, &graph)?;
         Ok(GuardedRelationalCandidate {
             json: wire(ctx, &program, raw, &source)?,
@@ -147,10 +148,12 @@ pub fn inspect_guarded_relational_result(raw: &str) -> Result<Value> {
         let graph: GraphSource = serde_json::from_str(ctx.binding_json()).map_err(|_| fail())?;
         let source = ctx.source_context()?;
         source.require_sources(ctx)?;
+        crate::security_native_codecs::check_postgresql_parameter_codecs(ctx,&graph)?;
         let program = prepare_relational_graph_sql(ctx, &graph)?;
         if wire(ctx, &program, request, &source)? != output {
             return Err(fail());
         }
+        crate::security_native_codecs::check_postgresql_operand_codecs(ctx,&graph,operands)?;
         let checked = weft_core::security_operand_values::check_operand_values(ctx, operands)?;
         let contract = serde_json::to_string(program.result_contract()).map_err(|_| fail())?;
         let hash = sha256(contract.as_bytes());

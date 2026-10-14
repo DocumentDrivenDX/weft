@@ -1,0 +1,35 @@
+{
+  "version": "weft.security.pg-codec.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "0eb6ed01e4510d03e7a5f595888fe4d7eae6eb5d",
+  "composedParent": "7749962faa069c9b2f7f4bc2f23e18537ec6f2a9",
+  "securityReady": false,
+  "checks": {
+    "integration": 23,
+    "graph": 6,
+    "codec_units": 2,
+    "privacy_compile_fail": 1,
+    "module_controls": 16,
+    "isolated_native_type_boundaries": 10
+  },
+  "qualification": "PostgreSQL18.6 UTF8/raw-cast value representation only, no actual native session/source/caller/current-authority or release admission",
+  "native_cases_promoted": 0,
+  "remaining": [
+    "authentic target/session settings",
+    "complete native captures and selection",
+    "aggregate arithmetic/output range",
+    "genuine source/Subject/current authority",
+    "guarded release",
+    "all132 cases"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/lib.rs": "bc23c5416705b55cf58c6e2f0bdf68af9754b9e1f964c85c276ee93937e002ed",
+    "crates/weft-postgresql/src/security_native_codecs.rs": "5e5fbb519cfb38b287d5e43846a07f05d761d64575160393e952cbbe09b830c6",
+    "crates/weft-postgresql/src/security_relational_transport.rs": "79ef614df828f929f2914bd36b6a6b68b4bd7545e71b633e15129227900835af",
+    "crates/weft-postgresql/examples/security_postgresql_codecs.rs": "a4c87518066058e5abfafa5e350e4b6deed663c69ccf13026954d6fd53995b5f",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "255228612d145a6f54e6e3717e1d58da170c90c92be08dd23e6adba507637bbf",
+    "docs/helix/02-design/module-boundaries.json": "7045184e0cf88ae97ec98c92af01a183b6482fdbb23e63c1868dca299e9c362e",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "83f12fc1d0ab058255e554c0cc91ea45b1d474f6fb3de2d59607c5f631605b07",
+    "docs/helix/04-build/implementation-plan.md": "27b0a40deb20ed0277a1e870c25619ffa96f02ffc4fc89b165077bf5e0e30f11"
+  }
+}

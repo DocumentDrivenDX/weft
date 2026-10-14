@@ -1297,7 +1297,8 @@
             "const:ENCODING",
             "const:VERSION",
             "fn:check_aggregate_result_declaration",
-            "fn:check_aggregate_result_cells"
+            "fn:check_aggregate_result_cells",
+            "fn:aggregate_result_type"
           ],
           "pathReferences": []
         },
@@ -2215,7 +2216,8 @@
             "mod:security_query_use_guards",
             "mod:security_relational_parameters",
             "mod:security_relational_sql",
-            "mod:security_relational_transport"
+            "mod:security_relational_transport",
+            "mod:security_native_codecs"
           ],
           "pathReferences": []
         },
@@ -2784,6 +2786,18 @@
             "fn:query",
             "fn:prepare_guarded_graph_candidate",
             "fn:inspect_guarded_graph_result"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_native_codecs.rs",
+          "publicDeclarations": [
+            "struct:CheckedPostgresqlCodecs",
+            "fn:context_sha256",
+            "fn:parameter_count",
+            "fn:operand_count",
+            "fn:check_postgresql_parameter_codecs",
+            "fn:check_postgresql_operand_codecs"
           ],
           "pathReferences": []
         },

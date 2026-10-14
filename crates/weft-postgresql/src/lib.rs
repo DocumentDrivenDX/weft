@@ -297,3 +297,6 @@ pub mod security_relational_sql;
 
 /// Separate guarded relational handoff; original correspondence only, no native permit.
 pub mod security_relational_transport;
+
+/// PostgreSQL18.6 value codec correspondence; no native authority or session admission.
+pub mod security_native_codecs;

@@ -1538,3 +1538,25 @@ This closes value-correspondence plumbing, not native capture completeness/authe
 The separate0.2 candidate/result transport now preserves original source/query/parameter/operand/result lineage, regenerates exact producer bytes and checks complete supplied cells. Twenty-two integration tests, six graph regressions, private-constructor and module checks, plus12 actual CLI controls qualify original correspondence only. Evidence: `evidence/security-relational-transport-20261014/`.
 
 Next integrate this exact protocol with genuine native source/Subject/current-authority admission, complete operand capture and native codec qualification. Preserve the existing direct dispatcher until the separate relational path is qualified; do not promote supplied hashes/cells into credentials. All132 shared/native cases, backend parity and public security activation remain required.
+
+
+### B-008 PostgreSQL codec value checks — 2026-10-14
+
+Original parameter and supplied operand values now have separate PostgreSQL18.6 raw-cast correspondence checks. Exact numeric precision/scale/exponent boundaries and NUL refusal preserve original model meaning; valid model integers beyond native storage refuse as unsupported codec values rather than being redefined. Tests distinguish model-domain admission from native value representation. Ten isolated PostgreSQL type probes confirm boundaries; evidence under `evidence/security-pg-codecs-20261014/`.
+
+Native dispatcher integration must check actual target/session settings, run parameter checks before anchors/capture, check genuinely complete operand captures before evaluation and preserve current source/Subject/authority cuts through release. Aggregate arithmetic/output-range qualification and all132 cases remain open.
+
+
+### B-008 grouped SUM nullability correction — 2026-10-14
+
+The separate aggregate candidate now derives nullable output from actual source availability and selected disclosed null transforms, including nonempty groups whose operands are all null/absent. Required non-null original grouped SUM remains non-null. Security-only optional scalar operator admission keeps original bytes and ordinary subsets intact. Type declaration/emission and cell checking share the owner derivation; copied output objects and narrowed declared nullability refuse. Evidence: `evidence/security-sum-domains-20261014/`. Native optional/null grouping, selected-rule/result arithmetic, current-authority dispatch and all132 required cases remain open.
+
+
+### B-008 controlled null/absence SQL parity — 2026-10-14
+
+Eleven PostgreSQL18.6 controlled probes now include optional original/disclosed grouped-null SUM and missing-versus-present-null grouping. Actual captures and complete query results pass original owner operand/result checking and exact producer correspondence. Evidence: `evidence/security-null-parity-20261014/`. This is controlled SQL/decoding parity on a partial synthetic layout, not native admission/release or132-case promotion. Genuine0.2 dispatcher integration and the full backend acceptance matrix remain open.
+
+
+### B-008 explicit native check ordering — 2026-10-14
+
+The original relational handoff now distinguishes initial integrity/Subject/query-use checks from post-operand-validation group checks. Its schema requires closed stage values, exact producer inspection rejects changed stages, and the controlled runner follows them explicitly. Thirty-two targeted compiler/graph tests and eleven controlled native SQL/inspection probes pass. Evidence: `evidence/security-execution-stages-20261014/`. The genuine Truss0.2 host is updating ordering under its existing native cuts; direct0.1 remains intact. Native admission/release, full arithmetic and all132 cases remain open.
