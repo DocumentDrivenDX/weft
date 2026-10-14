@@ -2199,7 +2199,8 @@
             "mod:security_graph_query",
             "mod:security_graph_parameters",
             "mod:security_guarded_transport",
-            "mod:security_query_use_guards"
+            "mod:security_query_use_guards",
+            "mod:security_relational_parameters"
           ],
           "pathReferences": []
         },
@@ -2800,6 +2801,25 @@
             "fn:context_sha256",
             "fn:scans",
             "fn:prepare_graph_query_use_guards"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_relational_parameters.rs",
+          "publicDeclarations": [
+            "enum:RelationalQueryParameterCodec",
+            "struct:RelationalQueryParameterBinding",
+            "fn:ordinal",
+            "fn:source_path",
+            "fn:value",
+            "fn:logical_type",
+            "fn:codec",
+            "struct:RelationalGraphParameterBindings",
+            "fn:graph",
+            "fn:policy_values",
+            "fn:query",
+            "fn:require_context",
+            "fn:prepare_relational_graph_parameters"
           ],
           "pathReferences": []
         },

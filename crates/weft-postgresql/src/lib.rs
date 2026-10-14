@@ -288,3 +288,6 @@ pub mod security_guarded_transport;
 
 /// Original all-operator query-use guards; relational/native admission remains required.
 pub mod security_query_use_guards;
+
+/// Separate original relational query, policy and unvalued Subject ordinal channels.
+pub mod security_relational_parameters;

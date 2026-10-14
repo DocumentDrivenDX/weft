@@ -272,3 +272,37 @@ fn mixed_aggregate_contract_keeps_direct_disclosure_and_computed_outputs_distinc
  batch["rows"][0][0]["disposition"]=json!("original");batch["rows"][0][1]["outcomeId"]=json!("original");assert!(check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch.to_string()).is_err());Ok(())
  }).unwrap();
 }
+#[test]
+fn relational_parameters_keep_repeated_named_values_distinct_from_policy_and_subject(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,application_ir::Value as QueryValue};
+ use weft_postgresql::security_relational_parameters::*;
+ let mut raw:Value=serde_json::from_str(&query_use_request("SELECT r.resourceId FROM Resource r WHERE r.resourceId=:id AND r.resourceId=:id",None,false)).unwrap();
+ let hostile="RA'; SELECT secret FROM private_table; --";
+ raw["parameters"]=json!({"id":{"family":"string","value":hostile}});
+ with_security_mapping_context(&raw.to_string(),|ctx|{
+ let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let bindings=prepare_relational_graph_parameters(ctx,&source)?;bindings.require_context(ctx)?;
+ assert_eq!(bindings.graph().policy().len(),1);assert_eq!(bindings.policy_values(),&[json!(true)]);assert_eq!(bindings.graph().subject().ordinal(),2);assert_eq!(bindings.query().len(),2);
+ for (i,p) in bindings.query().iter().enumerate(){assert_eq!(p.ordinal(),3+i);assert_eq!(p.codec(),RelationalQueryParameterCodec::Text);assert_eq!(p.source_path(),format!("filters/{i}/right"));assert!(matches!(p.value(),QueryValue::Parameter{name,value,..} if name=="id"&&value==hostile));}
+ // Old direct graph producer still refuses query slots, not reclassifying them.
+ assert!(prepare_guarded_graph_candidate(&raw.to_string()).is_err());
+ with_security_mapping_context(&raw.to_string(),|other|{assert!(bindings.require_context(other).is_err());Ok(())})?;
+ Ok(())
+ }).unwrap();
+}
+#[test]
+fn relational_parameters_preserve_numeric_literals_keyset_order_and_join_occurrences(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,application_ir::Value as QueryValue};use weft_postgresql::security_relational_parameters::*;
+ let raw=query_use_request("SELECT r.resourceId FROM Resource r JOIN Resource s ON r.salary=s.salary WHERE r.salary=100 AND s.salary=200",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let p=prepare_relational_graph_parameters(ctx,&source)?;assert_eq!(p.query().len(),2);
+ for (binding,path,value) in [( &p.query()[0],"filters/0/right","100"),(&p.query()[1],"filters/1/right","200")]{assert_eq!(binding.codec(),RelationalQueryParameterCodec::Numeric);assert_eq!(binding.source_path(),path);assert!(matches!(binding.value(),QueryValue::Literal{value:v,..} if v==value));}Ok(())
+ }).unwrap();
+ let raw=query_use_request("SELECT r.resourceId FROM Resource r WHERE (r.resourceId)>('RA') ORDER BY r.resourceId LIMIT 1",None,false);
+ with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let p=prepare_relational_graph_parameters(ctx,&source)?;assert_eq!(p.query()[0].source_path(),"filters/0/values/0");assert_eq!(p.query()[0].ordinal(),3);Ok(())}).unwrap();
+}
+#[test]
+fn relational_parameters_refuse_foreign_graph_sources_without_binding_native_subject(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;use weft_postgresql::security_relational_parameters::*;
+ let raw=query_use_request("SELECT COUNT(*) FROM Resource r",None,false);
+ with_security_mapping_context(&raw,|ctx|{let mut source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let p=prepare_relational_graph_parameters(ctx,&source)?;assert!(p.query().is_empty());assert_eq!(p.graph().subject().ordinal(),2);source.native_schema_revision="2".into();assert!(prepare_relational_graph_parameters(ctx,&source).is_err());Ok(())}).unwrap();
+}

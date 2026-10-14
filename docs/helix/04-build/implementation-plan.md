@@ -1512,3 +1512,8 @@ The PostgreSQL candidate now derives original per-scan guards for all five query
 A separate computed-result candidate now checks original resolved COUNT/SUM domain and argument lineage, exact tokens, COUNT nonnegativity and SUM empty/grouped null semantics. Original result/registration APIs continue to reject its versions. Compiler tests cover changed lineage/facets, incorrect wrappers, negative/null counts and grouped-null sums; direct projection stays on its existing contract. Evidence is retained under `evidence/security-aggregate-results-20261014/`. Relational lowering, native arithmetic/input authorization and the full132-case acceptance suite remain open.
 
 Read-only approved Databricks inventory confirms configured aidev-cus access and an existing private Ashlar development catalog. Historical evidence qualifies ordinary development custody, not scoped end-user security. The sole visible data-gateway warehouse needs a user decision because Ashlar's plan excludes shared/default compute; no SQL, compute configuration or grants were changed during inventory.
+
+
+### B-008 relational parameter increment — 2026-10-14
+
+The next relational graph path now retains all original query values separately after policy and unvalued Subject slots, with actual occurrence paths and borrowed owner types/values. Tests cover repeated named values containing SQL punctuation, both scanned filter occurrences after a field-equality join, keyset order, field-free COUNT, foreign source/context refusal and retained legacy rejection. Native codecs, SQL lowering/ordinal use, actual guard evaluation, arithmetic and the full132-case acceptance suite remain required. Evidence: `evidence/security-relational-parameters-20261014/`.
