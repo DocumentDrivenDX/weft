@@ -1,0 +1,17 @@
+{
+  "baseline": "480e117ed6fd991eee5cfd9176b5922be0473174",
+  "command": "cargo test --locked --offline -p weft-postgresql --test security_graph",
+  "tests": 5,
+  "failed": 0,
+  "ignored": 0,
+  "rawLogSha256": "af72e7871af6a89d0280297711249c9f76770c9556b90e61a422c5c4e5216c1b",
+  "scope": "Original owner graph-source/query/output and complete-batch cell correspondence; no native selection, issuer, admission, or release proof.",
+  "controls": {
+    "projectionShapes": 3,
+    "unsupportedOperations": 6,
+    "contextSubstitutions": 1,
+    "validBatchShapes": 2,
+    "corruptedBatches": 7
+  },
+  "remaining": "B-008 and all132 original shared/native cases remain open."
+}
