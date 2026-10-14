@@ -1159,7 +1159,8 @@
             "mod:security_lowering",
             "mod:security_requirements",
             "mod:security_parameter_sources",
-            "mod:security_source_context"
+            "mod:security_source_context",
+            "mod:security_aggregate_results"
           ],
           "pathReferences": []
         },
@@ -1286,6 +1287,16 @@
           "path": "crates/weft-core/src/resolve.rs",
           "publicDeclarations": [
             "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_aggregate_results.rs",
+          "publicDeclarations": [
+            "const:ENCODING",
+            "const:VERSION",
+            "fn:check_aggregate_result_declaration",
+            "fn:check_aggregate_result_cells"
           ],
           "pathReferences": []
         },
@@ -2187,7 +2198,8 @@
             "mod:security_graph_binding",
             "mod:security_graph_query",
             "mod:security_graph_parameters",
-            "mod:security_guarded_transport"
+            "mod:security_guarded_transport",
+            "mod:security_query_use_guards"
           ],
           "pathReferences": []
         },
@@ -2764,6 +2776,30 @@
           "publicDeclarations": [
             "fn:render",
             "fn:render_graph"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_query_use_guards.rs",
+          "publicDeclarations": [
+            "struct:QueryUseRuleTruth",
+            "fn:column",
+            "fn:expression",
+            "struct:QueryUseOccurrence",
+            "fn:field",
+            "fn:operator",
+            "fn:original_action",
+            "struct:ScanQueryUseGuard",
+            "fn:scan",
+            "fn:target",
+            "fn:actions",
+            "fn:rule_truths",
+            "fn:refusal_expression",
+            "fn:uses",
+            "struct:GraphQueryUseGuards",
+            "fn:context_sha256",
+            "fn:scans",
+            "fn:prepare_graph_query_use_guards"
           ],
           "pathReferences": []
         },

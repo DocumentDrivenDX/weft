@@ -1516,6 +1516,9 @@ fn combined_candidate_checks_borrow_original_registration_without_backend_dispat
   let mut pg_manifest=manifest.clone();pg_manifest["targetProfiles"][0]["engine"]=json!("postgresql");pg_manifest["targetProfiles"][0]["engineVersion"]=json!("18.6");pg_manifest["targetProfiles"][0]["sessionSettings"]=json!({"standard_conforming_strings":"on","backslash_quote":"safe_encoding","server_encoding":"UTF8","client_encoding":"UTF8"});
   let mut pg=SecurityRegistry::default();pg.register(RegistrationFixture(pg_manifest.to_string()))?;
   pg.check_postgresql_candidate_declaration(ctx,&candidate,true)?;
+  let mut aggregate_version=candidate.clone();aggregate_version.result_contract.version=weft_core::security_aggregate_results::VERSION.into();aggregate_version.result_contract.encoding=weft_core::security_aggregate_results::ENCODING.into();
+  assert!(registry.check_candidate_declaration(ctx,&aggregate_version,true).is_err());
+  assert!(pg.check_postgresql_candidate_declaration(ctx,&aggregate_version,true).is_err());
   use std::sync::{Arc,atomic::{AtomicUsize,Ordering}};
   let calls=Arc::new(AtomicUsize::new(0));
   let mut dispatched=SecurityRegistry::default();

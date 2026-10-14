@@ -159,3 +159,6 @@ mod security_deployment_catalog;
 mod security_payload_applicability;
 
 mod security_physical_check;
+
+/// Separate aggregate result-domain candidate; no execution authority.
+pub mod security_aggregate_results;

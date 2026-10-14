@@ -1,0 +1,54 @@
+{
+  "version": "weft.security.aggregate-result.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "aaefc0491245c7b70cedce6e46c772c49abedd68",
+  "securityReady": false,
+  "qualification": "Original computed-result domain/cell correspondence only; no native arithmetic, selection, authorization or release",
+  "checks": {
+    "core": 274,
+    "admission": 75,
+    "guarded_and_aggregate": 10,
+    "graph": 6,
+    "schema_controls": 6,
+    "module_controls": 16,
+    "governed_schemas": 67
+  },
+  "versions": {
+    "contract": "weft.security.result-contract/0.2-candidate",
+    "encoding": "weft.security.cells/0.2-candidate"
+  },
+  "controls": [
+    "original methods reject new contract and encoding",
+    "existing generic and PostgreSQL registrations reject new contract",
+    "COUNT exact nonnegative non-null integer",
+    "SUM exact argument identity and derived facets",
+    "empty ungrouped SUM null",
+    "grouped SUM null refusal",
+    "mixed direct and computed outputs",
+    "decimal scale without inherited precision",
+    "changed lineage/refinements/wrappers/extra fields",
+    "large exact integers without floating conversion"
+  ],
+  "native_cases_promoted": 0,
+  "remaining": [
+    "relational lowering",
+    "native guard evaluation and arithmetic",
+    "genuine source/Subject/current authority",
+    "all 132 cases",
+    "qualified Databricks security test endpoint/caller policies"
+  ],
+  "source_sha256": {
+    "crates/weft-core/src/lib.rs": "5cfbe8a1b93d07cf68c94b3eebf3d8a60beb0a9ddc22fe438bc1b182f81d7e2e",
+    "crates/weft-core/src/security_aggregate_results.rs": "2a9ff366e1abbe43e5d08c0c5b491ed5d6c325999cfe4cae4b144611cf1775a3",
+    "crates/weft-core/src/security_lowering.rs": "3bf6ac94263e218a40766c8dd84a83d80d2e8f4aa6a4a41fa3b196a72f4740de",
+    "crates/weft-core/src/security_result_check.rs": "34c0f19b2a8e287bd71f068420fbf4d9a51fcc67d0dbb50a9e9eebc57255112f",
+    "crates/weft-core/src/security_result_cells.rs": "cb2d6f4c16f65cad86659a8263f23401eeb8e501bb66ad502aad06ad43743519",
+    "crates/weft-core/src/security_result_selection.rs": "cbe10087ffdbcb835c26400c9a7874e7a3f56cc025271b9a3f1c4fbb050163dc",
+    "crates/weft-core/tests/security_admission.rs": "f44152d67e339b6a0b403bf4df210ee5ddce37d3c7f4285dcc981e60105969df",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "cac6654f9abee128cf2078378f5b74ce01bdfdce4a242a6d05dd1be780b0395d",
+    "docs/helix/02-design/module-boundaries.json": "ffa6e3cb16366b3ed4fd86cb44735bf545828916358eacd1d48da33558b4aa9f",
+    "docs/helix/02-design/contracts/security-cells-v0.2-candidate.schema.json": "40551dcc9b492540902912b42022a0e5e63c7c4fe436357fabba40ec2111cb32",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "5814d08acf67d3965e9e656e70d3c532e73e60d34a14a5ded19dd0d48c40a2c7",
+    "docs/helix/04-build/implementation-plan.md": "7469c5409820ebb3b46cc607d94998757e8802f2a4b5c2dd3a10e96a93643bf6"
+  }
+}

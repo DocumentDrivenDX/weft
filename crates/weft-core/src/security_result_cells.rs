@@ -5,21 +5,25 @@ fn fail()->Diagnostic {Diagnostic::new("WFT-SECURITY-RESULT","result","Security 
 fn limit()->Diagnostic {Diagnostic::new("WFT-LIMIT","result","Security cell resource limit exceeded")}
 pub(crate) fn parse(raw:&str)->Result<Value>{checked_json_bounded(raw,32*1024*1024,64,1_000_000).map_err(|code|Diagnostic::new(code,"result","Security result JSON refused"))}
 pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str)->Result<()> {
- ctx.check_result_declaration(contract)?;
+ check_version(ctx,contract,contract_json,contract_sha256,batch_json,"weft.security.result-contract/0.1.0")
+}
+pub(crate) fn check_version(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultContract,contract_json:&str,contract_sha256:&str,batch_json:&str,version:&str)->Result<()> {
+ crate::security_result_check::check_version(ctx,contract,version)?;
  // Hash the retained bytes before parsing; never substitute reserialization.
  if contract_json.len()>32*1024*1024{return Err(Diagnostic::new("WFT-LIMIT","result","Security result JSON refused"));}
  if sha256(contract_json.as_bytes())!=contract_sha256{return Err(fail());}
  let retained=parse(contract_json)?;
  if retained!=serde_json::to_value(contract).map_err(|_|fail())?{return Err(fail());}
  let batch=parse(batch_json)?;let object=batch.as_object().ok_or_else(fail)?;
- if object.len()!=3||batch["version"]!="weft.security.cells/0.1.0"||batch["resultContractSha256"]!=contract_sha256{return Err(fail());}
+ if object.len()!=3||batch["version"]!=contract.encoding||batch["resultContractSha256"]!=contract_sha256{return Err(fail());}
  let rows=batch["rows"].as_array().ok_or_else(fail)?;if rows.len()>4096{return Err(fail());}
  let mut budget=crate::security_result_check::Budget::new();
  for row in rows {let cells=row.as_array().ok_or_else(fail)?;if cells.len()!=contract.columns.len(){return Err(fail());}
   for (cell,column) in cells.iter().zip(&contract.columns) {let object=cell.as_object().ok_or_else(fail)?;
    let id=cell["outcomeId"].as_str().ok_or_else(fail)?;let disposition=cell["disposition"].as_str().ok_or_else(fail)?;
-   let outcome=column.outcomes.iter().find(|o|match o{SecurityResultOutcome::Original{id:i,..}|SecurityResultOutcome::Transformed{id:i,..}|SecurityResultOutcome::Withheld{id:i}|SecurityResultOutcome::Absent{id:i}=>i==id}).ok_or_else(fail)?;
+   let outcome=column.outcomes.iter().find(|o|match o{SecurityResultOutcome::Computed{id:i,..}|SecurityResultOutcome::Original{id:i,..}|SecurityResultOutcome::Transformed{id:i,..}|SecurityResultOutcome::Withheld{id:i}|SecurityResultOutcome::Absent{id:i}=>i==id}).ok_or_else(fail)?;
    let (expected,domain,literal)=match outcome {
+    SecurityResultOutcome::Computed{domain,..}=>("computed",Some(domain),None),
     SecurityResultOutcome::Original{domain,..}=>("original",Some(domain),None),
     SecurityResultOutcome::Transformed{domain,transform:SecurityTransform::Constant{literal,..},..}=>("transformed",Some(domain),Some(literal)),
     SecurityResultOutcome::Withheld{..}=>("withheld",None,None),SecurityResultOutcome::Absent{..}=>("absent",None,None)
@@ -29,6 +33,14 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
    if !object.contains_key("outcomeId")||!object.contains_key("disposition"){return Err(fail());}
    if let Some(domain)=domain {
     let value=object.get("value").ok_or_else(fail)?;
+    if let SecurityResultDomain::Scalar{r#type:t}=domain {
+     if version!=crate::security_aggregate_results::VERSION||disposition!="computed"{return Err(fail());}
+     let expression=&ctx.requirements().outputs()[column.position-1].output().expression;
+     let source=crate::security_aggregate_results::scalar_source(expression,t)?;
+     budget.literal(value).map_err(|_|limit())?;
+     budget.normalize(&source,value).map_err(|d|if d.code=="WFT-LIMIT"{limit()}else{fail()})?;
+     continue;
+    }
     let SecurityResultDomain::Model{field}=domain else{return Err(fail());};
     let reference=SecurityRef{document_id:field.document_id.clone(),module_id:field.module.clone(),element_id:field.element.clone()};
     let source=locate(ctx.catalog(),&reference).map_err(|_|fail())?;

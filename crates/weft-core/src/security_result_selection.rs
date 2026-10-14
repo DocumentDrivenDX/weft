@@ -45,7 +45,7 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
    let field=SecurityRef{document_id:identity.document_id.clone(),module_id:identity.module.clone(),element_id:identity.element.clone()};
    let disposition=selected.get(&(scan.as_str(),field)).ok_or_else(fail)?;
    let id=cell["outcomeId"].as_str().ok_or_else(fail)?;
-   let outcome=column.outcomes.iter().find(|o|match o{SecurityResultOutcome::Original{id:i,..}|SecurityResultOutcome::Transformed{id:i,..}|SecurityResultOutcome::Withheld{id:i}|SecurityResultOutcome::Absent{id:i}=>i==id}).ok_or_else(fail)?;
+   let outcome=column.outcomes.iter().find(|o|match o{SecurityResultOutcome::Computed{id:i,..}|SecurityResultOutcome::Original{id:i,..}|SecurityResultOutcome::Transformed{id:i,..}|SecurityResultOutcome::Withheld{id:i}|SecurityResultOutcome::Absent{id:i}=>i==id}).ok_or_else(fail)?;
    match (disposition,outcome){
     (Disposition::Original,SecurityResultOutcome::Original{..}|SecurityResultOutcome::Absent{..})|(Disposition::Withheld,SecurityResultOutcome::Withheld{..})=>{},
     (Disposition::Transformed{transform,version,output_field,literal,..},SecurityResultOutcome::Transformed{transform:SecurityTransform::Constant{version:v,output_field:f,literal:l},..})=>{

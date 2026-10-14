@@ -30,6 +30,7 @@ pub enum SecurityTransform {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "disposition", rename_all = "lowercase", rename_all_fields = "camelCase")]
 pub enum SecurityResultOutcome {
+    Computed { id: String, domain: SecurityResultDomain },
     Original { id: String, domain: SecurityResultDomain },
     Transformed { id: String, transform: SecurityTransform, disposition_sources: Vec<SecurityDispositionSource>, domain: SecurityResultDomain },
     Withheld { id: String },

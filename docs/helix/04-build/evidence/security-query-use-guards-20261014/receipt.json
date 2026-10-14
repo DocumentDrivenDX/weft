@@ -1,0 +1,35 @@
+{
+  "version": "weft.security.query-use-guards.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "0ed2bd106e42c8c4e2d9b3fa12e972ee01313a16",
+  "securityReady": false,
+  "scope": "Original per-scan query-use guard derivation only; no native execution or relational SQL admission",
+  "checks": {
+    "guarded_transport_tests": 7,
+    "graph_regressions": 6,
+    "privacy_compile_fail": 1
+  },
+  "controls": [
+    "all five operators",
+    "both join scan occurrences",
+    "query-only fields",
+    "disclosed withheld refusal",
+    "exact original action",
+    "missing original grant",
+    "prohibited use",
+    "foreign source rejection",
+    "existing unsupported SQL gate retained"
+  ],
+  "remaining": [
+    "full relational lowering",
+    "native guard evaluation before filtering",
+    "native source/Subject/current authority",
+    "result contracts for aggregate outputs",
+    "all 132 shared/native cases",
+    "Databricks authenticated dedicated endpoint"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/security_query_use_guards.rs": "40f1390a590e613b0163db45b7dde1006c444dfc1c5ff7eeeaa4839ddafc806c",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "c5389149cca6355a17f2d25b078f6a38a01664dac34577a769db1c852308afa5"
+  }
+}

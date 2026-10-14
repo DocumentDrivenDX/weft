@@ -285,3 +285,6 @@ pub mod security_graph_parameters;
 
 /// Separate guarded candidate handoff and original result correspondence; no native permit.
 pub mod security_guarded_transport;
+
+/// Original all-operator query-use guards; relational/native admission remains required.
+pub mod security_query_use_guards;
