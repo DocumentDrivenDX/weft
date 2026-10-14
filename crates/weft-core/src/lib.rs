@@ -131,6 +131,7 @@ pub mod security_backend;
 pub mod security_lowering;
 pub mod security_requirements;
 pub mod security_parameter_sources;
+pub mod security_source_context;
 
 mod security_result_check;
 

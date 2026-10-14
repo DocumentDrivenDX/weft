@@ -1,0 +1,48 @@
+{
+  "baseline": "edfd91044a02545c520ccc4d6ed5625543f26c2e",
+  "scope": "Original exact source capsule independent of SQL/parameter/result lineage; no native source/caller/epoch/permit or backend activation.",
+  "tests": {
+    "core": 273,
+    "admission": 75,
+    "sourceContext": 5,
+    "privacy": 1,
+    "moduleBoundary": 16
+  },
+  "ignored": 0,
+  "failed": 0,
+  "commands": [
+    "cargo test --locked --offline -p weft-core --lib --test security_admission --test security_source_context",
+    "cargo test --locked --offline -p weft-core --lib --test security_source_context",
+    "cargo test --locked --offline -p weft-core --doc security_source_context",
+    "bun run modules:check",
+    "bun run specs:check"
+  ],
+  "remaining": "B-008 and all132 original cases remain open. Actual native source/Subject issuers, separate per-query registered guarded dispatch and full native/lifecycle qualification remain required.",
+  "specs": {
+    "governedArtifacts": 61,
+    "schemas": 63,
+    "shapeOnly": true
+  },
+  "logs": {
+    "core": {
+      "rawSha256": "9d9db311be0bf33e20b70423fabbcc6d7ac1ae3c0c056bdcd7e1cf1f82733cce",
+      "bytes": 41818
+    },
+    "privacy": {
+      "rawSha256": "f49179cd3f2cba05b8480dedc57a2b8fbfa8660bbe9b4fc70e8cdd7b9a3a853f",
+      "bytes": 6151
+    },
+    "modules": {
+      "rawSha256": "f6c444516e4519d273790e1731c86b379617ea3deef4390c692ff9a0576a4885",
+      "bytes": 1887
+    },
+    "specs": {
+      "rawSha256": "b79026d6f2abed291240ec389dd52718f4b13364eb0c5cd437779c6aa63573cd",
+      "bytes": 253
+    },
+    "final-core": {
+      "rawSha256": "6652b29869826335c888c4aaf41017d852984b006a864217577d14a39a49f6df",
+      "bytes": 35699
+    }
+  }
+}

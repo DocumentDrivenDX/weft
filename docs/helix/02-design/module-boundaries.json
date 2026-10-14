@@ -1158,7 +1158,8 @@
             "mod:security_backend",
             "mod:security_lowering",
             "mod:security_requirements",
-            "mod:security_parameter_sources"
+            "mod:security_parameter_sources",
+            "mod:security_source_context"
           ],
           "pathReferences": []
         },
@@ -1336,6 +1337,7 @@
             "fn:check_simulated_result_selection",
             "fn:check_simulated_fact_selection",
             "fn:parameter_sources",
+            "fn:source_context",
             "fn:requirements",
             "fn:catalog",
             "fn:logical_plan",
@@ -1863,6 +1865,17 @@
             "fn:policy_json",
             "fn:ontology_json",
             "fn:require_catalog"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_source_context.rs",
+          "publicDeclarations": [
+            "const:MAX_SOURCE_CONTEXT_BYTES",
+            "struct:SecuritySourceContext",
+            "fn:json",
+            "fn:sha256",
+            "fn:require_sources"
           ],
           "pathReferences": []
         },
