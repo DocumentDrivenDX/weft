@@ -1157,7 +1157,8 @@
             "mod:backend03",
             "mod:security_backend",
             "mod:security_lowering",
-            "mod:security_requirements"
+            "mod:security_requirements",
+            "mod:security_parameter_sources"
           ],
           "pathReferences": []
         },
@@ -1334,6 +1335,7 @@
             "fn:check_result_cells",
             "fn:check_simulated_result_selection",
             "fn:check_simulated_fact_selection",
+            "fn:parameter_sources",
             "fn:requirements",
             "fn:catalog",
             "fn:logical_plan",
@@ -1618,6 +1620,7 @@
             "const:MAX_REQUEST_BYTES",
             "fn:inspect_security_mapping_result_cells",
             "fn:inspect_security_mapping_result_facts",
+            "fn:with_security_mapping_context",
             "fn:inspect_security_mapping_subject_key",
             "fn:inspect_security_mapping_subject_key_json",
             "fn:prepare_security_mapping_json"
@@ -1665,10 +1668,38 @@
             "field:fields",
             "field:keys",
             "struct:SecurityOntologyClosure",
+            "fn:authored_key_fields",
+            "fn:check_mapped_scalar_fields",
             "fn:subject",
             "fn:type_count",
             "fn:field_count",
             "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_parameter_sources.rs",
+          "publicDeclarations": [
+            "enum:SecurityPolicyParameterKind",
+            "struct:SecurityPolicyParameterSource",
+            "fn:path",
+            "fn:kind",
+            "fn:field",
+            "fn:domain",
+            "fn:literal",
+            "enum:SecurityQueryParameterValue",
+            "struct:SecurityQueryParameterSource",
+            "fn:path",
+            "fn:value",
+            "struct:SecuritySubjectParameterSource",
+            "fn:subject",
+            "fn:key_id",
+            "fn:key_fields",
+            "struct:SecurityParameterSources",
+            "fn:query_values",
+            "fn:policy_operands",
+            "fn:subject",
+            "fn:require_context"
           ],
           "pathReferences": []
         },
@@ -2139,7 +2170,9 @@
             "mod:original_backend",
             "mod:native_profile",
             "mod:qualified_profile",
-            "mod:security_predicate_spike"
+            "mod:security_predicate_spike",
+            "mod:security_graph_binding",
+            "mod:security_graph_query"
           ],
           "pathReferences": []
         },
@@ -2645,9 +2678,39 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/security_graph_binding.rs",
+          "publicDeclarations": [
+            "struct:GraphSource",
+            "field:version",
+            "field:native_schema_revision",
+            "field:physical_module",
+            "field:inventory_json",
+            "field:correspondence_json",
+            "field:logical_resolution_json",
+            "field:logical_transport_json",
+            "struct:GraphBinding",
+            "fn:source_sha256",
+            "fn:integrity_checks",
+            "fn:read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_graph_query.rs",
+          "publicDeclarations": [
+            "struct:GraphQueryCandidate",
+            "fn:value",
+            "fn:result_contract",
+            "fn:prepare_graph_query",
+            "fn:prepare_graph_query_checked"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/security_predicate_spike.rs",
           "publicDeclarations": [
-            "fn:render"
+            "fn:render",
+            "fn:render_graph"
           ],
           "pathReferences": []
         },

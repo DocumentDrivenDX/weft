@@ -128,6 +128,8 @@ impl<'a> SecurityBackendContext<'a> {
     pub fn check_simulated_result_selection(&self, contract: &crate::security_lowering::SecurityResultContract, contract_json: &str, hash: &str, batch_json: &str, truth_rows: &[SecuritySimulatedRowTruths]) -> Result<()> { crate::security_result_selection::check(self,contract,contract_json,hash,batch_json,truth_rows) }
     /// Conditional evaluated facts and Original values; caller facts are not credentials.
     pub fn check_simulated_fact_selection(&self, contract: &crate::security_lowering::SecurityResultContract, contract_json: &str, hash: &str, batch_json: &str, cut_json: &str, rows_json: &str) -> Result<()> { crate::security_evaluation::check_owner_rows(self,contract,contract_json,hash,batch_json,cut_json,rows_json) }
+    /// Original parameter provenance only; no native caller/context value or permission.
+    pub fn parameter_sources(&self) -> Result<crate::security_parameter_sources::SecurityParameterSources<'_, 'a>> { crate::security_parameter_sources::issue(self) }
     pub fn requirements(&self) -> &crate::security_requirements::SecurityRequirements<'a> { &self.requirements }
     pub fn catalog(&self) -> &Catalog { self.catalog }
     pub fn logical_plan(&self) -> &SecurityLogicalPlan { self.logical_plan }
