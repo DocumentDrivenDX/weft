@@ -545,6 +545,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
         read["sql"] = json!(anchor_sql(original, &anchor));
     }
     for check in &mut checks {
+        check["stage"]=json!(if check["failureCode"]=="WFT-SECURITY-GROUP-DISCLOSURE"{"afterOperandValidation"}else{"beforeOperandCapture"});
         let original = check["sql"].as_str().ok_or_else(fail)?;
         check["sql"] = json!(anchor_sql(original, &anchor));
     }

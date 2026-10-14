@@ -46,7 +46,7 @@ try:
    v=1 if p['channel']=='subject' else p['value'];values.append('TRUE' if v is True else 'FALSE' if v is False else str(v) if isinstance(v,int) else "'"+str(v).replace("'","''")+"'")
   return sql('PREPARE probe ('+types+') AS '+statement+';EXECUTE probe ('+','.join(values)+');DEALLOCATE probe;')
  def check(name,query,mode=None,grant=True,parameters=None,expected=None,refused=False,operand_refused=False,optional=False,original_disclosure=False):
-  program=request(query,mode,grant,parameters,optional,original_disclosure);violations=[int(execute(program,c['sql'])) for c in program['checks'] if c['failureCode']!='WFT-SECURITY-GROUP-DISCLOSURE']
+  program=request(query,mode,grant,parameters,optional,original_disclosure);assert all(c['stage'] in ['beforeOperandCapture','afterOperandValidation'] for c in program['checks']);violations=[int(execute(program,c['sql'])) for c in program['checks'] if c['stage']=='beforeOperandCapture']
   if refused:assert any(violations),name;results.append({'case':name,'refusedBeforeExecution':True,'violations':violations});return
   assert not any(violations),(name,violations)
   captures=[]
@@ -60,7 +60,7 @@ try:
    return
   if inspected.returncode:raise RuntimeError(inspected.stderr[:1000])
   for c in program['checks']:
-   if c['failureCode']=='WFT-SECURITY-GROUP-DISCLOSURE':assert int(execute(program,c['sql']))==0,name
+   if c['stage']=='afterOperandValidation':assert int(execute(program,c['sql']))==0,name
   output=execute(program,program['sql']);rows=[json.loads(line) for line in output.splitlines()] if output else [];assert rows==expected,(name,rows,expected)
   producer=subprocess.run([str(args.guarded_producer)],input=program['_originalRequest'],text=True,capture_output=True,timeout=20)
   if producer.returncode:raise RuntimeError(producer.stderr[:1000])

@@ -1555,3 +1555,8 @@ The separate aggregate candidate now derives nullable output from actual source 
 ### B-008 controlled null/absence SQL parity — 2026-10-14
 
 Eleven PostgreSQL18.6 controlled probes now include optional original/disclosed grouped-null SUM and missing-versus-present-null grouping. Actual captures and complete query results pass original owner operand/result checking and exact producer correspondence. Evidence: `evidence/security-null-parity-20261014/`. This is controlled SQL/decoding parity on a partial synthetic layout, not native admission/release or132-case promotion. Genuine0.2 dispatcher integration and the full backend acceptance matrix remain open.
+
+
+### B-008 explicit native check ordering — 2026-10-14
+
+The original relational handoff now distinguishes initial integrity/Subject/query-use checks from post-operand-validation group checks. Its schema requires closed stage values, exact producer inspection rejects changed stages, and the controlled runner follows them explicitly. Thirty-two targeted compiler/graph tests and eleven controlled native SQL/inspection probes pass. Evidence: `evidence/security-execution-stages-20261014/`. The genuine Truss0.2 host is updating ordering under its existing native cuts; direct0.1 remains intact. Native admission/release, full arithmetic and all132 cases remain open.

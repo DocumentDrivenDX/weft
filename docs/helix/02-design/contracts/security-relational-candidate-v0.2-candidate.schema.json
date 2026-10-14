@@ -33,7 +33,18 @@
       "type": "array",
       "maxItems": 4096,
       "items": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "stage": {
+            "enum": [
+              "beforeOperandCapture",
+              "afterOperandValidation"
+            ]
+          }
+        },
+        "required": [
+          "stage"
+        ]
       }
     },
     "operandReads": {

@@ -1,0 +1,29 @@
+{
+  "version": "weft.security.execution-stage.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "e1230034d0164aa60e65e3c36533e1c39758ca27",
+  "securityReady": false,
+  "checks": {
+    "integration": 26,
+    "graph": 6,
+    "module_controls": 16,
+    "controlled_pg18_6": 11
+  },
+  "qualification": "Original check-stage declaration, exact producer mutation refusal and controlled ordering/inspection parity only",
+  "native_cases_promoted": 0,
+  "remaining": [
+    "genuine host stage enforcement under native cuts",
+    "complete native source/caller/current-authority admission",
+    "arithmetic and result selection",
+    "protected release",
+    "all132 cases"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/security_relational_sql.rs": "b1367eecf06ce03fa0b823dc5fe6af9dbfe3feaed67ff45b950cbaeb55f88192",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "f3073d1fe59da2495f69bf1927c49f265629a6fe98a88414f4145bf13ecd9823",
+    "scripts/check-security-relational-sql-native.py": "f20c5527a9a2fe90b24185c40d5315d8a927675461a03ad20e0f18865c3996cc",
+    "docs/helix/02-design/contracts/security-relational-candidate-v0.2-candidate.schema.json": "98cfdfa0819b863987cd9b75ca4cf992af38dca2e09c26ec940820e07fd2e297",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "1572f37fe77952838c2ba50e49f79b1b63bf967cbe0bf7d7ca73b7a198af9e2c",
+    "docs/helix/04-build/implementation-plan.md": "fe874d32d5b9a88750b2836ece67d34ce289a8639a5150bef627415fa7fb1432"
+  }
+}
