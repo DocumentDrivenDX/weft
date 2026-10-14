@@ -1,0 +1,1944 @@
+{
+  "originalCasePlanSha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+  "requiredCases": 132,
+  "cases": [
+    {
+      "id": "S01",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Resolve Staff/Project/Ownership/Assignment and require active Assignment to same owning Project.",
+      "assertionIds": [
+        "S01"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S01"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S02",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Same labels in different documents never join; exact typed keys and Unicode remain distinct.",
+      "assertionIds": [
+        "S02"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S02"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S03",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Reject wrong endpoint role, undeclared action, boolean/string comparison, unknown operator and depth/node excess.",
+      "assertionIds": [
+        "S03"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S03"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S04",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Broad read permit plus false mandatory membership denies; forbid dominates all permits; rule permutation agrees.",
+      "assertionIds": [
+        "S04"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S04"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S05",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Active same-Project allows; inactive, missing, sibling Client/Project denies; any/all and ownerless behavior explicit.",
+      "assertionIds": [
+        "S05"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S05"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S06",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Missing/ambiguous subject, incomplete assignment inventory, stale cut or untrusted attribute refuses entire collection.",
+      "assertionIds": [
+        "S06"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S06"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S07",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Null, absence, withheld, constant transform and output type survive encoding; false permits add no obligations; absent protected disposition refuses.",
+      "assertionIds": [
+        "S07"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S07"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S08",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Predicate/order/group/join/aggregate uses disclosed representation or explicit original-use action; withheld use refuses.",
+      "assertionIds": [
+        "S08"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S08"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S09",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Preserve unknown rules and native source byte content where promised; unknown security meaning blocks interpretation.",
+      "assertionIds": [
+        "S09"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S09"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S10",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Same policy/facts/diagnostics and refusal outcomes in Bun and Chromium, no host globals or external requests.",
+      "assertionIds": [
+        "S10",
+        "S10:disclosure"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tools/security/browser.ts"
+      ],
+      "testSource": "tools/security/browser.ts",
+      "oracleSource": "tests/security/browser-corpus.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S11",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Generate corrupted references/types/unknown members; no fabricated trusted issuer or stale classification admits.",
+      "assertionIds": [
+        "S11"
+      ],
+      "status": "implemented",
+      "command": [
+        "bun",
+        "tests/security/acceptance-case.ts",
+        "S11"
+      ],
+      "testSource": "tests/security/acceptance-case.ts",
+      "oracleSource": "tests/security/acceptance-oracle.ts",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "S12",
+      "backend": "semantic",
+      "required": true,
+      "assertion": "Retain SAT weakened controls and UNSAT scoped safety checks; assumptions have positive witnesses.",
+      "assertionIds": [
+        "S12"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/formal-acceptance.py"
+      ],
+      "testSource": "tests/security/formal-acceptance.py",
+      "oracleSource": "tests/security/formal-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/acceptance.json"
+    },
+    {
+      "id": "pg-raw.B01",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "assertionIds": [
+        "pg-raw.B01"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B01.json"
+    },
+    {
+      "id": "pg-raw.B02",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "assertionIds": [
+        "pg-raw.B02"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B02.json"
+    },
+    {
+      "id": "pg-raw.B03",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "assertionIds": [
+        "pg-raw.B03"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B03.json"
+    },
+    {
+      "id": "pg-raw.B04",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "assertionIds": [
+        "pg-raw.B04"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B04.json"
+    },
+    {
+      "id": "pg-raw.B05",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "assertionIds": [
+        "pg-raw.B05"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B05.json"
+    },
+    {
+      "id": "pg-raw.B06",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "assertionIds": [
+        "pg-raw.B06"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B06.json"
+    },
+    {
+      "id": "pg-raw.B07",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "assertionIds": [
+        "pg-raw.B07"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B07.json"
+    },
+    {
+      "id": "pg-raw.B08",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "assertionIds": [
+        "pg-raw.B08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.B09",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "assertionIds": [
+        "pg-raw.B09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.B10",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "assertionIds": [
+        "pg-raw.B10"
+      ],
+      "status": "counterexample-found",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": "docs/helix/04-build/evidence/security/pg-private-diagnostics.json"
+    },
+    {
+      "id": "pg-raw.B11",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "assertionIds": [
+        "pg-raw.B11"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B11.json"
+    },
+    {
+      "id": "pg-raw.B12",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "assertionIds": [
+        "pg-raw.B12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.B13",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "assertionIds": [
+        "pg-raw.B13"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-identity-probe.py"
+      ],
+      "testSource": "tools/security/pg-raw-identity-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-identity-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B13.json"
+    },
+    {
+      "id": "pg-raw.B14",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "assertionIds": [
+        "pg-raw.B14"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B14.json"
+    },
+    {
+      "id": "pg-raw.B15",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "assertionIds": [
+        "pg-raw.B15"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-membership.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-membership.py",
+      "oracleSource": "tests/security/native/pg-raw-membership-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B15.json"
+    },
+    {
+      "id": "pg-raw.B16",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "assertionIds": [
+        "pg-raw.B16"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tests/security/native/pg-raw-scale.py"
+      ],
+      "testSource": "tests/security/native/pg-raw-scale.py",
+      "oracleSource": "tests/security/native/pg-raw-scale-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-B16.json"
+    },
+    {
+      "id": "pg-raw.L01",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "assertionIds": [
+        "pg-raw.L01"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-write-probe.py"
+      ],
+      "testSource": "tools/security/pg-raw-write-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-write-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L01.json"
+    },
+    {
+      "id": "pg-raw.L02",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "assertionIds": [
+        "pg-raw.L02"
+      ],
+      "status": "implemented",
+      "command": [
+        "python3",
+        "tools/security/pg-raw-field-write-probe.py"
+      ],
+      "testSource": "tools/security/pg-raw-field-write-probe.py",
+      "oracleSource": "tests/security/native/pg-raw-field-write-oracle.json",
+      "evidence": "docs/helix/04-build/evidence/security/pg-raw-L02.json"
+    },
+    {
+      "id": "pg-raw.L03",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "assertionIds": [
+        "pg-raw.L03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L04",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "assertionIds": [
+        "pg-raw.L04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L05",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "assertionIds": [
+        "pg-raw.L05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L06",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "assertionIds": [
+        "pg-raw.L06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L07",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "assertionIds": [
+        "pg-raw.L07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L08",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "assertionIds": [
+        "pg-raw.L08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L09",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "assertionIds": [
+        "pg-raw.L09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L10",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "assertionIds": [
+        "pg-raw.L10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L11",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "assertionIds": [
+        "pg-raw.L11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L12",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "assertionIds": [
+        "pg-raw.L12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L13",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "assertionIds": [
+        "pg-raw.L13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "pg-raw.L14",
+      "backend": "pg-raw",
+      "required": true,
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "assertionIds": [
+        "pg-raw.L14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B01",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "assertionIds": [
+        "truss.B01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B02",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "assertionIds": [
+        "truss.B02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B03",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "assertionIds": [
+        "truss.B03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B04",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "assertionIds": [
+        "truss.B04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B05",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "assertionIds": [
+        "truss.B05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B06",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "assertionIds": [
+        "truss.B06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B07",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "assertionIds": [
+        "truss.B07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B08",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "assertionIds": [
+        "truss.B08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B09",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "assertionIds": [
+        "truss.B09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B10",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "assertionIds": [
+        "truss.B10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B11",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "assertionIds": [
+        "truss.B11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B12",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "assertionIds": [
+        "truss.B12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B13",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "assertionIds": [
+        "truss.B13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B14",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "assertionIds": [
+        "truss.B14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B15",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "assertionIds": [
+        "truss.B15"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.B16",
+      "backend": "truss",
+      "required": true,
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "assertionIds": [
+        "truss.B16"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L01",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "assertionIds": [
+        "truss.L01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L02",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "assertionIds": [
+        "truss.L02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L03",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "assertionIds": [
+        "truss.L03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L04",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "assertionIds": [
+        "truss.L04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L05",
+      "backend": "truss",
+      "required": true,
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "assertionIds": [
+        "truss.L05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L06",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "assertionIds": [
+        "truss.L06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L07",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "assertionIds": [
+        "truss.L07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L08",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "assertionIds": [
+        "truss.L08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L09",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "assertionIds": [
+        "truss.L09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L10",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "assertionIds": [
+        "truss.L10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L11",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "assertionIds": [
+        "truss.L11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L12",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "assertionIds": [
+        "truss.L12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L13",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "assertionIds": [
+        "truss.L13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "truss.L14",
+      "backend": "truss",
+      "required": true,
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "assertionIds": [
+        "truss.L14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B01",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "assertionIds": [
+        "delta-raw.B01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B02",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "assertionIds": [
+        "delta-raw.B02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B03",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "assertionIds": [
+        "delta-raw.B03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B04",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "assertionIds": [
+        "delta-raw.B04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B05",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "assertionIds": [
+        "delta-raw.B05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B06",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "assertionIds": [
+        "delta-raw.B06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B07",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "assertionIds": [
+        "delta-raw.B07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B08",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "assertionIds": [
+        "delta-raw.B08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B09",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "assertionIds": [
+        "delta-raw.B09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B10",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "assertionIds": [
+        "delta-raw.B10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B11",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "assertionIds": [
+        "delta-raw.B11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B12",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "assertionIds": [
+        "delta-raw.B12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B13",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "assertionIds": [
+        "delta-raw.B13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B14",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "assertionIds": [
+        "delta-raw.B14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B15",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "assertionIds": [
+        "delta-raw.B15"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.B16",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "assertionIds": [
+        "delta-raw.B16"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L01",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "assertionIds": [
+        "delta-raw.L01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L02",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "assertionIds": [
+        "delta-raw.L02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L03",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "assertionIds": [
+        "delta-raw.L03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L04",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "assertionIds": [
+        "delta-raw.L04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L05",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "assertionIds": [
+        "delta-raw.L05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L06",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "assertionIds": [
+        "delta-raw.L06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L07",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "assertionIds": [
+        "delta-raw.L07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L08",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "assertionIds": [
+        "delta-raw.L08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L09",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "assertionIds": [
+        "delta-raw.L09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L10",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "assertionIds": [
+        "delta-raw.L10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L11",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "assertionIds": [
+        "delta-raw.L11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L12",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "assertionIds": [
+        "delta-raw.L12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L13",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "assertionIds": [
+        "delta-raw.L13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "delta-raw.L14",
+      "backend": "delta-raw",
+      "required": true,
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "assertionIds": [
+        "delta-raw.L14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B01",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Selected native ordinary identity sees exact oracle resource IDs; active/inactive/sibling/no-owner cases.",
+      "assertionIds": [
+        "ashlar.B01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B02",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Junction row/typed edge identity and endpoint direction bind faithfully; reversed/wrong-type endpoints refuse.",
+      "assertionIds": [
+        "ashlar.B02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B03",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Lookup/list/count/aggregate/traversal/page all follow eligibility, including all-hidden and empty authorized sets.",
+      "assertionIds": [
+        "ashlar.B03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B04",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Direct tables, child homes, property bags, raw retained bytes, files and alternate query endpoints cannot bypass admitted policy.",
+      "assertionIds": [
+        "ashlar.B04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B05",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Ordinary identity cannot inherit/SET/adopt owner, bypass or internal roles; pool role resets between transactions.",
+      "assertionIds": [
+        "ashlar.B05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B06",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Overloads, search path, temporary objects, wrapper calls and routine PUBLIC grants cannot enlarge ordinary authority.",
+      "assertionIds": [
+        "ashlar.B06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B07",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Original null, absence, redaction and transform differ; forbidden property never escapes bag/retained carrier.",
+      "assertionIds": [
+        "ashlar.B07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B08",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Filter/sort/group/join/aggregate on protected properties follow disclosed/original-authorized/prohibited modes. Raw access requires the profile-bound exact separate action; caller-selected unrelated actions, changed bindings, empty prohibited selections and incomplete original-action dependencies refuse before execution.",
+      "assertionIds": [
+        "ashlar.B08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B09",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Unsupported path/mask/history/composition cannot install report-mode weakening; prior protected profile remains.",
+      "assertionIds": [
+        "ashlar.B09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B10",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Authorization can consult hidden Assignment facts; ordinary direct/list/count/diagnostic paths disclose none.",
+      "assertionIds": [
+        "ashlar.B10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B11",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Change owner/grant/membership/routine/policy/column mapping after qualification; admission detects and refuses.",
+      "assertionIds": [
+        "ashlar.B11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B12",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Pin exact engine/build/model/policy/mapping/source/actual-role and per-case outcomes; missing or fabricated receipt refuses.",
+      "assertionIds": [
+        "ashlar.B12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B13",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Same labels, hash collisions, quoted case, Unicode and composite keys cannot mix ownership or subjects.",
+      "assertionIds": [
+        "ashlar.B13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B14",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Excluded admin actually bypasses ordinary protection; ordinary identities cannot reach that authority.",
+      "assertionIds": [
+        "ashlar.B14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B15",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Corrupt one required authority dependency; no silent partial rows/counts/page or success receipt.",
+      "assertionIds": [
+        "ashlar.B15"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.B16",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "At 1k/100k/1M records retain plans/overhead and finite timeout refusal, with no unauthorized partial output.",
+      "assertionIds": [
+        "ashlar.B16"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L01",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Create/delete/update and ownership-change action compare original/proposed state; failed checks leave no effects.",
+      "assertionIds": [
+        "ashlar.L01"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L02",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Updating forbidden field or policy attribute fails even where object write is permitted; plain SQL path cannot bypass.",
+      "assertionIds": [
+        "ashlar.L02"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L03",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Hold admitted operation at final release; revoker blocks until drain and acknowledges only after release.",
+      "assertionIds": [
+        "ashlar.L03"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L04",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Revoke after first streamed page/row; profile either holds admitted guard through last release or refuses streaming before output.",
+      "assertionIds": [
+        "ashlar.L04"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L05",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "After assignment/grant removal acknowledges, a newly admitted read returns no revoked resources.",
+      "assertionIds": [
+        "ashlar.L05"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L06",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Begin repeatable-read before revoke, attempt first protected read after acknowledgment; restart/refuse old authority facts.",
+      "assertionIds": [
+        "ashlar.L06"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L07",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Historical owner differs from current owner or key reused; current assignment with retained original owner alone governs.",
+      "assertionIds": [
+        "ashlar.L07"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L08",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Admit actual historical read only under proved native policy/compute/table profile; incompatible historical column fails closed.",
+      "assertionIds": [
+        "ashlar.L08"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L09",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Change caller/query/policy/assignment/mapping/data cut; old cursor or cache token cannot bypass fresh admission.",
+      "assertionIds": [
+        "ashlar.L09"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L10",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Serving copies, journals, tombstones, provenance, exports and feed checkpoints preserve declared policy and completeness.",
+      "assertionIds": [
+        "ashlar.L10"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L11",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Delete retained owner or make guard/fact provider unavailable; refuse without hidden counts or effects.",
+      "assertionIds": [
+        "ashlar.L11"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L12",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Fail policy/mapping migration midway; prior protection survives, and downgrade never broadens ordinary access.",
+      "assertionIds": [
+        "ashlar.L12"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L13",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Assignment activation, role changes, subject remap and relevant attributes advance authority and invalidate stale decisions.",
+      "assertionIds": [
+        "ashlar.L13"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    },
+    {
+      "id": "ashlar.L14",
+      "backend": "ashlar",
+      "required": true,
+      "assertion": "Trusted clock crosses assignment expiry during operation; lease/coordination profile preserves declared cut or refuses.",
+      "assertionIds": [
+        "ashlar.L14"
+      ],
+      "status": "not-run",
+      "command": null,
+      "testSource": null,
+      "oracleSource": null,
+      "evidence": null
+    }
+  ],
+  "nativeCasesPromoted": 0
+}

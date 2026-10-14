@@ -1560,3 +1560,12 @@ Eleven PostgreSQL18.6 controlled probes now include optional original/disclosed 
 ### B-008 explicit native check ordering — 2026-10-14
 
 The original relational handoff now distinguishes initial integrity/Subject/query-use checks from post-operand-validation group checks. Its schema requires closed stage values, exact producer inspection rejects changed stages, and the controlled runner follows them explicitly. Thirty-two targeted compiler/graph tests and eleven controlled native SQL/inspection probes pass. Evidence: `evidence/security-execution-stages-20261014/`. The genuine Truss0.2 host is updating ordering under its existing native cuts; direct0.1 remains intact. Native admission/release, full arithmetic and all132 cases remain open.
+
+
+### B-008 original132-case coverage audit — 2026-10-14
+
+The original UMF case plan still requires12 shared semantic cases and30 each for pg-raw, Truss, delta-raw and Ashlar. Current allocation labels: shared12 implemented; pg-raw14 implemented,15 not-run and B10 counterexample-found; Truss/Delta/Ashlar30 each not-run. Allocation labels are not fresh native passes. All original IDs, assertions and procedure/evidence fields are retained in `evidence/security-original-case-audit-20261014/`, with exact original case-plan SHA/bytes.
+
+All12 original shared commands were freshly replayed in an exact-source copied snapshot, with assertion IDs, observations, original source hashes and before/after custody checks. Chromium required a local-only server outside the restricted sandbox; S12 used the existing Z3 4.15.4 interpreter. Original owner sources remained unchanged. This qualifies original shared reference semantics and conditional proof, not Weft's compiled/native product acceptance. No case plan/ledger status or native acceptance entry is promoted.
+
+The recorded pg-raw.B10 counterexample concerns ordinary private-fact diagnostic observation and needs a qualified closure, not removal from scope. Recent Truss genuine source/Subject/filter/count/group/stage/publication controls contribute evidence but do not establish every original assertion (for example all collection operations, roles/pools and lifecycle paths). The native owner confirms no Truss promotions. Next allocate/replay exact complete native assertions, preserve distinct source/current-authority/release boundaries, and obtain the dedicated Databricks endpoint/scoped-caller decision for both Delta and Ashlar lanes. All132 remain the completion gate.
