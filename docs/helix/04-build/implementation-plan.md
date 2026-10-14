@@ -1538,3 +1538,10 @@ This closes value-correspondence plumbing, not native capture completeness/authe
 The separate0.2 candidate/result transport now preserves original source/query/parameter/operand/result lineage, regenerates exact producer bytes and checks complete supplied cells. Twenty-two integration tests, six graph regressions, private-constructor and module checks, plus12 actual CLI controls qualify original correspondence only. Evidence: `evidence/security-relational-transport-20261014/`.
 
 Next integrate this exact protocol with genuine native source/Subject/current-authority admission, complete operand capture and native codec qualification. Preserve the existing direct dispatcher until the separate relational path is qualified; do not promote supplied hashes/cells into credentials. All132 shared/native cases, backend parity and public security activation remain required.
+
+
+### B-008 PostgreSQL codec value checks — 2026-10-14
+
+Original parameter and supplied operand values now have separate PostgreSQL18.6 raw-cast correspondence checks. Exact numeric precision/scale/exponent boundaries and NUL refusal preserve original model meaning; valid model integers beyond native storage refuse as unsupported codec values rather than being redefined. Tests distinguish model-domain admission from native value representation. Ten isolated PostgreSQL type probes confirm boundaries; evidence under `evidence/security-pg-codecs-20261014/`.
+
+Native dispatcher integration must check actual target/session settings, run parameter checks before anchors/capture, check genuinely complete operand captures before evaluation and preserve current source/Subject/authority cuts through release. Aggregate arithmetic/output-range qualification and all132 cases remain open.
