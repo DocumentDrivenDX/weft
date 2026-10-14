@@ -3,7 +3,7 @@ use serde_json::{Value,json};
 use weft_core::{error::{Diagnostic,Result},security_backend::SecurityBackendContext,security_lowering::SecurityResultContract,security_ontology::{SecurityRef,SecurityOntologyClosure}};
 use crate::security_graph_binding::{GraphBinding,GraphSource};
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-GRAPH-QUERY","capability","Original direct graph projection required")}
-fn column(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value,position:usize)->Result<weft_core::security_lowering::SecurityResultColumn> {
+pub(crate) fn column(input:&serde_json::Value,output:&serde_json::Value,probe:&serde_json::Value,position:usize)->Result<weft_core::security_lowering::SecurityResultColumn> {
  use weft_core::security_lowering::*;
  let object=probe.as_object().ok_or_else(fail)?;
  if object.len()!=3||object.keys().any(|k|!matches!(k.as_str(),"target"|"field"|"outputName")){return Err(fail());}

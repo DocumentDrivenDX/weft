@@ -122,6 +122,12 @@ pub(crate) fn issue(
     types: &[Value],
     native_type_id: i64,
 ) -> Result<GraphParameterBindings> {
+    issue_channels(ctx, paths, parameters, types, native_type_id, false)
+}
+pub(crate) fn issue_channels(
+    ctx: &SecurityBackendContext<'_>, paths: &[String], parameters: &[Value],
+    types: &[Value], native_type_id: i64, include_query: bool,
+) -> Result<GraphParameterBindings> {
     if parameters.len() != paths.len()
         || parameters.len() != types.len()
         || parameters.len() > 1024
@@ -131,9 +137,9 @@ pub(crate) fn issue(
     }
     let inventory = ctx.parameter_sources()?;
     inventory.require_context(ctx)?;
-    // This candidate still refuses query operations; no query slot can be dropped
-    // or mislabeled as a policy or authenticated subject parameter.
-    if !inventory.query_values().is_empty() {
+    // Legacy issue() still refuses every query value. The separate relational
+    // issuer must retain all of them in its own original query channel.
+    if !include_query && !inventory.query_values().is_empty() {
         return Err(fail());
     }
     let mut sources = std::collections::BTreeMap::new();

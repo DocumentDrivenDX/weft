@@ -1,0 +1,44 @@
+{
+  "version": "weft.security.relational-parameter.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "10567089bbb3409865f62e84a78eaafa07438b71",
+  "composedParent": "47ed3c33abee3f6be11032ff3792fdc9f2528bd0",
+  "securityReady": false,
+  "scope": "Original borrowed query/value/type/occurrence channel correspondence, not native codecs or SQL execution",
+  "checks": {
+    "guarded_and_aggregate_and_parameter_tests": 13,
+    "graph_tests": 6,
+    "legacy_policy_binding_units": 2,
+    "privacy_compile_fail": 1,
+    "module_controls": 16,
+    "governed_schemas": 67
+  },
+  "controls": [
+    "repeated named values retain distinct occurrences",
+    "SQL punctuation remains original bound value",
+    "policy values and unvalued Subject remain separate",
+    "both scanned filter occurrences after field-equality JOIN",
+    "keyset values retain order",
+    "COUNT has no fabricated query values",
+    "foreign source/context refuses",
+    "legacy direct producer still refuses operations"
+  ],
+  "native_cases_promoted": 0,
+  "remaining": [
+    "actual relational SQL lowering and ordinal usage",
+    "pre-operator native guards and operand validation",
+    "native arithmetic/cell selection",
+    "genuine source/Subject/current authority",
+    "all 132 cases",
+    "Databricks endpoint/scoped caller decision"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/lib.rs": "d83090244addde99018d2a1f366d841fff7c39a3c8156531b7e38d3af9cb7db8",
+    "crates/weft-postgresql/src/security_graph_parameters.rs": "0039481fcee5b2cdf31ce4dac052eeac7abf2248760d6d2d5e4b15cef4f144ad",
+    "crates/weft-postgresql/src/security_relational_parameters.rs": "efd0254d9d4a53bc74a981d0c4405228f33dac96b819c19921df52ab406820ab",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "78a6d2912a84d1af2742845375d73e4cdbd4d469cbe0154c1b8f421d3ce5f555",
+    "docs/helix/02-design/module-boundaries.json": "1b68b6ea84e2b28550d81f87b0ecc358e90855e38852f34033e74c44a074ae72",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "d2a13b3a1b25b8db4fff1b1a594f8074037547da3b55ce3dd71b6eed56ab727f",
+    "docs/helix/04-build/implementation-plan.md": "f9065f64596299d4fef0e7232dd64fbd5622ec80b0ead74acd6bf28eed718ffd"
+  }
+}

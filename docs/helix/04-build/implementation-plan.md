@@ -1512,3 +1512,15 @@ The PostgreSQL candidate now derives original per-scan guards for all five query
 A separate computed-result candidate now checks original resolved COUNT/SUM domain and argument lineage, exact tokens, COUNT nonnegativity and SUM empty/grouped null semantics. Original result/registration APIs continue to reject its versions. Compiler tests cover changed lineage/facets, incorrect wrappers, negative/null counts and grouped-null sums; direct projection stays on its existing contract. Evidence is retained under `evidence/security-aggregate-results-20261014/`. Relational lowering, native arithmetic/input authorization and the full132-case acceptance suite remain open.
 
 Read-only approved Databricks inventory confirms configured aidev-cus access and an existing private Ashlar development catalog. Historical evidence qualifies ordinary development custody, not scoped end-user security. The sole visible data-gateway warehouse needs a user decision because Ashlar's plan excludes shared/default compute; no SQL, compute configuration or grants were changed during inventory.
+
+
+### B-008 relational parameter increment — 2026-10-14
+
+The next relational graph path now retains all original query values separately after policy and unvalued Subject slots, with actual occurrence paths and borrowed owner types/values. Tests cover repeated named values containing SQL punctuation, both scanned filter occurrences after a field-equality join, keyset order, field-free COUNT, foreign source/context refusal and retained legacy rejection. Native codecs, SQL lowering/ordinal use, actual guard evaluation, arithmetic and the full132-case acceptance suite remain required. Evidence: `evidence/security-relational-parameters-20261014/`.
+
+
+### B-008 relational SQL increment — 2026-10-14
+
+The separate immutable SQL candidate now emits the actual relational stages with original parameter/guard/result lineage and explicit operand-validation demands. Grouped disclosure/order consistency and absence-aware grouping prevent arbitrary representative selection or silent absence/null merging. Eighteen compiler integration tests plus six graph regressions qualify declaration correspondence. Seven controlled PostgreSQL18.6 probes qualify selected SQL behavior on a partial synthetic layout; their excluded administrator and missing source/actor/authority admission are recorded, with no native case promotion. Evidence: `evidence/security-relational-sql-20261014/`.
+
+Next: issue and verify original native operand/presence/codec evidence, define a separate guarded relational transport/result inspection, integrate with genuine source/Subject/current-authority dispatch, and expand native parity/refusal coverage across all132 original cases. Registered security activation and the full backend matrix remain open.
