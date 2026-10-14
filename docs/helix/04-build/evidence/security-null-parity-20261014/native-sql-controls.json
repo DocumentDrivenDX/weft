@@ -1,0 +1,394 @@
+{
+  "version": "weft.relational.sql-controlled-probe/0.1",
+  "engine": "postgres (PostgreSQL) 18.6 (Homebrew)",
+  "securityReady": false,
+  "qualification": "Excluded administrator, partial synthetic graph layout, original scalar helper bodies; no installed source/caller/current-authority or guarded release proof; no native acceptance case promotion",
+  "helperSha256": "03fd6a50ed7676e855959fb80887a8c733f3965b5958fda632967e3b961d244c",
+  "binarySha256": "4b5bfdd1834bb47f0b38803d52f2f5b05487dc72e6e9f62ed84cb395242ef46f",
+  "durationSeconds": 9.944,
+  "controls": [
+    {
+      "case": "count",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "3"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "988ddc6eb651796108daa0ef79a5a6b245cc07db30be1938655aba646c50d867",
+        "contextSha256": "1e6b22db706d27fb4c271869f2b6801522ed669b4d790be4eee769387631e094",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "d8fa7c9609c222d81a73107101aaece041d143c822af26b869b65975a25f3b63",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "988ddc6eb651796108daa0ef79a5a6b245cc07db30be1938655aba646c50d867",
+        "operandCounts": {
+          "s0": 3
+        },
+        "queryContextSha256": "1e6b22db706d27fb4c271869f2b6801522ed669b4d790be4eee769387631e094",
+        "securityReady": false,
+        "sourceContextSha256": "c3db8b8d922f424a1cb3a07c283203b5522afff84f833ad11b38f4610a3301b5",
+        "sourceOutputSha256": "0a657132ea673b4643bce9f87b61c7b828c4f3515ef2db198a0861162a114511",
+        "sourceRequestSha256": "b4f0a418e02de8d8db43bff074cc5e89a8c3e570069af5d35fc1abeb654506dd",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "sum",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "5a617d281f4473006d3e8b495cb0a34c4056c08d6d5752e748447547619cd245",
+        "contextSha256": "ad2c7b085e5810d5257988389c0c83c3ad85c8e99f431714bb9caeb1784a31be",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "7c6b2af2d90bff92a93a9a833f2cff1e30902fad9bb976250b369aca79f701a0",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "5a617d281f4473006d3e8b495cb0a34c4056c08d6d5752e748447547619cd245",
+        "operandCounts": {
+          "s0": 3
+        },
+        "queryContextSha256": "ad2c7b085e5810d5257988389c0c83c3ad85c8e99f431714bb9caeb1784a31be",
+        "securityReady": false,
+        "sourceContextSha256": "ca484e84945f7464655080df6d1381d023507cf90cc832aa749d196dd82ce5a9",
+        "sourceOutputSha256": "f6d3514f9c501ba69f998d0d06fd6b52e3d05d6aff08aa7093bd0f3dbc53e85d",
+        "sourceRequestSha256": "3b13d6c21d26a8650607618b22c1c2ec18bf88c80e84203c5d737eacd02d1c15",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "all-operators",
+      "rows": [
+        [
+          {
+            "outcomeId": "withheld",
+            "disposition": "withheld"
+          },
+          {
+            "value": {
+              "integerToken": "400"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          },
+          {
+            "value": {
+              "integerToken": "4"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 8,
+      "operandCheck": {
+        "batchSha256": "688a5f59926dd1821e0731bc1da33176741ce024a3efcc648ae9bdd022128a4b",
+        "contextSha256": "a28f900a861f1c4199b6024d6cc971f6a3f10a0eb3b665aa6d697beba982a5ee",
+        "counts": {
+          "s0": 3,
+          "s1": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "ca33e27eea424e4ca4cda739ebb4194448da7c44bcc52fd4c7d114146cee8c29",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "688a5f59926dd1821e0731bc1da33176741ce024a3efcc648ae9bdd022128a4b",
+        "operandCounts": {
+          "s0": 3,
+          "s1": 3
+        },
+        "queryContextSha256": "a28f900a861f1c4199b6024d6cc971f6a3f10a0eb3b665aa6d697beba982a5ee",
+        "securityReady": false,
+        "sourceContextSha256": "ca484e84945f7464655080df6d1381d023507cf90cc832aa749d196dd82ce5a9",
+        "sourceOutputSha256": "c34e7b233c767859bd0199a8b5d4351ae2e5fc174ba7b005c8bee26cdd735fe3",
+        "sourceRequestSha256": "8357da66eeaa9aa372c2776acdce71af33dceb13da0fa9dddf5f173b0c3fdec4",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "keyset",
+      "rows": [
+        [
+          {
+            "value": {
+              "string": "RB"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "2e649864b39ddeb41e98106fc8bd3632a507a3904510bb5f6d875b2154f9104b",
+        "contextSha256": "03c9242b6846b0562539d5651b2f2b4b4627d071008d19224f732771ff6018b0",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "5fbb627e6d1bfd5891b4034b3d1e50206619af11ad0995064ba59b6fe1bb8963",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "2e649864b39ddeb41e98106fc8bd3632a507a3904510bb5f6d875b2154f9104b",
+        "operandCounts": {
+          "s0": 3
+        },
+        "queryContextSha256": "03c9242b6846b0562539d5651b2f2b4b4627d071008d19224f732771ff6018b0",
+        "securityReady": false,
+        "sourceContextSha256": "c3db8b8d922f424a1cb3a07c283203b5522afff84f833ad11b38f4610a3301b5",
+        "sourceOutputSha256": "53d170f1e1f8355473e2bc9c70702ed5ca1a2cd5306c55435a9b3dc557b0e6d2",
+        "sourceRequestSha256": "fc39732f56449fab7a35d84df24f91489ba578c2782db4d436ba4992861a43c2",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "named-value",
+      "rows": [],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "a3709fbd234345d6a75cf36fba066b937fed37c997280186003e6c587ef91e30",
+        "contextSha256": "4a6fb5eeb15844216ceb15ec76bf0d10e41a7500a71659c699918e7c05847546",
+        "counts": {
+          "s0": 3
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "ad59eda506bc4c5a1ef5bf569db8540240c584ba80daebfbf109c46b5d9a7ef4",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "a3709fbd234345d6a75cf36fba066b937fed37c997280186003e6c587ef91e30",
+        "operandCounts": {
+          "s0": 3
+        },
+        "queryContextSha256": "4a6fb5eeb15844216ceb15ec76bf0d10e41a7500a71659c699918e7c05847546",
+        "securityReady": false,
+        "sourceContextSha256": "c3db8b8d922f424a1cb3a07c283203b5522afff84f833ad11b38f4610a3301b5",
+        "sourceOutputSha256": "307c527a1f532d218baaff6b07c4fbe6d6b87aa92d80555649a8cce80b0ece29",
+        "sourceRequestSha256": "56427eb4c3b43467ff641d5ab2ea660a67771b60a701a78302a87ee78b7d3ae9",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "withheld-before-empty-filter",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "case": "missing-original-grant",
+      "refusedBeforeExecution": true,
+      "violations": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3
+      ]
+    },
+    {
+      "case": "invalid-later-operand-before-empty-filter",
+      "refusedBeforeExecution": true,
+      "phase": "original_operand_values",
+      "diagnostic": {
+        "code": "WFT-SECURITY-LOWERING-UNSUPPORTED",
+        "severity": "error",
+        "message": "Security result declaration correspondence refused",
+        "phase": "capability"
+      }
+    },
+    {
+      "case": "nullable-grouped-sum-original",
+      "rows": [
+        [
+          {
+            "value": {
+              "string": "RA"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          },
+          {
+            "value": null,
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ],
+        [
+          {
+            "value": {
+              "string": "RB"
+            },
+            "outcomeId": "original",
+            "disposition": "original"
+          },
+          {
+            "value": null,
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 7,
+      "operandCheck": {
+        "batchSha256": "faa61b21adb0f8d9350326acb11ff8e283211f075ac0abb308bb258fb63c4999",
+        "contextSha256": "6910ad1809dc48845a074f68e868a7fd90d11b2f3006bb979a9e939a14295c35",
+        "counts": {
+          "s0": 2
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "6aab41e454236f2d1a4b5b46509e902a750523058076d0832aeb7b1d660b55f5",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "faa61b21adb0f8d9350326acb11ff8e283211f075ac0abb308bb258fb63c4999",
+        "operandCounts": {
+          "s0": 2
+        },
+        "queryContextSha256": "6910ad1809dc48845a074f68e868a7fd90d11b2f3006bb979a9e939a14295c35",
+        "securityReady": false,
+        "sourceContextSha256": "ccf599a3df09d1420574f697d35b2eb9183e52beca0fd8a3d919bd9b04cc10ba",
+        "sourceOutputSha256": "01a5f6e91e1d1cfb58965ea6b0690a81e1b2b352abc59cbffa3d162f878b69ca",
+        "sourceRequestSha256": "39b97fd9c6f4c863d77a0728d4ed4cca9bb705ceefe5ff929cd0e3f604f17184",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "absence-null-distinct-group-keys",
+      "rows": [
+        [
+          {
+            "value": {
+              "integerToken": "1"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ],
+        [
+          {
+            "value": {
+              "integerToken": "1"
+            },
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "8b35b1708848c33364bb61536ef552d72a025cb6cbe368ff2a8d2c7946136b9c",
+        "contextSha256": "323c9f536836db017dd9700c8ed8136cca1596ed4921482bb340d8b528a367f1",
+        "counts": {
+          "s0": 2
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "f3beb805f5ae7aa76dacaed31d4a8efbb83e58da6422ec2ad7d4285d46a7e561",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "8b35b1708848c33364bb61536ef552d72a025cb6cbe368ff2a8d2c7946136b9c",
+        "operandCounts": {
+          "s0": 2
+        },
+        "queryContextSha256": "323c9f536836db017dd9700c8ed8136cca1596ed4921482bb340d8b528a367f1",
+        "securityReady": false,
+        "sourceContextSha256": "ccf599a3df09d1420574f697d35b2eb9183e52beca0fd8a3d919bd9b04cc10ba",
+        "sourceOutputSha256": "cd06d09aa7a383c54d6e50078771be4c6e95a876074b6f03b19f68386a45bb4f",
+        "sourceRequestSha256": "b0b56edf7d822151f8b4f8bf43b7cd43c9e3bb54920298ac6a938428c89ac287",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    },
+    {
+      "case": "nullable-disclosed-grouped-sum",
+      "rows": [
+        [
+          {
+            "value": null,
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ],
+        [
+          {
+            "value": null,
+            "outcomeId": "computed",
+            "disposition": "computed"
+          }
+        ]
+      ],
+      "guards": 6,
+      "operandCheck": {
+        "batchSha256": "de9b5d7423e5ebd45e43b44df86b0d94ef60638ba2e3a47ad94e0911d17e47d0",
+        "contextSha256": "87327df2f958d024e565f60722548711d3980391168d24f76a2f97458cf69a3b",
+        "counts": {
+          "s0": 2
+        },
+        "securityReady": false,
+        "version": "weft.security.operand-values.inspected/0.1-candidate"
+      },
+      "resultCheck": {
+        "batchSha256": "b1c68b507160e49ed7d38611bd3602168db64c4c7dacd60677dc6e193f1b25b4",
+        "inspected": true,
+        "nativeAdmission": "required",
+        "operandBatchSha256": "de9b5d7423e5ebd45e43b44df86b0d94ef60638ba2e3a47ad94e0911d17e47d0",
+        "operandCounts": {
+          "s0": 2
+        },
+        "queryContextSha256": "87327df2f958d024e565f60722548711d3980391168d24f76a2f97458cf69a3b",
+        "securityReady": false,
+        "sourceContextSha256": "a658431b0cb8df2b6192dd69ddcff5a5dad3029dadca8c28ab6c6166d6120ab9",
+        "sourceOutputSha256": "686334ea9f5f15694d854b5dbe3185c69e451d18b34b4b06e9a52ca4a6f30073",
+        "sourceRequestSha256": "3757bbb6d42f3408100590b03e9f810f9dbb8f5de9636eec3a6a6e8f6c4e0948",
+        "version": "weft.truss.security.relational-result.inspected/0.2-candidate"
+      }
+    }
+  ]
+}

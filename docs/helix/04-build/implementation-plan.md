@@ -1550,3 +1550,8 @@ Native dispatcher integration must check actual target/session settings, run par
 ### B-008 grouped SUM nullability correction — 2026-10-14
 
 The separate aggregate candidate now derives nullable output from actual source availability and selected disclosed null transforms, including nonempty groups whose operands are all null/absent. Required non-null original grouped SUM remains non-null. Security-only optional scalar operator admission keeps original bytes and ordinary subsets intact. Type declaration/emission and cell checking share the owner derivation; copied output objects and narrowed declared nullability refuse. Evidence: `evidence/security-sum-domains-20261014/`. Native optional/null grouping, selected-rule/result arithmetic, current-authority dispatch and all132 required cases remain open.
+
+
+### B-008 controlled null/absence SQL parity — 2026-10-14
+
+Eleven PostgreSQL18.6 controlled probes now include optional original/disclosed grouped-null SUM and missing-versus-present-null grouping. Actual captures and complete query results pass original owner operand/result checking and exact producer correspondence. Evidence: `evidence/security-null-parity-20261014/`. This is controlled SQL/decoding parity on a partial synthetic layout, not native admission/release or132-case promotion. Genuine0.2 dispatcher integration and the full backend acceptance matrix remain open.
