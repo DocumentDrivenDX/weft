@@ -1449,3 +1449,9 @@ Compile/IR/backend026 explicitly select committed UMF exact-instant1.0 without c
 ### Registration-owned Truss rebinding — 2026-10-14
 
 Weft25 adds backend0.4.30/native60 through a separate selection flag, preserving backend29/native59 and inheriting exact timestamp/scalar/container/entity/page semantics. Truss24's seven basic PG18 cases pass, including UMF0.7/0.8 scalar and complete-entity queries after registration, and populated native59 upgrade. Workspace Rust checking and11-package boundaries pass. Astra Ultra approves the mapping. Publication uses the existing five-platform workflow; broader Truss rebinding and Ashlar admission remain separate.
+
+### B-008 compiler-owned lowering preparation — 2026-10-13
+
+A pure exact PostgreSQL18.6 registry dispatch now checks original owner source/profile/semantic selection before one lowering callback and validates the entire returned declaration before retaining it. Immutable checked snapshots retain exact manifest, plan and result-contract bytes/hashes and original context fingerprint. The original public compiler still refuses activation until native mapping/lineage, authenticated caller/source custody and guarded release close. The security chat owns the Truss native admission/release path; Weft owns compiler binding/lineage/dispatch. No existing dirty checkout was reset or overwritten.
+
+The expanded adversarial boundary test passes, and all74 original security admission tests pass with no filtered/ignored cases. Tests distinguish zero-call initial refusals, one-call valid preparation and whole-result refusal for changed slots, result name, capabilities or omitted obligations. These are compiler correspondence tests, not native enforcement or B-008 completion. Full original132-case scope remains open; native typed graph correspondence and public activation remain the next integration gates.
