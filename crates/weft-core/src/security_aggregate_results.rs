@@ -67,13 +67,71 @@ pub fn check_aggregate_result_cells(
         VERSION,
     )
 }
+/// Derive aggregate result nullability from the actual original query and its
+/// selected operand mode. Nullable/absent inputs or null constant disclosures
+/// can make grouped SUM null even when a group contains admitted rows.
+pub fn aggregate_result_type(
+    ctx: &SecurityBackendContext<'_>,
+    output: &Output,
+) -> Result<LogicalType> {
+    require(ctx)?;
+    if !ctx
+        .requirements()
+        .outputs()
+        .iter()
+        .any(|o| std::ptr::eq(o.output(), output))
+    {
+        return Err(fail());
+    }
+    match &output.expression {
+        Expression::Count { logical_type } => Ok(logical_type.clone()),
+        Expression::Sum {
+            argument,
+            logical_type,
+        } => {
+            let field = crate::security_ontology::SecurityRef {
+                document_id: argument.identity.document_id.clone(),
+                module_id: argument.identity.module.clone(),
+                element_id: argument.identity.element.clone(),
+            };
+            let source =
+                crate::security_ontology::locate(ctx.catalog(), &field).map_err(|_| fail())?;
+            let mut result = logical_type.clone();
+            result.nullable |= source["nullability"] == "absent-allowed";
+            let requirement = ctx
+                .requirements()
+                .operators()
+                .iter()
+                .find(|o| {
+                    o.usage().scan == argument.scan
+                        && o.usage().field == field
+                        && o.usage().operator == crate::security_ir::QueryOperator::Aggregate
+                })
+                .ok_or_else(fail)?;
+            if matches!(
+                requirement.mode(),
+                crate::security_requirements::SecurityOperatorMode::Disclosed
+            ) {
+                let scan = ctx
+                    .requirements()
+                    .scans()
+                    .iter()
+                    .find(|s| s.inventory().scan() == argument.scan)
+                    .ok_or_else(fail)?;
+                result.nullable|=ctx.logical_plan().rules().iter().any(|r|r.target==*scan.inventory().target()&&r.effect==crate::security_ir::Effect::Permit&&r.actions.iter().any(|a|a==ctx.requirements().primary_action())&&r.disclosure.iter().any(|(f,d)|f==&field&&matches!(d,crate::security_ir::Disposition::Transformed{literal,..} if literal.is_null())));
+            }
+            Ok(result)
+        }
+        _ => Err(fail()),
+    }
+}
 pub(crate) fn check_column(
     ctx: &SecurityBackendContext<'_>,
     output: &Output,
     column: &SecurityResultColumn,
     budget: &mut Budget,
 ) -> Result<()> {
-    let (t, source) = match &output.expression {
+    let (_t, source) = match &output.expression {
         Expression::Count { logical_type } => (logical_type, None),
         Expression::Sum {
             argument,
@@ -118,10 +176,11 @@ pub(crate) fn check_column(
         return Err(fail());
     };
     budget.text(id)?;
-    if id != "computed" || declared != t {
+    let expected = aggregate_result_type(ctx, output)?;
+    if id != "computed" || declared != &expected {
         return Err(fail());
     }
-    scalar_source(&output.expression, t)?;
+    scalar_source(&output.expression, &expected)?;
     Ok(())
 }
 pub(crate) fn scalar_source(expression: &Expression, t: &LogicalType) -> Result<Value> {

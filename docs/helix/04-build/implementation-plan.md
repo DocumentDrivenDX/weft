@@ -1545,3 +1545,8 @@ Next integrate this exact protocol with genuine native source/Subject/current-au
 Original parameter and supplied operand values now have separate PostgreSQL18.6 raw-cast correspondence checks. Exact numeric precision/scale/exponent boundaries and NUL refusal preserve original model meaning; valid model integers beyond native storage refuse as unsupported codec values rather than being redefined. Tests distinguish model-domain admission from native value representation. Ten isolated PostgreSQL type probes confirm boundaries; evidence under `evidence/security-pg-codecs-20261014/`.
 
 Native dispatcher integration must check actual target/session settings, run parameter checks before anchors/capture, check genuinely complete operand captures before evaluation and preserve current source/Subject/authority cuts through release. Aggregate arithmetic/output-range qualification and all132 cases remain open.
+
+
+### B-008 grouped SUM nullability correction — 2026-10-14
+
+The separate aggregate candidate now derives nullable output from actual source availability and selected disclosed null transforms, including nonempty groups whose operands are all null/absent. Required non-null original grouped SUM remains non-null. Security-only optional scalar operator admission keeps original bytes and ordinary subsets intact. Type declaration/emission and cell checking share the owner derivation; copied output objects and narrowed declared nullability refuse. Evidence: `evidence/security-sum-domains-20261014/`. Native optional/null grouping, selected-rule/result arithmetic, current-authority dispatch and all132 required cases remain open.

@@ -33,6 +33,7 @@ pub struct ModuleInput {
 pub struct Catalog {
     inputs: Vec<ModuleInput>,
     pub(crate) exact_numbers: bool,
+    security_inputs: bool,
     pub(crate) exact_scalars: bool,
     pub(crate) documents: Vec<Value>,
 }
@@ -165,7 +166,7 @@ impl Catalog {
             }
             documents.push(doc);
         }
-        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false })
+        Ok(Self { inputs, documents, exact_numbers:false, exact_scalars:false, security_inputs:required_version==Some("0.8.0") })
     }
     pub fn pins(&self) -> Vec<ModelPin> {
         self.inputs.iter().map(|i| i.pin.clone()).collect()
@@ -256,7 +257,7 @@ impl Catalog {
         })
     }
     pub fn field(&self, record: &Record, name: &Name) -> Result<(Identity, LogicalType, String)> {
-        self.field_mode(record,name,false)
+        self.field_mode(record,name,self.security_inputs)
     }
     pub(crate) fn field03(&self, record:&Record,name:&Name)->Result<(Identity,LogicalType,String)> {
         self.field_mode(record,name,true)

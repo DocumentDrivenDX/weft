@@ -490,7 +490,7 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
                     outcomes: vec![SecurityResultOutcome::Computed {
                         id: "computed".into(),
                         domain: SecurityResultDomain::Scalar {
-                            r#type: logical_type.clone(),
+                            r#type: weft_core::security_aggregate_results::aggregate_result_type(ctx,output)?,
                         },
                     }],
                 });

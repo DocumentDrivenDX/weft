@@ -1,0 +1,39 @@
+{
+  "version": "weft.security.sum-domain.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "22a0767f40e33c20f0df4322e393ade4244fb259",
+  "securityReady": false,
+  "checks": {
+    "core": 274,
+    "admission": 75,
+    "integration": 25,
+    "graph": 6,
+    "module_controls": 16
+  },
+  "qualification": "Original owner-derived security aggregate result nullability and optional scalar operator admission, not native parity or release",
+  "native_cases_promoted": 0,
+  "controls": [
+    "nullable grouped original SUM",
+    "null disclosed constant SUM",
+    "required original grouped-null refusal retained",
+    "changed declared nullability rejected",
+    "caller-copied output rejected",
+    "ordinary default catalogs unchanged"
+  ],
+  "remaining": [
+    "native absent/null group parity",
+    "genuine source/caller/Subject/current authority",
+    "arithmetic and selection",
+    "guarded release",
+    "all132 cases"
+  ],
+  "files": {
+    "crates/weft-core/src/model.rs": "622c7ef2821ce7458e46f6a556c83a77612e5c2e684f604b7e3eb8a1b04424bc",
+    "crates/weft-core/src/security_aggregate_results.rs": "03394d952dcdef2bd8dc0732992e6fae534860011f734c93a20444b5cfe92bd5",
+    "crates/weft-postgresql/src/security_relational_sql.rs": "84e03b0e78e03d4c7f4069f1789f6393a7f4eb77d3b625357dbbc1862ef8ba2d",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "6f32e5064bc744077c4cb103efd06c77b81f656e7bed8d8ce00959ef990430a1",
+    "docs/helix/02-design/module-boundaries.json": "c1935fd219a5444dbf6d1d2472023a78ffee0a6cef92ee030845b53935a55b30",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "1a06de3c6498314b94af007d338cc9a51e5fe9c425accd77db0ba1978daa91cb",
+    "docs/helix/04-build/implementation-plan.md": "bcd48e376d42c4ab1eb8f22733528cd013185ee376462c47df81530fb36542c7"
+  }
+}

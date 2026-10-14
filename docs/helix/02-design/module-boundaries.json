@@ -1297,7 +1297,8 @@
             "const:ENCODING",
             "const:VERSION",
             "fn:check_aggregate_result_declaration",
-            "fn:check_aggregate_result_cells"
+            "fn:check_aggregate_result_cells",
+            "fn:aggregate_result_type"
           ],
           "pathReferences": []
         },

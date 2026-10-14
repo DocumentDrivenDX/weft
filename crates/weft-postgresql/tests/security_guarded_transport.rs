@@ -231,7 +231,7 @@ fn aggregate_contract(ctx:&weft_core::security_backend::SecurityBackendContext<'
  return SecurityResultColumn{position:output.position(),output_name:output.output().name.clone(),source_fields:vec![identity.clone()],outcomes:vec![SecurityResultOutcome::Original{id:"original".into(),domain:SecurityResultDomain::Model{field:identity}}]};
  }
  let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_type}=>(logical_type,Some(&argument.identity)),_=>panic!("aggregate fixture")};
- SecurityResultColumn{position:output.position(),output_name:output.output().name.clone(),source_fields:source.into_iter().map(|i|SecurityIdentity{document_id:i.document_id.clone(),revision:i.revision.clone(),module:i.module.clone(),element:i.element.clone()}).collect(),outcomes:vec![SecurityResultOutcome::Computed{id:"computed".into(),domain:SecurityResultDomain::Scalar{r#type:t.clone()}}]}
+ SecurityResultColumn{position:output.position(),output_name:output.output().name.clone(),source_fields:source.into_iter().map(|i|SecurityIdentity{document_id:i.document_id.clone(),revision:i.revision.clone(),module:i.module.clone(),element:i.element.clone()}).collect(),outcomes:vec![SecurityResultOutcome::Computed{id:"computed".into(),domain:SecurityResultDomain::Scalar{r#type:weft_core::security_aggregate_results::aggregate_result_type(ctx,output.output()).unwrap()}}]}
  }).collect()}
 }
 #[test]
@@ -402,4 +402,20 @@ fn postgresql_codec_checks_refuse_nul_and_native_numeric_overflow_without_narrow
  with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let batch=|token:&str|json!({"version":VERSION,"contextSha256":ctx.execution_query_context_sha256(),"scans":[{"scan":"s0","rows":[{"nativeRowId":"2","operands":[{"index":0,"cell":{"disposition":"original","value":{"integerToken":token}}}]}]}]}).to_string();
  for (token,native) in [("9223372036854775808",true),("1e131071",true),("1e131072",false)]{let raw=batch(token);check_operand_values(ctx,&raw)?;assert_eq!(check_postgresql_operand_codecs(ctx,&source,&raw).is_ok(),native);}
  Ok(())}).unwrap();
+}
+fn nullable_salary_request(raw:&str)->String{
+ let mut r:Value=serde_json::from_str(raw).unwrap();let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();let salary=doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="salary").unwrap();salary["nullability"]=json!("absent-allowed");r["modules"][0]["documentJson"]=json!(doc.to_string());r["modules"][0]["pin"]["sha256"]=json!(sha256(doc.to_string().as_bytes()));let mut profile:Value=serde_json::from_str(r["queryProfileJson"].as_str().unwrap()).unwrap();profile["modelPins"]=json!(r["modules"].as_array().unwrap().iter().map(|m|m["pin"].clone()).collect::<Vec<_>>());r["queryProfileJson"]=json!(profile.to_string());r.to_string()
+}
+#[test]
+fn grouped_sum_of_nullable_original_values_preserves_null_result_domain(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_aggregate_results::*,security_lowering::*};
+ let raw=nullable_salary_request(&query_use_request("SELECT SUM(r.salary) FROM Resource r GROUP BY r.resourceId",Some("original-authorized"),true));
+ with_security_mapping_context(&raw,|ctx|{let mut c=aggregate_contract(ctx);let t=aggregate_result_type(ctx,ctx.requirements().outputs()[0].output())?;assert!(t.nullable);check_aggregate_result_declaration(ctx,&c)?;let text=serde_json::to_string(&c).unwrap();let hash=sha256(text.as_bytes());let batch=json!({"version":ENCODING,"resultContractSha256":hash,"rows":[[{"outcomeId":"computed","disposition":"computed","value":null}]]}).to_string();check_aggregate_result_cells(ctx,&c,&text,&hash,&batch)?;
+ if let SecurityResultOutcome::Computed{domain:SecurityResultDomain::Scalar{r#type:t},..}=&mut c.columns[0].outcomes[0]{t.nullable=false;}assert!(check_aggregate_result_declaration(ctx,&c).is_err());let copy=ctx.requirements().outputs()[0].output().clone();assert!(aggregate_result_type(ctx,&copy).is_err());Ok(())}).unwrap();
+}
+#[test]
+fn grouped_sum_disclosed_null_transform_retains_nullable_output(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_aggregate_results::*};
+ let mut raw:Value=serde_json::from_str(&nullable_salary_request(&query_use_request("SELECT SUM(r.salary) FROM Resource r GROUP BY r.resourceId",Some("disclosed"),false))).unwrap();let mut policy:Value=serde_json::from_str(raw["policyJson"].as_str().unwrap()).unwrap();policy["rules"][0]["disclosure"][0]["disposition"]=json!({"kind":"transformed","transform":"constant","version":"0.1.0","field":{"documentId":"domain","moduleId":"m","elementId":"salary"},"value":null});raw["policyJson"]=json!(policy.to_string());let mut profile:Value=serde_json::from_str(raw["queryProfileJson"].as_str().unwrap()).unwrap();profile["policySha256"]=json!(sha256(policy.to_string().as_bytes()));raw["queryProfileJson"]=json!(profile.to_string());
+ with_security_mapping_context(&raw.to_string(),|ctx|{let c=aggregate_contract(ctx);assert!(aggregate_result_type(ctx,ctx.requirements().outputs()[0].output())?.nullable);check_aggregate_result_declaration(ctx,&c)?;Ok(())}).unwrap();
 }
