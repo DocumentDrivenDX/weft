@@ -2172,7 +2172,8 @@
             "mod:qualified_profile",
             "mod:security_predicate_spike",
             "mod:security_graph_binding",
-            "mod:security_graph_query"
+            "mod:security_graph_query",
+            "mod:security_graph_parameters"
           ],
           "pathReferences": []
         },
@@ -2696,11 +2697,36 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/security_graph_parameters.rs",
+          "publicDeclarations": [
+            "enum:GraphPolicyParameterCodec",
+            "struct:GraphPolicyParameterBinding",
+            "fn:ordinal",
+            "fn:source_path",
+            "fn:kind",
+            "fn:field",
+            "fn:domain",
+            "fn:codec",
+            "struct:GraphSubjectParameterBinding",
+            "fn:ordinal",
+            "fn:native_type_id",
+            "fn:subject",
+            "fn:key_id",
+            "fn:key_fields",
+            "fn:physical_type",
+            "struct:GraphParameterBindings",
+            "fn:policy",
+            "fn:subject"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/security_graph_query.rs",
           "publicDeclarations": [
             "struct:GraphQueryCandidate",
             "fn:value",
             "fn:result_contract",
+            "fn:parameter_bindings",
             "fn:prepare_graph_query",
             "fn:prepare_graph_query_checked"
           ],
