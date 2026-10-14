@@ -2187,7 +2187,8 @@
             "mod:security_graph_binding",
             "mod:security_graph_query",
             "mod:security_graph_parameters",
-            "mod:security_guarded_transport"
+            "mod:security_guarded_transport",
+            "mod:security_query_use_guards"
           ],
           "pathReferences": []
         },
@@ -2764,6 +2765,30 @@
           "publicDeclarations": [
             "fn:render",
             "fn:render_graph"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_query_use_guards.rs",
+          "publicDeclarations": [
+            "struct:QueryUseRuleTruth",
+            "fn:column",
+            "fn:expression",
+            "struct:QueryUseOccurrence",
+            "fn:field",
+            "fn:operator",
+            "fn:original_action",
+            "struct:ScanQueryUseGuard",
+            "fn:scan",
+            "fn:target",
+            "fn:actions",
+            "fn:rule_truths",
+            "fn:refusal_expression",
+            "fn:uses",
+            "struct:GraphQueryUseGuards",
+            "fn:context_sha256",
+            "fn:scans",
+            "fn:prepare_graph_query_use_guards"
           ],
           "pathReferences": []
         },

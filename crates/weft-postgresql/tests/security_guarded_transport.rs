@@ -170,3 +170,56 @@ fn unsupported_queries_and_injected_authority_inputs_cannot_prepare_handoff() {
     assert_eq!(refused["status"], "blocked");
     assert!(refused.get("sql").is_none());
 }
+fn query_use_request(sql:&str,mode:Option<&str>,grant:bool)->String {
+ let mut request:Value=serde_json::from_str(&request(sql)).unwrap();
+ if let Some(mode)=mode {
+  let mut ontology:Value=serde_json::from_str(request["ontologyJson"].as_str().unwrap()).unwrap();let resource=ontology["entities"].as_array_mut().unwrap().iter_mut().find(|e|e["type"]["elementId"]=="Resource").unwrap();let salary=resource["fields"].as_array_mut().unwrap().iter_mut().find(|f|f["ref"]["elementId"]=="salary").unwrap();
+  salary["queryUse"]=json!({"predicate":mode,"order":mode,"group":mode,"join":mode,"aggregate":mode});
+  let mut policy:Value=serde_json::from_str(request["policyJson"].as_str().unwrap()).unwrap();
+  let mut profile:Value=serde_json::from_str(request["queryProfileJson"].as_str().unwrap()).unwrap();
+  if mode=="original-authorized" {
+   ontology["actions"].as_array_mut().unwrap().push(json!("query-original"));
+   if grant {policy["rules"].as_array_mut().unwrap().push(json!({"id":"original-access","effect":"permit","actions":["query-original"],"target":[{"documentId":"domain","moduleId":"m","elementId":"Resource"}],"condition":{"op":"literal","value":true}}));}
+   profile["bindings"]=json!(["predicate","order","group","join","aggregate"].into_iter().map(|op|json!({"target":{"documentId":"domain","moduleId":"m","elementId":"Resource"},"field":{"documentId":"domain","moduleId":"m","elementId":"salary"},"operator":op,"originalAction":"query-original"})).collect::<Vec<_>>());
+  }
+  let mut source:GraphSource=serde_json::from_str(request["bindingJson"].as_str().unwrap()).unwrap();let mut resolution:Value=serde_json::from_str(&source.logical_resolution_json).unwrap();resolution["ontology"]=ontology.clone();source.logical_resolution_json=resolution.to_string();
+  let ontology_bytes=ontology.to_string();let policy_bytes=policy.to_string();request["ontologyJson"]=json!(ontology_bytes);request["policyJson"]=json!(policy_bytes);
+  let mut correspondence:Value=serde_json::from_str(&source.correspondence_json).unwrap();correspondence["logicalSourceDigests"]["resolution"]=json!(sha256(source.logical_resolution_json.as_bytes()));correspondence["logicalSourceDigests"]["policy"]=json!(sha256(policy_bytes.as_bytes()));source.correspondence_json=correspondence.to_string();let binding=serde_json::to_string(&source).unwrap();request["bindingJson"]=json!(binding);
+  profile["ontologySha256"]=json!(sha256(ontology_bytes.as_bytes()));profile["policySha256"]=json!(sha256(policy_bytes.as_bytes()));profile["binding"]["sha256"]=json!(sha256(binding.as_bytes()));request["queryProfileJson"]=json!(profile.to_string());
+ }
+ request.to_string()
+}
+#[test]
+fn query_use_guards_keep_all_five_operators_and_both_join_scan_occurrences() {
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_ir::QueryOperator};
+ use weft_postgresql::security_query_use_guards::prepare_graph_query_use_guards;
+ let raw=query_use_request("SELECT r.salary, SUM(s.salary) FROM Resource r JOIN Resource s ON r.salary=s.salary WHERE r.salary=100 GROUP BY r.salary ORDER BY r.salary",Some("disclosed"),false);
+ with_security_mapping_context(&raw,|ctx|{
+  let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let guards=prepare_graph_query_use_guards(ctx,&source)?;assert_eq!(guards.scans().len(),2);assert_eq!(guards.context_sha256(),ctx.execution_query_context_sha256());
+  let ops=guards.scans().iter().flat_map(|s|s.uses()).map(|u|u.operator()).collect::<std::collections::BTreeSet<_>>();assert_eq!(ops,std::collections::BTreeSet::from([QueryOperator::Predicate,QueryOperator::Order,QueryOperator::Group,QueryOperator::Join,QueryOperator::Aggregate]));
+  for scan in guards.scans(){assert!(scan.uses().iter().any(|u|u.operator()==QueryOperator::Join));assert!(scan.refusal_expression().contains("IN ('original','transformed','absent')) IS NOT TRUE"));assert!(scan.refusal_expression().contains("WHEN"));assert_eq!(scan.rule_truths().len(),2);}
+  assert_ne!(guards.scans()[0].scan(),guards.scans()[1].scan());Ok(())
+ }).unwrap();
+}
+#[test]
+fn original_query_action_is_exact_and_missing_grant_refuses_before_query_filters() {
+ use weft_core::security_mapping_transport::with_security_mapping_context;
+ use weft_postgresql::security_query_use_guards::prepare_graph_query_use_guards;
+ for granted in [false,true] {
+  let raw=query_use_request("SELECT r.resourceId FROM Resource r WHERE r.salary=100",Some("original-authorized"),granted);
+  with_security_mapping_context(&raw,|ctx|{
+   let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let guards=prepare_graph_query_use_guards(ctx,&source)?;let scan=&guards.scans()[0];assert!(scan.actions().iter().any(|a|a=="query-original"));assert_eq!(scan.uses()[0].original_action(),Some("query-original"));
+   if granted {assert_eq!(scan.rule_truths().len(),3);assert!(scan.refusal_expression().contains("IS DISTINCT FROM 'permit'"));}else{assert_eq!(scan.rule_truths().len(),2);assert!(scan.refusal_expression().contains("THEN (TRUE)"));}
+   // Guard derivation cannot activate the still-unsupported relational candidate.
+   assert!(prepare_guarded_graph_candidate(&raw).is_err());Ok(())
+  }).unwrap();
+ }
+}
+#[test]
+fn prohibited_and_foreign_sources_never_produce_query_use_guards() {
+ use weft_core::security_mapping_transport::with_security_mapping_context;
+ use weft_postgresql::security_query_use_guards::prepare_graph_query_use_guards;
+ let prohibited=query_use_request("SELECT r.resourceId FROM Resource r WHERE r.salary=100",None,false);assert!(with_security_mapping_context(&prohibited,|_|Ok(())).is_err());
+ let raw=query_use_request("SELECT r.resourceId FROM Resource r WHERE r.resourceId='RA'",None,false);
+ with_security_mapping_context(&raw,|ctx|{let mut source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();source.native_schema_revision="2".into();assert!(prepare_graph_query_use_guards(ctx,&source).is_err());Ok(())}).unwrap();
+}
