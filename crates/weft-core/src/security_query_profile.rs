@@ -5,7 +5,6 @@ use serde_json::Value;
 use std::collections::{BTreeMap,BTreeSet};
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-query-profile-v0.1.schema.json")]
 struct ProfileSchema;
-#[cfg(test)]
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/security-query-profile-v0.2-candidate.schema.json")]
 struct RelationshipProfileSchema;
 fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-QUERY-PROFILE","model","Security query profile admission refused")}
@@ -15,9 +14,15 @@ struct BindingSource{backend_id:String,backend_version:String,target_profile:Str
 #[derive(Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Entry{target:SecurityRef,field:SecurityRef,operator:QueryOperator,original_action:String}
+#[derive(Debug,Deserialize,PartialEq,Eq,PartialOrd,Ord)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+struct RelationshipRef{document_id:String,module_id:String,relationship_id:String}
 #[derive(Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-struct Spec{version:String,id:String,revision:String,action:String,model_pins:Vec<ModelPin>,policy_sha256:String,ontology_sha256:String,binding:BindingSource,targets:Vec<SecurityRef>,bindings:Vec<Entry>}
+struct RelationshipEntry{relationship:RelationshipRef,operator:String,observation_action:String,target_action:String}
+#[derive(Debug,Deserialize)]
+#[serde(rename_all="camelCase",deny_unknown_fields)]
+struct Spec{version:String,id:String,revision:String,action:String,model_pins:Vec<ModelPin>,policy_sha256:String,ontology_sha256:String,binding:BindingSource,targets:Vec<SecurityRef>,bindings:Vec<Entry>,#[serde(default)]relationships:Vec<RelationshipEntry>}
 #[derive(Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct ClaimedUse{field:SecurityRef,operator:QueryOperator,#[serde(skip_serializing_if="Option::is_none")]original_action:Option<String>}
@@ -60,13 +65,36 @@ impl SecurityQueryProfile{
  pub fn source_json(&self)->&str{&self.raw}
  pub fn binding_json(&self)->&str{&self.binding_json}
  pub fn read(raw:&str,plan:&SecurityLogicalPlan,catalog:&Catalog,binding_json:&str,backend_id:&str,backend_version:&str,target_profile:&str)->Result<Self>{
+  Self::read_selected(raw,plan,catalog,binding_json,backend_id,backend_version,target_profile,false)
+ }
+ /// Admit original authored relationship/profile sources only. This is not an executable traversal permit.
+ pub fn read_relationship_candidate(raw:&str,plan:&SecurityLogicalPlan,catalog:&Catalog,binding_json:&str,backend_id:&str,backend_version:&str,target_profile:&str)->Result<Self>{
+  Self::read_selected(raw,plan,catalog,binding_json,backend_id,backend_version,target_profile,true)
+ }
+ fn read_selected(raw:&str,plan:&SecurityLogicalPlan,catalog:&Catalog,binding_json:&str,backend_id:&str,backend_version:&str,target_profile:&str,relationships:bool)->Result<Self>{
   plan.require_catalog(catalog)?;if raw.len()>4_000_000||binding_json.len()>4_000_000{return Err(fail());}
-  let value=checked_json(raw).map_err(|_|fail())?;if !ProfileSchema::is_valid(&value){return Err(fail());}
+  let value=checked_json(raw).map_err(|_|fail())?;if !(if relationships{RelationshipProfileSchema::is_valid(&value)}else{ProfileSchema::is_valid(&value)}){return Err(fail());}
   let spec:Spec=serde_json::from_value(value).map_err(|_|fail())?;
   checked_json(binding_json).map_err(|_|fail())?;
-  if spec.version!="weft.security.query-profile/0.1.0"||spec.model_pins!=catalog.pins()||spec.policy_sha256!=sha256(plan.source().policy_json().as_bytes())||spec.ontology_sha256!=sha256(plan.source().ontology_json().as_bytes())||spec.binding.backend_id!=backend_id||spec.binding.backend_version!=backend_version||spec.binding.target_profile!=target_profile||spec.binding.sha256!=sha256(binding_json.as_bytes()){return Err(fail());}
+  if spec.version!=if relationships{"weft.security.query-profile/0.2-candidate"}else{"weft.security.query-profile/0.1.0"}||spec.model_pins!=catalog.pins()||spec.policy_sha256!=sha256(plan.source().policy_json().as_bytes())||spec.ontology_sha256!=sha256(plan.source().ontology_json().as_bytes())||spec.binding.backend_id!=backend_id||spec.binding.backend_version!=backend_version||spec.binding.target_profile!=target_profile||spec.binding.sha256!=sha256(binding_json.as_bytes()){return Err(fail());}
   let closure=SecurityOntologyClosure::read(plan.source(),catalog)?;let actions=plan.source().ontology()["actions"].as_array().ok_or_else(fail)?;
   if !actions.iter().any(|a|a==&spec.action)||spec.targets.iter().collect::<BTreeSet<_>>().len()!=spec.targets.len()||spec.targets.iter().any(|t|!closure.types.contains_key(t)){return Err(fail());}
+  let mut related=BTreeSet::new();
+  for entry in &spec.relationships {
+   if entry.operator!="hasRelated"||entry.observation_action==spec.action||entry.observation_action==entry.target_action||entry.target_action!=spec.action||!actions.iter().any(|a|a==&entry.observation_action)||!actions.iter().any(|a|a==&entry.target_action)||!related.insert(&entry.relationship){return Err(fail());}
+   let input=catalog.inputs().iter().find(|i|i.pin.document_id==entry.relationship.document_id).ok_or_else(fail)?;
+   if !input.selected_module_ids.contains(&entry.relationship.module_id){return Err(fail());}
+   let doc=checked_json(&input.document_json).map_err(|_|fail())?;
+   let module=doc["modules"].as_array().ok_or_else(fail)?.iter().find(|m|m["id"]==entry.relationship.module_id).ok_or_else(fail)?;
+   let matches:Vec<_>=module["relationships"].as_array().ok_or_else(fail)?.iter().filter(|r|r["id"]==entry.relationship.relationship_id).collect();
+   if matches.len()!=1{return Err(fail());}let rel=matches[0];
+   let endpoint=&rel["source"][0];
+   let source=catalog.record_by_identity(&crate::ir::Identity{document_id:input.pin.document_id.clone(),revision:input.pin.revision.clone(),module:endpoint["module"].as_str().ok_or_else(fail)?.into(),element:endpoint["element"].as_str().ok_or_else(fail)?.into()})?;
+   let name=crate::syntax::Name{value:rel["name"].as_str().ok_or_else(fail)?.into(),quoted:true,span:crate::ir::Span{start:0,end:0}};
+   let resolved=catalog.relationship_read(&source,&name)?;
+   if resolved.identity.module!=entry.relationship.module_id||resolved.identity.relationship!=entry.relationship.relationship_id||resolved.inverse||resolved.target_lifecycle!="independent"{return Err(fail());}
+   for endpoint in [&resolved.from,&resolved.to]{let target=SecurityRef{document_id:endpoint.document_id.clone(),module_id:endpoint.module.clone(),element_id:endpoint.element.clone()};if !spec.targets.contains(&target)||!closure.types.contains_key(&target){return Err(fail());}}
+  }
   let mut expected=BTreeSet::new();for target in &spec.targets{for field in closure.types[target].source["fields"].as_array().ok_or_else(fail)?{let reference=SecurityRef::read(&field["ref"])?;for operator in [QueryOperator::Predicate,QueryOperator::Order,QueryOperator::Group,QueryOperator::Join,QueryOperator::Aggregate]{if field["queryUse"][operator.name()]=="original-authorized"{expected.insert((target.clone(),reference.clone(),operator));}}}}
   let mut bindings=BTreeMap::new();for entry in &spec.bindings{let key=(entry.target.clone(),entry.field.clone(),entry.operator);if !expected.contains(&key)||entry.original_action==spec.action||!actions.iter().any(|a|a==&entry.original_action)||bindings.insert(key,entry.original_action.clone()).is_some(){return Err(fail());}}
   if bindings.keys().cloned().collect::<BTreeSet<_>>()!=expected{return Err(fail());}
@@ -127,6 +155,29 @@ mod tests{
   let binding=json!({"version":"fixture-only","layout":"opaque-unqualified-storage"}).to_string();
   let profile=json!({"version":"weft.security.query-profile/0.1.0","id":"fixture-profile","revision":"p1","action":"read","modelPins":catalog.pins(),"policySha256":sha256(plan.source().policy_json().as_bytes()),"ontologySha256":sha256(plan.source().ontology_json().as_bytes()),"binding":{"backendId":"fixture","backendVersion":"unqualified","targetProfile":"fixture-only","sha256":sha256(binding.as_bytes())},"targets":case["request"]["targets"],"bindings":[{"target":case["request"]["targets"][0],"field":case["request"]["queryUses"][0]["field"],"operator":"predicate","originalAction":"query-original"}]});
   (catalog,plan,profile,binding,case)
+ }
+ #[test]
+ fn authored_relationship_candidate_admits_original_sources_and_refuses_identity_action_substitution(){
+  let modules=serde_json::from_str(include_str!("../tests/security-public-relationship/modules.json")).unwrap();
+  let catalog=Catalog::prepare_security(modules).unwrap();
+  let packet=crate::security_source::SecuritySourcePacket::read(include_str!("../tests/security-public-relationship/policy.json"),include_str!("../tests/security-public-relationship/ontology.json"),&catalog).unwrap();
+  let plan=SecurityLogicalPlan::read(packet,&catalog).unwrap();
+  let binding="{\"scope\":\"source-admission-only-no-native-authority\"}";
+  let mut profile:Value=serde_json::from_str(include_str!("../tests/security-public-relationship/query-profile-template.json")).unwrap();
+  profile["binding"]["sha256"]=json!(sha256(binding.as_bytes()));
+  assert_eq!(profile["policySha256"],json!(sha256(plan.source().policy_json().as_bytes())));
+  assert_eq!(profile["ontologySha256"],json!(sha256(plan.source().ontology_json().as_bytes())));
+  let candidate=|value:&Value|SecurityQueryProfile::read_relationship_candidate(&value.to_string(),&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only");
+  let admitted=candidate(&profile).unwrap();assert_eq!(admitted.source_json(),profile.to_string());
+  assert!(SecurityQueryProfile::read(&profile.to_string(),&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only").is_err());
+  for (key,value) in [("observationAction","read"),("observationAction","undeclared"),("targetAction","observeResourceRelations"),("operator","relatedKeys")] {
+   let mut changed=profile.clone();changed["relationships"][0][key]=json!(value);assert!(candidate(&changed).is_err(),"{key}");
+  }
+  for key in ["documentId","moduleId","relationshipId"] {
+   let mut changed=profile.clone();changed["relationships"][0]["relationship"][key]=json!("missing");assert!(candidate(&changed).is_err(),"{key}");
+  }
+  let mut changed=profile.clone();changed["relationships"].as_array_mut().unwrap().push(profile["relationships"][0].clone());assert!(candidate(&changed).is_err());
+  changed=profile.clone();changed["binding"]["sha256"]=json!("0".repeat(64));assert!(candidate(&changed).is_err());
  }
  #[test]
  fn relationship_profile_shape_is_separate_and_cannot_activate_old_owner(){

@@ -1766,6 +1766,7 @@
             "fn:source_json",
             "fn:binding_json",
             "fn:read",
+            "fn:read_relationship_candidate",
             "fn:require_sources",
             "fn:admit_resolved_query",
             "fn:bind_request_json",
