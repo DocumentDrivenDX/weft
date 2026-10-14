@@ -8,13 +8,21 @@ fn fail()->Diagnostic{Diagnostic::new("WFT-SECURITY-PREDICATE-SPIKE","capability
 #[derive(Clone)]
 struct Cell{known:String,sql:String,family:String}
 struct Tuple{cells:Vec<Cell>,identity:Option<(SecurityRef,String)>}
-struct Render<'a>{inventory:&'a Value,ontology:&'a Value,documents:Vec<Value>,parameters:Vec<Value>,parameter_bytes:usize,parameter_types:Vec<String>,work:usize}
+struct Render<'a>{graph:Option<&'a crate::security_graph_binding::GraphBinding>,inventory:&'a Value,ontology:&'a Value,documents:Vec<Value>,parameters:Vec<Value>,parameter_bytes:usize,parameter_types:Vec<String>,work:usize}
 impl Render<'_>{
  fn step(&mut self)->Result<()>{if self.work==0{return Err(fail());}self.work-=1;Ok(())}
  fn one<'a>(&self,rows:Vec<&'a Value>)->Result<&'a Value>{if rows.len()!=1{return Err(fail());}Ok(rows[0])}
- fn type_id(&self,r:&SecurityRef)->Result<i64>{let row=self.one(self.inventory["types"].as_array().ok_or_else(fail)?.iter().filter(|v|v["retired_rev"].is_null()&&v["document_id"]==r.document_id&&v["module"]==r.module_id&&v["element"]==r.element_id&&v["kind"]=="record").collect())?;let id=row["type_id"].as_i64().ok_or_else(fail)?;if !(1..=i32::MAX as i64).contains(&id){return Err(fail());}Ok(id)}
+ fn type_id(&self,r:&SecurityRef)->Result<i64>{if let Some(g)=self.graph{return g.type_id(r);}let row=self.one(self.inventory["types"].as_array().ok_or_else(fail)?.iter().filter(|v|v["retired_rev"].is_null()&&v["document_id"]==r.document_id&&v["module"]==r.module_id&&v["element"]==r.element_id&&v["kind"]=="record").collect())?;let id=row["type_id"].as_i64().ok_or_else(fail)?;if !(1..=i32::MAX as i64).contains(&id){return Err(fail());}Ok(id)}
  fn field(&self,r:&SecurityRef)->Result<&Value>{let doc=self.one(self.documents.iter().filter(|d|d["id"]==r.document_id).collect())?;let module=self.one(doc["modules"].as_array().ok_or_else(fail)?.iter().filter(|m|m["id"]==r.module_id).collect())?;self.one(module["elements"].as_array().ok_or_else(fail)?.iter().filter(|f|f["id"]==r.element_id&&f["kind"]=="field").collect())}
  fn cell(&self,target:&SecurityRef,r:&SecurityRef,alias:&str)->Result<Cell>{
+  if let Some(g)=self.graph {
+   let field=self.field(r)?;let family=field["scalarType"].as_str().ok_or_else(fail)?;
+   if !matches!(family,"string"|"boolean"){return Err(fail());}
+   let raw=g.raw_cell(target,r,alias)?;let nullable=field["nullability"]=="absent-allowed";
+   let known=format!("({raw}) IS NOT NULL AND truss.valid_scalar_cell(({raw}),'{family}',{nullable}) IS TRUE");
+   let sql=if family=="string"{format!("(CASE WHEN ({raw})->>'kind'='null' THEN NULL ELSE ({raw})->>'text' END) COLLATE pg_catalog.\"C\"")}else{format!("CASE WHEN ({raw})->>'kind'='null' THEN NULL ELSE ({raw})->'value' END")};
+   return Ok(Cell{known,sql,family:family.into()});
+  }
   let tid=self.type_id(target)?;let row=self.one(self.inventory["properties"].as_array().ok_or_else(fail)?.iter().filter(|p|p["retired_rev"].is_null()&&p["type_id"]==tid&&p["definition_document_id"]==r.document_id&&p["declaration_module"]==r.module_id&&p["element"]==r.element_id&&p["home"]=="json").collect())?;
   let id=row["prop_id"].as_i64().ok_or_else(fail)?;if !(1..=i32::MAX as i64).contains(&id){return Err(fail());}
   let field=self.field(r)?;let family=field["scalarType"].as_str().ok_or_else(fail)?;if !matches!(family,"string"|"boolean"){return Err(fail());}
@@ -24,6 +32,13 @@ impl Render<'_>{
   Ok(Cell{known,sql,family:family.into()})
  }
  fn projection_cell(&self,target:&SecurityRef,r:&SecurityRef)->Result<(String,String,bool)> {
+  if let Some(g)=self.graph {
+   let raw=g.raw_cell(target,r,"r")?;let source=self.field(r)?;let family=source["scalarType"].as_str().ok_or_else(fail)?;
+   let wrapper=match family{"string"=>"string","boolean"=>"boolean","integer"=>"integerToken","decimal"=>"decimalToken","binary"=>"binaryHex",_=>return Err(fail())};
+   let payload=if family=="boolean"{format!("({raw})->'value'")}else if family=="binary"{format!("pg_catalog.to_jsonb(pg_catalog.encode(pg_catalog.decode(({raw})->>'text','base64'),'hex'))")}else{format!("({raw})->'text'")};
+   let literal=format!("CASE WHEN ({raw})->>'kind'='null' THEN 'null'::pg_catalog.jsonb ELSE pg_catalog.jsonb_build_object('{wrapper}',{payload}) END");
+   return Ok((raw,literal,source["nullability"]=="absent-allowed"));
+  }
   let tid=self.type_id(target)?;
   let row=self.one(self.inventory["properties"].as_array().ok_or_else(fail)?.iter().filter(|p|p["retired_rev"].is_null()&&p["type_id"]==tid&&p["definition_document_id"]==r.document_id&&p["declaration_module"]==r.module_id&&p["element"]==r.element_id&&p["home"]=="json").collect())?;
   let id=row["prop_id"].as_i64().ok_or_else(fail)?;if !(1..=i32::MAX as i64).contains(&id){return Err(fail());}
@@ -35,6 +50,7 @@ impl Render<'_>{
   Ok((raw,literal,source["nullability"]=="absent-allowed"))
  }
  fn key(&self,target:&SecurityRef,key:&str)->Result<Vec<SecurityRef>>{
+  if let Some(g)=self.graph{return g.key(target,key);}
   let tid=self.type_id(target)?;let row=self.one(self.inventory["keys"].as_array().ok_or_else(fail)?.iter().filter(|k|k["type_id"]==tid&&k["key_id"]==key&&k["retired_rev"].is_null()).collect())?;
   let mut result=Vec::new();for id in row["prop_ids"].as_array().ok_or_else(fail)?{let p=self.one(self.inventory["properties"].as_array().ok_or_else(fail)?.iter().filter(|p|p["type_id"]==tid&&p["prop_id"]==*id&&p["retired_rev"].is_null()).collect())?;result.push(SecurityRef{document_id:p["definition_document_id"].as_str().ok_or_else(fail)?.into(),module_id:p["declaration_module"].as_str().ok_or_else(fail)?.into(),element_id:p["element"].as_str().ok_or_else(fail)?.into()});}if result.is_empty()||result.len()>64{return Err(fail());}Ok(result)
  }
@@ -57,10 +73,20 @@ impl Render<'_>{
 /// Subjects are explicit fixture rows, not authenticated principals. Complete
 /// field-domain-valid facts and valid declared witness keys are prerequisites;
 /// the SQL expression does not itself establish native fact admission.
-pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Result<Value>{
+pub fn render(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value)->Result<Value>{render_inner(plan,catalog,assessment,None)}
+/// Explicit graph-source correspondence with mandatory complete endpoint guards.
+/// Success remains a pure candidate declaration, not a native permission.
+pub fn render_graph(plan:&SecurityLogicalPlan,catalog:&Catalog,source:&crate::security_graph_binding::GraphSource)->Result<Value>{
+ let graph=crate::security_graph_binding::GraphBinding::read(plan,catalog,source)?;
+ let assessment=json!({"modelPins":catalog.pins(),"inventory":graph.inventory});
+ let mut output=render_inner(plan,catalog,&assessment,Some(&graph))?;
+ output["graphSourceSha256"]=json!(graph.source_sha256());output["integrityChecks"]=json!(graph.integrity_checks());
+ if serde_json::to_vec(&output).map_err(|_|fail())?.len()>16_000_000{return Err(fail());}Ok(output)
+}
+fn render_inner(plan:&SecurityLogicalPlan,catalog:&Catalog,assessment:&Value,graph:Option<&crate::security_graph_binding::GraphBinding>)->Result<Value>{
  plan.require_catalog(catalog)?;if assessment["modelPins"]!=serde_json::to_value(catalog.pins()).map_err(|_|fail())?{return Err(fail());}
  let documents=catalog.inputs().iter().map(|i|weft_core::json::checked_json(&i.document_json).map_err(|_|fail())).collect::<Result<Vec<_>>>()?;
- let mut renderer=Render{inventory:&assessment["inventory"],ontology:plan.source().ontology(),documents,parameters:vec![],parameter_bytes:0,parameter_types:vec![],work:8192};let mut rules=Vec::new();let mut total=0;
+ let mut renderer=Render{graph,inventory:&assessment["inventory"],ontology:plan.source().ontology(),documents,parameters:vec![],parameter_bytes:0,parameter_types:vec![],work:8192};let mut rules=Vec::new();let mut total=0;
  for (index,rule) in plan.rules().iter().enumerate(){let expression=renderer.expression(&rule.condition,&rule.target,&BTreeMap::new(),0)?;total+=expression.len();if total>4_000_000{return Err(fail());}rules.push(json!({"id":rule.id,"target":rule.target,"effect":rule.effect,"actions":rule.actions,"expression":expression,"truthColumn":format!("q{index}")}));}
  let mut group_bytes=0usize;
  let mut groups:BTreeMap<(SecurityRef,String),Vec<(usize,Effect)>>=BTreeMap::new();

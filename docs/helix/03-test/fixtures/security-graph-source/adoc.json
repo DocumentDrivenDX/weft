@@ -1,0 +1,382 @@
+{
+  "umf": "0.8.0",
+  "id": "adoc",
+  "vocabularies": {},
+  "extensions": {},
+  "modules": [
+    {
+      "id": "m",
+      "namespace": "m",
+      "extensions": {},
+      "elements": [
+        {
+          "id": "Client",
+          "name": "Client",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "clientId"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "clientId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "clientId",
+          "name": "clientId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Project",
+          "name": "Project",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "projectId"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "projectId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "projectId",
+          "name": "projectId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Staff",
+          "name": "Staff",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "staffId"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "staffId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "staffId",
+          "name": "staffId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Resource",
+          "name": "Resource",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "resourceId"
+            },
+            {
+              "module": "m",
+              "element": "salary"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "resourceId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "resourceId",
+          "name": "resourceId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "salary",
+          "name": "salary",
+          "kind": "field",
+          "scalarType": "integer",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Assignment",
+          "name": "Assignment",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "assignmentId"
+            },
+            {
+              "module": "m",
+              "element": "active"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "assignmentId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "assignmentId",
+          "name": "assignmentId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "active",
+          "name": "active",
+          "kind": "field",
+          "scalarType": "boolean",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        },
+        {
+          "id": "Ownership",
+          "name": "Ownership",
+          "kind": "record",
+          "members": [
+            {
+              "module": "m",
+              "element": "ownershipId"
+            }
+          ],
+          "keys": [
+            {
+              "id": "pk",
+              "name": "Key",
+              "primary": true,
+              "fields": [
+                {
+                  "module": "m",
+                  "element": "ownershipId"
+                }
+              ]
+            }
+          ],
+          "extensions": {}
+        },
+        {
+          "id": "ownershipId",
+          "name": "ownershipId",
+          "kind": "field",
+          "scalarType": "string",
+          "nullability": "required",
+          "cardinality": "one",
+          "extensions": {}
+        }
+      ],
+      "relationships": [
+        {
+          "id": "ProjectClient",
+          "name": "ProjectClient",
+          "source": [
+            {
+              "module": "m",
+              "element": "Project"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Client",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "StaffAssignment",
+          "name": "StaffAssignment",
+          "source": [
+            {
+              "module": "m",
+              "element": "Staff"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Assignment",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "AssignmentProject",
+          "name": "AssignmentProject",
+          "source": [
+            {
+              "module": "m",
+              "element": "Assignment"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "OwnershipResource",
+          "name": "OwnershipResource",
+          "source": [
+            {
+              "module": "m",
+              "element": "Ownership"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Resource",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        },
+        {
+          "id": "OwnershipProject",
+          "name": "OwnershipProject",
+          "source": [
+            {
+              "module": "m",
+              "element": "Ownership"
+            }
+          ],
+          "target": [
+            {
+              "module": "m",
+              "element": "Project",
+              "key": "pk"
+            }
+          ],
+          "sourceMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetMultiplicity": {
+            "min": 0,
+            "max": "*"
+          },
+          "targetLifecycle": "independent",
+          "directed": true
+        }
+      ]
+    }
+  ]
+}

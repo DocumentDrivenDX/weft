@@ -1,0 +1,184 @@
+{
+  "version": "truss.reified-security-binding-fixture/0.1-candidate",
+  "scope": "Explicit owned fixture correspondence, not installed/authenticated owner/compiler admission.",
+  "logicalSourceDigests": {
+    "document": "1eb64de9c3cdf8fcde1c1d37325136330508686cca70b6550c780df7d74085e8",
+    "resolution": "d6591a68b48b4f4a56b1631fce26dd66ac99a9d4f1f60c02c77c178bb3636e74",
+    "policy": "ac1dc5841de60f64b8c268417124818c089ef247549fa75a621f1785f0b6ec97",
+    "transport": "83ce25c40a5840b09c5eb4e95d1b4f756e4cb57c8d3429ba5c2e4dc850df48c6"
+  },
+  "physicalSourceSha256": "37ba63adcfb8c618902fd708d09b5a0837674e393bc8817373b92e78a5bcfd73",
+  "inventorySha256": "4160caee59523a7a5fd33f21a6cf039b7004cd0bf0034028ef478b06df9035df",
+  "entities": [
+    {
+      "logicalType": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Staff"
+      },
+      "nativeType": {
+        "documentId": "adoc",
+        "moduleId": "m",
+        "elementId": "Staff",
+        "typeId": "6"
+      },
+      "logicalKeyId": "pk",
+      "nativeKeyId": "pk",
+      "nativeKeyNumber": "1",
+      "logicalKeyField": "staffId",
+      "nativeKeyField": "staffId",
+      "nativePropertyId": "8",
+      "scalarFamily": "string"
+    },
+    {
+      "logicalType": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Project"
+      },
+      "nativeType": {
+        "documentId": "adoc",
+        "moduleId": "m",
+        "elementId": "Project",
+        "typeId": "4"
+      },
+      "logicalKeyId": "pk",
+      "nativeKeyId": "pk",
+      "nativeKeyNumber": "1",
+      "logicalKeyField": "projectId",
+      "nativeKeyField": "projectId",
+      "nativePropertyId": "5",
+      "scalarFamily": "string"
+    },
+    {
+      "logicalType": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Resource"
+      },
+      "nativeType": {
+        "documentId": "adoc",
+        "moduleId": "m",
+        "elementId": "Resource",
+        "typeId": "5"
+      },
+      "logicalKeyId": "pk",
+      "nativeKeyId": "pk",
+      "nativeKeyNumber": "1",
+      "logicalKeyField": "resourceId",
+      "nativeKeyField": "resourceId",
+      "nativePropertyId": "6",
+      "scalarFamily": "string"
+    },
+    {
+      "logicalType": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Assignment"
+      },
+      "nativeType": {
+        "documentId": "adoc",
+        "moduleId": "m",
+        "elementId": "Assignment",
+        "typeId": "1"
+      },
+      "logicalKeyId": "pk",
+      "nativeKeyId": "pk",
+      "nativeKeyNumber": "1",
+      "logicalKeyField": "assignmentId",
+      "nativeKeyField": "assignmentId",
+      "nativePropertyId": "2",
+      "scalarFamily": "string"
+    },
+    {
+      "logicalType": {
+        "documentId": "domain",
+        "moduleId": "m",
+        "elementId": "Ownership"
+      },
+      "nativeType": {
+        "documentId": "adoc",
+        "moduleId": "m",
+        "elementId": "Ownership",
+        "typeId": "3"
+      },
+      "logicalKeyId": "pk",
+      "nativeKeyId": "pk",
+      "nativeKeyNumber": "1",
+      "logicalKeyField": "ownerId",
+      "nativeKeyField": "ownershipId",
+      "nativePropertyId": "4",
+      "scalarFamily": "string"
+    }
+  ],
+  "endpoints": [
+    {
+      "logicalAssociation": "Assignment",
+      "role": "staff",
+      "logicalField": "assignmentStaff",
+      "nativeRelationship": "StaffAssignment",
+      "nativeRelationshipId": "5",
+      "direction": "incoming",
+      "sourceTypeId": "6",
+      "targetTypeId": "1",
+      "targetKeyType": "Staff",
+      "targetKeyId": "pk",
+      "runtimeCardinality": "exactly_one_for_every_association_node",
+      "schemaMultiplicityDoesNotProveRuntimeCardinality": true
+    },
+    {
+      "logicalAssociation": "Assignment",
+      "role": "project",
+      "logicalField": "assignmentProject",
+      "nativeRelationship": "AssignmentProject",
+      "nativeRelationshipId": "1",
+      "direction": "outgoing",
+      "sourceTypeId": "1",
+      "targetTypeId": "4",
+      "targetKeyType": "Project",
+      "targetKeyId": "pk",
+      "runtimeCardinality": "exactly_one_for_every_association_node",
+      "schemaMultiplicityDoesNotProveRuntimeCardinality": true
+    },
+    {
+      "logicalAssociation": "Ownership",
+      "role": "resource",
+      "logicalField": "ownerResource",
+      "nativeRelationship": "OwnershipResource",
+      "nativeRelationshipId": "3",
+      "direction": "outgoing",
+      "sourceTypeId": "3",
+      "targetTypeId": "5",
+      "targetKeyType": "Resource",
+      "targetKeyId": "pk",
+      "runtimeCardinality": "exactly_one_for_every_association_node",
+      "schemaMultiplicityDoesNotProveRuntimeCardinality": true
+    },
+    {
+      "logicalAssociation": "Ownership",
+      "role": "project",
+      "logicalField": "ownerProject",
+      "nativeRelationship": "OwnershipProject",
+      "nativeRelationshipId": "2",
+      "direction": "outgoing",
+      "sourceTypeId": "3",
+      "targetTypeId": "4",
+      "targetKeyType": "Project",
+      "targetKeyId": "pk",
+      "runtimeCardinality": "exactly_one_for_every_association_node",
+      "schemaMultiplicityDoesNotProveRuntimeCardinality": true
+    }
+  ],
+  "active": {
+    "nativeTypeId": "1",
+    "nativePropertyId": "1",
+    "family": "boolean"
+  },
+  "salary": {
+    "nativeTypeId": "5",
+    "nativePropertyId": "7",
+    "family": "integer",
+    "mode": "withheld_only_not_a_captured_policy_operand"
+  },
+  "identityMeaning": "Preserve original logical and physical authored keys separately; normalize typed original values explicitly. Do not equate opaque namespace/key bytes across domain and adoc models."
+}

@@ -1,0 +1,38 @@
+{
+  "scope": "Original context/output bytes and owner result-cell correspondence; no native selection/permission or release authority.",
+  "checkerSha256": "862d42a74db643b7e29717a80bef03baf6d808a87b2ba9c7c62778183e3e4358",
+  "checks": [
+    {
+      "case": 0,
+      "status": "inspected"
+    },
+    {
+      "case": 1,
+      "status": "refused"
+    },
+    {
+      "case": 2,
+      "status": "refused"
+    },
+    {
+      "case": 3,
+      "status": "refused"
+    },
+    {
+      "case": 4,
+      "status": "refused"
+    },
+    {
+      "case": 5,
+      "status": "refused"
+    },
+    {
+      "case": 6,
+      "status": "refused"
+    },
+    {
+      "case": 7,
+      "status": "refused"
+    }
+  ]
+}

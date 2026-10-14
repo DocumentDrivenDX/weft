@@ -86,12 +86,6 @@ impl Parameters {
         self.0.push(ParameterSlot {position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Binary},value,origin});
         Ok(format!("${position}"))
     }
-    pub fn push_timestamp(&mut self,value:String,origin:serde_json::Value)->Result<String> {
-        if value.len()>1048576 || self.0.len()>=1024 {return Err(Diagnostic::new("WFT-LIMIT","emit","Timestamp parameter bounds exceeded"));}
-        let position=self.0.len()+1;
-        self.0.push(ParameterSlot{position,logical_type:weft_core::backend::ParameterType::Exact{kind:weft_core::backend::ExactParameterKind::ExactScalar,scalar_type:weft_core::application_model::ExactScalarType::Timestamp},value,origin});
-        Ok(format!("${position}"))
-    }
     pub fn into_slots(self) -> Vec<ParameterSlot> {
         self.0
     }
@@ -273,3 +267,9 @@ pub mod native_profile;
 pub mod qualified_profile;
 
 pub mod security_predicate_spike;
+
+/// Explicit reified graph correspondence, not protected execution admission.
+pub mod security_graph_binding;
+
+/// Owner-derived direct graph projection; native admission remains mandatory.
+pub mod security_graph_query;

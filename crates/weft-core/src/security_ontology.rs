@@ -40,6 +40,25 @@ pub(crate) fn domain(field:&Value)->Result<Value>{
  }
  Ok(json!({"scalarType":field["scalarType"],"cardinality":field["cardinality"],"nullability":field["nullability"],"facets":facets,"allowedValues":field.get("allowedValues").unwrap_or(&Value::Null)}))
 }
+/// Original authored scalar-key references, with no native identity or authority.
+pub fn authored_key_fields(catalog:&Catalog,record_ref:&SecurityRef,key_id:&str)->Result<Vec<SecurityRef>> {
+ let record=locate(catalog,record_ref)?;if record["kind"]!="record"{return Err(fail());}
+ let mut declared=BTreeSet::new();for member in record["members"].as_array().ok_or_else(fail)?{if !declared.insert(SecurityRef::local(&record_ref.document_id,member)?){return Err(fail());}}
+ let definitions=record["keys"].as_array().ok_or_else(fail)?;let matching:Vec<_>=definitions.iter().filter(|k|k["id"]==key_id).collect();if matching.len()!=1{return Err(fail());}let key=matching[0];members(key,&["id","name","fields","primary"])?;
+ if definitions.iter().any(|k|k.get("primary").is_some_and(|p|!p.is_boolean()))||definitions.iter().filter(|k|k["primary"]==true).count()>1{return Err(fail());}
+ let mut keys=Vec::new();let mut unique=BTreeSet::new();for f in key["fields"].as_array().ok_or_else(fail)?{
+  let field=SecurityRef::local(&record_ref.document_id,f)?;
+  if !declared.contains(&field)||!unique.insert(field.clone())||locate(catalog,&field)?["nullability"]!="required"{return Err(fail());}
+  crate::security_literals::validate_field(locate(catalog,&field)?)?;keys.push(field);
+ }if keys.is_empty(){return Err(fail());}Ok(keys)
+}
+/// Compare original scalar domains across separately pinned models. No opaque
+/// namespace/key bytes are equated and no native source/caller is authenticated.
+pub fn check_mapped_scalar_fields(logical:&Catalog,logical_field:&SecurityRef,physical:&Catalog,physical_field:&SecurityRef)->Result<()> {
+ let a=locate(logical,logical_field)?;let b=locate(physical,physical_field)?;
+ crate::security_literals::validate_field(a)?;crate::security_literals::validate_field(b)?;
+ if a["extensions"].as_object().is_some_and(|e|!e.is_empty())||b["extensions"].as_object().is_some_and(|e|!e.is_empty())||domain(a)?!=domain(b)?{return Err(fail());}Ok(())
+}
 pub(crate) fn close_entities(entities:&[Value],catalog:&Catalog)->Result<(BTreeMap<SecurityRef,TypeBinding>,BTreeMap<SecurityRef,Value>)>{
  let mut types=BTreeMap::new();let mut fields=BTreeMap::new();
   for entity in entities{
@@ -49,12 +68,7 @@ pub(crate) fn close_entities(entities:&[Value],catalog:&Catalog)->Result<(BTreeM
    }
    let mut record_members=BTreeSet::new();for member in record["members"].as_array().ok_or_else(fail)?{if !record_members.insert(SecurityRef::local(&reference.document_id,member)?){return Err(fail());}}
    if record_members!=declared{return Err(fail());}
-   let definitions=record["keys"].as_array().ok_or_else(fail)?;let matching:Vec<_>=definitions.iter().filter(|k|k["id"]==entity["keyId"]).collect();if matching.len()!=1{return Err(fail());}let key=matching[0];members(key,&["id","name","fields","primary"])?;
-   if definitions.iter().any(|k|k.get("primary").is_some_and(|p|!p.is_boolean()))||definitions.iter().filter(|k|k["primary"]==true).count()>1{return Err(fail());}
-   let mut keys=Vec::new();let mut unique=BTreeSet::new();for f in key["fields"].as_array().ok_or_else(fail)?{
-    let r=SecurityRef::local(&reference.document_id,f)?;
-    if !declared.contains(&r)||!unique.insert(r.clone())||locate(catalog,&r)?["nullability"]!="required"{return Err(fail());}keys.push(r);
-   }
+   let keys=authored_key_fields(catalog,&reference,entity["keyId"].as_str().ok_or_else(fail)?)?;
    if keys.is_empty()||types.insert(reference,TypeBinding{source:entity.clone(),fields:declared,keys}).is_some(){return Err(fail());}
   }
  Ok((types,fields))
