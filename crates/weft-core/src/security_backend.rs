@@ -143,6 +143,27 @@ pub trait SecurityBackend: Send + Sync + 'static {
     fn manifest_json(&self) -> &str;
     fn lower(&self, context: &SecurityBackendContext<'_>) -> Result<SecurityLowering>;
 }
+/// Immutable compiler-checked candidate declarations, not native execution authority.
+/// There is no public constructor or deserializer. Hosts still need authenticated
+/// source/caller admission, complete native coverage and guarded result release.
+pub struct CheckedSecurityCandidate {
+    candidate: SecurityLowering,
+    context_sha256: String,
+    manifest_json: String,
+    result_contract_json: String,
+    result_contract_sha256: String,
+    physical_plan_json: String,
+    physical_plan_sha256: String,
+}
+impl CheckedSecurityCandidate {
+    pub fn candidate(&self) -> &SecurityLowering { &self.candidate }
+    pub fn context_sha256(&self) -> &str { &self.context_sha256 }
+    pub fn manifest_json(&self) -> &str { &self.manifest_json }
+    pub fn result_contract_json(&self) -> &str { &self.result_contract_json }
+    pub fn result_contract_sha256(&self) -> &str { &self.result_contract_sha256 }
+    pub fn physical_plan_json(&self) -> &str { &self.physical_plan_json }
+    pub fn physical_plan_sha256(&self) -> &str { &self.physical_plan_sha256 }
+}
 struct Registration { manifest_json: String, manifest: SecurityManifest, backend: Box<dyn SecurityBackend> }
 /// Immutable original registry selection. Custody only; not semantic admission.
 #[derive(Clone, Copy)]
@@ -192,6 +213,39 @@ impl SecurityRegistry {
         }
         self.check_candidate_declaration(context,candidate,allow_candidate)?;
         context.check_postgresql_query_placeholders(&candidate.lowering)
+    }
+    /// Invoke a pure trusted PostgreSQL candidate lowerer exactly once after
+    /// original source, registration and selected semantic-domain admission.
+    /// Entire returned declarations are checked before any output is retained.
+    /// Success does not open public security compilation or native execution.
+    pub fn prepare_postgresql_candidate(
+        &self, context: &SecurityBackendContext<'_>, capability_ids: &[String],
+        allow_candidate: bool,
+    ) -> Result<CheckedSecurityCandidate> {
+        context.profiled_query().require_sources(context.logical_plan(),context.catalog(),context.binding_json(),context.backend_id(),context.backend_version(),context.target_profile())?;
+        let declaration=self.select_declaration(context)?;
+        if declaration.target().engine!="postgresql" || declaration.target().engine_version!="18.6"
+            || declaration.target().session_settings!=serde_json::json!({"standard_conforming_strings":"on","backslash_quote":"safe_encoding","server_encoding":"UTF8","client_encoding":"UTF8"}) {
+            return Err(fail("Exact PostgreSQL18.6 target declaration required"));
+        }
+        let coverage=crate::security_semantic_coverage::issue(context,declaration,capability_ids,allow_candidate)?;
+        let demands=crate::security_obligation_sources::issue_demands(&coverage)?;
+        let _occurrences=crate::security_rule_occurrences::issue(&demands)?;
+        let candidate=declaration.registration.backend.lower(context).map_err(|d|callback_error(d,context.query().sql().len()))?;
+        let returned: BTreeSet<_>=candidate.capability_ids.iter().collect();
+        let selected: BTreeSet<_>=capability_ids.iter().collect();
+        if candidate.capability_ids.len()!=returned.len() || returned!=selected {
+            return Err(fail("Lowering changed selected capability identities"));
+        }
+        self.check_postgresql_candidate_declaration(context,&candidate,allow_candidate)?;
+        context.profiled_query().require_sources(context.logical_plan(),context.catalog(),context.binding_json(),context.backend_id(),context.backend_version(),context.target_profile())?;
+        let contract_json=serde_json::to_string(&candidate.result_contract).map_err(|_|fail("Result contract serialization refused"))?;
+        if contract_json.len()>4_000_000 { return Err(fail("Result contract exceeds bounded transport")); }
+        let contract_sha256=crate::json::sha256(contract_json.as_bytes());
+        let physical_json=serde_json::to_string(&candidate.lowering).map_err(|_|fail("Physical plan serialization refused"))?;
+        if physical_json.len()>16_000_000 {return Err(fail("Physical plan exceeds bounded transport"));}
+        let physical_sha256=crate::json::sha256(physical_json.as_bytes());
+        Ok(CheckedSecurityCandidate{candidate,context_sha256:context.execution_query_context_sha256(),manifest_json:declaration.manifest_json().to_string(),result_contract_json:contract_json,result_contract_sha256:contract_sha256,physical_plan_json:physical_json,physical_plan_sha256:physical_sha256})
     }
     pub(crate) fn select_declaration(&self, context: &SecurityBackendContext<'_>) -> Result<RegisteredSecurityDeclaration<'_>> {
         self.declaration_for(context.backend_id,context.backend_version,context.target_profile)

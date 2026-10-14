@@ -1,0 +1,24 @@
+{
+  "baseCommit": "63ab931ef24a50175d350ac3bb532b609d0379dd",
+  "date": "2026-10-13",
+  "scope": "Compiler-owned candidate declaration preparation; native/public security activation remains blocked. B-008 and all132 required backend cases remain open.",
+  "tests": {
+    "coreLibraryPassed": 269,
+    "securityAdmissionPassed": 74,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0
+  },
+  "sourceSha256": {
+    "crates/weft-core/src/security_backend.rs": "24f995facc5af1dd40219af4afc7ea65cad2a44e048a78b57e777a39b9b063f7",
+    "crates/weft-core/tests/security_admission.rs": "f6875fc07389d7d7ef605cfb4cf1efaef50e87e3806d715efa2da54dde547c92",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "9dfba9b54b57bfd0b14656f3c1a60c412a2e1d100d1bc9a11b80d1b287f49064",
+    "docs/helix/04-build/implementation-plan.md": "6047a353945acda367408a936f23cbddb4eb472f86b9295570341e5a16678317"
+  },
+  "logSha256": {
+    "weft-b008-core-suite.log": "e9a949fed312b4d10b84d5cda58c62bd8ffbdbb120b836f683b8ec19d17790c6",
+    "weft-b008-admission-suite.log": "2deec9092a1107ecd5ae0a283e1e3da4dd210b6517fe0ce97e31bfa4555df0be",
+    "weft-b008-checked-dispatch-final.log": "0f89252e327309ec7313fa59ff6ec7697ae2e88f6e1cc3fee42eac74ae5d1b91"
+  },
+  "initialAttempt": "An in-progress test compile saw pre-change library with post-change test method names; clean final source rebuild passed. Sandbox dependency retrieval refused DNS; same locked invocation reran with authorized network."
+}

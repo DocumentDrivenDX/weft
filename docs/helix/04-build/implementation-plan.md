@@ -1445,3 +1445,10 @@ Astra Ultra independently passes22 actual loaded Python-extension controls, incl
 ### Shared exact timestamp equality — 2026-10-14
 
 Compile/IR/backend026 explicitly select committed UMF exact-instant1.0 without changing generic timestamp/facets/Key meaning. Backend0.4.29 binds native59, retains old28/58, dispatches exact equality by family, validates original operands before emission and preserves typed slot/occurrence custody. Basic public Truss07/08 workflows cover precise offset equality, optional values, joins/pages/read-only transactions; matching timestamp/binary/populated upgrade checks pass5/48.058s. Workspace Rust checking, one targeted exact-instant test and11-package boundaries pass. Astra source review is clear after the three Truss version/upgrade-custody fixes. Weft24 release uses the existing five-platform workflow; Ashlar admission remains unavailable.
+
+
+### B-008 compiler-owned lowering preparation — 2026-10-13
+
+A pure exact PostgreSQL18.6 registry dispatch now checks original owner source/profile/semantic selection before one lowering callback and validates the entire returned declaration before retaining it. Immutable checked snapshots retain exact manifest, plan and result-contract bytes/hashes and original context fingerprint. The original public compiler still refuses activation until native mapping/lineage, authenticated caller/source custody and guarded release close. The security chat owns the Truss native admission/release path; Weft owns compiler binding/lineage/dispatch. No existing dirty checkout was reset or overwritten.
+
+The expanded adversarial boundary test passes, and all74 original security admission tests pass with no filtered/ignored cases. Tests distinguish zero-call initial refusals, one-call valid preparation and whole-result refusal for changed slots, result name, capabilities or omitted obligations. These are compiler correspondence tests, not native enforcement or B-008 completion. Full original132-case scope remains open; native typed graph correspondence and public activation remain the next integration gates.

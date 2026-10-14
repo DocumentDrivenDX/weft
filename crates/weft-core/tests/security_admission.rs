@@ -1491,6 +1491,35 @@ fn combined_candidate_checks_borrow_original_registration_without_backend_dispat
   let mut pg_manifest=manifest.clone();pg_manifest["targetProfiles"][0]["engine"]=json!("postgresql");pg_manifest["targetProfiles"][0]["engineVersion"]=json!("18.6");pg_manifest["targetProfiles"][0]["sessionSettings"]=json!({"standard_conforming_strings":"on","backslash_quote":"safe_encoding","server_encoding":"UTF8","client_encoding":"UTF8"});
   let mut pg=SecurityRegistry::default();pg.register(RegistrationFixture(pg_manifest.to_string()))?;
   pg.check_postgresql_candidate_declaration(ctx,&candidate,true)?;
+  use std::sync::{Arc,atomic::{AtomicUsize,Ordering}};
+  let calls=Arc::new(AtomicUsize::new(0));
+  let mut dispatched=SecurityRegistry::default();
+  dispatched.register(CheckedDispatchFixture{manifest:pg_manifest.to_string(),candidate:candidate.clone(),calls:calls.clone()})?;
+  assert!(dispatched.prepare_postgresql_candidate(ctx,&candidate.capability_ids,false).is_err());
+  assert!(dispatched.prepare_postgresql_candidate(ctx,&["foreign".into()],true).is_err());
+  assert_eq!(calls.load(Ordering::SeqCst),0);
+  let checked=dispatched.prepare_postgresql_candidate(ctx,&candidate.capability_ids,true)?;
+  assert_eq!(calls.load(Ordering::SeqCst),1);
+  assert_eq!(checked.context_sha256(),ctx.execution_query_context_sha256());
+  assert_eq!(checked.manifest_json(),pg_manifest.to_string());
+  assert_eq!(checked.result_contract_sha256(),sha256(checked.result_contract_json().as_bytes()));
+  assert_eq!(serde_json::from_str::<Value>(checked.result_contract_json()).unwrap(),serde_json::to_value(&candidate.result_contract).unwrap());
+  assert_eq!(checked.candidate().lowering.execution.sql,"SELECT 1");
+  assert_eq!(checked.physical_plan_sha256(),sha256(checked.physical_plan_json().as_bytes()));
+  assert_eq!(serde_json::from_str::<Value>(checked.physical_plan_json()).unwrap(),serde_json::to_value(&candidate.lowering).unwrap());
+  for mutation in 0..5 {
+   let mut bad=candidate.clone();match mutation {
+    0=>bad.lowering.execution.sql="SELECT $1".into(),
+    1=>bad.result_contract.columns[0].output_name="substituted".into(),
+    2=>bad.capability_ids=vec!["foreign".into()],
+    3=>bad.obligations.clear(),
+    _=>bad.capability_ids.push(bad.capability_ids[0].clone())
+   }
+   let mut registry=SecurityRegistry::default();registry.register(CheckedDispatchFixture{manifest:pg_manifest.to_string(),candidate:bad,calls:calls.clone()})?;
+   assert!(registry.prepare_postgresql_candidate(ctx,&candidate.capability_ids,true).is_err(),"unchecked mutation {mutation}");
+  }
+  assert_eq!(calls.load(Ordering::SeqCst),6);
+
   for sql in ["SELECT $1","SELECT $0","SELECT $01","SELECT $1abc","SELECT $1é"] {
    let mut bad=candidate.clone();bad.lowering.execution.sql=sql.into();
    // Generic declaration shape cannot establish native ordinal coverage.
@@ -1538,4 +1567,16 @@ fn combined_candidate_checks_borrow_original_registration_without_backend_dispat
   let mut supported=manifest.clone();supported["capabilities"][0]["status"]=json!("supported");supported["evidence"]=json!(["declared-fixture-only"]);supported["capabilities"][0]["evidence"]=json!(["declared-fixture-only"]);let mut other=SecurityRegistry::default();other.register(RegistrationFixture(supported.to_string()))?;other.check_candidate_declaration(ctx,&candidate,false)?;
   Ok(registry)
  });refused(serde_json::from_str(&raw).unwrap(),"WFT-SECURITY-LOWERING-UNSUPPORTED");
+}
+
+struct CheckedDispatchFixture {
+ manifest:String,
+ candidate:weft_core::security_lowering::SecurityLowering,
+ calls:std::sync::Arc<std::sync::atomic::AtomicUsize>,
+}
+impl weft_core::security_backend::SecurityBackend for CheckedDispatchFixture {
+ fn manifest_json(&self)->&str {&self.manifest}
+ fn lower(&self,_:&weft_core::security_backend::SecurityBackendContext<'_>)->weft_core::error::Result<weft_core::security_lowering::SecurityLowering>{
+  self.calls.fetch_add(1,std::sync::atomic::Ordering::SeqCst);Ok(self.candidate.clone())
+ }
 }
