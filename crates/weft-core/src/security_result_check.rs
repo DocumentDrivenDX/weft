@@ -36,14 +36,23 @@ impl Budget {
 #[derive(PartialEq)]
 struct Class<'a> { output:&'a SecurityRef,version:&'a str,domain:&'a Value,literal:Option<ScalarLiteral>,sources:BTreeSet<&'a str> }
 pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultContract)->Result<()> {
+ check_version(ctx,contract,"weft.security.result-contract/0.1.0")
+}
+pub(crate) fn check_version(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultContract,version:&str)->Result<()> {
  ctx.profiled_query().require_sources(ctx.logical_plan(),ctx.catalog(),ctx.binding_json(),ctx.backend_id(),ctx.backend_version(),ctx.target_profile())?;
  let requirements=ctx.requirements();
- if contract.version!="weft.security.result-contract/0.1.0"||contract.encoding!="weft.security.cells/0.1.0"||contract.columns.len()!=requirements.outputs().len()||contract.columns.is_empty()||contract.columns.len()>256{return Err(fail());}
+ if contract.version!=version||contract.encoding!=if version==crate::security_aggregate_results::VERSION{crate::security_aggregate_results::ENCODING}else{"weft.security.cells/0.1.0"}||contract.columns.len()!=requirements.outputs().len()||contract.columns.is_empty()||contract.columns.len()>256{return Err(fail());}
  let ontology=SecurityOntologyClosure::read(ctx.logical_plan().source(),ctx.catalog())?;
  let mut budget=Budget{work:1_000_000,bytes:16_000_000};
  for (expected,column) in requirements.outputs().iter().zip(&contract.columns) {
   budget.charge(0)?;budget.text(&column.output_name)?;
-  if column.position!=expected.position()||column.output_name!=expected.output().name||column.source_fields.len()!=1||column.outcomes.is_empty()||column.outcomes.len()>256{return Err(fail());}
+  if column.position!=expected.position()||column.output_name!=expected.output().name||column.outcomes.is_empty()||column.outcomes.len()>256{return Err(fail());}
+  if matches!(expected.output().expression,Expression::Count{..}|Expression::Sum{..}) {
+   if version!="weft.security.result-contract/0.2-candidate" {return Err(fail());}
+   crate::security_aggregate_results::check_column(ctx,expected.output(),column,&mut budget)?;
+   continue;
+  }
+  if column.source_fields.len()!=1{return Err(fail());}
   let (scan,identity)=match &expected.output().expression {Expression::Field{scan,identity}=>(scan,identity),_=>return Err(fail())};
   budget.identity(&column.source_fields[0])?;if !same(&column.source_fields[0],identity){return Err(fail());}
   let field=SecurityRef{document_id:identity.document_id.clone(),module_id:identity.module.clone(),element_id:identity.element.clone()};
@@ -74,9 +83,10 @@ pub(crate) fn check(ctx:&SecurityBackendContext<'_>,contract:&SecurityResultCont
   if required==0||required>256||required!=column.outcomes.len(){return Err(fail());}
   let mut ids=BTreeSet::new();let mut seen_classes=BTreeSet::new();let mut seen_original=false;let mut seen_withheld=false;let mut seen_absent=false;
   for outcome in &column.outcomes {budget.charge(0)?;
-   let id=match outcome {SecurityResultOutcome::Original{id,..}|SecurityResultOutcome::Transformed{id,..}|SecurityResultOutcome::Withheld{id}|SecurityResultOutcome::Absent{id}=>id};
+   let id=match outcome {SecurityResultOutcome::Computed{id,..}|SecurityResultOutcome::Original{id,..}|SecurityResultOutcome::Transformed{id,..}|SecurityResultOutcome::Withheld{id}|SecurityResultOutcome::Absent{id}=>id};
    budget.text(id)?;if !ids.insert(id){return Err(fail());}
    match outcome {
+    SecurityResultOutcome::Computed{..}=>return Err(fail()),
     SecurityResultOutcome::Original{domain,..}=>{if !original||seen_original||!model_domain(domain,&field,ctx){return Err(fail());}seen_original=true;},
     SecurityResultOutcome::Withheld{..}=>{if !withheld||seen_withheld{return Err(fail());}seen_withheld=true;},
     SecurityResultOutcome::Absent{..}=>{if !absent||seen_absent{return Err(fail());}seen_absent=true;},

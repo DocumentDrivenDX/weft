@@ -1505,3 +1505,10 @@ The new pure guarded handoff combines the original source capsule with distinct 
 ### B-008 query-use guard increment — 2026-10-14
 
 The PostgreSQL candidate now derives original per-scan guards for all five query-use operators, both join occurrences, disclosed withholding and exact original-action permission. Seven targeted guarded tests and six graph regressions pass; private-constructor compile-fail, source/module inventory and governed artifact checks qualify this pure compiler increment. [Receipt](evidence/security-query-use-guards-20261014/receipt.json). Relational SQL lowering, aggregate result contracts, native pre-filter enforcement and all132 cases remain unfinished; the public activation gate stays closed. The aidev-cus Databricks profile exists, but endpoint inventory currently refuses because no cached credentials are present; the user has been asked to sign in without sharing credentials.
+
+
+### B-008 aggregate result candidate — 2026-10-14
+
+A separate computed-result candidate now checks original resolved COUNT/SUM domain and argument lineage, exact tokens, COUNT nonnegativity and SUM empty/grouped null semantics. Original result/registration APIs continue to reject its versions. Compiler tests cover changed lineage/facets, incorrect wrappers, negative/null counts and grouped-null sums; direct projection stays on its existing contract. Evidence is retained under `evidence/security-aggregate-results-20261014/`. Relational lowering, native arithmetic/input authorization and the full132-case acceptance suite remain open.
+
+Read-only approved Databricks inventory confirms configured aidev-cus access and an existing private Ashlar development catalog. Historical evidence qualifies ordinary development custody, not scoped end-user security. The sole visible data-gateway warehouse needs a user decision because Ashlar's plan excludes shared/default compute; no SQL, compute configuration or grants were changed during inventory.

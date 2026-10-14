@@ -223,3 +223,52 @@ fn prohibited_and_foreign_sources_never_produce_query_use_guards() {
  let raw=query_use_request("SELECT r.resourceId FROM Resource r WHERE r.resourceId='RA'",None,false);
  with_security_mapping_context(&raw,|ctx|{let mut source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();source.native_schema_revision="2".into();assert!(prepare_graph_query_use_guards(ctx,&source).is_err());Ok(())}).unwrap();
 }
+fn aggregate_contract(ctx:&weft_core::security_backend::SecurityBackendContext<'_>)->weft_core::security_lowering::SecurityResultContract {
+ use weft_core::{application_ir::Expression,security_lowering::*};
+ SecurityResultContract{version:weft_core::security_aggregate_results::VERSION.into(),encoding:"weft.security.cells/0.2-candidate".into(),columns:ctx.requirements().outputs().iter().map(|output|{
+ if let Expression::Field{identity,..}=&output.output().expression {
+ let identity=SecurityIdentity{document_id:identity.document_id.clone(),revision:identity.revision.clone(),module:identity.module.clone(),element:identity.element.clone()};
+ return SecurityResultColumn{position:output.position(),output_name:output.output().name.clone(),source_fields:vec![identity.clone()],outcomes:vec![SecurityResultOutcome::Original{id:"original".into(),domain:SecurityResultDomain::Model{field:identity}}]};
+ }
+ let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_type}=>(logical_type,Some(&argument.identity)),_=>panic!("aggregate fixture")};
+ SecurityResultColumn{position:output.position(),output_name:output.output().name.clone(),source_fields:source.into_iter().map(|i|SecurityIdentity{document_id:i.document_id.clone(),revision:i.revision.clone(),module:i.module.clone(),element:i.element.clone()}).collect(),outcomes:vec![SecurityResultOutcome::Computed{id:"computed".into(),domain:SecurityResultDomain::Scalar{r#type:t.clone()}}]}
+ }).collect()}
+}
+#[test]
+fn aggregate_result_candidate_preserves_derived_domains_and_old_contract_refusals(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_aggregate_results::*,security_lowering::*};
+ let raw=query_use_request("SELECT COUNT(*), SUM(r.salary) FROM Resource r",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let mut contract=aggregate_contract(ctx);check_aggregate_result_declaration(ctx,&contract)?;
+ assert!(ctx.check_result_declaration(&contract).is_err());
+ let text=serde_json::to_string(&contract).unwrap();let hash=sha256(text.as_bytes());
+ let batch=|count:Value,sum:Value|json!({"version":"weft.security.cells/0.2-candidate","resultContractSha256":hash,"rows":[[{"outcomeId":"computed","disposition":"computed","value":count},{"outcomeId":"computed","disposition":"computed","value":sum}]]}).to_string();
+ for (count,sum) in [(json!({"integerToken":"0"}),Value::Null),(json!({"integerToken":"123456789012345678901234567890"}),json!({"integerToken":"-100000000000000000000000000000"}))]{let batch=batch(count,sum);check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch)?;assert!(ctx.check_result_cells(&contract,&text,&hash,&batch).is_err());}
+ for (count,sum) in [(json!({"integerToken":"-1"}),Value::Null),(Value::Null,Value::Null),(json!({"integerToken":"1.5"}),Value::Null),(json!({"integerToken":"1"}),json!({"decimalToken":"1"})),(json!({"integerToken":"1"}),json!({"integerToken":"1","extra":true}))]{assert!(check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch(count,sum)).is_err());}
+ contract.version="weft.security.result-contract/0.1.0".into();assert!(check_aggregate_result_declaration(ctx,&contract).is_err());assert!(ctx.check_result_declaration(&contract).is_err());
+ contract.version=VERSION.into();if let SecurityResultOutcome::Computed{domain:SecurityResultDomain::Scalar{r#type:t},..}=&mut contract.columns[1].outcomes[0]{t.facets=json!({"range":{"min":{"integerToken":"0"}}});}assert!(check_aggregate_result_declaration(ctx,&contract).is_err());Ok(())
+ }).unwrap();
+}
+#[test]
+fn grouped_sum_rejects_null_and_changed_input_lineage(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_aggregate_results::*};
+ let raw=query_use_request("SELECT SUM(r.salary) FROM Resource r GROUP BY r.resourceId",Some("original-authorized"),true);
+ with_security_mapping_context(&raw,|ctx|{
+ let mut contract=aggregate_contract(ctx);check_aggregate_result_declaration(ctx,&contract)?;let text=serde_json::to_string(&contract).unwrap();let hash=sha256(text.as_bytes());
+ let batch=json!({"version":"weft.security.cells/0.2-candidate","resultContractSha256":hash,"rows":[[{"outcomeId":"computed","disposition":"computed","value":null}]]}).to_string();assert!(check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch).is_err());
+ contract.columns[0].source_fields[0].element="resourceId".into();assert!(check_aggregate_result_declaration(ctx,&contract).is_err());Ok(())
+ }).unwrap();
+}
+
+#[test]
+fn mixed_aggregate_contract_keeps_direct_disclosure_and_computed_outputs_distinct(){
+ use weft_core::{security_mapping_transport::with_security_mapping_context,security_aggregate_results::*};
+ let raw=query_use_request("SELECT r.resourceId, COUNT(*) FROM Resource r GROUP BY r.resourceId",None,false);
+ with_security_mapping_context(&raw,|ctx|{
+ let contract=aggregate_contract(ctx);check_aggregate_result_declaration(ctx,&contract)?;let text=serde_json::to_string(&contract).unwrap();let hash=sha256(text.as_bytes());
+ let mut batch=json!({"version":ENCODING,"resultContractSha256":hash,"rows":[[{"outcomeId":"original","disposition":"original","value":{"string":"RA"}},{"outcomeId":"computed","disposition":"computed","value":{"integerToken":"1"}}]]});
+ check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch.to_string())?;
+ batch["rows"][0][0]["disposition"]=json!("computed");assert!(check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch.to_string()).is_err());
+ batch["rows"][0][0]["disposition"]=json!("original");batch["rows"][0][1]["outcomeId"]=json!("original");assert!(check_aggregate_result_cells(ctx,&contract,&text,&hash,&batch.to_string()).is_err());Ok(())
+ }).unwrap();
+}

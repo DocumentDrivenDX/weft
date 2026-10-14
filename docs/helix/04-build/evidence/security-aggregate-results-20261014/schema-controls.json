@@ -1,0 +1,11 @@
+{
+  "controls": [
+    "new computed shape",
+    "old schema rejects candidate",
+    "old schema rejects computed outcome at old version",
+    "new schema rejects old version",
+    "new schema rejects injected authority",
+    "new schema rejects computed value omission"
+  ],
+  "passed": 6
+}

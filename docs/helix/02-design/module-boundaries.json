@@ -1159,7 +1159,8 @@
             "mod:security_lowering",
             "mod:security_requirements",
             "mod:security_parameter_sources",
-            "mod:security_source_context"
+            "mod:security_source_context",
+            "mod:security_aggregate_results"
           ],
           "pathReferences": []
         },
@@ -1286,6 +1287,16 @@
           "path": "crates/weft-core/src/resolve.rs",
           "publicDeclarations": [
             "fn:resolve"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/security_aggregate_results.rs",
+          "publicDeclarations": [
+            "const:ENCODING",
+            "const:VERSION",
+            "fn:check_aggregate_result_declaration",
+            "fn:check_aggregate_result_cells"
           ],
           "pathReferences": []
         },
