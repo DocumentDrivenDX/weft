@@ -59,9 +59,13 @@ impl Collector<'_>{
  }Ok(())}
 }
 pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_query_uses::QueryUse,Option<String>)])->Result<Vec<ScanObligations>>{
+ derive_with_actions(query,plan,catalog,primary_action,uses,&[])
+}
+pub(crate) fn derive_with_actions(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_query_uses::QueryUse,Option<String>)],extra:&[(String,String)])->Result<Vec<ScanObligations>>{
+ if extra.len()>256||extra.iter().any(|(scan,_)|!query.scans().contains_key(scan)){return Err(fail());}
  query.require_sources(plan,catalog)?;let closure=SecurityOntologyClosure::read(plan.source(),catalog)?;let mut budget=Budget{remaining:1_000_000,text_remaining:16_000_000};let mut scans=Vec::new();
  for (scan,target) in query.scans(){
-  let mut actions=BTreeSet::from([primary_action.to_string()]);for (usage,original_action) in uses{if &usage.scan==scan{if let Some(action)=original_action{actions.insert(action.clone());}}}
+  let mut actions=BTreeSet::from([primary_action.to_string()]);for (owner,action) in extra{if owner==scan{actions.insert(action.clone());}}for (usage,original_action) in uses{if &usage.scan==scan{if let Some(action)=original_action{actions.insert(action.clone());}}}
   let mut obligations=Vec::new();for action in actions{
    budget.reference(target)?;budget.text(action.len())?;let mut collector=Collector{resource:target.clone(),variables:BTreeMap::new(),closure:&closure,budget:&mut budget,result:ActionObligations{action:action.clone(),rule_ids:Vec::new(),keys:BTreeMap::new(),fields:BTreeMap::new(),context:BTreeSet::new(),associations:BTreeSet::new()}};
    collector.key(target)?;collector.key(closure.subject())?;

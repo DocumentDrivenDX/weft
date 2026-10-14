@@ -127,6 +127,20 @@ pub fn with_security_mapping_context<T>(raw:&str,callback:impl for<'a> FnOnce(&c
     callback(&context).map_err(|d|crate::security_backend::callback_error(d,request.sql.len()))
 }
 
+/// Separate original authored relationship context. Source admission is not native execution authority.
+pub fn with_security_relationship_context<T>(raw:&str,callback:impl for<'a> FnOnce(&crate::security_backend::SecurityBackendContext<'a>)->Result<T>)->Result<T> {
+    let request=read_request(raw)?;
+    let catalog=Catalog::prepare_security(request.modules)?;
+    let packet=SecuritySourcePacket::read(&request.policy_json,&request.ontology_json,&catalog)?;
+    let plan=SecurityLogicalPlan::read(packet,&catalog)?;
+    let profile=SecurityQueryProfile::read_relationship_candidate(&request.query_profile_json,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    parameter_payload_budget(&request.sql,&request.parameters,MAX_RESPONSE_BYTES)?;
+    let query=SecurityResolvedQuery::resolve_relationship_candidate(&request.sql,&catalog,&plan,request.parameters,request.read_profile)?;
+    let profiled=profile.admit_resolved_query(&query,&plan,&catalog,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    let context=crate::security_backend::SecurityBackendContext::new(&catalog,&plan,&query,&profiled,&request.binding_json,&request.backend_id,&request.backend_version,&request.target_profile)?;
+    callback(&context).map_err(|d|crate::security_backend::callback_error(d,request.sql.len()))
+}
+
 /// Pure original-ontology subject Record/Key/source selection correspondence.
 /// No native principal binding, key existence, issuer or release authority.
 pub fn inspect_security_mapping_subject_key(raw:&str,selection_json:&str)->Result<()> {

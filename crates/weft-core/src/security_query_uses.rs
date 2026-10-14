@@ -9,8 +9,10 @@ pub struct QueryUse{pub scan:String,pub target:SecurityRef,pub field:SecurityRef
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord)]
 pub struct Projection{pub scan:String,pub target:SecurityRef,pub field:SecurityRef}
 #[derive(Debug)]
-pub struct SecurityResolvedQuery{sql:String,order_descending:Vec<bool>,query:app::Plan,model_inputs:Vec<ModuleInput>,policy_json:String,ontology_json:String,scans:BTreeMap<String,SecurityRef>,uses:Vec<QueryUse>,projections:Vec<Projection>}
+pub struct SecurityResolvedQuery{relationship_filters:Vec<usize>,sql:String,order_descending:Vec<bool>,query:app::Plan,model_inputs:Vec<ModuleInput>,policy_json:String,ontology_json:String,scans:BTreeMap<String,SecurityRef>,uses:Vec<QueryUse>,projections:Vec<Projection>}
 impl SecurityResolvedQuery{
+ /// Actual WHERE predicate positions, retained by the owner; not caller annotations.
+ pub fn relationship_filters(&self)->&[usize]{&self.relationship_filters}
  pub fn sql(&self)->&str{&self.sql}
  pub fn order_descending(&self)->&[bool]{&self.order_descending}
  pub fn application_plan(&self)->&app::Plan{&self.query}
@@ -19,6 +21,10 @@ impl SecurityResolvedQuery{
  pub fn projections(&self)->&[Projection]{&self.projections}
  pub fn require_sources(&self,security:&SecurityLogicalPlan,catalog:&Catalog)->Result<()>{security.require_catalog(catalog)?;if self.model_inputs!=catalog.inputs()||self.policy_json!=security.source().policy_json()||self.ontology_json!=security.source().ontology_json(){return Err(fail());}Ok(())}
  pub fn resolve(sql:&str,catalog:&Catalog,security:&SecurityLogicalPlan,parameters:crate::application_resolve::Parameters,profile:Option<app::ReadProfile>)->Result<Self>{
+  Self::resolve_selected(sql,catalog,security,parameters,profile,false)
+ }
+ pub fn resolve_relationship_candidate(sql:&str,catalog:&Catalog,security:&SecurityLogicalPlan,parameters:crate::application_resolve::Parameters,profile:Option<app::ReadProfile>)->Result<Self>{Self::resolve_selected(sql,catalog,security,parameters,profile,true)}
+ fn resolve_selected(sql:&str,catalog:&Catalog,security:&SecurityLogicalPlan,parameters:crate::application_resolve::Parameters,profile:Option<app::ReadProfile>,relationships:bool)->Result<Self>{
   security.require_catalog(catalog)?;if sql.len()>4_000_000{return Err(fail());}
   let (syntax,order_descending)=crate::application_syntax::parse_security(sql)?;
   let mut query=crate::application_resolve::resolve(catalog,syntax,parameters,profile)?;
@@ -45,7 +51,20 @@ impl SecurityResolvedQuery{
   }Ok(())}
   let mut uses=BTreeSet::new();let mut projections=BTreeSet::new();
   for join in &query.joins{for p in &join.on{predicate(p,QueryOperator::Join,&mut uses,&scans,&closure,catalog)?;}}
-  for p in &query.filters{predicate(p,QueryOperator::Predicate,&mut uses,&scans,&closure,catalog)?;}
+  let mut relationship_filters=Vec::new();
+  for (index,p) in query.filters.iter().enumerate(){
+   if let app::Predicate::HasRelated{scan,relationship,key}=p {
+    if !relationships||relationship.inverse||relationship.target_lifecycle!="independent"||key.len()!=relationship.target_key.fields.len(){return Err(unsupported());}
+    if scans.get(scan)!=Some(&reference(&relationship.from,catalog)?){return Err(fail());}
+    let target=reference(&relationship.to,catalog)?;if !closure.types.contains_key(&target){return Err(fail());}
+    let terminal=format!("t{index}");if scans.insert(terminal.clone(),target.clone()).is_some(){return Err(fail());}
+    for identity in &relationship.target_key.fields {
+     let field=reference(identity,catalog)?;if !closure.types[&target].fields.contains(&field){return Err(fail());}
+     uses.insert(QueryUse{scan:terminal.clone(),target:target.clone(),field,operator:QueryOperator::Predicate});
+    }
+    relationship_filters.push(index);
+   }else{predicate(p,QueryOperator::Predicate,&mut uses,&scans,&closure,catalog)?;}
+  }
   for f in &query.groups{add(f,QueryOperator::Group,&mut uses,&scans,&closure,catalog)?;}
   for f in &query.order{add(f,QueryOperator::Order,&mut uses,&scans,&closure,catalog)?;}
   for output in &query.outputs{match &output.expression{
@@ -55,7 +74,7 @@ impl SecurityResolvedQuery{
    app::Expression::CompleteRelatedKeys{..}|app::Expression::RelatedKeys{..}|app::Expression::NativeMetadata{..}=>return Err(unsupported())
   }}
   if projections.len()>4096||scans.len()>256{return Err(fail());}
-  Ok(Self{sql:sql.into(),order_descending,query,model_inputs:catalog.inputs().to_vec(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
+  Ok(Self{relationship_filters,sql:sql.into(),order_descending,query,model_inputs:catalog.inputs().to_vec(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
  }
 }
 

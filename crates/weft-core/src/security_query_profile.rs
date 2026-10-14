@@ -118,7 +118,16 @@ impl SecurityQueryProfile{
   self.require_sources(plan,catalog,binding_json,backend_id,backend_version,target_profile)?;query.require_sources(plan,catalog)?;
   if query.scans().values().any(|t|!self.spec.targets.contains(t)){return Err(fail());}
   let uses=query.uses().iter().map(|u|Ok((u.clone(),self.derive(&u.target,&u.field,u.operator)?.original_action))).collect::<Result<Vec<_>>>()?;
-  let obligations=crate::security_scan_obligations::derive(query,plan,catalog,&self.spec.action,&uses)?;
+  let mut selected=BTreeSet::new();let mut extra=Vec::new();
+  for index in query.relationship_filters(){
+   let crate::application_ir::Predicate::HasRelated{scan,relationship,..}=&query.application_plan().filters[*index] else{return Err(fail());};
+   let key=RelationshipRef{document_id:relationship.identity.document_id.clone(),module_id:relationship.identity.module.clone(),relationship_id:relationship.identity.relationship.clone()};
+   let entry=self.spec.relationships.iter().find(|e|e.relationship==key).ok_or_else(fail)?;
+   selected.insert(key);extra.push((scan.clone(),entry.observation_action.clone()));
+   extra.push((format!("t{index}"),entry.target_action.clone()));
+  }
+  if selected.len()!=self.spec.relationships.len(){return Err(fail());}
+  let obligations=crate::security_scan_obligations::derive_with_actions(query,plan,catalog,&self.spec.action,&uses,&extra)?;
   Ok(SecurityProfiledQuery{query,profile:self,uses,obligations})
  }
  /// Construct or verify query annotations from this exact profile, preserving all
@@ -169,6 +178,18 @@ mod tests{
   assert_eq!(profile["ontologySha256"],json!(sha256(plan.source().ontology_json().as_bytes())));
   let candidate=|value:&Value|SecurityQueryProfile::read_relationship_candidate(&value.to_string(),&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only");
   let admitted=candidate(&profile).unwrap();assert_eq!(admitted.source_json(),profile.to_string());
+  let sql="SELECT r.resourceId FROM Resource r WHERE HAS_RELATED(r.relatedResources,KEY('RB'))";
+  assert!(crate::security_query_uses::SecurityResolvedQuery::resolve(sql,&catalog,&plan,BTreeMap::new(),None).is_err());
+  let query=crate::security_query_uses::SecurityResolvedQuery::resolve_relationship_candidate(sql,&catalog,&plan,BTreeMap::new(),None).unwrap();
+  assert_eq!(query.relationship_filters(),&[0]);assert_eq!(query.scans().len(),2);
+  let profiled=admitted.admit_resolved_query(&query,&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only").unwrap();
+  let source=profiled.obligations().iter().find(|o|o.scan()=="s0").unwrap();
+  assert!(source.actions().iter().any(|a|a.action()=="read"));
+  assert!(source.actions().iter().any(|a|a.action()=="observeResourceRelations"&&a.rule_ids().iter().any(|r|r=="resource-relationship-observer")));
+  let terminal=profiled.obligations().iter().find(|o|o.scan()=="t0").unwrap();assert!(terminal.actions().iter().any(|a|a.action()=="read"));
+  let ordinary=crate::security_query_uses::SecurityResolvedQuery::resolve("SELECT r.resourceId FROM Resource r",&catalog,&plan,BTreeMap::new(),None).unwrap();
+  assert!(admitted.admit_resolved_query(&ordinary,&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only").is_err());
+
   assert!(SecurityQueryProfile::read(&profile.to_string(),&plan,&catalog,binding,"truss.postgresql","unqualified","fixture-only").is_err());
   for (key,value) in [("observationAction","read"),("observationAction","undeclared"),("targetAction","observeResourceRelations"),("operator","relatedKeys")] {
    let mut changed=profile.clone();changed["relationships"][0][key]=json!(value);assert!(candidate(&changed).is_err(),"{key}");

@@ -1636,6 +1636,7 @@
             "fn:inspect_security_mapping_result_cells",
             "fn:inspect_security_mapping_result_facts",
             "fn:with_security_mapping_context",
+            "fn:with_security_relationship_context",
             "fn:inspect_security_mapping_subject_key",
             "fn:inspect_security_mapping_subject_key_json",
             "fn:prepare_security_mapping_json"
@@ -1787,6 +1788,7 @@
             "field:target",
             "field:field",
             "struct:SecurityResolvedQuery",
+            "fn:relationship_filters",
             "fn:sql",
             "fn:order_descending",
             "fn:application_plan",
@@ -1794,7 +1796,8 @@
             "fn:uses",
             "fn:projections",
             "fn:require_sources",
-            "fn:resolve"
+            "fn:resolve",
+            "fn:resolve_relationship_candidate"
           ],
           "pathReferences": []
         },
