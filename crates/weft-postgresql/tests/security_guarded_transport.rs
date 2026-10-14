@@ -427,3 +427,24 @@ fn relational_guard_stages_keep_operand_evaluation_after_capture_validation(){
  with_security_mapping_context(&raw,|ctx|{let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();let program=prepare_relational_graph_sql(ctx,&source)?;for check in program.checks(){assert_eq!(check["stage"],if check["failureCode"]=="WFT-SECURITY-GROUP-DISCLOSURE"{"afterOperandValidation"}else{"beforeOperandCapture"});}assert!(program.checks().iter().any(|c|c["stage"]=="afterOperandValidation"));Ok(())}).unwrap();
  let prepared=prepare_guarded_relational_candidate(&raw).unwrap();let mut changed:Value=serde_json::from_str(prepared.json()).unwrap();let check=changed["checks"].as_array_mut().unwrap().iter_mut().find(|c|c["stage"]=="afterOperandValidation").unwrap();check["stage"]=json!("beforeOperandCapture");let input=json!({"version":"weft.truss.security.relational-result/0.2-candidate","sourceRequestJson":raw,"sourceOutputJson":changed.to_string()+"\n","operandBatchJson":"{}","batchJson":"{}"});assert!(inspect_guarded_relational_result(&input.to_string()).is_err());
 }
+
+#[test]
+fn security_descending_order_retains_guarded_selection_and_old_registration_refusal(){
+ use weft_core::security_mapping_transport::with_security_mapping_context;
+ use weft_postgresql::security_relational_sql::prepare_relational_graph_sql;
+ for sql in ["SELECT r.resourceId FROM Resource r ORDER BY r.resourceId DESC LIMIT 1",
+ "SELECT r.salary,SUM(r.salary) FROM Resource r GROUP BY r.salary ORDER BY r.salary DESC LIMIT 1"] {
+  let raw=query_use_request(sql,Some("original-authorized"),true);
+  with_security_mapping_context(&raw,|ctx|{
+   assert_eq!(ctx.query().order_descending(),&[true]);
+   assert!(ctx.query().application_plan().required_capabilities.iter().any(|c|c=="order.desc"));
+   let source:GraphSource=serde_json::from_str(ctx.binding_json()).unwrap();
+   let plan=prepare_relational_graph_sql(ctx,&source)?;
+   assert!(plan.sql().contains("DESC NULLS FIRST LIMIT 1"));
+   assert!(plan.sql().contains("AS MATERIALIZED"));
+   assert!(plan.checks().iter().any(|c|c["failureCode"]=="WFT-SECURITY-QUERY-USE"));
+   Ok(())
+  }).unwrap();
+  assert!(prepare_guarded_graph_candidate(&raw).is_err());
+ }
+}

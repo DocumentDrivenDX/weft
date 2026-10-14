@@ -152,6 +152,13 @@ fn predicates(p: &mut Parser) -> Result<Vec<Predicate>> {
     Ok(predicates)
 }
 pub fn parse(sql: &str) -> Result<Query> {
+    parse_selected(sql, false).map(|(query, _)| query)
+}
+/// Security candidate parser; historical application registrations retain ASC only.
+pub(crate) fn parse_security(sql: &str) -> Result<(Query, Vec<bool>)> {
+    parse_selected(sql, true)
+}
+fn parse_selected(sql: &str, descending: bool) -> Result<(Query, Vec<bool>)> {
     let mut p = Parser::new(sql)?;
     p.word("select")?;
     let mut outputs = Vec::new();
@@ -248,14 +255,17 @@ pub fn parse(sql: &str) -> Result<Query> {
         vec![]
     };
     let mut order = Vec::new();
+    let mut order_descending = Vec::new();
     if p.peek_word("order") {
         p.word("order")?;
         p.word("by")?;
         loop {
             order.push(p.column()?);
-            if p.peek_word("asc") {
+            let desc = descending && p.peek_word("desc");
+            if desc { p.word("desc")?; } else if p.peek_word("asc") {
                 p.word("asc")?;
             }
+            order_descending.push(desc);
             if !p.peek_symbol(',') {
                 break;
             }
@@ -269,7 +279,7 @@ pub fn parse(sql: &str) -> Result<Query> {
         None
     };
     p.finish_application()?;
-    Ok(Query {
+    Ok((Query {
         outputs,
         source,
         predicates,
@@ -277,5 +287,21 @@ pub fn parse(sql: &str) -> Result<Query> {
         groups,
         order,
         limit,
-    })
+    }, order_descending))
+}
+
+#[cfg(test)]
+mod security_order_tests {
+    #[test]
+    fn descending_is_selected_only_for_security_and_preserves_each_direction() {
+        let sql="SELECT r.id FROM Resource r ORDER BY r.id DESC,r.name ASC LIMIT 1";
+        assert!(super::parse(sql).is_err());
+        let (query,directions)=super::parse_security(sql).unwrap();
+        assert_eq!(query.order.len(),2);
+        assert_eq!(directions,vec![true,false]);
+        assert_eq!(query.limit,Some(1));
+        for suffix in ["DESC DESC","DESC NULLS LAST","DESC; SELECT r.id FROM Resource r"] {
+            assert!(super::parse_security(&format!("SELECT r.id FROM Resource r ORDER BY r.id {suffix}")).is_err());
+        }
+    }
 }

@@ -501,14 +501,16 @@ pub fn prepare_relational_graph_sql<'a, 'owner>(
     let order = app
         .order
         .iter()
-        .map(|f| {
+        .enumerate()
+        .map(|(i,f)| {
             let value = build.field(&f.scan, &f.identity, Some(QueryOperator::Order))?;
-            Ok(if app.aggregate {
+            let value = if app.aggregate {
                 uniform.push(format!("pg_catalog.count(DISTINCT {value})+CASE WHEN pg_catalog.bool_or(({value}) IS NULL) THEN 1 ELSE 0 END>1"));
                 if f.logical_type.family==Family::Boolean{format!("pg_catalog.bool_or({value})")}else{format!("pg_catalog.min({value})")}
             } else {
                 value
-            })
+            };
+            Ok(if ctx.query().order_descending()[i] {format!("{value} DESC NULLS FIRST")} else {value})
         })
         .collect::<Result<Vec<_>>>()?;
     if build.used.len() != parameters.query().len() {

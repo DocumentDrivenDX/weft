@@ -34,7 +34,7 @@ fn fail() -> Diagnostic {
 // Conservative JSON control-character charges avoid allocating escaped copies.
 fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usize)->Result<()> {
     use crate::application_syntax::{Predicate,Value};
-    let syntax=crate::application_syntax::parse(sql)?;
+    let (syntax,_)=crate::application_syntax::parse_security(sql)?;
     let mut sizes=std::collections::BTreeMap::new();
     for (name,parameter) in parameters {
         let mut size=2usize; // JSON string quotes.

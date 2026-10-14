@@ -9,9 +9,10 @@ pub struct QueryUse{pub scan:String,pub target:SecurityRef,pub field:SecurityRef
 #[derive(Debug,Clone,PartialEq,Eq,PartialOrd,Ord)]
 pub struct Projection{pub scan:String,pub target:SecurityRef,pub field:SecurityRef}
 #[derive(Debug)]
-pub struct SecurityResolvedQuery{sql:String,query:app::Plan,model_inputs:Vec<ModuleInput>,policy_json:String,ontology_json:String,scans:BTreeMap<String,SecurityRef>,uses:Vec<QueryUse>,projections:Vec<Projection>}
+pub struct SecurityResolvedQuery{sql:String,order_descending:Vec<bool>,query:app::Plan,model_inputs:Vec<ModuleInput>,policy_json:String,ontology_json:String,scans:BTreeMap<String,SecurityRef>,uses:Vec<QueryUse>,projections:Vec<Projection>}
 impl SecurityResolvedQuery{
  pub fn sql(&self)->&str{&self.sql}
+ pub fn order_descending(&self)->&[bool]{&self.order_descending}
  pub fn application_plan(&self)->&app::Plan{&self.query}
  pub fn scans(&self)->&BTreeMap<String,SecurityRef>{&self.scans}
  pub fn uses(&self)->&[QueryUse]{&self.uses}
@@ -19,7 +20,14 @@ impl SecurityResolvedQuery{
  pub fn require_sources(&self,security:&SecurityLogicalPlan,catalog:&Catalog)->Result<()>{security.require_catalog(catalog)?;if self.model_inputs!=catalog.inputs()||self.policy_json!=security.source().policy_json()||self.ontology_json!=security.source().ontology_json(){return Err(fail());}Ok(())}
  pub fn resolve(sql:&str,catalog:&Catalog,security:&SecurityLogicalPlan,parameters:crate::application_resolve::Parameters,profile:Option<app::ReadProfile>)->Result<Self>{
   security.require_catalog(catalog)?;if sql.len()>4_000_000{return Err(fail());}
-  let query=crate::application_resolve::resolve(catalog,crate::application_syntax::parse(sql)?,parameters,profile)?;
+  let (syntax,order_descending)=crate::application_syntax::parse_security(sql)?;
+  let mut query=crate::application_resolve::resolve(catalog,syntax,parameters,profile)?;
+  if order_descending.iter().any(|d|*d) {
+   if query.page_key.is_some()||query.filters.iter().any(|p|matches!(p,app::Predicate::LexicographicGreater{..})){return Err(unsupported());}
+   query.required_capabilities.retain(|c|c!="order.asc");
+   if order_descending.iter().any(|d|!*d){query.required_capabilities.push("order.asc".into());}
+   query.required_capabilities.push("order.desc".into());query.required_capabilities.sort();
+  }
   let closure=SecurityOntologyClosure::read(security.source(),catalog)?;
   fn reference(id:&Identity,catalog:&Catalog)->Result<SecurityRef>{if !catalog.inputs().iter().any(|m|m.pin.document_id==id.document_id&&m.pin.revision==id.revision){return Err(fail());}Ok(SecurityRef{document_id:id.document_id.clone(),module_id:id.module.clone(),element_id:id.element.clone()})}
   let mut scans=BTreeMap::new();for scan in std::iter::once(&query.source).chain(query.joins.iter().map(|j|&j.right)){
@@ -47,7 +55,7 @@ impl SecurityResolvedQuery{
    app::Expression::CompleteRelatedKeys{..}|app::Expression::RelatedKeys{..}|app::Expression::NativeMetadata{..}=>return Err(unsupported())
   }}
   if projections.len()>4096||scans.len()>256{return Err(fail());}
-  Ok(Self{sql:sql.into(),query,model_inputs:catalog.inputs().to_vec(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
+  Ok(Self{sql:sql.into(),order_descending,query,model_inputs:catalog.inputs().to_vec(),policy_json:security.source().policy_json().into(),ontology_json:security.source().ontology_json().into(),scans,uses:uses.into_iter().collect(),projections:projections.into_iter().collect()})
  }
 }
 

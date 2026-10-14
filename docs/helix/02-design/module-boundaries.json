@@ -1787,6 +1787,7 @@
             "field:field",
             "struct:SecurityResolvedQuery",
             "fn:sql",
+            "fn:order_descending",
             "fn:application_plan",
             "fn:scans",
             "fn:uses",
