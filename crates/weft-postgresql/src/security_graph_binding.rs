@@ -26,7 +26,10 @@ pub struct GraphSource {
 struct Entity {native:SecurityRef,tid:i64,key_id:String,key_field:SecurityRef,prop:i64}
 #[derive(Clone)]
 enum Home {Property{i:i64},Endpoint{relation:i64,incoming:bool,source:i64,target:i64,key_prop:i64}}
+#[derive(Clone)]
+pub(crate) struct QueryRelationship {pub(crate) relation:i64,pub(crate) source:i64,pub(crate) target:i64}
 pub struct GraphBinding {
+ query_relationships:BTreeMap<(String,String,String),QueryRelationship>,
  entities:BTreeMap<SecurityRef,Entity>,homes:BTreeMap<(SecurityRef,SecurityRef),Home>,
  logical_keys:BTreeMap<(SecurityRef,String),Vec<SecurityRef>>,pub(crate) inventory:Value,
  source_sha256:String,guards:Vec<Value>,
@@ -46,15 +49,18 @@ impl GraphBinding {
    }
   }
  }
- pub fn read(plan:&SecurityLogicalPlan,logical:&Catalog,source:&GraphSource)->Result<Self>{
+ pub fn read(plan:&SecurityLogicalPlan,logical:&Catalog,source:&GraphSource)->Result<Self>{Self::read_selected(plan,logical,source,false)}
+ /// Original relationship correspondence admission; not a native authority or query permit.
+ pub fn read_relationship_candidate(plan:&SecurityLogicalPlan,logical:&Catalog,source:&GraphSource)->Result<Self>{Self::read_selected(plan,logical,source,true)}
+ fn read_selected(plan:&SecurityLogicalPlan,logical:&Catalog,source:&GraphSource,relationships:bool)->Result<Self>{
   plan.require_catalog(logical)?;
-  if source.version!="weft.truss.security.graph-source/0.1-candidate"{return Err(fail());}
+  if source.version!=if relationships{"weft.truss.security.graph-source/0.2-candidate"}else{"weft.truss.security.graph-source/0.1-candidate"}{return Err(fail());}
   let total=[source.inventory_json.len(),source.correspondence_json.len(),source.logical_resolution_json.len(),source.logical_transport_json.len(),source.physical_module.document_json.len()].into_iter().try_fold(0usize,|a,b|a.checked_add(b)).ok_or_else(fail)?;
   if total>16_000_000||logical.inputs().len()!=1{return Err(fail());}
   let parse=source_json;
   let c=parse(&source.correspondence_json)?;
-  object(&c,&["version","scope","logicalSourceDigests","physicalSourceSha256","inventorySha256","entities","endpoints","active","salary","identityMeaning"])?;
-  if c["version"]!="truss.reified-security-binding-fixture/0.1-candidate"||c["physicalSourceSha256"]!=sha256(source.physical_module.document_json.as_bytes())||c["inventorySha256"]!=sha256(source.inventory_json.as_bytes()){return Err(fail());}
+  let mut keys=vec!["version","scope","logicalSourceDigests","physicalSourceSha256","inventorySha256","entities","endpoints","active","salary","identityMeaning"];if relationships{keys.push("queryRelationships");}object(&c,&keys)?;
+  if c["version"]!=if relationships{"truss.reified-security-binding-fixture/0.2-candidate"}else{"truss.reified-security-binding-fixture/0.1-candidate"}||c["physicalSourceSha256"]!=sha256(source.physical_module.document_json.as_bytes())||c["inventorySha256"]!=sha256(source.inventory_json.as_bytes()){return Err(fail());}
   object(&c["logicalSourceDigests"],&["document","resolution","policy","transport"])?;
   for (name,bytes) in [("document",logical.inputs()[0].document_json.as_bytes()),("resolution",source.logical_resolution_json.as_bytes()),("policy",plan.source().policy_json().as_bytes()),("transport",source.logical_transport_json.as_bytes())]{if c["logicalSourceDigests"][name]!=sha256(bytes){return Err(fail());}}
   let resolution=parse(&source.logical_resolution_json)?;
@@ -65,7 +71,7 @@ impl GraphBinding {
   let native_doc=parse(&source.physical_module.document_json)?;
   let wrapper=parse(&source.inventory_json)?;let inventory=wrapper["inventory"].clone();
   for key in ["types","properties","keys","relationships","endpoints"]{rows(&inventory,key)?;}
-  let mut out=Self{entities:BTreeMap::new(),homes:BTreeMap::new(),logical_keys:BTreeMap::new(),inventory,source_sha256:sha256(serde_json::to_string(source).map_err(|_|fail())?.as_bytes()),guards:Vec::new()};
+  let mut out=Self{query_relationships:BTreeMap::new(),entities:BTreeMap::new(),homes:BTreeMap::new(),logical_keys:BTreeMap::new(),inventory,source_sha256:sha256(serde_json::to_string(source).map_err(|_|fail())?.as_bytes()),guards:Vec::new()};
   let entities=rows(&c,"entities")?;if entities.is_empty()||entities.len()>32{return Err(fail());}
   for entry in entities {
    object(entry,&["logicalType","nativeType","logicalKeyId","nativeKeyId","nativeKeyNumber","logicalKeyField","nativeKeyField","nativePropertyId","scalarFamily"])?;
@@ -121,6 +127,38 @@ impl GraphBinding {
    if p["cardinality"]!=declaration["cardinality"]||p["nullability"]!=declaration["nullability"]{return Err(fail());}
    check_mapped_scalar_fields(logical,&logical_field,&physical,&physical_field)?;
    out.homes.insert((logical_ref.clone(),logical_field),Home::Property{i:prop});
+  }
+  if relationships {
+   fn resolve(catalog:&Catalog,r:&Value)->Result<weft_core::application_model::RelationshipRead>{
+    object(r,&["documentId","moduleId","relationshipId"])?;
+    let input=catalog.inputs().iter().find(|i|i.pin.document_id==r["documentId"]).ok_or_else(fail)?;
+    let module_id=r["moduleId"].as_str().ok_or_else(fail)?;if !input.selected_module_ids.iter().any(|m|m==module_id){return Err(fail());}
+    let doc=source_json(&input.document_json)?;let module=one(rows(&doc,"modules")?,|m|m["id"]==module_id)?;
+    let rel=one(rows(module,"relationships")?,|v|v["id"]==r["relationshipId"])?;
+    let endpoint=&rel["source"][0];let record=catalog.record_by_identity(&weft_core::ir::Identity{document_id:input.pin.document_id.clone(),revision:input.pin.revision.clone(),module:endpoint["module"].as_str().ok_or_else(fail)?.into(),element:endpoint["element"].as_str().ok_or_else(fail)?.into()})?;
+    let name=weft_core::syntax::Name{value:rel["name"].as_str().ok_or_else(fail)?.into(),quoted:true,span:weft_core::ir::Span{start:0,end:0}};
+    let read=catalog.relationship_read(&record,&name)?;
+    if read.inverse||read.target_lifecycle!="independent"||read.identity.module!=module_id||read.identity.relationship!=r["relationshipId"]{return Err(fail());}Ok(read)
+   }
+   fn reference_of(i:&weft_core::ir::Identity)->SecurityRef{SecurityRef{document_id:i.document_id.clone(),module_id:i.module.clone(),element_id:i.element.clone()}}
+   let entries=rows(&c,"queryRelationships")?;if entries.is_empty()||entries.len()>256{return Err(fail());}
+   for entry in entries {
+    object(entry,&["logicalRelationship","nativeRelationship","nativeRelationshipId","sourceTypeId","targetTypeId"])?;
+    let l=resolve(logical,&entry["logicalRelationship"])?;let n=resolve(&physical,&entry["nativeRelationship"])?;
+    let src=out.entities.get(&reference_of(&l.from)).ok_or_else(fail)?;let dst=out.entities.get(&reference_of(&l.to)).ok_or_else(fail)?;
+    let relation=id(entry["nativeRelationshipId"].as_str().ok_or_else(fail)?)?;let source_id=id(entry["sourceTypeId"].as_str().ok_or_else(fail)?)?;let target_id=id(entry["targetTypeId"].as_str().ok_or_else(fail)?)?;
+    if source_id!=src.tid||target_id!=dst.tid||reference_of(&n.from)!=src.native||reference_of(&n.to)!=dst.native||l.source_multiplicity!=n.source_multiplicity||l.target_multiplicity!=n.target_multiplicity||n.source_key.id!=src.key_id||n.target_key.id!=dst.key_id{return Err(fail());}
+    for (lk,nk,owner) in [(&l.source_key,&n.source_key,&l.from),(&l.target_key,&n.target_key,&l.to)] {
+     let expected=out.logical_keys.get(&(reference_of(owner),lk.id.clone())).ok_or_else(fail)?;
+     if lk.fields.iter().map(reference_of).collect::<Vec<_>>()!=*expected||lk.fields.len()!=nk.fields.len(){return Err(fail());}
+     for (a,b) in lk.fields.iter().zip(&nk.fields){check_mapped_scalar_fields(logical,&reference_of(a),&physical,&reference_of(b))?;}
+    }
+    let row=one(rows(&out.inventory,"relationships")?,|v|v.get("retired_rev").is_some_and(Value::is_null)&&v["definition_rev"]==revision&&v["definition_source_kind"]=="accepted_document"&&v["rel_type_id"]==relation&&v["document_id"]==n.identity.document_id&&v["module"]==n.identity.module&&v["rel_id"]==n.identity.relationship)?;
+    if row["directed"]!=true||row["composition"]!=false||row["lifecycle"]!="independent"||row["target_key"]!=n.target_key.id||!row["assoc_type_id"].is_null(){return Err(fail());}
+    for (side,m) in [("source",&n.source_multiplicity),("target",&n.target_multiplicity)] {if row[format!("{side}_min")]!=m["min"]||row[format!("{side}_max")]!=if m["max"]=="*"{Value::Null}else{m["max"].clone()}{return Err(fail());}}
+    one(rows(&out.inventory,"endpoints")?,|v|v["rel_type_id"]==relation&&v["source_type"]==source_id&&v["target_type"]==target_id)?;
+    let key=(l.identity.document_id,l.identity.module,l.identity.relationship);if out.query_relationships.insert(key,QueryRelationship{relation,source:source_id,target:target_id}).is_some(){return Err(fail());}
+   }
   }
   Ok(out)
  }

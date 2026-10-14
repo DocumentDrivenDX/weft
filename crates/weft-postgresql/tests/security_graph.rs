@@ -169,3 +169,24 @@ fn graph_ordinals_preserve_distinct_constant_sources_and_exact_transformation_pa
   ctx.check_result_declaration(query.result_contract())?;Ok(())
  }).unwrap();
 }
+
+#[test]
+fn public_relationship_correspondence_uses_original_installed_catalog_and_old_reader_refuses(){
+ let inputs=serde_json::from_str(include_str!("security-public-relationship/modules.json")).unwrap();
+ let logical=Catalog::prepare_security(inputs).unwrap();
+ let packet=weft_core::security_source::SecuritySourcePacket::read(include_str!("security-public-relationship/policy.json"),include_str!("security-public-relationship/ontology.json"),&logical).unwrap();
+ let plan=SecurityLogicalPlan::read(packet,&logical).unwrap();
+ let original:GraphSource=serde_json::from_str(include_str!("security-public-relationship/graph-source.json")).unwrap();
+ assert!(GraphBinding::read(&plan,&logical,&original).is_err());
+ GraphBinding::read_relationship_candidate(&plan,&logical,&original).unwrap();
+ for field in ["nativeRelationshipId","sourceTypeId","targetTypeId"] {
+  let mut source=original.clone();let mut c:serde_json::Value=serde_json::from_str(&source.correspondence_json).unwrap();c["queryRelationships"][0][field]=serde_json::json!("1");source.correspondence_json=c.to_string();
+  assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err(),"{field}");
+ }
+ for side in ["logicalRelationship","nativeRelationship"] {
+  let mut source=original.clone();let mut c:serde_json::Value=serde_json::from_str(&source.correspondence_json).unwrap();c["queryRelationships"][0][side]["relationshipId"]=serde_json::json!("missing");source.correspondence_json=c.to_string();
+  assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err());
+ }
+ let mut source=original.clone();let mut c:serde_json::Value=serde_json::from_str(&source.correspondence_json).unwrap();let entry=c["queryRelationships"][0].clone();c["queryRelationships"].as_array_mut().unwrap().push(entry);source.correspondence_json=c.to_string();assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err());
+ let mut source=original;source.version="weft.truss.security.graph-source/0.1-candidate".into();assert!(GraphBinding::read_relationship_candidate(&plan,&logical,&source).is_err());
+}

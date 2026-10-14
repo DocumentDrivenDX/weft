@@ -2738,7 +2738,8 @@
             "struct:GraphBinding",
             "fn:source_sha256",
             "fn:integrity_checks",
-            "fn:read"
+            "fn:read",
+            "fn:read_relationship_candidate"
           ],
           "pathReferences": []
         },
