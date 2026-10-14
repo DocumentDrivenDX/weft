@@ -1,0 +1,37 @@
+{
+  "version": "weft.security.relational-transport.evidence/0.1",
+  "date": "2026-10-14",
+  "baseline": "b4d6b63cb27a9780387645b6f85d418d668ab692",
+  "securityReady": false,
+  "checks": {
+    "integration": 22,
+    "graph": 6,
+    "privacy_compile_fail": 1,
+    "module_controls": 16,
+    "cli_controls": 12,
+    "governed_schemas": 71
+  },
+  "qualification": "Original producer/source/query/parameter/operand/result correspondence only",
+  "native_cases_promoted": 0,
+  "remaining": [
+    "native capture completeness/authenticity",
+    "policy truth and arithmetic/selection",
+    "native parameter and operand codecs",
+    "genuine caller/source/Subject/current authority",
+    "guarded settlement/publication",
+    "all132 required cases"
+  ],
+  "files": {
+    "crates/weft-postgresql/src/lib.rs": "1a2d4411b55ae2e06a7bae92eeabc43e6408f61484d886001852ed3b5c10aeaa",
+    "crates/weft-postgresql/src/security_relational_transport.rs": "0713cff5f35bbc48d78079a306859fc6f3c6c31c9c71d7d9d695d662d107627b",
+    "crates/weft-postgresql/examples/security_relational_candidate.rs": "40a9feae284a1ea71618592830a75d54e4dab6b8a5445888022ffbc174bceede",
+    "crates/weft-postgresql/examples/security_relational_result.rs": "72e112e8366512a38cfe42b06b8f40b48488d4705c5d1866efa1f7b31a4c126f",
+    "crates/weft-postgresql/tests/security_guarded_transport.rs": "b59cec2cef712ffcfd53481227517e687bb09da2090bf0e406acb41786772987",
+    "docs/helix/02-design/module-boundaries.json": "1d00762285cf98de1e3e6a957b37fa0c18aa1a15831c21bebacb1bb5dee9a3be",
+    "docs/helix/02-design/contracts/security-relational-candidate-v0.2-candidate.schema.json": "68d716aad1c9e73204a65fd848bb2ca5803dd300fa92283e1adbb4e2be1c360d",
+    "docs/helix/02-design/contracts/security-relational-result-input-v0.2-candidate.schema.json": "a72f9e5cb0e50bdf2e4d95d86be038f8f8423daadd0eeed13774cbfd70e007cd",
+    "docs/helix/02-design/contracts/security-relational-result-output-v0.2-candidate.schema.json": "ca9973a94a488722e6fa8d84f14ae26318ce261a00e74bca4c85fae22a9f2624",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "569eae14782ba000b82befe7acb87b5b2c46de2e42a4b6ae562ac27aad68474d",
+    "docs/helix/04-build/implementation-plan.md": "140870e92a4cd50fcc64c7401bfd123e743c915b251f6aa239e47e94d6324904"
+  }
+}

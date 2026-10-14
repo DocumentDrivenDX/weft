@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-relational-result-output-v0.2-candidate.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.truss.security.relational-result.inspected/0.2-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "inspected": {
+      "const": true
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceOutputSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceContextSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "queryContextSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operandBatchSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "operandCounts": {
+      "type": "object",
+      "maxProperties": 256,
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 4096
+      }
+    },
+    "batchSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nativeAdmission": {
+      "const": "required"
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "inspected",
+    "sourceRequestSha256",
+    "sourceOutputSha256",
+    "sourceContextSha256",
+    "queryContextSha256",
+    "operandBatchSha256",
+    "operandCounts",
+    "batchSha256",
+    "nativeAdmission"
+  ],
+  "additionalProperties": false
+}

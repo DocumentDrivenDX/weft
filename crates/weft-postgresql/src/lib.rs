@@ -294,3 +294,6 @@ pub mod security_relational_parameters;
 
 /// Original relational graph SQL candidate; native operand/cut admission remains required.
 pub mod security_relational_sql;
+
+/// Separate guarded relational handoff; original correspondence only, no native permit.
+pub mod security_relational_transport;

@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/DocumentDrivenDX/weft/raw/main/docs/helix/02-design/contracts/security-relational-candidate-v0.2-candidate.schema.json",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.truss.security.relational-candidate/0.2-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceContextJson": {
+      "type": "string",
+      "maxLength": 16000000
+    },
+    "sourceContextSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "queryContextSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "executionSql": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "checks": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object"
+      }
+    },
+    "operandReads": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {
+        "type": "object"
+      }
+    },
+    "operandDemands": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object"
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object"
+      }
+    },
+    "resultContract": {
+      "type": "object"
+    },
+    "resultContractJson": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "resultContractSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "nativeAdmission": {
+      "const": "required"
+    },
+    "nativeCodecAdmission": {
+      "const": "required"
+    },
+    "nativePopulationAndSelection": {
+      "const": "required"
+    },
+    "releaseProtection": {
+      "const": "required"
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "sourceRequestSha256",
+    "sourceContextJson",
+    "sourceContextSha256",
+    "queryContextSha256",
+    "executionSql",
+    "checks",
+    "operandReads",
+    "operandDemands",
+    "parameters",
+    "resultContract",
+    "resultContractJson",
+    "resultContractSha256",
+    "nativeAdmission",
+    "nativeCodecAdmission",
+    "nativePopulationAndSelection",
+    "releaseProtection"
+  ],
+  "additionalProperties": false
+}

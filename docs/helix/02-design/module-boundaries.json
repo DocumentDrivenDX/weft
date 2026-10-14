@@ -2214,7 +2214,8 @@
             "mod:security_guarded_transport",
             "mod:security_query_use_guards",
             "mod:security_relational_parameters",
-            "mod:security_relational_sql"
+            "mod:security_relational_sql",
+            "mod:security_relational_transport"
           ],
           "pathReferences": []
         },
@@ -2849,6 +2850,16 @@
             "fn:operand_demands",
             "fn:context_sha256",
             "fn:prepare_relational_graph_sql"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-postgresql/src/security_relational_transport.rs",
+          "publicDeclarations": [
+            "struct:GuardedRelationalCandidate",
+            "fn:json",
+            "fn:prepare_guarded_relational_candidate",
+            "fn:inspect_guarded_relational_result"
           ],
           "pathReferences": []
         },
