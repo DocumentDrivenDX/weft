@@ -1,6 +1,6 @@
 # Discovery input: Weft requirements from the UMF typed data access SDK
 
-Proposed 2026-10-15 by UMF and amended the same day (WR-A10 to WR-A12, WR-B4 validation and edits), for the owner's review and for Weft's governed
+Proposed 2026-10-15 by UMF and amended the same day (WR-A10 to WR-A14, WR-B4 validation and edits, WR-B7 schema-neutral statements), for the owner's review and for Weft's governed
 planning. This is source material, not an approved requirements document, and it
 changes no existing Weft document. Weft owns the design and implementation of
 everything below; UMF owns the semantics in "Shared semantics" and will not build
@@ -163,6 +163,17 @@ Truss on PostgreSQL and Ashlar on Databricks. The requirements below extend that
   - The continuation records those versions.
   - Pages without a snapshot read live data. Keyset continuation then never repeats
     a row, but rows inserted or changed between pages may be missed or seen.
+- **S16 Null-safe distinctness.** `x IS DISTINCT FROM v` is TRUE when exactly one
+  side is null or missing, or both are present and unequal; FALSE otherwise. It is
+  never UNKNOWN. `IS NOT DISTINCT FROM` is its complement. On property stores,
+  missing and null are not distinct from each other.
+- **S17 Relationship joins.**
+  - A join follows one declared UMF relationship from a Record to a to-one target
+    (each source row has at most one target row). It never multiplies source rows.
+  - A required relationship is an inner join. An optional one is a left join whose
+    target columns are null when there is no target.
+  - Joins are only along declared relationships, one hop per join, at most four
+    joins per query; arbitrary join conditions are not offered.
 
 ## Tranche A: query forms
 
@@ -207,6 +218,15 @@ specific diagnostic. Tranche B backends must support all of tranche A.
   - Ashlar pages are already pinned to a publication.
   - On Postgres and Lakebase, refuse snapshot pages (only live pages there) unless
     Weft proposes an exact mechanism.
+- **WR-A13 Null-safe distinctness:** `IS [NOT] DISTINCT FROM` (S16) for every
+  comparable field type.
+- **WR-A14 Relationship joins (S17):**
+  - Joins along declared to-one relationships, inner or left as S17 requires,
+    with predicates, projections and ordering over columns of joined Records.
+  - Builds on Weft's existing equality joins and left-join contract. Output
+    descriptors identify each column's Record and Field.
+  - Refuse to-many joins; use `HAS_RELATED`, `RELATED_KEYS` or related pages for
+    those.
 - **WR-A9 Bulk UPDATE extensions (CONTRACT-009):**
   - `SET field = NULL` where the Field admits null.
   - `SET` values for integer, decimal, date, instant and local timestamp fields.
@@ -226,6 +246,7 @@ primary     = "(", predicate, ")"
             | column, "IS", [ "NOT" ], ( "NULL" | "MISSING" )
             | column, [ "NOT" ], "IN", "(", ( parameter | value, { ",", value } ), ")"
             | column, [ "NOT" ], "BETWEEN", value, "AND", value
+            | column, "IS", [ "NOT" ], "DISTINCT", "FROM", value
             | "STARTS_WITH", "(", column, ",", value, ")"
             | ( "MATCHES_ALL_TERMS" | "MATCHES_ANY_TERM" ), "(", column, ",", value, ")"
             | "HAS_RELATED", "(", column, ",", "KEY", "(", key_value, { ",", key_value }, ")", ")" ;
@@ -260,6 +281,16 @@ continuation tuple as API arguments or typed parameters.
   - Bindings come from UMF CONTRACT-042 physical bindings plus the `umf.access`
     extension's ColumnSets (CONTRACT-070), which give exact native column types.
     Missing or incompatible column facts refuse.
+- **WR-B7 Schema-neutral statements on Postgres and Lakebase.**
+  - A binding may leave table schemas unqualified, meaning the host binds the
+    schema once per connection through the role's `search_path`.
+  - Lowering then emits unqualified table and type names, and qualifies every
+    system object with `pg_catalog`, for example `pg_catalog.pg_has_role`, so
+    `search_path` cannot redirect it.
+  - The compile output records a host obligation: `search_path` resolves each
+    table to the intended schema and keeps `pg_catalog` first (its default).
+  - One compiled catalog then serves every deployment of an app, each with its
+    own schema name.
 - **WR-B2 Reads on Postgres and Lakebase.** All of tranche A, with output decoders
   for every WR-I4 carrier.
 - **WR-B3 Set-based mutations on Postgres and Lakebase.**
@@ -343,15 +374,24 @@ contribute the first cases with tranche A. Minimum coverage:
 - `STARTS_WITH` with a prefix containing `%`, `_` and a backslash.
 - Snapshot pages on Delta with a concurrent write between pages: no skipped or
   repeated rows.
+- `IS DISTINCT FROM` over every combination of null, missing and present values.
+- A left join along an optional relationship with and without a target row; a
+  refused to-many join.
+- The same schema-neutral statement run under two roles whose `search_path`
+  names different schemas, returning each schema's rows; a table shadowing
+  attempt does not redirect `pg_catalog` functions.
 
 ## Priority
 
 1. WR-I6, WR-I3 and WR-I4: the inputs and outputs UMF needs to call Weft at all.
-2. WR-A1, WR-A2, WR-A3, WR-A5 and WR-A8, plus WR-B1 and WR-B2: comparisons, nulls,
-   OR/NOT, ordering and temporal values on raw Postgres and Lakebase. This is the
-   first use-case path.
+2. WR-A1, WR-A2, WR-A3, WR-A5, WR-A8 and WR-A13, plus WR-B1, WR-B2 and WR-B7:
+   comparisons, nulls, OR/NOT, null-safe distinctness, ordering and temporal values
+   on raw Postgres and Lakebase, with schema-neutral statements. This is the first
+   use-case path; the first consumer (an apps host on Lakebase, Postgres 18) needs
+   it.
 3. WR-A4, WR-A6, WR-A7, WR-A10 and WR-A11: membership, general keyset pages,
-   counts and existence, aggregates and buckets, prefix and term filters.
+   counts and existence, aggregates and buckets, prefix and term filters, and
+   WR-A14 relationship joins.
 4. WR-I5, WR-A9 and WR-B3: bulk updates on raw tables.
 5. WR-B4: actions on Postgres and Lakebase.
 6. Tranche A on the Truss and Ashlar backends.
