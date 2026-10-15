@@ -40,7 +40,7 @@ impl CurrentTrussMutationBackend {
             || evidence.len() > 32
             || evidence.iter().any(|s| s.is_empty() || s.len() > 4096)
             || document["umf"] != "0.8.0"
-            || b["releaseId"] != "truss-catalog-runtime/0.65-candidate"
+            || (b["releaseId"] != "truss-catalog-runtime/0.65-candidate" && b["releaseId"] != "truss-catalog-runtime/0.66-candidate")
             || b["interfaceVersion"] != "truss-runtime-binding/0.4"
         {
             return Err(fail("Original current model/binding/evidence required"));
@@ -322,7 +322,7 @@ impl CurrentTrussMutationBackend {
                 field: Some(field.clone()),
             });
         }
-        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec!["Current PostgreSQL18.6/layout1.0/tagged runtime0.65 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into(),"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into(),"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
+        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec!["Current PostgreSQL18.6/layout1.0/tagged runtime0.65/0.66 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into(),"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into(),"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
     }
 }
 impl SelectionBackend for CurrentTrussMutationBackend {
