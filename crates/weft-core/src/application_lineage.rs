@@ -18,6 +18,10 @@ struct RequestSchema;
     path = "../../docs/helix/02-design/contracts/application-lineage-v0.1-candidate.schema.json"
 )]
 struct ReportSchema;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-request-v0.2-candidate.schema.json")]
+struct RequestSchemaV02;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/application-lineage-v0.2-candidate.schema.json")]
+struct ReportSchemaV02;
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct SourceIdentity {
@@ -98,11 +102,12 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         return Err(fail());
     }
     let value = checked_json(raw).map_err(|_| fail())?;
-    if !RequestSchema::is_valid(&value) {
+    let extended=value["interfaceVersion"]=="weft-application-lineage/0.2-candidate";
+    if !(if extended{RequestSchemaV02::is_valid(&value)}else{RequestSchema::is_valid(&value)}) {
         return Err(fail());
     }
     let request: Request = serde_json::from_value(value).map_err(|_| fail())?;
-    if request.interface_version != "weft-application-lineage/0.1-candidate"
+    if request.interface_version != if extended{"weft-application-lineage/0.2-candidate"}else{"weft-application-lineage/0.1-candidate"}
         || request.opaque_sources.len() > 16
     {
         return Err(fail());
@@ -127,19 +132,21 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         unresolved.push(json!({"role":source.role,"identity":{"documentId":source.identity.document_id,"revision":source.identity.revision},"mediaType":source.media_type,"sha256":source.sha256,"status":"uninterpreted"}));
     }
     // Reuse the exact occurrence-sensitive original parameter preflight, not a second parser.
-    crate::security_mapping_transport::parameter_payload_budget(
+    if extended&&request.read_profile.is_some(){return Err(fail());}
+    crate::security_mapping_transport::parameter_payload_budget_selected(
         &request.sql,
         &request.parameters,
-        8_000_000,
+        8_000_000,extended,
     )?;
     let catalog = Catalog::prepare_security(request.modules)?;
-    let (syntax, directions) = crate::application_syntax::parse_security(&request.sql)?;
+    let (syntax, directions) = if extended{crate::application_syntax::parse_lineage_candidate(&request.sql)?}else{crate::application_syntax::parse_security(&request.sql)?};
     let mut plan = crate::application_resolve::resolve(
         &catalog,
         syntax,
         request.parameters,
         request.read_profile,
     )?;
+    if extended{plan.ir_version="weft-ir/application-lineage/0.2-candidate".into();}
     if directions.len() != plan.order.len() {
         return Err(fail());
     }
@@ -172,6 +179,7 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         let target = scans.get(u.scan).ok_or_else(fail)?;
         let row = json!({"path":u.path,"scan":u.scan,"type":SecurityRef{document_id:target.document_id.clone(),module_id:target.module.clone(),element_id:target.element.clone()},"field":SecurityRef{document_id:u.identity.document_id.clone(),module_id:u.identity.module.clone(),element_id:u.identity.element.clone()},"fieldIdentity":u.identity,"logicalType":u.logical_type,"operator":u.operator,"operation":u.operation,"required":u.required.map(|p|vec![p]),"propertyStatus":if u.required.is_some(){"derived"}else{"unsupported"}});
         let mut row = row;
+        if u.operation=="countDistinct"&&u.logical_type.nullable{row["required"]=json!(["equality","nullity"]);}
         if let Some(output) = u.output {
             row["outputType"] = json!(output);
         }
@@ -181,8 +189,9 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         Ok(())
     })?;
     let plan_json = encode(&plan, 8_000_000)?;
-    let report = json!({"version":"weft.application.lineage/0.1-candidate","securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
-    if !ReportSchema::is_valid(&report) {
+    let mut report = json!({"version":if extended{"weft.application.lineage/0.2-candidate"}else{"weft.application.lineage/0.1-candidate"},"securityReady":false,"authority":false,"sourceRequestJson":raw,"sourceRequestSha256":sha256(raw.as_bytes()),"modelPins":catalog.pins(),"sqlSha256":sha256(request.sql.as_bytes()),"applicationPlanJson":plan_json,"applicationPlanSha256":sha256(plan_json.as_bytes()),"orderDirections":directions.iter().map(|d|if *d{"desc"}else{"asc"}).collect::<Vec<_>>(),"scans":scans,"uses":uses,"unresolvedSources":unresolved});
+    if extended{report["readRequirements"]=crate::application_read_requirements::derive(&plan,&catalog)?;}
+    if !(if extended{ReportSchemaV02::is_valid(&report)}else{ReportSchema::is_valid(&report)}) {
         return Err(fail());
     }
     Ok(ApplicationLineage {
@@ -406,5 +415,55 @@ mod availability_regressions{
    if case["expected"]=="refused"{let error=result.err().unwrap();assert_eq!(error.code,"WFT-APPLICATION-LINEAGE-AVAILABILITY","{}",case["id"]);}
    else{let result=result.unwrap();let report:Value=serde_json::from_str(result.json()).unwrap();assert_eq!(report["authority"],false);assert_eq!(report["sourceRequestJson"],raw);assert_eq!(report["scans"].as_object().unwrap().len(),1);if case["id"]=="field-free-count"{assert_eq!(report["uses"],json!([]));}}
   }
+ }
+}
+
+#[cfg(test)]
+mod v02_tests{
+ use super::*;
+ fn request(sql:&str)->Value{let mut r:Value=serde_json::from_str(include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")).unwrap();r["interfaceVersion"]=json!("weft-application-lineage/0.2-candidate");r["sql"]=json!(sql);r}
+ fn report(sql:&str)->Value{serde_json::from_str(prepare(&request(sql).to_string()).unwrap().json()).unwrap()}
+ #[test]
+ fn distinct_count_owns_exact_present_domain_and_nonnull_count_result(){
+  let r=report("SELECT COUNT(DISTINCT r.token) AS unique_tokens FROM Resource r");assert_eq!(r["version"],"weft.application.lineage/0.2-candidate");assert_eq!(r["authority"],false);let use0=&r["uses"][0];assert_eq!(use0["operation"],"countDistinct");assert_eq!(use0["operator"],"aggregate");assert_eq!(use0["required"],json!(["equality"]));assert_eq!(use0["logicalType"]["nullable"],false);assert_eq!(use0["outputType"]["nullable"],false);assert_eq!(use0["outputType"]["family"],"integer");assert!(use0.get("mode").is_none());
+  let p:Value=serde_json::from_str(r["applicationPlanJson"].as_str().unwrap()).unwrap();assert_eq!(p["irVersion"],"weft-ir/application-lineage/0.2-candidate");assert_eq!(p["outputs"][0]["expression"]["op"],"countDistinct");assert!(p["requiredCapabilities"].as_array().unwrap().contains(&json!("aggregate.countDistinct")));
+ }
+ #[test]
+ fn false_zero_limit_and_self_join_cannot_erase_uses_or_scans(){
+  let r=report("SELECT COUNT(DISTINCT s.token) FROM Resource r JOIN Resource s ON r.token=s.token WHERE FALSE AND r.token='opaque-token' LIMIT 0");assert_eq!(r["scans"].as_object().unwrap().len(),2);assert_eq!(r["uses"].as_array().unwrap().len(),4);assert_eq!(r["uses"][0]["scan"],"s0");assert_eq!(r["uses"][1]["scan"],"s1");assert_eq!(r["uses"][2]["path"],"filters/1/left");assert_eq!(r["uses"][3]["scan"],"s1");let p:Value=serde_json::from_str(r["applicationPlanJson"].as_str().unwrap()).unwrap();assert_eq!(p["filters"][0],json!({"op":"boolean","value":false}));assert_eq!(p["limit"],0);assert_eq!(p["joins"].as_array().unwrap().len(),1);
+  let r=report("SELECT COUNT(*) FROM Resource r WHERE TRUE AND FALSE LIMIT 0");assert!(r["uses"].as_array().unwrap().is_empty());assert_eq!(r["scans"].as_object().unwrap().len(),1);
+  for sql in ["SELECT COUNT(*) FROM Resource r WHERE FALSE AND r.missing='x' LIMIT 0","SELECT COUNT(*) FROM Resource r WHERE FALSE AND r.token=:missing LIMIT 0"]{assert!(prepare(&request(sql).to_string()).is_err());}
+ }
+ #[test]
+ fn prior_protocols_and_absent_arguments_do_not_gain_support(){
+  for sql in ["SELECT COUNT(DISTINCT r.token) FROM Resource r","SELECT COUNT(*) FROM Resource r LIMIT 0","SELECT COUNT(*) FROM Resource r WHERE FALSE"]{let mut r=request(sql);r["interfaceVersion"]=json!("weft-application-lineage/0.1-candidate");assert!(prepare(&r.to_string()).is_err());assert!(crate::application_syntax::parse(sql).is_err());assert!(crate::application_syntax::parse_security(sql).is_err());}
+  let mut r=request("SELECT COUNT(DISTINCT r.token) FROM Resource r");let mut doc:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();next_absent(&mut doc);let text=doc.to_string();r["modules"][0]["documentJson"]=json!(text);r["modules"][0]["pin"]["sha256"]=json!(sha256(text.as_bytes()));assert!(prepare(&r.to_string()).is_err());
+  let mut r=request("SELECT COUNT(DISTINCT r.token) FROM Resource r");r["readProfile"]=json!({"version":"weft-application-read/0.2.0","subset":"count-summary"});assert!(prepare(&r.to_string()).is_err());
+ }
+ fn next_absent(doc:&mut Value){doc["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="token").unwrap()["nullability"]=json!("absent-allowed");}
+ #[test]
+ fn new_syntax_is_bounded_and_does_not_accept_count_expressions_or_join_constants(){
+  for sql in ["SELECT COUNT(DISTINCT *) FROM Resource r","SELECT COUNT(DISTINCT r.token,r.salary) FROM Resource r","SELECT COUNT(DISTINCT r.token+1) FROM Resource r","SELECT COUNT(DISTINCT) FROM Resource r","SELECT COUNT(*) FROM Resource r LIMIT -1","SELECT COUNT(*) FROM Resource r LIMIT 1001","SELECT COUNT(*) FROM Resource r LIMIT 0.0","SELECT COUNT(*) FROM Resource r LIMIT 0e0","SELECT COUNT(*) FROM Resource r JOIN Resource s ON FALSE"]{assert!(prepare(&request(sql).to_string()).is_err(),"{sql}");}
+  for sql in ["SELECT COUNT(*) AS all_rows,COUNT(DISTINCT r.token) AS distinct_tokens FROM Resource r","SELECT r.token,COUNT(DISTINCT r.salary) AS amounts FROM Resource r GROUP BY r.token ORDER BY r.token LIMIT 0"]{let r=report(sql);assert_eq!(r["authority"],false);}
+ }
+}
+
+#[cfg(test)]
+mod v02_read_requirements_tests{
+ use super::*;
+ fn report(sql:&str)->Value{let mut r:Value=serde_json::from_str(include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")).unwrap();r["interfaceVersion"]=json!("weft-application-lineage/0.2-candidate");r["sql"]=json!(sql);serde_json::from_str(prepare(&r.to_string()).unwrap().json()).unwrap()}
+ #[test]
+ fn projection_occurrences_and_hidden_uses_have_owner_derived_read_sources(){
+  let r=report("SELECT r.token AS first,r.token AS second FROM Resource r WHERE FALSE AND r.token='opaque-token' ORDER BY r.salary LIMIT 0");let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),1);assert_eq!(reads["scans"][0]["kind"],"rowRead");let fields=reads["fields"].as_array().unwrap();assert_eq!(fields.len(),4);assert_eq!(fields[0]["path"],"outputs/0/expression");assert_eq!(fields[1]["path"],"outputs/1/expression");assert_eq!(fields[0]["role"],"projection");assert_eq!(fields[2]["path"],"filters/1/left");assert_eq!(fields[3]["role"],"order");for f in fields{assert_eq!(f["descriptor"]["availability"],"required");assert_eq!(f["fieldIdentity"]["revision"],"named-query-core-r1");assert!(f.get("mode").is_none());assert!(f.get("action").is_none());}
+ }
+ #[test]
+ fn field_free_false_count_keeps_both_join_row_scans_and_explicit_sum_limit(){
+  let r=report("SELECT COUNT(*) FROM Resource r WHERE FALSE LIMIT 0");assert_eq!(r["readRequirements"]["fields"],json!([]));assert_eq!(r["readRequirements"]["scans"].as_array().unwrap().len(),1);
+  let r=report("SELECT COUNT(DISTINCT s.token) FROM Resource r JOIN Resource s ON r.token=s.token LIMIT 0");let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),2);assert_eq!(reads["fields"].as_array().unwrap().len(),3);assert_eq!(reads["fields"][0]["scan"],"s0");assert_eq!(reads["fields"][1]["scan"],"s1");assert_eq!(reads["fields"][2]["role"],"aggregate");
+  let r=report("SELECT SUM(r.salary) FROM Resource r LIMIT 0");assert_eq!(r["readRequirements"]["unsupportedSources"],json!([{"path":"outputs/0/argument","kind":"numericAggregateProperties"}]));
+ }
+ #[test]
+ fn public_relationship_observation_and_terminal_keys_remain_separate_read_intents(){
+  let source:Value=serde_json::from_str(include_str!("../../weft-postgresql/tests/security-public-relationship/compiler-request.json")).unwrap();let r=json!({"interfaceVersion":"weft-application-lineage/0.2-candidate","modules":source["modules"],"sql":source["sql"],"parameters":source["parameters"],"opaqueSources":[]});let r:Value=serde_json::from_str(prepare(&r.to_string()).unwrap().json()).unwrap();let reads=&r["readRequirements"];assert_eq!(reads["scans"].as_array().unwrap().len(),2);assert_eq!(reads["relationships"][0]["kind"],"relationshipObservation");assert_eq!(reads["relationships"][0]["sourceScan"],"s0");assert_eq!(reads["relationships"][0]["terminalScan"],"t0");assert!(reads["fields"].as_array().unwrap().iter().any(|f|f["scan"]=="t0"&&f["role"]=="predicate"));
  }
 }

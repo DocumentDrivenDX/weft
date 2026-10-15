@@ -60,7 +60,7 @@ pub(crate) fn check_query_slots(ctx:&SecurityBackendContext<'_>,plan:&SecurityPh
  fn collect<'a>(p:&'a Predicate,path:String,out:&mut Vec<(String,&'a Value)>)->Result<()>{
   fn push<'a>(path:String,v:&'a Value,out:&mut Vec<(String,&'a Value)>)->Result<()>{if matches!(v,Value::Field{..}){return Ok(());}if out.len()>=1024{return Err(fail());}out.push((path,v));Ok(())}
   match p {
-   Predicate::ExactEqual{..}=>return Err(fail()),
+   Predicate::Boolean{..}|Predicate::ExactEqual{..}=>return Err(fail()),
    Predicate::Equal{right,..}=>push(format!("{path}/right"),right,out)?,
    Predicate::LexicographicGreater{values,..}=>for(i,v)in values.iter().enumerate(){push(format!("{path}/values/{i}"),v,out)?;},
    Predicate::HasRelated{key,..}=>for(i,v)in key.iter().enumerate(){push(format!("{path}/key/{i}"),v,out)?;}

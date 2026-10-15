@@ -75,7 +75,8 @@ pub(super) fn collect_predicate(lower: &mut Lower<'_>, p: &plan::Predicate) -> R
             collect_numeric(lower, right)
         }
         plan::Predicate::Legacy { predicate } => match predicate {
-            app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
+            app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
+        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => {
                 collect_field(lower, left);
                 collect_value(lower, right)
@@ -375,7 +376,8 @@ pub(super) fn predicate(
             ))
         }
         plan::Predicate::Legacy { predicate } => match predicate {
-            app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
+            app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
+        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => {
                 let (a, b) = pair(lower, left, right, guards)?;
                 Ok(format!("({a} = {b})"))

@@ -291,6 +291,7 @@ fn issue_with_budget<'a, 'owner>(
     ) -> Result<()> {
         budget.step(&path)?;
         match p {
+            Predicate::Boolean{..}=>return Err(fail()),
             Predicate::ExactEqual { right, .. } => {
                 let path = format!("{path}/right");
                 budget.step(&path)?;

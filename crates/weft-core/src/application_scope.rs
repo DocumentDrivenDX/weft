@@ -232,6 +232,7 @@ impl<'a> Scope<'a> {
     }
     pub(crate) fn predicate(&mut self, p: &ast::Predicate, on: bool) -> Result<ir::Predicate> {
         match p {
+            ast::Predicate::Boolean{value}=>{if on{return Err(fail("WFT-UNSUPPORTED","JOIN ON requires field equality"));}self.caps.insert("predicate.boolean".into());Ok(ir::Predicate::Boolean{value:*value})},
             ast::Predicate::Compare {
                 columns,
                 values,

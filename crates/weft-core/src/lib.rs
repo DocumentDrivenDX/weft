@@ -1,3 +1,4 @@
+mod application_read_requirements;
 pub mod application_lineage;
 mod application_property_uses;
 pub mod security_query_properties;

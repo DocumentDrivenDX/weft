@@ -170,7 +170,7 @@ pub(crate) fn validate(
                         }
                         crate::application_ir::Expression::CompleteRelatedKeys { relationship, bound, .. } => Expected::CompleteRelated(relationship, *bound),
                         crate::application_ir::Expression::NativeMetadata { metadata, logical_type, record, .. } => Expected::Native(metadata, logical_type, record),
-                         crate::application_ir::Expression::Count { logical_type }
+                         crate::application_ir::Expression::CountDistinct { logical_type,.. } | crate::application_ir::Expression::Count { logical_type }
                         | crate::application_ir::Expression::Sum { logical_type, .. } => {
                             Expected::Scalar(logical_type)
                         }

@@ -1036,6 +1036,7 @@ impl Build<'_> {
     }
     fn predicate(&mut self, p: &app::Predicate, continuation: bool) -> Result<String> {
         match p {
+            app::Predicate::Boolean{..}=>return Err(unsupported("Lineage boolean predicates require separately qualified native lowering")),
             app::Predicate::ExactEqual { left, right } => {
                 use weft_core::application_model::ExactScalarType;
                 if left.scalar_type==ExactScalarType::Timestamp && !self.timestamp_equality {return Err(unsupported("Selected backend does not admit exact instant equality"));}

@@ -846,6 +846,7 @@ fn selected(plan: Plan<'_>) -> Selection {
     }
     fn predicate(p: &AP, s: &mut Selection) {
         match p {
+            AP::Boolean{..}=>{},
             AP::ExactEqual { left, right } => {
                 s.fields.push(left.identity.clone());
                 if let crate::application_ir::ExactValue::Field { field } = right {
@@ -933,7 +934,7 @@ fn selected(plan: Plan<'_>) -> Selection {
             for output in &p.outputs {
                 match &output.expression {
                     AE::Field { identity, .. } => s.fields.push(identity.clone()),
-                    AE::Sum { argument, .. } => s.fields.push(argument.identity.clone()),
+                    AE::CountDistinct{argument,..}|AE::Sum { argument, .. } => s.fields.push(argument.identity.clone()),
                     AE::CompleteRelatedKeys { relationship, .. } | AE::RelatedKeys { relationship, .. } => rel(relationship, &mut s),
                     AE::Count { .. } => {},
                     AE::NativeMetadata { record, .. } => s.types.push(record.clone()),
@@ -1022,4 +1023,23 @@ mod tests {
         malformed.failure_code = "WFT-".into();
         assert!(merge_obligations(&mut vec![], &[malformed]).is_err());
     }
+}
+
+#[cfg(test)]
+mod lineage_candidate_refusal_tests{
+ use super::*;
+ struct Closed;
+ impl Backend for Closed{
+  type Mapping=();type TargetPlan=();
+  fn describe(&self)->Result<Manifest>{serde_json::from_value(serde_json::json!({"backendId":"test.closed","backendVersion":"1","interfaceVersion":"weft-backend/0.2.0","languageProfiles":[{"dialectProfile":"weft-sql/0.2.0","irVersion":"weft-ir/0.2.0"}],"bindingProfile":"test.closed/1","targetProfiles":[{"id":"fixture","engine":"synthetic","engineVersion":"1","sessionSettings":{},"storageLayoutRevision":"1","publicationRevision":"1"}],"capabilities":[{"id":"scan","targetProfiles":["fixture"],"languageProfiles":[{"dialectProfile":"weft-sql/0.2.0","irVersion":"weft-ir/0.2.0"}],"logicalDomain":{"fixture":true},"resultDomain":{"fixture":true},"constraints":[],"obligations":[],"status":"candidate","evidence":[]}],"evidence":[]})).map_err(|_|failure("WFT-TEST","Fixture declaration refused"))}
+  fn validate_binding(&self,_:&Context<'_>)->Result<Validated<()>>{panic!("new lineage IR must refuse before binding callback")}
+  fn assess(&self,_:&Context<'_>,_:&())->Result<Vec<Assessment>>{panic!("new lineage IR must refuse before assess")}
+  fn lower(&self,_:&Context<'_>,_:&())->Result<()>{panic!("new lineage IR must refuse before lower")}
+  fn emit(&self,_:&Context<'_>,_:&())->Result<Emission>{panic!("new lineage IR must refuse before emit")}
+ }
+ #[test]
+ fn old_registration_refuses_new_ir_before_any_backend_callback(){
+  let r:Value=serde_json::from_str(include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")).unwrap();let catalog=crate::model::Catalog::prepare_security(serde_json::from_value(r["modules"].clone()).unwrap()).unwrap();let mut registry=Registry::default();registry.register(Closed).unwrap();
+  for sql in ["SELECT COUNT(DISTINCT r.token) FROM Resource r","SELECT COUNT(*) FROM Resource r WHERE FALSE","SELECT COUNT(*) FROM Resource r LIMIT 0"]{let (syntax,_)=crate::application_syntax::parse_lineage_candidate(sql).unwrap();let plan=crate::application_resolve::resolve(&catalog,syntax,Default::default(),None).unwrap();assert_eq!(plan.ir_version,"weft-ir/application-lineage/0.2-candidate");let error=registry.compile(&catalog,Plan::V02(&plan),&Target{backend_id:"test.closed".into(),backend_version:"1".into(),profile_id:"fixture".into(),allow_candidate:true},&BindingInput{profile:"never-reached".into(),json:"{}".into(),sha256:"0".repeat(64)}).err().unwrap();assert_eq!(error.code,"WFT-BACKEND-VERSION");}
+ }
 }

@@ -117,7 +117,8 @@ fn predicate(
     p: &app::Predicate,
 ) -> Result<()> {
     match p {
-        app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
+        app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
+            app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
                     app::Predicate::Equal { left, right } => {
             field(all, owners, left, Operation::Equality)?;
             if let app::Value::Field { field: f } = right {
@@ -257,7 +258,8 @@ pub fn collect(plan: Plan<'_>) -> Result<Vec<Requirement>> {
             }
             for output in &plan.outputs {
                 match &output.expression {
-                    app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("Native entity metadata requires an explicit Truss profile")),
+                    app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
+            app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("Native entity metadata requires an explicit Truss profile")),
                     app::Expression::Sum { argument, .. } => {
                         field(&mut all, &owners, argument, Operation::Sum)?
                     }
