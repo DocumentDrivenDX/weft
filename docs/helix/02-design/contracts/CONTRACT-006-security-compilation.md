@@ -2095,3 +2095,20 @@ occurrences and the aggregate argument. `SELECT COUNT(*) FROM Resource r WHERE
 FALSE LIMIT 0` retains the Resource row scan with no invented Field dependency.
 Original0.1 and existing SQL backends refuse these extensions. No native protected
 backend case or original132-case acceptance item is promoted by this candidate.
+
+### Opt-in application lineage embedding candidate
+
+The explicit Cargo feature application-lineage-candidate enables
+prepare_application_lineage_json(request) in weft-runtime, native Python and
+browser WASM. It calls the same original application_lineage::prepare; requests
+remain the exact0.1/0.2 candidate schemas above, with no host plan/action/mode
+argument. Success returns the exact report JSON string with no new envelope or
+newline normalization. Rust returns Result<String, Diagnostic>; Python raises
+ValueError and browser WASM throws a string containing the original diagnostic
+code/message on refusal. No partial report is returned. Invalid UTF8 cannot enter
+these string APIs; malformed/duplicate/over-budget JSON retains core refusal.
+
+Without the feature these functions are absent. Existing compile entrypoints,
+backend features and release defaults do not enable it. No new parser, sidecar,
+SQL execution, policy interpretation or current/native authority is added. Exact
+source/output custody and subsequent native obligations remain host requirements.

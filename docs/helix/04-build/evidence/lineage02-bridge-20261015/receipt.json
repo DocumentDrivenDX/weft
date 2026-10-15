@@ -1,0 +1,40 @@
+{
+  "status": "binding-component-passed",
+  "baseCommit": "75b7c24b31300c8cea5ed57516b75d910ee011df",
+  "feature": "application-lineage-candidate",
+  "buildProfile": "dev",
+  "toolchain": {
+    "rust": "1.90.0",
+    "maturin": "1.9.6",
+    "wasmBindgen": "0.2.105"
+  },
+  "sourceSha256": {
+    "crates/weft-runtime/Cargo.toml": "2bea477d70653ead4c2edc2987b12bd30f2ee56ce56fb1d3dbb9ff9e1bfe9e0c",
+    "crates/weft-runtime/src/lib.rs": "1a4bbed3e14d1bed3ce74229e17ca939bb0c763dd7edfa3c2e690aa30572a555",
+    "crates/weft-python/Cargo.toml": "0993a495bd0615aa6ce79fc85fad81e2073091acb170085813fad7471c003938",
+    "crates/weft-python/src/lib.rs": "7cd63298dadba3654f6f52e1f50a2907f3deb6ec0800cb1bf24402ebf539ebb4",
+    "crates/weft-wasm/Cargo.toml": "d68ecca79f23e44bea001c0fe12c79a740a9db9aaf627f389255f4b50f2dbeca",
+    "crates/weft-wasm/src/lib.rs": "75e72a7b481a4eb2e22f4f80a5ebd3c58ece130be3f5ca0bbfe0231f07c43410",
+    "tests/lineage-v02/python-bridge.py": "310ecd00f50e7b28395a3a427fd6dff1402b036698cb3164763c9f6a9684698d",
+    "tests/lineage-v02/browser-bridge.mjs": "cbdbb42e1db1ac9d1eadc43c38626548b51821d7e925ffd14a653b0516787a17"
+  },
+  "artifacts": {
+    "candidateWheel": "5977de98acc9bcfae80f886e0e7fc85a8ac5ecbe06ff9a85298b8cb8fe6e203f",
+    "defaultWheel": "a76bcda16a6eef21c9c316755038c10d240cb43e6448af71a41045945fe01edb",
+    "wasm": "329d94d47c9f74167c08d9d10038ed9d303e9a868caa05ac6a75346cb96e7cc4",
+    "wasmJs": "ed04984001b0bb5ba17550b2b056f30d013d3e4095b4c4c7a9df201333e47c88"
+  },
+  "checks": {
+    "pythonExactReports": 11,
+    "pythonRefusals": 5,
+    "chromiumExactReports": 11,
+    "chromiumRefusals": 5,
+    "defaultWheelApiAbsent": true,
+    "ordinaryTransportStillRefuses": true,
+    "moduleBoundaryControls": 16,
+    "runtimeBridgeUnit": 1
+  },
+  "scope": "Source-only original core compiler parity; no native data/caller/current-authority/guarded-release acceptance. Feature not enabled in release defaults.",
+  "published": false,
+  "acceptanceCasesPromoted": []
+}

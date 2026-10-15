@@ -315,3 +315,16 @@ SAT results. native-count-distinct.py requires actual PostgreSQL18.6 and verifie
 Neither qualifies native compiled protected queries, nullable-source admission or
 US-009-AC4. Every original132 shared/native backend case remains allocated with
 its original source/caller/current-authority/guarded-publication obligations.
+
+### Installed lineage bridge parity
+
+Opt-in embedding tests under tests/lineage-v02/python-bridge.py and
+browser-bridge.mjs cite US-009-AC1/2/3 and require eleven original0.1/0.2 reports
+to match exact saved bytes, repeated browser calls to remain deterministic and
+five malformed/duplicate/override/over-budget inputs to throw without a report.
+Ordinary compile_json must refuse the lineage envelope. Browser initialization
+must load actual WASM in Chromium; after initialization host fetch/XHR/WebSocket/
+Worker access is fenced, page errors and external requests fail the test. Record
+exact wheel/WASM/JS hashes, build features and browser version. The no-feature
+wheel must omit the bridge. These are binding/source-lineage component checks,
+not native policy/caller/current-cut/guarded-release acceptance.

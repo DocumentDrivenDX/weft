@@ -1897,3 +1897,27 @@ capability program and original authenticated native admission. Actual caller/
 Subject/current source and eligible-population custody, compiler-to-native/result
 lineage, guarded release and every original132-case shared/native gate remain
 mandatory. This increment promotes no acceptance case and does not complete B-008.
+
+## B-008 optional Python/WASM read-requirement bridge — 2026-10-15
+
+The application-lineage-candidate feature now exposes the same original core
+issuer through pure runtime composition, native Python and browser WASM.
+CONTRACT-006 defines the exact success/refusal surface; TD-009/STP-009 retain
+module ownership, parity and no-feature checks. No alternate parser, native
+executor or policy mode/action interpretation is introduced. Existing compiler
+entrypoints and released native066 source50464e0 remain separately pinned.
+
+A freshly installed dev-profile Python wheel and actual Chromium151.0.7922.34 WASM
+each pass11 exact0.1/0.2 report fixtures and5 malformed/duplicate/override/oversize
+refusals. Both ordinary compile entrypoints still refuse lineage envelopes.
+Chromium test initialization uses exact local WASM/JS; host I/O is fenced after
+initialization, with no page errors/external requests. A separate default-feature
+wheel omits the optional API and retains the ordinary runtime API. One runtime
+bridge test, explicit feature checks and16 boundary controls pass. Exact source,
+wheel/WASM/JS hashes and receipts are under evidence/lineage02-bridge-20261015/.
+
+This closes embedding of issued source read requirements only. Original132 native
+security cases, genuine caller/source/current authority and guarded end-to-end
+result release remain open. No artifact is published and no acceptance case is
+promoted. Next compose the owner's current whole-query read program and actual
+native admission against these original issued bytes rather than caller assertions.

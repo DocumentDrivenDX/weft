@@ -40,6 +40,8 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(inspect_security_mapping_subject_key_json, m)?)?;
     m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
+    #[cfg(feature="application-lineage-candidate")]
+    m.add_function(wrap_pyfunction!(prepare_application_lineage_json,m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;
     #[cfg(feature="truss-postgresql-pg18")]
@@ -101,4 +103,11 @@ fn prepare_truss_security_relationship_candidate_json(request:&str)->PyResult<St
 #[pyfunction]
 fn inspect_truss_security_relationship_result_json(request:&str)->PyResult<String>{
  weft_runtime::inspect_truss_security_relationship_result_json(request).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+}
+
+/// Opt-in source lineage candidate; no native authorization or execution.
+#[cfg(feature="application-lineage-candidate")]
+#[pyfunction]
+fn prepare_application_lineage_json(request:&str)->PyResult<String>{
+ weft_runtime::prepare_application_lineage_json(request).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
 }

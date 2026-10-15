@@ -381,3 +381,13 @@ claim. Separate PostgreSQL18.6 VALUES tests cover count/NULL/duplicate/equality
 primitives and intentional counterexamples; they install no protected policy and
 admit no nullable/absent UMF Field. Preserve these scope distinctions in all
 compiler/native evidence and do not combine component counts into acceptance.
+
+### Optional native/browser lineage embedding
+
+CONTRACT-006's application-lineage-candidate feature adds a thin pure runtime
+composition and Python/WASM bindings to the same core issuer. It supplies exact
+report bytes rather than rebuilding a query AST in Python or JavaScript. New
+interfaces are gated in all three crates; existing release feature defaults and
+compile entrypoints stay separate. Errors preserve the original Diagnostic code
+and become host-language exceptions, with no partial report. Module ownership
+adds only explicit runtime/python/wasm API inventories; core has no host I/O.

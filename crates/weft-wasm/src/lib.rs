@@ -32,3 +32,10 @@ pub fn compile_paths_keys_json(request: &str) -> String {
 pub fn compile_implicit_arithmetic_json(request: &str) -> String {
     weft_runtime::implicit_arithmetic::compile_json(request)
 }
+
+/// Opt-in source lineage candidate; no native authorization or execution.
+#[cfg(feature="application-lineage-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn prepare_application_lineage_json(request:&str)->Result<String,wasm_bindgen::JsValue>{
+ weft_runtime::prepare_application_lineage_json(request).map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
+}
