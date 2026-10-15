@@ -468,3 +468,29 @@ separate read-disclosure requirements remain governing. UMF must supply original
 source-derived conditional routes. Native source/caller/Subject/current-cut
 admission and guarded release remain separate mandatory gates. No backend is
 registered or activated by this increment.
+
+#### Same-parent runtime/Python handoff — 2026-10-15
+
+The original runtime preparation now owns Arc<ApplicationLineage>. Its existing
+JSON/source APIs retain exact bytes. Creating a CurrentQueryPreparation shares
+that exact immutable allocation and captures bounded designation JSON plus the
+operand count after the original designation/operand factories both succeed.
+There is no self-referential allocation, AST clone, caller report import or
+serialized operand constructor. Source/read requirements remain on the same
+original preparation. The complete original descriptor/parameter/direction context
+is available to the trusted Rust with_context consumer callback.
+
+The child rederives temporary borrowed declarations under each callback rather
+than retaining self-referential Rust borrows. It checks exact captured declaration
+bytes/count before consumer invocation. Callback borrowing prevents retaining
+operand references after the scoped invocation. Native consumers may return owned
+lowerings only subject to their separate held native/source/release contract.
+The callback itself performs no native admission and accepts no Python callback.
+
+Python retains both the actual original parent object and this shared Rust child.
+Its native methods compare the child's Arc with the real parent's private inner
+context. Frozen instances have no constructor/import/replacement/copy/pickle path.
+Python class methods may be replaceable by trusted host code; native consumers
+must extract the actual native type/private fields, not call overridable Python
+methods or trust their JSON output. The source object and its diagnostics remain
+host-private and are not credentials.

@@ -1,0 +1,27 @@
+$ python3 scripts/checks/check-module-boundaries.py && bun scripts/module-boundaries.ts && bun test scripts/module-boundaries.test.ts
+{"edges": [["weft-backend-probe", "weft-core"], ["weft-databricks", "weft-core"], ["weft-frontend-probe", "weft-core"], ["weft-postgresql", "weft-core"], ["weft-python", "weft-runtime"], ["weft-runtime", "weft-backend-probe"], ["weft-runtime", "weft-core"], ["weft-runtime", "weft-databricks"], ["weft-runtime", "weft-postgresql"], ["weft-spike-python", "weft-spike-core"], ["weft-spike-wasm", "weft-spike-core"], ["weft-wasm", "weft-runtime"]], "format": "weft-cargo-boundaries/0.1", "qualification": "Actual Cargo manifest edges; Rust compiler enforces symbol visibility; within-crate/external meaning requires review", "workspaceModules": 11}
+Module boundaries: 11 workspace packages checked
+bun test v1.4.2 (43848b5a7)
+
+scripts/module-boundaries.test.ts:
+(pass) allowed actual graph passes [0.23ms]
+(pass) forbidden optional edge fails [0.13ms]
+(pass) unowned package fails [0.03ms]
+(pass) missing package fails [0.02ms]
+(pass) cycle fails even when edges individually allowed [0.04ms]
+(pass) new public type fails [0.02ms]
+(pass) new source fails
+(pass) removed public type fails [0.01ms]
+(pass) actual file scanner refuses same-line, reexport, extern and static additions [107.69ms]
+(pass) unsupported public form refuses [0.09ms]
+(pass) actual Cargo metadata detects same-name external source substitution [159.73ms]
+(pass) directory symlink cannot hide source from actual scanner [13.95ms]
+(pass) const unsafe functions retain actual API identity [0.11ms]
+(pass) new JavaScript dependency groups cannot bypass ownership [0.47ms]
+(pass) raw and commented Rust path attributes cannot redirect owned modules [69.72ms]
+(pass) keyword-named public field remains owned [0.16ms]
+
+ 16 pass
+ 0 fail
+ 30 expect() calls
+Ran 16 tests across 1 file. [806.00ms]

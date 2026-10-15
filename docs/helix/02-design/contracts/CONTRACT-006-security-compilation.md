@@ -2270,3 +2270,40 @@ value scopes. It must preserve original parameter meaning and refuse unqualified
 transform/key/runtime combinations. Issuance on caller-selected source bytes is
 possible and is not native source/current-authority admission. Existing report
 bytes, protocol versions and registered SQL backends remain unchanged.
+
+#### Same-original current query object
+
+The opt-in Python `ApplicationLineagePreparation.prepare_current_query()` method
+accepts no action, mode, AST, plan, report or parent override. It returns a frozen,
+non-importable `CurrentQueryPreparation`. The child retains the actual Python
+parent and shares its original immutable Rust preparation through Arc; it does
+not reconstruct a Catalog or Plan from diagnostic JSON. `source_preparation()`
+returns that same parent object, `designation_json()` returns the existing
+non-authoritative designation format, and `operand_count()` reports original
+operation count. No new wire artifact or native credential is introduced.
+
+Construction derives designation and operand ledger together before issuing a
+child. Unsupported SUM or an unrepresented operator refuses without a child;
+legacy source/profile combinations refuse. The container is source preparation,
+not query admission: it may still describe a prohibited route or unresolved read
+projection. Native lowering must refuse every unsupported semantic/physical use
+before execution. Public read disclosure, hidden original use and primary row
+eligibility remain separate.
+
+The runtime `CurrentQueryPreparation.with_context` is the trusted Rust consumer
+hook. Each scoped invocation derives actual borrowed designation/operand objects
+over the same retained original context, checks them against the captured
+immutable declarations and then invokes the consumer. SQL/AST are not reparsed;
+retained opaque source/profile JSON is revalidated by the original factory.
+Borrowed operand objects cannot escape the callback. `is_from(original)` compares
+actual original object identity, not source-byte equality. Python native getters
+also check their retained parent's actual Rust identity, using private fields
+rather than Python method dispatch. Native consumers MUST use this typed path;
+diagnostic report JSON or Python overrides cannot establish issuer provenance.
+
+These guarantees assume trusted host code and memory safety. Legitimate producers
+can be called on caller-selected source bytes, and possession grants no native
+permission. The native caller/Subject/source/current-cut issuer, source admission,
+actual route activation and separate action decisions, scalar/domain/runtime
+scope checks, SQL/result lowering and guarded release remain mandatory. No
+registered backend accepts the child as a native permit or legacy request.

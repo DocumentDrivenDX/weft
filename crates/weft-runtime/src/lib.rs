@@ -543,7 +543,7 @@ pub fn prepare_application_lineage_json(request:&str)->weft_core::error::Result<
 /// Original in-process issued preparation. Possession is not native authority.
 #[cfg(feature="application-lineage-candidate")]
 pub fn prepare_application_lineage(request:&str)->weft_core::error::Result<ApplicationLineagePreparation>{
- weft_core::application_lineage::prepare(request).map(|inner|ApplicationLineagePreparation{inner})
+ weft_core::application_lineage::prepare(request).map(|inner|ApplicationLineagePreparation{inner:std::sync::Arc::new(inner)})
 }
 /// Issued only by the actual core producer. No caller report constructor or serde.
 /// ```compile_fail
@@ -553,12 +553,57 @@ pub fn prepare_application_lineage(request:&str)->weft_core::error::Result<Appli
 /// }
 /// ```
 #[cfg(feature="application-lineage-candidate")]
-pub struct ApplicationLineagePreparation{inner:weft_core::application_lineage::ApplicationLineage}
+pub struct ApplicationLineagePreparation{inner:std::sync::Arc<weft_core::application_lineage::ApplicationLineage>}
 #[cfg(feature="application-lineage-candidate")]
 impl ApplicationLineagePreparation{
  pub fn json(&self)->&str{self.inner.json()}
  pub fn source_request_json(&self)->&str{self.inner.source_request_json()}
  pub fn current_query_designations_json(&self)->weft_core::error::Result<String>{weft_core::current_query_designation::derive(&self.inner).map(|d|d.json().to_owned())}
+ /// Derive both original declarations before issuing a child; no input overrides.
+ pub fn prepare_current_query(&self)->weft_core::error::Result<CurrentQueryPreparation>{
+  let designation=weft_core::current_query_designation::derive(&self.inner)?;
+  let operands=weft_core::current_query_operands::derive(&designation)?;
+  Ok(CurrentQueryPreparation{original:std::sync::Arc::clone(&self.inner),designation_json:designation.json().to_owned(),operand_count:operands.operations().len()})
+ }
+
+}
+/// Same original immutable core context. Never a native permission or imported report.
+/// ```compile_fail
+/// use weft_runtime::CurrentQueryPreparation;
+/// fn import(raw:&str)->CurrentQueryPreparation{serde_json::from_str(raw).unwrap()}
+/// ```
+/// Scoped operand borrows cannot escape the callback.
+/// ```compile_fail
+/// use weft_runtime::CurrentQueryPreparation;
+/// use weft_core::current_query_operands::CurrentQueryOperands;
+/// fn leak<'a>(p:&'a CurrentQueryPreparation)->&'a CurrentQueryOperands<'a>{
+///   p.with_context(|_,_,operands|Ok(operands)).unwrap()
+/// }
+/// ```
+#[cfg(feature="application-lineage-candidate")]
+pub struct CurrentQueryPreparation{
+ original:std::sync::Arc<weft_core::application_lineage::ApplicationLineage>,
+ designation_json:String,
+ operand_count:usize,
+}
+#[cfg(feature="application-lineage-candidate")]
+impl CurrentQueryPreparation{
+ pub fn designation_json(&self)->&str{&self.designation_json}
+ pub fn operand_count(&self)->usize{self.operand_count}
+ /// Original object identity only; identical source bytes are not object custody.
+ pub fn is_from(&self,original:&ApplicationLineagePreparation)->bool{std::sync::Arc::ptr_eq(&self.original,&original.inner)}
+ /// Trusted Rust consumer hook, not a Python callback or native admission API.
+ /// Borrowed declarations are derived over the same original context on each
+ /// scoped invocation; SQL/AST are not reparsed and caller reports are not imported.
+ /// The original factory revalidates retained opaque profile/source JSON.
+ /// A consumer still must admit native source/caller/current authority and all
+ /// effective routes, action permissions, scalar/runtime scopes and release.
+ pub fn with_context<T>(&self,consume:impl FnOnce(&weft_core::application_lineage::ApplicationLineage,&weft_core::current_query_designation::CurrentQueryDesignations<'_>,&weft_core::current_query_operands::CurrentQueryOperands<'_>)->weft_core::error::Result<T>)->weft_core::error::Result<T>{
+  let designation=weft_core::current_query_designation::derive(&self.original)?;
+  let operands=weft_core::current_query_operands::derive(&designation)?;
+  if designation.json()!=self.designation_json||operands.operations().len()!=self.operand_count{return Err(weft_core::error::Diagnostic::new("WFT-CURRENT-QUERY-CONTEXT","capability","Original current query context refused"))}
+  consume(&self.original,&designation,&operands)
+ }
 }
 #[cfg(all(test,feature="application-lineage-candidate"))]
 mod application_lineage_bridge_tests{
@@ -591,4 +636,31 @@ pub fn install_browser_mutation_backend(registry:&mut MutationRegistry,configura
  let value=weft_core::json::checked_json(configuration).map_err(|_|fail())?;
  let c:Configuration=serde_json::from_value(value).map_err(|_|fail())?;
  registry.install_selection_backend(Box::new(weft_postgresql::truss_mutation::CurrentTrussMutationBackend::new_browser(c.model,c.binding,c.model_pin)?))
+}
+
+#[cfg(all(test,feature="application-lineage-candidate"))]
+mod current_query_object_tests{
+ use super::*;use serde_json::Value;
+ fn raw()->String{include_str!("../../../tests/current-query-designation/fixtures/mixed-original-uses.request.json").into()}
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn scoped_consumer_uses_same_original_parent_and_owned_payload_without_report_import(){
+  let raw=format!(" \n{}\t",raw());let parent=prepare_application_lineage(&raw).unwrap();let child=parent.prepare_current_query().unwrap();let same_bytes=prepare_application_lineage(&raw).unwrap();assert!(child.is_from(&parent));assert!(!child.is_from(&same_bytes));
+  assert_eq!(child.designation_json(),parent.current_query_designations_json().unwrap());assert_eq!(child.operand_count(),2);
+  child.with_context(|original,designation,operands|{assert!(std::ptr::eq(original,parent.inner.as_ref()));assert!(std::ptr::eq(original,designation.preparation()));assert!(std::ptr::eq(operands.designation(),designation));assert_eq!(original.source_request_json(),raw);assert_eq!(operands.operations().len(),child.operand_count());Ok(())}).unwrap();
+  drop(parent);child.with_context(|original,_,_|{assert_eq!(original.source_request_json(),raw);Ok(())}).unwrap();
+ }
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn cached_declaration_or_original_context_substitution_refuses_before_consumer(){
+  for kind in 0..3{
+   let parent=prepare_application_lineage(&raw()).unwrap();let mut child=parent.prepare_current_query().unwrap();match kind{0=>child.operand_count+=1,1=>child.designation_json="{}".into(),_=>{let substituted=format!(" {}",raw());let replacement=prepare_application_lineage(&substituted).unwrap();let before:Value=serde_json::from_str(parent.json()).unwrap();let after:Value=serde_json::from_str(replacement.json()).unwrap();assert_eq!(before["applicationPlanJson"],after["applicationPlanJson"]);child.original=replacement.inner;}}
+   let called=std::cell::Cell::new(false);let result=child.with_context(|_,_,_|{called.set(true);Ok(())});assert_eq!(result.unwrap_err().code,"WFT-CURRENT-QUERY-CONTEXT");assert!(!called.get());
+  }
+ }
+ // @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn unsupported_and_legacy_preparations_issue_no_child(){
+  for raw in [include_str!("../../../tests/current-query-designation/fixtures/unsupported-salary-sum.request.json"),include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json")]{let parent=prepare_application_lineage(raw).unwrap();let before=parent.json().to_owned();assert!(parent.prepare_current_query().is_err());assert_eq!(parent.json(),before);}
+ }
 }

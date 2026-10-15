@@ -1,0 +1,77 @@
+{
+  "scope": "Installed native source-only bridge; no native data/current authority",
+  "module": "/private/tmp/weft-current-object-v0432-installed/weft/__init__.py",
+  "version": "0.4.32",
+  "checks": [
+    {
+      "case": "application-lineage:field-free-count.request",
+      "reportSha256": "35c32a64fd23eef25f096a0f8f60b2d72527755adcad88ec3475eb4f19d5081d",
+      "passed": true
+    },
+    {
+      "case": "application-lineage:numeric-sum-unsupported.request",
+      "reportSha256": "5f117aa3f236426fe64542cbd5ce433b230dd3b078a8ee11e440a500e18eded9",
+      "passed": true
+    },
+    {
+      "case": "application-lineage:token-equality.request",
+      "reportSha256": "5ddef19f441670a3614dc7885ed00173fb5f28ac1b98107de6ff3e124067f573",
+      "passed": true
+    },
+    {
+      "case": "application-lineage:token-order-refusal.request",
+      "reportSha256": "0ed2e4da3c7e90a924ca494d6c27d658caf73cfca305b0b34432dbd6ec302e10",
+      "passed": true
+    },
+    {
+      "case": "application-lineage:token-self-join.request",
+      "reportSha256": "18bc7f7b7b5c17c57b0466ac25215569b86f7547784e26d15e7bf9bad2499a97",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:distinct-required.request",
+      "reportSha256": "9f5b9018660b202b0c1196bc043401b0f163eaa7c089da2fc868b4d4f00bdce8",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:distinct-selfjoin-false-zero.request",
+      "reportSha256": "c9a0877f9d44ce4db7d65acdf7eb2838f1e4ca64006d7416654a0b706d608269",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:field-free-false-zero.request",
+      "reportSha256": "acf0705613cf9e4459cc17162a96fdfb375fb28c4919f15b1621f4ae68f20bb2",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:hidden-read-false-zero.request",
+      "reportSha256": "7889f78a8f70f038ccea11e1f49d9e22d125798a5d4489ef7f42a2524e5f259e",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:projection-read.request",
+      "reportSha256": "33db3d2ff1ec6aecdca5ee55059fc41528c45f583dde6416e0da887b7abf02cf",
+      "passed": true
+    },
+    {
+      "case": "lineage-v02:sum-unsupported.request",
+      "reportSha256": "19a3b919fe06513e90ae9966d4d006eed32191e8db33ffbb24b55e79116a3df1",
+      "passed": true
+    },
+    {
+      "refusal": true
+    },
+    {
+      "refusal": true
+    },
+    {
+      "refusal": true
+    },
+    {
+      "refusal": true
+    },
+    {
+      "refusal": true
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "scope": "Same-original typed Rust/Python preparation custody only; not native source/caller/current permission or SQL enforcement",
+  "baseMain": "3026a23aa445e07f84fcd4e9f072d434a531c7d7",
+  "sourceSha256": {
+    "crates/weft-runtime/src/lib.rs": "d2fb57ebc1116efc7eafe2ca9cda41325214cc0a189ce4e1758814cffcc01feb",
+    "crates/weft-python/src/lib.rs": "13e62fc3f982e33eec8fa239da6c69213814c19e5462f48385393733f495be99",
+    "tests/current-query-designation/issued-current-python.py": "19995d316e554958ca79b1b2106589f6d5695eb210ec4018100de48f2ddf45e1"
+  },
+  "evidenceSha256": {
+    "browser.json": "d98524a409bed1250bd09c57f2b3e97c9a33a025b9a35511f528a96f95ec9276",
+    "designation-regression.json": "e13351483083881b434d97bd70a7a5ca18e68e129c7a1b28b66987e4857c98f9",
+    "json-regression.json": "90185a70c83787e36187d088a8af44535a7042426129141932c619749223b32a",
+    "module-boundaries.log": "ffc0ec370f49b2da80985a61ef3f509b64f43ddd387cebdf7a9098b2da399bac",
+    "parent-regression.json": "04a27a86ebf09bd1ce5280092d5ea950e4e84e4c3e1bedabc080ffcca322af14",
+    "python.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+    "runtime-api.log": "8f155eb88d1812401139db5cab623a527f5a7b16ce0473533c0484d2a68a1078",
+    "runtime-tests.log": "9a95a4c685d0492f355b4b2771703614127dab848e71540caf7c1291c3c209e4",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "workspace.log": "7138cf089bdf72b0ae4acd401e18944a3e63d3fb80da12d680cabf7288ce50a5"
+  },
+  "features": [
+    "application-lineage-candidate"
+  ],
+  "buildProfile": "dev",
+  "candidateWheelVersion": "0.4.32",
+  "candidateWheelSha256": "1e1234e6049995995bc4530abc6537905a87053c4d38eb6e7df52ad21c39c4eb",
+  "installedNativeModuleSha256": "be3b18fc99c5097b1f4f3bfc6aa93429d80e15632f8896a1d4a672a19da2941c",
+  "installedNativeMatchesWheel": true,
+  "published": false,
+  "checks": {
+    "runtimeTests": 5,
+    "runtimePublicApiDoctests": 3,
+    "pythonSameOriginalControls": 46,
+    "pythonDesignationRegressions": 18,
+    "pythonParentRegressions": 31,
+    "pythonJsonRegressions": 16,
+    "realChromiumRegressions": 16,
+    "workspaceAllTargets": "passed",
+    "wasmBuild": "passed",
+    "moduleBoundaries": "passed",
+    "governedSpecs": "passed",
+    "sourceDigestsUnchangedAcrossBuildAndFinalChecks": true
+  },
+  "embedding": {
+    "python": "3.12.14",
+    "abi3Minimum": "3.9",
+    "platform": "macOS arm64",
+    "rust": "1.90.0",
+    "chromium": "151.0.7922.34"
+  },
+  "semantics": [
+    "Actual Python parent retained and shared original Rust Arc",
+    "Native getter checks actual private parent identity",
+    "Typed with_context consumer uses actual original context and scoped borrowed declarations",
+    "No SQL/AST reparse or imported caller report",
+    "Revalidates retained opaque source/profile JSON with original factory",
+    "Frozen instances and native receiver/constructor/import/substitution refusals",
+    "Existing report bytes, published version and registered backend behavior preserved"
+  ],
+  "limitations": [
+    "Source preparation is not query admission; prohibited/unqualified routes can still be represented",
+    "Unsupported SUM/unrepresented operators/legacy source refuse without child",
+    "No new WASM object interface",
+    "No current-policy native issuer/consumer/lowering or protected SQL activation",
+    "Actual route/action/scalar/paired runtime scopes and guarded native release remain required",
+    "Trusted host and memory-safe code assumed; Python class method overrides are not trusted",
+    "All original132 shared/native cases and expanded owner gate preserved without promotion"
+  ],
+  "composition": "Preserves current main release/native67 compatibility changes; same-source bridge, runtime tests, installed wheel regressions, workspace, WASM/Chromium and governance checks freshly replayed.",
+  "observedExports": {
+    "CurrentQueryPreparation": true,
+    "compile_truss_runtime_json": false
+  },
+  "composedUpstreamSourceSha256": {
+    "Cargo.lock": "d1829584f9aeb929ef16f9a32e7b7571636e6aabb23b43cfd7b0f2a74d0e0d6d",
+    "crates/weft-python/Cargo.toml": "a3135ae31efcd135e57400813077237bd5579436e6201517ec55731d4508c8da",
+    "crates/weft-python/pyproject.toml": "a73cc6193374cfc8ca1540e011d6389ae4a33790fe3b7c88c7156b7e5efc2ef0",
+    "crates/weft-postgresql/src/truss_runtime.rs": "3a157f4fe65fb3ec7341aee35a275024ab4d8d46c8f95b51167893da4dbf3cb4",
+    "crates/weft-postgresql/src/truss_mutation.rs": "443c5188981c03b3463c153431db68e1e42a45b0df6202f33f8a290ba822fd75"
+  }
+}

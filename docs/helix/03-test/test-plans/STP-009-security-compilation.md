@@ -458,3 +458,29 @@ inspection nor these tests activate a branch, evaluate current permissions, emit
 protected SQL or qualify native admission. The original132-case completion gate remains
 open; individual statuses do not change. Evidence:
 `../../04-build/evidence/current-route-interoperability-20261015/receipt.json`.
+
+### Same-original Python current query handoff — 2026-10-15
+
+Five runtime controls pass, including actual pointer identity across original/
+designation/operand objects, retained context after parent drop, rejection before
+callback of corrupted declaration/count or substituted source with byte-identical
+Plan, and atomic unsupported/legacy refusal. Three runtime API doctests reject
+private construction, report import and escaping scoped operand borrows.
+
+The actual installed macOSarm64 Python abi3 development wheel passes46 handoff
+controls in `tests/current-query-designation/issued-current-python.py`: exact
+original parent identity, six original designation goldens, actual operation
+counts, identical-byte distinct parent separation, retention after GC, frozen
+constructor/attribute/subclass/copy/pickle refusals, actual native receiver checks,
+no override inputs, legacy compiler/report refusal, and native descriptor behavior
+under class-method replacement. Existing18 designation,31 original-object and16
+JSON bridge controls pass. Unsupported SUM refuses; a prohibited source can still
+be represented as non-authoritative preparation and is not admitted for SQL.
+
+Workspace all-target checking passes. The same runtime ownership change builds
+for WASM and passes16 original JSON-lineage controls in actual Chromium151.0.7922.34.
+The child object is Python/Rust only; no WASM object or new native consumer is
+claimed. Module-boundary/spec checks and source/wheel/module correspondence are
+recorded in `../../04-build/evidence/current-query-object-20261015/receipt.json`.
+The development wheel retains version0.4.32 and does not replace that published
+release. No original132 acceptance case is promoted.

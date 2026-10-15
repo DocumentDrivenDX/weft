@@ -1,0 +1,78 @@
+{
+  "scope": "Real Chromium source-only WASM bridge; no data/current authority",
+  "browser": "151.0.7922.34",
+  "wasmSha256": "261869036428d3c1e84870db02da81860c765bfdaa41e8bf047c2fee35d80245",
+  "jsSha256": "954477087965bfecf73990a1f9e7f8d5a63bdbe6f2a327d7f53cdf779018349e",
+  "checks": [
+    {
+      "id": "application-lineage:field-free-count.request.json",
+      "reportSha256": "35c32a64fd23eef25f096a0f8f60b2d72527755adcad88ec3475eb4f19d5081d"
+    },
+    {
+      "id": "application-lineage:numeric-sum-unsupported.request.json",
+      "reportSha256": "5f117aa3f236426fe64542cbd5ce433b230dd3b078a8ee11e440a500e18eded9"
+    },
+    {
+      "id": "application-lineage:token-equality.request.json",
+      "reportSha256": "5ddef19f441670a3614dc7885ed00173fb5f28ac1b98107de6ff3e124067f573"
+    },
+    {
+      "id": "application-lineage:token-order-refusal.request.json",
+      "reportSha256": "0ed2e4da3c7e90a924ca494d6c27d658caf73cfca305b0b34432dbd6ec302e10"
+    },
+    {
+      "id": "application-lineage:token-self-join.request.json",
+      "reportSha256": "18bc7f7b7b5c17c57b0466ac25215569b86f7547784e26d15e7bf9bad2499a97"
+    },
+    {
+      "id": "lineage-v02:distinct-required.request.json",
+      "reportSha256": "9f5b9018660b202b0c1196bc043401b0f163eaa7c089da2fc868b4d4f00bdce8"
+    },
+    {
+      "id": "lineage-v02:distinct-selfjoin-false-zero.request.json",
+      "reportSha256": "c9a0877f9d44ce4db7d65acdf7eb2838f1e4ca64006d7416654a0b706d608269"
+    },
+    {
+      "id": "lineage-v02:field-free-false-zero.request.json",
+      "reportSha256": "acf0705613cf9e4459cc17162a96fdfb375fb28c4919f15b1621f4ae68f20bb2"
+    },
+    {
+      "id": "lineage-v02:hidden-read-false-zero.request.json",
+      "reportSha256": "7889f78a8f70f038ccea11e1f49d9e22d125798a5d4489ef7f42a2524e5f259e"
+    },
+    {
+      "id": "lineage-v02:projection-read.request.json",
+      "reportSha256": "33db3d2ff1ec6aecdca5ee55059fc41528c45f583dde6416e0da887b7abf02cf"
+    },
+    {
+      "id": "lineage-v02:sum-unsupported.request.json",
+      "reportSha256": "19a3b919fe06513e90ae9966d4d006eed32191e8db33ffbb24b55e79116a3df1"
+    },
+    {
+      "id": "refusal:11",
+      "refused": true
+    },
+    {
+      "id": "refusal:12",
+      "refused": true
+    },
+    {
+      "id": "refusal:13",
+      "refused": true
+    },
+    {
+      "id": "refusal:14",
+      "refused": true
+    },
+    {
+      "id": "refusal:15",
+      "refused": true
+    }
+  ],
+  "requests": [
+    "http://weft.lineage.test/",
+    "http://weft.lineage.test/weft.js",
+    "http://weft.lineage.test/weft_wasm_bg.wasm"
+  ],
+  "pageErrors": []
+}

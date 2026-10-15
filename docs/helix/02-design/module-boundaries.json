@@ -3364,6 +3364,12 @@
             "fn:json",
             "fn:source_request_json",
             "fn:current_query_designations_json",
+            "fn:prepare_current_query",
+            "struct:CurrentQueryPreparation",
+            "fn:designation_json",
+            "fn:operand_count",
+            "fn:is_from",
+            "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"
           ],

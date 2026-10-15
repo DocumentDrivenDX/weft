@@ -45,6 +45,7 @@ fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
         m.add_function(wrap_pyfunction!(prepare_application_lineage_json,m)?)?;
         m.add_function(wrap_pyfunction!(prepare_application_lineage,m)?)?;
         m.add_class::<ApplicationLineagePreparation>()?;
+        m.add_class::<CurrentQueryPreparation>()?;
     }
     #[cfg(feature="truss-postgresql-pg18")]
     m.add_function(wrap_pyfunction!(compile_truss_runtime_json,m)?)?;
@@ -128,6 +129,11 @@ impl ApplicationLineagePreparation {
  fn current_query_designations_json(&self)->PyResult<String>{
   self.inner.current_query_designations_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
  }
+ fn prepare_current_query(slf:PyRef<'_,Self>)->PyResult<CurrentQueryPreparation>{
+  let inner=slf.inner.prepare_current_query().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))?;
+  Ok(CurrentQueryPreparation{original:slf.into(),inner})
+ }
+
 }
 #[cfg(feature="application-lineage-candidate")]
 #[pyfunction]
@@ -135,4 +141,26 @@ fn prepare_application_lineage(request:&str)->PyResult<ApplicationLineagePrepara
  weft_runtime::prepare_application_lineage(request)
   .map(|inner|ApplicationLineagePreparation{inner})
   .map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+}
+
+/// Non-importable original-object custody. Possession establishes no native authority.
+#[cfg(feature="application-lineage-candidate")]
+#[pyclass(frozen,module="weft")]
+struct CurrentQueryPreparation{original:Py<ApplicationLineagePreparation>,inner:weft_runtime::CurrentQueryPreparation}
+#[cfg(feature="application-lineage-candidate")]
+#[pymethods]
+impl CurrentQueryPreparation{
+ fn source_preparation(&self,py:Python<'_>)->PyResult<Py<ApplicationLineagePreparation>>{self.check_original(py)?;Ok(self.original.clone_ref(py))}
+ fn designation_json(&self,py:Python<'_>)->PyResult<String>{
+  self.check_original(py)?;
+  self.inner.with_context(|_,designation,_|Ok(designation.json().to_owned())).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+ fn operand_count(&self,py:Python<'_>)->PyResult<usize>{self.check_original(py)?;Ok(self.inner.operand_count())}
+}
+
+#[cfg(feature="application-lineage-candidate")]
+impl CurrentQueryPreparation{
+ fn check_original(&self,py:Python<'_>)->PyResult<()>{
+  if !self.inner.is_from(&self.original.bind(py).borrow().inner){return Err(pyo3::exceptions::PyValueError::new_err("WFT-CURRENT-QUERY-CONTEXT: Original current query context refused"))}Ok(())
+ }
 }

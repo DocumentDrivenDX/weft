@@ -2074,3 +2074,31 @@ actual context, not import report/plan JSON as authority. UMF's next runtime rou
 activation and Truss's held caller/Subject/source/current-cut issuer remain separate
 unmet implementation gates. The concurrent local mutation/binding cohort is
 preserved and cannot substitute for this native security path.
+
+### Same-original Python current query handoff — 2026-10-15
+
+B-008 remains open. Actual Python parent.prepare_current_query() now derives the
+source-bound designation and typed operand ledger together, returns a frozen
+non-importable child and retains the actual original parent plus shared immutable
+Rust context. The Rust with_context consumer hook supplies that actual original
+context and temporary typed declarations, rather than importing report/plan JSON.
+No SQL/AST reparse or global Field retyping occurs. Original object identity is
+checked independently of identical source bytes. Native consumers must use actual
+native fields, not overridable Python methods or diagnostic JSON.
+
+Five runtime tests,3 runtime API doctests and46 installed-wheel handoff controls
+pass, alongside18 designation/31 parent-object/16 JSON regressions. Workspace and
+WASM builds pass;16 real Chromium bridge controls pass. Evidence/source/wheel pins
+are retained in `evidence/current-query-object-20261015/receipt.json`. This is an
+unpublished0.4.32 development wheel, not a replacement for the published release.
+The existing reports and registered backend behavior remain unchanged.
+
+Next implement the separately registered current-source PostgreSQL scalar
+consumer through this typed hook and Truss's genuine held native issuer. Initial
+required singular String/signed64 application scalar qualification is a first
+subset only; all original132 shared/native cases and full raw/graph goal remain
+required. Unsupported uses must refuse the whole lowering without empty-selection
+bypass. UMF owns actual read-rule/route activation; exact separate original-action
+permission, per-use/cross-row runtime scopes, original native source/caller/Subject
+cut, SQL/result lineage and guarded release remain unmet. The new source object
+is not evidence that any of those gates passed.
