@@ -323,6 +323,7 @@ impl Backend for Runtime {
                 } else {
                     "truss-catalog-runtime/0.26-candidate"
                 }
+            || (self.declarative_fields && binding.release_sha256 != "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a")
             || binding.release_sha256.len() != 64
             || !binding
                 .release_sha256
@@ -1260,6 +1261,7 @@ mod native066_tests{
    let r=run(&request(&bundle,sql,"0.4.36"));assert_eq!(r["status"],"compiled","{sql}: {r}");assert!(r.get("sql").is_some());
    let r=run(&request(&bundle,sql,"0.4.35"));assert_eq!(r["status"],"blocked","old registration: {r}");assert!(r.get("sql").is_none());
   }
+  let mut wrong=bundle.clone();let mut binding=wrong["binding"].clone();binding["releaseSha256"]=json!("0".repeat(64));wrong["bindingJson"]=json!(binding.to_string());let refused=run(&request(&wrong,"SELECT COUNT(*) FROM Resource r","0.4.36"));assert_eq!(refused["status"],"blocked");assert!(refused.get("sql").is_none());
   let r=run(&request(&bundle,"SELECT r.clear FROM Resource r","0.4.36"));assert_eq!(r["status"],"blocked");assert!(r.get("sql").is_none());
  }
  #[test]

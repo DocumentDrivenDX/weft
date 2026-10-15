@@ -1845,3 +1845,11 @@ evidence/truss066-20261015/committed-sdk-query-receipt.json. Build-only GitHub
 Actions run38754435498 targets compiler77639ba for five wheel platforms; no
 tag/release publication was requested. Full85 PostgreSQL unit run is still in
 progress (84 passed, exhaustive decimal-domain case pending).
+
+Final manifest admission hardening: backend0.4.36 requires the exact committed
+99ae7218 native manifest digest in addition to its runtime version and binding
+digest. A freshly rehashed binding with a substituted manifest digest refuses
+without SQL; both new native-cohort tests pass after this tightening. Earlier
+77639ba wheel/replay receipts remain historical before-hardening evidence.
+A rebuilt wheel and matching native replay are pending; no released asset is
+qualified by the earlier build-only run. Older registrations are unchanged.
