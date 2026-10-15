@@ -1,0 +1,32 @@
+{
+  "baseline": "c0c6449481a87eed38d3f7a6ebebc1f4ab4beeb4",
+  "feature": "truss-security-relationship-candidate",
+  "scope": "Original in-process compiler/result correspondence only; no native authority, completeness, current cut, publication or case promotion",
+  "wheel": {
+    "name": "weft_sql-0.4.30-cp39-abi3-macosx_11_0_arm64.whl",
+    "sha256": "a52e265e7bd49f80a76e4a868f1e0b95df50ef175428d8dcdea746c6922c5bdd",
+    "platform": "macOS arm64",
+    "python": "3.12.14",
+    "installed": "offline --no-deps isolated target; candidate feature explicit"
+  },
+  "ordinaryPg18Wheel": "separate candidate methods absent",
+  "checks": {
+    "guardedTransport": 28,
+    "boundaryControls": 16
+  },
+  "sources": {
+    "crates/weft-runtime/src/lib.rs": "14e2adaa987f43e49f0ffe475c65837846bf432000cbf5d230cfcd49f4efa526",
+    "crates/weft-runtime/Cargo.toml": "034b25b2bc2e4212bfdcfedc9435b560358c9b6107d348f89ff56e67dbe17419",
+    "crates/weft-python/src/lib.rs": "2ac872b655343b7fbcc3eaae392cdc35336b27d2740060cc135b5484cb18b91e",
+    "crates/weft-python/Cargo.toml": "383bc0d32a2d9104940e5388ca44c908754bc4c6ad23e77e352dd79dca4a0498",
+    "crates/weft-postgresql/src/security_relational_transport.rs": "f0c05742b5b13cc0b86c7ca4a876bdb49b47d4b403d544d97efb72e06f6a678e",
+    "tests/security-relationship-python.py": "6d04417a6d664e0b4fe8b002ffe0eec2ba52fab743734af7641c941753b0f866"
+  },
+  "evidence": {
+    "modules.log": "0b39b62713ac22db10fdf4c3ced0896f6bfee88a5e77f41358737587bf5dfa8c",
+    "python-parity.json": "f183d895cbbbb2c16ae15a001f4f54cf5b3ea6c43202dc0252f90d2b4f294202",
+    "specs.log": "475c1db7c84ba914df68e15919b6ada62a5f959dcc5aa194fd11067e4d1b4d6d",
+    "transport-tests.log": "34b423d047c9ef1146c7ff6c327766e884867527593cbba58011856970e3aa8a",
+    "wheel-build.log": "338371d0b1e119c2190fb70aee4049a5304a0dba94affd15654acb8da598ae9c"
+  }
+}

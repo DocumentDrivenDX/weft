@@ -1,0 +1,15 @@
+{
+  "scope": "in-process original compiler correspondence only; no authentication/native population/current authority/publication qualification",
+  "pythonModuleSha256": "a416f855f01a60425c4d56cdacaced993064d9a14ffab04e89a75f9d64829fdf",
+  "checks": [
+    "compiler-request.json: exact candidate parity, separate Subject and historical entrypoint refusal",
+    "compiler-request.json: original-source empty-declaration result parity; no completeness claim",
+    "compiler-request.json: SQL/newline/source/version/authority/scan/contract tamper refused",
+    "compiler-request.json: caller authority/SQL overrides refused",
+    "compiler-request-observation-denied.json: exact candidate parity, separate Subject and historical entrypoint refusal",
+    "compiler-request-observation-denied.json: original-source empty-declaration result parity; no completeness claim",
+    "compiler-request-observation-denied.json: SQL/newline/source/version/authority/scan/contract tamper refused",
+    "compiler-request-observation-denied.json: caller authority/SQL overrides refused",
+    "both boundaries refuse malformed, duplicate and oversized envelopes"
+  ]
+}

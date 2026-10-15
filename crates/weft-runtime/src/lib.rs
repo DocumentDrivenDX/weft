@@ -523,3 +523,14 @@ pub fn lower_mutation_selection_json(registry:&MutationRegistry,handle:usize,req
  let r:Request=serde_json::from_value(value).map_err(|_|fail())?;
  serde_json::to_string(&registry.lower_selection(handle,&r.selection,&r.model,&r.binding,r.max_items)?).map_err(|_|fail())
 }
+
+/// Separate pure relationship candidate transport. Never registers a backend or grants authority.
+#[cfg(feature="truss-security-relationship-candidate")]
+pub fn prepare_truss_security_relationship_candidate_json(request:&str)->weft_core::error::Result<String>{
+ weft_postgresql::security_relational_transport::prepare_guarded_relationship_candidate(request).map(|p|p.json().to_owned())
+}
+/// Reconstruct original producer bytes and inspect supplied cells. Native completeness and release remain host obligations.
+#[cfg(feature="truss-security-relationship-candidate")]
+pub fn inspect_truss_security_relationship_result_json(request:&str)->weft_core::error::Result<String>{
+ weft_postgresql::security_relational_transport::inspect_guarded_relationship_result(request).map(|v|v.to_string())
+}

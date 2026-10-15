@@ -1638,3 +1638,28 @@ Evidence: [current native receipt](evidence/mutation-current-truss-20261014/rece
 and [source/transport manifest](evidence/mutation-current-truss-20261014/manifest.json).
 
 The final installable abi3 wheel was built with the pinned toolchain, installed offline into an isolated target, and passed the32-case Python oracle plus the same-store native replay on Python3.12.14/macOS arm64. The bridge also rejects caller SQL/principal/plugin members, unknown handles and PostgreSQL NUL parameters. No package was published.
+
+
+### Explicit native Python relationship candidate bridge — 2026-10-15
+
+The separate `truss-security-relationship-candidate` Cargo feature in runtime and
+Python exposes `prepare_truss_security_relationship_candidate_json(request)` and
+`inspect_truss_security_relationship_result_json(request)`. Both invoke the same
+original Rust producer/inspector used by the separate relationship binaries.
+Python accepts and returns original JSON strings; refusals raise ValueError with
+original diagnostic code/message. The existing 4MB producer and 32MB inspector
+input bounds, closed envelopes, exact producer-byte reconstruction, query/policy/
+unvalued Subject parameter channels, codecs and result obligations are unchanged.
+No new protocol, installed backend, caller identity or execution callback is added.
+Ordinary builds, including the ordinary PG18 feature, omit these two methods.
+Existing security mapping and compiler registrations remain closed to this profile.
+
+Fresh macOS arm64/Python3.12.14 installed-wheel checks compare exact Rust/Python
+candidate and inspector outputs for both original permitted and observation-denied
+sources. SQL/newline/source/version/authority overrides, missing source/terminal
+scan declarations, mismatched result hashes, duplicate JSON keys, malformed and
+oversized envelopes refuse. Empty supplied batches only exercise correspondence:
+they do not establish native population completeness, source truth, original
+operand capture, current authority, authenticated Subject or guarded publication.
+This binding increment promotes no original backend case and does not activate
+public security compilation. Native enforcement and full B-008 remain open.

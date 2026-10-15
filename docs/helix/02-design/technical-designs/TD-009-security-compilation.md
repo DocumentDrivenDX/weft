@@ -172,3 +172,28 @@ checkpoint foundation claims do not qualify the reconciled composition.
 ## Current-main security registration correspondence
 
 CONTRACT-006 now governs main’s dedicated security 0.1/0.2 protocols; CONTRACT-007 retains the blocked compile 0.5 compatibility envelope. The finite no-executable-output property includes the new registration protocol: security 0.2 may call its explicit trusted registration factory once after source/query/profile admission, but SecurityBackend::lower remains uncalled and the response refuses unsupported lowering. Compatibility 0.5 and security 0.1 never invoke either backend factory. Generic security 0.2 has no implicit registration and refuses BACKEND-REQUIRED. The prior callback prohibition is historical and does not erase main’s admitted registration component. New protocol-matrix and main registration/owner-refusal tests provide actual Rust correspondence; native authentication, enforcement and release remain unqualified.
+
+
+### Explicit native Python relationship candidate bridge — 2026-10-15
+
+The separate `truss-security-relationship-candidate` Cargo feature in runtime and
+Python exposes `prepare_truss_security_relationship_candidate_json(request)` and
+`inspect_truss_security_relationship_result_json(request)`. Both invoke the same
+original Rust producer/inspector used by the separate relationship binaries.
+Python accepts and returns original JSON strings; refusals raise ValueError with
+original diagnostic code/message. The existing 4MB producer and 32MB inspector
+input bounds, closed envelopes, exact producer-byte reconstruction, query/policy/
+unvalued Subject parameter channels, codecs and result obligations are unchanged.
+No new protocol, installed backend, caller identity or execution callback is added.
+Ordinary builds, including the ordinary PG18 feature, omit these two methods.
+Existing security mapping and compiler registrations remain closed to this profile.
+
+Fresh macOS arm64/Python3.12.14 installed-wheel checks compare exact Rust/Python
+candidate and inspector outputs for both original permitted and observation-denied
+sources. SQL/newline/source/version/authority overrides, missing source/terminal
+scan declarations, mismatched result hashes, duplicate JSON keys, malformed and
+oversized envelopes refuse. Empty supplied batches only exercise correspondence:
+they do not establish native population completeness, source truth, original
+operand capture, current authority, authenticated Subject or guarded publication.
+This binding increment promotes no original backend case and does not activate
+public security compilation. Native enforcement and full B-008 remain open.

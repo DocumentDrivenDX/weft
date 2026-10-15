@@ -3259,7 +3259,9 @@
             "fn:compile_truss_runtime_page_json",
             "use:weft_core : : mutation : : MutationRegistry",
             "fn:install_truss_mutation_backend",
-            "fn:lower_mutation_selection_json"
+            "fn:lower_mutation_selection_json",
+            "fn:prepare_truss_security_relationship_candidate_json",
+            "fn:inspect_truss_security_relationship_result_json"
           ],
           "pathReferences": []
         },

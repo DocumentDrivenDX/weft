@@ -32,6 +32,11 @@ fn compile_truss_postgresql_json(request:&str,composition:&str)->String{
 #[pymodule]
 fn weft(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<MutationCompiler>()?;
+    #[cfg(feature="truss-security-relationship-candidate")]
+    {
+        m.add_function(wrap_pyfunction!(prepare_truss_security_relationship_candidate_json,m)?)?;
+        m.add_function(wrap_pyfunction!(inspect_truss_security_relationship_result_json,m)?)?;
+    }
     m.add_function(wrap_pyfunction!(inspect_security_mapping_subject_key_json, m)?)?;
     m.add_function(wrap_pyfunction!(prepare_security_mapping_json, m)?)?;
     m.add_function(wrap_pyfunction!(compile_json, m)?)?;
@@ -85,4 +90,15 @@ impl MutationCompiler {
  #[cfg(feature="truss-postgresql-pg18")]
  fn register_truss_selection(&mut self,configuration:&str)->PyResult<usize>{weft_runtime::install_truss_mutation_backend(&mut self.registry,configuration).map_err(|e|mutation_error(format!("{}: {}",e.code,e.message)))}
  fn lower_selection_json(&self,handle:usize,request:&str)->PyResult<String>{weft_runtime::lower_mutation_selection_json(&self.registry,handle,request).map_err(|e|mutation_error(format!("{}: {}",e.code,e.message)))}
+}
+
+#[cfg(feature="truss-security-relationship-candidate")]
+#[pyfunction]
+fn prepare_truss_security_relationship_candidate_json(request:&str)->PyResult<String>{
+ weft_runtime::prepare_truss_security_relationship_candidate_json(request).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+}
+#[cfg(feature="truss-security-relationship-candidate")]
+#[pyfunction]
+fn inspect_truss_security_relationship_result_json(request:&str)->PyResult<String>{
+ weft_runtime::inspect_truss_security_relationship_result_json(request).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
 }

@@ -1,0 +1,189 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:837:8
+    |
+837 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 9 warnings (run `cargo fix --lib -p weft-core` to apply 2 suggestions)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-mutation-reconcile/crates/weft-postgresql)
+warning: unused variable: `t`
+   --> crates/weft-postgresql/tests/security_guarded_transport.rs:233:7
+    |
+233 |  let (t,source)=match &output.output().expression{Expression::Count{logical_type}=>(logical_type,None),Expression::Sum{argument,logical_t...
+    |       ^ help: if this is intentional, prefix it with an underscore: `_t`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `weft-postgresql` (test "security_guarded_transport") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.40s
+     Running tests/security_guarded_transport.rs (/private/tmp/weft-compatible-latest-target/debug/deps/security_guarded_transport-467a5806a6ad6045)
+
+running 28 tests
+test grouped_sum_disclosed_null_transform_retains_nullable_output ... ok
+test operand_value_checks_cover_every_operator_occurrence_on_both_scans ... ok
+test grouped_sum_of_nullable_original_values_preserves_null_result_domain ... ok
+test prohibited_and_foreign_sources_never_produce_query_use_guards ... ok
+test grouped_sum_rejects_null_and_changed_input_lineage ... ok
+test mixed_aggregate_contract_keeps_direct_disclosure_and_computed_outputs_distinct ... ok
+test query_use_guards_keep_all_five_operators_and_both_join_scan_occurrences ... ok
+test aggregate_result_candidate_preserves_derived_domains_and_old_contract_refusals ... ok
+test relational_parameters_refuse_foreign_graph_sources_without_binding_native_subject ... ok
+test relational_disclosed_cross_family_transform_refuses_before_silent_null_conversion ... ok
+test relational_parameters_keep_repeated_named_values_distinct_from_policy_and_subject ... ok
+test operand_transform_values_require_original_constant_rule_and_exact_domain ... ok
+test original_query_action_is_exact_and_missing_grant_refuses_before_query_filters ... ok
+test relational_boolean_group_order_uses_bool_or_and_keeps_absence_key ... ok
+test guarded_handoff_keeps_source_query_parameter_and_subject_channels_distinct ... ok
+test relational_parameters_preserve_numeric_literals_keyset_order_and_join_occurrences ... ok
+test relational_sql_count_preserves_subject_and_rule_checks_without_fabricated_field_operands ... ok
+test relational_sql_keeps_named_input_out_of_sql_and_retains_query_only_operand_guards ... ok
+test operand_values_refuse_invalid_later_rows_missing_occurrences_and_foreign_context ... ok
+test relational_sql_emits_all_owner_stages_with_pre_query_guards_and_computed_lineage ... ok
+test original_result_batch_passes_correspondence_without_granting_a_release_permit ... ok
+test unsupported_queries_and_injected_authority_inputs_cannot_prepare_handoff ... ok
+test security_descending_order_retains_guarded_selection_and_old_registration_refusal ... ok
+test relational_guard_stages_keep_operand_evaluation_after_capture_validation ... ok
+test complete_guarded_result_refuses_changed_producer_source_or_later_withheld_value ... ok
+test postgresql_codec_checks_refuse_nul_and_native_numeric_overflow_without_narrowing_umf ... ok
+test relationship_candidate_keeps_source_observation_terminal_and_closed_old_protocols ... ok
+test separate_relational_handoff_checks_original_operands_results_and_rejects_old_versions ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.63s
+

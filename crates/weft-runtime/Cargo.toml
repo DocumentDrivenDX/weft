@@ -5,6 +5,7 @@ version.workspace=true
 edition.workspace=true
 publish.workspace=true
 [features]
+truss-security-relationship-candidate=["dep:weft-postgresql"]
 ashlar-databricks-compatible-revisions-candidate=["dep:weft-databricks"]
 truss-postgresql-pg18=["dep:weft-postgresql"]
 ashlar-databricks-implicit-arithmetic=["dep:weft-databricks"]

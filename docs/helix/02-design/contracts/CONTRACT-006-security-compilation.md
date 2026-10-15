@@ -1855,3 +1855,28 @@ Eleven controlled probes pass, including the prior withholding/missing-grant/mal
 Every original relational check now carries a closed `stage`: `beforeOperandCapture` for integrity, Subject and query-use/truth checks; `afterOperandValidation` for grouped disclosure/order consistency. The latter statements evaluate relational operands and filters, so executing them before original operand-domain/presence and native codec validation is forbidden. Parameter codec and genuine native source/caller/current-authority admission still precede every SQL statement. Capture follows the initial checks; original value/native codec checking precedes the later checks and execution; result inspection and late native checks precede protected publication.
 
 The separate0.2 producer retains stages in its exact canonical bytes. Changing a stage fails original producer correspondence, and the candidate envelope schema requires one of the two stage values. Native hosts must reject missing/unknown stages and enforce ordering, not infer it from error strings. Existing direct0.1 output/checks remain unchanged; updating0.2 requires the matching original compiler/binary pin. The controlled runner consumes the explicit stages and retains malformed-later-value refusal before any grouped or relational operand evaluation. Eleven controlled probes pass; no native authority/release or132-case entry is promoted.
+
+
+### Explicit native Python relationship candidate bridge — 2026-10-15
+
+The separate `truss-security-relationship-candidate` Cargo feature in runtime and
+Python exposes `prepare_truss_security_relationship_candidate_json(request)` and
+`inspect_truss_security_relationship_result_json(request)`. Both invoke the same
+original Rust producer/inspector used by the separate relationship binaries.
+Python accepts and returns original JSON strings; refusals raise ValueError with
+original diagnostic code/message. The existing 4MB producer and 32MB inspector
+input bounds, closed envelopes, exact producer-byte reconstruction, query/policy/
+unvalued Subject parameter channels, codecs and result obligations are unchanged.
+No new protocol, installed backend, caller identity or execution callback is added.
+Ordinary builds, including the ordinary PG18 feature, omit these two methods.
+Existing security mapping and compiler registrations remain closed to this profile.
+
+Fresh macOS arm64/Python3.12.14 installed-wheel checks compare exact Rust/Python
+candidate and inspector outputs for both original permitted and observation-denied
+sources. SQL/newline/source/version/authority overrides, missing source/terminal
+scan declarations, mismatched result hashes, duplicate JSON keys, malformed and
+oversized envelopes refuse. Empty supplied batches only exercise correspondence:
+they do not establish native population completeness, source truth, original
+operand capture, current authority, authenticated Subject or guarded publication.
+This binding increment promotes no original backend case and does not activate
+public security compilation. Native enforcement and full B-008 remain open.
