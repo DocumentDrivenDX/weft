@@ -1,0 +1,11 @@
+{
+  "limit-zero-salary.native.json": "adac1fb79e97f051dfd3a0aff62fcb0c0f4b812a783fe4185f3a53baee35797c",
+  "limit-zero-salary.request.json": "721f4a01135b5dd061afdba8c3897b8ecf246eb9daf355baa82f7f218466b7af",
+  "plain-salary.request.json": "b96243bdecc5a2b62b4c2be5a4ff775275c5a4254ab140accfc614f37f2af38c",
+  "plain-salary.native.json": "7e599ae92390347ec87fa8f4e7430852a8ca1e2a711354fdf00c08c340b31e2c",
+  "false-salary.native.json": "f3181799a904ce63871e6d32483db43735f6eb394eb1fcb5005ca3c8c8bdb85d",
+  "false-salary.request.json": "52f1c2b78ed1df505a7dbabd1c6c94d028565a2f56048020c3bcdecbc30b8a8f",
+  "stored-token.request.json": "0daa2fc9d0d6818ef79e9173b59667aa2664df56fd87382c15c9faa7fe761ea8",
+  "receipt.json": "eaa3c28fe456673c71a6781f50cbb2daddf38daaf4f1e680007f6bc443578bb7",
+  "stored-token.native.json": "1cd4cec2a01b4ee61fe96411cbced1b3bbc2f162c675f71c866e5b2e52b329f8"
+}

@@ -1,0 +1,85 @@
+{
+  "scope": "Actual original public Weft CQP producer inputs for subsequent operator-free original UMF bridge tests; no UMF execution, read disposition, output domain selection, native result or authority",
+  "weftVersion": "0.4.34",
+  "wheel": "weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "fb0d79679c158208418199df144cfc21917b3955c382ef933980bb89645eed37",
+  "nativeModuleSha256": "877bfafd51a7f50478be954c0cbabd0cba0a705f004a5b5e99d317fd087f19d9",
+  "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+  "fixtureSha256": "192614d9e7b0dee56364299a9d7cfee0d72b0a7c8778b91640da818cb8ef8ad4",
+  "checks": [
+    {
+      "id": "plain-salary",
+      "sql": "SELECT r.salary FROM Resource r",
+      "sameOriginalParent": true,
+      "sourceRequestSha256": "b96243bdecc5a2b62b4c2be5a4ff775275c5a4254ab140accfc614f37f2af38c",
+      "packetSha256": "7e599ae92390347ec87fa8f4e7430852a8ca1e2a711354fdf00c08c340b31e2c",
+      "projectionField": {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "module": "m",
+        "element": "salary"
+      },
+      "queryRoutes": 0,
+      "queryFieldOperands": 0,
+      "projectionOccurrences": 1,
+      "originalLogicalFamily": "integer",
+      "readProjectionDecision": "not-produced"
+    },
+    {
+      "id": "false-salary",
+      "sql": "SELECT r.salary FROM Resource r WHERE FALSE",
+      "sameOriginalParent": true,
+      "sourceRequestSha256": "52f1c2b78ed1df505a7dbabd1c6c94d028565a2f56048020c3bcdecbc30b8a8f",
+      "packetSha256": "f3181799a904ce63871e6d32483db43735f6eb394eb1fcb5005ca3c8c8bdb85d",
+      "projectionField": {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "module": "m",
+        "element": "salary"
+      },
+      "queryRoutes": 0,
+      "queryFieldOperands": 0,
+      "projectionOccurrences": 1,
+      "originalLogicalFamily": "integer",
+      "readProjectionDecision": "not-produced"
+    },
+    {
+      "id": "limit-zero-salary",
+      "sql": "SELECT r.salary FROM Resource r LIMIT 0",
+      "sameOriginalParent": true,
+      "sourceRequestSha256": "721f4a01135b5dd061afdba8c3897b8ecf246eb9daf355baa82f7f218466b7af",
+      "packetSha256": "adac1fb79e97f051dfd3a0aff62fcb0c0f4b812a783fe4185f3a53baee35797c",
+      "projectionField": {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "module": "m",
+        "element": "salary"
+      },
+      "queryRoutes": 0,
+      "queryFieldOperands": 0,
+      "projectionOccurrences": 1,
+      "originalLogicalFamily": "integer",
+      "readProjectionDecision": "not-produced"
+    },
+    {
+      "id": "stored-token",
+      "sql": "SELECT r.token FROM Resource r",
+      "sameOriginalParent": true,
+      "sourceRequestSha256": "0daa2fc9d0d6818ef79e9173b59667aa2664df56fd87382c15c9faa7fe761ea8",
+      "packetSha256": "1cd4cec2a01b4ee61fe96411cbced1b3bbc2f162c675f71c866e5b2e52b329f8",
+      "projectionField": {
+        "documentId": "domain",
+        "revision": "query-value-core-r1",
+        "module": "m",
+        "element": "token"
+      },
+      "queryRoutes": 0,
+      "queryFieldOperands": 0,
+      "projectionOccurrences": 1,
+      "originalLogicalFamily": "string",
+      "readProjectionDecision": "not-produced"
+    }
+  ],
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}

@@ -2433,3 +2433,18 @@ match their public archives. Six controls pass. Reproducible test source lives
 at tests/truss068/retained-consumer-cohort.py; scoped receipts/provenance are under
 evidence/retained-consumer-cohort-20261015/. This is pre-native consumer selection,
 not policy or backend acceptance; all original132 obligations remain unchanged.
+
+
+### Original operator-free projection producer corpus - 2026-10-15
+
+Four actual public034 installed-wheel CQP producer packets retain plain/WHEREFALSE/
+LIMIT0 salary and storedtoken projections with exact original parent/source/Field
+descriptor custody. No query operator or field route is invented; FALSE retains
+only its original Boolean operation. Salary stays originalInteger in this packet;
+original UMF read metadata must determine any transformedString output domain.
+Original requests/packets/hashes and scoped receipt are retained under
+evidence/operator-free-projections-20261015/; reproducible producer test lives
+at tests/current-query-designation/operator-free-projections.py. Packets are sent
+to the new explicit UMF child transport for subsequent genuine interop. No UMF
+response, native result, effective domain decision or original132 case promotion
+is inferred from these producer-only tests.
