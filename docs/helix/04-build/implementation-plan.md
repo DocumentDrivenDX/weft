@@ -2402,3 +2402,21 @@ pins, not final published wheel pins or protected consumer registration. Release
 tag0.4.34 is source86273dd3 (release notes only after e4cc source); release
 run38818298197 must finish before publication is claimed. All original132 B-008
 shared/native cases and genuine caller/source/current-authority gates remain open.
+
+
+### Public Weft0.4.34 source/archive/native correspondence - 2026-10-15
+
+Tagged release38818298197 completed five platform wheel jobs and publication.
+Source86273dd3 is the notes-only successor of the tested e4cc compiler source.
+All public GitHub asset digests and embedded source/version/archive/extension/shim
+pins match, including PG4 and Databricks32 exact installed controls per platform
+and the retained native68 release3588cf03/backend37 metadata. Native68 compiler10
+also passed every wheel job. Actual installed public ARM wheel passes fresh
+native68 public acceptance/create/query and ordinary direct-object denial; the
+local disposable runtime context exits normally. Its five member payloads equal
+the prior CI ARM wheel while archive hashes differ. Evidence and exact public
+ARM/Linux consumer tuples are retained under evidence/release034-public-20261015/.
+Truss and Ashlar received publication pins for explicit adoption; historical
+consumer registrations and aggregate/ownership/security claims remain unchanged.
+All original132 B-008 cases and native authenticated source/caller/current
+authority, result/cell lineage and guarded release obligations remain required.

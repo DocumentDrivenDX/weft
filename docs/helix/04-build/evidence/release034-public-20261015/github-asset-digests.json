@@ -1,0 +1,109 @@
+{
+  "release": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.34",
+  "tag": "v0.4.34",
+  "publishedAt": "2026-10-15T22:44:39Z",
+  "assets": [
+    {
+      "name": "current-databricks-smoke-aarch64-apple-darwin.json",
+      "digest": "sha256:a08ec21488839761ff7871dc87de656c17931951c7a823eb663129e2b85ea700",
+      "size": 4442,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-databricks-smoke-aarch64-apple-darwin.json"
+    },
+    {
+      "name": "current-databricks-smoke-aarch64-unknown-linux-gnu.json",
+      "digest": "sha256:7b614cd0b4fc775be59f10b2c5e94ee94d029e360c3b2db40d64939b5050ff8e",
+      "size": 4469,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-databricks-smoke-aarch64-unknown-linux-gnu.json"
+    },
+    {
+      "name": "current-databricks-smoke-x86_64-apple-darwin.json",
+      "digest": "sha256:8243e05ea7946ab5f0ddd3bbe3ef05f398c44fcf64212d85829fc4037aa441d4",
+      "size": 4444,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-databricks-smoke-x86_64-apple-darwin.json"
+    },
+    {
+      "name": "current-databricks-smoke-x86_64-pc-windows-msvc.json",
+      "digest": "sha256:0fb7617088186cf8004a7b1df29789633bb2b1553a1069be7c760cf2b912d9fa",
+      "size": 4578,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-databricks-smoke-x86_64-pc-windows-msvc.json"
+    },
+    {
+      "name": "current-databricks-smoke-x86_64-unknown-linux-gnu.json",
+      "digest": "sha256:d3fbcb3b3e915b6450b96c6c556d202a5057c26086633c25d74664aee06459f5",
+      "size": 4467,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-databricks-smoke-x86_64-unknown-linux-gnu.json"
+    },
+    {
+      "name": "current-query-smoke-aarch64-apple-darwin.json",
+      "digest": "sha256:b530e4b870ef029515c5efc942d14bbf32454454290a35ea20f1d127caba1ad9",
+      "size": 1305,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-query-smoke-aarch64-apple-darwin.json"
+    },
+    {
+      "name": "current-query-smoke-aarch64-unknown-linux-gnu.json",
+      "digest": "sha256:1981a275fb6be1a14ab23f039d994886a956d67cfb82bdb95014d4751c1951c4",
+      "size": 1296,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-query-smoke-aarch64-unknown-linux-gnu.json"
+    },
+    {
+      "name": "current-query-smoke-x86_64-apple-darwin.json",
+      "digest": "sha256:cc15fd0d305c10c48a2b41306f0fe4adb895c1d39169a8b5bdc3b8649288962e",
+      "size": 1307,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-query-smoke-x86_64-apple-darwin.json"
+    },
+    {
+      "name": "current-query-smoke-x86_64-pc-windows-msvc.json",
+      "digest": "sha256:7067d1cafacaf7f716df5761829149fa2a8f400fe377b38177d7aadf604e1c1b",
+      "size": 1323,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-query-smoke-x86_64-pc-windows-msvc.json"
+    },
+    {
+      "name": "current-query-smoke-x86_64-unknown-linux-gnu.json",
+      "digest": "sha256:3fdd0c598510ade9981675575eda484b7fd9d8bb1737c3643e895eb7ec450268",
+      "size": 1294,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/current-query-smoke-x86_64-unknown-linux-gnu.json"
+    },
+    {
+      "name": "release-pins.json",
+      "digest": "sha256:0c5998e4fe7a32eda3ef80a6ed7d9c206d40d25f3638ced263995491afccc96d",
+      "size": 33531,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/release-pins.json"
+    },
+    {
+      "name": "SHA256SUMS",
+      "digest": "sha256:138e0ad93efdf71ff5650c02acf05f63028e63a598989d33cd5896b88c76e1d4",
+      "size": 616,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/SHA256SUMS"
+    },
+    {
+      "name": "weft_sql-0.4.34-cp39-abi3-macosx_10_12_x86_64.whl",
+      "digest": "sha256:d8de28e3acb5accb5c33578059c3444dd0a535735f62b8c027b5d2f04eb3d1d6",
+      "size": 3179696,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/weft_sql-0.4.34-cp39-abi3-macosx_10_12_x86_64.whl"
+    },
+    {
+      "name": "weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+      "digest": "sha256:fb0d79679c158208418199df144cfc21917b3955c382ef933980bb89645eed37",
+      "size": 3034769,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl"
+    },
+    {
+      "name": "weft_sql-0.4.34-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "digest": "sha256:4bb831b119d3bc28c0d82fef10ba4dd25ff4c67897c37c7637ce0f8312904e75",
+      "size": 4182803,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/weft_sql-0.4.34-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl"
+    },
+    {
+      "name": "weft_sql-0.4.34-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "digest": "sha256:bfc70a4d1f9146c3630ebb177be5a4f52231fd81b276233b3e0aa1a2c5e73246",
+      "size": 4916174,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/weft_sql-0.4.34-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    },
+    {
+      "name": "weft_sql-0.4.34-cp39-abi3-win_amd64.whl",
+      "digest": "sha256:7f6db476427cc231907ebf83f70372ad51866a7acbf2d5ab5fe6d653b934fd5b",
+      "size": 3011243,
+      "url": "https://github.com/DocumentDrivenDX/weft/releases/download/v0.4.34/weft_sql-0.4.34-cp39-abi3-win_amd64.whl"
+    }
+  ]
+}
