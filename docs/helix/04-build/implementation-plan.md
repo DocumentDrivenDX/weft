@@ -1921,3 +1921,15 @@ security cases, genuine caller/source/current authority and guarded end-to-end
 result release remain open. No artifact is published and no acceptance case is
 promoted. Next compose the owner's current whole-query read program and actual
 native admission against these original issued bytes rather than caller assertions.
+
+### Native066 workflow completion
+
+GitHub Actions38754989288 completed successfully at exact50464e0: all five
+platform wheel build/install/import/API smoke jobs passed and the publication job
+was skipped. evidence/truss066-20261015/workflow-final.json records the observed
+source/job outcomes. This supersedes the earlier pending build status, not the
+local96b0 import failure. Truss separately reports adopter, numeric and upgrade/
+query checks against the actual workflow Mac artifact; those are owner-reported
+until its exact retained receipts are independently consumed here. No current
+protected-security or newer opt-in lineage release claim follows. Tag/publication
+is coordinated separately and was not performed by this increment.
