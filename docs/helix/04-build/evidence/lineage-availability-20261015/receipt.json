@@ -1,0 +1,42 @@
+{
+  "baseline": "05b68633ee082509f956fb67b8b3e012692048b5",
+  "scope": "Actual selected availability refusal in source-only report profiles; all-required bytes unchanged; no native data leak/qualification claim",
+  "checks": {
+    "core": 292,
+    "boundaryControls": 16,
+    "weftHostAvailability": 10,
+    "upstreamAvailability": 12,
+    "priorCurrentScenarios": 5,
+    "priorLegacyScenarios": 3
+  },
+  "sources": {
+    "crates/weft-core/src/application_property_uses.rs": "258f2fa49c279b4390b1ee50b7e9044b4621805bab91e2bb183ea3b3cb60cf0b",
+    "crates/weft-core/src/application_lineage.rs": "bd1ff9362fad1a58fa63b6e2b987f58b3793e7b8e54115ea30df2420f195057f",
+    "crates/weft-core/src/security_query_properties.rs": "dc82af1c21ff141b0f96d94a6e06d64d58cf654eebc22e3dcb55a25fe518b872",
+    "tests/lineage-availability/check.py": "cce4b2b66eac77c828255df369b206d5bdaee419b67e6ce6ab8c95797207b936"
+  },
+  "witnesses": {
+    "tests/lineage-availability/check.py": "cce4b2b66eac77c828255df369b206d5bdaee419b67e6ce6ab8c95797207b936",
+    "tests/lineage-availability/expanded-before.json": "ac05bc99eb28f63f1b35f3064c318b5e9798d148101ebc327d1ea8821bcc1555",
+    "tests/lineage-availability/legacy-absent.before.json": "e8737b1afb3bd1849fb04bb71aafdbd8a9ddf8d9ae338e30266084a3179eb479",
+    "tests/lineage-availability/legacy-absent.request.json": "f5c7c60c06585724ab84f5822d16781197288a13eda90f4923f93fc3d6499839",
+    "tests/lineage-availability/original-before.json": "a1241baa53ba409195f310aceee8f92848fa2eb90b14b5f4f1d2566f97bb6e2d"
+  },
+  "binaries": {
+    "application_lineage": "6069d58a2009ca2d5f5d65557e5a7d71900c1343ad3ef792f4e3f375e6a3fc65",
+    "security_query_properties": "5e20086e913f59ab4fe77ba55113567df2f0e76e8773cd08c0a98d249111d593"
+  },
+  "evidence": {
+    "after.json": "0454a1fafa08108dddc1d289a2d225809f903fc7fbcbe91187f4e894acc9a2a9",
+    "build.log": "008de165d180fb59e2d149fbb4550d19ef9376e4049af4ea3e7adc28b9f8d1d7",
+    "core-tests.log": "0f8ede712c557a0e9e431e9500ebce57f555fa7f0b94e97a79af2eeea3cd331e",
+    "current-byte-regression.json": "eef7e0f4160625c84c5a33112371f3ce4ecf711cc58057c2cd135813c81283fc",
+    "legacy-build.log": "12c72f41e00aebfae8cca99186f334eb4b871f688bbee81a73930462a2fa5664",
+    "legacy-byte-regression.json": "eb136a3d229f96a48c675bcf203907948b5c0cd0fe3607e63d99b458c3a96c06",
+    "modules.log": "d0efbbfcd8376880586b156535fba73d486bc297c1331198089527e3934a74bc",
+    "specs.log": "41ccd10746e2b9b1a356e1716c404416318159a7c008e13fae4e39f0bc1be907",
+    "upstream-after.json": "74212ff0f7715a99099aef08f532bddf25104632a6d5434286ce1ad3480ca9e0",
+    "upstream-complete-before.json": "42eab212b1e1a484dfbf75d79c97f27cc04e8c99cfb5df673be2d60f5f3a5dc6",
+    "upstream-required-byte-compatibility.json": "37b2886e5106ee3f2aa8a379788422bb465090bfb59048d2ee4b191ff04bad20"
+  }
+}

@@ -1776,3 +1776,43 @@ catalog/storage-owner program and effective read policy. No current catalog
 compatibility, native before-dispatch/source/current authority, protected release,
 P03/B08 completion or original backend case promotion follows from this artifact.
 All original assertions, allocations and deadlines remain mandatory.
+
+
+### Selected availability regression repair — 2026-10-15
+
+An independent owner replay exposed that the source-only0.1 parser could resolve
+an absent-allowed scalar as an ideal nonnull Field while its dependency report
+omitted actual availability. Predicate, projection, hidden order, selfjoin, group
+and SUM argument paths could therefore emit misleading domain lineage. This is a
+source-report counterexample, not evidence of a native data leak or permission.
+The original six-case and expanded eight-case before witnesses are preserved under
+`tests/lineage-availability/`; the old frozen producer passed only the required
+predicate and field-free count controls. The earlier legacy property report also
+accepted an original absent salary source; its actual before output is retained.
+
+Both `application_lineage::prepare` and `security_query_properties::derive` now
+require actual selected Field descriptors to have availability required. The
+shared check resolves each original scan Record/Field membership from Catalog,
+then inspects the original descriptor; it does not infer presence from the ideal
+LogicalType.nullable flag or the existence of a predicate. It covers plain output
+Fields as well as every hidden/operator/aggregate/terminal-key dependency before
+any report is returned. Unrepresented availability refuses with
+WFT-APPLICATION-LINEAGE-AVAILABILITY and no partial stdout. Absence is not NULL;
+nullable/absent source semantics need a separately explicit qualified descriptor
+and protocol before these reports can claim them.
+
+Field-free COUNT(*) remains supported as structural lineage: it selects no Field,
+retains every original scan and source duty, and does not blanket reject an unused
+optional Record member. A required projection similarly survives an unselected
+optional sibling. Neither positive control establishes native source completeness,
+policy eligibility, current authority or guarded release.
+
+All existing all-required0.1 reports, current five-source scenarios and historical
+mapping outputs remain byte-identical. There is no envelope/schema/registration
+upgrade or compatibility fallback. Fresh292 core tests,16 boundary controls and
+10 host availability controls pass; exact original before witnesses, repaired
+binary/source pins and current/legacy correspondence evidence are retained under
+`evidence/lineage-availability-20261015/`. Frozen old producers remain historical
+counterexample evidence, not qualification of selected absence. Full P03/B08 and
+all native backend acceptance duties remain open. The in-progress0.2 grammar is
+kept separate from this repair.

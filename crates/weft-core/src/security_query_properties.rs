@@ -113,6 +113,7 @@ impl Derivation<'_, '_> {
 /// Derive from the actual admitted owner context; supplied property annotations are never read.
 pub fn derive(ctx: &SecurityBackendContext<'_>) -> Result<SecurityQueryProperties> {
     let query = ctx.query().application_plan();
+    crate::application_property_uses::require_present_fields(query,ctx.catalog())?;
     let mut d = Derivation {
         ctx,
         uses: Vec::new(),
@@ -202,4 +203,14 @@ mod schema_tests {
         bad["outputs"][0]["expression"]["required"] = json!(["equality"]);
         assert!(!ReportSchema::is_valid(&bad));
     }
+}
+
+#[cfg(test)]
+mod availability_regressions{
+ #[test]
+ fn original_legacy_property_uses_cannot_infer_nonnull_from_absence(){
+  let raw=include_str!("../../../tests/lineage-availability/legacy-absent.request.json");
+  let error=crate::security_mapping_transport::prepare_security_query_properties(raw).err().unwrap();
+  assert_eq!(error.code,"WFT-APPLICATION-LINEAGE-AVAILABILITY");
+ }
 }

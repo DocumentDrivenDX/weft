@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "id": "token-equality",
+      "sha256": "7009e280d77d63c67745eb509c5250a15950f0771004753d49fc0641e781deaf",
+      "byteEqual": true
+    },
+    {
+      "id": "token-self-join",
+      "sha256": "177382f46178f174e93aea471c6ace9495364f412cb8275d529493a78b2d2def",
+      "byteEqual": true
+    },
+    {
+      "id": "token-order-refusal",
+      "sha256": "4e3d4a46673818413486b431a938404b6c626379ffe956bacc4dc1466bd3ad25",
+      "byteEqual": true
+    },
+    {
+      "id": "numeric-sum-unsupported",
+      "sha256": "c89ad71f6647990cc0f6c7bb14daac2c6fda3d9954ca35c1ce8bb5eaa8f235f2",
+      "byteEqual": true
+    },
+    {
+      "id": "field-free-count",
+      "sha256": "8a288c3d5fa9a65ed2b2872177954c79ba640cddc2daec4da7b750232523911f",
+      "byteEqual": true
+    }
+  ],
+  "scope": "Original five current required-field lineage reports remain byte-identical; no general/native compatibility claim."
+}

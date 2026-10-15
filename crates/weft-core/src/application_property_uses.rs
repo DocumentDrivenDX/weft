@@ -228,3 +228,38 @@ pub(crate) fn visit(
     }
     Ok(())
 }
+
+/// This report subset cannot represent both explicit null and absence. Admit
+/// selected Fields only from actual required descriptors, including projections.
+/// Field-free COUNT retains scans without selecting unrelated Record members.
+pub(crate) fn require_present_fields(plan: &app::Plan, catalog: &Catalog) -> Result<()> {
+    let owners = scans(plan)?;
+    let mut seen = std::collections::BTreeSet::new();
+    let mut check = |scan: &str, identity: &Identity| -> Result<()> {
+        let owner = owners.get(scan).ok_or_else(fail)?;
+        let key = serde_json::to_string(&(owner, identity)).map_err(|_| fail())?;
+        if seen.insert(key) {
+            let record = catalog.record_by_identity(owner)?;
+            let (_, graph) = catalog.member_descriptor_by_identity(&record, identity)?;
+            let selected = graph
+                .iter()
+                .find(|d| d.identity == *identity)
+                .ok_or_else(fail)?;
+            if selected.availability.as_deref() != Some("required") {
+                return Err(Diagnostic::new(
+                    "WFT-APPLICATION-LINEAGE-AVAILABILITY",
+                    "capability",
+                    "Selected Field availability cannot be represented by this lineage profile",
+                ));
+            }
+        }
+        Ok(())
+    };
+    visit(plan, catalog, |u| check(u.scan, u.identity))?;
+    for output in &plan.outputs {
+        if let app::Expression::Field { scan, identity } = &output.expression {
+            check(scan, identity)?;
+        }
+    }
+    Ok(())
+}

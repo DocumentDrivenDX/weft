@@ -161,6 +161,7 @@ pub fn prepare(raw: &str) -> Result<ApplicationLineage> {
         plan.required_capabilities.push("order.desc".into());
         plan.required_capabilities.sort();
     }
+    crate::application_property_uses::require_present_fields(&plan,&catalog)?;
     let scans = crate::application_property_uses::scans(&plan)?;
     let mut uses = Vec::new();
     let mut remaining = 8_000_000usize;
@@ -391,4 +392,19 @@ mod tests {
             assert!(prepare(&request.to_string()).is_err());
         }
     }
+}
+
+#[cfg(test)]
+mod availability_regressions{
+ use super::*;
+ #[test]
+ fn independent_selected_absence_witnesses_refuse_without_erasing_count_scans(){
+  let cases:Value=serde_json::from_str(include_str!("../../../tests/lineage-availability/expanded-before.json")).unwrap();
+  assert_eq!(cases["observations"].as_array().unwrap().len(),8);
+  for case in cases["observations"].as_array().unwrap(){
+   let raw=case["request"].to_string();let result=prepare(&raw);
+   if case["expected"]=="refused"{let error=result.err().unwrap();assert_eq!(error.code,"WFT-APPLICATION-LINEAGE-AVAILABILITY","{}",case["id"]);}
+   else{let result=result.unwrap();let report:Value=serde_json::from_str(result.json()).unwrap();assert_eq!(report["authority"],false);assert_eq!(report["sourceRequestJson"],raw);assert_eq!(report["scans"].as_object().unwrap().len(),1);if case["id"]=="field-free-count"{assert_eq!(report["uses"],json!([]));}}
+  }
+ }
 }

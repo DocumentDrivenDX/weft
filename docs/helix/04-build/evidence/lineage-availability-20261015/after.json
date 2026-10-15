@@ -1,0 +1,64 @@
+{
+  "scope": "source-only selected availability refusal and scan preservation; no native policy or execution acceptance",
+  "producerSha256": "6069d58a2009ca2d5f5d65557e5a7d71900c1343ad3ef792f4e3f375e6a3fc65",
+  "observations": [
+    {
+      "id": "required-predicate",
+      "expected": "passed",
+      "passed": true,
+      "stderr": ""
+    },
+    {
+      "id": "absent-projection",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "absent-predicate",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "absent-hidden-order",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "absent-self-join",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "absent-group",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "absent-sum",
+      "expected": "refused",
+      "passed": true,
+      "stderr": "WFT-APPLICATION-LINEAGE-AVAILABILITY: Selected Field availability cannot be represented by this lineage profile\n"
+    },
+    {
+      "id": "field-free-count",
+      "expected": "passed",
+      "passed": true,
+      "stderr": ""
+    },
+    {
+      "id": "required-projection-with-unselected-optional-token",
+      "expected": "passed",
+      "passed": true
+    },
+    {
+      "id": "legacy-property-hidden-and-projected-absence",
+      "expected": "refused",
+      "passed": true
+    }
+  ]
+}
