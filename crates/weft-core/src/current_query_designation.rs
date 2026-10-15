@@ -30,6 +30,23 @@ struct Profile{version:String,id:String,revision:String,model_pins:Vec<ModelPin>
 #[serde(rename_all="camelCase")]
 struct UseDesignation{path:String,scan:String,target:SecurityRef,field:SecurityRef,field_identity:Identity,operator:QueryOperator,operation:String,original_action:Option<String>}
 /// Only the factory can bind a profile to the original preparation. No serde/import API.
+/// Reports cannot be imported as issued contexts.
+/// ```compile_fail
+/// use weft_core::current_query_designation::CurrentQueryDesignations;
+/// fn import(raw:&str)->CurrentQueryDesignations<'_>{serde_json::from_str(raw).unwrap()}
+/// ```
+/// The original preparation cannot be replaced through the public API.
+/// ```compile_fail
+/// use weft_core::{application_lineage::ApplicationLineage,current_query_designation::CurrentQueryDesignations};
+/// fn replace<'a>(d:&mut CurrentQueryDesignations<'a>,p:&'a ApplicationLineage){d.preparation=p;}
+/// ```
+/// Issued designations cannot outlive their actual original typed preparation.
+/// ```compile_fail
+/// use weft_core::{application_lineage,current_query_designation::{derive,CurrentQueryDesignations}};
+/// fn detached(raw:&str)->CurrentQueryDesignations<'static>{
+///   let original=application_lineage::prepare(raw).unwrap();derive(&original).unwrap()
+/// }
+/// ```
 pub struct CurrentQueryDesignations<'a>{preparation:&'a ApplicationLineage,profile:Profile,uses:Vec<UseDesignation>,json:String}
 impl CurrentQueryDesignations<'_>{
  pub fn json(&self)->&str{&self.json}

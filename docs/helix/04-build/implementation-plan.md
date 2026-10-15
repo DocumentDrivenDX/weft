@@ -2003,3 +2003,29 @@ original use and primary row eligibility must remain distinct. Actual authentica
 caller/source/Subject/current-authority admission, paired runtime scopes and guarded
 result release remain required. All original132 shared/native backend cases remain
 in scope; the expanded UMF gate stays45 accepted/113 unimplemented/158 required.
+
+### Native environment and issued-object custody — 2026-10-15
+
+B-008 remains open under every original132-case obligation. The user-approved
+Databricks test catalog now has actual one-caller UC/Delta row-filter and column-
+mask evidence:17 statements pass and the disposable namespace is removed. SQL
+version2026.39 is observed after the run. This resolves the earlier untested
+managed-table/filter/mask platform prerequisite for that endpoint, not source/
+caller isolation, compiler/native integration, retention or Ashlar qualification.
+The second configured caller still fails authentication. See
+`evidence/current-security-primitives-20261015/receipt.json` for sanitized source
+pins, actual checks and their precise limits.
+
+The same increment verifies11 Rust public API doctests. Current query designation
+JSON cannot be imported as an issued object; its original preparation cannot be
+replaced or outlived. No executable semantics or published wheel version changes.
+
+Truss confirms native66 has no current-policy0.2 held issuer/consumer API. The
+Truss owner has queued a separate host-issued opaque query context plus private
+PostgreSQL admission/release guard, using only qualified portions of existing
+caller/Subject/source/role/table/DDL cut helpers. It must span complete per-resource
+original-action preflight, application SQL, decoding and guarded release. This is
+an assigned implementation boundary, not an available API or acceptance evidence.
+Weft retains ownership of original use/action designation, mode/domain consumption,
+SQL and result lineage. UMF's route inspector and Weft's draft correspondence test
+remain outside this committed increment until the upstream interface is pinned.

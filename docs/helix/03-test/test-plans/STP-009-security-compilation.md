@@ -381,3 +381,31 @@ original owner/binary/source pins and distinguish purpose compatibility from who
 policy admission. Native Python and actual Chromium compare exact issued bytes and
 refusal behavior, while all prior lineage/property/mapping/availability outputs
 stay exact. Native P03/B08, current authority and all132 backend cases remain open.
+
+### Real Databricks platform prerequisites — 2026-10-15
+
+`tests/lineage-v02/databricks-security-primitives.py` uses one genuinely
+SQL-authenticated configured caller against an already running Unity Catalog SQL
+warehouse. It creates a unique schema in the user-approved test catalog, a managed
+Delta table with two synthetic resources, a current-user row filter and a constant
+BIGINT column mask. It checks filtered projection/count/SUM/distinct/self-join/
+predicate and masked projection/predicate/group/SUM results. A `finally` cleanup
+drops only the fresh owned schema and verifies its absence. The fresh-namespace
+check precedes creation; failed creation still enters cleanup. It refuses truncated
+results, unexpected rows, failed statements and an endpoint that is not already
+running. The runner never starts compute or changes caller grants.
+
+Seventeen statements pass, including fresh-namespace and cleanup controls. SQL
+version2026.39 is observed afterward on the same configured endpoint. The receipt
+contains no caller identity, endpoint ID or catalog/schema name; namespace and SQL
+text are represented by digests. Original private identity output remains outside
+the repository. This is one-caller platform evidence, not compiled Weft security,
+Ashlar layout, second-caller isolation or physical-retention qualification. No
+original132-case status changes. The second configured connection still fails
+authentication; an approved scoped caller connection remains required.
+
+Eleven Rust public API doctests also pass, including three designation custody
+controls: report deserialization, replacement of original context and detachment
+from its lifetime cannot compile. These are Rust API boundaries inside the trusted
+host, not protection against unsafe host code or proof of native authority.
+Evidence: `../../04-build/evidence/current-security-primitives-20261015/receipt.json`.

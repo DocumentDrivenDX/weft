@@ -1,0 +1,35 @@
+{
+  "scope": "Public Rust designation custody and one-caller Databricks SQL/UC/Delta platform prerequisites only; no original native case promotion",
+  "baseMain": "4ad90a28903eb4a2a6514de1c36b4dff50633a7f",
+  "sourceSha256": {
+    "crates/weft-core/src/current_query_designation.rs": "c3ddf2ace812fa4d3777daf08e4f4ae9e431596dc80d66dd3f7a618faabec0cd",
+    "tests/lineage-v02/databricks-security-primitives.py": "e6655275132d6c0509b812dede4286604bd684a1217ffa385dbf485749064462"
+  },
+  "evidenceSha256": {
+    "databricks.json": "66d8e43985beb58b30380a6fefe3e2d04c6c981e4d2fb3a16427d3777722414b",
+    "module-boundaries.log": "43f92df1c1436f037b4618e86f555770dc34f12b808f9771b887698e51c1ac9c",
+    "public-custody.log": "5178966d19deeeceb77ceb9375cc7417b2a761d0f34d7cab86861286b399903f",
+    "readiness.json": "6a0b98319718e05deb1e31c48d42ca38694621dc642d578ecb7fbd8b22040176",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "sql-identity.json": "3476f7a5b4657fc4e01a8f7ae8c0a807c07b99024521ba7ae41953140c4c8cec",
+    "sql-version.json": "c15ef5ba9e3499db4f57873566353261af1bfee0b335b21c4cd490c52e33c003"
+  },
+  "checks": {
+    "rustPublicApiDoctests": 11,
+    "databricksStatements": 17,
+    "testNamespaceRemoved": true,
+    "primarySqlAuthentication": "succeeded",
+    "secondConfiguredIdentity": "authentication-failed",
+    "sqlVersionObservedAfterRun": "2026.39",
+    "moduleBoundaries": "passed",
+    "governedSpecs": "passed"
+  },
+  "limitations": [
+    "One actual caller; independent caller/grant isolation remains unqualified",
+    "No Weft-generated protected SQL or current-policy native admission tested",
+    "No Ashlar physical-layout qualification or current-policy issuer activation",
+    "Logical namespace cleanup verified; physical managed-data retention not qualified",
+    "Existing original132 shared/native cases and expanded158 owner gate remain unchanged",
+    "UMF value-route source and draft Weft correspondence are not part of this increment"
+  ]
+}
