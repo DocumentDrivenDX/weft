@@ -1,0 +1,10 @@
+{
+  "baseCommit": "eff0897f57b84e3c1347a52add682efd0991c275",
+  "build": "unpublished local maturin dev build; same version label is not the published0.4.30 wheel",
+  "binarySha256": "3d1f9363cae5c8a8949d33ff1303446a2ef5e0d042ae6510106096f92c183c0f",
+  "sourceSha256": {
+    "crates/weft-postgresql/src/truss_mutation.rs": "21dc109380614784811dc14f1daa9cfdc4d425b87dbb3249d858d777cf88a107",
+    "crates/weft-postgresql/src/truss_runtime.rs": "5010b00dc84730d146e7be4bdb56afbeadc46ca0a5cb4fa6fb39154dd044fb05",
+    "tests/mutation/fixtures/truss066-products.json": "a341180fedb808955f3907bbf4640a5e53f3509949e596ccadddd9a1cfe6d781"
+  }
+}
