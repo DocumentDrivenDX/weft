@@ -1816,3 +1816,120 @@ binary/source pins and current/legacy correspondence evidence are retained under
 counterexample evidence, not qualification of selected absence. Full P03/B08 and
 all native backend acceptance duties remain open. The in-progress0.2 grammar is
 kept separate from this repair.
+
+## Native Truss0.66 query compatibility — 2026-10-15
+
+Backend truss.postgresql.runtime0.4.36 separately admits the exact native0.66
+manifest99ae7218 and UMF0.8/support0.17 binding. Native0.65/backend0.4.35
+remains unchanged and refuses the new cohort; the new cohort refuses old bindings.
+The original named-query-core-r1 logical revision is preserved. Standalone scalar
+declarations have no invented Record membership or property/storage identity; a
+query selecting declaration-only clear refuses. The additive manifest capability
+schema.declarativeScalarFields describes catalog compatibility only. Historical
+mutation/security profiles retain their original runtime pins.
+
+The local weft-sql0.4.30 arm64 wheel passed five actual public-SDK native queries
+(projection, COUNT, predicate, group and selfjoin), declaration-only refusal and
+ordinary caller raw-object privilege denial. The frozen Truss50307788 SDK used
+an explicit candidate BACKEND0.4.36 metadata override; this is not qualification
+of an unmodified committed SDK. Exact receipts and local wheel hash are under
+evidence/truss066-20261015/. The native setup applies the original five owner
+Records through public APIs and preserves original source/readback hashes.
+This is ordinary catalog/query integration, not installed protection/Subject/
+current-query authority. B-008 remains open. Distribution publication is separate.
+
+Follow-up paired replay passed all seven checks with the exact committed Truss
+SDK query-runtime module99f9a129 over frozen native50307788. There is no SDK
+metadata override in this replay; both source pins are explicit in
+evidence/truss066-20261015/committed-sdk-query-receipt.json. Build-only GitHub
+Actions run38754435498 targets compiler77639ba for five wheel platforms; no
+tag/release publication was requested. Full85 PostgreSQL unit run is still in
+progress (84 passed, exhaustive decimal-domain case pending).
+
+Final manifest admission hardening: backend0.4.36 requires the exact committed
+99ae7218 native manifest digest in addition to its runtime version and binding
+digest. A freshly rehashed binding with a substituted manifest digest refuses
+without SQL; both new native-cohort tests pass after this tightening. Earlier
+77639ba wheel/replay receipts remain historical before-hardening evidence.
+A rebuilt wheel and matching native replay are pending; no released asset is
+qualified by the earlier build-only run. Older registrations are unchanged.
+
+Final50464e0 source passed the seven native checks with committed SDK99f9a129
+using a freshly installed development-profile wheel (SHA6878b8ca). Full85
+PostgreSQL unit regression tests passed on the pre-hash-guard source; the final
+manifest-guard source separately passed both focused tests. Exact logs and
+final-build.json retain this composition rather than claiming a fresh full run
+after the guard. The release-profile wheel96b0fa8d fails macOS import with
+mis-aligned LINKEDIT string pool and is explicitly unqualified. The final-source
+five-platform build-only run38754989288 remains pending; no package release
+is published. Truss received source, replacement wheel pins and this limitation.
+Ordinary query integration passed; current-policy/native protection and B-008
+completion remain open.
+
+## B-008 source-owned read requirements and COUNT candidate — 2026-10-15
+
+The separate application-lineage0.2 candidate now extends the original application
+parser/resolver with COUNT DISTINCT, flat WHERE Boolean conjuncts and LIMIT0,
+retaining original row/Field/relationship dependencies through false/zero output.
+CONTRACT-006 defines the closed request/report/IR and readRequirements contract;
+TD-009 and STP-009 retain the implementation and verification scope. No alternate
+policy compiler, caller AST/action/mode authority or backend fallback is admitted.
+Old0.1/property/mapping bytes and availability refusals are unchanged; existing
+registrations refuse the new IR before backend binding/lowering callbacks.
+
+Fresh current-main integration passes300 core tests, workspace all-target check,
+16 boundary controls, both retained native066 cohort tests, six candidate paired
+reports and all current/legacy/availability host controls. Original owner schemas
+pass68 artifacts/77 schemas/52 allocated criteria/636 fixture scenarios (document
+checks only). The actual UMF consumer independently passes262 controls over18
+fresh original compiler reports; all18 report bytes match its reviewed candidate.
+Evidence and exact source/binary pins are under evidence/lineage02-20261015/.
+
+The bounded count model passes six UNSAT/four SAT sensitivity checks. Eleven
+previously retained PostgreSQL18.6 VALUES primitives remain byte-corresponding
+source evidence, not a fresh compiled protected-query execution. Required source
+Fields stay required; absent/null ambiguity, unsupported SUM properties and
+unsupported shapes retain refusals/explicit unsupported status. Native original
+scalar access and historical mutation pins stay unchanged.
+
+Next connect these exact issued read requirements to the owner's current read/
+capability program and original authenticated native admission. Actual caller/
+Subject/current source and eligible-population custody, compiler-to-native/result
+lineage, guarded release and every original132-case shared/native gate remain
+mandatory. This increment promotes no acceptance case and does not complete B-008.
+
+## B-008 optional Python/WASM read-requirement bridge — 2026-10-15
+
+The application-lineage-candidate feature now exposes the same original core
+issuer through pure runtime composition, native Python and browser WASM.
+CONTRACT-006 defines the exact success/refusal surface; TD-009/STP-009 retain
+module ownership, parity and no-feature checks. No alternate parser, native
+executor or policy mode/action interpretation is introduced. Existing compiler
+entrypoints and released native066 source50464e0 remain separately pinned.
+
+A freshly installed dev-profile Python wheel and actual Chromium151.0.7922.34 WASM
+each pass11 exact0.1/0.2 report fixtures and5 malformed/duplicate/override/oversize
+refusals. Both ordinary compile entrypoints still refuse lineage envelopes.
+Chromium test initialization uses exact local WASM/JS; host I/O is fenced after
+initialization, with no page errors/external requests. A separate default-feature
+wheel omits the optional API and retains the ordinary runtime API. One runtime
+bridge test, explicit feature checks and16 boundary controls pass. Exact source,
+wheel/WASM/JS hashes and receipts are under evidence/lineage02-bridge-20261015/.
+
+This closes embedding of issued source read requirements only. Original132 native
+security cases, genuine caller/source/current authority and guarded end-to-end
+result release remain open. No artifact is published and no acceptance case is
+promoted. Next compose the owner's current whole-query read program and actual
+native admission against these original issued bytes rather than caller assertions.
+
+### Native066 workflow completion
+
+GitHub Actions38754989288 completed successfully at exact50464e0: all five
+platform wheel build/install/import/API smoke jobs passed and the publication job
+was skipped. evidence/truss066-20261015/workflow-final.json records the observed
+source/job outcomes. This supersedes the earlier pending build status, not the
+local96b0 import failure. Truss separately reports adopter, numeric and upgrade/
+query checks against the actual workflow Mac artifact; those are owner-reported
+until its exact retained receipts are independently consumed here. No current
+protected-security or newer opt-in lineage release claim follows. Tag/publication
+is coordinated separately and was not performed by this increment.

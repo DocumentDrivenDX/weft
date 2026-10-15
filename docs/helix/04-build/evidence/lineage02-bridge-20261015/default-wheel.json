@@ -1,0 +1,7 @@
+{
+  "scope": "Default-feature wheel excludes optional lineage bridge",
+  "module": "/private/tmp/weft-lineage02-no-bridge-installed/weft/__init__.py",
+  "version": "0.4.30",
+  "bridgeAbsent": true,
+  "ordinaryApiPresent": true
+}

@@ -116,6 +116,7 @@ pub(super) fn lower(
     }
     for output in &plan.outputs {
         match &output.expression {
+            app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
@@ -186,6 +187,7 @@ pub(super) fn lower(
     let mut columns = vec![];
     for (i, output) in plan.outputs.iter().enumerate() {
         let (value, representation, nullable, identities) = match &output.expression {
+            app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(capability("Native entity metadata requires an explicit Truss profile")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
@@ -713,6 +715,7 @@ impl Build<'_> {
     }
     fn application_fields(&mut self, p: &app::Predicate) -> Result<()> {
         match p {
+            app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
                     app::Predicate::Equal { left, right } => {
                 self.field(&legacy(left))?;
@@ -770,6 +773,7 @@ impl Build<'_> {
     }
     fn application_predicate(&mut self, p: &app::Predicate) -> Result<String> {
         Ok(match p {
+            app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
             app::Predicate::Equal { left, right } => format!(
                 "({} = {})",

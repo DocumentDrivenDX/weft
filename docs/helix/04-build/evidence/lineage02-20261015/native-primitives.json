@@ -1,0 +1,128 @@
+{
+  "scope": "Fixed PG18.6 count/NULL/equality primitives and counterexamples only; no admitted nullable/absent UMF Field, current authority, compiled SQL refinement, protected dispatch/publication or backend case qualification. Disposable empty server; original SQL contains only authored VALUES.",
+  "postgres": "180006",
+  "psycopg": "3.3.6",
+  "serverStopped": true,
+  "checks": [
+    {
+      "id": "empty-input",
+      "sqlSha256": "ac58112e093e3a26c838c9cb853d81351c93249b249b42c59f8127122d0fd819",
+      "rows": [
+        [
+          0
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "all-null",
+      "sqlSha256": "a292667246f9752b9f7ada6b44964dd34be4c31a172874755db67586dbce35bc",
+      "rows": [
+        [
+          0
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "text-duplicates-null",
+      "sqlSha256": "d6e5ca78b5eb013e548c3cbfb3304b0f63ee0f8e2c6d5093cbf555a47678524d",
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "unicode-exact",
+      "sqlSha256": "3933abe804ec95842ae6bc86126c6ec775b5c9eb6f206405442ace88d90c1470",
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "exact-decimal-equality",
+      "sqlSha256": "b1d2db032aac459a79575f3d13958cd9fe6a4c17b09117021ce2a069d5a686f2",
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "boolean-duplicates-null",
+      "sqlSha256": "95f298fbd65a11a58f17c70f6591247f2f16ca8bde0c7185bb8087249b92ae9f",
+      "rows": [
+        [
+          2
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "where-false-count-row",
+      "sqlSha256": "dbba2d06ae71199d069ccb34b740a283e7fce5dba65db22638e9736439e92f13",
+      "rows": [
+        [
+          0
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "limit-zero-removes-count-row",
+      "sqlSha256": "b5d7b928a1955299a6cdbc741591143b4c00fd3fee98f298487a97161f1d9acb",
+      "rows": [],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "bag-count-is-not-distinct-count",
+      "sqlSha256": "0f52774368db7d41e1bb1590b31252527a91833479b4956fdd335b7dd8bdc393",
+      "rows": [
+        [
+          3,
+          1
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "null-sentinel-changes-count",
+      "sqlSha256": "401aa2c9bc9c37171a51fa37160f3bb91127f43f6b77ef60db3ae539164d23ff",
+      "rows": [
+        [
+          1,
+          2
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    },
+    {
+      "id": "lossy-comparison-changes-count",
+      "sqlSha256": "6b42aba147b5b3f14dc10aff6dff6a55488773bef5d4918473492e2120b695ce",
+      "rows": [
+        [
+          2,
+          1
+        ]
+      ],
+      "countCarrier": "int8",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,881 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:application:lineage:0.2-candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.application.lineage/0.2-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "authority": {
+      "const": false
+    },
+    "sourceRequestJson": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "sourceRequestSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "modelPins": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1
+          },
+          "umfVersion": {
+            "const": "0.8.0"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "documentId",
+          "revision",
+          "umfVersion",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "sqlSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "applicationPlanJson": {
+      "type": "string",
+      "maxLength": 8000000
+    },
+    "applicationPlanSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "orderDirections": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "enum": [
+          "asc",
+          "desc"
+        ]
+      }
+    },
+    "scans": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 256,
+      "propertyNames": {
+        "pattern": "^[st][0-9]+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/identity"
+      }
+    },
+    "uses": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "scan": {
+            "type": "string",
+            "pattern": "^[st][0-9]+$"
+          },
+          "type": {
+            "$ref": "#/$defs/ref"
+          },
+          "field": {
+            "$ref": "#/$defs/ref"
+          },
+          "fieldIdentity": {
+            "$ref": "#/$defs/identity"
+          },
+          "logicalType": {
+            "$ref": "#/$defs/logicalType"
+          },
+          "operator": {
+            "enum": [
+              "predicate",
+              "join",
+              "group",
+              "order",
+              "aggregate"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "equal",
+              "lexicographicGreater",
+              "group",
+              "order",
+              "hasRelatedKey",
+              "sum",
+              "countDistinct"
+            ]
+          },
+          "required": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "equality",
+                    "order",
+                    "nullity"
+                  ]
+                }
+              }
+            ]
+          },
+          "propertyStatus": {
+            "enum": [
+              "derived",
+              "unsupported"
+            ]
+          },
+          "outputType": {
+            "$ref": "#/$defs/logicalType"
+          }
+        },
+        "required": [
+          "path",
+          "scan",
+          "type",
+          "field",
+          "fieldIdentity",
+          "logicalType",
+          "operator",
+          "operation",
+          "required",
+          "propertyStatus"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "sum"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "operator": {
+                  "const": "aggregate"
+                },
+                "required": {
+                  "type": "null"
+                },
+                "propertyStatus": {
+                  "const": "unsupported"
+                }
+              },
+              "required": [
+                "outputType"
+              ]
+            },
+            "else": {
+              "if": {
+                "properties": {
+                  "operation": {
+                    "const": "countDistinct"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "operator": {
+                    "const": "aggregate"
+                  },
+                  "propertyStatus": {
+                    "const": "derived"
+                  },
+                  "required": {
+                    "oneOf": [
+                      {
+                        "const": [
+                          "equality"
+                        ]
+                      },
+                      {
+                        "const": [
+                          "equality",
+                          "nullity"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "outputType"
+                ],
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "logicalType": {
+                          "properties": {
+                            "nullable": {
+                              "const": true
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "then": {
+                      "properties": {
+                        "required": {
+                          "const": [
+                            "equality",
+                            "nullity"
+                          ]
+                        }
+                      }
+                    },
+                    "else": {
+                      "properties": {
+                        "required": {
+                          "const": [
+                            "equality"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              "else": {
+                "properties": {
+                  "propertyStatus": {
+                    "const": "derived"
+                  }
+                },
+                "not": {
+                  "required": [
+                    "outputType"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "equal",
+                    "group",
+                    "hasRelatedKey"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "required": {
+                  "const": [
+                    "equality"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "lexicographicGreater",
+                    "order"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "required": {
+                  "const": [
+                    "order"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "unresolvedSources": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "identity": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          "mediaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "status": {
+            "const": "uninterpreted"
+          }
+        },
+        "required": [
+          "role",
+          "identity",
+          "mediaType",
+          "sha256",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "readRequirements": {
+      "type": "object",
+      "properties": {
+        "scans": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "scan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "target": {
+                "$ref": "#/$defs/ref"
+              },
+              "recordIdentity": {
+                "$ref": "#/$defs/identity"
+              },
+              "kind": {
+                "const": "rowRead"
+              }
+            },
+            "required": [
+              "path",
+              "scan",
+              "target",
+              "recordIdentity",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "fields": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "scan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "target": {
+                "$ref": "#/$defs/ref"
+              },
+              "recordIdentity": {
+                "$ref": "#/$defs/identity"
+              },
+              "field": {
+                "$ref": "#/$defs/ref"
+              },
+              "fieldIdentity": {
+                "$ref": "#/$defs/identity"
+              },
+              "role": {
+                "enum": [
+                  "projection",
+                  "predicate",
+                  "join",
+                  "group",
+                  "order",
+                  "aggregate"
+                ]
+              },
+              "descriptor": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "scalar"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/logicalType"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "sequence"
+                      },
+                      "item": {
+                        "$ref": "#/$defs/identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "item"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "map"
+                      },
+                      "item": {
+                        "$ref": "#/$defs/identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "item"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "structured"
+                      },
+                      "record": {
+                        "$ref": "#/$defs/identity"
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "record"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "availability": {
+                        "const": "required"
+                      },
+                      "kind": {
+                        "const": "exactScalar"
+                      },
+                      "scalarType": {
+                        "enum": [
+                          "timestamp",
+                          "binary"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "identity",
+                      "availability",
+                      "kind",
+                      "scalarType"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "sourceStatus": {
+                "enum": [
+                  "derived",
+                  "unsupported-shape"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "scan",
+              "target",
+              "recordIdentity",
+              "field",
+              "fieldIdentity",
+              "role",
+              "descriptor",
+              "sourceStatus"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "descriptor": {
+                      "properties": {
+                        "kind": {
+                          "const": "scalar"
+                        }
+                      }
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "sourceStatus": {
+                      "const": "derived"
+                    }
+                  }
+                },
+                "else": {
+                  "properties": {
+                    "sourceStatus": {
+                      "const": "unsupported-shape"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "kind": {
+                "const": "relationshipObservation"
+              },
+              "sourceScan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "terminalScan": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "relationship": {
+                "type": "object",
+                "properties": {
+                  "documentId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "module": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "relationship": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  }
+                },
+                "required": [
+                  "documentId",
+                  "revision",
+                  "module",
+                  "relationship"
+                ],
+                "additionalProperties": false
+              },
+              "sourceIdentity": {
+                "$ref": "#/$defs/identity"
+              },
+              "targetIdentity": {
+                "$ref": "#/$defs/identity"
+              }
+            },
+            "required": [
+              "path",
+              "kind",
+              "sourceScan",
+              "terminalScan",
+              "relationship",
+              "sourceIdentity",
+              "targetIdentity"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "unsupportedSources": {
+          "type": "array",
+          "maxItems": 8192,
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "kind": {
+                "enum": [
+                  "fieldShape",
+                  "numericAggregateProperties"
+                ]
+              },
+              "fieldIdentity": {
+                "$ref": "#/$defs/identity"
+              }
+            },
+            "required": [
+              "path",
+              "kind"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "fieldShape"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "fieldIdentity"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "required": [
+                      "fieldIdentity"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "scans",
+        "fields",
+        "relationships",
+        "unsupportedSources"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "authority",
+    "sourceRequestJson",
+    "sourceRequestSha256",
+    "modelPins",
+    "sqlSha256",
+    "applicationPlanJson",
+    "applicationPlanSha256",
+    "orderDirections",
+    "scans",
+    "uses",
+    "unresolvedSources",
+    "readRequirements"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "logicalType": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "facets": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "family",
+        "nullable",
+        "facets"
+      ],
+      "additionalProperties": false
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

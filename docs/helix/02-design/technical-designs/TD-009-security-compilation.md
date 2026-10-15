@@ -350,3 +350,44 @@ binary/source pins and current/legacy correspondence evidence are retained under
 counterexample evidence, not qualification of selected absence. Full P03/B08 and
 all native backend acceptance duties remain open. The in-progress0.2 grammar is
 kept separate from this repair.
+
+## Application read-intent and count candidate implementation — 2026-10-15
+
+CONTRACT-006 governs the separate0.2 request/report/IR. application_syntax gates
+the extensions behind parse_lineage_candidate; application_resolve constructs the
+original plan, retaining source/join/terminal scans before Boolean or LIMIT effects.
+application_property_uses remains the common operation dependency traversal.
+New private application_read_requirements derives projections, row scans and
+hidden/operator occurrences against actual Catalog membership/descriptors. No
+policy adapter, synthesized SecurityLogicalPlan or user-authored action is added.
+Older parser entrypoints retain refusals; original backend dispatch rejects the
+new IR before its mapping callback. Existing PostgreSQL/Databricks lowerers have
+explicit unsupported arms rather than accidentally acquiring new SQL semantics.
+
+This realizes component prerequisites for US-009-AC1/2/3, not their full native
+acceptance. Module inventories must include the new private source, shared enum
+match sites and evidence hosts; bun run modules:check is the boundary gate.
+Rollback disables the0.2 request version while retaining0.1 and exact historical
+reports. Current-policy/native admission, actual caller/Subject/current-cut
+custody, complete eligible population and guarded result release remain required.
+
+The COUNT model checks0..4 paired rows over mathematical equality classes with
+complete population, bidirectional equality and nullity agreement. Six UNSAT
+checks establish only those bounded conditional implications; four SAT sensitivity
+checks expose missing equality/nullity/population/native-nonnull premises. A
+required-argument specialization still needs an actual native nonnull guard.
+The model is not a Rust/SQL refinement proof or a pre-storage plaintext equality
+claim. Separate PostgreSQL18.6 VALUES tests cover count/NULL/duplicate/equality
+primitives and intentional counterexamples; they install no protected policy and
+admit no nullable/absent UMF Field. Preserve these scope distinctions in all
+compiler/native evidence and do not combine component counts into acceptance.
+
+### Optional native/browser lineage embedding
+
+CONTRACT-006's application-lineage-candidate feature adds a thin pure runtime
+composition and Python/WASM bindings to the same core issuer. It supplies exact
+report bytes rather than rebuilding a query AST in Python or JavaScript. New
+interfaces are gated in all three crates; existing release feature defaults and
+compile entrypoints stay separate. Errors preserve the original Diagnostic code
+and become host-language exceptions, with no partial report. Module ownership
+adds only explicit runtime/python/wasm API inventories; core has no host I/O.

@@ -14,6 +14,7 @@ pub enum Output {
     Field(Column),
     Entity(Name),
     Count,
+    CountDistinct(Column),
     Sum(Column),
     Related { relationship: Column, bound: u16 },
 }
@@ -24,6 +25,7 @@ pub struct Projection {
 }
 #[derive(Debug, Clone)]
 pub enum Predicate {
+    Boolean { value:bool },
     Compare {
         columns: Vec<Column>,
         values: Vec<Value>,
@@ -57,7 +59,8 @@ fn value(p: &mut Parser) -> Result<Value> {
         Ok(Value::Literal(p.literal()?))
     }
 }
-fn bound(p: &mut Parser) -> Result<u16> {
+fn bound(p: &mut Parser) -> Result<u16> { bound_selected(p,false) }
+fn bound_selected(p: &mut Parser,zero:bool) -> Result<u16> {
     let literal = p.literal()?;
     if !matches!(literal.kind, LiteralKind::Number) {
         return Err(Diagnostic::new(
@@ -71,12 +74,12 @@ fn bound(p: &mut Parser) -> Result<u16> {
         .value
         .parse::<u16>()
         .ok()
-        .filter(|n| (1..=1000).contains(n));
+        .filter(|n| if zero {(0..=1000).contains(n)}else{(1..=1000).contains(n)});
     n.ok_or_else(|| {
         Diagnostic::new(
             "WFT-LIMIT",
             "parse",
-            "Application bound must be an integer from 1 through 1000",
+            if zero {"Application bound must be an integer from 0 through 1000"}else{"Application bound must be an integer from 1 through 1000"},
         )
         .at(&literal.span)
     })
@@ -89,10 +92,12 @@ fn columns(p: &mut Parser) -> Result<Vec<Column>> {
     }
     Ok(values)
 }
-fn predicates(p: &mut Parser) -> Result<Vec<Predicate>> {
+fn predicates(p: &mut Parser,extended:bool) -> Result<Vec<Predicate>> {
     let mut predicates = Vec::new();
     loop {
-        let predicate = if p.peek_word("has_related") {
+        let predicate = if extended && (p.peek_word("true")||p.peek_word("false")) {
+            let value=p.peek_word("true");p.word(if value{"true"}else{"false"})?;Predicate::Boolean{value}
+        } else if p.peek_word("has_related") {
             p.word("has_related")?;
             p.symbol('(')?;
             let relationship = p.column()?;
@@ -152,13 +157,14 @@ fn predicates(p: &mut Parser) -> Result<Vec<Predicate>> {
     Ok(predicates)
 }
 pub fn parse(sql: &str) -> Result<Query> {
-    parse_selected(sql, false).map(|(query, _)| query)
+    parse_selected(sql, false,false).map(|(query, _)| query)
 }
 /// Security candidate parser; historical application registrations retain ASC only.
 pub(crate) fn parse_security(sql: &str) -> Result<(Query, Vec<bool>)> {
-    parse_selected(sql, true)
+    parse_selected(sql, true,false)
 }
-fn parse_selected(sql: &str, descending: bool) -> Result<(Query, Vec<bool>)> {
+pub(crate) fn parse_lineage_candidate(sql:&str)->Result<(Query,Vec<bool>)>{parse_selected(sql,true,true)}
+fn parse_selected(sql: &str, descending: bool,extended:bool) -> Result<(Query, Vec<bool>)> {
     let mut p = Parser::new(sql)?;
     p.word("select")?;
     let mut outputs = Vec::new();
@@ -166,9 +172,7 @@ fn parse_selected(sql: &str, descending: bool) -> Result<(Query, Vec<bool>)> {
         let output = if p.peek_word("count") {
             p.word("count")?;
             p.symbol('(')?;
-            p.symbol('*')?;
-            p.symbol(')')?;
-            Output::Count
+            if extended&&p.peek_word("distinct") {p.word("distinct")?;let field=p.column()?;p.symbol(')')?;Output::CountDistinct(field)}else{p.symbol('*')?;p.symbol(')')?;Output::Count}
         } else if p.peek_word("sum") {
             p.word("sum")?;
             p.symbol('(')?;
@@ -239,11 +243,11 @@ fn parse_selected(sql: &str, descending: bool) -> Result<(Query, Vec<bool>)> {
         p.word("join")?;
         let right = p.source()?;
         p.word("on")?;
-        joins.push((right, predicates(&mut p)?));
+        joins.push((right, predicates(&mut p,extended)?));
     }
     let predicates = if p.peek_word("where") {
         p.word("where")?;
-        predicates(&mut p)?
+        predicates(&mut p,extended)?
     } else {
         vec![]
     };
@@ -274,7 +278,7 @@ fn parse_selected(sql: &str, descending: bool) -> Result<(Query, Vec<bool>)> {
     }
     let limit = if p.peek_word("limit") {
         p.word("limit")?;
-        Some(bound(&mut p)?)
+        Some(bound_selected(&mut p,extended)?)
     } else {
         None
     };

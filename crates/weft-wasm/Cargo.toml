@@ -6,6 +6,7 @@ publish.workspace=true
 [lib]
 crate-type=["cdylib"]
 [features]
+application-lineage-candidate=["weft-runtime/application-lineage-candidate"]
 ashlar-databricks-compatible-revisions-candidate=["weft-runtime/ashlar-databricks-compatible-revisions-candidate"]
 ashlar-databricks-implicit-arithmetic=["weft-runtime/ashlar-databricks-implicit-arithmetic"]
 ashlar-databricks-paths-keys=["weft-runtime/ashlar-databricks-paths-keys"]

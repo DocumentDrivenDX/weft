@@ -468,7 +468,8 @@ pub fn projection_columns(
         Plan::V02(plan) => {
             for (index, output) in plan.outputs.iter().enumerate() {
                 columns.push(match &output.expression {
-                    app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("Native entity metadata requires an explicit Truss profile")),
+                    app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
+            app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("Native entity metadata requires an explicit Truss profile")),
                     app::Expression::Field { scan, identity } => property_column(
                         selected_property(scan, identity)?,
                         index + 1,

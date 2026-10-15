@@ -531,6 +531,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/application_read_requirements.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/application_resolve.rs",
           "publicDeclarations": [
             "struct:Parameter",
@@ -3296,7 +3301,8 @@
             "fn:install_truss_mutation_backend",
             "fn:lower_mutation_selection_json",
             "fn:prepare_truss_security_relationship_candidate_json",
-            "fn:inspect_truss_security_relationship_result_json"
+            "fn:inspect_truss_security_relationship_result_json",
+            "fn:prepare_application_lineage_json"
           ],
           "pathReferences": []
         },
@@ -3486,7 +3492,8 @@
             "fn:compile_json",
             "fn:compile_json_with_conformance_configuration",
             "fn:compile_paths_keys_json",
-            "fn:compile_implicit_arithmetic_json"
+            "fn:compile_implicit_arithmetic_json",
+            "fn:prepare_application_lineage_json"
           ],
           "pathReferences": []
         }

@@ -1,0 +1,42 @@
+{
+  "status": "exported",
+  "authority": false,
+  "securityReady": false,
+  "sourceSha256": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+  "scenariosSha256": "de7e5a72f59fde30b5d57704f9f1513bafbf0e77a8f9094ae566fbbd582ecc3f",
+  "coreExtraction": {
+    "pointer": "/closure/documents/0/document",
+    "serialization": "UTF-8 compact JSON; original object/list order and values retained; exact original envelope archived",
+    "logicalRevision": "named-query-core-r1",
+    "contentSha256": "acec104f93bd9f78ebe1b7872c04ae777827415c36d7c8532d1e9177aafd446a"
+  },
+  "runtime": "truss-catalog-runtime/0.66-candidate",
+  "runtimeSha256": "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a",
+  "layout": {
+    "identity": "truss-layout",
+    "version": "1.0",
+    "sha256": "cf417e0af5d37dd61fa5f39f818d2e7282a29e6c6c6ab7fc0b26dcdde99e7dec"
+  },
+  "scope": "Public catalog/mutation/readback and actual native layout only. No installed policy/ontology/protection, Subject mapping, token implementation or current-query authority.",
+  "actorOid": "18515",
+  "catalogRevision": 1,
+  "revisionCorrespondence": {
+    "originalLogicalRevision": "named-query-core-r1",
+    "acceptedDocumentRevision": "named-query-core-r1",
+    "acceptedContentSha256": "acec104f93bd9f78ebe1b7872c04ae777827415c36d7c8532d1e9177aafd446a",
+    "artifactIdentity": "acec104f93bd9f78ebe1b7872c04ae777827415c36d7c8532d1e9177aafd446a"
+  },
+  "artifacts": {
+    "native-runtime-manifest.json": "99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a",
+    "original-source.json": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+    "accepted-document.json": "acec104f93bd9f78ebe1b7872c04ae777827415c36d7c8532d1e9177aafd446a",
+    "original-read-scenarios.json": "de7e5a72f59fde30b5d57704f9f1513bafbf0e77a8f9094ae566fbbd582ecc3f",
+    "native-query-bundle.json": "3a723880cc465010cd7377785a8d248487083218c9146ff97cb9c143d672c533",
+    "original-prepared-acceptance.json": "6d53a95eca91733a6ff4062379de6fa5a27d066cd3c8bfe51142c531e8b8c067",
+    "accepted-report.json": "e447d4c0349c56704bf0a04e3ce54fc985436e49d8f38b8c1f49bb4b49e8f29a",
+    "native-binding.json": "8193ae3f7870a1402cb756f60c8839cdff5623de69333c1f9ae71f249d3d0cd2",
+    "seed-readbacks.json": "32b033328ad268403d9b9ced74e31ec781b2f9ce67518454b8f31fde608c5e6a",
+    "original-owner-storage.json": "d2f8c120312157a6f66dfda5db2fa7778d8a7eff415e339daedc3e5572449a6a",
+    "original-core.json": "acec104f93bd9f78ebe1b7872c04ae777827415c36d7c8532d1e9177aafd446a"
+  }
+}

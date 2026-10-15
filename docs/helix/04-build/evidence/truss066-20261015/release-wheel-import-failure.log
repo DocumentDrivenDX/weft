@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/private/tmp/weft-truss066-e2e-final.py", line 30, in <module>
+    out=Path(sys.argv[1]);report=scope['run'](packet/'original-source.json',packet/'original-read-scenarios.json',out)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/truss066-native-frozen/scripts/export-current-security-native-binding.py", line 133, in run
+    bundle=json.loads(bundle_bytes);binding=bundle['bindingJson'].encode('utf8')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/weft-truss066-e2e-final.py", line 16, in exercise
+    if not isinstance(result,QueryRows) or result.rows!=expected:raise AssertionError((sql,result,expected))
+                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('SELECT r.token FROM Resource r', QueryUnavailable(reason='compiler', outcome='unavailable'), (('opaque-token',),))

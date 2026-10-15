@@ -288,3 +288,43 @@ binary/source pins and current/legacy correspondence evidence are retained under
 counterexample evidence, not qualification of selected absence. Full P03/B08 and
 all native backend acceptance duties remain open. The in-progress0.2 grammar is
 kept separate from this repair.
+
+## Application lineage0.2 candidate verification
+
+The v02_tests and v02_read_requirements_tests modules in application_lineage.rs
+provide component coverage for US-009-AC1/2/3, under CONTRACT-006 and TD-009.
+They assert original occurrence-sensitive row/Field/relationship read intents,
+projection/hidden/RHS-join/aggregate identity and availability, retained FALSE/
+LIMIT0 dependencies, invalid hidden-name/parameter refusal, absent argument
+refusal, SUM unsupported status, new IR identity and old protocol/parser refusal.
+The backend lineage_candidate_refusal_tests control asserts refusal before mapping.
+These tests cite @covers US-009-AC1/2/3; all four full story criteria remain open.
+
+Six paired fixtures under tests/lineage-v02/fixtures cover projection, hidden
+reads, distinct selfjoin, field-free count, required COUNT DISTINCT and unsupported
+SUM. Rebuild every report from exact original request bytes and compare the whole
+output. Also replay every original0.1 and legacy property request byte-for-byte;
+no version relabel, adapter replacement or expected-output rewrite is permitted.
+A fresh core unit run, workspace all-target check and module-boundary controls
+are integration gates. Independent owner consumer evidence must identify the
+actual compiler binary and exact report hashes, not fixture expectations as input.
+
+prove-count-correspondence.py requires z3-solver4.15.4.0 and asserts six UNSAT/four
+SAT results. native-count-distinct.py requires actual PostgreSQL18.6 and verifies
+11 VALUES primitives/counterexamples, exact int8 counts and stopped-server cleanup.
+Neither qualifies native compiled protected queries, nullable-source admission or
+US-009-AC4. Every original132 shared/native backend case remains allocated with
+its original source/caller/current-authority/guarded-publication obligations.
+
+### Installed lineage bridge parity
+
+Opt-in embedding tests under tests/lineage-v02/python-bridge.py and
+browser-bridge.mjs cite US-009-AC1/2/3 and require eleven original0.1/0.2 reports
+to match exact saved bytes, repeated browser calls to remain deterministic and
+five malformed/duplicate/override/over-budget inputs to throw without a report.
+Ordinary compile_json must refuse the lineage envelope. Browser initialization
+must load actual WASM in Chromium; after initialization host fetch/XHR/WebSocket/
+Worker access is fenced, page errors and external requests fail the test. Record
+exact wheel/WASM/JS hashes, build features and browser version. The no-feature
+wheel must omit the bridge. These are binding/source-lineage component checks,
+not native policy/caller/current-cut/guarded-release acceptance.

@@ -55,7 +55,7 @@ pub(crate) fn output(source:&str,selected:&crate::application_ir::Output,plan:&c
     let d=selected.ok_or_else(fail)?;let crate::application_model::Shape::Scalar{logical_type}=&d.shape else{return Err(fail());};
     sink.duty(source,Selector::OutputAvailability(availability(d.availability.as_deref())?),&["payload","output-availability"])?;
     (Output::Field,logical_type)
-   },Expression::Count{logical_type}=>(Output::Count,logical_type),Expression::Sum{logical_type,..}=>(Output::Sum,logical_type),Expression::CompleteRelatedKeys{..}|Expression::RelatedKeys{..}|Expression::NativeMetadata{..}=>return Err(fail())};
+   },Expression::Count{logical_type}=>(Output::Count,logical_type),Expression::Sum{logical_type,..}=>(Output::Sum,logical_type),Expression::CountDistinct{..}|Expression::CompleteRelatedKeys{..}|Expression::RelatedKeys{..}|Expression::NativeMetadata{..}=>return Err(fail())};
    sink.duty(source,Selector::Output(kind),&["payload","output-kind"])?;
    let family=match t.family{Family::Boolean=>Scalar::Boolean,Family::String=>Scalar::String,Family::Integer=>Scalar::Integer,Family::Decimal=>Scalar::Decimal};sink.duty(source,Selector::OutputScalar(family),&["payload","output-scalar"])?;sink.duty(source,Selector::OutputNullable(t.nullable),&["payload","output-nullable"])?;facets(source,Some(&t.facets),true,sink)?;
  Ok(())

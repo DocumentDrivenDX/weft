@@ -1,0 +1,17 @@
+{
+  "workflow": "https://github.com/DocumentDrivenDX/weft/actions/runs/38754989288",
+  "observedCommand": "gh run view 38754989288 --repo DocumentDrivenDX/weft --json status,conclusion,headSha,jobs",
+  "status": "completed",
+  "conclusion": "success",
+  "headSha": "50464e03edc9db6dd1ea566f2e110b2aa4e6164f",
+  "wheelJobs": {
+    "x86_64-apple-darwin": "success",
+    "aarch64-apple-darwin": "success",
+    "x86_64-unknown-linux-gnu": "success",
+    "aarch64-unknown-linux-gnu": "success",
+    "x86_64-pc-windows-msvc": "success"
+  },
+  "publishJob": "skipped",
+  "smoke": "Each actual built wheel installed and imported by workflow; distribution/module version and both runtime APIs checked",
+  "scope": "Five-platform ordinary native066 package build/import only. Does not qualify current protected security or the later opt-in lineage feature. Local malformed release wheel remains unqualified."
+}

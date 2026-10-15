@@ -65,6 +65,7 @@ pub enum ExactValue {
 #[derive(Debug, Clone, Serialize)]
 #[serde(tag = "op", rename_all = "camelCase")]
 pub enum Predicate {
+    Boolean { value:bool },
     ExactEqual { left:ExactField, right:ExactValue },
     Equal {
         left: Field,
@@ -105,6 +106,7 @@ pub enum Expression {
         scan: String,
         identity: Identity,
     },
+    CountDistinct { argument:Field, #[serde(rename="type")] logical_type:LogicalType },
     Count {
         #[serde(rename = "type")]
         logical_type: LogicalType,

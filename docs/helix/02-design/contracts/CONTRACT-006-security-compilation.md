@@ -2033,3 +2033,82 @@ binary/source pins and current/legacy correspondence evidence are retained under
 counterexample evidence, not qualification of selected absence. Full P03/B08 and
 all native backend acceptance duties remain open. The in-progress0.2 grammar is
 kept separate from this repair.
+
+### Application lineage0.2 candidate: complete read intents
+
+This separate candidate uses request `weft-application-lineage/0.2-candidate`,
+report `weft.application.lineage/0.2-candidate` and plan
+`weft-ir/application-lineage/0.2-candidate`. Its closed request/report schemas are
+`application-lineage-request-v0.2-candidate.schema.json` and
+`application-lineage-v0.2-candidate.schema.json`. It extends the original
+application parser/resolver; caller-supplied plans/read requirements, policy modes
+and action assertions remain invalid inputs. The0.1 protocol and ordinary/backend
+registrations MUST retain their original bytes and refusals. The0.2 plan MUST NOT
+enter an older registration, even when its SQL uses only older operations.
+
+Only this candidate admits COUNT(DISTINCT one scalar Field), flat Boolean TRUE/
+FALSE WHERE conjuncts, and integer LIMIT0 through1000. COUNT DISTINCT produces a
+required integer count and demands equality for its original argument domain.
+A null-capable argument would additionally demand nullity correspondence; actual
+selected source Fields currently require original descriptor availability
+`required`. Absent-allowed and unspecified descriptors refuse: absence MUST NOT
+be interpreted as SQL NULL. Nullable-source admission is not implemented by this
+candidate. COUNT(DISTINCT expression/multiple arguments/*), JOIN ON constants,
+negative/fractional/exponent LIMIT and readProfile combinations remain refused.
+SUM argument/output types are retained, but numeric aggregate preservation remains
+required:null/propertyStatus:unsupported and an explicit unsupported source.
+
+The mandatory `readRequirements` object has four ordered arrays:
+
+| Member | Required meaning |
+| --- | --- |
+| scans | Every source/right-join/relationship-terminal occurrence, with original path, scan, target, complete Record identity/revision and kind rowRead. |
+| fields | Every projected Field and every hidden predicate/join/group/order/aggregate/terminal-Key occurrence, including duplicates; original path, scan, owner target/Record identity, Field reference/full identity/revision, role, original descriptor and sourceStatus. |
+| relationships | Each original relationship observation, with path, source/terminal scan and original relationship/source/target identities. |
+| unsupportedSources | Original field-shape and numeric-SUM preservation gaps that consumers MUST NOT treat as supported. |
+
+Projection occurrences precede the shared operator traversal; scan order is
+source, right joins, then relationship terminals in filter order. Descriptor
+availability is the original model's value, never inferred from the ideal IR
+nullable bit or native data. Non-scalar read shapes retain unsupported-shape and
+an explicit unsupported entry. These are source read intents, not policy actions,
+permissions or effective disclosure modes. The current UMF owner must separately
+derive row/field/relationship actions and effective read programs from its exact
+policy/catalog/ontology/storage-owner sources. Fields needed only for predicates,
+ordering, joins or aggregation retain their duties. FALSE and LIMIT0 MUST NOT
+erase a scan, Field use, unresolved source or required duty. Missing names and
+parameters therefore refuse even when SQL would return no rows.
+
+Existing4MB request,4096 operation occurrences,8MB retained-use/plan and16MB report
+bounds continue. Read requirements additionally permit at most8192 Field entries
+and an8MB serialized Field-entry budget. The final report remains bounded; errors
+emit no partial report. WFT-APPLICATION-READ-REQUIREMENTS reports failed original
+read derivation; existing syntax/name/parameter/availability errors retain their
+owner codes. The schemas describe output shape; only rebuilding the original
+producer can establish report correspondence. Source/report hashes alone are not
+current authority, population completeness, native codec/refinement or release
+proof. Both authority and securityReady MUST remain false.
+
+Example: `SELECT COUNT(DISTINCT s.token) FROM Resource r JOIN Resource s ON
+r.token=s.token WHERE FALSE LIMIT 0` retains both row scans, both join Field
+occurrences and the aggregate argument. `SELECT COUNT(*) FROM Resource r WHERE
+FALSE LIMIT 0` retains the Resource row scan with no invented Field dependency.
+Original0.1 and existing SQL backends refuse these extensions. No native protected
+backend case or original132-case acceptance item is promoted by this candidate.
+
+### Opt-in application lineage embedding candidate
+
+The explicit Cargo feature application-lineage-candidate enables
+prepare_application_lineage_json(request) in weft-runtime, native Python and
+browser WASM. It calls the same original application_lineage::prepare; requests
+remain the exact0.1/0.2 candidate schemas above, with no host plan/action/mode
+argument. Success returns the exact report JSON string with no new envelope or
+newline normalization. Rust returns Result<String, Diagnostic>; Python raises
+ValueError and browser WASM throws a string containing the original diagnostic
+code/message on refusal. No partial report is returned. Invalid UTF8 cannot enter
+these string APIs; malformed/duplicate/over-budget JSON retains core refusal.
+
+Without the feature these functions are absent. Existing compile entrypoints,
+backend features and release defaults do not enable it. No new parser, sidecar,
+SQL execution, policy interpretation or current/native authority is added. Exact
+source/output custody and subsequent native obligations remain host requirements.

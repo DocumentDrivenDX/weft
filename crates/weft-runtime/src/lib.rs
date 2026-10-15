@@ -534,3 +534,22 @@ pub fn prepare_truss_security_relationship_candidate_json(request:&str)->weft_co
 pub fn inspect_truss_security_relationship_result_json(request:&str)->weft_core::error::Result<String>{
  weft_postgresql::security_relational_transport::inspect_guarded_relationship_result(request).map(|v|v.to_string())
 }
+
+/// Opt-in original source read intents only. Never policy/native admission.
+#[cfg(feature="application-lineage-candidate")]
+pub fn prepare_application_lineage_json(request:&str)->weft_core::error::Result<String>{
+ weft_core::application_lineage::prepare(request).map(|p|p.json().to_owned())
+}
+#[cfg(all(test,feature="application-lineage-candidate"))]
+mod application_lineage_bridge_tests{
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn bridge_returns_exact_original_core_bytes_and_refuses_report_override(){
+  for raw in [include_str!("../../../tests/application-lineage/fixtures/token-equality.request.json"),include_str!("../../../tests/lineage-v02/fixtures/distinct-selfjoin-false-zero.request.json"),include_str!("../../../tests/lineage-v02/fixtures/field-free-false-zero.request.json")]{
+   let actual=super::prepare_application_lineage_json(raw).unwrap();assert_eq!(actual,weft_core::application_lineage::prepare(raw).unwrap().json());
+   let r:serde_json::Value=serde_json::from_str(&actual).unwrap();assert_eq!(r["securityReady"],false);assert_eq!(r["authority"],false);
+   let mut bad:serde_json::Value=serde_json::from_str(raw).unwrap();bad["readRequirements"]=serde_json::json!({});assert!(super::prepare_application_lineage_json(&bad.to_string()).is_err());
+  }
+  for bad in ["{}".to_owned()," ".repeat(4_000_001)]{assert!(super::prepare_application_lineage_json(&bad).is_err());}
+ }
+}

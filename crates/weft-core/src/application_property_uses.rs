@@ -94,6 +94,7 @@ fn predicate(
     emit: &mut impl for<'a> FnMut(Use<'a>) -> Result<()>,
 ) -> Result<()> {
     match p {
+        app::Predicate::Boolean{..}=>{},
         app::Predicate::Equal { left, right } => {
             field(
                 format!("{path}/left"),
@@ -209,6 +210,7 @@ pub(crate) fn visit(
     }
     for (i, o) in plan.outputs.iter().enumerate() {
         match &o.expression {
+            app::Expression::CountDistinct{argument,logical_type}=>emit(Use{path:format!("outputs/{i}/argument"),scan:&argument.scan,identity:&argument.identity,logical_type:&argument.logical_type,operator:QueryOperator::Aggregate,operation:"countDistinct",required:Some("equality"),output:Some(logical_type)})?,
             app::Expression::Sum {
                 argument,
                 logical_type,
