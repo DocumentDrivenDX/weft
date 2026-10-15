@@ -3132,10 +3132,16 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/truss_browser_binding.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/truss_mutation.rs",
           "publicDeclarations": [
             "struct:CurrentTrussMutationBackend",
-            "fn:new"
+            "fn:new",
+            "fn:new_browser"
           ],
           "pathReferences": []
         },
@@ -3358,7 +3364,8 @@
             "fn:json",
             "fn:source_request_json",
             "fn:current_query_designations_json",
-            "fn:prepare_current_query_designations_json"
+            "fn:prepare_current_query_designations_json",
+            "fn:install_browser_mutation_backend"
           ],
           "pathReferences": []
         },
@@ -3553,6 +3560,8 @@
             "fn:prepare_current_query_designations_json",
             "struct:MutationCompiler",
             "fn:new",
+            "fn:register_browser_selection",
+            "fn:lower_selection_json",
             "fn:compile_json"
           ],
           "pathReferences": []

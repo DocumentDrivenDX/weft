@@ -579,3 +579,16 @@ mod application_lineage_bridge_tests{
 pub fn prepare_current_query_designations_json(request:&str)->weft_core::error::Result<String>{
  prepare_application_lineage(request)?.current_query_designations_json()
 }
+
+/// Pure browser-local catalog mapping; no store capability is accepted from JSON.
+#[cfg(feature="truss-browser-local")]
+pub fn install_browser_mutation_backend(registry:&mut MutationRegistry,configuration:&str)->weft_core::mutation::MResult<usize>{
+ #[derive(serde::Deserialize)]
+ #[serde(rename_all="camelCase",deny_unknown_fields)]
+ struct Configuration{model:weft_core::mutation::Artifact,model_pin:weft_core::ir::ModelPin,binding:weft_core::mutation::Artifact}
+ let fail=||weft_core::mutation::MutationDiagnostic{code:"WFT-MUTATION-BROWSER-REGISTRATION".into(),phase:"input".into(),path:String::new(),message:"Bounded original browser mapping required".into()};
+ if configuration.len()>4194304{return Err(fail());}
+ let value=weft_core::json::checked_json(configuration).map_err(|_|fail())?;
+ let c:Configuration=serde_json::from_value(value).map_err(|_|fail())?;
+ registry.install_selection_backend(Box::new(weft_postgresql::truss_mutation::CurrentTrussMutationBackend::new_browser(c.model,c.binding,c.model_pin)?))
+}

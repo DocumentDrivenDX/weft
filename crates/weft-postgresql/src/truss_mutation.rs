@@ -26,6 +26,7 @@ pub struct CurrentTrussMutationBackend {
     binding: Artifact,
     catalog: Catalog,
     evidence: Vec<String>,
+    local: Option<crate::truss_browser_binding::BrowserMapping>,
 }
 impl CurrentTrussMutationBackend {
     pub fn new(
@@ -93,7 +94,18 @@ impl CurrentTrussMutationBackend {
             binding,
             catalog,
             evidence,
+            local: None,
         })
+    }
+    /// Separately admitted browser correspondence, never native release admission.
+    pub fn new_browser(model:Artifact,binding:Artifact,pin:ModelPin)->MResult<Self>{
+        let document=model.read()?;
+        if document["umf"]!="0.8.0"||document["id"]!=pin.document_id||pin.sha256!=model.sha256{return Err(fail("Original browser model pin required"));}
+        let modules=document["modules"].as_array().ok_or_else(||fail("Original modules required"))?.iter()
+            .map(|m|m["id"].as_str().map(str::to_owned).ok_or_else(||fail("Module identity required"))).collect::<MResult<Vec<_>>>()?;
+        let catalog=owner(Catalog::prepare_security(vec![ModuleInput{document_json:model.utf8.clone(),pin:pin.clone(),selected_module_ids:modules}]))?;
+        let local=crate::truss_browser_binding::BrowserMapping::admit(&binding,&model,&pin,&catalog)?;
+        Ok(Self{model,binding,catalog,evidence:vec!["Browser local original catalog correspondence only; host-issued owner/read grant and current store cut required".into()],local:Some(local)})
     }
     fn build(
         &self,
@@ -175,8 +187,8 @@ impl CurrentTrussMutationBackend {
             binding_value: &b,
             selection: &coverage,
         };
-        let mapping = owner(crate::truss_runtime::admit_mutation_mapping(&context))?;
-        let tid = owner(crate::truss_runtime::mutation_type(&mapping, &identity))?;
+        let mapping = if self.local.is_none(){Some(owner(crate::truss_runtime::admit_mutation_mapping(&context))?)}else{None};
+        let tid = if let Some(local)=&self.local{local.type_id(&identity)?}else{owner(crate::truss_runtime::mutation_type(mapping.as_ref().unwrap(), &identity))?};
         let source = "\"truss\".\"object\" AS \"weft_mutation\"";
         let scope = format!("\"weft_mutation\".type_id={tid}::pg_catalog.int4");
         let mut needed: BTreeSet<String> =
@@ -197,12 +209,13 @@ impl CurrentTrussMutationBackend {
             }
         }
         let mut fields = BTreeMap::new();
+        let mut browser_validations=Vec::new();
         let mut preflight=vec![SelectionPreflight{sql:format!("SELECT CASE WHEN pg_catalog.count(*)>{} THEN '1' ELSE '0' END::pg_catalog.text AS violations FROM {source} WHERE {scope}",b["maximumScanRows"].as_u64().ok_or_else(||fail("Scan bound required"))?),parameters:vec![]},SelectionPreflight{sql:format!("SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {source} WHERE {scope} AND (\"weft_mutation\".id IS NULL OR \"weft_mutation\".id<=0 OR \"weft_mutation\".ver IS NULL OR \"weft_mutation\".ver<=0)"),parameters:vec![]}];
         for member in &entity.members {
             let reference =
                 json!({"module":member.identity.module,"element":member.identity.element});
             let key = weft_core::mutation::canonical(&reference);
-            if !needed.contains(&key) {
+            if self.local.is_none() && !needed.contains(&key) {
                 continue;
             }
             let descriptor = entity
@@ -216,16 +229,15 @@ impl CurrentTrussMutationBackend {
             if descriptor.availability.as_deref() != Some("required") {
                 return Err(fail("Current selection requires original required fields"));
             }
-            let (expression, carrier, valid) = owner(crate::truss_runtime::mutation_scalar(
-                &mapping,
-                &identity,
-                &member.identity,
-                logical_type,
-            ))?;
-            preflight.push(SelectionPreflight{sql:format!("SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {source} WHERE {scope} AND ({valid}) IS NOT TRUE"),parameters:vec![]});
+            let (expression, carrier, valid) = if let Some(local)=&self.local{
+                local.scalar(&identity,&member.identity,logical_type)?
+            }else{owner(crate::truss_runtime::mutation_scalar(mapping.as_ref().unwrap(),&identity,&member.identity,logical_type))?};
+            if self.local.is_some(){browser_validations.push(format!("({valid}) IS NOT TRUE"));}
+            else{preflight.push(SelectionPreflight{sql:format!("SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {source} WHERE {scope} AND ({valid}) IS NOT TRUE"),parameters:vec![]});}
             fields.insert(key, (expression, carrier, logical_type.clone()));
         }
-        if fields.len() != needed.len() {
+        if !browser_validations.is_empty(){preflight.push(SelectionPreflight{sql:format!("SELECT pg_catalog.count(*)::pg_catalog.text AS violations FROM {source} WHERE {scope} AND ({})",browser_validations.join(" OR ")),parameters:vec![]});}
+        if (self.local.is_none() && fields.len() != needed.len()) || needed.iter().any(|key|!fields.contains_key(key)) {
             return Err(fail("Complete original selection field mapping required"));
         }
         fn render(
@@ -322,7 +334,7 @@ impl CurrentTrussMutationBackend {
                 field: Some(field.clone()),
             });
         }
-        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec![if self.binding.read()?["releaseId"] == "truss-catalog-runtime/0.66-candidate" { "Current PostgreSQL18.6/layout1.0/tagged runtime0.66 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() } else { "Current PostgreSQL18.6/layout1.0/tagged runtime0.65 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() },"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into(),"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
+        Ok(SelectionLowering::Lowered{sql:format!("SELECT {} FROM {source} WHERE ({scope}) AND ({predicate}) ORDER BY \"weft_mutation\".id ASC LIMIT {}",projection.join(", "),max+1),parameters,columns,preflight,ordering:SelectionOrdering{kind:"native-integer-identity".into(),direction:"asc".into()},bounds:SelectionBounds{max_items:max,fetch_limit:max+1},obligations:vec![if self.local.is_some(){"Browser PGlite0.5.10/PostgreSQL18.6/layout1.0; original catalog mapping and complete Record population preflight, no native release claim".into()}else if self.binding.read()?["releaseId"] == "truss-catalog-runtime/0.66-candidate" { "Current PostgreSQL18.6/layout1.0/tagged runtime0.66 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() } else { "Current PostgreSQL18.6/layout1.0/tagged runtime0.65 original binding; same original document bytes retain accepted native revision separately from action compilation revision".into() },if self.local.is_some(){"Host must hold original issued local owner and independent read grant over the same current store/incarnation/catalog/model cut; run every complete-population preflight before selection and refuse violations/overflow without trimming".into()}else{"Host must admit original authenticated authorized coherent source/caller cut, run every complete-population preflight before selection, reject any violations and maxItems+1 overflow without trimming".into()},"No connection, raw caller SQL, RR facade, action execution, authorization or publication is issued by this compiler".into()]})
     }
 }
 impl SelectionBackend for CurrentTrussMutationBackend {
@@ -404,4 +416,50 @@ mod native066_tests {
         let refused=serde_json::to_value(backend.lower_selection(&selection,&model,&bad,2).unwrap()).unwrap();
         assert_eq!(refused["status"],"blocked");
     }
+}
+
+#[cfg(test)]
+mod browser_tests {
+ use super::*;
+ #[test]
+ fn browser_mapping_lowers_original_selection_with_complete_record_preflight(){
+  let fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/local-products-input.json")).unwrap();
+  let mut registry=weft_core::mutation::MutationRegistry::from_json(&fixture["configuration"].to_string()).unwrap();
+  let response:Value=serde_json::from_str(&registry.compile_json(&fixture["request"].to_string())).unwrap();
+  let plan:Value=serde_json::from_str(response["plan"]["utf8"].as_str().unwrap()).unwrap();
+  let model:Artifact=serde_json::from_value(fixture["request"]["model"].clone()).unwrap();
+  let pin:ModelPin=serde_json::from_value(fixture["request"]["modelPin"].clone()).unwrap();
+  let identity=|element:&str|json!({"documentId":pin.document_id,"revision":pin.revision,"module":"sales","element":element});
+  let value=json!({"interfaceVersion":"truss-browser-binding/0.1","pgliteVersion":"0.5.10","postgresqlVersion":"18.6",
+   "store":{"profile":"truss-browser-layout/0.1","origin":"http://localhost","namespace":"truss-browser:products","storeId":"12345678-1234-4234-8234-123456789abc","incarnation":"22345678-1234-4234-8234-123456789abc","layoutSha256":"c203d09418fb4eddda829d791dda11c20341227c2d1d82e86d4c24afda5e7294"},
+   "catalogRevision":"1","document":pin,"maximumScanRows":1000,
+   "record":{"identity":identity("products"),"typeId":"1","fields":[{"identity":identity("product-id"),"propertyId":"1"},{"identity":identity("product-name"),"propertyId":"2"}],"key":{"keyId":"pk","propertyIds":["1"]}}});
+  let artifact=|v:&Value|{let utf8=v.to_string();Artifact{media_type:"application/json".into(),sha256:weft_core::json::sha256(utf8.as_bytes()),utf8}};
+  let binding=artifact(&value);
+  let backend=CurrentTrussMutationBackend::new_browser(model.clone(),binding.clone(),pin.clone()).unwrap();
+  let selection:Artifact=serde_json::from_value(plan["selection"]["artifact"].clone()).unwrap();
+  let handle=registry.install_selection_backend(Box::new(backend)).unwrap();
+  let result=serde_json::to_value(registry.lower_selection(handle,&selection,&model,&binding,2).unwrap()).unwrap();
+  assert_eq!(result["status"],"lowered","{result}");
+  assert_eq!(result["preflight"].as_array().unwrap().len(),4);
+  assert!(result["preflight"][2]["sql"].as_str().unwrap().contains("props->'2'"));
+  // The public owner prepared this synthetic64-member model; use the full outer registry.
+  let wide_fixture:Value=serde_json::from_str(include_str!("../../../tests/mutation/fixtures/local-products-64-input.json")).unwrap();
+  let mut outer=weft_core::mutation::MutationRegistry::from_json(&wide_fixture["configuration"].to_string()).unwrap();
+  let wide_model:Artifact=serde_json::from_value(wide_fixture["request"]["model"].clone()).unwrap();
+  let wide_pin:ModelPin=serde_json::from_value(wide_fixture["request"]["modelPin"].clone()).unwrap();
+  let response:Value=serde_json::from_str(&outer.compile_json(&wide_fixture["request"].to_string())).unwrap();
+  let wide_plan:Value=serde_json::from_str(response["plan"]["utf8"].as_str().unwrap()).unwrap();
+  let wide_selection:Artifact=serde_json::from_value(wide_plan["selection"]["artifact"].clone()).unwrap();
+  let mut wide_binding=value.clone();wide_binding["document"]=json!(wide_pin);
+  for n in 3..=64{wide_binding["record"]["fields"].as_array_mut().unwrap().push(json!({"identity":identity(&format!("extra-{n}")),"propertyId":n.to_string()}));}
+  let wide_binding=artifact(&wide_binding);
+  let backend=CurrentTrussMutationBackend::new_browser(wide_model.clone(),wide_binding.clone(),wide_pin).unwrap();
+  let handle=outer.install_selection_backend(Box::new(backend)).unwrap();
+  let result=serde_json::to_value(outer.lower_selection(handle,&wide_selection,&wide_model,&wide_binding,2).unwrap()).unwrap();
+  assert_eq!(result["status"],"lowered","{result}");assert_eq!(result["preflight"].as_array().unwrap().len(),4);
+  assert!(result["preflight"][2]["sql"].as_str().unwrap().contains("props->'64'"));
+  let mut wrong=value;wrong["record"]["key"]["propertyIds"]=json!(["2"]);
+  assert!(CurrentTrussMutationBackend::new_browser(model,artifact(&wrong),pin).is_err());
+ }
 }

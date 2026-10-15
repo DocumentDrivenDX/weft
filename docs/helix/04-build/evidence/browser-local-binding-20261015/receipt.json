@@ -1,0 +1,32 @@
+{
+  "sourceHashes": {
+    "packages/browser/catalog.ts": "20335014083c16341e63c93957b91a262f54b9df41445784a09ccc5e1c5c358e",
+    "packages/postgresql/src/acceptance-json.ts": "ef934c8d2ccdd53c604f917c5a16ed27e99d6a24cc5deca809861c117f16bdc4",
+    "packages/postgresql/src/original-byte-custody.ts": "0080a33427c00435da7cefdc3fbc35feaaaf453e86d21d7df43390e6f291af81",
+    "packages/umf-bun/src/catalog-declarations.ts": "e1150ec89cd4924a02df0245af7ac1dafc5b1cff687a681587c1527f3ef8ffb9",
+    "packages/python/src/truss/_umf_core08/producer.js": "88899e3c1221ca3998e80a878d37d5344d68062afa82eb15d6cffc49dd3752f3",
+    "packages/python/src/truss/_catalog_runtime/layout.sql": "c203d09418fb4eddda829d791dda11c20341227c2d1d82e86d4c24afda5e7294",
+    "packages/python/src/truss/_catalog_runtime/scalars.sql": "03fd6a50ed7676e855959fb80887a8c733f3965b5958fda632967e3b961d244c",
+    "packages/python/src/truss/_catalog_runtime/lineage.sql": "f972491c61f2aedbe612165eb2ed3a6cd1e2d2a9456a6d45f2542d7c62e69fbc",
+    "packages/python/src/truss/_catalog_runtime/containers.sql": "053bb17399cc487cdcf65c06a0237c7012ebc4c92ec1343c4a97bef3e3a9188c",
+    "packages/python/src/truss/_catalog_runtime/plan.sql": "ef8d993cbbe6c80198b1f15f71370b35aee1241d11362674c1d4e31e3bce4dee"
+  },
+  "scope": "Original Rust WASM lowering executed against actual Truss catalog/layout and scalar validators in PGlite memory; administrative fixture seeds only",
+  "chromium": "153.0.8010.12",
+  "wasmSha256": "e73e77d5dfbf2118a0452838f70c17ab17658caf7bca5841abc6f31a6e91f8e5",
+  "catalogRevision": "1",
+  "bindingSha256": "d92b0e9a15a7c5de5f4a3d03b34617c0d71a91e0865a667e2788bba474788692",
+  "selection": [
+    {
+      "identity": "1",
+      "version": "1",
+      "key0": "bar"
+    }
+  ],
+  "completeRecordPreflights": 4,
+  "physicalLowering": true,
+  "issuedOwner": false,
+  "selectionReadGrant": false,
+  "publicMutation": false,
+  "effects": false
+}

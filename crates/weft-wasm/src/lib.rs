@@ -60,6 +60,15 @@ impl MutationCompiler {
             .map_err(|d| wasm_bindgen::JsValue::from_str(&format!("{}: {}", d.code, d.message)))?;
         Ok(Self { registry })
     }
+    #[cfg(feature="truss-browser-local")]
+    pub fn register_browser_selection(&mut self,configuration:&str)->Result<usize,wasm_bindgen::JsValue>{
+        weft_runtime::install_browser_mutation_backend(&mut self.registry,configuration)
+            .map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
+    }
+    pub fn lower_selection_json(&self,handle:usize,request:&str)->Result<String,wasm_bindgen::JsValue>{
+        weft_runtime::lower_mutation_selection_json(&self.registry,handle,request)
+            .map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
+    }
     pub fn compile_json(&self, request: &str) -> String {
         self.registry.compile_json(request)
     }
