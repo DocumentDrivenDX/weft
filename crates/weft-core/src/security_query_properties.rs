@@ -1,6 +1,5 @@
 //! Original AST property requirements, separate from storage/disclosure/native authority.
 use crate::{
-    application_ir as app,
     error::{Diagnostic, Result},
     ir::{Identity, LogicalType},
     security_backend::SecurityBackendContext,
@@ -110,74 +109,6 @@ impl Derivation<'_, '_> {
         self.uses.push(row);
         Ok(())
     }
-    fn field(
-        &mut self,
-        path: &str,
-        f: &app::Field,
-        operator: QueryOperator,
-        operation: &str,
-        required: &str,
-    ) -> Result<()> {
-        self.add(
-            path,
-            &f.scan,
-            &f.identity,
-            &f.logical_type,
-            operator,
-            operation,
-            Some(required),
-            None,
-        )
-    }
-    fn value(
-        &mut self,
-        path: &str,
-        v: &app::Value,
-        operator: QueryOperator,
-        operation: &str,
-        required: &str,
-    ) -> Result<()> {
-        if let app::Value::Field { field } = v {
-            self.field(path, field, operator, operation, required)?;
-        }
-        Ok(())
-    }
-    fn predicate(&mut self, path: &str, p: &app::Predicate, operator: QueryOperator) -> Result<()> {
-        match p {
-            app::Predicate::Equal { left, right } => {
-                self.field(&format!("{path}/left"), left, operator, "equal", "equality")?;
-                self.value(
-                    &format!("{path}/right"),
-                    right,
-                    operator,
-                    "equal",
-                    "equality",
-                )?;
-            }
-            app::Predicate::LexicographicGreater { columns, values } => {
-                for (i, f) in columns.iter().enumerate() {
-                    self.field(
-                        &format!("{path}/columns/{i}"),
-                        f,
-                        operator,
-                        "lexicographicGreater",
-                        "order",
-                    )?;
-                }
-                for (i, v) in values.iter().enumerate() {
-                    self.value(
-                        &format!("{path}/values/{i}"),
-                        v,
-                        operator,
-                        "lexicographicGreater",
-                        "order",
-                    )?;
-                }
-            }
-            _ => return Err(fail()),
-        }
-        Ok(())
-    }
 }
 /// Derive from the actual admitted owner context; supplied property annotations are never read.
 pub fn derive(ctx: &SecurityBackendContext<'_>) -> Result<SecurityQueryProperties> {
@@ -187,77 +118,18 @@ pub fn derive(ctx: &SecurityBackendContext<'_>) -> Result<SecurityQueryPropertie
         uses: Vec::new(),
         remaining: 8_000_000,
     };
-    for (i, join) in query.joins.iter().enumerate() {
-        for (j, p) in join.on.iter().enumerate() {
-            d.predicate(&format!("joins/{i}/on/{j}"), p, QueryOperator::Join)?;
-        }
-    }
-    for (i, p) in query.filters.iter().enumerate() {
-        if let app::Predicate::HasRelated { relationship, .. } = p {
-            let scan = format!("t{i}");
-            for (j, identity) in relationship.target_key.fields.iter().enumerate() {
-                let record = ctx.catalog().record_by_identity(&relationship.to)?;
-                let (_, graph) = ctx
-                    .catalog()
-                    .member_descriptor_by_identity(&record, identity)?;
-                let field = graph
-                    .iter()
-                    .find(|f| f.identity == *identity)
-                    .ok_or_else(fail)?;
-                let crate::application_model::Shape::Scalar { logical_type } = &field.shape else {
-                    return Err(fail());
-                };
-                d.add(
-                    &format!("filters/{i}/targetKey/{j}"),
-                    &scan,
-                    identity,
-                    logical_type,
-                    QueryOperator::Predicate,
-                    "hasRelatedKey",
-                    Some("equality"),
-                    None,
-                )?;
-            }
-        } else {
-            d.predicate(&format!("filters/{i}"), p, QueryOperator::Predicate)?;
-        }
-    }
-    for (i, f) in query.groups.iter().enumerate() {
-        d.field(
-            &format!("groups/{i}"),
-            f,
-            QueryOperator::Group,
-            "group",
-            "equality",
-        )?;
-    }
-    for (i, f) in query.order.iter().enumerate() {
-        d.field(
-            &format!("order/{i}"),
-            f,
-            QueryOperator::Order,
-            "order",
-            "order",
-        )?;
-    }
-    for (i, output) in query.outputs.iter().enumerate() {
-        if let app::Expression::Sum {
-            argument,
-            logical_type,
-        } = &output.expression
-        {
-            d.add(
-                &format!("outputs/{i}/argument"),
-                &argument.scan,
-                &argument.identity,
-                &argument.logical_type,
-                QueryOperator::Aggregate,
-                "sum",
-                None,
-                Some(logical_type),
-            )?;
-        }
-    }
+    crate::application_property_uses::visit(query, ctx.catalog(), |u| {
+        d.add(
+            &u.path,
+            u.scan,
+            u.identity,
+            u.logical_type,
+            u.operator,
+            u.operation,
+            u.required,
+            u.output,
+        )
+    })?;
     // Compare complete deduplicated coverage with the admitted old operator inventory.
     for r in ctx.requirements().operators() {
         let u = r.usage();

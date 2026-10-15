@@ -1,0 +1,59 @@
+{
+  "baseline": "f30f27b7a0b7ffbb0d6735a5b3baef71d6fc91fe",
+  "scope": "Pure actual application AST lineage and explicit unresolved current-source custody; no effective read/storage owner/native authority or backend case qualification",
+  "checks": {
+    "coreLibrary": 290,
+    "boundaryControls": 16,
+    "governedArtifacts": 68,
+    "schemas": 75,
+    "fixtureScenarios": 636,
+    "currentSqlScenarios": 5,
+    "previousReports": "all three f30f27b reports and historical mapping bytes preserved"
+  },
+  "binary": {
+    "path": "/private/tmp/weft-application-lineage-current-source-r1/application_lineage",
+    "sha256": "8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1",
+    "freshBuildCorrespondence": "8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1"
+  },
+  "sources": {
+    "crates/weft-core/src/lib.rs": "916c321e6add65e1cee486fc61c3cbc2a4684e9cdfcaf2d22b02159ff820898f",
+    "crates/weft-core/src/application_lineage.rs": "3061565e2c06d24d41a31a6b30010136d195ea0e290830e0e5750940c8f2362b",
+    "crates/weft-core/src/application_property_uses.rs": "c99912747a4d21e43602d478d64e7263c941014992c5775785f02f1f3f05fea3",
+    "crates/weft-core/src/security_query_properties.rs": "f5c82c15628021e50d71fa97f7966664714680d60edcd132ba9fae3611138b16",
+    "crates/weft-core/src/security_mapping_transport.rs": "1cd8c0f6dbde7285dac0f70b29689463e35af31ea53eec7c7bbecb0ab3928b8c",
+    "crates/weft-core/examples/application_lineage.rs": "e2562a6f886b93f63fb565c6352f7552f2e9b56ae75bf956f84740b7bb693c2f",
+    "docs/helix/02-design/contracts/application-lineage-request-v0.1-candidate.schema.json": "db105dea067a45b07cf55c92f9636b200d0a2fe2191460a43c32513f1a21e836",
+    "docs/helix/02-design/contracts/application-lineage-v0.1-candidate.schema.json": "116d9026d639fe7bc9a269cf9f86c650c683e3cbfc4e69f176ec7a7c370a44cb",
+    "tests/application-lineage/check.py": "46af23174d9a3ce769595b10a47c06e817ca57971f464a49f13152d53d3cc589"
+  },
+  "fixtures": {
+    "tests/application-lineage/fixtures/current-query-source.json": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+    "tests/application-lineage/fixtures/field-free-count.report.json": "35c32a64fd23eef25f096a0f8f60b2d72527755adcad88ec3475eb4f19d5081d",
+    "tests/application-lineage/fixtures/field-free-count.request.json": "654fcfa084ad776369133091b35700b2da0f86f0eed1b634ba4ee96f152e4040",
+    "tests/application-lineage/fixtures/numeric-sum-unsupported.report.json": "5f117aa3f236426fe64542cbd5ce433b230dd3b078a8ee11e440a500e18eded9",
+    "tests/application-lineage/fixtures/numeric-sum-unsupported.request.json": "b89e0a986c4fa3381033dd526d2bc4a3156e46ce4dfbb4d435d91b1e298143a1",
+    "tests/application-lineage/fixtures/original-umf-obligations.json": "e372318532d8de95c5b44338948c43bb8b32daeb797d5e87d66970df05965a86",
+    "tests/application-lineage/fixtures/token-equality.report.json": "5ddef19f441670a3614dc7885ed00173fb5f28ac1b98107de6ff3e124067f573",
+    "tests/application-lineage/fixtures/token-equality.request.json": "8c1e937535ce12dc7b71f8791009a9b360ca33412f43918ffe1489088dba04cc",
+    "tests/application-lineage/fixtures/token-order-refusal.report.json": "0ed2e4da3c7e90a924ca494d6c27d658caf73cfca305b0b34432dbd6ec302e10",
+    "tests/application-lineage/fixtures/token-order-refusal.request.json": "c762f19a97a2093189595171a3eefe0575379fa3aedc8bcb8993a4421b30549c",
+    "tests/application-lineage/fixtures/token-self-join.report.json": "18bc7f7b7b5c17c57b0466ac25215569b86f7547784e26d15e7bf9bad2499a97",
+    "tests/application-lineage/fixtures/token-self-join.request.json": "7c44771ef8aa9035316dd614aca71749ddce465ef8b93d460a04d64afbdb228e"
+  },
+  "upstream": {
+    "source": "/Users/erik/.codex/worktrees/security-main-integration/umf/docs/helix/04-build/evidence/security/current-query-source-20261015/lineage.json",
+    "status": "point-in-time uncommitted owner candidate evidence; not native acceptance",
+    "controls": 74,
+    "fixtureSha256": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059"
+  },
+  "evidence": {
+    "build.log": "45bd4296a52c87e640607475c3ace16058e0697076614c8970b8dc17def56de7",
+    "core-tests.log": "5ab1f0e12b39586d2d6a9b019ff6f8dca5e50568824fa63d45c3a461d7d66e0a",
+    "correspondence.json": "eef7e0f4160625c84c5a33112371f3ce4ecf711cc58057c2cd135813c81283fc",
+    "legacy-build.log": "ce55ad98e068eee6e32e21a26bd70f21ba97b8bcb6fd8089b0b88b555ceaf674",
+    "legacy-correspondence.json": "eb136a3d229f96a48c675bcf203907948b5c0cd0fe3607e63d99b458c3a96c06",
+    "modules.log": "bc7f9582f9f6c46609787a8253a6bb1225923778868be3ce31b2912273fa3137",
+    "specs.log": "41ccd10746e2b9b1a356e1716c404416318159a7c008e13fae4e39f0bc1be907",
+    "upstream-owner-correspondence.json": "35cb476406e7235e5c1af2076e6ce74efedfccaa481bdff66d4d2db0d9a6406d"
+  }
+}

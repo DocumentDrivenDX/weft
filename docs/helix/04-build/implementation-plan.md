@@ -1716,3 +1716,63 @@ current-source admission or policy-independent application-AST lineage surface
 must derive requirements from the actual current query/model, retain unknown
 source bytes and omit unestablished modes/actions. This report does not establish
 current catalog compatibility by carrying a legacy-source mode label.
+
+
+### Policy-independent application lineage candidate — 2026-10-15
+
+The distinct `application_lineage::prepare` API and `application_lineage` core
+example accept `weft-application-lineage/0.1-candidate` and emit the closed
+`weft.application.lineage/0.1-candidate` artifact. Request/report schemas live in
+`application-lineage-request-v0.1-candidate.schema.json` and
+`application-lineage-v0.1-candidate.schema.json`. A private immutable result is
+constructed only by resolving the original pinned core0.8 modules and SQL through
+the existing application parser/resolver. No SecurityLogicalPlan, policy0.1 adapter
+or synthetic legacy policy is constructed. Old registrations/transports stay
+separate. No executable plugin, SQL override or caller AST/required/mode/action
+input is accepted.
+
+A shared internal traversal of the resolved application AST derives original
+occurrence paths, scan/Field identities with revisions, equality/order properties
+and actual numeric SUM argument/output types. It is used by both the earlier
+legacy property report and this new source-only report. Legacy output bytes must
+remain unchanged. Self-join sides and repeated expressions are distinct, hidden
+Fields retain uses, terminal keys retain their own tN equality occurrence, and
+COUNT(*) preserves source scans with no invented Field dependency. Unsupported
+SUM properties remain required:null/propertyStatus:unsupported. ASC/DESC direction
+and required capabilities are preserved consistently; unsupported descending
+cursor combinations refuse. COUNT(DISTINCT), LIMIT0 and WHERE FALSE still require
+language/IR/conformance work and remain refused.
+
+The report retains exact sourceRequestJson/hash, original model pins, SQL hash,
+actual applicationPlanJson/hash, scan identities and uses. It contains no mode,
+modeSource or originalAction. Optional external opaque source records retain
+role, declared document/revision identity, media type, exact UTF8 bytes and digest
+inside the original request. Their status is always uninterpreted; matching a
+supplied digest proves local byte correspondence, not ownership, current policy
+meaning, storageTransform, effective disposition, original action, key/runtime
+scope, authentication or native permission. Unknown opaque source content is never
+parsed as a compiler override. Original model content remains retained; selected
+unestablished core element meaning still refuses.
+
+Limits are4MB input bytes,16 opaque sources,4096 dependency occurrences,8MB
+parameter replication/retained-use/serialized-plan budgets and16MB serialized
+report output. The bounded writer refuses without partial output. These are
+explicit endpoint/component bounds, not a whole-process allocation/CPU theorem.
+The pure parameter preflight is reused from the original mapping transport.
+
+The UMF owner's explicitly new named-current-stored-token-r1 fixture is retained
+unchanged with source SHA2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059.
+Its current policy0.2, ontology0.2, catalog0.1 and storage owner values are extracted
+with recorded compact UTF8 JSON encoding; the exact whole fixture bytes are also
+retained as an opaque source. Five actual SQL scenarios independently derive
+operation/property lineage, including selfjoin/group, output-omitted token order,
+unsupported numeric SUM and field-free COUNT. Expected stored uses remain authored
+test expectations, never producer inputs or attestations. Opaque expectation
+mutations cannot change AST uses. The original unnamed UMF fixture is preserved
+as a refusal: Weft never adds names/members to make it queryable.
+
+UMF must separately consume these original issued requirements against its actual
+catalog/storage-owner program and effective read policy. No current catalog
+compatibility, native before-dispatch/source/current authority, protected release,
+P03/B08 completion or original backend case promotion follows from this artifact.
+All original assertions, allocations and deadlines remain mandatory.

@@ -465,6 +465,15 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/application_lineage.rs",
+          "publicDeclarations": [
+            "struct:ApplicationLineage",
+            "fn:json",
+            "fn:prepare"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/application_model.rs",
           "publicDeclarations": [
             "struct:Member",
@@ -504,6 +513,20 @@
             "field:target_multiplicity",
             "field:target_lifecycle",
             "fn:relationship_read"
+          ],
+          "pathReferences": []
+        },
+        {
+          "path": "crates/weft-core/src/application_property_uses.rs",
+          "publicDeclarations": [
+            "field:path",
+            "field:scan",
+            "field:identity",
+            "field:logical_type",
+            "field:operator",
+            "field:operation",
+            "field:required",
+            "field:output"
           ],
           "pathReferences": []
         },
@@ -1121,6 +1144,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:application_lineage",
             "mod:security_query_properties",
             "mod:mutation_backend",
             "mod:mutation",

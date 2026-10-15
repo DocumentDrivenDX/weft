@@ -1,0 +1,307 @@
+{
+  "status": "passed",
+  "producer": {
+    "binarySha256": "8d2ff86173efe81aafd17cb14cad06d880c55802fc39fc361802d520307487a1"
+  },
+  "fixtureSha256": "2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059",
+  "controls": 74,
+  "observations": [
+    {
+      "id": "token-equality:actual-producer-success",
+      "passed": true
+    },
+    {
+      "id": "token-equality:no-authority",
+      "passed": true
+    },
+    {
+      "id": "token-equality:exact-source-custody",
+      "passed": true
+    },
+    {
+      "id": "token-equality:exact-model-pins",
+      "passed": true
+    },
+    {
+      "id": "token-equality:actual-plan-hash",
+      "passed": true
+    },
+    {
+      "id": "token-equality:all-opaque-sources-uninterpreted",
+      "passed": true
+    },
+    {
+      "id": "token-equality:scan-population",
+      "passed": true
+    },
+    {
+      "id": "token-equality:no-mode-action-invention",
+      "passed": true
+    },
+    {
+      "id": "token-equality:all-stored-occurrences",
+      "passed": true
+    },
+    {
+      "id": "token-equality:complete-use-population",
+      "passed": true
+    },
+    {
+      "id": "token-equality:filters/0/left:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "token-equality:filters/0/left:independent-expectation",
+      "passed": true
+    },
+    {
+      "id": "token-equality:filters/0/left:current-owner-correspondence",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:actual-producer-success",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:no-authority",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:exact-source-custody",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:exact-model-pins",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:actual-plan-hash",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:all-opaque-sources-uninterpreted",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:scan-population",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:no-mode-action-invention",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:all-stored-occurrences",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:complete-use-population",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/left:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/left:independent-expectation",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/left:current-owner-correspondence",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/right:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/right:independent-expectation",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:joins/0/on/0/right:current-owner-correspondence",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:groups/0:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:groups/0:independent-expectation",
+      "passed": true
+    },
+    {
+      "id": "token-self-join:groups/0:current-owner-correspondence",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:actual-producer-success",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:no-authority",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:exact-source-custody",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:exact-model-pins",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:actual-plan-hash",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:all-opaque-sources-uninterpreted",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:scan-population",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:no-mode-action-invention",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:all-stored-occurrences",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:complete-use-population",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:order/0:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:order/0:independent-expectation",
+      "passed": true
+    },
+    {
+      "id": "token-order-refusal:order/0:current-owner-correspondence",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:actual-producer-success",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:no-authority",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:exact-source-custody",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:exact-model-pins",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:actual-plan-hash",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:all-opaque-sources-uninterpreted",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:scan-population",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:no-mode-action-invention",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:all-stored-occurrences",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:complete-use-population",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-unsupported:outputs/0/argument:exact-field-revision",
+      "passed": true
+    },
+    {
+      "id": "numeric-sum-no-fake-property",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:actual-producer-success",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:no-authority",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:exact-source-custody",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:exact-model-pins",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:actual-plan-hash",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:all-opaque-sources-uninterpreted",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:scan-population",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:no-mode-action-invention",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:all-stored-occurrences",
+      "passed": true
+    },
+    {
+      "id": "field-free-count:complete-use-population",
+      "passed": true
+    },
+    {
+      "id": "count-star-no-invented-field",
+      "passed": true
+    },
+    {
+      "id": "required-override:refused-before-partial-report",
+      "passed": true
+    },
+    {
+      "id": "mode-override:refused-before-partial-report",
+      "passed": true
+    },
+    {
+      "id": "authority-override:refused-before-partial-report",
+      "passed": true
+    },
+    {
+      "id": "changed-opaque-source:refused-before-partial-report",
+      "passed": true
+    },
+    {
+      "id": "changed-model-digest:refused-before-partial-report",
+      "passed": true
+    },
+    {
+      "id": "fixture-and-producer-unchanged",
+      "passed": true
+    }
+  ],
+  "scope": "Fresh original Weft parser/resolver lineage matched to the exact new current UMF fixture and existing storage owner. Reports remain non-authoritative; no numeric aggregate admission, current read/action permission, mixed-mode native compilation or P03/B08 qualification."
+}
