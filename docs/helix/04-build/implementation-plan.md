@@ -2132,3 +2132,31 @@ the approved second caller connection is still unresolved.
 An independent ordinary-role PG18.6 oracle also passes17 positive and4 pre-execution refusal controls over UTF8 C-collation and signed64 edges. Removing eligibility filtering changes the expected bag and is detected. Its owned container is removed. These checks share the conditional premise qualification above and confer no native policy admission.
 
 The full core/PostgreSQL/runtime test invocation passes, including the exhaustive existing decimal storage-home matrix and Rust API doctests. Workspace all-target checking, module boundaries and governed-spec checks also pass; see the exact logs and test-result ledger in the receipt.
+
+
+### Same-original computation input and private row lineage — 2026-10-15
+
+B-008 remains open under all132 original backend obligations and the expanded
+45/113/158 gate. A no-argument native Python method now derives exact operation,
+operand and UMF route requests inside the retained Rust typed context. The new
+separate0.2 current-row compiler carries native opaque TEXT keys through direct
+projection/inner-join SQL, with separate private-column and public-cell source
+metadata. It never imports a caller ledger or establishes native source access.
+
+The actual Python -> Rust -> PostgreSQL18.6 fixture passes13 row/bridge controls,
+including duplicate masked rows, both join contributors, exact staged cell
+correspondence, FALSE/LIMIT0, no imported packet/foreign self and three aggregate
+refusals. The server stops and its lease is released. Ten targeted scalar Rust
+controls, the original typed packet core control,46 Python custody controls and
+nine previous scalar native cases pass. All nine predecessor compiled artifacts,
+SQL hashes and result bags are identical with the new wheel. The native fixtures
+use privileged local connections and synthetic stage/mode/scope declarations;
+these prove conditional SQL/lineage only. No original native case is promoted.
+
+Evidence is under evidence/current-row-lineage-20261015/. The unchanged-version
+0.4.32 development wheel is unpublished and has separate pins. Truss agreed the
+closed0.2 TEXT-key carrier and Python bridge interface; its actual original-source
+installation, authenticated capture/Subject/current-cut issuer and guarded final
+release remain incomplete. Grouped contributor bags, COUNT/DISTINCT and remaining
+scalar/aggregate domains are next required compiler work, currently refused by
+this0.2 path. They are not removed from B-008 scope.

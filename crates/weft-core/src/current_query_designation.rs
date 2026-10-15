@@ -120,9 +120,61 @@ pub fn derive(prepared:&ApplicationLineage)->Result<CurrentQueryDesignations<'_>
  let json=encode(&report,16_000_000)?;Ok(CurrentQueryDesignations{preparation:prepared,profile,uses,json})
 }
 
+
+/// Source-bound computation inputs issued only from the actual typed context.
+/// This is not a native credential and cannot be imported as an issued object.
+/// The host must still authenticate and admit every original captured source.
+pub fn native_request_json(g:&crate::current_query_operands::CurrentQueryOperands<'_>)->Result<String>{
+ use crate::{application_ir as app,current_query_operands::{Input,Kind}};
+ let d=g.designation();let p=d.preparation();let plan=p.plan();
+ let scan_map=crate::application_property_uses::scans(plan)?;
+ let scans=std::iter::once(&plan.source).chain(plan.joins.iter().map(|j|&j.right)).map(|s|json!({"scan":s.occurrence,"record":s.record,"type":reference(&s.record)})).collect::<Vec<_>>();
+ let mut projections=Vec::new();
+ for (i,o) in plan.outputs.iter().enumerate(){
+  if let app::Expression::Field{scan,identity}=&o.expression{
+   let record=p.catalog().record_by_identity(scan_map.get(scan).ok_or_else(fail)?)?;
+   let descriptor=p.catalog().member_descriptor_by_identity(&record,identity)?;
+   projections.push(json!({"path":format!("outputs/{i}/expression"),"scan":scan,"field":identity,"descriptor":descriptor}));
+  }
+ }
+ let mut routes=Vec::new();
+ crate::application_property_uses::visit(plan,p.catalog(),|u|{
+  if routes.len()>=4096{return Err(fail())}
+  routes.push(json!({"scan":u.scan,"path":u.path,"type":reference(scan_map.get(u.scan).ok_or_else(fail)?),"field":reference(u.identity),"operator":u.operator,"operation":u.operation,"required":u.required.into_iter().collect::<Vec<_>>()}));Ok(())
+ })?;
+ let mut operations=Vec::new();
+ for op in g.operations(){
+  let (kind,direction,boolean)=match op.kind(){
+   Kind::Equal=>("equal",None,None),Kind::LexicographicGreater=>("lexicographic-greater",None,None),Kind::Group=>("group",None,None),
+   Kind::Order(direction)=>("order",Some(match direction{crate::application_lineage::OrderDirection::Asc=>"asc",crate::application_lineage::OrderDirection::Desc=>"desc"}),None),
+   Kind::Count=>("count",None,None),Kind::CountDistinct=>("count-distinct",None,None),Kind::Boolean(value)=>("boolean",None,Some(value))};
+  let operands=op.operands().iter().map(|operand|{let input=match operand.input(){
+   Input::Field{scan,identity,logical_type,original_action}=>json!({"kind":"field","scan":scan,"identity":identity,"logicalType":logical_type,"originalAction":original_action}),
+   Input::Literal{value,logical_type}=>json!({"kind":"literal","value":value,"logicalType":logical_type}),
+   Input::Parameter{name,value,logical_type}=>json!({"kind":"parameter","name":name,"value":value,"logicalType":logical_type})};
+   json!({"path":operand.path(),"input":input})}).collect::<Vec<_>>();
+  operations.push(json!({"path":op.path(),"operator":op.operator(),"kind":kind,"direction":direction,"boolean":boolean,"operands":operands,"outputType":op.output_type()}));
+ }
+ encode(&json!({"version":"weft.current-query.native-input/0.1-candidate","authority":false,"securityReady":false,"sourceRequestSha256":sha256(p.source_request_json().as_bytes()),"designationSha256":sha256(d.json().as_bytes()),"modelPins":p.catalog().pins(),"binding":d.binding_scope(),"sources":d.profile.sources,"primaryAction":d.primary_action(),"scans":scans,"projections":projections,"operations":operations,"routes":routes}),16_000_000)
+}
+
 #[cfg(test)]
 mod tests{
  use super::*;
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn native_request_derives_original_routes_operations_and_literals_without_report_import(){
+  let r=request();let p=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&p).unwrap();let g=crate::current_query_operands::derive(&d).unwrap();
+  let output:Value=serde_json::from_str(&native_request_json(&g).unwrap()).unwrap();
+  assert_eq!(output["primaryAction"],d.primary_action());assert_eq!(output["designationSha256"],sha256(d.json().as_bytes()));
+  assert_eq!(output["sourceRequestSha256"],sha256(p.source_request_json().as_bytes()));
+  assert_eq!(output["routes"][0]["required"],json!(["equality"]));assert_eq!(output["routes"][0]["type"]["elementId"],"Resource");
+  assert!(output["routes"][0].get("originalAction").is_none());
+  assert_eq!(output["operations"][0]["operands"][0]["input"]["originalAction"],"query-original-salary-predicate");
+  assert_eq!(output["operations"][0]["operands"][1]["input"]["value"],"100");
+  assert_eq!(output["operations"][1]["direction"],"desc");
+  assert_eq!(output["projections"][0]["path"],"outputs/0/expression");assert_eq!(output["authority"],false);assert_eq!(output["securityReady"],false);
+ }
  fn request()->Value{serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/mixed-original-uses.request.json")).unwrap()}
  fn source_index(r:&Value,role:&str)->usize{r["opaqueSources"].as_array().unwrap().iter().position(|s|s["role"]==role).unwrap()}
  fn profile(r:&mut Value,edit:impl FnOnce(&mut Value)){let i=source_index(r,"query-designation");let mut p:Value=serde_json::from_str(r["opaqueSources"][i]["utf8"].as_str().unwrap()).unwrap();edit(&mut p);let raw=p.to_string();r["opaqueSources"][i]["utf8"]=json!(raw);r["opaqueSources"][i]["sha256"]=json!(sha256(raw.as_bytes()));}

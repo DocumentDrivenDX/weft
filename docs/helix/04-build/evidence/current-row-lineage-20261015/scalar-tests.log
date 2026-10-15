@@ -1,0 +1,187 @@
+warning: unexpected `cfg` condition value: `128`
+   --> vendor/ahash/src/fallback_hash.rs:164:11
+    |
+164 |     #[cfg(target_pointer_width = "128")]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `target_pointer_width` are: `16`, `32`, and `64`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:48:58
+   |
+48 |     if #[cfg(all(feature = "compile-time-rng", any(test, fuzzing)))] {
+   |                                                          ^^^^^^^
+   |
+   = help: expected names are: `docsrs`, `feature`, `folded_multiply`, `specialize`, and `test` and 31 more
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> vendor/ahash/src/random_state.rs:68:54
+   |
+68 |     } else if #[cfg(all(feature = "runtime-rng", not(fuzzing)))] {
+   |                                                      ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+
+warning: methods `read_u128x2`, `read_u128x4`, `read_last_u16`, `read_last_u128x2`, and `read_last_u128x4` are never used
+  --> vendor/ahash/src/convert.rs:69:8
+   |
+64 | pub(crate) trait ReadFromSlice {
+   |                  ------------- methods in this trait
+...
+69 |     fn read_u128x2(&self) -> ([u128; 2], &[u8]);
+   |        ^^^^^^^^^^^
+70 |     fn read_u128x4(&self) -> ([u128; 4], &[u8]);
+   |        ^^^^^^^^^^^
+71 |     fn read_last_u16(&self) -> u16;
+   |        ^^^^^^^^^^^^^
+...
+75 |     fn read_last_u128x2(&self) -> [u128; 2];
+   |        ^^^^^^^^^^^^^^^^
+76 |     fn read_last_u128x4(&self) -> [u128; 4];
+   |        ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `ahash` (lib) generated 4 warnings
+warning: `ahash` (lib) generated 4 warnings (4 duplicates)
+warning: unused import: `Value`
+  --> crates/weft-core/src/application_lineage.rs:11:24
+   |
+11 | use serde_json::{json, Value};
+   |                        ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `Identity`
+ --> crates/weft-core/src/application_scope.rs:8:18
+  |
+8 |     ir::{Family, Identity, LogicalType},
+  |                  ^^^^^^^^
+
+warning: unused imports: `Descriptor`, `Record`, `Shape`, and `exact`
+ --> crates/weft-core/src/application_resolve.rs:3:25
+  |
+3 |     application_model::{Descriptor, Shape},
+  |                         ^^^^^^^^^^  ^^^^^
+...
+6 |     exact,
+  |     ^^^^^
+7 |     ir::{Family, Identity, LogicalType},
+8 |     model::{Catalog, Record},
+  |                      ^^^^^^
+
+warning: struct `PlanSchema03` is never constructed
+   --> crates/weft-core/src/arithmetic_application_resolve.rs:837:8
+    |
+837 | struct PlanSchema03;
+    |        ^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: function `derive` is never used
+  --> crates/weft-core/src/security_scan_obligations.rs:61:15
+   |
+61 | pub(crate) fn derive(query:&SecurityResolvedQuery,plan:&SecurityLogicalPlan,catalog:&Catalog,primary_action:&str,uses:&[(crate::security_...
+   |               ^^^^^^
+
+warning: method `finish` is never used
+   --> crates/weft-core/src/syntax.rs:245:19
+    |
+208 | impl Parser {
+    | ----------- method in this implementation
+...
+245 |     pub(crate) fn finish(&mut self) -> Result<()> {
+    |                   ^^^^^^
+
+warning: methods `terminal_record` and `terminal_key` are never used
+   --> crates/weft-core/src/path_ir.rs:119:12
+    |
+ 54 | impl PathRead {
+    | ------------- methods in this implementation
+...
+119 |     pub fn terminal_record(&self) -> &Identity {
+    |            ^^^^^^^^^^^^^^^
+...
+122 |     pub fn terminal_key(&self) -> &AuthoredKey {
+    |            ^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+   --> crates/weft-core/src/path_ir.rs:240:12
+    |
+239 | impl Plan {
+    | --------- associated function in this implementation
+240 |     pub fn new(p: PlanParts) -> Result<Self> {
+    |            ^^^
+
+warning: field `span` is never read
+  --> crates/weft-core/src/path_query.rs:23:9
+   |
+21 |     CountDistinctPathTargets {
+   |     ------------------------ field in this variant
+22 |         alias: Name,
+23 |         span: Span,
+   |         ^^^^
+   |
+   = note: `Output` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `field` is never read
+ --> crates/weft-core/src/security_rule_occurrences.rs:8:103
+  |
+8 | pub(crate) enum RulePayload<'a>{Rule(&'a Rule),Condition(&'a Expression),Operand(&'a Term),Disclosure{field:&'a SecurityRef,disposition:&...
+  |                                                                                            ---------- ^^^^^
+  |                                                                                            |
+  |                                                                                            field in this variant
+  |
+  = note: `RulePayload` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `weft-core` (lib) generated 10 warnings (run `cargo fix --lib -p weft-core` to apply 3 suggestions)
+   Compiling weft-postgresql v0.1.0 (/private/tmp/weft-current-row-lineage-20261015/crates/weft-postgresql)
+warning: unused imports: `Requirement` and `admit_properties`
+    --> crates/weft-postgresql/src/property_definition.rs:1025:39
+     |
+1025 |             comparator_requirements::{admit_properties, registration_key, Requirement},
+     |                                       ^^^^^^^^^^^^^^^^                    ^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` on by default
+
+warning: variable does not need to be mutable
+   --> crates/weft-postgresql/src/row_join_definition.rs:842:13
+    |
+842 |         let mut binding: Value = serde_json::from_str(include_str!(
+    |             ----^^^^^^^
+    |             |
+    |             help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: `weft-postgresql` (lib test) generated 2 warnings (run `cargo fix --lib -p weft-postgresql --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.96s
+     Running unittests src/lib.rs (/private/tmp/weft-truss066-final-target/debug/deps/weft_postgresql-b7aa85c391c7ed3a)
+
+running 10 tests
+test current_scalar::tests::effective_scalar_lookup_preserves_original_identity_and_refuses_non_scalar ... ok
+test current_scalar::tests::actual_original_context_lowers_masked_projection_and_separately_typed_raw_predicate ... ok
+test current_scalar::tests::row_versions_and_legacy_unknown_keys_refuse ... ok
+test current_scalar::tests::named_parameters_preserve_original_payload_and_no_field_count_has_eligibility_source ... ok
+test current_scalar::tests::hidden_group_with_count_and_canonical_group_projection_are_distinct_from_unsafe_projection_fold ... ok
+test current_scalar::tests::joins_and_distinct_require_each_occurrence_and_matching_effective_scope ... ok
+test current_scalar::tests::joined_rows_retain_both_sources_and_aggregates_do_not_claim_contribution ... ok
+test current_scalar::tests::literal_domain_mismatch_wrong_action_and_prohibited_empty_refuse ... ok
+test current_scalar::tests::private_row_contribution_is_separate_from_public_columns_and_preserves_v1 ... ok
+test current_scalar::tests::scope_pins_closed_shapes_unknown_sources_and_identifier_injection_refuse_or_quote ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 87 filtered out; finished in 0.13s
+

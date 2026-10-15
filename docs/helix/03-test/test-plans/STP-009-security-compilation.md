@@ -498,3 +498,19 @@ paired scopes, original actions, type mismatch and unsupported/prohibited refusa
 These conditional stage premises do not qualify policy correctness, authenticated
 caller/current authority, Truss issuer, paired transform runtime or protected
 publication. Keep all original132 backend obligations and expanded158 gate open.
+
+
+### Native input packet and row-contribution candidate — 2026-10-15
+
+Derive operation/route packets from an actual retained Python child with no
+arguments. Check original source/designation/action/type/literal/direction and
+UMF required-capability correspondence; imported packet and foreign-self calls
+refuse. Execute actual0.2 SQL on PG18.6: duplicate masked projection rows must
+retain distinct private source keys, joins retain both actual staged contributors,
+and public cell/source associations must match private fixture rows. FALSE and
+LIMIT0 retain preflight requirements. Verify TEXT OIDs/closed carrier/scan order,
+0.1 backward behavior and cross-version refusal. Explicit aggregate refusal
+remains pending grouped-bag work. Stop the disposable server on every exit.
+The finite fixture proves conditional SQL and source contribution only; no
+source-policy correctness, authenticated caller/current authority or guarded
+public result release is qualified by it.

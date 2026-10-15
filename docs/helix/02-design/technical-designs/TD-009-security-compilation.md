@@ -506,3 +506,16 @@ the closed conditional materialization declaration, subset and native duties.
 Private materialized columns support non-JSONB values and separate masked reads
 from hidden original uses. This does not commit Truss's pending capture/current
 Subject ABI; the native owner must supply and validate that boundary first.
+
+
+### Python computation bridge and private row lineage — 2026-10-15
+
+The same-original native packet derives UMF route arguments and typed operations
+inside Rust, giving the trusted Python host a computation input without an
+importable ledger. A separate0.2 materialization ABI carries native opaque TEXT
+row keys through actual typed SQL. Public-cell metadata links each direct output
+to its original scan/Field; private source tuples preserve duplicate masked values
+and joined row occurrences. CONTRACT-006 defines exact shapes and native checks.
+This is compiler lineage over declared stages; Truss owns genuine captured source,
+authenticated Subject, actual mappings, current cut and final disclosure/release.
+Grouped contributor bags and aggregates stay explicit unfinished requirements.

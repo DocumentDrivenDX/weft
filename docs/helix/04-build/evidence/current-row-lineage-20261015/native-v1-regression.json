@@ -1,0 +1,130 @@
+{
+  "scope": "Actual same-object Weft typed compiler -> PG18 SQL refinement on synthetic declared per-use values only. Privileged fixture connection; no authentication/current-authority/UMF source decision/paired runtime proof or protected publication. Scope/mode/eligibility are premises, including counterfactual source modes. Not original native backend acceptance.",
+  "postgresVersionNum": "180006",
+  "weftVersion": "0.4.32",
+  "psycopgVersion": "3.3.6",
+  "serverStopped": true,
+  "checks": [
+    {
+      "id": "masked-read-raw-predicate",
+      "sqlSha256": "7655d9f92855ff14242eb68fa8b6abef18600b1115298c651eb8886266296c39",
+      "compiledSha256": "e329d475da003ca7e7d3e9b894bb7d1f3e9f361534f66c844694b227ec685375",
+      "rows": [
+        [
+          "[private]",
+          "opaque-z"
+        ],
+        [
+          "[private]",
+          "opaque-a"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "self-join-distinct",
+      "sqlSha256": "4a4604eee13a7be858501db5946c3e30f8b24b554175977d63e3fb23cb794d2a",
+      "compiledSha256": "ac1d7ca4b5208c5e6f0c4b3d9e01545b5e77e54cf55bcf5bcd850cdebea8701b",
+      "rows": [
+        [
+          "2"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "self-join-bag-count",
+      "sqlSha256": "3f649b89b8a377db825b88553dbe0212c398ec0018c6995ec7ee70eaa777b511",
+      "compiledSha256": "c63b19cc7b512c7569f4e844ad713971932fa1ee0044e676b6785c910cef556e",
+      "rows": [
+        [
+          "5"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "group-order",
+      "sqlSha256": "ff2b467ce44eb750723aaf8715258aba816ac7bf3f1fe662f441424c1f2ca281",
+      "compiledSha256": "08ef0b341f445cb03cb2d2000c47a46d290319e2f6dc262a21efda935af789ae",
+      "rows": [
+        [
+          "opaque-z",
+          "1"
+        ],
+        [
+          "opaque-a",
+          "2"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "hidden-group-count",
+      "sqlSha256": "9e51e8c78e6ddda98ae1ccb1d0f750681549c37afe993f5c8bd6bbf768eaf277",
+      "compiledSha256": "cbc593cc2e7e50e39c9bc70d465b68df48aeed84e75db2fe607012328e0a0193",
+      "rows": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "false-zero-count",
+      "sqlSha256": "f97f1ef4c537adc59e71d97b453ade8f3273b779f685bd472d021a34ca4183ee",
+      "compiledSha256": "4aae97e6a140cb28bac3c32636253eed7851b6037ef2b47aa6b9e403562632a1",
+      "rows": [],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "original-predicate-zero",
+      "sqlSha256": "ebf16b26c48c080507f9707eda28f6b7b09e2ad8026ac56e36c7af9a271f7aed",
+      "compiledSha256": "b465657afea28b2da238e85ea62a64a2d3228d3a791251c705760b47214e1432",
+      "rows": [],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "named-parameter",
+      "sqlSha256": "d3e7f90c8efd5b999bb91a316e21a4de004abcdaae6a659de1bb8b1b9f52d3aa",
+      "compiledSha256": "791e5bc6fff4a43e2579c5a2ea31d916ac4c3c59748a53918dc9031858ac9cd0",
+      "rows": [
+        [
+          "[private]"
+        ],
+        [
+          "[private]"
+        ]
+      ],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    },
+    {
+      "id": "parameter-is-data",
+      "sqlSha256": "214fd2609b851a402e9137596bb46a620ec45069fa2e41fa6dced0f07d48be33",
+      "compiledSha256": "c27128a5cdf0dfafe706aa34b26d860ddc06600d5ae55a953d13f2cca03c043d",
+      "rows": [],
+      "nativeAdmissionStillRequired": true,
+      "sameOriginalParent": true,
+      "passed": true
+    }
+  ]
+}

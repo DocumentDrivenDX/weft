@@ -590,6 +590,9 @@ pub struct CurrentQueryPreparation{
 impl CurrentQueryPreparation{
  pub fn designation_json(&self)->&str{&self.designation_json}
  pub fn operand_count(&self)->usize{self.operand_count}
+ /// Derive computation inputs from the same actual original typed context.
+ pub fn native_request_json(&self)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_core::current_query_designation::native_request_json(operands))}
+
  /// Original object identity only; identical source bytes are not object custody.
  pub fn is_from(&self,original:&ApplicationLineagePreparation)->bool{std::sync::Arc::ptr_eq(&self.original,&original.inner)}
  /// Conditional compiler output only. No native issuer, permission or execution.
@@ -598,6 +601,9 @@ impl CurrentQueryPreparation{
   self.with_context(|_,_,operands|weft_postgresql::current_scalar::lower(operands,binding)?.json_string())
  }
 
+ /// Conditional nonaggregate SQL with private source row contribution.
+ #[cfg(feature="current-postgresql-scalar-candidate")]
+ pub fn lower_postgresql_current_rows_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_postgresql::current_scalar::lower_rows(operands,binding)?.json_string())}
  /// Trusted Rust consumer hook, not a Python callback or native admission API.
  /// Borrowed declarations are derived over the same original context on each
  /// scoped invocation; SQL/AST are not reparsed and caller reports are not imported.

@@ -109,6 +109,7 @@ pub struct CurrentScalarSql<'a> {
     sql: String,
     parameters: Vec<Parameter>,
     columns: Vec<ResultColumn>,
+    private: Option<(Value, Value)>,
 }
 impl CurrentScalarSql<'_> {
     pub fn sql(&self) -> &str {
@@ -146,7 +147,13 @@ impl CurrentScalarSql<'_> {
         String::from_utf8(out.bytes).map_err(|_| fail())
     }
     pub fn json(&self) -> Value {
-        json!({"version":"weft.postgresql.current-scalar/0.1-candidate","authority":false,"securityReady":false,"nativeAdmission":"required","sourceRequestSha256":sha256(self.context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(self.context.designation().json().as_bytes()),"materializationBindingSha256":self.binding_sha256,"sql":self.sql,"parameters":self.parameters,"resultColumns":self.columns,"nativeRequirements":["genuine authenticated held source/caller/Subject/current cut","exact original static binding/profile/model/source correspondence","private relation producer/OID/ACL/type/encoding/collation correspondence","complete primary-eligible population before relational operations even when empty","actual per-use read/route/disclosure and exact separate action decisions","present uniform per-use domains and paired/cross-row key/transform/runtime scopes","native statement/result budgets and no partial public release","source/caller/current-cut revalidation, result/cell lineage and guarded decoding/release"]})
+        let mut value = json!({"version":"weft.postgresql.current-scalar/0.1-candidate","authority":false,"securityReady":false,"nativeAdmission":"required","sourceRequestSha256":sha256(self.context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(self.context.designation().json().as_bytes()),"materializationBindingSha256":self.binding_sha256,"sql":self.sql,"parameters":self.parameters,"resultColumns":self.columns,"nativeRequirements":["genuine authenticated held source/caller/Subject/current cut","exact original static binding/profile/model/source correspondence","private relation producer/OID/ACL/type/encoding/collation correspondence","complete primary-eligible population before relational operations even when empty","actual per-use read/route/disclosure and exact separate action decisions","present uniform per-use domains and paired/cross-row key/transform/runtime scopes","native statement/result budgets and no partial public release","source/caller/current-cut revalidation, result/cell lineage and guarded decoding/release"]});
+        if let Some((columns, cells)) = &self.private {
+            value["version"] = json!("weft.postgresql.current-scalar/0.2-candidate");
+            value["privateResultColumns"] = columns.clone();
+            value["publicCellSources"] = cells.clone();
+        }
+        value
     }
 }
 struct Selected<'a> {
@@ -279,11 +286,21 @@ pub fn lower<'a>(
     }
     let raw = checked_json(binding_json).map_err(|_| fail())?;
     let binding: Binding = serde_json::from_value(raw.clone()).map_err(|_| fail())?;
+    if serde_json::to_value(&binding).map_err(|_| fail())? != raw {
+        return Err(fail());
+    }
+    lower_binding(context, binding, sha256(binding_json.as_bytes()), None)
+}
+fn lower_binding<'a>(
+    context: &'a CurrentQueryOperands<'a>,
+    binding: Binding,
+    binding_sha256: String,
+    row_keys: Option<BTreeMap<String, String>>,
+) -> Result<CurrentScalarSql<'a>> {
     let designation = context.designation();
     let original = designation.preparation();
     let plan = original.plan();
-    if serde_json::to_value(&binding).map_err(|_| fail())? != raw
-        || binding.version != "weft.postgresql.current-values/0.1-candidate"
+    if binding.version != "weft.postgresql.current-values/0.1-candidate"
         || binding.source_request_sha256 != sha256(original.source_request_json().as_bytes())
         || binding.designation_sha256 != sha256(designation.json().as_bytes())
         || binding.source_binding_sha256 != designation.binding_scope().sha256
@@ -291,6 +308,9 @@ pub fn lower<'a>(
         || binding.values.len() > 4096
         || plan.joins.len() > 8
     {
+        return Err(fail());
+    }
+    if row_keys.is_some() && plan.aggregate {
         return Err(fail());
     }
     let mut scans = BTreeMap::new();
@@ -304,12 +324,15 @@ pub fn lower<'a>(
             return Err(fail());
         }
         let alias = ident(&scan.scan)?;
-        let columns = binding
+        let mut columns = binding
             .values
             .iter()
             .filter(|v| v.scan == scan.scan)
             .map(|v| ident(&v.column))
             .collect::<Result<BTreeSet<_>>>()?;
+        if let Some(keys) = &row_keys {
+            columns.insert(ident(keys.get(&scan.scan).ok_or_else(fail)?)?);
+        }
         let select = if columns.is_empty() {
             "1 AS \"__wft_row\"".to_owned()
         } else {
@@ -321,6 +344,11 @@ pub fn lower<'a>(
             ident(&scan.relation.table)?,
             ident(&scan.relation.eligible_column)?
         ));
+    }
+    if row_keys.as_ref().is_some_and(|keys| {
+        keys.len() != scans.len() || keys.keys().any(|k| !scans.contains_key(k))
+    }) {
+        return Err(fail());
     }
     if scans.len() != 1 + plan.joins.len() {
         return Err(fail());
@@ -610,6 +638,35 @@ pub fn lower<'a>(
     if build.used.len() != expected.len() {
         return Err(fail());
     }
+    let private = if let Some(keys) = &row_keys {
+        let mut row_sql = Vec::new();
+        let mut scan_ids = Vec::new();
+        for source in std::iter::once(&plan.source).chain(plan.joins.iter().map(|j| &j.right)) {
+            let scan = &source.occurrence;
+            let key = keys.get(scan).ok_or_else(fail)?;
+            let literal = format!("'{}'", scan.replace('\'', "''"));
+            row_sql.push(format!(
+                "pg_catalog.jsonb_build_object('scan',{literal},'key',{}.{})",
+                ident(scan)?,
+                ident(key)?
+            ));
+            scan_ids.push(scan.clone());
+        }
+        output_sql.push(format!("pg_catalog.jsonb_build_object('version','weft.stage-row-tuple/0.1-candidate','rows',pg_catalog.jsonb_build_array({}))::pg_catalog.text AS \"__weft_source_rows\"",row_sql.join(",")));
+        let mut cells = Vec::new();
+        for (position, output) in plan.outputs.iter().enumerate() {
+            let app::Expression::Field { scan, identity } = &output.expression else {
+                return Err(fail());
+            };
+            cells.push(json!({"position":position,"sourcePath":format!("outputs/{position}/expression"),"scan":scan,"field":identity}));
+        }
+        Some((
+            json!([{"position":columns.len(),"name":"__weft_source_rows","purpose":"source-row-contribution","encoding":"jsonb-text:weft.stage-row-tuple/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256}]),
+            json!(cells),
+        ))
+    } else {
+        None
+    };
     let sql = format!(
         "WITH {} SELECT {} FROM {}{}{}{}{}{}",
         ctes.join(", "),
@@ -640,11 +697,88 @@ pub fn lower<'a>(
     }
     Ok(CurrentScalarSql {
         context,
-        binding_sha256: sha256(binding_json.as_bytes()),
+        binding_sha256,
         sql,
         parameters: build.parameters,
         columns,
+        private,
     })
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct RowRelation {
+    schema: String,
+    table: String,
+    eligible_column: String,
+    row_key_column: String,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct RowScan {
+    scan: String,
+    target: Identity,
+    relation: RowRelation,
+}
+#[derive(Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct RowBinding {
+    version: String,
+    source_request_sha256: String,
+    designation_sha256: String,
+    source_binding_sha256: String,
+    scans: Vec<RowScan>,
+    values: Vec<BindingValue>,
+}
+/// Nonaggregate current rows with private source contribution, never native admission.
+/// The host must validate private TEXT keys and keep the sideband from public release.
+pub fn lower_rows<'a>(
+    context: &'a CurrentQueryOperands<'a>,
+    binding_json: &str,
+) -> Result<CurrentScalarSql<'a>> {
+    if binding_json.len() > 4_000_000 {
+        return Err(fail());
+    }
+    let raw = checked_json(binding_json).map_err(|_| fail())?;
+    let binding: RowBinding = serde_json::from_value(raw.clone()).map_err(|_| fail())?;
+    if binding.version != "weft.postgresql.current-values/0.2-candidate"
+        || serde_json::to_value(&binding).map_err(|_| fail())? != raw
+    {
+        return Err(fail());
+    }
+    let mut keys = BTreeMap::new();
+    let mut scans = Vec::new();
+    for scan in binding.scans {
+        ident(&scan.relation.row_key_column)?;
+        if keys
+            .insert(scan.scan.clone(), scan.relation.row_key_column)
+            .is_some()
+        {
+            return Err(fail());
+        }
+        scans.push(Scan {
+            scan: scan.scan,
+            target: scan.target,
+            relation: Relation {
+                schema: scan.relation.schema,
+                table: scan.relation.table,
+                eligible_column: scan.relation.eligible_column,
+            },
+        });
+    }
+    lower_binding(
+        context,
+        Binding {
+            version: "weft.postgresql.current-values/0.1-candidate".into(),
+            source_request_sha256: binding.source_request_sha256,
+            designation_sha256: binding.designation_sha256,
+            source_binding_sha256: binding.source_binding_sha256,
+            scans,
+            values: binding.values,
+        },
+        sha256(binding_json.as_bytes()),
+        Some(keys),
+    )
 }
 
 #[cfg(test)]
@@ -657,13 +791,105 @@ mod tests {
         let r = request("mixed");
         let p = application_lineage::prepare(&r.to_string()).unwrap();
         let c = p.catalog();
-        let dto = c.scalar_descriptor_by_identity(&identity("salaryMaskLabel")).unwrap();
-        assert!(matches!(dto.shape, Shape::Scalar { logical_type } if logical_type.family == Family::String));
-        for id in [Identity { revision: "other".into(), ..identity("salaryMaskLabel") },
-                   Identity { module: "unselected".into(), ..identity("salaryMaskLabel") },
-                   identity("Resource"), identity("missing")] {
+        let dto = c
+            .scalar_descriptor_by_identity(&identity("salaryMaskLabel"))
+            .unwrap();
+        assert!(
+            matches!(dto.shape, Shape::Scalar { logical_type } if logical_type.family == Family::String)
+        );
+        for id in [
+            Identity {
+                revision: "other".into(),
+                ..identity("salaryMaskLabel")
+            },
+            Identity {
+                module: "unselected".into(),
+                ..identity("salaryMaskLabel")
+            },
+            identity("Resource"),
+            identity("missing"),
+        ] {
             assert!(c.scalar_descriptor_by_identity(&id).is_err());
         }
+    }
+    fn rows(r: &Value, edit: impl FnOnce(&mut Value)) -> Result<Value> {
+        let p = application_lineage::prepare(&r.to_string())?;
+        let d = current_query_designation::derive(&p)?;
+        let g = current_query_operands::derive(&d)?;
+        let mut b = binding(&g);
+        b["version"] = json!("weft.postgresql.current-values/0.2-candidate");
+        for scan in b["scans"].as_array_mut().unwrap() {
+            scan["relation"]["rowKeyColumn"] = json!("__native_row_key")
+        }
+        edit(&mut b);
+        lower_rows(&g, &b.to_string()).map(|sql| sql.json())
+    }
+    // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+    #[test]
+    fn private_row_contribution_is_separate_from_public_columns_and_preserves_v1() {
+        let r = request("mixed");
+        let old = run(&r, |_| {}).unwrap();
+        let out = rows(&r, |_| {}).unwrap();
+        assert_eq!(out["resultColumns"], old["resultColumns"]);
+        assert_eq!(out["parameters"], old["parameters"]);
+        assert_eq!(
+            out["version"],
+            "weft.postgresql.current-scalar/0.2-candidate"
+        );
+        assert_eq!(out["privateResultColumns"][0]["position"], old["resultColumns"].as_array().unwrap().len());
+        assert_eq!(out["privateResultColumns"][0]["scans"], json!(["s0"]));
+        assert_eq!(
+            out["publicCellSources"][0]["sourcePath"],
+            "outputs/0/expression"
+        );
+        assert_eq!(
+            out["publicCellSources"][0]["field"],
+            json!(identity("salary"))
+        );
+        let sql = out["sql"].as_str().unwrap();
+        assert!(sql.contains("pg_catalog.jsonb_build_object"));
+        assert!(sql.contains("\"s0\".\"__native_row_key\""));
+        assert!(old.get("privateResultColumns").is_none());
+        assert!(!old["sql"].as_str().unwrap().contains("__native_row_key"));
+        assert!(rows(&r, |b| {
+            b["scans"][0]["relation"]
+                .as_object_mut()
+                .unwrap()
+                .remove("rowKeyColumn");
+        })
+        .is_err());
+        assert!(rows(&r, |b| b["scans"][0]["relation"]["rowKeyColumn"] =
+            json!("bad\0key"))
+        .is_err());
+        assert!(rows(&r, |b| b["scans"][0]["relation"]["rowKeyColumn"] =
+            Value::Null)
+        .is_err());
+    }
+    // @covers US-009-AC2
+    #[test]
+    fn row_versions_and_legacy_unknown_keys_refuse(){
+        let r=request("mixed");
+        assert!(rows(&r,|b|b["version"]=json!("weft.postgresql.current-values/0.1-candidate")).is_err());
+        assert!(run(&r,|b|b["scans"][0]["relation"]["rowKeyColumn"]=json!("__native_row_key")).is_err());
+    }
+    // @covers US-009-AC1 @covers US-009-AC2
+    #[test]
+    fn joined_rows_retain_both_sources_and_aggregates_do_not_claim_contribution() {
+        let mut r = request("join");
+        assert!(rows(&r, |_| {}).is_err());
+        r["sql"] = json!("SELECT a.token FROM Resource a JOIN Resource b ON a.token=b.token");
+        let out = rows(&r, |_| {}).unwrap();
+        assert_eq!(out["privateResultColumns"][0]["scans"], json!(["s0", "s1"]));
+        assert_eq!(out["publicCellSources"][0]["scan"], "s0");
+        let sql = out["sql"].as_str().unwrap();
+        assert!(sql.contains("\"s1\".\"__native_row_key\""));
+        r["sql"] = json!("SELECT COUNT(*) FROM Resource a WHERE FALSE LIMIT 0");
+        assert!(rows(&r, |_| {}).is_err());
+        r["sql"] = json!("SELECT a.token FROM Resource a WHERE FALSE LIMIT 0");
+        assert!(rows(&r, |_| {}).unwrap()["sql"]
+            .as_str()
+            .unwrap()
+            .ends_with(" LIMIT 0"));
     }
     fn request(name: &str) -> Value {
         serde_json::from_str(match name{

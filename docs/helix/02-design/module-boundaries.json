@@ -1097,7 +1097,8 @@
             "fn:primary_action",
             "fn:binding_scope",
             "fn:original_action",
-            "fn:derive"
+            "fn:derive",
+            "fn:native_request_json"
           ],
           "pathReferences": []
         },
@@ -2336,7 +2337,8 @@
             "fn:columns",
             "fn:json_string",
             "fn:json",
-            "fn:lower"
+            "fn:lower",
+            "fn:lower_rows"
           ],
           "pathReferences": []
         },
@@ -3399,8 +3401,10 @@
             "struct:CurrentQueryPreparation",
             "fn:designation_json",
             "fn:operand_count",
+            "fn:native_request_json",
             "fn:is_from",
             "fn:lower_postgresql_scalar_candidate_json",
+            "fn:lower_postgresql_current_rows_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"

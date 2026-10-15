@@ -2371,3 +2371,69 @@ cut through execution, decoding and guarded result/cell release. Arbitrary
 caller-authored declarations can produce conditional SQL and are not admitted
 security requests. No current native issuer or protected backend support is
 claimed by this component. Original B-008 acceptance obligations remain open.
+
+
+#### Same-original native computation input and private row contribution
+
+`CurrentQueryPreparation.native_request_json()` takes no arguments and derives
+`weft.current-query.native-input/0.1-candidate` inside the actual Rust scoped
+consumer. It reads the original Catalog, Plan, typed operations and designation;
+it does not import the parent's diagnostic JSON or a caller ledger. The Python
+native entry checks its actual retained parent identity first. No constructor,
+plan/action/mode override or native permission is provided.
+
+The output contains version, authority:false, securityReady:false,
+sourceRequestSha256, designationSha256, original modelPins, binding, source pins,
+primaryAction, scans, projections, operations and routes. A scan has scan, full
+record identity and UMF type reference. A direct projection has original path,
+scan, full field identity and actual Catalog descriptor. Each operation retains
+path, operator (or null), kind, direction (asc/desc or null), boolean (or null),
+ordered operands and outputType (or null). Operand input distinguishes Field
+(scan, identity, logicalType, originalAction or null), literal (value string,
+logicalType), and parameter (name, value string, logicalType); each also retains
+its original operand path. These are original types, not effective read domains.
+
+Each route is the original shared visitor's exact UMF inspector argument object:
+scan, path, type, field, operator, operation and required (ordered capability
+array). No action or mode is injected into that UMF argument. Independent
+original-action designation remains attached to the actual Field operand.
+Primary eligibility, projection requirements and route selection stay distinct.
+The complete encoded packet is bounded to16MB. Native hosts must admit original
+installed source/caller/current context and retain the actual child through
+lowering; recomputable byte hashes and packet possession grant no permission.
+
+The separate `lower_postgresql_current_rows_candidate_json(binding)` accepts
+`weft.postgresql.current-values/0.2-candidate`. It preserves every closed0.1
+binding member, adding required rowKeyColumn to each relation. The native issuer
+must create a private builtin TEXT column with unique, nonnull, nonempty keys of
+at most256 UTF8 bytes, retaining an invocation-local mapping to original qualified
+resources, versions, routes/actions and disclosed cells. These opaque keys have
+no UMF key or public identifier meaning. The compiler quotes/selects this column;
+it cannot prove native constraints, completeness or mapping correctness.
+
+This path emits `weft.postgresql.current-scalar/0.2-candidate`. Public resultColumns
+and public values remain unchanged. SQL appends one private TEXT column named
+__weft_source_rows, encoding the exact object
+`{version:"weft.stage-row-tuple/0.1-candidate",rows:[{scan,key},...]}`.
+Every original scan appears once in typed source/join order; every key is its
+actual joined staged row's TEXT key. Duplicate public values retain their distinct
+source tuples. The carrier uses qualified PostgreSQL JSONB constructors and a
+text result cast; keys are never converted through floating point or truncated.
+
+Separate privateResultColumns declares its zero-based position after all public
+columns, name, purpose source-row-contribution, encoding
+jsonb-text:weft.stage-row-tuple/0.1-candidate, exact scan sequence and
+maxKeyUtf8Bytes:256. publicCellSources contains one entry per public direct field:
+position, sourcePath (outputs/i/expression), scan and full original field identity.
+ResultColumns independently retain effective domain, exposure and exact codec.
+The host MUST validate exact widths/OIDs, closed carrier members/version/scan
+sequence/key bounds, actual held key mappings and every public cell's contributor
+and disclosure before guarded release. It must consume private columns only in
+the held callback and never append them to public results or publish on failure.
+
+Only nonaggregate direct-field outputs, including inner joins, are admitted by
+this0.2 component. Grouping, COUNT and COUNT DISTINCT refuse, even FALSE/LIMIT0,
+until complete grouped bags of joined contributor tuples and aggregate cell
+checks are implemented. They remain required original scope. The0.1 path and
+registration behavior are unchanged;0.1 refuses the extra row key,0.2 refuses a
+0.1 binding. Neither path is a currently installed protected backend or permission.
