@@ -46,3 +46,21 @@ pub fn prepare_application_lineage_json(request:&str)->Result<String,wasm_bindge
 pub fn prepare_current_query_designations_json(request:&str)->Result<String,wasm_bindgen::JsValue>{
  weft_runtime::prepare_current_query_designations_json(request).map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
 }
+
+/// Host-installed action preparation. Compiles plans; grants no execution authority.
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub struct MutationCompiler {
+    registry: weft_runtime::MutationRegistry,
+}
+#[wasm_bindgen::prelude::wasm_bindgen]
+impl MutationCompiler {
+    #[wasm_bindgen::prelude::wasm_bindgen(constructor)]
+    pub fn new(configuration: &str) -> Result<MutationCompiler, wasm_bindgen::JsValue> {
+        let registry = weft_runtime::MutationRegistry::from_json(configuration)
+            .map_err(|d| wasm_bindgen::JsValue::from_str(&format!("{}: {}", d.code, d.message)))?;
+        Ok(Self { registry })
+    }
+    pub fn compile_json(&self, request: &str) -> String {
+        self.registry.compile_json(request)
+    }
+}

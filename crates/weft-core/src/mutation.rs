@@ -147,13 +147,19 @@ impl MutationRegistry {
                 "../../../spec/upstream/actions-plan/owner-pins.json"
             ))
             .expect("pinned build resource");
-            if prepared["producer"] != owner["producer"] {
+            let local = registration.pin["invocation"] == json!({"id":"umf.actions.local-tx","version":"1"});
+            let local_owner: Value = serde_json::from_str(include_str!(
+                "../../../spec/upstream/actions-plan-local/owner-pins.json"
+            )).expect("pinned local owner resource");
+            let expected_owner = if local { &local_owner } else { &owner };
+            if prepared["producer"] != expected_owner["producer"] {
                 return Err(fail(
                     "ACTION",
                     "action",
                     "Owner preparation build is not pinned by this compiler",
                 ));
             }
+            validate_local_bundle(&model, &registration.pin, local)?;
             exact(&prepared["schema"], &["id", "sha256"])?;
             text(&prepared["entityParameter"])?;
             validate_ref(&prepared["target"], true)?;
@@ -415,9 +421,34 @@ fn validate_action_pin(pin: &Value) -> MResult<()> {
     text(&pin["identity"]["module"])?;
     text(&pin["identity"]["action"])?;
     if !digest(&pin["documentSha256"])
-        || pin["invocation"] != json!({"id":"umf.actions.tx","version":"1"})
+        || (pin["invocation"] != json!({"id":"umf.actions.tx","version":"1"})
+            && pin["invocation"] != json!({"id":"umf.actions.local-tx","version":"1"}))
     {
         return Err(fail("INPUT", "input", "Original action pin refused"));
+    }
+    Ok(())
+}
+// Declaration correspondence only. No capability or execution authority is issued here.
+fn validate_local_bundle(model: &Value, pin: &Value, local: bool) -> MResult<()> {
+    let action = model["modules"].as_array().into_iter().flatten()
+        .filter(|m| m["id"] == pin["identity"]["module"])
+        .flat_map(|m| m["extensions"]["umf.actions"]["actions"].as_array().into_iter().flatten())
+        .filter(|a| a["id"] == pin["identity"]["action"]).collect::<Vec<_>>();
+    if action.len() != 1 { return Err(fail("ACTION","action","Unique original local action required")); }
+    let a = action[0];
+    if !local {
+        if a["attribution"]["profile"]["id"] == "umf.actions.local-owner"
+            || a["authorization"]["profile"]["id"] == "umf.actions.local-store-owner" {
+            return Err(fail("ACTION","action","Local source declarations cannot select native invocation"));
+        }
+        return Ok(());
+    }
+    let reads = a["reads"].as_array().ok_or_else(|| fail("ACTION","action","Original read frames required"))?;
+    let writes = a["writes"].as_array().ok_or_else(|| fail("ACTION","action","Original write frames required"))?;
+    let resources: Vec<Value> = reads.iter().chain(writes).map(|f| f["id"].clone()).collect();
+    if a["attribution"] != json!({"subject":"actor-profile","profile":{"id":"umf.actions.local-owner","version":"1"}})
+        || a["authorization"] != json!({"kind":"policy","profile":{"id":"umf.actions.local-store-owner","version":"1"},"resources":resources}) {
+        return Err(fail("ACTION","action","Complete original local actor/policy bundle required"));
     }
     Ok(())
 }

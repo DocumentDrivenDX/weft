@@ -29,3 +29,30 @@ r["sql"]=serde_json::json!("UPDATE Customer SET active=FALSE WHERE last_seen<:Cu
 for depth in [128,129]{r=request();r["sql"]=serde_json::json!(format!("UPDATE Customer SET active=FALSE WHERE {}last_seen<:cutoff{}","(".repeat(depth),")".repeat(depth)));assert_eq!(run(&r)["status"],if depth==128{"compiled"}else{"blocked"});}
 r=request();let atom=format!("{}last_seen<:cutoff{}","(".repeat(32),")".repeat(32));r["sql"]=serde_json::json!(format!("UPDATE Customer SET active=FALSE WHERE {}",vec![atom;64].join(" AND ")));assert_eq!(run(&r)["status"],"compiled");
 }
+
+#[test]
+fn original_local_preparation_compiles_without_crossing_native_producer() {
+    let fixture: Value = serde_json::from_str(include_str!("fixtures/local-products-input.json")).unwrap();
+    let registry = MutationRegistry::from_json(&fixture["configuration"].to_string()).unwrap();
+    let response: Value = serde_json::from_str(&registry.compile_json(&fixture["request"].to_string())).unwrap();
+    assert_eq!(response["status"], "compiled", "{response}");
+    let plan: Value = serde_json::from_str(response["plan"]["utf8"].as_str().unwrap()).unwrap();
+    assert_eq!(plan["action"]["invocation"]["id"], "umf.actions.local-tx");
+    assert_eq!(plan["inputs"]["assignments"][0]["value"]["string"], "Foo");
+    let mut crossed = fixture["configuration"].clone();
+    let mut preparation: Value = serde_json::from_str(crossed["actions"][0]["preparation"]["utf8"].as_str().unwrap()).unwrap();
+    let native: Value = serde_json::from_str(include_str!("../../spec/upstream/actions-plan/owner-pins.json")).unwrap();
+    preparation["producer"] = native["producer"].clone();
+    let bytes = preparation.to_string();
+    crossed["actions"][0]["preparation"]["utf8"] = bytes.clone().into();
+    crossed["actions"][0]["preparation"]["sha256"] = weft_core::json::sha256(bytes.as_bytes()).into();
+    assert!(MutationRegistry::from_json(&crossed.to_string()).is_err());
+    // A rewritten preparation cannot relabel unchanged local source as native.
+    let native_invocation = serde_json::json!({"id":"umf.actions.tx","version":"1"});
+    crossed["actions"][0]["pin"]["invocation"] = native_invocation.clone();
+    preparation["action"]["invocation"] = native_invocation;
+    let bytes = preparation.to_string();
+    crossed["actions"][0]["preparation"]["utf8"] = bytes.clone().into();
+    crossed["actions"][0]["preparation"]["sha256"] = weft_core::json::sha256(bytes.as_bytes()).into();
+    assert!(MutationRegistry::from_json(&crossed.to_string()).is_err());
+}
