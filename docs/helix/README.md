@@ -1,10 +1,10 @@
 # Weft specification index
 
 Unreleased Python 0.4.31 extends the existing Truss backend 0.4.35 guard to
-native runtime 0.65 and 0.66, preserving the original binding release ID and
+native runtime 0.65, 0.66 and 0.67, preserving the original binding release ID and
 digest. Query/layout semantics are unchanged. The same allowlist applies to
-mutation selection registration. Native 0.67 and older-backend mismatches remain
-refused. This compatibility change adds no key encoder; Truss 0.66 derives keys
+mutation selection registration. Native 0.68 and older-backend mismatches remain
+refused. This compatibility change adds no key encoder; Truss 0.67 derives keys
 in PostgreSQL. Public compiler guard tests and actual Truss 0.66 backfill/query
 execution pass locally on PostgreSQL 18.6; release CI remains unrun.
 

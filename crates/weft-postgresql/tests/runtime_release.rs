@@ -21,11 +21,11 @@ fn request(release: &str, backend: &str) -> Value {
 
 #[test]
 fn owned_runtime_accepts_only_qualified_releases() {
-    for release in ["truss-catalog-runtime/0.65-candidate", "truss-catalog-runtime/0.66-candidate"] {
+    for release in ["truss-catalog-runtime/0.65-candidate", "truss-catalog-runtime/0.66-candidate", "truss-catalog-runtime/0.67-candidate"] {
         let response: Value = serde_json::from_str(&weft_postgresql::truss_runtime::compile_json(&request(release,"0.4.35").to_string())).unwrap();
         assert_eq!(response["status"], "compiled", "{release}: {response}");
     }
-    for (release, backend) in [("truss-catalog-runtime/0.67-candidate","0.4.35"), ("truss-catalog-runtime/0.64-candidate","0.4.35"), ("truss-catalog-runtime/0.66-candidate","0.4.34")] {
+    for (release, backend) in [("truss-catalog-runtime/0.68-candidate","0.4.35"), ("truss-catalog-runtime/0.64-candidate","0.4.35"), ("truss-catalog-runtime/0.66-candidate","0.4.34")] {
         let response: Value = serde_json::from_str(&weft_postgresql::truss_runtime::compile_json(&request(release,backend).to_string())).unwrap();
         assert_ne!(response["status"], "compiled", "{release}/{backend}: {response}");
         assert!(response.get("sql").is_none(), "{response}");
@@ -36,7 +36,7 @@ fn owned_runtime_accepts_only_qualified_releases() {
 fn page_and_mutation_admission_keep_original_release_identity() {
     use weft_core::mutation::Artifact;
     use weft_postgresql::truss_mutation::CurrentTrussMutationBackend;
-    for (release, accepted) in [("truss-catalog-runtime/0.65-candidate", true), ("truss-catalog-runtime/0.66-candidate", true), ("truss-catalog-runtime/0.67-candidate", false), ("truss-catalog-runtime/0.64-candidate", false)] {
+    for (release, accepted) in [("truss-catalog-runtime/0.65-candidate", true), ("truss-catalog-runtime/0.66-candidate", true), ("truss-catalog-runtime/0.67-candidate", true), ("truss-catalog-runtime/0.68-candidate", false), ("truss-catalog-runtime/0.64-candidate", false)] {
         let mut r = request(release, "0.4.35");
         r.as_object_mut().unwrap().remove("readProfile");
         r["sql"] = json!("SELECT r.* FROM Record r");
