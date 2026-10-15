@@ -1880,3 +1880,56 @@ they do not establish native population completeness, source truth, original
 operand capture, current authority, authenticated Subject or guarded publication.
 This binding increment promotes no original backend case and does not activate
 public security compilation. Native enforcement and full B-008 remain open.
+
+
+### Original AST query property candidate — 2026-10-15
+
+The separate `security_mapping_transport::prepare_security_query_properties`
+function and `weft-core` example `security_query_properties` consume the existing
+closed original mapping request and emit `weft.security.query-properties/0.1-candidate`.
+The closed schema is `security-query-properties-v0.1-candidate.schema.json`.
+No existing QueryUse, mapping handoff, candidate SQL or registered compiler wire
+is extended or reinterpreted. The report has securityReady:false and authority:false.
+
+Each actual resolved expression position retains its path, scan occurrence,
+qualified target/Field, original revision-qualified Field identity and logical
+type. Equal predicates and both sides of join equality require equality;
+lexicographic comparisons and ordering require order; grouping requires equality.
+Equal-valued or repeated Field expressions remain distinct occurrences. Hidden
+Fields used only by filters/order/join/group remain dependencies. Source scans
+survive field-free COUNT(*); contradictory predicates do not erase dependencies.
+Directed one-hop relationship terminal keys derive equality at their own tN scan
+when the owner invokes derive with an admitted relationship context.
+
+SUM retains actual argument/output numeric type and the resolved mode/action,
+but required:null/propertyStatus:unsupported. No numeric transform property is
+invented or classified as equality. The actual legacy mode and originalAction
+are marked modeSource:legacy-ontology-query-profile. Full exact source capsule,
+SQL, source/query hashes and pins retain their provenance. This report does not
+resolve the current UMF catalog, canonical stored Field or storageTransform:
+the original catalog/owner consumer must resolve those independently. A selected
+compatible transform property never supplies a read/native permit.
+
+Derivation refuses missing original requirements and stale identities; caller
+property lists, paths, modes or actions are not accepted inputs. Work retains at
+most4096 dependency occurrences with a conservative text charge and16MB final
+serialized report ceiling. The ceiling is an endpoint/output bound, not a
+preallocation, CPU or whole-compiler resource theorem. Existing4MB request and
+source admission limits remain. JSON facets remain opaque original type content.
+
+Actual parser refusal of COUNT(DISTINCT), LIMIT0 and WHERE FALSE remains explicit
+in this first candidate. They require language/IR and null/duplicate/zero-result
+conformance, with no optimization that bypasses permissions. Numeric SUM rules,
+current catalog/storage-transform source consumption, effective disclosure and
+original action/current-authority/native before-dispatch checks remain required.
+This component does not close P03/B08, promote an original native case, change
+any case assertion/allocation, or activate protected execution.
+
+
+Current-source dependency: this first report requires original legacy0.1 ontology/
+query-profile admission. Current UMF catalog/ontology0.2 source bytes must never be
+rewritten into a synthetic legacy policy to obtain this context. A later explicit
+current-source admission or policy-independent application-AST lineage surface
+must derive requirements from the actual current query/model, retain unknown
+source bytes and omit unestablished modes/actions. This report does not establish
+current catalog compatibility by carrying a legacy-source mode label.

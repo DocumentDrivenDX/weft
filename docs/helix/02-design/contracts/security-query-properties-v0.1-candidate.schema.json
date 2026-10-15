@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:security:query-properties:0.1-candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.security.query-properties/0.1-candidate"
+    },
+    "securityReady": {
+      "const": false
+    },
+    "authority": {
+      "const": false
+    },
+    "sourceContextJson": {
+      "type": "string",
+      "maxLength": 16000000
+    },
+    "sourceContextSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "queryContextSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "sql": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "sqlSha256": {
+      "$ref": "#/$defs/hash"
+    },
+    "scans": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 256,
+      "propertyNames": {
+        "pattern": "^[st][0-9]+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/ref"
+      }
+    },
+    "uses": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "scan": {
+            "type": "string",
+            "pattern": "^[st][0-9]+$"
+          },
+          "type": {
+            "$ref": "#/$defs/ref"
+          },
+          "field": {
+            "$ref": "#/$defs/ref"
+          },
+          "fieldIdentity": {
+            "$ref": "#/$defs/identity"
+          },
+          "logicalType": {
+            "$ref": "#/$defs/logicalType"
+          },
+          "operator": {
+            "enum": [
+              "predicate",
+              "join",
+              "group",
+              "order",
+              "aggregate"
+            ]
+          },
+          "operation": {
+            "enum": [
+              "equal",
+              "lexicographicGreater",
+              "group",
+              "order",
+              "hasRelatedKey",
+              "sum"
+            ]
+          },
+          "required": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "enum": [
+                    "equality",
+                    "order"
+                  ]
+                }
+              }
+            ]
+          },
+          "mode": {
+            "enum": [
+              "disclosed",
+              "original-authorized"
+            ]
+          },
+          "modeSource": {
+            "const": "legacy-ontology-query-profile"
+          },
+          "propertyStatus": {
+            "enum": [
+              "derived",
+              "unsupported"
+            ]
+          },
+          "originalAction": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "outputType": {
+            "$ref": "#/$defs/logicalType"
+          }
+        },
+        "required": [
+          "path",
+          "scan",
+          "type",
+          "field",
+          "fieldIdentity",
+          "logicalType",
+          "operator",
+          "operation",
+          "required",
+          "mode",
+          "modeSource",
+          "propertyStatus"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "original-authorized"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "originalAction"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "originalAction"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "sum"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "operator": {
+                  "const": "aggregate"
+                },
+                "required": {
+                  "type": "null"
+                },
+                "propertyStatus": {
+                  "const": "unsupported"
+                }
+              },
+              "required": [
+                "outputType"
+              ]
+            },
+            "else": {
+              "properties": {
+                "propertyStatus": {
+                  "const": "derived"
+                }
+              },
+              "not": {
+                "required": [
+                  "outputType"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "equal",
+                    "group",
+                    "hasRelatedKey"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "required": {
+                  "const": [
+                    "equality"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "lexicographicGreater",
+                    "order"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "required": {
+                  "const": [
+                    "order"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "expression": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "field"
+                  },
+                  "scan": {
+                    "type": "string"
+                  },
+                  "identity": {
+                    "$ref": "#/$defs/identity"
+                  }
+                },
+                "required": [
+                  "op",
+                  "scan",
+                  "identity"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "count"
+                  },
+                  "type": {
+                    "$ref": "#/$defs/logicalType"
+                  }
+                },
+                "required": [
+                  "op",
+                  "type"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "sum"
+                  },
+                  "argument": {
+                    "type": "object",
+                    "properties": {
+                      "scan": {
+                        "type": "string",
+                        "pattern": "^[st][0-9]+$"
+                      },
+                      "identity": {
+                        "$ref": "#/$defs/identity"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/logicalType"
+                      },
+                      "span": {
+                        "type": "object",
+                        "properties": {
+                          "start": {
+                            "type": "integer",
+                            "minimum": 0
+                          },
+                          "end": {
+                            "type": "integer",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "start",
+                          "end"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "required": [
+                      "scan",
+                      "identity",
+                      "type",
+                      "span"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "type": {
+                    "$ref": "#/$defs/logicalType"
+                  }
+                },
+                "required": [
+                  "op",
+                  "argument",
+                  "type"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "expression"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "version",
+    "securityReady",
+    "authority",
+    "sourceContextJson",
+    "sourceContextSha256",
+    "queryContextSha256",
+    "sql",
+    "sqlSha256",
+    "scans",
+    "uses",
+    "outputs"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "moduleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "elementId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "moduleId",
+        "elementId"
+      ],
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "documentId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "element": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        }
+      },
+      "required": [
+        "documentId",
+        "revision",
+        "module",
+        "element"
+      ],
+      "additionalProperties": false
+    },
+    "logicalType": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "enum": [
+            "boolean",
+            "string",
+            "integer",
+            "decimal"
+          ]
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "facets": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "family",
+        "nullable",
+        "facets"
+      ],
+      "additionalProperties": false
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}
