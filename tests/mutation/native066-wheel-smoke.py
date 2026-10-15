@@ -32,3 +32,22 @@ refused = json.loads(compiler.lower_selection_json(handle, json.dumps({
     'binding': binding, 'maxItems': 2})))
 assert refused['status'] == 'blocked', refused
 print('Installed wheel: original native65/native66 mutation registration and lowering passed')
+
+# Compiler-only compatibility fixture: native67 retains this physical layout.
+# This does not claim original native67 execution or caller authority.
+for digest, expected in (('8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee', 'lowered'), ('0' * 64, 'blocked')):
+    compatible = json.loads(fixture['binding']['utf8'])
+    compatible['releaseId'] = 'truss-catalog-runtime/0.67-candidate'
+    compatible['releaseSha256'] = digest
+    raw = json.dumps(compatible)
+    binding = {'mediaType': 'application/json', 'utf8': raw, 'sha256': hashlib.sha256(raw.encode()).hexdigest()}
+    handle = compiler.register_truss_selection(json.dumps({
+        'model': fixture['model'], 'modelPin': fixture['modelPin'],
+        'binding': binding, 'evidence': ['Compiler-only native67 compatibility; no native execution or authority claim']}))
+    result = json.loads(compiler.lower_selection_json(handle, json.dumps({
+        'selection': fixture['selection'], 'model': fixture['model'], 'binding': binding, 'maxItems': 2})))
+    assert result['status'] == expected, result
+    if expected == 'lowered':
+        assert 'runtime0.67' in result['obligations'][0]
+        assert result['parameters'][0]['value'] == {'string': 'bar'}
+print('Installed wheel: compiler-only native67 lowering and exact manifest refusal passed')
