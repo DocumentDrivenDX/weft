@@ -427,3 +427,34 @@ module-boundary and governed-spec verification recorded separately. These checks
 prove original operand custody only; they execute no current protected SQL and
 promote none of the original132 shared/native cases. Per-use effective domains,
 paired/cross-row runtime scopes and genuine native admission/release remain open.
+
+### Pinned UMF route interoperability — 2026-10-15
+
+`tests/current-query-designation/value-route-conformance.ts` executes the exact
+committed Weft lineage/designation producer images against UMF's reviewed source-
+route inspector at commitc57d283ece30326bcb06607ca5d2384fc69ddef4. The test pins both
+producer hashes and the complete1683-file src/spec/package/lock source inventory,
+rejects extra source files and checks all source bytes before and after execution.
+Use an exported original source tree matching `umf-source-manifest.json`, with
+locked dependencies available separately. The observed embedding is Bun1.4.2 on
+macOSarm64; the pinned CLI images are platform-specific evidence, not a universal
+binary-build claim.
+
+Fifty-one controls pass:10 original occurrences (including explicit unsupported
+SUM),36 closed-shape mode/action/authority override refusals, and5 joint-constraint/
+missing-designation/direction-context controls. Each inspected route retains its
+exact compiler path, scan, target, Field identity, operator, operation and required
+properties. Original policy read/membership conditions and full core domain
+identities/declarations must match. The salary read DTO remains String while its
+hidden predicate retains original Integer meaning; token queries retain the live
+stored opaque Field and nonselectable pre-storage input. Conflicting/prohibited
+modes and missing per-use actions cannot become permission defaults.
+
+`provenance-refusals.py` adds4 actual pre-import refusals: unqualified producer,
+modified source bytes, extra source file and changed source manifest. No partial
+report is written. Temporary counterfactual source copies are removed. Mode-source
+mutations are diagnostic counterfactuals, not accepted policy revisions. Neither
+inspection nor these tests activate a branch, evaluate current permissions, emit
+protected SQL or qualify native admission. The original132-case completion gate remains
+open; individual statuses do not change. Evidence:
+`../../04-build/evidence/current-route-interoperability-20261015/receipt.json`.

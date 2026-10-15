@@ -2053,3 +2053,24 @@ lower through the separately admitted native consumer. Logical family equality
 alone is insufficient for protected comparison/group/distinct across rows. Exact
 runtime key/transform scope, real current source/caller/Subject cut, complete
 resource-dependent action preflight and guarded result release remain mandatory.
+
+### Pinned current-source route interoperability — 2026-10-15
+
+B-008 remains open under all original132 shared/native obligations. The actual
+Weft issued lineage/designation images now interoperate with UMF's committed
+c57d283 source-route inspector under exact source/producer pins. The full1683-file
+src/spec/package/lock inventory is checked before/after; source overlays and earlier
+unqualified producers refuse. Fifty-one correspondence/constraint controls and4
+additional provenance refusals pass. Conditions, use identities, domains and
+read-versus-hidden-original meanings are retained. Unsupported SUM remains
+unsupported. See `evidence/current-route-interoperability-20261015/receipt.json`.
+
+This is source/conditional-route interoperability only. It does not select runtime
+branches, authorize an original action or produce native protected SQL. Next add
+Python `prepare_current_query()` on the actual immutable original preparation,
+retaining that same object and shared Rust context while deriving designation and
+typed operand ledger together. Native consumers must use the issued object's
+actual context, not import report/plan JSON as authority. UMF's next runtime route
+activation and Truss's held caller/Subject/source/current-cut issuer remain separate
+unmet implementation gates. The concurrent local mutation/binding cohort is
+preserved and cannot substitute for this native security path.

@@ -1,0 +1,27 @@
+{
+  "scope": "Actual pre-import provenance refusals; no report/native authority",
+  "controls": 4,
+  "temporaryCopiesRemoved": true,
+  "checks": [
+    {
+      "id": "unqualified-producer",
+      "refusedBeforeReport": true,
+      "diagnosticMatched": true
+    },
+    {
+      "id": "source-drift",
+      "refusedBeforeReport": true,
+      "diagnosticMatched": true
+    },
+    {
+      "id": "extra-source",
+      "refusedBeforeReport": true,
+      "diagnosticMatched": true
+    },
+    {
+      "id": "manifest-drift",
+      "refusedBeforeReport": true,
+      "diagnosticMatched": true
+    }
+  ]
+}
