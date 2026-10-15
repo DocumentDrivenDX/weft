@@ -84,4 +84,12 @@ class ConfigurationTests(unittest.TestCase):
  def test_timeout_terminates_boundedly(self):
   result=run([sys.executable,'-c','import time;time.sleep(20)'],self.root,os.environ.copy(),.1)
   self.assertTrue(result.timed_out);self.assertLess(result.duration_ms,3100)
+ def test_real_mutation_targets_remain_unique(self):
+  from reliability.mutations import cases
+  repository=pathlib.Path(__file__).resolve().parents[2]
+  for name,file,before,after,_,_ in cases:
+   with self.subTest(mutation=name):
+    original=(repository/file).read_text()
+    self.assertEqual(original.count(before),1)
+    self.assertNotEqual(apply_mutation(original,before,after),original)
 if __name__=='__main__':unittest.main()
