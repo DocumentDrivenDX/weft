@@ -415,3 +415,32 @@ semantics and refuse operand/domain/key/runtime incompatibility. Retaining model
 plan allocations extends their lifetime to the preparation's lifetime; hosts
 must account for the number/lifetime of held preparations. Report/input bounds
 remain endpoint/component bounds rather than a process-wide heap theorem.
+
+## Source-bound current-query designation implementation
+
+CONTRACT-006 defines the independent current profile/artifact. New core module
+current_query_designation borrows the original Catalog/Plan/directions/request
+from ApplicationLineage; it never resolves a second SQL AST. Exact profile/source
+linkage, actual Record/Field membership, complete purpose declarations and unique
+Field/operator mappings precede issue. The shared operation visitor produces
+per-occurrence action requirements. The runtime/Python object and WASM function
+reuse that same issuer under application-lineage-candidate; default release
+features stay separate. Update core/runtime/python/wasm inventories and run
+bun run modules:check before integration.
+
+This introduces only a bounded Rust interpretation of action-purpose declarations
+for Weft's owned operation roles. Verify it against original UMF purpose checking
+and preserve narrower identifier limits. It does not implement mode composition,
+policy evaluation, storage effects, effective values or native authority. The
+UMF callable needed next is a private source-derived per-use route inspection over
+its original program/owner plus issued Field/operator requirements; it should
+report applicable route/domain/scope conditions without minting a Weft designation
+or caller-selected permission. Native registration then supplies actual effective
+source/domain and paired-key/runtime evidence for the separately versioned lowerer.
+
+Formal-methods scope: this slice binds symbols/occurrences and validates bounded
+sets, with original-owner differential and mutation controls. It adds no transform
+or relational algebra theorem; existing conditional source/value and native proof
+obligations remain open. Do not substitute this structural evidence for SQL/native
+refinement. Rollback disables the new profile/issuer, preserving original0.1/0.2
+lineage bytes and old registrations' refusals.

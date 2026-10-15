@@ -361,3 +361,23 @@ not lowering the new typed0.2 Plan. A future current-native lowerer must consume
 that exact issued context and per-use effective descriptors directly. Native source
 preparations may contain private host inputs; releasing those reports is outside
 the guarded result contract and must remain prohibited in the actual adapter.
+
+## Current-query designation verification
+
+New core current_query_designation tests and tests/current-query-designation
+cite US-009-AC1/2/3. Seven original committed UMF query-value source requests must
+issue exact action paths: salary predicate and token order designate their own
+actions; other operators retain null designation. Original integer salary model/
+plan descriptors remain unchanged despite its separate masked String DTO.
+
+Reject unrelated read/update/reverse/vault/unknown actions, missing/duplicate/
+unknown/incompatible purpose declarations, mixed legacy profile versions, wrong
+source/model/binding pins, missing/duplicate selected source roles, duplicate
+bindings, nonmember standalone DTO references and caller mode/action/AST additions.
+False/zero output retains hidden requirements; empty bindings never grant a mode.
+The original UMF purpose checker independently compares known-subset role outcomes,
+including an action whose spelling is unrelated to its declared purpose. Record
+original owner/binary/source pins and distinguish purpose compatibility from whole
+policy admission. Native Python and actual Chromium compare exact issued bytes and
+refusal behavior, while all prior lineage/property/mapping/availability outputs
+stay exact. Native P03/B08, current authority and all132 backend cases remain open.

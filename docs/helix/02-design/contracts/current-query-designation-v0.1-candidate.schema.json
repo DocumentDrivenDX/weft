@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:current-query-designation-v0.1-candidate",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "weft.current-query.designation/0.1-candidate"
+    },
+    "authority": {
+      "const": false
+    },
+    "securityReady": {
+      "const": false
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "sourceProfileJson": {
+      "type": "string",
+      "maxLength": 4000000
+    },
+    "sourceProfileSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "modelPins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "umfVersion": {
+            "const": "0.8.0"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "documentId",
+          "revision",
+          "umfVersion",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "binding": {
+      "type": "object",
+      "properties": {
+        "backendId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "backendVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "targetProfile": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 4096
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "documentId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "revision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            }
+          },
+          "required": [
+            "documentId",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "backendId",
+        "backendVersion",
+        "targetProfile",
+        "source",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "enum": [
+              "policy",
+              "ontology",
+              "catalog",
+              "owner"
+            ]
+          },
+          "identity": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision"
+            ],
+            "additionalProperties": false
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "role",
+          "identity",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "primaryAction": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "primaryActionRequiredPurpose": {
+      "const": "read"
+    },
+    "originalActionRequiredPurpose": {
+      "const": "original-authorized"
+    },
+    "uses": {
+      "type": "array",
+      "maxItems": 4096,
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "scan": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "moduleId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "elementId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "moduleId",
+              "elementId"
+            ],
+            "additionalProperties": false
+          },
+          "field": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "moduleId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "elementId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "moduleId",
+              "elementId"
+            ],
+            "additionalProperties": false
+          },
+          "fieldIdentity": {
+            "type": "object",
+            "properties": {
+              "documentId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "revision": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "element": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              }
+            },
+            "required": [
+              "documentId",
+              "revision",
+              "module",
+              "element"
+            ],
+            "additionalProperties": false
+          },
+          "operator": {
+            "enum": [
+              "predicate",
+              "order",
+              "group",
+              "join",
+              "aggregate"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "originalAction": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "scan",
+          "target",
+          "field",
+          "fieldIdentity",
+          "operator",
+          "operation",
+          "originalAction"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      }
+    }
+  },
+  "required": [
+    "version",
+    "authority",
+    "securityReady",
+    "sourceRequestSha256",
+    "sourceProfileJson",
+    "sourceProfileSha256",
+    "modelPins",
+    "binding",
+    "sources",
+    "primaryAction",
+    "primaryActionRequiredPurpose",
+    "originalActionRequiredPurpose",
+    "uses",
+    "unresolved"
+  ],
+  "additionalProperties": false
+}

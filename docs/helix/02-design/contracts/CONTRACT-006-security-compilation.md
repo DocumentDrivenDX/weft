@@ -2170,3 +2170,75 @@ may be included in ordinary query responses or unguarded diagnostics. The native
 host releases only the separately checked query result under its current release
 obligations. Test fixtures containing logical-cut bytes are source-correspondence
 evidence, not a protocol that permits returning private facts to an ordinary caller.
+
+## Current-source original-use designation candidate
+
+The separate profile version is weft.current-query.designation-profile/0.1-candidate;
+the issued artifact is weft.current-query.designation/0.1-candidate. Their closed
+schemas are current-query-designation-profile-v0.1-candidate.schema.json and
+current-query-designation-v0.1-candidate.schema.json. These are not aliases for
+legacy security.query-profile0.1 or its0.2 relationship extension.
+
+The original0.2 source request retains exactly one application/json opaque source
+for each selected role: query-designation, native-binding, policy, ontology,
+catalog and owner. The profile source identity matches its id/revision; its
+modelPins equal the actual Catalog pins. Sources bind the four original semantic
+source roles by identity/revision/byte SHA. Binding scope binds backend ID/version,
+target profile and the exact native-binding source identity/bytes. These hashes
+prove local correspondence only. No source body loads an executable backend.
+
+| Profile member | Rules |
+| --- | --- |
+| version/id/revision | Exact new version; id/revision1..4096 UTF8 bytes. |
+| modelPins | Exact ordered owning core0.8 pins. |
+| sources | Exactly policy/ontology/catalog/owner, each once, matching original source bytes/identity. |
+| binding | Exact backendId/backendVersion/targetProfile and native-binding source identity/SHA. This does not admit its physical layout. |
+| targets | Unique actual Record references, covering every original query scan;1..1024 entries. |
+| primaryAction | An exact declared read-purpose action. |
+| bindings | At most4096 unique target/Field/operator→originalAction entries; each Field belongs to that Record and each action is distinct from primaryAction with declared original-authorized purpose. |
+
+The issuer consumes the actual immutable preparation. It reuses the original
+operation traversal, preserving scan/path/Field/operator occurrences and operation
+names, including selfjoin sides, hidden uses, COUNT DISTINCT and zero/false source
+duties. A binding attaches its exact originalAction to each matching occurrence.
+No match yields originalAction:null, never implicit disclosure or permission.
+Projection read/disposition requirements remain separate. Relationship observation
+designation is unsupported in this first candidate and refuses; no legacy fallback.
+
+The issuer checks only the bounded action/purpose subset of original ontology0.2:
+exact source identity/version, exhaustive unique action-purpose closure, known
+purposes and the owning-operation distinctness rules. The full UMF source/model/
+ontology/policy/catalog/storage admission remains unresolved and mandatory. Its
+source subset bounds every action ID to4096 UTF8 bytes and256 actions. This is
+stricter than UMF's UTF16 identifier ceiling for some long Unicode IDs; it is not
+universal ontology support. Missing/unknown/incomplete purpose closure refuses.
+Names do not select purpose, and grants do not supply absent purpose declarations.
+
+The output retains exact profile JSON/SHA, original request SHA, model/binding/
+source scope and per-use designations. It always has authority:false and
+securityReady:false, with explicit unresolved whole-source semantics, joint query
+modes, per-use effective/native value scope and current authority/release. Neither
+ontology nor catalog modes are selected by this Weft profile. UMF must compose
+applicable modes and effective value routes from its original source program;
+conflicting/absent/unknown selected meaning cannot be overwritten by a designation.
+Selected original-authorized routes require the exact issued action and separate
+current permission. Disclosed routes cannot be upgraded by property compatibility.
+
+Core current_query_designation::derive(&ApplicationLineage) returns an immutable
+object tied to that original preparation. Native Python's opt-in preparation
+method current_query_designations_json() accepts no profile/mode/action override;
+WASM prepare_current_query_designations_json(request) calls the same factory.
+Their success is exact report JSON; refusal uses the existing diagnostic exception
+surface. WFT-CURRENT-QUERY-DESIGNATION refuses invalid source/profile linkage,
+unknown/missing actions/purposes, duplicate bindings, invalid membership, unsupported
+relationship designation or exhausted budgets, with no partial output. Existing
+request4MB/report16MB bounds apply;4096 derived uses share an8MB serialized-use
+budget. This is a component ledger, not a process-wide heap/CPU proof.
+
+Native consumers MUST bind the original private issuer invocation and approved
+profile/source/registration at a live same-store cut. Caller replacement of the
+entire profile, a rehashed source, an action name or this report is not an approved
+registration. Native caller/Subject/current authority, complete preflight, effective
+value domains, exact paired key/runtime scope and guarded release remain required.
+No SQL is emitted and no original132-case entry is promoted by this candidate.
+The source/report may retain private host metadata and must remain host-private.

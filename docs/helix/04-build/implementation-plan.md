@@ -1976,3 +1976,30 @@ JSON controls after composing those exact peer sources; workspace all-target
 checking is retained separately. The8 ordinary-native controls remain qualified
 to the earlier0.4.30 image and its frozen SDK, rather than being relabeled as a
 fresh0.4.31 SDK qualification. No current/native protection claim follows.
+
+### Current-source original-action designation — 2026-10-15
+
+B-008 remains open. The separate `weft.current-query.designation-profile/0.1-candidate`
+now binds the original typed preparation, source/model/binding bytes and exact
+per-occurrence original-authorized actions. Read, update, reverse and undeclared
+actions cannot substitute. Missing designation remains unresolved rather than a
+permission default. The source fixture is UMF92f228e's unchanged current query-value
+source. Weft authors the designation independently of owner authoring-intent fields.
+The profile/report are separate from every existing backend registration and the
+legacy relationship profile; HasRelated designation currently refuses.
+
+Evidence: `evidence/current-query-designation-20261015/receipt.json`. All305 core
+tests,17 original UMF-purpose correspondence controls,12 CLI correspondence/refusal
+controls,18 installed Python-wheel designation controls and12 actual Chromium/WASM
+controls pass. The existing31 immutable-object and16 Python JSON controls pass.
+Workspace all-targets, module boundaries and governed-spec checks pass. The local
+wheel is an unpublished development build with the unchanged0.4.31 version; it does
+not replace the published release. No native/security execution claim follows.
+
+Next integrate UMF's original-source joint mode/effective-value route semantics
+with this issued designation and retained original typed context, then implement
+the separately registered native lowering/consumer path. Read disclosure, hidden
+original use and primary row eligibility must remain distinct. Actual authenticated
+caller/source/Subject/current-authority admission, paired runtime scopes and guarded
+result release remain required. All original132 shared/native backend cases remain
+in scope; the expanded UMF gate stays45 accepted/113 unimplemented/158 required.

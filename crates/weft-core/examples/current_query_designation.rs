@@ -1,0 +1,3 @@
+//! Source-bound designation only. No policy decision, SQL or native authority.
+use std::io::{Read,Write};
+fn main(){let mut raw=Vec::new();let result=std::io::stdin().take(4_000_001).read_to_end(&mut raw).map_err(|_|"WFT-CURRENT-QUERY-DESIGNATION".to_owned()).and_then(|_|std::str::from_utf8(&raw).map_err(|_|"WFT-CURRENT-QUERY-DESIGNATION".to_owned())).and_then(|raw|{let p=weft_core::application_lineage::prepare(raw).map_err(|d|format!("{}: {}",d.code,d.message))?;weft_core::current_query_designation::derive(&p).map(|d|d.json().to_owned()).map_err(|d|format!("{}: {}",d.code,d.message))});match result{Ok(s)=>{if std::io::stdout().write_all(s.as_bytes()).is_err(){std::process::exit(1)}},Err(e)=>{let _=writeln!(std::io::stderr(),"{e}");std::process::exit(1)}}}

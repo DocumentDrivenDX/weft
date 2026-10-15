@@ -558,6 +558,7 @@ pub struct ApplicationLineagePreparation{inner:weft_core::application_lineage::A
 impl ApplicationLineagePreparation{
  pub fn json(&self)->&str{self.inner.json()}
  pub fn source_request_json(&self)->&str{self.inner.source_request_json()}
+ pub fn current_query_designations_json(&self)->weft_core::error::Result<String>{weft_core::current_query_designation::derive(&self.inner).map(|d|d.json().to_owned())}
 }
 #[cfg(all(test,feature="application-lineage-candidate"))]
 mod application_lineage_bridge_tests{
@@ -571,4 +572,10 @@ mod application_lineage_bridge_tests{
   }
   for bad in ["{}".to_owned()," ".repeat(4_000_001)]{assert!(super::prepare_application_lineage_json(&bad).is_err());}
  }
+}
+
+/// Source-bound original-action designation only; no query mode or native permit.
+#[cfg(feature="application-lineage-candidate")]
+pub fn prepare_current_query_designations_json(request:&str)->weft_core::error::Result<String>{
+ prepare_application_lineage(request)?.current_query_designations_json()
 }

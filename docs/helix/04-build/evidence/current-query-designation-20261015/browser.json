@@ -1,0 +1,62 @@
+{
+  "scope": "Real Chromium current designation WASM bridge; no mode, SQL or current authority",
+  "browser": "151.0.7922.34",
+  "wasmSha256": "14bc56d001565cd0da93c1a95a510d3b489f64d6888da861d3216cd5ad752c06",
+  "jsSha256": "3a1090f2d45f8dd3fc15850242f04ebfac8c8ef8200c25ea7d4a43484f8d5965",
+  "checks": [
+    {
+      "id": "current-query-designation:disclosed-token-equality.request.json",
+      "reportSha256": "559db129327d22d5f1c8e6d89fa648d6ee2ed9d9185e478bdc3800efa0c52b80"
+    },
+    {
+      "id": "current-query-designation:disclosed-token-selfjoin.request.json",
+      "reportSha256": "d297bdd5caba6d22ab3591de848f37547e897f674a6cfd5d49149d055178fd86"
+    },
+    {
+      "id": "current-query-designation:mixed-original-uses.request.json",
+      "reportSha256": "a6a07ef51fd547dddd5884d7b43a2fe703058d3ba2bb199018eb3c989c61dfdc"
+    },
+    {
+      "id": "current-query-designation:original-token-order.request.json",
+      "reportSha256": "80e3083960d7792d8bb669d4aa986913e3317e4ff95eb129e982057a2190248c"
+    },
+    {
+      "id": "current-query-designation:prohibited-salary-order-empty.request.json",
+      "reportSha256": "9791b4d14ded0d45f55a1b841250c6347369fce70d4fdd917f0fbfb6b9831dfb"
+    },
+    {
+      "id": "current-query-designation:read-dto-hidden-original.request.json",
+      "reportSha256": "109bffdfa6439c8b16502c3a05d4ef81e73fbb3b9603377ee67b6e83dae1a9d8"
+    },
+    {
+      "id": "current-query-designation:unsupported-salary-sum.request.json",
+      "reportSha256": "4763373f4f9a3e38032ca91ca0ab22ecf6ca943501f67100bdfcd3ddadc476b7"
+    },
+    {
+      "id": "refusal:7",
+      "refused": true
+    },
+    {
+      "id": "refusal:8",
+      "refused": true
+    },
+    {
+      "id": "refusal:9",
+      "refused": true
+    },
+    {
+      "id": "refusal:10",
+      "refused": true
+    },
+    {
+      "id": "refusal:11",
+      "refused": true
+    }
+  ],
+  "requests": [
+    "http://weft.lineage.test/",
+    "http://weft.lineage.test/weft.js",
+    "http://weft.lineage.test/weft_wasm_bg.wasm"
+  ],
+  "pageErrors": []
+}

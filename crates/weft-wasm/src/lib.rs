@@ -39,3 +39,10 @@ pub fn compile_implicit_arithmetic_json(request: &str) -> String {
 pub fn prepare_application_lineage_json(request:&str)->Result<String,wasm_bindgen::JsValue>{
  weft_runtime::prepare_application_lineage_json(request).map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
 }
+
+/// Source-bound designation only. It cannot authorize a native operation.
+#[cfg(feature="application-lineage-candidate")]
+#[wasm_bindgen::prelude::wasm_bindgen]
+pub fn prepare_current_query_designations_json(request:&str)->Result<String,wasm_bindgen::JsValue>{
+ weft_runtime::prepare_current_query_designations_json(request).map_err(|d|wasm_bindgen::JsValue::from_str(&format!("{}: {}",d.code,d.message)))
+}

@@ -1,0 +1,132 @@
+{
+  "scope": "Original UMF purpose declaration + Weft role compatibility only; not whole policy/current source/native permission. Opaque-name mutation is not an admitted policy revision.",
+  "producerSha256": "418a5f3b33231fd000eaec1d8bfdde1fba8f85385cb4f937c76a5c9c1722b41e",
+  "selectedOwnerSourceDigests": {
+    "src/extensions/security/action-purposes.ts": "ea0165668ddd25b703303a8b6dd917d1c4143b21c68f77661b0fead5b87a9575",
+    "src/extensions/security/action-purpose-declarations.ts": "b49c8de2407a6c26b850595dc267e600f1c1def030cc2606ea7cc6cd2e5cdf6e",
+    "src/extensions/security/ontology-checks-candidate.ts": "b68d0f27a3b2394b4b086f50fc0299ce549f68fc7fd79c007d22992fe1d4a005",
+    "spec/extensions/security-v0.2/ontology.schema.json": "c4ccbe5909bb9665a26b4dd6dbf8e91c8a7f6645cddc2007653ce801d9b1573d"
+  },
+  "controls": 17,
+  "observations": [
+    {
+      "id": "valid-source",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": true,
+      "weftIssued": true,
+      "passed": true
+    },
+    {
+      "id": "missing-purpose-closure",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "missing-entry",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "duplicate-entry",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "duplicate-action",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "duplicate-purpose",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "unknown-purpose",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "mixed-reverse",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "mixed-other",
+      "ownerStatus": "refused",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "wrong-original-purpose",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "wrong-primary-purpose",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "unrelated-field-action",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "unrelated-reverse-action",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "primary-action-as-original",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "unknown-original-action",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": false,
+      "weftIssued": false,
+      "passed": true
+    },
+    {
+      "id": "ordinary-purpose-combination",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": true,
+      "weftIssued": true,
+      "passed": true
+    },
+    {
+      "id": "opaque-action-name",
+      "ownerStatus": "resolved-purposes",
+      "ownerRoleCompatible": true,
+      "weftIssued": true,
+      "passed": true
+    }
+  ]
+}
