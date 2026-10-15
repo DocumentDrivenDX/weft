@@ -167,6 +167,7 @@ jobs:
           --maturin "$(command -v maturin)"
           --wasm-bindgen "$(command -v wasm-bindgen)"
       - name: Retain current qualification receipts and fresh artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: current-qualification-${{ github.sha }}

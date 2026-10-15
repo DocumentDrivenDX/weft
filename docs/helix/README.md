@@ -1,5 +1,14 @@
 # Weft specification index
 
+Proposed Python 0.4.32 extends the existing Truss backend 0.4.36 guard to
+native runtime 0.66 and 0.67 (0.65 retains backend 0.4.35), preserving the original binding release ID and
+digest. Query/layout semantics are unchanged. The same allowlist applies to
+mutation selection registration. Native 0.68 and older-backend mismatches remain
+refused. This compatibility change adds no key encoder; Truss 0.67 derives keys
+in PostgreSQL. Public compiler guard tests and actual Truss 0.66 backfill/query
+execution pass locally on PostgreSQL 18.6; release CI remains unrun.
+
+
 The active flow is `helix` under `docs/helix/`. Current catalog binding: installed HELIX **0.15.4**, full plugin `workflows/graph.yml`; templates and methodology are resolved from that plugin and are not vendored here.
 
 Public contracts and requirements remain drafts. ADR-001 selects Rust after the bounded B-001 spike; ADR-002 accepts the structural registered backend boundary. The public compiler has native Python and browser WASM component evidence. No production storage binding is implemented.
