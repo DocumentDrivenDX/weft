@@ -1,0 +1,335 @@
+{
+  "scope": "Actual explicit original integer SUM capability/nullable mathematical output/PG18 exact numeric accumulation and contributor-bag refinement over synthetic declared stages. Privileged fixture role; no actual native policy/caller/current authority, paired runtime proof or guarded public release.",
+  "postgresVersionNum": "180006",
+  "checks": [
+    {
+      "id": "exact-total",
+      "rows": [
+        [
+          [
+            "-2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "7be44ca6aa8ff508738a6e2a797a526a2868cc43dd22a2ffd0fd71bc5748e573",
+      "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3",
+      "passed": true
+    },
+    {
+      "id": "beyond-positive-int64",
+      "rows": [
+        [
+          [
+            "18446744073709551614"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "7d2660c0496cd53962050a5b67292335e37c9f99331598ee5387b4f464ae0a39",
+      "compiledSha256": "f0d60c2bb9a85f18569934bbb663be81b17041cb78cc8ac5b20a4be915306b06",
+      "passed": true
+    },
+    {
+      "id": "beyond-negative-int64",
+      "rows": [
+        [
+          [
+            "-18446744073709551616"
+          ],
+          [
+            [
+              "k4"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "7d2660c0496cd53962050a5b67292335e37c9f99331598ee5387b4f464ae0a39",
+      "compiledSha256": "c74292ce4f2281b9ef4cf62d3e604705b6d7c7ceac6114316eae7fe5970e9f12",
+      "passed": true
+    },
+    {
+      "id": "empty-null",
+      "rows": [
+        [
+          [
+            null
+          ],
+          []
+        ]
+      ],
+      "sqlSha256": "0fc689ae46f75b630fb556336522fb932ac4c53c35701e91ec27767e7d87c1f5",
+      "compiledSha256": "d8d3a24bd56368f06191237f7b877f5bbd846addbed95a93754ebde5d3a6caa4",
+      "passed": true
+    },
+    {
+      "id": "empty-null-with-count",
+      "rows": [
+        [
+          [
+            null,
+            "0"
+          ],
+          []
+        ]
+      ],
+      "sqlSha256": "b4ef376269f4b15169c640617c8d8f6b8df9c6c0f04a55f5834396ff2ccc5489",
+      "compiledSha256": "256497c20bfd7be53d70951769952a08b3ae7683568ed98bd877bd73b9cebc13",
+      "passed": true
+    },
+    {
+      "id": "empty-group",
+      "rows": [],
+      "sqlSha256": "4678f4d3f0c3c70798f321541411c4d950659560943364a656148fbe3744952f",
+      "compiledSha256": "880a5cd8c901901a70a0c3ec96a5e977458d34075a33a86ffa2ad9d6fea47364",
+      "passed": true
+    },
+    {
+      "id": "zero-limit",
+      "rows": [],
+      "sqlSha256": "b286b5a4a1c65811cc3fa9dbecc6be81bef9bb7a1189f79faad4b5b2e3648174",
+      "compiledSha256": "aa9b4536b9364be4373824a046f237d55fb23071ce87502340e570b491d32021",
+      "passed": true
+    },
+    {
+      "id": "grouped",
+      "rows": [
+        [
+          [
+            "opaque-z",
+            "-1",
+            "2"
+          ],
+          [
+            [
+              "k3"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ],
+        [
+          [
+            "opaque-a",
+            "-1",
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "2c01043c5e2358d6cc0e937625dd0127545ad809a328da02d66331451358bc03",
+      "compiledSha256": "c1eaa6beac42e0d15bd2ff13dbb61ca5eada77a49f0857a5f994d0d511c8fbf8",
+      "passed": true
+    },
+    {
+      "id": "joined",
+      "rows": [
+        [
+          [
+            "-4",
+            "-4",
+            "8"
+          ],
+          [
+            [
+              "k1",
+              "k1"
+            ],
+            [
+              "k1",
+              "k4"
+            ],
+            [
+              "k3",
+              "k3"
+            ],
+            [
+              "k3",
+              "k5"
+            ],
+            [
+              "k4",
+              "k1"
+            ],
+            [
+              "k4",
+              "k4"
+            ],
+            [
+              "k5",
+              "k3"
+            ],
+            [
+              "k5",
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "b67328c1ee4e5954f24c1b7db8461f4002140ec41590ab934ee03867c8239ca0",
+      "compiledSha256": "bc05b3d2eab1b058c4b0bd44476765ea91d6dc3d087259af848a24f7819bca5b",
+      "passed": true
+    },
+    {
+      "id": "same-public-sum-distinct-bags",
+      "rows": [
+        [
+          [
+            "-1"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ],
+        [
+          [
+            "-1"
+          ],
+          [
+            [
+              "k3"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "c7bf3edf755514fb5254c33ee065ba7a1daf154c308d8a24e83d2248c0a561e0",
+      "compiledSha256": "30f254c027f169270dde60ac54cf396d253e9e4c39c5032e05d166bc4fe0eaed",
+      "passed": true
+    },
+    {
+      "id": "sum-and-distinct",
+      "rows": [
+        [
+          [
+            "-2",
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "5012c1fb30d659a41c77a013ee45c45e10a2d8cd58971c4be5c7148b67ea67be",
+      "compiledSha256": "d771cd51034d6d4976711035debbdc1335a5102b8454939721e05616ac8084a1",
+      "passed": true
+    },
+    {
+      "id": "count-capability-context",
+      "rows": [
+        [
+          [
+            "4"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ],
+            [
+              "k5"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "20235e37736c6ea84dd49b1a6613221ff69d0fa292e491b5341ad00e928b7541",
+      "compiledSha256": "220c881ee6e733a9ce59cc187a0af16880287b5ab0373c55a22e503ec63ed064",
+      "passed": true
+    },
+    {
+      "id": "predecessor-refuses-new-context:0.1",
+      "refused": true
+    },
+    {
+      "id": "predecessor-refuses-new-context:0.2",
+      "refused": true
+    },
+    {
+      "id": "predecessor-refuses-new-context:0.3",
+      "refused": true
+    },
+    {
+      "id": "disclosed-sum",
+      "refused": true
+    },
+    {
+      "id": "wrong-action",
+      "refused": true
+    },
+    {
+      "id": "mask-domain",
+      "refused": true
+    },
+    {
+      "id": "new-consumer-refuses-legacy-context",
+      "refused": true
+    },
+    {
+      "id": "legacy-sum-factory-still-refuses",
+      "refused": true
+    }
+  ],
+  "serverStopped": true,
+  "pinsBeforeAfter": {
+    "wheel": "a2fe09d2a8d7bc240cf0ab0be385a77b087dcb98c96da6039c831c825ab03964",
+    "module": "412e591c0dbf11efefefca7e075eb633104b2e025c3d972ad6620ea235e32691",
+    "shim": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "runner": "bec61c0458034f7279cc40131ad499452701ac9bf8394d1078dfc441e47d1697"
+  },
+  "nativeAdmission": false,
+  "securityReady": false
+}

@@ -2491,3 +2491,71 @@ truncate or publish a partial group. The component's16MB serialized compiler
 artifact bound is not a native result-data or whole-host memory guarantee.
 The original source/caller/current authority, actual UMF decisions, transform
 runtime scope and final native release gates remain mandatory and unfinished.
+
+
+#### Explicit live-original signed64 SUM capability
+
+The closed designation-profile/report0.2 schemas add exactly the capability
+live-original-integer-sum. Every0.2 action binding also requires an explicit
+operation (equal, order, group, countDistinct or sum), valid for its operator;
+lookup uses the exact actual operator and operation. A SUM binding therefore
+cannot implicitly designate COUNT DISTINCT. Profile/report0.1 remain unchanged
+and refuse these additional members. Unknown/duplicate/absent capabilities,
+unknown operation/operator pairs and missing separate SUM designation refuse.
+Capability selection is source preparation, not native action permission.
+
+The actual typed operand factory admits Sum only in that selected context, for
+a required singular original signed64 Integer Field and the original mathematical
+Integer result. Global SUM is nullable (empty input returns scalar null); grouped
+SUM over these required inputs is nonnullable because a materialized group is
+nonempty. The actual original Plan type is preserved rather than rewritten.
+Nullable/unsigned/other-width/noninteger/structured inputs remain unsupported in
+this capability. Older contexts still refuse Sum without returning a partial
+operand graph or Python child.
+
+The same-original native computation packet becomes
+weft.current-query.native-input/0.2-candidate with explicit capabilities. Sum has
+its original output/argument path, source Field/type, separate original action
+and actual output type. Its UMF route request uses required:[nullity] only as a
+necessary scalar presence/null-versus-absence prerequisite. This is not additive
+transform preservation. Admission additionally requires the actual original-
+authorized live-field route, untransformed original domain/value, exact independent
+action and native presence/codec/current-cut evidence. Legacy unsupported Sum
+property reports retain required:null; this contextual dependency does not alter
+their meaning. No model property is invented to justify transformed arithmetic.
+
+The separate lower_postgresql_current_sum_candidate_json accepts only
+weft.postgresql.current-values/0.4-candidate and the explicit0.2 context. The three
+older scalar/row/contributor entry points refuse this context, including COUNT
+or empty work; the new entry point refuses older contexts. Version changes do
+not downgrade. The materialization shape retains the closed native TEXT-key
+carrier of0.3. Every Sum input requires original-authorized mode, the exact
+independent designation and unchanged original signed64 domain. Disclosed or
+transformed Sum refuses, including FALSE/LIMIT0. These operations remain in the
+broader requirements and need a proper semantic preservation contract.
+
+The result is weft.postgresql.current-scalar/0.4-candidate, always authority:false,
+securityReady:false and nativeAdmission:required. Qualified PostgreSQL sum over
+builtin bigint yields exact numeric accumulation. Result text is decoded as
+native-numeric-integer-nullable-text globally or native-numeric-integer-required-text
+for grouped results, preserving the original mathematical Integer type; native
+capacity/statement/result failures must refuse, never wrap, approximate or publish
+partial results. Scalar null is explicit data, not an absent Field or string null.
+No public mask column/rendering is needed for an unselected hidden-original Sum.
+
+Complete contributor bags, grouping sources and original per-cell paths remain
+mandatory. publicCellSources adds kind:sum with the exact argument source, so the
+native host can verify actual input contribution and exact output/null meaning.
+Native authenticated source/caller/current-authority admission, actual UMF action/
+route decisions, exact live-value correspondence and guarded release remain
+required. Availability of these compiler methods/capability strings is not a
+native registration or authorization credential. Old registrations cannot infer
+support from package versions or a static backendVersion; they must explicitly
+pin the consumer/result ABI and implementation.
+
+The source fixture is the separate original UMF1bb8ec4768 revision, SHA256
+d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15.
+Weft authors its profile independently, preserving exact role JSON substrings and
+selected Core document tokens. Owner intent/expected metadata does not issue a
+designation. The old SUM-prohibited source and unsupported-source negatives are
+unchanged. This component does not qualify any original protected backend case.

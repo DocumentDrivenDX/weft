@@ -7,6 +7,10 @@ use std::collections::{BTreeMap,BTreeSet};
 struct ProfileSchema;
 #[jsonschema::validator(path="../../docs/helix/02-design/contracts/current-query-designation-v0.1-candidate.schema.json")]
 struct ReportSchema;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/current-query-designation-profile-v0.2-candidate.schema.json")]
+struct SumProfileSchema;
+#[jsonschema::validator(path="../../docs/helix/02-design/contracts/current-query-designation-v0.2-candidate.schema.json")]
+struct SumReportSchema;
 fn fail()->Diagnostic{Diagnostic::new("WFT-CURRENT-QUERY-DESIGNATION","model","Original current query designation refused")}
 #[derive(Debug,Clone,Deserialize,Serialize,PartialEq,Eq)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -22,10 +26,10 @@ struct SourcePin{role:String,identity:SourceIdentity,sha256:String}
 pub struct BindingScope{pub backend_id:String,pub backend_version:String,pub target_profile:String,pub source:SourceIdentity,pub sha256:String}
 #[derive(Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-struct Entry{target:SecurityRef,field:SecurityRef,operator:QueryOperator,original_action:String}
+struct Entry{target:SecurityRef,field:SecurityRef,operator:QueryOperator,original_action:String,#[serde(default,skip_serializing_if="Option::is_none")]operation:Option<String>}
 #[derive(Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-struct Profile{version:String,id:String,revision:String,model_pins:Vec<ModelPin>,sources:Vec<SourcePin>,binding:BindingScope,targets:Vec<SecurityRef>,primary_action:String,bindings:Vec<Entry>}
+struct Profile{version:String,id:String,revision:String,model_pins:Vec<ModelPin>,sources:Vec<SourcePin>,binding:BindingScope,targets:Vec<SecurityRef>,primary_action:String,bindings:Vec<Entry>,#[serde(default,skip_serializing_if="Option::is_none")]capabilities:Option<Vec<String>>}
 #[derive(Debug,Serialize)]
 #[serde(rename_all="camelCase")]
 struct UseDesignation{path:String,scan:String,target:SecurityRef,field:SecurityRef,field_identity:Identity,operator:QueryOperator,operation:String,original_action:Option<String>}
@@ -52,6 +56,7 @@ impl CurrentQueryDesignations<'_>{
  pub fn json(&self)->&str{&self.json}
  pub fn preparation(&self)->&ApplicationLineage{self.preparation}
  pub fn primary_action(&self)->&str{&self.profile.primary_action}
+ pub fn supports_live_original_integer_sum(&self)->bool{self.profile.version=="weft.current-query.designation-profile/0.2-candidate" && self.profile.capabilities.as_ref().is_some_and(|v|v.len()==1 && v[0]=="live-original-integer-sum")}
  pub fn binding_scope(&self)->&BindingScope{&self.profile.binding}
  pub fn original_action(&self,path:&str,scan:&str)->Result<Option<&str>>{self.uses.iter().find(|u|u.path==path&&u.scan==scan).map(|u|u.original_action.as_deref()).ok_or_else(fail)}
 }
@@ -87,9 +92,9 @@ pub fn derive(prepared:&ApplicationLineage)->Result<CurrentQueryDesignations<'_>
  let request=checked_json(prepared.source_request_json()).map_err(|_|fail())?;
  let sources:Vec<Opaque>=serde_json::from_value(request["opaqueSources"].clone()).map_err(|_|fail())?;
  let get=|role:&str|->Result<&Opaque>{let all:Vec<_>=sources.iter().filter(|s|s.role==role).collect();if all.len()!=1{return Err(fail())}let s=all[0];if s.media_type!="application/json"||sha256(s.utf8.as_bytes())!=s.sha256{return Err(fail())}Ok(s)};
- let original=get("query-designation")?;let value=checked_json(&original.utf8).map_err(|_|fail())?;if !ProfileSchema::is_valid(&value){return Err(fail())}let profile:Profile=serde_json::from_value(value.clone()).map_err(|_|fail())?;
+ let original=get("query-designation")?;let value=checked_json(&original.utf8).map_err(|_|fail())?;let sum_profile=value["version"]=="weft.current-query.designation-profile/0.2-candidate";if !(if sum_profile{SumProfileSchema::is_valid(&value)}else{ProfileSchema::is_valid(&value)}){return Err(fail())}let profile:Profile=serde_json::from_value(value.clone()).map_err(|_|fail())?;
  // Closed nested source/model references: no unknown member can be discarded by serde.
- if serde_json::to_value(&profile).map_err(|_|fail())?!=value||profile.version!="weft.current-query.designation-profile/0.1-candidate"||!bounded(&profile.id)||!bounded(&profile.revision)||original.identity!= (SourceIdentity{document_id:profile.id.clone(),revision:profile.revision.clone()})||profile.model_pins!=prepared.catalog().pins(){return Err(fail())}
+ if serde_json::to_value(&profile).map_err(|_|fail())?!=value||!matches!(profile.version.as_str(),"weft.current-query.designation-profile/0.1-candidate"|"weft.current-query.designation-profile/0.2-candidate")||!bounded(&profile.id)||!bounded(&profile.revision)||original.identity!= (SourceIdentity{document_id:profile.id.clone(),revision:profile.revision.clone()})||profile.model_pins!=prepared.catalog().pins(){return Err(fail())}
  let required:BTreeSet<_>=["policy","ontology","catalog","owner"].into_iter().map(str::to_owned).collect();let mut seen=BTreeSet::new();
  for pin in &profile.sources{if !required.contains(&pin.role)||!seen.insert(pin.role.clone()){return Err(fail())}let s=get(&pin.role)?;if s.identity!=pin.identity||s.sha256!=pin.sha256{return Err(fail())}}
  if seen!=required{return Err(fail())}
@@ -103,20 +108,23 @@ pub fn derive(prepared:&ApplicationLineage)->Result<CurrentQueryDesignations<'_>
  let scans=crate::application_property_uses::scans(prepared.plan())?;if scans.values().any(|i|!targets.contains(&reference(i))){return Err(fail())}
  let mut entries=BTreeMap::new();
  for (index,e) in profile.bindings.iter().enumerate(){
+  if sum_profile && !matches!((e.operator,e.operation.as_deref()),(QueryOperator::Predicate,Some("equal"|"order"))|(QueryOperator::Join,Some("equal"))|(QueryOperator::Group,Some("group"))|(QueryOperator::Order,Some("order"))|(QueryOperator::Aggregate,Some("countDistinct"|"sum"))){return Err(fail())}
+
   if !targets.contains(&e.target)||e.original_action==profile.primary_action||!action_purposes.get(&e.original_action).is_some_and(|p|p.contains("original-authorized")){return Err(fail())}
   let record=prepared.catalog().record_by_identity(&identity(prepared.catalog(),&e.target)?).map_err(|_|fail())?;
   prepared.catalog().member_descriptor_by_identity(&record,&identity(prepared.catalog(),&e.field)?).map_err(|_|fail())?;
-  if entries.insert((e.target.clone(),e.field.clone(),e.operator),index).is_some(){return Err(fail())}
+  if entries.insert((e.target.clone(),e.field.clone(),e.operator,e.operation.clone()),index).is_some(){return Err(fail())}
  }
  let mut uses=Vec::new();let mut remaining=8_000_000usize;
  crate::application_property_uses::visit(prepared.plan(),prepared.catalog(),|u|{
   if uses.len()>=4096{return Err(fail())}let target=reference(scans.get(u.scan).ok_or_else(fail)?);let field=reference(u.identity);
-  let action=entries.get(&(target.clone(),field.clone(),u.operator)).map(|i|profile.bindings[*i].original_action.clone());
+  let action=entries.get(&(target.clone(),field.clone(),u.operator,if sum_profile{Some(u.operation.to_owned())}else{None})).map(|i|profile.bindings[*i].original_action.clone());
   let row=UseDesignation{path:u.path,scan:u.scan.to_owned(),target,field,field_identity:u.identity.clone(),operator:u.operator,operation:u.operation.into(),original_action:action};
   let value=serde_json::to_value(&row).map_err(|_|fail())?;let bytes=encode(&value,remaining)?;remaining=remaining.checked_sub(bytes.len()).ok_or_else(fail)?;uses.push(row);Ok(())
  })?;
- let report=json!({"version":"weft.current-query.designation/0.1-candidate","authority":false,"securityReady":false,"sourceRequestSha256":sha256(prepared.source_request_json().as_bytes()),"sourceProfileJson":original.utf8,"sourceProfileSha256":original.sha256,"modelPins":prepared.catalog().pins(),"binding":profile.binding,"sources":profile.sources,"primaryAction":profile.primary_action,"primaryActionRequiredPurpose":"read","originalActionRequiredPurpose":"original-authorized","uses":uses,"unresolved":["UMF whole-source semantic admission","joint ontology/catalog query modes","per-occurrence effective value and paired native scope","authenticated native source/caller/current authority and guarded release"]});
- if !ReportSchema::is_valid(&report){return Err(fail())}
+ let mut report=json!({"version":"weft.current-query.designation/0.1-candidate","authority":false,"securityReady":false,"sourceRequestSha256":sha256(prepared.source_request_json().as_bytes()),"sourceProfileJson":original.utf8,"sourceProfileSha256":original.sha256,"modelPins":prepared.catalog().pins(),"binding":profile.binding,"sources":profile.sources,"primaryAction":profile.primary_action,"primaryActionRequiredPurpose":"read","originalActionRequiredPurpose":"original-authorized","uses":uses,"unresolved":["UMF whole-source semantic admission","joint ontology/catalog query modes","per-occurrence effective value and paired native scope","authenticated native source/caller/current authority and guarded release"]});
+ if sum_profile{report["version"]=json!("weft.current-query.designation/0.2-candidate");report["capabilities"]=json!(profile.capabilities);}
+ if !(if sum_profile{SumReportSchema::is_valid(&report)}else{ReportSchema::is_valid(&report)}){return Err(fail())}
  let json=encode(&report,16_000_000)?;Ok(CurrentQueryDesignations{preparation:prepared,profile,uses,json})
 }
 
@@ -140,14 +148,14 @@ pub fn native_request_json(g:&crate::current_query_operands::CurrentQueryOperand
  let mut routes=Vec::new();
  crate::application_property_uses::visit(plan,p.catalog(),|u|{
   if routes.len()>=4096{return Err(fail())}
-  routes.push(json!({"scan":u.scan,"path":u.path,"type":reference(scan_map.get(u.scan).ok_or_else(fail)?),"field":reference(u.identity),"operator":u.operator,"operation":u.operation,"required":u.required.into_iter().collect::<Vec<_>>()}));Ok(())
+  routes.push(json!({"scan":u.scan,"path":u.path,"type":reference(scan_map.get(u.scan).ok_or_else(fail)?),"field":reference(u.identity),"operator":u.operator,"operation":u.operation,"required":if u.operation=="sum" && d.supports_live_original_integer_sum(){vec!["nullity"]}else{u.required.into_iter().collect::<Vec<_>>()}}));Ok(())
  })?;
  let mut operations=Vec::new();
  for op in g.operations(){
   let (kind,direction,boolean)=match op.kind(){
    Kind::Equal=>("equal",None,None),Kind::LexicographicGreater=>("lexicographic-greater",None,None),Kind::Group=>("group",None,None),
    Kind::Order(direction)=>("order",Some(match direction{crate::application_lineage::OrderDirection::Asc=>"asc",crate::application_lineage::OrderDirection::Desc=>"desc"}),None),
-   Kind::Count=>("count",None,None),Kind::CountDistinct=>("count-distinct",None,None),Kind::Boolean(value)=>("boolean",None,Some(value))};
+   Kind::Count=>("count",None,None),Kind::CountDistinct=>("count-distinct",None,None),Kind::Sum=>("sum",None,None),Kind::Boolean(value)=>("boolean",None,Some(value))};
   let operands=op.operands().iter().map(|operand|{let input=match operand.input(){
    Input::Field{scan,identity,logical_type,original_action}=>json!({"kind":"field","scan":scan,"identity":identity,"logicalType":logical_type,"originalAction":original_action}),
    Input::Literal{value,logical_type}=>json!({"kind":"literal","value":value,"logicalType":logical_type}),
@@ -155,7 +163,9 @@ pub fn native_request_json(g:&crate::current_query_operands::CurrentQueryOperand
    json!({"path":operand.path(),"input":input})}).collect::<Vec<_>>();
   operations.push(json!({"path":op.path(),"operator":op.operator(),"kind":kind,"direction":direction,"boolean":boolean,"operands":operands,"outputType":op.output_type()}));
  }
- encode(&json!({"version":"weft.current-query.native-input/0.1-candidate","authority":false,"securityReady":false,"sourceRequestSha256":sha256(p.source_request_json().as_bytes()),"designationSha256":sha256(d.json().as_bytes()),"modelPins":p.catalog().pins(),"binding":d.binding_scope(),"sources":d.profile.sources,"primaryAction":d.primary_action(),"scans":scans,"projections":projections,"operations":operations,"routes":routes}),16_000_000)
+ let mut packet=json!({"version":"weft.current-query.native-input/0.1-candidate","authority":false,"securityReady":false,"sourceRequestSha256":sha256(p.source_request_json().as_bytes()),"designationSha256":sha256(d.json().as_bytes()),"modelPins":p.catalog().pins(),"binding":d.binding_scope(),"sources":d.profile.sources,"primaryAction":d.primary_action(),"scans":scans,"projections":projections,"operations":operations,"routes":routes});
+ if d.supports_live_original_integer_sum(){packet["version"]=json!("weft.current-query.native-input/0.2-candidate");packet["capabilities"]=json!(d.profile.capabilities);}
+ encode(&packet,16_000_000)
 }
 
 #[cfg(test)]
@@ -174,6 +184,44 @@ mod tests{
   assert_eq!(output["operations"][0]["operands"][1]["input"]["value"],"100");
   assert_eq!(output["operations"][1]["direction"],"desc");
   assert_eq!(output["projections"][0]["path"],"outputs/0/expression");assert_eq!(output["authority"],false);assert_eq!(output["securityReady"],false);
+ }
+ fn sum_request()->Value{serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/live-original-integer-sum.request.json")).unwrap()}
+ // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn explicit_sum_context_preserves_original_action_presence_dependency_and_nullable_math_type(){
+  let r=sum_request();let p=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&p).unwrap();assert!(d.supports_live_original_integer_sum());
+  let g=crate::current_query_operands::derive(&d).unwrap();assert_eq!(g.operations()[0].kind(),crate::current_query_operands::Kind::Sum);
+  assert_eq!(d.original_action("outputs/0/argument","s0").unwrap(),Some("query-original-salary-sum"));
+  let report:Value=serde_json::from_str(d.json()).unwrap();assert_eq!(report["version"],"weft.current-query.designation/0.2-candidate");
+  let native:Value=serde_json::from_str(&native_request_json(&g).unwrap()).unwrap();assert_eq!(native["version"],"weft.current-query.native-input/0.2-candidate");
+  assert_eq!(native["routes"][0]["required"],json!(["nullity"]));assert_eq!(native["routes"][0]["path"],"outputs/0/argument");assert_eq!(native["operations"][0]["kind"],"sum");
+  assert_eq!(native["operations"][0]["outputType"],json!({"family":"integer","facets":{},"nullable":true}));assert_eq!(native["projections"],json!([]));
+  assert_eq!(native["authority"],false);assert_eq!(native["securityReady"],false);
+ }
+ // @covers US-009-AC2
+ #[test]
+ fn live_original_sum_does_not_narrow_unsupported_input_domains(){
+  for facets in [json!({"integerWidth":{"bits":32,"signed":true}}),json!({"integerWidth":{"bits":64,"signed":false}}),json!({})]{
+   let mut r=sum_request();let mut document:Value=serde_json::from_str(r["modules"][0]["documentJson"].as_str().unwrap()).unwrap();
+   document["modules"][0]["elements"].as_array_mut().unwrap().iter_mut().find(|e|e["id"]=="salary").unwrap()["facets"]=facets;
+   let raw=document.to_string();r["modules"][0]["documentJson"]=json!(raw);r["modules"][0]["pin"]["sha256"]=json!(sha256(raw.as_bytes()));
+   let pins=json!([r["modules"][0]["pin"].clone()]);profile(&mut r,|p|p["modelPins"]=pins);
+   let parent=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&parent).unwrap();let error=match crate::current_query_operands::derive(&d){Ok(_)=>panic!("Unsupported SUM domain admitted"),Err(error)=>error};assert_eq!(error.code,"WFT-CURRENT-QUERY-OPERANDS");
+  }
+ }
+ // @covers US-009-AC2 @covers US-009-AC3
+ #[test]
+ fn sum_capability_has_no_legacy_unknown_or_missing_action_fallback(){
+  for op in [json!("arithmetic"),Value::Null]{let mut r=sum_request();profile(&mut r,|p|p["bindings"][2]["operation"]=op);assert!(result(&r).is_err());}
+  let mut absent=sum_request();profile(&mut absent,|p|{p["bindings"][2].as_object_mut().unwrap().remove("operation");});assert!(result(&absent).is_err());
+  let mut distinct=sum_request();distinct["sql"]=json!("SELECT COUNT(DISTINCT r.salary) AS n FROM Resource r");let parent=crate::application_lineage::prepare(&distinct.to_string()).unwrap();let selected=derive(&parent).unwrap();assert_eq!(selected.original_action("outputs/0/argument","s0").unwrap(),None);
+
+  for capability in [json!([]),json!(["sum"]),json!(["live-original-integer-sum","live-original-integer-sum"]),Value::Null]{let mut r=sum_request();profile(&mut r,|p|p["capabilities"]=capability);assert!(result(&r).is_err());}
+  let mut r=sum_request();profile(&mut r,|p|p["version"]=json!("weft.current-query.designation-profile/0.1-candidate"));assert!(result(&r).is_err());
+  let mut r=sum_request();profile(&mut r,|p|{p.as_object_mut().unwrap().remove("capabilities");});assert!(result(&r).is_err());
+  let mut r=sum_request();profile(&mut r,|p|{p["bindings"].as_array_mut().unwrap().retain(|b|b["operator"]!="aggregate");});
+  let p=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&p).unwrap();assert!(crate::current_query_operands::derive(&d).is_err());
+  let mut r=request();r["sql"]=json!("SELECT SUM(r.salary) AS total FROM Resource r");let p=crate::application_lineage::prepare(&r.to_string()).unwrap();let d=derive(&p).unwrap();assert!(!d.supports_live_original_integer_sum());assert!(crate::current_query_operands::derive(&d).is_err());
  }
  fn request()->Value{serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/mixed-original-uses.request.json")).unwrap()}
  fn source_index(r:&Value,role:&str)->usize{r["opaqueSources"].as_array().unwrap().iter().position(|s|s["role"]==role).unwrap()}

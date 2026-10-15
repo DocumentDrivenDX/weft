@@ -56,6 +56,7 @@ pub enum Kind {
     Order(OrderDirection),
     Count,
     CountDistinct,
+    Sum,
     Boolean(bool),
 }
 #[derive(Debug)]
@@ -275,7 +276,40 @@ pub fn derive<'a>(
                     Some(logical_type),
                 )?;
             }
-            // SUM has no qualified preservation property in this candidate. No partial graph.
+            app::Expression::Sum {
+                argument,
+                logical_type,
+            } if designation.supports_live_original_integer_sum() => {
+                use crate::ir::Family;
+                if argument.logical_type.family != Family::Integer
+                    || argument.logical_type.nullable
+                    || argument.logical_type.facets
+                        != serde_json::json!({"integerWidth":{"bits":64,"signed":true}})
+                    || logical_type.family != Family::Integer
+                    || logical_type.nullable != plan.groups.is_empty()
+                    || logical_type.facets != serde_json::json!({})
+                {
+                    return Err(fail());
+                }
+                let field = b.field(format!("{path}/argument"), argument)?;
+                if !matches!(
+                    field.input(),
+                    Input::Field {
+                        original_action: Some(_),
+                        ..
+                    }
+                ) {
+                    return Err(fail());
+                }
+                b.push(
+                    path,
+                    Some(QueryOperator::Aggregate),
+                    Kind::Sum,
+                    vec![field],
+                    Some(logical_type),
+                )?;
+            }
+            // Older contexts and every unqualified SUM still refuse as a whole.
             _ => return Err(fail()),
         }
     }

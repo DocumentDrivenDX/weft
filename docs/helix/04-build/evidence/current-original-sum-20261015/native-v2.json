@@ -1,0 +1,241 @@
+{
+  "scope": "Actual original typed Python computation packet and PG18 nonaggregate source-row contribution over synthetic declared staging. Privileged fixture connection. No authenticated source/caller/policy/current authority, native runtime pairing or guarded public release.",
+  "postgresVersionNum": "180006",
+  "checks": [
+    {
+      "id": "mixed",
+      "rows": [
+        [
+          [
+            "[private]"
+          ],
+          [
+            "k3"
+          ]
+        ],
+        [
+          [
+            "[private]"
+          ],
+          [
+            "k1"
+          ]
+        ]
+      ],
+      "sourceRequestSha256": "5b11691514e5cf19b6e9523a03c73e51d27bce51a015723f190f7e3124237ff1",
+      "sqlSha256": "8d740f842dda3ff5ac2d4c7efbaab8c97192f3d6aa30c9c00766da629dba0eef",
+      "passed": true
+    },
+    {
+      "id": "selfjoin",
+      "rows": [
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k1",
+            "k1"
+          ]
+        ],
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k1",
+            "k4"
+          ]
+        ],
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k4",
+            "k1"
+          ]
+        ],
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k4",
+            "k4"
+          ]
+        ],
+        [
+          [
+            "opaque-z"
+          ],
+          [
+            "k3",
+            "k3"
+          ]
+        ]
+      ],
+      "sourceRequestSha256": "9c59b74225560dfff78c675b4d6e743cf8214d01df2bc353ba497fd9ec183266",
+      "sqlSha256": "ffa7bf679346267cd511b96203972bb8eb9a52484e9aaa023174c658fbbd6717",
+      "passed": true
+    },
+    {
+      "id": "two-masked-cells",
+      "rows": [
+        [
+          [
+            "[private]",
+            "[private]"
+          ],
+          [
+            "k1",
+            "k1"
+          ]
+        ],
+        [
+          [
+            "[private]",
+            "[private]"
+          ],
+          [
+            "k1",
+            "k4"
+          ]
+        ],
+        [
+          [
+            "[private]",
+            "[private]"
+          ],
+          [
+            "k3",
+            "k3"
+          ]
+        ],
+        [
+          [
+            "[private]",
+            "[private]"
+          ],
+          [
+            "k4",
+            "k1"
+          ]
+        ],
+        [
+          [
+            "[private]",
+            "[private]"
+          ],
+          [
+            "k4",
+            "k4"
+          ]
+        ]
+      ],
+      "sourceRequestSha256": "62b3226ffdef735bd8d5933108a6aeeaf3feda5b5b612f02dd226371c1c7adeb",
+      "sqlSha256": "b802b72fcb2a1b65ee8a515337217209a6bfb7eef1fc43b84cb6775d5e94d7bd",
+      "passed": true
+    },
+    {
+      "id": "false",
+      "rows": [],
+      "sourceRequestSha256": "bc65f7d05e724c66612e98a0be42a819c1d77e402d4c967fbd1eae54881f6119",
+      "sqlSha256": "e8ce2dbd13de4745efd54792fd62f4b0bc001ee1e58cdfdac7a632a60ea02882",
+      "passed": true
+    },
+    {
+      "id": "limit-zero",
+      "rows": [],
+      "sourceRequestSha256": "441f7950f29c2e180b21f14c127ffc25525556951bdbab1465c3ada3885b4322",
+      "sqlSha256": "618c90c58bf1936578e5942b96952b8274c1366d8f76daeff6555684428cfa9d",
+      "passed": true
+    },
+    {
+      "id": "asc",
+      "rows": [
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k1"
+          ]
+        ],
+        [
+          [
+            "opaque-a"
+          ],
+          [
+            "k4"
+          ]
+        ],
+        [
+          [
+            "opaque-z"
+          ],
+          [
+            "k3"
+          ]
+        ]
+      ],
+      "sourceRequestSha256": "67b3d5ae1676e22d021578880673ad59913ae08a3883123d086e5c171f3a1060",
+      "sqlSha256": "2292681053404e6b66bdc4c8ef1c656a453136bd3833afa390151829eb8c4b62",
+      "passed": true
+    },
+    {
+      "id": "named",
+      "rows": [
+        [
+          [
+            "[private]"
+          ],
+          [
+            "k1"
+          ]
+        ],
+        [
+          [
+            "[private]"
+          ],
+          [
+            "k3"
+          ]
+        ]
+      ],
+      "sourceRequestSha256": "7fc00eea29b23acc4c1b00ab38170f2b9ed72c9affa7106782a8fa4880621132",
+      "sqlSha256": "564509cbbecc4644e6d0e674987fa513cf17faa6eaa240db219d5900dcc1e91a",
+      "passed": true
+    },
+    {
+      "id": "quoted-data",
+      "rows": [],
+      "sourceRequestSha256": "d0fb3967a3eec4666614669edf8769f5ed5db70493ee3b5b3016dd46eb3cdae2",
+      "sqlSha256": "26b5b4b8184cdd0f70aa28ad11b21963410ed32b38293dd5bb9ee16e5a91f408",
+      "passed": true
+    },
+    {
+      "id": "no-packet-import",
+      "refused": true
+    },
+    {
+      "id": "no-foreign-self",
+      "refused": true
+    },
+    {
+      "id": "aggregate-refusal:SELECT COUNT(*) FROM Resource r",
+      "refused": true
+    },
+    {
+      "id": "aggregate-refusal:SELECT COUNT(DISTINCT r.token) FROM Resource r",
+      "refused": true
+    },
+    {
+      "id": "aggregate-refusal:SELECT r.token FROM Resource r GROUP BY r.token",
+      "refused": true
+    }
+  ],
+  "serverStopped": true,
+  "nativeAdmission": false,
+  "securityReady": false
+}

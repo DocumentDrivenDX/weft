@@ -2200,3 +2200,44 @@ arbitrary-precision accumulation. Disclosed/transformed SUM and remaining domain
 stay required and unsupported until their actual semantics are established.
 
 UMF main9d0e8758 retains five actual prior0.2 Weft packet -> original Bun child supplied-cut cases and26 focused verifier controls. The retained README/root verification were inspected; that external evidence qualifies the prior wheel/source pins only and grants no native SQL/caller/current-authority or backend acceptance.
+
+
+### Explicit original integer SUM context — 2026-10-15
+
+B-008 remains open under all132 original shared/native cases and expanded
+45 accepted/113 unimplemented/158 required coverage. Designation-profile/report0.2
+now selects live-original-integer-sum and exact per-operation action bindings;
+a SUM action is not automatically assigned to COUNT DISTINCT. The typed factory
+preserves original signed64 input and contextual mathematical Integer output:
+nullable globally, required in nonempty groups. Native-input0.2 derives necessary
+nullity requirements only under that capability. This does not claim additive
+transform preservation or alter old unsupported property reports.
+
+Separate SQLconsumer0.4 requires the new context, original-authorized untransformed
+signed64 input/domain and exact action. Qualified bigint SUM accumulates as exact
+numeric and uses explicit nullable/required text codecs, retaining complete
+contributor bags. All older consumers reject the new context even for COUNT or
+empty work, and the new consumer rejects old contexts. Disclosed/transformed SUM,
+other numeric widths/domains and wider required operations remain unsupported
+and in scope. No native permission or registration is issued by the compiler.
+
+The original source is independently pinned UMF1bb8ec4768 SHA
+d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15.
+Weft authors its own profile without owner intent/expectation inputs, preserves
+exact role JSON slices and checks selected Core numeric tokens. Old source and
+factory negatives are unchanged. The actual conditional PG18.6 corpus passes20
+controls, including sums beyond both int64 limits, global null versus grouped
+required output, exact joined bags and version/mode/action refusal. The server
+stops; module/shim/wheel/runner pins match before and after cleanup. The three
+predecessor native ledgers (9/13/20) remain identical;46 Python custody checks pass.
+All317 core tests,15 targeted scalar controls, actual Chromium13 metadata controls,
+workspace, module16 and governed-schema checks pass. Evidence is retained under
+evidence/current-original-sum-20261015/. These are declared-stage compiler proofs,
+not authenticated policy/current-authority or protected backend acceptance.
+
+Truss reports its first finite ordinary-caller masked/raw-predicate query workflow
+on main9a495c23, still requiring exact new standard-wheel qualification and wider
+original cases. Published Weft0.4.32 lacks the optional current-query feature;
+prepare0.4.33 standard platform wheels with explicit current-query and ordinary
+PG18 features plus exact-wheel API/ABI2 smoke gates. Do not overwrite32 or infer
+native security support from compiler method availability.

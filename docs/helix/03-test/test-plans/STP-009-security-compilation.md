@@ -530,3 +530,23 @@ an implemented native-guard rejection. Require cross-version refusal and both
 predecessor native corpora unchanged, exact text OIDs and disposable-server cleanup.
 Synthetic declarations/counterfactual salary modes do not qualify UMF/native
 source permission, authenticated caller/current authority or final publication.
+
+
+### Original integer SUM and explicit capability boundaries — 2026-10-15
+
+Verify the separate committed original SUM source, exact role-byte/model-token
+custody and independently authored operation-scoped Weft profile. Core tests must
+reject unknown/missing/legacy capabilities, absent SUM action and unsupported
+signedness/width/domains, without borrowing SUM action for COUNT DISTINCT.
+Actual Python -> Rust -> PostgreSQL18.6 checks must cover sums beyond positive and
+negative int64, exact joined multiplicity, global empty scalar null, no empty group,
+nonnullable grouped sums, separate identical-public-value bags, SUM/count/distinct,
+FALSE/LIMIT0 and typed parameters. Fixed SQL signatures independently determine
+expected source routes, operations, grouping and result types; producer omissions
+must not self-validate. No public salary mask column is staged for original-only
+SUM. Verify exact text OIDs, complete private bags and native module/shim/wheel/
+runner pins before and after cleanup. The three predecessor corpora and legacy
+factory negatives remain unchanged; browser designation parity is metadata only.
+These supplied stages are conditional fixtures, not native policy/current authority
+or guarded result-release acceptance. Disclosed/transformed SUM and remaining
+specified domains stay open.

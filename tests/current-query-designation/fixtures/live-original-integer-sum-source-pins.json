@@ -1,0 +1,62 @@
+{
+  "originalOwnerCommit": "1bb8ec4768a720c88c4436cd2f1b75272661096c",
+  "originalSourceSha256": "d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15",
+  "requestSha256": "fc8ed1aaa049f16a3accc983b09118711bd70aead974f247d72a02df6f2e6855",
+  "roles": [
+    {
+      "role": "policy",
+      "identity": {
+        "documentId": "project-access",
+        "revision": "integer-sum-policy-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "aac0db3af437dc12a66ee560048ff56a17f626878c35282178169ff6bc1c234a"
+    },
+    {
+      "role": "ontology",
+      "identity": {
+        "documentId": "domain",
+        "revision": "integer-sum-ontology-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "a30154769f8bdbf1d7704a1adf457135c0db534c3bc0623671424970960de05f"
+    },
+    {
+      "role": "catalog",
+      "identity": {
+        "documentId": "stored",
+        "revision": "integer-sum-catalog-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "1803b1cc4c124b92a2656eb9c369c1df6b964b521c3f2cfaf63bfa2df6862f44"
+    },
+    {
+      "role": "owner",
+      "identity": {
+        "documentId": "owner",
+        "revision": "integer-sum-owner-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "117509c21be8e105c19f028a57cd681975c172089b7cb1072e891dd2e65a72f6"
+    },
+    {
+      "role": "native-binding",
+      "identity": {
+        "documentId": "fixture-live-original-integer-sum-pg",
+        "revision": "sum-materialization-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "b19ccc285f876ebe467f609b3fb1d1b9a1c6aed65f8e4a83bb35dbc357602921"
+    },
+    {
+      "role": "query-designation",
+      "identity": {
+        "documentId": "weft-live-original-integer-sum-actions",
+        "revision": "live-original-integer-sum-designation-r1"
+      },
+      "mediaType": "application/json",
+      "sha256": "b030853041b1360657f52167a3cb073ddeab7c6d012b7a216eb39f1dbeb9f168"
+    }
+  ],
+  "qualification": "Source/profile custody only; no action permission/native installation or execution"
+}

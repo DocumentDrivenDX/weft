@@ -120,6 +120,7 @@ struct PrivateLineage {
 struct Lineage {
     keys: BTreeMap<String, String>,
     contributor_bag: bool,
+    live_original_integer_sum: bool,
 }
 impl CurrentScalarSql<'_> {
     pub fn sql(&self) -> &str {
@@ -325,6 +326,12 @@ fn lower_binding<'a>(
     }
     let row_keys = lineage.as_ref().map(|value| &value.keys);
     let contributor_bag = lineage.as_ref().is_some_and(|value| value.contributor_bag);
+    let live_sum = lineage
+        .as_ref()
+        .is_some_and(|value| value.live_original_integer_sum);
+    if designation.supports_live_original_integer_sum() != live_sum {
+        return Err(fail());
+    }
     if row_keys.is_some() && plan.aggregate && !contributor_bag {
         return Err(fail());
     }
@@ -600,6 +607,36 @@ fn lower_binding<'a>(
                 let (s, t, _) = build.field(&key.0, scan, identity)?;
                 (s, Some(identity.clone()), Some(domain), t, exposure)
             }
+            app::Expression::Sum {
+                argument,
+                logical_type,
+            } if live_sum => {
+                if logical_type.family != Family::Integer
+                    || logical_type.nullable != plan.groups.is_empty()
+                    || logical_type.facets != json!({})
+                {
+                    return Err(fail());
+                }
+                let key = (format!("{path}/argument"), argument.scan.clone());
+                let input = build.selected.get(&key).ok_or_else(fail)?;
+                if input.source.mode != Some(Mode::OriginalAuthorized)
+                    || input.source.domain != argument.identity
+                    || input.logical_type.family != Family::Integer
+                    || input.logical_type.facets
+                        != json!({"integerWidth":{"bits":64,"signed":true}})
+                    || input.logical_type.nullable
+                {
+                    return Err(fail());
+                }
+                let (sql, _, _) = build.field(&key.0, &argument.scan, &argument.identity)?;
+                (
+                    format!("pg_catalog.sum({sql})"),
+                    Some(argument.identity.clone()),
+                    None,
+                    logical_type.clone(),
+                    "computed",
+                )
+            }
             app::Expression::Count { logical_type } => {
                 count_type(logical_type)?;
                 (
@@ -642,7 +679,13 @@ fn lower_binding<'a>(
             effective_domain: domain,
             logical_type: t,
             exposure: exposure.into(),
-            encoding: if exposure == "computed" {
+            encoding: if let app::Expression::Sum { logical_type, .. } = &o.expression {
+                if logical_type.nullable {
+                    "native-numeric-integer-nullable-text"
+                } else {
+                    "native-numeric-integer-required-text"
+                }
+            } else if exposure == "computed" {
                 "native-int8-nonnegative-text"
             } else {
                 "native-text-exact-required"
@@ -690,6 +733,11 @@ fn lower_binding<'a>(
                             json!([{"path":path,"scan":scan,"field":identity}]),
                         )
                     }
+                    app::Expression::Sum { argument, .. } if live_sum => (
+                        "sum",
+                        format!("outputs/{position}"),
+                        json!([{"path":format!("outputs/{position}/argument"),"scan":argument.scan,"field":argument.identity}]),
+                    ),
                     app::Expression::Count { .. } => {
                         ("count", format!("outputs/{position}"), json!([]))
                     }
@@ -706,7 +754,11 @@ fn lower_binding<'a>(
             }
             let groups=plan.groups.iter().enumerate().map(|(index,field)|json!({"path":format!("groups/{index}"),"scan":field.scan,"field":field.identity})).collect::<Vec<_>>();
             Some(PrivateLineage {
-                version: "weft.postgresql.current-scalar/0.3-candidate",
+                version: if live_sum {
+                    "weft.postgresql.current-scalar/0.4-candidate"
+                } else {
+                    "weft.postgresql.current-scalar/0.3-candidate"
+                },
                 columns: json!([{"position":columns.len(),"name":"__weft_contributors","purpose":"source-row-contributor-bag","encoding":"jsonb-text:weft.stage-contributor-bag/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256,"multiplicity":"bag"}]),
                 cells: json!(cells),
                 groups: Some(json!(groups)),
@@ -804,6 +856,7 @@ pub fn lower_rows<'a>(
         binding_json,
         "weft.postgresql.current-values/0.2-candidate",
         false,
+        false,
     )
 }
 /// Complete joined contributor bags for supported direct/grouped COUNT operations.
@@ -817,6 +870,20 @@ pub fn lower_contributors<'a>(
         binding_json,
         "weft.postgresql.current-values/0.3-candidate",
         true,
+        false,
+    )
+}
+/// Explicit live-original signed64 SUM capability with exact nullable integer output.
+pub fn lower_original_sum<'a>(
+    context: &'a CurrentQueryOperands<'a>,
+    binding_json: &str,
+) -> Result<CurrentScalarSql<'a>> {
+    lower_keyed(
+        context,
+        binding_json,
+        "weft.postgresql.current-values/0.4-candidate",
+        true,
+        true,
     )
 }
 fn lower_keyed<'a>(
@@ -824,6 +891,7 @@ fn lower_keyed<'a>(
     binding_json: &str,
     version: &str,
     contributor_bag: bool,
+    live_original_integer_sum: bool,
 ) -> Result<CurrentScalarSql<'a>> {
     if binding_json.len() > 4_000_000 {
         return Err(fail());
@@ -867,6 +935,7 @@ fn lower_keyed<'a>(
         Some(Lineage {
             keys,
             contributor_bag,
+            live_original_integer_sum,
         }),
     )
 }
@@ -1073,6 +1142,78 @@ mod tests {
         let mut r = r;
         r["sql"] = json!("SELECT COUNT(DISTINCT r.token) AS n FROM Resource r WHERE FALSE LIMIT 0");
         assert!(contributors(&r, |b| b["values"][0]["mode"] = json!("prohibited")).is_err());
+    }
+    fn sum_request() -> Value {
+        serde_json::from_str(include_str!("../../../tests/current-query-designation/fixtures/live-original-integer-sum.request.json")).unwrap()
+    }
+    fn sum_output(r: &Value, edit: impl FnOnce(&mut Value)) -> Result<Value> {
+        let p = application_lineage::prepare(&r.to_string())?;
+        let d = current_query_designation::derive(&p)?;
+        let g = current_query_operands::derive(&d)?;
+        let mut b = binding(&g);
+        b["version"] = json!("weft.postgresql.current-values/0.4-candidate");
+        for scan in b["scans"].as_array_mut().unwrap() {
+            scan["relation"]["rowKeyColumn"] = json!("__native_row_key")
+        }
+        edit(&mut b);
+        lower_original_sum(&g, &b.to_string()).map(|sql| sql.json())
+    }
+    // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+    #[test]
+    fn original_integer_sum_uses_exact_numeric_accumulation_nullable_text_and_complete_bag() {
+        let r = sum_request();
+        let out = sum_output(&r, |_| {}).unwrap();
+        let sql = out["sql"].as_str().unwrap();
+        assert!(sql.contains("pg_catalog.sum(\"s0\".\"salary\")"));
+        assert!(sql.contains("pg_catalog.jsonb_agg("));
+        assert!(!sql.contains("salary_public"));
+        assert_eq!(
+            out["version"],
+            "weft.postgresql.current-scalar/0.4-candidate"
+        );
+        assert_eq!(
+            out["resultColumns"][0]["logicalType"],
+            json!({"family":"integer","facets":{},"nullable":true})
+        );
+        assert_eq!(
+            out["resultColumns"][0]["encoding"],
+            "native-numeric-integer-nullable-text"
+        );
+        assert_eq!(out["publicCellSources"][0]["kind"], "sum");
+        assert_eq!(
+            out["publicCellSources"][0]["sources"][0]["path"],
+            "outputs/0/argument"
+        );
+        let mut grouped = r.clone();
+        grouped["sql"] = json!("SELECT SUM(r.salary) AS total FROM Resource r GROUP BY r.token");
+        let out = sum_output(&grouped, |_| {}).unwrap();
+        assert_eq!(out["resultColumns"][0]["logicalType"]["nullable"], false);
+        assert_eq!(
+            out["resultColumns"][0]["encoding"],
+            "native-numeric-integer-required-text"
+        );
+        assert!(sum_output(&r, |b| {
+            b["values"][0]["mode"] = json!("disclosed");
+            b["values"][0]["originalAction"] = Value::Null;
+        })
+        .is_err());
+        assert!(sum_output(&r, |b| b["values"][0]["originalAction"] = json!("read")).is_err());
+    }
+    // @covers US-009-AC2 @covers US-009-AC3
+    #[test]
+    fn sum_context_cannot_route_through_predecessors_even_for_count_or_empty_work() {
+        let mut r = sum_request();
+        r["sql"] = json!("SELECT COUNT(*) AS n FROM Resource r WHERE FALSE LIMIT 0");
+        assert!(run(&r, |_| {}).is_err());
+        assert!(rows(&r, |_| {}).is_err());
+        assert!(contributors(&r, |_| {}).is_err());
+        assert!(sum_output(&r, |_| {}).is_ok());
+        assert!(sum_output(&r, |b| b["version"] =
+            json!("weft.postgresql.current-values/0.3-candidate"))
+        .is_err());
+        assert!(sum_output(&request("mixed"), |_| {}).is_err());
+        r["sql"] = json!("SELECT SUM(r.salary) AS total FROM Resource r WHERE FALSE LIMIT 0");
+        assert!(sum_output(&r, |b| b["values"][0]["mode"] = json!("prohibited")).is_err());
     }
     fn request(name: &str) -> Value {
         serde_json::from_str(match name{

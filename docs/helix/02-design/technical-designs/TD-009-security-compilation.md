@@ -531,3 +531,16 @@ logical mathematical Integer remains distinct from its bounded native encoding.
 The native host must retain actual statement/result custody and validate complete
 contribution/cell meaning; a correct public count alone cannot establish lineage.
 CONTRACT-006 specifies the exact closed carrier and explicit ABI registration.
+
+
+### Versioned original-integer SUM — 2026-10-15
+
+Designation0.2 selects an explicit live-original-integer-sum capability and
+operation-scoped action bindings. The original typed factory preserves contextual
+nullable/global versus required/grouped mathematical Integer outputs. Native
+packet0.2 derives the necessary nullity route dependency inside the actual scoped
+context; it makes no additive transform claim. Separate SQLconsumer0.4 checks raw
+original-authorized signed64 inputs and emits qualified exact numeric SUM with
+complete source bags and contextual result codecs. All older source/consumer
+cohorts keep their existing behavior and reject the new context. See CONTRACT-006
+for closed schemas, native requirements and remaining unsupported domains.

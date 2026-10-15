@@ -1095,6 +1095,7 @@
             "fn:json",
             "fn:preparation",
             "fn:primary_action",
+            "fn:supports_live_original_integer_sum",
             "fn:binding_scope",
             "fn:original_action",
             "fn:derive",
@@ -2339,7 +2340,8 @@
             "fn:json",
             "fn:lower",
             "fn:lower_rows",
-            "fn:lower_contributors"
+            "fn:lower_contributors",
+            "fn:lower_original_sum"
           ],
           "pathReferences": []
         },
@@ -3407,6 +3409,7 @@
             "fn:lower_postgresql_scalar_candidate_json",
             "fn:lower_postgresql_current_rows_candidate_json",
             "fn:lower_postgresql_current_contributors_candidate_json",
+            "fn:lower_postgresql_current_sum_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"

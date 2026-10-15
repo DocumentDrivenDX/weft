@@ -1,0 +1,99 @@
+{
+  "scope": "Explicit original signed64 SUM conditional compiler/type/SQL/bag evidence only; not genuine native source/caller/current authority, UMF action permission or guarded release",
+  "baseMain": "86fa36badecbae7ba8aff9df00b7cd9936e97ebe",
+  "sourceSha256": {
+    "crates/weft-core/src/current_query_designation.rs": "d6611f03f2d7e952a077253293d9338be3d8e74b7b60e3e183abe7baeb07149c",
+    "crates/weft-core/src/current_query_operands.rs": "f708dccec6a1ad4fdb871f945aeffa922b43e404125bdc7a62c15855cae3f44f",
+    "crates/weft-postgresql/src/current_scalar.rs": "115dbdbc06757928ba074baa8af72bd3c09a8e4027994d5df11c8f0da2ed37eb",
+    "crates/weft-runtime/src/lib.rs": "c002df576dd5945ab7788650c32b57424d155ea8d18fdcaef909be0ff9794fc4",
+    "crates/weft-python/src/lib.rs": "d5026ddedbf8345f3a9bbc3b1396996af259e0380106f2d3e36b9fa6031aa230",
+    "docs/helix/02-design/contracts/current-query-designation-profile-v0.2-candidate.schema.json": "5f5b3918ef7ad33c7f07f0d4064e832b5f893d55c2b664c391fda7cf9f2eaae6",
+    "docs/helix/02-design/contracts/current-query-designation-v0.2-candidate.schema.json": "f41765fa4fe19c92e9c4060c3523afe61c3c03d4d2e67f68d17e3c8c3493a2f3",
+    "tests/current-scalar-postgresql/sum.py": "bec61c0458034f7279cc40131ad499452701ac9bf8394d1078dfc441e47d1697",
+    "tests/current-query-designation/make-live-sum-fixture.py": "eb8499e2eb48ca75a4f3d490292d8fb9e201153d9570d0c0cd985812f47bfc2f",
+    "tests/current-query-designation/fixtures/live-original-integer-sum.request.json": "fc8ed1aaa049f16a3accc983b09118711bd70aead974f247d72a02df6f2e6855",
+    "tests/current-query-designation/fixtures/live-original-integer-sum.report.json": "5080024644fb76d82380653c3581026d09270874d9c20586fca8e2ede5ced1eb",
+    "tests/current-query-designation/fixtures/original-live-sum-owner-source.json": "d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15"
+  },
+  "frozenSourceManifestSha256": "e786d5433afc9af0d8f1615130fcdd4ae6ae6d6f05519f4037e61b621b3eb4c0",
+  "frozenFileCount": 3831,
+  "features": [
+    "current-postgresql-scalar-candidate"
+  ],
+  "candidateWheelVersion": "0.4.32",
+  "candidateWheelSha256": "a2fe09d2a8d7bc240cf0ab0be385a77b087dcb98c96da6039c831c825ab03964",
+  "nativeModuleSha256": "412e591c0dbf11efefefca7e075eb633104b2e025c3d972ad6620ea235e32691",
+  "postBuildChanges": "Test harness/generator, a cfg(test) type-refusal test, and governed documentation only; production Rust unchanged.",
+  "published": false,
+  "buildProfile": "dev",
+  "originalOwnerSource": {
+    "repository": "DocumentDrivenDX/umf",
+    "commit": "1bb8ec4768a720c88c4436cd2f1b75272661096c",
+    "sha256": "d9a87aa6b230eacf38b7b56451725cdf226a492610c2872c585008badd8c7b15",
+    "profileAuthor": "Weft independently; source expectation/intent metadata unused"
+  },
+  "checks": {
+    "core": 317,
+    "targetedScalar": 15,
+    "actualPgSumAndRefusals": 20,
+    "pythonOriginalCustody": 46,
+    "chromiumMetadata": 13,
+    "chromiumVersion": "151.0.7922.34",
+    "predecessorNativeLedgersUnchanged": [
+      9,
+      13,
+      20
+    ],
+    "workspaceAllTargets": "passed",
+    "modules": 16,
+    "governedSchemas": 81
+  },
+  "calibrationFailures": {
+    "initialError": "Blanket nullable SUM expectation incorrectly refused grouped nonnullable original IR; fixed preserving contextual type, then rebuilt wheel/retested",
+    "failedAttempts": [
+      {
+        "attempt": "weft-current-sum-native-20261015",
+        "receiptPublished": false,
+        "postmasterPidFilesObservedAfterFailure": 0
+      },
+      {
+        "attempt": "weft-current-sum-native-r2-20261015",
+        "receiptPublished": false,
+        "postmasterPidFilesObservedAfterFailure": 0
+      }
+    ],
+    "qualifiedNativeAttempt": "weft-current-sum-native-r3-20261015"
+  },
+  "nativeQualification": "Privileged fixture connection and synthetic declared stage/mode/scope/eligibility, not source policy decisions. Module/shim/wheel/runner verified before and after final server cleanup.",
+  "nativeAdmission": false,
+  "securityReady": false,
+  "original132Required": true,
+  "expandedGate": {
+    "accepted": 45,
+    "unimplemented": 113,
+    "required": 158
+  },
+  "remaining": [
+    "native original source/Subject/current cut/actual fact and action admission",
+    "actual original-value correspondence, exact statement/result custody and guarded release",
+    "disclosed/transformed SUM and remaining required domains/operations",
+    "all original raw/graph/Truss/Ashlar shared/native acceptance including second Databricks caller",
+    "next standard-wheel0.4.33 feature/API smoke and actual exact-wheel Truss qualification"
+  ],
+  "evidenceSha256": {
+    "full-core.log": "60f956857aeaa703fd4b53e105938332fa57af634f8b78e2fcb50a958e98331c",
+    "scalar-tests.log": "c3af2c8f8007a8ba12c64794e2cbc9d9459c62dcfda7e351e40486de4dd2aa09",
+    "native-sum.json": "92f88df9aa1d807e37e6d3e99b2771787c98c89baf0700453aa15f4cae0faef2",
+    "python-custody.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+    "native-v1.json": "9cf6973d99206b76755268264a5cc5c46a9849e6713e4134cb6b96c451b4c8d0",
+    "native-v2.json": "879aa231f6b29f71ed109b30578b3d07e0d23da4ce484f71f820917996ea9f06",
+    "native-v3.json": "a0aa1b87bf891b4d57e84d8eabc217f8bf1a33f28744963444c67835c00d0e22",
+    "predecessor-identity.json": "49bf606b58de86ba6ce73b663e4ee2228ca75457843438093e394fd362b85e23",
+    "browser.json": "a086fc30c0b87a26cf8f9f5ce058a63fe38388ba72854f7cf3e1aab0aa6259de",
+    "wasm-build.log": "89a82e6c438f1a359fb352ad873282e4a5de7e44017f2c51191e476c223df49f",
+    "wheel-build.log": "8ce5cdf22d3e6819fdd7f802b93326b95a186ad96c234c41d4a33c7cdcfa7fe9",
+    "modules.log": "719b155679565d0cd935fd64f07a396f7d90aee9613e4107f16e99bd6e5d4242",
+    "workspace.log": "92a597944efda37e0000c8661284960d3506345caee094f0e0abc26b187d35d2",
+    "specs.log": "e1be5b5bc001dc8fa1e6743a31577d947b3a817f145b4f1b930f8064df04b51a"
+  }
+}
