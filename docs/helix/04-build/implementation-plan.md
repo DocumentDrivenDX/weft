@@ -1933,3 +1933,46 @@ query checks against the actual workflow Mac artifact; those are owner-reported
 until its exact retained receipts are independently consumed here. No current
 protected-security or newer opt-in lineage release claim follows. Tag/publication
 is coordinated separately and was not performed by this increment.
+
+## B-008 original typed preparation lifetime — 2026-10-15
+
+The core preparation now retains actual Catalog, ApplicationPlan, original sort
+directions and exact original request UTF8. Immutable accessors expose those
+original values without reconstructing a plan from report JSON. The source-owned
+Python preparation holds the same core result, with no report/dict constructor,
+mutation, dynamic state, subclass, copy or pickle path. Its native receivers reject
+forged dictionaries/strings/duck types. JSON/report protocols remain exact.
+
+The direction vector is essential: the older Plan order list alone omits ASC/DESC,
+and span-aligned opposite-direction queries can have identical Plan bytes. A new
+native lowerer must consume the full issued preparation and per-occurrence owner
+value descriptors, preserving output disclosure separately from hidden original
+operands. Existing registrations still reject0.2 IR before callbacks, including
+older SQL syntax transported under the new protocol. Native profile/issuer/action
+approval is not inferred from object possession, hashes or source declarations.
+Private native source preparations must stay inside the trusted host boundary;
+authority:false does not permit publication of their retained host inputs.
+
+Fresh301 core tests, runtime/doc tests,16 boundary controls,31 installed preparation
+controls,16 Python and16 real-Chromium checks pass. An explicitly dual-feature
+wheel coexists with ordinary native066 public queries and passes8 native controls:
+reports cannot become compile requests, new syntax remains refused and ordinary
+raw-object access is denied. This is the old ordinary route, not0.2 typed-plan
+lowering or current protection. The actual source CLI passes445 independent UMF
+consumer checks over27 reports; selected source pins are retained, not a hermetic
+or native-proof claim. All old/candidate/property/mapping/availability report
+bytes remain unchanged. Exact receipts are under evidence/issued-context-20261015/.
+
+Next implement a separate current-source designation and SQL lowering cohort over
+this context, with joint ontology/catalog modes, per-use effective domains and
+exact original-action bindings. A new original owner source is required for the
+original-authorized positives; r1/r2 remain unchanged. Actual native caller/source/
+current-authority and guarded result-release gates, every original132 backend case
+and expanded owner coverage remain open. No acceptance case is promoted.
+
+Concurrent integration retains the reviewed native66 mutation fix e389d60 and
+release preparation f87939f. A fresh dual-feature0.4.31 wheel passes31 object and16
+JSON controls after composing those exact peer sources; workspace all-target
+checking is retained separately. The8 ordinary-native controls remain qualified
+to the earlier0.4.30 image and its frozen SDK, rather than being relabeled as a
+fresh0.4.31 SDK qualification. No current/native protection claim follows.

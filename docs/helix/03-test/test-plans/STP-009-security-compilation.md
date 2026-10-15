@@ -328,3 +328,36 @@ Worker access is fenced, page errors and external requests fail the test. Record
 exact wheel/WASM/JS hashes, build features and browser version. The no-feature
 wheel must omit the bridge. These are binding/source-lineage component checks,
 not native policy/caller/current-cut/guarded-release acceptance.
+
+### Issued Python preparation controls
+
+The installed issued-python.py test cites US-009-AC1/2/3 and compares all11
+retained report fixtures through the actual typed preparation and JSON API.
+Direct report/dict/no-argument constructors, object.__new__, attribute/dynamic
+state changes, copy/deepcopy/pickle, and dictionary/string/duck-type native
+receivers must refuse. The real object must remain unchanged. Whitespace and
+Unicode/NUL/duplicate-content opaque source bytes remain exact and uninterpreted;
+legitimate producer invocation on caller source still reports authority:false.
+Malformed and over-budget source inputs refuse. A Rust compile-fail example
+checks private-field construction. Default builds omit the typed surface. These
+controls do not establish native policy or caller/current-generation authority.
+
+Typed-context verification compares the retained actual Plan serialization to
+applicationPlanJson, actual Catalog inputs/pins to original request/report bytes,
+join/zero-limit occurrences and mixed DESC/ASC order alignment. The old-backend
+callback trap now consumes the actual issued preparation rather than resolving a
+second plan, and includes an older-syntax query inside the new0.2 protocol.
+
+The native-issued.py harness explicitly builds both application-lineage-candidate
+and truss-postgresql-pg18, exercising ordinary native066 query compatibility with
+the original accepted source/binding. Lineage reports must fail as native compile
+requests; COUNT DISTINCT/FALSE/LIMIT0 remain refused by the original SQL profile,
+while source read duties survive. This installs no current protection policy and
+must not promote a native security case or treat the preparation as permission.
+
+The ordinary native coexistence harness deliberately keeps the existing native
+compiler route separate; it checks original source pins/SQL and refusal boundaries,
+not lowering the new typed0.2 Plan. A future current-native lowerer must consume
+that exact issued context and per-use effective descriptors directly. Native source
+preparations may contain private host inputs; releasing those reports is outside
+the guarded result contract and must remain prohibited in the actual adapter.

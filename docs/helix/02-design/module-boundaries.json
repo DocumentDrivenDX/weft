@@ -468,7 +468,12 @@
           "path": "crates/weft-core/src/application_lineage.rs",
           "publicDeclarations": [
             "struct:ApplicationLineage",
+            "enum:OrderDirection",
             "fn:json",
+            "fn:catalog",
+            "fn:plan",
+            "fn:order_directions",
+            "fn:source_request_json",
             "fn:prepare"
           ],
           "pathReferences": []
@@ -3302,7 +3307,11 @@
             "fn:lower_mutation_selection_json",
             "fn:prepare_truss_security_relationship_candidate_json",
             "fn:inspect_truss_security_relationship_result_json",
-            "fn:prepare_application_lineage_json"
+            "fn:prepare_application_lineage_json",
+            "fn:prepare_application_lineage",
+            "struct:ApplicationLineagePreparation",
+            "fn:json",
+            "fn:source_request_json"
           ],
           "pathReferences": []
         },
