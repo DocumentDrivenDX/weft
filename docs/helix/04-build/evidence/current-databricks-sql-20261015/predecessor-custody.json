@@ -1,0 +1,202 @@
+{
+  "scope": "Actual source-object custody and Rust consumer hook through native Python getters only; no native source/current authority or SQL",
+  "controls": 46,
+  "checks": [
+    {
+      "id": "disclosed-token-equality",
+      "sameParent": true,
+      "operandCount": 1,
+      "designationSha256": "559db129327d22d5f1c8e6d89fa648d6ee2ed9d9185e478bdc3800efa0c52b80"
+    },
+    {
+      "id": "disclosed-token-selfjoin",
+      "sameParent": true,
+      "operandCount": 2,
+      "designationSha256": "d297bdd5caba6d22ab3591de848f37547e897f674a6cfd5d49149d055178fd86"
+    },
+    {
+      "id": "original-token-order",
+      "sameParent": true,
+      "operandCount": 1,
+      "designationSha256": "80e3083960d7792d8bb669d4aa986913e3317e4ff95eb129e982057a2190248c"
+    },
+    {
+      "id": "read-dto-hidden-original",
+      "sameParent": true,
+      "operandCount": 1,
+      "designationSha256": "109bffdfa6439c8b16502c3a05d4ef81e73fbb3b9603377ee67b6e83dae1a9d8"
+    },
+    {
+      "id": "mixed-original-uses",
+      "sameParent": true,
+      "operandCount": 2,
+      "designationSha256": "a6a07ef51fd547dddd5884d7b43a2fe703058d3ba2bb199018eb3c989c61dfdc"
+    },
+    {
+      "id": "prohibited-salary-order-empty",
+      "sameParent": true,
+      "operandCount": 1,
+      "designationSha256": "9791b4d14ded0d45f55a1b841250c6347369fce70d4fdd917f0fbfb6b9831dfb"
+    },
+    {
+      "id": "no-child-constructor:0",
+      "refused": true
+    },
+    {
+      "id": "no-child-constructor:1",
+      "refused": true
+    },
+    {
+      "id": "no-child-constructor:2",
+      "refused": true
+    },
+    {
+      "id": "no-child-constructor:3",
+      "refused": true
+    },
+    {
+      "id": "no-object-new",
+      "refused": true
+    },
+    {
+      "id": "no-subclass",
+      "refused": true
+    },
+    {
+      "id": "no-instance-replacement:original",
+      "refused": true
+    },
+    {
+      "id": "no-instance-replacement:inner",
+      "refused": true
+    },
+    {
+      "id": "no-instance-replacement:designation_json",
+      "refused": true
+    },
+    {
+      "id": "no-instance-replacement:operand_count",
+      "refused": true
+    },
+    {
+      "id": "no-instance-dictionary",
+      "refused": true
+    },
+    {
+      "id": "no-copy",
+      "refused": true
+    },
+    {
+      "id": "no-deepcopy",
+      "refused": true
+    },
+    {
+      "id": "no-pickle",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:source_preparation:str",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:designation_json:str",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:operand_count:str",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:source_preparation:dict",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:designation_json:dict",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:operand_count:dict",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:source_preparation:ApplicationLineagePreparation",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:designation_json:ApplicationLineagePreparation",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:operand_count:ApplicationLineagePreparation",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:source_preparation:object",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:designation_json:object",
+      "refused": true
+    },
+    {
+      "id": "native-receiver:operand_count:object",
+      "refused": true
+    },
+    {
+      "id": "no-factory-input:NoneType",
+      "refused": true
+    },
+    {
+      "id": "no-factory-input:str",
+      "refused": true
+    },
+    {
+      "id": "no-factory-input:dict",
+      "refused": true
+    },
+    {
+      "id": "no-factory-input:function",
+      "refused": true
+    },
+    {
+      "id": "no-factory-mode",
+      "refused": true
+    },
+    {
+      "id": "no-child-action",
+      "refused": true
+    },
+    {
+      "id": "no-parent-override",
+      "refused": true
+    },
+    {
+      "id": "legacy-compiler-rejects-object",
+      "refused": true
+    },
+    {
+      "id": "legacy-compiler-refuses-diagnostic-report",
+      "passed": true
+    },
+    {
+      "id": "identical-source-parent-not-object-substitution",
+      "passed": true
+    },
+    {
+      "id": "unsupported-source:unsupported-salary-sum",
+      "refused": true
+    },
+    {
+      "id": "legacy-source-refused",
+      "refused": true
+    },
+    {
+      "id": "native-descriptor-ignores-python-replacement",
+      "passed": true
+    },
+    {
+      "id": "original-parent-retained-after-gc",
+      "passed": true
+    }
+  ]
+}

@@ -195,6 +195,38 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-databricks/src/current_scalar.rs",
+          "publicDeclarations": [
+            "struct:Parameter",
+            "field:ordinal",
+            "field:marker",
+            "field:kind",
+            "field:source_path",
+            "field:name",
+            "field:value",
+            "field:logical_type",
+            "field:native_type",
+            "struct:ResultColumn",
+            "field:position",
+            "field:name",
+            "field:path",
+            "field:source_field",
+            "field:effective_domain",
+            "field:logical_type",
+            "field:exposure",
+            "field:encoding",
+            "struct:CurrentScalarSql",
+            "fn:sql",
+            "fn:parameters",
+            "fn:columns",
+            "fn:json_string",
+            "fn:json",
+            "fn:lower",
+            "fn:lower_original_sum"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-databricks/src/implicit_arithmetic.rs",
           "publicDeclarations": [
             "const:VERSION",
@@ -228,7 +260,8 @@
             "mod:paths_keys",
             "mod:paths_keys_having",
             "mod:implicit_arithmetic",
-            "mod:compatible_profile"
+            "mod:compatible_profile",
+            "mod:current_scalar"
           ],
           "pathReferences": []
         },
@@ -3410,6 +3443,8 @@
             "fn:lower_postgresql_current_rows_candidate_json",
             "fn:lower_postgresql_current_contributors_candidate_json",
             "fn:lower_postgresql_current_sum_candidate_json",
+            "fn:lower_databricks_current_contributors_candidate_json",
+            "fn:lower_databricks_current_sum_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"

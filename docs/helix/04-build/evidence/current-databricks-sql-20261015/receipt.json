@@ -1,0 +1,31 @@
+{
+  "scope": "Conditional same-original Databricks compiler and native Python bridge. Native stages/modes/scopes are synthetic; actual source/caller/current authority and protected Ashlar registration are not qualified.",
+  "originalCasePlanSha256": "37308740d5d8b57f6f4647c1a44feee71cbfde02d8f5bee1334299654a610ba9",
+  "nativeControls": 25,
+  "nativePositiveQueryCases": 22,
+  "nativeCounterfactualOracleControls": 1,
+  "nativeProfileRefusals": 2,
+  "newRustUnitTests": 9,
+  "wholeDatabricksPackageTests": "passed (cargo test --locked -p weft-databricks)",
+  "newPythonBridgeControls": 32,
+  "predecessorPythonCustodyControls": 46,
+  "predecessorPostgresqlCompiledChecksIdentical": 4,
+  "workspaceAllTargetsCheck": "passed with both current consumer features",
+  "moduleBoundaryTests": 16,
+  "governedSchemas": 81,
+  "managedSchemaRemoved": true,
+  "review": "independent once-only source/retained-receipt review; five exact source hashes match",
+  "reviewBlockers": [],
+  "nativeAdmission": false,
+  "securityReady": false,
+  "casesPromoted": [],
+  "limitations": [
+    "Original fixtures retain PostgreSQL-scoped static binding declarations; no accepted Ashlar source/profile migration is inferred",
+    "One approved configured connection; no second caller, original native policy/UMF admission, UC row/column enforcement or time-travel policy qualification",
+    "Schema/UUID/version/domain/modes/actions/scopes/key uniqueness/completeness and builtin/runtime support remain native issuer premises",
+    "Negative COUNT check alone does not prove arbitrary overflow safety; actual host must bound and cross-check complete cardinality",
+    "DECIMAL38 SUM is exact-or-capability-refusal, not an unbounded native numeric type",
+    "Managed receipts do not establish native statement/result custody, cancellation/revocation handling or guarded public release",
+    "WASM/TypeScript current-CQP API qualification and wider structured/nullable/operator/disclosed-SUM scope remain required"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "README.md": "523ba07be11116130a08e7ae755249fae9fcf665ac3a2302a707cd95fa7ec049",
+  "independent-review.json": "8d30d7f7461aa0e4fdcd1cd54417581c652ac598711dd01a9c40fbb7dec61739",
+  "native.json": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f",
+  "predecessor-custody.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+  "predecessor-pg-smoke.json": "290170245ea4cf9561a3bdfa26c1d4d5ce76fb9b84f24cddc9438c451900eca5",
+  "python-bridge.json": "789756d03b1898a5abcd2ff95018239748496f75fa56b4457a1f722f519409a7",
+  "receipt.json": "a334d2804fd250017502d301d78293b109601d94135457fbfa68a518353d0f94",
+  "source-pins.json": "009b2e389fbfc860643b1c9295d6672a80f4850f1f539a4547e5fc4299f77bb6",
+  "standard-wheel-correspondence.json": "b7be5b413ee6c99376c354385f565180029591eb27e1c384eafad2a8b4997122",
+  "standard-wheel-smoke.json": "12f52ca5de4d1af87ec68e9ecf6bc5f356ad61b4a5c9b56da55b9b45d3947725"
+}

@@ -1,0 +1,29 @@
+{
+  "baseCommit": "57da5c9bd3ca0ef7753199b1a200183057cff4ff",
+  "changedFiles": {
+    ".github/workflows/release.yml": "593ae26d326a81c5797ce914f12c5e36aa2b7bd856ea7a3e3e9f4a0d03121ac3",
+    "tests/current-scalar-databricks/wheel-smoke.py": "fca05093a47d23ec7601d58b749ca43fb04d975184a180569d80360ef39fb881",
+    "Cargo.lock": "fb03f8165edef8efbbc2e2f64b34e9253ff9dff575fec76bd42ac6c3ec841953",
+    "crates/weft-databricks/src/lib.rs": "2f543be31b58a027641a898b2e26c6cc68d78e838ef04bed95cb3e248ba20d50",
+    "crates/weft-databricks/src/current_scalar.rs": "8dd23666211f0398b02e9f441515c1518f8847c77d8c88ea3826019fdef35ac5",
+    "crates/weft-runtime/Cargo.toml": "03e3bed75167f2a76662957bcdfa5a1a0ddf2c40cc5e05993ceb7d6ea44b3d5f",
+    "crates/weft-runtime/src/lib.rs": "53c0fd85339a2f4972fe1c98ecb3fd52bbedd4bba84bd592297eb03b490ab4a9",
+    "crates/weft-python/Cargo.toml": "7c1b0034369859b07bf16ce0b9f0510972914a8009db399993171ea6c600d939",
+    "crates/weft-python/pyproject.toml": "6a436a7baa2fc1ee1cd64b553ea451addc5afec962ea966d4c5e238558fbbc9c",
+    "crates/weft-python/src/lib.rs": "0e8835cabdf4d3f4ce9d01248ac69c5f053995b6559a1b0c650e9e7260dc8ef4",
+    "docs/helix/02-design/module-boundaries.json": "881250f2e95b2638c5cac0dd96f53083a6aed734c8ac0cd6ab95af81cd5ea26e",
+    "docs/helix/02-design/contracts/CONTRACT-006-security-compilation.md": "bc80f7d092c7b6b8f82ec0cce2b02d70a8d4f5492b7cf1f699da5abe314afea2",
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": "09e87bb0cc23e9d4ef631246692590b7095a1d2780b1873c57a92d9587695951",
+    "docs/helix/04-build/implementation-plan.md": "b2a045cfa309ef4b1b1ce0ac9bd16c54163b1b399aea6c1f0d60e29e484ea28b",
+    "tests/current-scalar-databricks/native.py": "1969c1cda8bc9b46430cf4ea2960122e32e5404e1392cdd0af2e0ae28043df95",
+    "tests/current-scalar-databricks/python-bridge.py": "d0fbb83dccdd15f9922561cea8771037264623f6a33baffe651fd359ed894276"
+  },
+  "features": [
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate",
+    "current-databricks-scalar-candidate"
+  ],
+  "developmentWheel": "/private/tmp/weft-current-databricks-standard-wheels-20261015/weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+  "packageVersion": "0.4.34",
+  "published": false
+}

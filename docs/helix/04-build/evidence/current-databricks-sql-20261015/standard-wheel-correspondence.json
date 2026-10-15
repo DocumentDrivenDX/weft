@@ -1,0 +1,12 @@
+{
+  "scope": "Default pyproject feature build vs explicit identical three-feature build; all wheel member payloads match, not a fresh database run",
+  "oldWheelSha256": "a9c1662b063ec530d9bcf32c36c34a59875ba6b5139de01e56dcdc32113cf874",
+  "standardWheelSha256": "0b20c8b432d6aaac081880bcf1559cf8fbdadcfab333394f630caee116e5996d",
+  "identicalMembers": {
+    "weft_sql-0.4.34.dist-info/METADATA": "0b66a3a17bc37fd43361a9ddcbf801b14c19a1124878a1f878b4667e1ca13019",
+    "weft_sql-0.4.34.dist-info/WHEEL": "be9a82d2d467ffc6d31e276fb6b3dbae71503d99eb86e2b3b230dd78ac02779f",
+    "weft/__init__.py": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+    "weft/weft.abi3.so": "6865628e315e5cc083d59b8c794be66659745c30d2af714963393226add03798",
+    "weft_sql-0.4.34.dist-info/RECORD": "3c9753d5417e3fa06f34cd1629dc4f141a5ceeb5590b3057019fbcd589b69ea2"
+  }
+}

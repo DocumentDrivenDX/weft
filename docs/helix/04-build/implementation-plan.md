@@ -2324,3 +2324,42 @@ adding ambiguous same-module cohorts or automatic ABI3/4 registration is invalid
 Evidence is in evidence/release033-published-20261015/. Publishing repairs the
 package dependency only: all132 original B-008 cases and full native security
 qualification remain open. Databricks typed compiler implementation is next.
+
+
+### Typed Databricks current scalar compiler and Python bridge — 2026-10-15
+
+B-008 remains open under all132 original shared/native cases. The separate pure
+Databricks consumer now emits current-value SQL through the actual original CQP
+context, with exact Delta relation/version declarations, bound values/scan labels,
+explicit binary collation, complete private contributor bags and guarded exact
+original signed64 SUM. Native Python exposes the two explicit profile APIs under
+current-databricks-scalar-candidate. Existing registered backends do not activate
+these methods or migrate bindings. The package version0.4.34 identifies an
+unpublished development wheel; public0.4.33 remains unchanged.
+
+Nine new Rust tests and the complete existing Databricks package suite pass.
+The native Python bridge passes32 new controls and46 existing custody controls.
+The actual same-original Python/Rust -> managed Databricks corpus passes25 controls
+(22 positive emitted-query cases, wrong-contributor oracle,2profile refusals),
+including exact sums beyond signed64, empty/global nullable versus grouped required,
+join bags, masks and parameter injection-as-data. Its dedicated client_dev schema
+is removed. The native tests use synthetic materialization/mode/scope declarations
+and original logical fixtures; no accepted Ashlar installation or actual native
+policy/source/caller authority is asserted. All original132 case IDs remain intact.
+
+Evidence is in evidence/current-databricks-sql-20261015/. Next integrate the actual
+Ashlar held provider and original UMF decisions, then complete genuine native
+source/caller/current authority, two-caller and guarded-release acceptance. The
+compiler's declared premises and JSON digest cannot substitute for those gates.
+Broader nullable/structured/numeric/operator/disclosed-SUM scope remains required.
+
+
+Standard Python wheel selection now explicitly includes the Databricks candidate
+feature. Release builds read their pinned source pyproject features, and every
+new standard platform runs32 exact-wheel Databricks bridge/version/refusal controls.
+Publication requires five matching Databricks reports when that feature is selected,
+with identical wheel/module/shim/source/version pins to the existing PostgreSQL
+smoke receipts. Historical0.4.33 artifacts need no Databricks report. A local
+no-extra-feature standard build has all five wheel member payloads identical to
+the explicitly enabled, managed-tested development wheel. This is archive/member
+correspondence, not another native database run or security qualification.

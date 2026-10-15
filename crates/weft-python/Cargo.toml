@@ -1,12 +1,13 @@
 [package]
 name="weft-python"
-version="0.4.33"
+version="0.4.34"
 edition.workspace=true
 publish.workspace=true
 [lib]
 name="weft"
 crate-type=["cdylib"]
 [features]
+current-databricks-scalar-candidate=["application-lineage-candidate","weft-runtime/current-databricks-scalar-candidate"]
 application-lineage-candidate=["weft-runtime/application-lineage-candidate"]
 current-postgresql-scalar-candidate=["application-lineage-candidate","weft-runtime/current-postgresql-scalar-candidate"]
 truss-security-relationship-candidate=["weft-runtime/truss-security-relationship-candidate"]

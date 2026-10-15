@@ -580,3 +580,19 @@ The six retained constant-only managed probes and six receipt-corruption control
 qualify their finite dialect/receipt oracle only. They do not implement these
 compiler/native tests or close any protected backend acceptance case. Local Spark
 is not a substitute for Databricks identity, Unity Catalog or source authority.
+
+
+### Conditional Databricks component evidence — 2026-10-15
+
+Nine new Rust current-consumer tests and the existing Databricks package tests
+pass. The real Python bridge passes32 new descriptor/import/override controls
+and46 predecessor custody controls. Actual compiler-emitted managed SQL passes
+22 finite direct/group/join/count/SUM cases plus a wrong-contributor negative
+oracle and two profile refusals. The schema is removed. Existing PostgreSQL
+ABI2/3/4 wheel smoke artifacts remain identical on the new wheel.
+
+This implements conditional SQL/cell-lineage components, not actual Ashlar source
+admission or native guarded execution. All US-009-AC1–AC4 full acceptance rows,
+original132 shared/native cases and broader supported domains remain open. The
+native provider, source/caller/current authority, real route/action decisions,
+second caller, UC time-travel/policy and closing-release tests above remain required.

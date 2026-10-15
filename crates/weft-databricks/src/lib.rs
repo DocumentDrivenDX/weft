@@ -32,3 +32,6 @@ pub mod implicit_arithmetic;
 
 /// Explicit candidate-only compatible physical revisions; historical versions reject it.
 pub mod compatible_profile;
+
+/// Conditional same-original current-value SQL; hosts own native admission.
+pub mod current_scalar;

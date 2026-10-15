@@ -610,6 +610,12 @@ impl CurrentQueryPreparation{
  /// Conditional SQL for the explicit live-original integer SUM capability.
  #[cfg(feature="current-postgresql-scalar-candidate")]
  pub fn lower_postgresql_current_sum_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_postgresql::current_scalar::lower_original_sum(operands,binding)?.json_string())}
+ /// Conditional Databricks current SQL with complete private contributor bags.
+ #[cfg(feature="current-databricks-scalar-candidate")]
+ pub fn lower_databricks_current_contributors_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_databricks::current_scalar::lower(operands,binding)?.json_string())}
+ /// Conditional Databricks SQL for the explicit original signed64 SUM context.
+ #[cfg(feature="current-databricks-scalar-candidate")]
+ pub fn lower_databricks_current_sum_candidate_json(&self,binding:&str)->weft_core::error::Result<String>{self.with_context(|_,_,operands|weft_databricks::current_scalar::lower_original_sum(operands,binding)?.json_string())}
  /// Trusted Rust consumer hook, not a Python callback or native admission API.
  /// Borrowed declarations are derived over the same original context on each
  /// scoped invocation; SQL/AST are not reparsed and caller reports are not imported.

@@ -2666,3 +2666,72 @@ Official [SUM](https://docs.databricks.com/aws/en/sql/language-manual/functions/
 and [parameter marker](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker)
 documentation informed the design; observed result metadata governs only this
 finite endpoint probe. All132 original acceptance cases remain required.
+
+
+#### Implemented conditional Databricks CQP consumer — 2026-10-15
+
+The opt-in current-databricks-scalar-candidate feature now provides
+CurrentQueryPreparation.lower_databricks_current_contributors_candidate_json and
+lower_databricks_current_sum_candidate_json in native Python and corresponding
+Rust scoped methods. They invoke the same original retained CQP typed callback;
+no report/AST import or ordinary compiler fallback is added. The two candidate
+binding/result ABIs above are concrete component interfaces. Protected backend
+registration and native authority remain unimplemented and unqualified.
+
+Each relation is closed and all eight members are required. Version is canonical
+nonnegative decimal text up to9223372036854775807; UUID is canonical lowercase
+36-character hyphenated hex and schemaSha256 is lowercase64hex. Catalog/schema/
+table/columns are escaped backtick identifiers, nonempty, NUL-free and at most255
+UTF8 bytes. Generated wft_sN aliases follow the original typed scan order. Relation
+metadata is retained separately in the result; it is not authenticated by emission.
+The native issuer must verify actual nonnullable Boolean eligibility and unique,
+nonnull opaque String keys over the complete eligible population, not the result
+of a selected query. Empty/FALSE/LIMIT0 cannot bypass those checks.
+
+For this candidate, schemaSha256 hashes the exact UTF8 String returned by the
+native DESCRIBE TABLE EXTENDED ... AS JSON descriptor. No parse/re-serialization
+or column sorting occurs: native column order, types, nullability, collation and
+unknown descriptor content remain in the hashed original bytes. The issuer must
+capture the descriptor for the exact held relation/version and retain original
+bytes. This hash does not prove metadata understanding, native source identity,
+permissions or support for Delta reader/writer protocol/features. Relevant Delta
+metadata, current UC policy, schema/UUID/version correspondence and retention
+must be admitted and revalidated separately by the actual native provider.
+Unknown selected meaning cannot be accepted solely because a digest matches.
+
+Parameters include ordinal, marker, kind, sourcePath, name, value, logicalType and
+nativeType. kind is source-value or internal-lineage-label; marker is a generated
+wft_N name bound as a String by the host and explicitly cast in SQL. Internal scan
+labels use $lineage/scans/N metadata paths and cannot add actions or permissions.
+All1024 parameter slots, including internal labels, share the component bound.
+Effective String operations use explicit UTF8_BINARY. All invoked JSON/count/SUM
+routines are qualified system.builtin functions. Input values are never SQL text.
+
+Public field codecs are native-string-exact-required; counts use
+native-bigint-nonnegative-string; SUM uses
+native-decimal38-integer-nullable-string or -required-string according to the
+original global/grouped mathematical output. COUNT has explicit negative-overflow
+refusal; the native host must independently bound complete joined work, verify
+counts against complete contribution and refuse all overflow/decoding failures.
+Original signed64 SUM casts inputs to DECIMAL(38,0), distinguishes empty input
+with count(*), and rejects nonempty TRY_SUM null with WFT-CAPABILITY. No numeric
+cast silently changes the original mathematical domain. Private bag metadata
+uses json-text:weft.stage-contributor-bag/0.1-candidate and retains complete source
+paths, scan order and Field identities. The original source/caller/current-cut,
+actual decisions, statement/result custody and guarded release gates remain open.
+
+The unpublished0.4.34 development wheel has25 managed SQL/lineage/refusal controls:
+22 emitted queries, one deliberately incorrect contributor bag with unchanged
+public count, and two cross-profile refusals. The wrong-bag oracle detects the
+corruption; no unfinished native guard is credited. Both source profiles use
+original logical/policy fixtures with synthetic stage/mode/scope premises, not an
+accepted Ashlar source installation. The isolated client_dev schema is removed.
+These results confer no original protected backend acceptance.
+
+
+The standard Python build explicitly selects this candidate feature. Its separate
+exact-wheel32-control smoke gate is included in release CI and pinned alongside
+the PostgreSQL gate. Selecting a compiled feature does not select a protected
+backend, migrate an accepted native source or confer authority. The managed
+fixtures still have PostgreSQL-scoped original static binding metadata; an actual
+Ashlar provider must install/admit its genuine Delta original binding/profile.

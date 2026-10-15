@@ -1,0 +1,53 @@
+{
+  "repository": "DocumentDrivenDX/umf",
+  "commit": "4ebc2e7f",
+  "path": "docs/helix/04-build/evidence/security/databricks-consumer-review-20261015/review.json",
+  "review": {
+    "status": "no-concrete-blocker-in-stated-scope",
+    "reviewedSourceSnapshot": "/private/tmp/weft-current-databricks-20261015",
+    "sourceDigestsAtReview": {
+      "crates/weft-databricks/src/current_scalar.rs": "8dd23666211f0398b02e9f441515c1518f8847c77d8c88ea3826019fdef35ac5",
+      "crates/weft-runtime/src/lib.rs": "53c0fd85339a2f4972fe1c98ecb3fd52bbedd4bba84bd592297eb03b490ab4a9",
+      "crates/weft-python/src/lib.rs": "0e8835cabdf4d3f4ce9d01248ac69c5f053995b6559a1b0c650e9e7260dc8ef4",
+      "tests/current-scalar-databricks/native.py": "1969c1cda8bc9b46430cf4ea2960122e32e5404e1392cdd0af2e0ae28043df95",
+      "tests/current-scalar-databricks/python-bridge.py": "d0fbb83dccdd15f9922561cea8771037264623f6a33baffe651fd359ed894276"
+    },
+    "nativeReceiptSha256": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f",
+    "inspectionChecks": {
+      "selectedSourceAndBridgeRead": true,
+      "sameOriginalFactoryAndPythonCustody": true,
+      "closedBindingAndExactInventory": true,
+      "normalVsSumContextNoDowngrade": true,
+      "quotedIdentifiersGeneratedAliasesAndBoundParameters": true,
+      "groupProjectionAndOrderDomainScopeCorrespondence": true,
+      "exactSigned64OriginalActionAndContextualSumNullability": true,
+      "completeBagMultiplicityAndScanTupleOrder": true,
+      "conditionalAuthorityFlags": true,
+      "retained25ControlsInternallyConsistent": true,
+      "retained22CompiledQueries": true,
+      "retainedSchemaCleanupObserved": true
+    },
+    "blockingFindings": [],
+    "remainingNativeObligations": [
+      "genuine original Delta binding/profile plus actual policy/caller/Subject/current authority",
+      "physical schema/UUID/version and exact scalar/key/encoding/uniqueness/coverage checks",
+      "actual per-use modes/actions and genuine paired comparison scopes",
+      "bounded exact-or-error COUNT/cardinality and complete contributor bags",
+      "DECIMAL38 SUM overflow refusal; no unbounded physical sum claim",
+      "native statement/result budgets and final guarded release",
+      "two-caller isolation and full original backend acceptance"
+    ],
+    "qualification": "Once-only source/retained-evidence review, no new database run or independent build-to-wheel provenance proof. Existing fixtures use declared synthetic stage/mode/scope premises and PG-scoped original static binding metadata; no real Ashlar admission/profile migration. COUNT BIGINT/nonnegative guard is not an unbounded overflow proof; host profile must establish exact-or-error within admitted cardinality. No new kernel, authority, formal or backend acceptance claim.",
+    "sourceReferences": [
+      {
+        "title": "Databricks count aggregate function (BIGINT)",
+        "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/count"
+      },
+      {
+        "title": "Databricks SUM exact-or-overflow behavior",
+        "url": "https://docs.databricks.com/aws/en/sql/language-manual/functions/sum"
+      }
+    ],
+    "casesPromoted": []
+  }
+}
