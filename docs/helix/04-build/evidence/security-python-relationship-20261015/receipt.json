@@ -12,7 +12,8 @@
   "ordinaryPg18Wheel": "separate candidate methods absent",
   "checks": {
     "guardedTransport": 28,
-    "boundaryControls": 16
+    "boundaryControls": 16,
+    "postgresqlLibrary": 83
   },
   "sources": {
     "crates/weft-runtime/src/lib.rs": "14e2adaa987f43e49f0ffe475c65837846bf432000cbf5d230cfcd49f4efa526",
@@ -27,6 +28,8 @@
     "python-parity.json": "f183d895cbbbb2c16ae15a001f4f54cf5b3ea6c43202dc0252f90d2b4f294202",
     "specs.log": "475c1db7c84ba914df68e15919b6ada62a5f959dcc5aa194fd11067e4d1b4d6d",
     "transport-tests.log": "34b423d047c9ef1146c7ff6c327766e884867527593cbba58011856970e3aa8a",
-    "wheel-build.log": "338371d0b1e119c2190fb70aee4049a5304a0dba94affd15654acb8da598ae9c"
-  }
+    "wheel-build.log": "338371d0b1e119c2190fb70aee4049a5304a0dba94affd15654acb8da598ae9c",
+    "postgresql-lib-tests.log": "0eb8b146b212a51d1e3ac9f1347c217fe0304ad41a0adf12fc8e0503e751ff36"
+  },
+  "postgresqlLibrarySourceCut": "c0c6449481a87eed38d3f7a6ebebc1f4ab4beeb4 (PostgreSQL/core source unchanged by bridge increment)"
 }

@@ -32,7 +32,7 @@ fn fail() -> Diagnostic {
 // The resolver owns substitution and retains a parameter value at every actual
 // AST occurrence. Bound that selected payload before it can be replicated.
 // Conservative JSON control-character charges avoid allocating escaped copies.
-fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usize)->Result<()> {
+pub(crate) fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usize)->Result<()> {
     use crate::application_syntax::{Predicate,Value};
     let (syntax,_)=crate::application_syntax::parse_security(sql)?;
     let mut sizes=std::collections::BTreeMap::new();
@@ -224,6 +224,32 @@ mod tests {
             "sql":"SELECT r.salary AS amount,SUM(r.salary) AS total FROM Resource r JOIN Resource s ON r.salary=s.salary WHERE r.salary=100 GROUP BY r.salary ORDER BY r.salary",
             "parameters":{}})
     }
+    #[test]
+    fn query_properties_distinguish_original_operations_without_changing_handoff(){
+        let request=fixture();let old=response(&request);
+        let report:Value=serde_json::from_str(&prepare_security_query_properties(&request.to_string()).unwrap()).unwrap();
+        assert_eq!(report["version"],"weft.security.query-properties/0.1-candidate");assert_eq!(report["authority"],false);assert_eq!(report["securityReady"],false);
+        let uses=report["uses"].as_array().unwrap();assert_eq!(uses.len(),6);
+        for path in ["joins/0/on/0/left","joins/0/on/0/right","filters/0/left","groups/0"]{let u=uses.iter().find(|u|u["path"]==path).unwrap();assert_eq!(u["required"],json!(["equality"]));assert_eq!(u["mode"],"original-authorized");assert_eq!(u["originalAction"],"query-original");}
+        assert_eq!(uses[0]["fieldIdentity"]["revision"],"schema-1");assert_eq!(uses[0]["modeSource"],"legacy-ontology-query-profile");assert_eq!(uses[0]["scan"],"s0");assert_eq!(uses[1]["scan"],"s1");assert_eq!(uses[0]["field"],uses[1]["field"]);
+        let order=uses.iter().find(|u|u["operator"]=="order").unwrap();assert_eq!(order["required"],json!(["order"]));
+        let sum=uses.iter().find(|u|u["operation"]=="sum").unwrap();assert!(sum["required"].is_null());assert_eq!(sum["propertyStatus"],"unsupported");assert_eq!(sum["logicalType"]["family"],"integer");assert_eq!(sum["outputType"]["family"],"integer");assert_eq!(sum["outputType"]["nullable"],false);
+        assert_eq!(response(&request),old);assert!(old["handoff"].get("propertyUses").is_none());
+    }
+    #[test]
+    fn query_properties_retain_hidden_range_occurrences_and_contradictory_filters(){
+        let mut request=fixture();request["sql"]=json!("SELECT r.resourceId FROM Resource r WHERE (r.salary)>(100) AND r.salary=100 AND r.salary=101 ORDER BY r.salary LIMIT 1");
+        let report:Value=serde_json::from_str(&prepare_security_query_properties(&request.to_string()).unwrap()).unwrap();
+        let uses=report["uses"].as_array().unwrap();assert_eq!(uses.len(),4);assert_eq!(uses[0]["operator"],"predicate");assert_eq!(uses[0]["operation"],"lexicographicGreater");assert_eq!(uses[0]["required"],json!(["order"]));assert_eq!(uses[1]["required"],json!(["equality"]));assert_eq!(uses[2]["required"],json!(["equality"]));assert_ne!(uses[1]["path"],uses[2]["path"]);assert_eq!(report["scans"].as_object().unwrap().len(),1);assert_eq!(report["outputs"][0]["expression"]["op"],"field");
+    }
+    #[test]
+    fn query_properties_preserve_field_free_counts_and_refuse_annotation_override(){
+        let mut request=fixture();request["sql"]=json!("SELECT COUNT(*) FROM Resource r");
+        let report:Value=serde_json::from_str(&prepare_security_query_properties(&request.to_string()).unwrap()).unwrap();assert!(report["uses"].as_array().unwrap().is_empty());assert_eq!(report["scans"].as_object().unwrap().len(),1);
+        for member in ["required","uses","authority","storedQuery"]{let mut bad=request.clone();bad[member]=json!([]);assert!(prepare_security_query_properties(&bad.to_string()).is_err());}
+        for sql in ["SELECT COUNT(DISTINCT r.salary) FROM Resource r","SELECT COUNT(*) FROM Resource r LIMIT 0","SELECT COUNT(*) FROM Resource r WHERE FALSE"]{request["sql"]=json!(sql);assert!(prepare_security_query_properties(&request.to_string()).is_err());}
+    }
+
     fn response(request:&Value)->Value {serde_json::from_str(&prepare_security_mapping_json(&request.to_string())).unwrap()}
     #[test]
     fn subject_selection_is_original_ontology_bound_and_closed() {
@@ -324,4 +350,9 @@ mod tests {
         assert_eq!(result["diagnostics"][0]["code"],"WFT-SECURITY-MAPPING-PARAMETER-LIMIT");
         assert!(result.get("handoff").is_none());
     }
+}
+
+/// Separate versioned AST requirement report, never a stored-property or native permit.
+pub fn prepare_security_query_properties(raw:&str)->Result<String>{
+ with_security_mapping_context(raw,|ctx|crate::security_query_properties::derive(ctx).map(|p|p.json().to_owned()))
 }

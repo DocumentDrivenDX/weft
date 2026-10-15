@@ -1,0 +1,45 @@
+{
+  "baseline": "c492444c2b77dc76c91c7a6a69835a5420d70151",
+  "scope": "Original legacy ontology/query-profile AST requirement derivation only; no current catalog/storageTransform/native authority or case promotion",
+  "checks": {
+    "coreLibrary": 282,
+    "boundaryControls": 16,
+    "governedArtifacts": 68,
+    "schemas": 73,
+    "fixtureScenarios": 636,
+    "legacyByteCompatibility": "three original requests match freshly archived prior-main mapping output bytes"
+  },
+  "sourceHashes": {
+    "crates/weft-core/src/security_query_properties.rs": "a284212d5d3da6ca3cc53b21cd6fe6c9a5f0c6ba8cd764bdba19e5a72a42a1b1",
+    "crates/weft-core/src/security_mapping_transport.rs": "979003d7295d68cf4477eca0f23cc63c2943e01c7b611281ef0d3d7c12d66df0",
+    "crates/weft-core/src/lib.rs": "c4dc731ec01fac08307e6f19b6b2522008a991bdfd2a596d52cd9a7dfb5dc632",
+    "crates/weft-core/examples/security_query_properties.rs": "b87df8dbf0a0821f0f692eac581473a063c437787e48feff84fb29dc1602370b",
+    "docs/helix/02-design/contracts/security-query-properties-v0.1-candidate.schema.json": "d3ccb1177fc0af401c0c6ad5011e15718cd0296853a3e80a782878574ab10073",
+    "tests/query-properties/check.py": "73af3746aa9b9f1a461f7500efe8438166586ea6fc459d112bb1918f86be846a"
+  },
+  "fixtures": {
+    "tests/query-properties/fixtures/field-free-count.legacy.json": "4a219d6d57fb81434ddbc14f8a43ba798a2ad9673a0dd2cfeae0a7b404b7324a",
+    "tests/query-properties/fixtures/field-free-count.report.json": "f047515ac920711d58bf6a9225f774144d6ca9807994330f8d7e1c96b166c49c",
+    "tests/query-properties/fixtures/field-free-count.request.json": "b8119ad4545c5fcbf09d89360ca963c0e1f65444b1bb369e55eaefcbcdc8b898",
+    "tests/query-properties/fixtures/operators.legacy.json": "5bf00a9672dea4871b35999b1ee3af4d1123dd40adb8db32f51c6344c9b32fc6",
+    "tests/query-properties/fixtures/operators.report.json": "5113fe6380b321df0d2d561a9809d6babbba608306f4923ae36603bbf3795f61",
+    "tests/query-properties/fixtures/operators.request.json": "815362ded7674cb7b09d7a2372b694a0167a7dfb79c002a21be63844434307b3",
+    "tests/query-properties/fixtures/range.legacy.json": "83b22c8498ac0b52b11ebc986e596eaa5957f96bf9a6104f76f589c7148cd67c",
+    "tests/query-properties/fixtures/range.report.json": "a466756028f84c62405d4056ada9b3a415c13f0695f2e4ee645a289f205d134e",
+    "tests/query-properties/fixtures/range.request.json": "78778fa776c7f00bf5092ab230ce9b53ec2d1784336ece46c9289e1ccb442f08"
+  },
+  "binaries": {
+    "priorMainMapping": "95b1cef7ab5d923c849f259e1e8d268eb375aef25aedc053fafd7eeea0904451",
+    "currentMapping": "8b6326b6c29d0f4f9de87c83a1808ba958b6679663210ca42deda9b179472a54",
+    "properties": "9b609fc1282167ff86adbf390b73c7ee90bfa48f383d1cc92e67fa3dc9f3e77f"
+  },
+  "evidence": {
+    "baseline-build.log": "6995cbe27a0419c6f1db93089d9740d15c1338e48c1a7b0c638aeda5b65ed208",
+    "core-tests.log": "1e2188a01bca6497c1f4333bf8c3b6cb772d81cf20deab03cd93de78375fcf11",
+    "correspondence.json": "eb136a3d229f96a48c675bcf203907948b5c0cd0fe3607e63d99b458c3a96c06",
+    "current-mapping-build.log": "1f24ff21d56163a46487dade8c4ef1d89fa69259f9acfcfabb7a2a4519fde0c0",
+    "modules.log": "54c725780f0741638637b7d740101eeebb954165bb9067e3271c91b7479888ab",
+    "producer-build.log": "654f26c92426b3f4bf1da6445488c9fd9a5615c3e596c50cfc7bbd37c2a6309c",
+    "specs.log": "73cb3e061eb6c1e2ec04e9f23450377f0445a86cb1f65926b2167264e5e6434a"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "scope": "legacy source/AST requirements only; no catalog storage transform/current authority/native completeness or execution qualification",
+  "checks": [
+    "operators: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+    "range: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+    "field-free-count: exact source/hash/AST occurrence report; legacy bytes preserved; annotation and pin substitutions refused",
+    "unsupported distinct/zero-limit/constant-false and malformed/duplicate/oversized inputs refuse with no partial stdout"
+  ]
+}

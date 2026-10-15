@@ -135,3 +135,156 @@ they do not establish native population completeness, source truth, original
 operand capture, current authority, authenticated Subject or guarded publication.
 This binding increment promotes no original backend case and does not activate
 public security compilation. Native enforcement and full B-008 remain open.
+
+
+### Original AST query property candidate — 2026-10-15
+
+The separate `security_mapping_transport::prepare_security_query_properties`
+function and `weft-core` example `security_query_properties` consume the existing
+closed original mapping request and emit `weft.security.query-properties/0.1-candidate`.
+The closed schema is `security-query-properties-v0.1-candidate.schema.json`.
+No existing QueryUse, mapping handoff, candidate SQL or registered compiler wire
+is extended or reinterpreted. The report has securityReady:false and authority:false.
+
+Each actual resolved expression position retains its path, scan occurrence,
+qualified target/Field, original revision-qualified Field identity and logical
+type. Equal predicates and both sides of join equality require equality;
+lexicographic comparisons and ordering require order; grouping requires equality.
+Equal-valued or repeated Field expressions remain distinct occurrences. Hidden
+Fields used only by filters/order/join/group remain dependencies. Source scans
+survive field-free COUNT(*); contradictory predicates do not erase dependencies.
+Directed one-hop relationship terminal keys derive equality at their own tN scan
+when the owner invokes derive with an admitted relationship context.
+
+SUM retains actual argument/output numeric type and the resolved mode/action,
+but required:null/propertyStatus:unsupported. No numeric transform property is
+invented or classified as equality. The actual legacy mode and originalAction
+are marked modeSource:legacy-ontology-query-profile. Full exact source capsule,
+SQL, source/query hashes and pins retain their provenance. This report does not
+resolve the current UMF catalog, canonical stored Field or storageTransform:
+the original catalog/owner consumer must resolve those independently. A selected
+compatible transform property never supplies a read/native permit.
+
+Derivation refuses missing original requirements and stale identities; caller
+property lists, paths, modes or actions are not accepted inputs. Work retains at
+most4096 dependency occurrences with a conservative text charge and16MB final
+serialized report ceiling. The ceiling is an endpoint/output bound, not a
+preallocation, CPU or whole-compiler resource theorem. Existing4MB request and
+source admission limits remain. JSON facets remain opaque original type content.
+
+Actual parser refusal of COUNT(DISTINCT), LIMIT0 and WHERE FALSE remains explicit
+in this first candidate. They require language/IR and null/duplicate/zero-result
+conformance, with no optimization that bypasses permissions. Numeric SUM rules,
+current catalog/storage-transform source consumption, effective disclosure and
+original action/current-authority/native before-dispatch checks remain required.
+This component does not close P03/B08, promote an original native case, change
+any case assertion/allocation, or activate protected execution.
+
+
+Current-source dependency: this first report requires original legacy0.1 ontology/
+query-profile admission. Current UMF catalog/ontology0.2 source bytes must never be
+rewritten into a synthetic legacy policy to obtain this context. A later explicit
+current-source admission or policy-independent application-AST lineage surface
+must derive requirements from the actual current query/model, retain unknown
+source bytes and omit unestablished modes/actions. This report does not establish
+current catalog compatibility by carrying a legacy-source mode label.
+
+
+### Policy-independent application lineage candidate — 2026-10-15
+
+The distinct `application_lineage::prepare` API and `application_lineage` core
+example accept `weft-application-lineage/0.1-candidate` and emit the closed
+`weft.application.lineage/0.1-candidate` artifact. Request/report schemas live in
+`application-lineage-request-v0.1-candidate.schema.json` and
+`application-lineage-v0.1-candidate.schema.json`. A private immutable result is
+constructed only by resolving the original pinned core0.8 modules and SQL through
+the existing application parser/resolver. No SecurityLogicalPlan, policy0.1 adapter
+or synthetic legacy policy is constructed. Old registrations/transports stay
+separate. No executable plugin, SQL override or caller AST/required/mode/action
+input is accepted.
+
+A shared internal traversal of the resolved application AST derives original
+occurrence paths, scan/Field identities with revisions, equality/order properties
+and actual numeric SUM argument/output types. It is used by both the earlier
+legacy property report and this new source-only report. Legacy output bytes must
+remain unchanged. Self-join sides and repeated expressions are distinct, hidden
+Fields retain uses, terminal keys retain their own tN equality occurrence, and
+COUNT(*) preserves source scans with no invented Field dependency. Unsupported
+SUM properties remain required:null/propertyStatus:unsupported. ASC/DESC direction
+and required capabilities are preserved consistently; unsupported descending
+cursor combinations refuse. COUNT(DISTINCT), LIMIT0 and WHERE FALSE still require
+language/IR/conformance work and remain refused.
+
+The report retains exact sourceRequestJson/hash, original model pins, SQL hash,
+actual applicationPlanJson/hash, scan identities and uses. It contains no mode,
+modeSource or originalAction. Optional external opaque source records retain
+role, declared document/revision identity, media type, exact UTF8 bytes and digest
+inside the original request. Their status is always uninterpreted; matching a
+supplied digest proves local byte correspondence, not ownership, current policy
+meaning, storageTransform, effective disposition, original action, key/runtime
+scope, authentication or native permission. Unknown opaque source content is never
+parsed as a compiler override. Original model content remains retained; selected
+unestablished core element meaning still refuses.
+
+Limits are4MB input bytes,16 opaque sources,4096 dependency occurrences,8MB
+parameter replication/retained-use/serialized-plan budgets and16MB serialized
+report output. The bounded writer refuses without partial output. These are
+explicit endpoint/component bounds, not a whole-process allocation/CPU theorem.
+The pure parameter preflight is reused from the original mapping transport.
+
+The UMF owner's explicitly new named-current-stored-token-r1 fixture is retained
+unchanged with source SHA2216a7ad3093c90437db035fb337d21ac67589dee5eb148b0eb4d7fd1ff75059.
+Its current policy0.2, ontology0.2, catalog0.1 and storage owner values are extracted
+with recorded compact UTF8 JSON encoding; the exact whole fixture bytes are also
+retained as an opaque source. Five actual SQL scenarios independently derive
+operation/property lineage, including selfjoin/group, output-omitted token order,
+unsupported numeric SUM and field-free COUNT. Expected stored uses remain authored
+test expectations, never producer inputs or attestations. Opaque expectation
+mutations cannot change AST uses. The original unnamed UMF fixture is preserved
+as a refusal: Weft never adds names/members to make it queryable.
+
+UMF must separately consume these original issued requirements against its actual
+catalog/storage-owner program and effective read policy. No current catalog
+compatibility, native before-dispatch/source/current authority, protected release,
+P03/B08 completion or original backend case promotion follows from this artifact.
+All original assertions, allocations and deadlines remain mandatory.
+
+
+### Selected availability regression repair — 2026-10-15
+
+An independent owner replay exposed that the source-only0.1 parser could resolve
+an absent-allowed scalar as an ideal nonnull Field while its dependency report
+omitted actual availability. Predicate, projection, hidden order, selfjoin, group
+and SUM argument paths could therefore emit misleading domain lineage. This is a
+source-report counterexample, not evidence of a native data leak or permission.
+The original six-case and expanded eight-case before witnesses are preserved under
+`tests/lineage-availability/`; the old frozen producer passed only the required
+predicate and field-free count controls. The earlier legacy property report also
+accepted an original absent salary source; its actual before output is retained.
+
+Both `application_lineage::prepare` and `security_query_properties::derive` now
+require actual selected Field descriptors to have availability required. The
+shared check resolves each original scan Record/Field membership from Catalog,
+then inspects the original descriptor; it does not infer presence from the ideal
+LogicalType.nullable flag or the existence of a predicate. It covers plain output
+Fields as well as every hidden/operator/aggregate/terminal-key dependency before
+any report is returned. Unrepresented availability refuses with
+WFT-APPLICATION-LINEAGE-AVAILABILITY and no partial stdout. Absence is not NULL;
+nullable/absent source semantics need a separately explicit qualified descriptor
+and protocol before these reports can claim them.
+
+Field-free COUNT(*) remains supported as structural lineage: it selects no Field,
+retains every original scan and source duty, and does not blanket reject an unused
+optional Record member. A required projection similarly survives an unselected
+optional sibling. Neither positive control establishes native source completeness,
+policy eligibility, current authority or guarded release.
+
+All existing all-required0.1 reports, current five-source scenarios and historical
+mapping outputs remain byte-identical. There is no envelope/schema/registration
+upgrade or compatibility fallback. Fresh292 core tests,16 boundary controls and
+10 host availability controls pass; exact original before witnesses, repaired
+binary/source pins and current/legacy correspondence evidence are retained under
+`evidence/lineage-availability-20261015/`. Frozen old producers remain historical
+counterexample evidence, not qualification of selected absence. Full P03/B08 and
+all native backend acceptance duties remain open. The in-progress0.2 grammar is
+kept separate from this repair.
