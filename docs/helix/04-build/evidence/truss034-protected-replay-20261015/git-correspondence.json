@@ -1,0 +1,6 @@
+{
+  "sourceCommit": "6074e761f42aecff75464c777e77c7d8d71dff2d",
+  "all789InputFilesMatchExactGitArchive": true,
+  "files": 789,
+  "scope": "Tracked original Truss Python package and exact imported capacity fixture; external Python/Bun/PostgreSQL runtimes are separate dependencies"
+}

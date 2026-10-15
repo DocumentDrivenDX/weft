@@ -1,0 +1,40 @@
+{
+  "scope": "Independent original four protected-query tests against frozen Truss source6074e761 and actual installed publicWeft034. Original fixture decisions/negative controls only; not complete B-008/all132/nativeB10/ownership/aggregate/history/revocation qualification. Truss release wheel not installed.",
+  "trussSourceCommit": "6074e761f42aecff75464c777e77c7d8d71dff2d",
+  "weftSourceCommit": "86273dd3c2b4c2b99c8d0268c9dff8537e6ce20e",
+  "weftVersion": "0.4.34",
+  "wheelSha256": "fb0d79679c158208418199df144cfc21917b3955c382ef933980bb89645eed37",
+  "moduleSha256": "877bfafd51a7f50478be954c0cbabd0cba0a705f004a5b5e99d317fd087f19d9",
+  "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+  "runtimeManifestSha256": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+  "postgresVersion": "18.6",
+  "tests": [
+    "test_public_masked_projection_with_authorized_exact_raw_predicate",
+    "test_all_denied_population_returns_empty_rows",
+    "test_empty_population_returns_empty_rows",
+    "test_protected_activation_closes_legacy_data_facades"
+  ],
+  "testsRun": 4,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 27.537,
+  "sourceFiles": 789,
+  "sourceUnchanged": true,
+  "loadedTrussModules": 73,
+  "serverStopped": true,
+  "leaseReleased": true,
+  "runtimeDirectoryRemoved": true,
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": [],
+  "priorAttempts": [
+    {
+      "status": "import failed before tests",
+      "reason": "initial package-only export omitted tracked fixture"
+    },
+    {
+      "status": "four tests passed but not credited",
+      "reason": "input export was not confirmed terminal before first snapshot"
+    }
+  ]
+}

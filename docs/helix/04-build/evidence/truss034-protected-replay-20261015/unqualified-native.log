@@ -1,0 +1,9 @@
+test_public_masked_projection_with_authorized_exact_raw_predicate (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_public_masked_projection_with_authorized_exact_raw_predicate) ... ok
+test_all_denied_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_all_denied_population_returns_empty_rows) ... ok
+test_empty_population_returns_empty_rows (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_empty_population_returns_empty_rows) ... ok
+test_protected_activation_closes_legacy_data_facades (test_current_query_runtime_native.CurrentQueryRuntimeNativeTests.test_protected_activation_closes_legacy_data_facades) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 27.383s
+
+OK

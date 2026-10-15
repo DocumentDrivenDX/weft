@@ -2448,3 +2448,19 @@ at tests/current-query-designation/operator-free-projections.py. Packets are sen
 to the new explicit UMF child transport for subsequent genuine interop. No UMF
 response, native result, effective domain decision or original132 case promotion
 is inferred from these producer-only tests.
+
+
+### Independent native68 protected-current source replay - 2026-10-15
+
+Four unchanged original Truss protected-query tests pass on exact6074e761 source
+and actual installed publicWeft034 in27.537s/PG18.6: maskedprojection/rawpredicate,
+all-deniedempty, emptypopulation and selected activation/legacyfacade refusals.
+The final fresh minimal export is complete before execution; all789 original
+input files match exactGitbytes and remain unchanged, with73 loadedTrussmodules
+pinned. Installedextension/shim matchpublicarchive; runtime3588cf03 and original
+UMFchild assets are not edited. Originalcleanup stopsserver/releaseslease/removes
+runtimedir. Evidence is under evidence/truss034-protected-replay-20261015/.
+Prior missingfixture import and four-test input-export-order attempt are retained
+unqualified; only the final fresh stable-input run is credited here. This is not
+a Trussreleasewheel test, nativeB10 diagnostic closure, full action/owned/aggregate/
+history/revocation qualification or original132 case promotion. B-008 stays open.
