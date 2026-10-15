@@ -1,0 +1,12 @@
+{
+  "observedNativeCases": 6,
+  "rejectedReceiptCorruptions": [
+    "rounded-sum",
+    "dropped-duplicate",
+    "wrong-empty-nullity",
+    "case-folded",
+    "rounded-parameter",
+    "wrong-private-key"
+  ],
+  "scope": "Finite value/shape oracle over actual constant-only managed SQL responses. Not backend/caller authority proof."
+}

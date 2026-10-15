@@ -2267,3 +2267,26 @@ extension line tables with strip:none fixes the observed pinned-toolchain case
 without changing release optimization. The failed artifact is not qualified.
 Module/spec checks pass. Exact five-platform/source-pinned build-only CI and
 paired native33 workflow qualification remain pending; nothing is published.
+
+
+### Databricks current consumer preparation — 2026-10-15
+
+B-008 remains open under all132 original shared/native cases. CONTRACT-006 now
+records the separate Databricks current-value ABI and original CQP handoff,
+managed provider obligations, exact String/signed64/finite integer codecs and
+complete contributor bags. STP-009 records actual compiler/native gates. This is
+a proposed implementation contract, not a registered backend or security claim.
+
+Six actual constant-only SQL probes on the approved aidev-cus managed warehouse
+pass, including exact18446744073709551614 SUM, empty SUM/bag/count, duplicate
+contributors, binary comparison, named exact parameter and qualified builtins.
+The independent finite receipt oracle rejects six semantic corruptions. No user
+schema/table was created, no source data was queried, and no second caller was
+simulated. Evidence is in evidence/current-databricks-semantics-20261015/.
+
+Next implement the Rust typed Databricks consumer, Python scoped bridge, exact
+version/refusal controls and independent emitted-SQL native corpus. Ashlar owns
+the actual held authority/provider adapter; UC policy/time-travel compatibility
+and second approved caller remain required native gaps. Complete native source,
+caller/current authority and guarded result release cannot be replaced by these
+six dialect observations or a finite representation declaration.

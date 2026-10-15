@@ -550,3 +550,33 @@ factory negatives remain unchanged; browser designation parity is metadata only.
 These supplied stages are conditional fixtures, not native policy/current authority
 or guarded result-release acceptance. Disclosed/transformed SUM and remaining
 specified domains stay open.
+
+
+## Databricks same-original current consumer — required implementation gate
+
+CONTRACT-006's separately versioned Databricks handoff is proposed, not activated.
+Retain the original132-case catalog and all US-009-AC1–AC4 rows. Required tests:
+
+- Actual Rust/Python same-original CQP custody, no imported ledger/ordinary fallback,
+  profile1 versus explicit SUM profile2, PostgreSQL/old/extra binding rejection,
+  exact source/model/static binding pins and duplicate/missing per-use refusal.
+- Managed Databricks compiler-emitted SQL against independent expected bags:
+  direct/join/group/order/COUNT/DISTINCT/original SUM, exact signed64 extremes,
+  counts versus complete contributor multiplicity, global null/grouped required,
+  empty/FALSE/LIMIT0, exact parameters and Unicode binary semantics.
+- Deliberate contributor deletion/duplication/scan swap, correct public count with
+  wrong private bag, wrong effective domain/scope/action and masked/raw confusion.
+  Actual held native executor must reject corruption before public release.
+- Exact native STRING metadata/codecs, private-column confinement, grouped source
+  correspondence, nonempty numeric overflow versus empty SUM, null/absent stage
+  refusal and no partial rows on decode/cancellation/deadline/overflow failures.
+- Generated aliases and escaped native identifiers, case-insensitive native name
+  collisions, hostile backticks/quotes, parameter names and builtin resolution.
+- Genuine Ashlar original publication/table UUID/version/schema vector, managed UC
+  policy/time-travel compatibility, actual two-caller isolation, opening/closing
+  drift/revocation, retained snapshots and alternative native access paths.
+
+The six retained constant-only managed probes and six receipt-corruption controls
+qualify their finite dialect/receipt oracle only. They do not implement these
+compiler/native tests or close any protected backend acceptance case. Local Spark
+is not a substitute for Databricks identity, Unity Catalog or source authority.

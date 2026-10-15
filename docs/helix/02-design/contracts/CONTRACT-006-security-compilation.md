@@ -2559,3 +2559,110 @@ Weft authors its profile independently, preserving exact role JSON substrings an
 selected Core document tokens. Owner intent/expected metadata does not issue a
 designation. The old SUM-prohibited source and unsupported-source negatives are
 unchanged. This component does not qualify any original protected backend case.
+
+
+#### Databricks current-value consumer handoff — implementation pending
+
+The next Databricks consumer must use the actual same-original CQP scoped Rust
+callback. It must not translate PostgreSQL SQL, import a logical-plan/report JSON,
+recompile an ordinary query or treat a packet digest as native permission. The
+initial implementation covers required singular String and signed64 fields,
+equality filters/joins, Boolean filters, direct projections, grouping, ordering,
+COUNT/DISTINCT, original integer SUM and complete private contributor bags. Wider
+original B-008 domains/operators remain required and explicitly refused until
+implemented. No current Databricks method or registration is claimed here.
+
+Use distinct closed candidate ABIs: weft.databricks.current-values/0.1-candidate
+for designation profile1 and weft.databricks.current-values/0.2-candidate for the
+explicit profile2 live-original-integer-sum capability. Result versions are
+weft.databricks.current-scalar/0.1-candidate and /0.2-candidate respectively.
+Unknown, PostgreSQL, mixed-profile and predecessor bindings refuse, including
+COUNT, FALSE and LIMIT0. Neither ABI implicitly migrates a protected backend.
+Outputs retain authority:false, securityReady:false and nativeAdmission:required.
+
+The proposed materialization declaration retains sourceRequestSha256,
+designationSha256, sourceBindingSha256, scans and values. Values retain the exact
+closed PostgreSQL per-use identity/domain/column/scope/mode/action/exposure members;
+these are declarations requiring native proof. A relation instead contains
+catalog, schema, table, uuid, version, schemaSha256, eligibleColumn and rowKeyColumn.
+Version is canonical nonnegative base-ten text within signed64, never a floating
+JSON number. UUID and schema digest must match the provider-held Delta relation;
+quoting its name or emitting VERSION AS OF does not establish either fact.
+
+The native provider must bind each staged relation to the complete original
+publication vector and static source binding, authenticated caller/Subject,
+original policy/ontology/model sources, actual per-resource eligibility and
+per-use route/action/disclosure decisions. A stage cannot bypass Unity Catalog
+policy, hide excluded native sources or replace original source identity.
+Source completeness and unknown/prohibited routes are checked before relational
+work even when empty. Native row keys are opaque required unique nonempty String
+values, at most256 UTF8 bytes, mapped privately to original qualified resources.
+
+Databricks identifiers are case-insensitive. Generate scan/CTE aliases by typed
+scan ordinal rather than copying authored aliases; retain original scan identities
+in metadata and lineage. Quote catalog/schema/table/column components with escaped
+backticks and explicit bounds. The native issuer must reject ambiguous native
+column names/carriers and verify actual native schema/domain/presence. Use named
+parameter markers with compiler-generated distinct names; original literal and
+parameter strings receive explicit STRING/BIGINT casts. Internal scan labels in
+lineage are separately identified bound String constants, never interpolated
+caller text. Apply explicit UTF8_BINARY to every effective String comparison,
+group/order and DISTINCT operand. Do not rely on ambient schema/session collation.
+
+Each source CTE selects only required columns from the exact provider-held Delta
+version with eligibleColumn IS TRUE. Databricks has no PostgreSQL MATERIALIZED
+contract here: optimizer evaluation order is not a policy gate. The held provider
+must already have admitted complete original sources and every use. Built-in calls
+must resolve to the actual system.builtin routines; a temporary/persistent UDF or
+caller-selected namespace must not change count, cast, JSON or aggregation meaning.
+
+Public scalar results are exact STRING carriers with separate original/effective
+types, exposure and codecs. COUNT uses checked nonnegative BIGINT text without
+narrowing its original mathematical Integer domain. For explicit original SUM,
+cast signed64 inputs to DECIMAL(38,0), preserve global nullable versus grouped
+required mathematical Integer output, and fail with WFT-CAPABILITY on nonempty
+TRY_SUM overflow. Never use BIGINT accumulation, DOUBLE, rounding, overflow NULL
+as an empty group, a saturating value or implicit original-action selection.
+DECIMAL(38,0) is a finite native representation, not an arbitrary-precision claim.
+The native provider must reject null/absent staged values before execution and
+withhold all results on numeric/decoding failures. Disclosed/transformed SUM remains
+required but unsupported; nullity alone is not additive transform preservation.
+
+Append a private STRING __weft_contributors encoding the same closed
+weft.stage-contributor-bag/0.1-candidate object used by PostgreSQL. Construct each
+non-null tuple as an ordered array of named structs {scan,key}; aggregate with
+system.builtin.collect_list without DISTINCT or truncation, then encode with
+system.builtin.to_json. Its outer order is unspecified, multiplicity is exact and
+scan order inside each tuple is fixed. A nonaggregate result has a singleton bag;
+an empty global aggregate has [] and a grouped empty input has no output rows.
+All tuple/key inputs must be nonnull: collect_list excludes null inputs. Private
+column metadata uses json-text rather than PostgreSQL jsonb-text, and retains
+complete public-cell/group source metadata. Never expose this carrier publicly.
+
+The provider holds exact CQP identity and native binding/statement/result custody,
+checks actual metadata/widths/closed carriers and complete bags, and buffers until
+closing validation renews caller policy, original sources and all snapshot pins.
+Missing retention, unreadable snapshots, revocation, cancellation, timeout,
+changed native identity/schema/policy or partial result retrieval yields no public
+prefix and no implicit replay. No custom allocation/work tracing is introduced.
+
+Managed Unity Catalog time travel requires separate qualification. Databricks'
+[ABAC time-travel documentation](https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/time-travel)
+currently describes an enabled beta with qualifying managed tables and supported
+compute. VERSION AS OF is not by itself evidence that current native policy is
+enforced. Do not disable native row/column controls or substitute local Spark to
+make this gate pass. The second approved caller and genuine Ashlar provider remain
+open; client_dev isolated-schema creation and cleanup are user-authorized.
+
+Actual constant-only probes on the approved managed warehouse establish six
+finite dialect observations in evidence/current-databricks-semantics-20261015/:
+exact two-MAX signed64 sum as decimal(38,0), empty SUM/bag/count, duplicate bags,
+binary collation, exact named parameter and qualified JSON builtins. They do not
+prove compiler emission, complete numeric range, overflow refusal, actual source
+admission, table time travel, second-caller isolation or Ashlar security.
+Official [SUM](https://docs.databricks.com/aws/en/sql/language-manual/functions/sum),
+[collect_list](https://docs.databricks.com/aws/en/sql/language-manual/functions/collect_list),
+[collation](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-collation)
+and [parameter marker](https://docs.databricks.com/aws/en/sql/language-manual/sql-ref-parameter-marker)
+documentation informed the design; observed result metadata governs only this
+finite endpoint probe. All132 original acceptance cases remain required.

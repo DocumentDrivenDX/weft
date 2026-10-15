@@ -1,0 +1,326 @@
+{
+  "scope": "Managed Databricks constant-only dialect semantics probes. No Ashlar binding, original protected sources, second caller or security qualification. No schema/table created.",
+  "profile": "aidev-cus",
+  "warehouse": "2439e1f2e37ac563",
+  "cases": [
+    {
+      "id": "exact-signed64-sum",
+      "sql": "SELECT typeof(sum(CAST(v AS DECIMAL(38,0)))) AS native_type, CAST(sum(CAST(v AS DECIMAL(38,0))) AS STRING) AS total FROM VALUES (CAST('9223372036854775807' AS BIGINT)), (CAST('9223372036854775807' AS BIGINT)) t(v)",
+      "parameters": null,
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 2,
+            "columns": [
+              {
+                "name": "native_type",
+                "position": 0,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              },
+              {
+                "name": "total",
+                "position": 1,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              "decimal(38,0)",
+              "18446744073709551614"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-ae2a-164c-bcd7-c21a150f8aac",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "id": "empty-aggregate-carrier",
+      "sql": "SELECT CAST(sum(CAST(v AS DECIMAL(38,0))) AS STRING) AS total, to_json(collect_list(array(named_struct('scan','r','key',k)))) AS contributors, CAST(count(*) AS STRING) AS n FROM (SELECT CAST(1 AS BIGINT) v, 'key' k WHERE FALSE)",
+      "parameters": null,
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 3,
+            "columns": [
+              {
+                "name": "total",
+                "position": 0,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              },
+              {
+                "name": "contributors",
+                "position": 1,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              },
+              {
+                "name": "n",
+                "position": 2,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              null,
+              "[]",
+              "0"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-af01-1b9e-9764-44e41e3f486f",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "id": "complete-duplicate-bag",
+      "sql": "SELECT CAST(count(DISTINCT v COLLATE UTF8_BINARY) AS STRING) AS n, to_json(collect_list(array(named_struct('scan','r','key',k)))) AS contributors FROM VALUES ('same','one'),('same','two'),('same','two') t(v,k)",
+      "parameters": null,
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 2,
+            "columns": [
+              {
+                "name": "n",
+                "position": 0,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              },
+              {
+                "name": "contributors",
+                "position": 1,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              "1",
+              "[[{\"scan\":\"r\",\"key\":\"one\"}],[{\"scan\":\"r\",\"key\":\"two\"}],[{\"scan\":\"r\",\"key\":\"two\"}]]"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-afa2-13d1-ad28-3e072d87209e",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "id": "binary-collation",
+      "sql": "SELECT ('A' COLLATE UTF8_BINARY = 'a' COLLATE UTF8_BINARY) AS case_equal, ('x' COLLATE UTF8_BINARY = 'x ' COLLATE UTF8_BINARY) AS space_equal, (decode(unhex('c3a9'),'UTF-8') COLLATE UTF8_BINARY = decode(unhex('65cc81'),'UTF-8') COLLATE UTF8_BINARY) AS normalized_equal",
+      "parameters": null,
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 3,
+            "columns": [
+              {
+                "name": "case_equal",
+                "position": 0,
+                "type_name": "BOOLEAN",
+                "type_text": "BOOLEAN"
+              },
+              {
+                "name": "space_equal",
+                "position": 1,
+                "type_name": "BOOLEAN",
+                "type_text": "BOOLEAN"
+              },
+              {
+                "name": "normalized_equal",
+                "position": 2,
+                "type_name": "BOOLEAN",
+                "type_text": "BOOLEAN"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              "false",
+              "false",
+              "false"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-b0a1-169b-84c7-3bb2c767daa2",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "id": "exact-bound-parameter",
+      "sql": "SELECT CAST(CAST(:wft_1 AS BIGINT) AS STRING) AS exact_value",
+      "parameters": [
+        {
+          "name": "wft_1",
+          "value": "9007199254740993",
+          "type": "STRING"
+        }
+      ],
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 1,
+            "columns": [
+              {
+                "name": "exact_value",
+                "position": 0,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              "9007199254740993"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-b123-1b45-aace-79686b5c155e",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    },
+    {
+      "id": "qualified-builtins",
+      "sql": "SELECT system.builtin.to_json(system.builtin.array(system.builtin.named_struct('scan','r','key','one'))) AS carrier",
+      "parameters": null,
+      "response": {
+        "manifest": {
+          "chunks": [
+            {
+              "chunk_index": 0,
+              "row_count": 1,
+              "row_offset": 0
+            }
+          ],
+          "format": "JSON_ARRAY",
+          "schema": {
+            "column_count": 1,
+            "columns": [
+              {
+                "name": "carrier",
+                "position": 0,
+                "type_name": "STRING",
+                "type_text": "STRING"
+              }
+            ]
+          },
+          "total_chunk_count": 1,
+          "total_row_count": 1,
+          "truncated": false
+        },
+        "result": {
+          "chunk_index": 0,
+          "data_array": [
+            [
+              "[{\"scan\":\"r\",\"key\":\"one\"}]"
+            ]
+          ],
+          "row_count": 1,
+          "row_offset": 0
+        },
+        "statement_id": "01f1c8dc-b1d7-14fc-b702-a567a303a3ef",
+        "status": {
+          "state": "SUCCEEDED"
+        }
+      }
+    }
+  ],
+  "runnerSha256": "f49abc8e97d3e15267f8f1dbf8d9b36198e6f8010bf81d0cd168956c88935a42"
+}
