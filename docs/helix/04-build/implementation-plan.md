@@ -2307,3 +2307,20 @@ current-query checks are validated again from the downloaded wheel bytes. The
 verifier is fetched from the immutable workflow commit; compiler/release source
 remains the selected tag. Two tests include14 corrupt-provenance/job controls.
 This changes release delivery only and does not promote B-008 security acceptance.
+
+
+### Published standard0.4.33 exact-wheel verification — 2026-10-15
+
+Release https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.33 is public.
+Promotion38808676764 passes using the original five tag-run38807410042 artifacts;
+no recompilation or retagging occurs during promotion. All five downloaded public
+wheels equal their verified tag-run bytes. Sourcecc943a2 and workflowe98bd19,
+embedded native module/shim digests, public smoke reports and SHA256SUMS match.
+The actually installed public ARMwheel passes all four current-query API checks.
+
+The ARMnative module is identical to the independently replayed CI module, while
+the public wheel archive digest differs. Truss must explicitly adopt public pins;
+adding ambiguous same-module cohorts or automatic ABI3/4 registration is invalid.
+Evidence is in evidence/release033-published-20261015/. Publishing repairs the
+package dependency only: all132 original B-008 cases and full native security
+qualification remain open. Databricks typed compiler implementation is next.

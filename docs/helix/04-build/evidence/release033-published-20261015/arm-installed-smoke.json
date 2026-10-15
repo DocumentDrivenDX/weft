@@ -1,0 +1,32 @@
+{
+  "scope": "Exact installed standard wheel current-query source/conditional SQL APIs only; no database/native permission or security qualification",
+  "sourceCommit": null,
+  "version": "0.4.33",
+  "wheel": "weft_sql-0.4.33-cp39-abi3-macosx_11_0_arm64.whl",
+  "pinsBeforeAfter": {
+    "wheelSha256": "8ea8e06b7e8cf3623df69dd1e27c3bde3a1189f3adbd01c43f4a1519431b2b35",
+    "nativeModuleSha256": "60b977a1c8b8a355b86be40375aab209ed894b172dbed972498721eab8bbddae",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "checks": [
+    {
+      "id": "original-source-custody-and-abi2-masked-read-raw-predicate",
+      "compiledSha256": "6d98d085ba0089bf867663917e93e289bfd7c72cdb00f259ca033a81676e21f0"
+    },
+    {
+      "id": "abi3-complete-count-bag",
+      "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d"
+    },
+    {
+      "id": "explicit-abi4-original-sum",
+      "compiledSha256": "ecfd1ac02fce24efadf64131764ea5598964825c7343340d3987e2a66a3a30c3"
+    },
+    {
+      "id": "no-context-downgrade",
+      "refused": true
+    }
+  ],
+  "nativeAdmission": false,
+  "securityReady": false
+}

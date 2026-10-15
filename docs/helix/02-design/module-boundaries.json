@@ -3895,6 +3895,8 @@
         "scripts/local/test_public_integer_source.py",
         "scripts/module-boundaries.test.ts",
         "scripts/module-boundaries.ts",
+        "scripts/release/test_verify_promotion.py",
+        "scripts/release/verify-promotion.py",
         "scripts/reliability/__init__.py",
         "scripts/reliability/cargo.py",
         "scripts/reliability/config.py",

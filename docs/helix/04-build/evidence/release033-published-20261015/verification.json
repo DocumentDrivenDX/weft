@@ -1,0 +1,9 @@
+{
+  "release": "https://github.com/DocumentDrivenDX/weft/releases/tag/v0.4.33",
+  "sourceCommit": "cc943a2f0ad87e3742cccdc171184bad7d4dbf60",
+  "workflowCommit": "e98bd1966c0cc902c09ade0cb6f30d73ff7b365a",
+  "publishedWheelsVerified": 5,
+  "byteIdenticalToTagRun": 38807410042,
+  "promotionRun": 38808676764,
+  "securityReady": false
+}
