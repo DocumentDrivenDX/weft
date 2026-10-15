@@ -1,0 +1,14 @@
+{
+  "trussTag": "v0.0.33",
+  "trussSourceCommit": "427c2ba8acb91bf4070c91f4d11e79de3f794c14",
+  "exportedPaths": [
+    "packages/python"
+  ],
+  "originalConsumerSourceSha256": "ae1998b6729cc4971cd7d375326b6e8a668864807706866e08cc57ca08e0fa43",
+  "testSourceSha256": "da5221f6b1c6c5f2331a3a04bed0c63727c3bc076aa9c69969010b8e3263d84c",
+  "controls": 6,
+  "actualPublic33Accepted": true,
+  "actualPublic34Refused": true,
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}

@@ -2420,3 +2420,16 @@ Truss and Ashlar received publication pins for explicit adoption; historical
 consumer registrations and aggregate/ownership/security claims remain unchanged.
 All original132 B-008 cases and native authenticated source/caller/current
 authority, result/cell lineage and guarded release obligations remain required.
+
+
+### Retained public consumer cohort refusal - 2026-10-15
+
+Actual public Weft033 versus034 installed wheels are exercised in separate
+processes against unchanged original Truss tag0.0.33 Python source. The exact
+ae1998b6 selector accepts033 and refuses034 at actual-module selection, retained
+consumer matching and original preparation entry. No registry/module/manifest
+patching occurs; original source is unchanged and installed extension/shim bytes
+match their public archives. Six controls pass. Reproducible test source lives
+at tests/truss068/retained-consumer-cohort.py; scoped receipts/provenance are under
+evidence/retained-consumer-cohort-20261015/. This is pre-native consumer selection,
+not policy or backend acceptance; all original132 obligations remain unchanged.

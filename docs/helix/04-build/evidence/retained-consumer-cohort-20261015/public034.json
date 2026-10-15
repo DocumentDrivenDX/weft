@@ -1,0 +1,63 @@
+{
+  "scope": "Actual installed public wheel against unchanged retained Truss original consumer selector before native execution; no source semantic or native security acceptance",
+  "weftVersion": "0.4.34",
+  "wheel": "weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "fb0d79679c158208418199df144cfc21917b3955c382ef933980bb89645eed37",
+  "nativeModuleSha256": "877bfafd51a7f50478be954c0cbabd0cba0a705f004a5b5e99d317fd087f19d9",
+  "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+  "retainedGateSourceSha256": "ae1998b6729cc4971cd7d375326b6e8a668864807706866e08cc57ca08e0fa43",
+  "retainedCohorts": [
+    {
+      "profile": "truss-current-query-consumer/0.1-candidate",
+      "umfRevision": "579675bdad79c349b06e25979108f8ac1bb7f7e0",
+      "umfBundleSha256": "36e2c63fb0d942c9b94141f1753bcd9b56aad9e32dec5aa1a9ee27aabc674248",
+      "umfManifestSha256": "98eed644128b6f77d087293360e062fc06cce941dcb686e09c35632a5560f03d",
+      "bunVersion": "1.4.2",
+      "weftRevision": "718a9649413baa4e3ede5c0c3b7ed24f4ae48d46",
+      "weftWheelSha256": "3e9bd6f6ac42c944dd12e36ce3ea0481ca116a3ab639ef2c2ede933751ff17a8",
+      "weftModuleSha256": "6b8af80b8d6da4216b1338e79e869faee4f5cd25af8500034368ef709005f523",
+      "resultAbi": "weft.postgresql.current-values/0.2-candidate"
+    },
+    {
+      "profile": "truss-current-query-consumer/0.1-candidate",
+      "umfRevision": "579675bdad79c349b06e25979108f8ac1bb7f7e0",
+      "umfBundleSha256": "36e2c63fb0d942c9b94141f1753bcd9b56aad9e32dec5aa1a9ee27aabc674248",
+      "umfManifestSha256": "98eed644128b6f77d087293360e062fc06cce941dcb686e09c35632a5560f03d",
+      "bunVersion": "1.4.2",
+      "weftRevision": "cc943a2f0ad87e3742cccdc171184bad7d4dbf60",
+      "weftWheelSha256": "8ea8e06b7e8cf3623df69dd1e27c3bde3a1189f3adbd01c43f4a1519431b2b35",
+      "weftModuleSha256": "60b977a1c8b8a355b86be40375aab209ed894b172dbed972498721eab8bbddae",
+      "resultAbi": "weft.postgresql.current-values/0.2-candidate"
+    },
+    {
+      "profile": "truss-current-query-consumer/0.1-candidate",
+      "umfRevision": "579675bdad79c349b06e25979108f8ac1bb7f7e0",
+      "umfBundleSha256": "36e2c63fb0d942c9b94141f1753bcd9b56aad9e32dec5aa1a9ee27aabc674248",
+      "umfManifestSha256": "98eed644128b6f77d087293360e062fc06cce941dcb686e09c35632a5560f03d",
+      "bunVersion": "1.4.2",
+      "weftRevision": "cc943a2f0ad87e3742cccdc171184bad7d4dbf60",
+      "weftWheelSha256": "5eddce42e8fc1497bad36413fe8153c85973d69e579ad5d6d261ff1b1ca1dd63",
+      "weftModuleSha256": "7e62d921d83cb9cefbf97d74819e41573339a6219793217edfe52402a6384134",
+      "resultAbi": "weft.postgresql.current-values/0.2-candidate"
+    }
+  ],
+  "checks": [
+    {
+      "id": "actual-module-cohort",
+      "refused": true,
+      "error": "Actual selected original Weft ABI2 module required"
+    },
+    {
+      "id": "retained-public33-selection",
+      "refused": true,
+      "error": "Actual selected original Weft ABI2 module required"
+    },
+    {
+      "id": "original-preparation-entry",
+      "refused": true,
+      "error": "Actual selected original Weft ABI2 module required"
+    }
+  ],
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}
