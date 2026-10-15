@@ -2388,3 +2388,17 @@ compiled artifacts match the already-managed-tested corpus exactly; this is
 compiler correspondence, not a new managed database run. Evidence is under
 evidence/native068-compiler-20261015/. Keep original132 acceptance obligations,
 full native security gates and separate protected consumer pin qualification open.
+
+
+### Five-platform native68 candidate delivery qualification - 2026-10-15
+
+Build-only run38817410581 passed all five exact-wheel jobs: PostgreSQL current
+smoke4, native68 compiler controls10 and Databricks bridge controls32 per platform.
+Downloaded archives, extension bytes and shim bytes match both persisted smoke
+reports. Actual CI macOS ARM wheel also passes unchanged-products public native68
+acceptance/create/query and no ordinary direct object SELECT; local runtime cleanup
+completed. Evidence: evidence/release034-candidate-20261015/. These are candidate
+pins, not final published wheel pins or protected consumer registration. Release
+tag0.4.34 is source86273dd3 (release notes only after e4cc source); release
+run38818298197 must finish before publication is claimed. All original132 B-008
+shared/native cases and genuine caller/source/current-authority gates remain open.

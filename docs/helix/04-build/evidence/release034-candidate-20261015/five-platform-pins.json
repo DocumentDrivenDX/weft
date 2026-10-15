@@ -1,0 +1,70 @@
+{
+  "buildOnlyRun": 38817410581,
+  "conclusion": "success",
+  "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+  "platforms": [
+    {
+      "wheel": "weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+      "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+      "pins": {
+        "wheelSha256": "32e9d6984c62c4fb710a5579ef88017485f25c95566df18c3a78192007395476",
+        "nativeModuleSha256": "877bfafd51a7f50478be954c0cbabd0cba0a705f004a5b5e99d317fd087f19d9",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "currentPgControls": 4,
+      "currentDatabricksControls": 32
+    },
+    {
+      "wheel": "weft_sql-0.4.34-cp39-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+      "pins": {
+        "wheelSha256": "0e40f38f5b1d1bf2820375b4dfd303c375522f396b4dbe47cb1fbdb47be1ea9f",
+        "nativeModuleSha256": "59c5b936ab2ae41f42e0a173048a26bc7622ea2b29e4145256281bd6135cb8e5",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "currentPgControls": 4,
+      "currentDatabricksControls": 32
+    },
+    {
+      "wheel": "weft_sql-0.4.34-cp39-abi3-macosx_10_12_x86_64.whl",
+      "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+      "pins": {
+        "wheelSha256": "df4175fa09c9dfcf81bfa38c8920e4bc5c950a2bf6b63645b98efe81eb6a33a5",
+        "nativeModuleSha256": "33472a747edc47d55e016f6698287b94673b59f17d2e07aaac9a811414b464fc",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "currentPgControls": 4,
+      "currentDatabricksControls": 32
+    },
+    {
+      "wheel": "weft_sql-0.4.34-cp39-abi3-win_amd64.whl",
+      "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+      "pins": {
+        "wheelSha256": "100501afd6b0184cf9b97efa99c39f447b32d3a9e85dc797ec8a8fb896500f95",
+        "nativeModuleSha256": "0abcf5d82c57f9c1b6206819624443946df06b1512fcbda253fb27d9bce38ce8",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "currentPgControls": 4,
+      "currentDatabricksControls": 32
+    },
+    {
+      "wheel": "weft_sql-0.4.34-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sourceCommit": "e4ccbd9d2a0d6aee53993a40e0c7be35ecf59456",
+      "pins": {
+        "wheelSha256": "778dbdc04040ccdc1d82de4ac8df08e784ddf8413a86a9406a42d336ec8cbaca",
+        "nativeModuleSha256": "6de57d7dfcd604fbdbd78534fcb5bca16c59a9fb71ccae58df0e08a67457e22c",
+        "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+      },
+      "currentPgControls": 4,
+      "currentDatabricksControls": 32
+    }
+  ],
+  "native68CompilerControlsPerPlatform": 10,
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": [],
+  "releaseTag": "v0.4.34",
+  "releaseSourceCommit": "86273dd3c2b4c2b99c8d0268c9dff8537e6ce20e",
+  "sourceDifference": "release notes only",
+  "releaseRun": 38818298197,
+  "releaseStateAtCapture": "queued; publication unproven"
+}
