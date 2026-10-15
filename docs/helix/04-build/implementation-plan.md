@@ -1837,3 +1837,11 @@ evidence/truss066-20261015/. The native setup applies the original five owner
 Records through public APIs and preserves original source/readback hashes.
 This is ordinary catalog/query integration, not installed protection/Subject/
 current-query authority. B-008 remains open. Distribution publication is separate.
+
+Follow-up paired replay passed all seven checks with the exact committed Truss
+SDK query-runtime module99f9a129 over frozen native50307788. There is no SDK
+metadata override in this replay; both source pins are explicit in
+evidence/truss066-20261015/committed-sdk-query-receipt.json. Build-only GitHub
+Actions run38754435498 targets compiler77639ba for five wheel platforms; no
+tag/release publication was requested. Full85 PostgreSQL unit run is still in
+progress (84 passed, exhaustive decimal-domain case pending).
