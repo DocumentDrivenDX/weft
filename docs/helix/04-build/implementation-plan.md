@@ -2290,3 +2290,20 @@ the actual held authority/provider adapter; UC policy/time-travel compatibility
 and second approved caller remain required native gaps. Complete native source,
 caller/current authority and guarded result release cannot be replaced by these
 six dialect observations or a finite representation declaration.
+
+
+### Exact wheel promotion after tag-ref publication failure — 2026-10-15
+
+All five wheel jobs in tag run38807410042 pass against v0.4.33/cc943a2. The
+publish job fails before release creation because checkout by immutable commit
+with default shallow depth does not retain refs/tags/v0.4.33. Fetch full tag refs
+in the publish checkout; keep the exact source/tag correspondence guard.
+
+The optional promote_run_id workflow input reuses existing wheel artifacts only
+after exact same-repository/tag/source/workflow provenance and all five successful
+platform jobs are checked. A failed publish job may be recovered without rebuilding
+or overwriting a public release. Native module/shim/wheel hashes and identical
+current-query checks are validated again from the downloaded wheel bytes. The
+verifier is fetched from the immutable workflow commit; compiler/release source
+remains the selected tag. Two tests include14 corrupt-provenance/job controls.
+This changes release delivery only and does not promote B-008 security acceptance.

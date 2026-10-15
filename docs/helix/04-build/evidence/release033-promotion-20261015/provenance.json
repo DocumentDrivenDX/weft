@@ -1,0 +1,44 @@
+{
+  "run": {
+    "id": 38807410042,
+    "path": ".github/workflows/release.yml",
+    "head_sha": "cc943a2f0ad87e3742cccdc171184bad7d4dbf60",
+    "head_branch": "v0.4.33",
+    "event": "push",
+    "status": "completed",
+    "conclusion": "failure"
+  },
+  "jobs": [
+    {
+      "name": "wheels (macos-15-intel, x86_64-apple-darwin, auto)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "wheels (ubuntu-24.04-arm, aarch64-unknown-linux-gnu, 2014)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "wheels (windows-2022, x86_64-pc-windows-msvc, auto)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "wheels (ubuntu-24.04, x86_64-unknown-linux-gnu, 2014)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "wheels (macos-14, aarch64-apple-darwin, auto)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "publish",
+      "status": "completed",
+      "conclusion": "failure"
+    }
+  ],
+  "verified": true
+}
