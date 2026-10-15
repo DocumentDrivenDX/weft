@@ -1,0 +1,58 @@
+{
+  "scope": "Finite design oracle only; no checker implementation/native authority proof",
+  "worlds": 15,
+  "comparisons": 51690,
+  "matched": true,
+  "mutantCounterexamples": {
+    "cardinality-alone": {
+      "rows": [
+        "k0"
+      ],
+      "sortKeys": [
+        0
+      ],
+      "observed": [
+        "foreign"
+      ],
+      "limit": null,
+      "descending": null,
+      "allowed": false
+    },
+    "invented-total-tie-order": {
+      "rows": [
+        "k0",
+        "k1"
+      ],
+      "sortKeys": [
+        0,
+        0
+      ],
+      "observed": [
+        "k1",
+        "k0"
+      ],
+      "limit": null,
+      "descending": false,
+      "allowed": true
+    },
+    "drop-required-earlier-key": {
+      "rows": [
+        "k0",
+        "k1"
+      ],
+      "sortKeys": [
+        0,
+        1
+      ],
+      "observed": [
+        "k1"
+      ],
+      "limit": 1,
+      "descending": false,
+      "allowed": false
+    }
+  },
+  "sourceSha256": "bd454c9bc302769f88d457eae0aa932cde95e50b287a893fde4a3dbf528a2c0b",
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}

@@ -131,3 +131,16 @@ and native correspondence require semantic review and tests under CONTRACT-005.
 **Construction Policy**: `weft-runtime` registers explicitly compiled features; request backend ID/version/profile selects registered code. A SQL expression MUST NOT choose or silently switch a backend. Existing library consumers may construct their own Registry through CONTRACT-002.
 
 **Boundary Check**: `python3 scripts/checks/check-module-boundaries.py`; its actual `cargo metadata --locked --offline --no-deps` graph MUST match every named workspace member, permitted workspace edges and exact manifest paths, refuse unknown local dependencies and cycles. Use this command locally, in `.githooks/pre-commit` (opt-in installation with `git config core.hooksPath .githooks`) and CI. `python3 tests/module-boundaries/check.py` MUST demonstrate a real allowed Cargo edge, a real forbidden core-to-adapter edge and Rust compiler refusal of private symbol access. Rust visibility owns symbol access; this checker does not claim AST-level within-crate responsibility checks. Such checks, target semantics and external dependency behavior remain explicit semantic review obligations. New workspace edges/members require reviewed map changes, not an expanded debt baseline.
+
+
+## Conditional result-refinement boundary
+
+CONTRACT-010 defines an optional pure conformance checker over the actual typed
+CQP and independently captured host values. The core owns relational semantics
+and conditional result comparison; backend adapters provide only their actual
+validated per-use column selections. No imported plan or generated SQL supplies
+the reference computation. The helper performs no database/network I/O or policy
+evaluation and grants no native authority. Native hosts still own source/caller/
+current-cut admission, genuine and complete input custody, statement/result
+capture, retention and guarded release. This adds a conformance consumer within
+the existing pure-core/host boundary, not a connection or public query executor.

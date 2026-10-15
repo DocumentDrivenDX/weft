@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:weft:current-query-refinement-result:0.1-candidate",
+  "title": "Conditional current-query refinement result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "matched",
+    "authority",
+    "securityReady",
+    "nativeAdmission",
+    "sourceRequestSha256",
+    "designationSha256",
+    "materializationBindingSha256",
+    "compiledArtifactSha256",
+    "refinementInputSha256"
+  ],
+  "properties": {
+    "version": {
+      "const": "weft.current-query.refinement-result/0.1-candidate"
+    },
+    "matched": {
+      "const": true
+    },
+    "authority": {
+      "const": false
+    },
+    "securityReady": {
+      "const": false
+    },
+    "nativeAdmission": {
+      "const": "required"
+    },
+    "sourceRequestSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "designationSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "materializationBindingSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "compiledArtifactSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "refinementInputSha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

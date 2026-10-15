@@ -17,6 +17,8 @@ ddx:
       kind: informed_by
     - id: CONTRACT-007
       kind: informed_by
+    - id: CONTRACT-010
+      kind: informed_by
 ---
 
 # TD-009: Security foundation assurance
@@ -540,7 +542,79 @@ operation-scoped action bindings. The original typed factory preserves contextua
 nullable/global versus required/grouped mathematical Integer outputs. Native
 packet0.2 derives the necessary nullity route dependency inside the actual scoped
 context; it makes no additive transform claim. Separate SQLconsumer0.4 checks raw
-original-authorized signed64 inputs and emits qualified exact numeric SUM with
+original-authorized signed 64-bit inputs and emits qualified exact numeric SUM with
 complete source bags and contextual result codecs. All older source/consumer
 cohorts keep their existing behavior and reject the new context. See CONTRACT-006
 for closed schemas, native requirements and remaining unsupported domains.
+
+
+## Conditional current-query result refinement
+
+CONTRACT-010 governs the optional bounded checker for US-009-AC3/AC4. Keep
+compiler-owned relational semantics separate from native factual authority. A
+source/data-frame match is not an authenticated cut. The selected actual backend
+lowerer validates the original binding before a shared core evaluator consumes
+its typed per-use column selections and the actual retained CQP.
+
+### Technical approach
+
+Evaluate the original typed plan directly over independently captured complete
+eligible populations. Do not parse generated SQL, import a replacement plan,
+reconstruct inputs from output contributors or infer projection domains from a
+query operator. Validate all cells, scan keys, declared counts and complete
+binding correspondence before FALSE/LIMIT0 can suppress execution.
+
+Use exact String/signed 64-bit input cells and existing num-bigint arithmetic for
+mathematical-integer aggregate results. Maintain source scan/key tuples through
+joins and grouping. Treat tuple bags and result bags as multisets; DISTINCT
+changes only its aggregate value set. Preserve private group keys for ordering
+and limit checks without exporting them in diagnostics or the successful report.
+
+Expected rows are derived before limit. Whole public-row/contributor-bag matching
+consumes occurrences once. Ordering constrains key classes rather than imposing
+an invented total order. An ordered limit includes every strictly preceding key
+and a valid submultiset of the boundary tie. Static frame, population, tuple and
+Cartesian candidate-product bounds refuse before any partial result is released.
+
+### Component changes
+
+- `weft-core/current_query_refinement`: optional pure typed-plan evaluator,
+  closed frame admission and exact whole-result comparison. No native libraries,
+  database/network I/O, credentials or policy evaluator dependencies.
+- Existing PostgreSQL/Databricks current-scalar lowerers: supply typed selected
+  cells from their actual validated binding path and call the shared evaluator.
+  Retain all existing SQL artifacts and closed version checks.
+- Runtime/native Python: expose only the new explicit candidate feature through
+  the existing actual-CQP borrowing path. No imported context/AST or alternate
+  source-parent override; older consumer registrations remain unchanged.
+
+Exact method/data/error rules belong to CONTRACT-010. Module inventory and
+`bun run modules:check` must cover any introduced module/API; the existing pure
+core/host dependency boundary remains binding. The standard feature set does not
+automatically acquire a new protected capability or native consumer cohort.
+
+### Testing and assurance
+
+STP-009 owns required positive, refusal and boundary coverage. Compare actual
+implementation with independently authored relational oracles and the retained
+native corpus; a second invocation of generated SQL is not an independent oracle.
+Property checks cover bag permutation, duplicate occurrence consumption, join
+multiplicity, group partition, contextual empty SUM, and valid/invalid limit ties.
+Add deliberate mutants that erase a duplicate, swap a same-public-value bag,
+ignore a predicate, truncate a population, round an integer or impose a tie order.
+
+This is implementation/refinement testing with exact bounded correspondence,
+not a proof of arbitrary SQL or native authority. No new SMT/formal model result
+is claimed by this design; existing FM001-005 evidence is unchanged. Native
+source/caller/current authority, primitive runtime correspondence, complete
+independent counts, snapshot retention and final closing remain host premises
+that require actual native evidence under all original132 obligations.
+
+### Sequence and rollback
+
+Define the closed CONTRACT-010 surface; implement the shared core checker and
+independent oracles; wire validated backend selections; add gated runtime/Python
+transport; exercise actual installed wheels with original native inputs; then
+qualify an explicit host consumer. Keep the feature unavailable on missing
+implementation or evidence. Rollback removes its explicit registration/feature,
+never weakens an existing lowerer or reinterprets a historical receipt.

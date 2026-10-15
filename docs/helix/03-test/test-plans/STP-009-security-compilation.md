@@ -561,7 +561,7 @@ Retain the original132-case catalog and all US-009-AC1–AC4 rows. Required test
   profile1 versus explicit SUM profile2, PostgreSQL/old/extra binding rejection,
   exact source/model/static binding pins and duplicate/missing per-use refusal.
 - Managed Databricks compiler-emitted SQL against independent expected bags:
-  direct/join/group/order/COUNT/DISTINCT/original SUM, exact signed64 extremes,
+  direct/join/group/order/COUNT/DISTINCT/original SUM, exact signed 64-bit extremes,
   counts versus complete contributor multiplicity, global null/grouped required,
   empty/FALSE/LIMIT0, exact parameters and Unicode binary semantics.
 - Deliberate contributor deletion/duplication/scan swap, correct public count with
@@ -596,3 +596,39 @@ admission or native guarded execution. All US-009-AC1–AC4 full acceptance rows
 original132 shared/native cases and broader supported domains remain open. The
 native provider, source/caller/current authority, real route/action decisions,
 second caller, UC time-travel/policy and closing-release tests above remain required.
+
+
+## Conditional result-refinement candidate
+
+CONTRACT-010 and TD-009 define a planned optional checker, not current native
+support. US-009-AC3/AC4 stay open. Implement `current_query_refinement` Rust tests
+and `tests/current-query-refinement/` cross-host cases before claiming this
+candidate implemented. No original132 assertion or case ID changes.
+
+| Layer | Required independent assertions |
+| --- | --- |
+| Source/binding | Actual CQP/parent and selected lowerer; exact four input digests plus the success report's exact complete-frame digest; stale/foreign/mixed inputs, duplicate JSON, unknown members and missing columns refuse before evaluation. |
+| Input values | All complete eligible cells checked even behind FALSE/LIMIT0; exact signed 64-bit endpoints and canonical values, full Unicode/empty strings, duplicate scan keys, missing rows/count mismatch and conflicting shared columns. |
+| Relational | Equality/Boolean predicates and lexicographic ORDER BY comparisons, literal/parameter values, inner/self joins, multiplicity and empty joins; independently authored expected tuples. |
+| Aggregate | COUNT, DISTINCT, grouping, SUM beyond signed 64-bit, positive/negative cancellation, global-empty null and grouped-empty no row; each complete contributing occurrence retained. |
+| Order/limit | Ascending/descending, hidden group/order fields, bag permutations, equal-key reorder, partial tie selection, duplicate-substitution refusal, omitted earlier keys and selected later keys; unordered limit valid submultisets. |
+| Result/custody | Exact public values plus complete private tuples/bags; same public result with wrong contributor, duplicate or missing result, wrong scan order/key, integer rounding, null/absence/withholding confusion and unsupported ABI refuse. |
+| Bounds | Exact and one-over frame, scan, population, column, tuple and join-product boundaries; no sample/prefix success, no private values/counts in coarse errors or success reports. |
+| Embedding/backend | Actual Rust/Python CQP and validated PostgreSQL/Databricks binding paths; installed-wheel source/context custody; old registrations reject the new extension/cohort. |
+| Native host | Actual complete independently captured populations/counts, source/actions/current authority, statement/parameter/result custody, snapshot retention and closing checks; pure frame success never qualifies these premises. |
+
+Use existing managed/native executions only as retained correspondence evidence;
+a fresh native acceptance claim needs a fresh original governed execution.
+Independent review must assess tie nondeterminism, full-result cardinality and
+source completeness separately; a successful decoder or mirrored computation
+alone cannot qualify them.
+
+
+The refinement countermodel deliberately forges population/count/result together.
+A conditional match may be correct under those supplied data and still supplies
+no native completeness or authority; only the genuine host/source gate can
+refuse that world. Keep this distinct from declared-count mismatch refusals.
+Use exact `(scan,path)` selections for raw-predicate/masked-projection positives
+and same-Field remap mutants. Include hidden ORDER keys, multiple ordering columns
+with mixed directions, invocation/cut/report reuse and private outcome/timing
+boundaries. Old lowerers' relational inequalities remain unsupported.

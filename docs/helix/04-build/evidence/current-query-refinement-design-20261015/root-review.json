@@ -1,0 +1,31 @@
+{
+  "status": "no remaining design blocker in frozen conditional scope",
+  "snapshot": "/private/tmp/weft-refinement-contract-review-20261015",
+  "sourcePins": {
+    "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md": "7856a18cff480741bfa8c8a5bf3f62d8c2c38e0303f49adbc4f744f1c833b6fb",
+    "docs/helix/02-design/contracts/current-query-refinement-input-v0.1-candidate.schema.json": "f26a8286be0d4ab5cb9189ff87eed8478b2014c235822e3158c981523a0a4aa5",
+    "docs/helix/02-design/contracts/current-query-refinement-result-v0.1-candidate.schema.json": "112c7f8054610705d6a5ae2d0457817acc98758e890464f986bee4b14c1cdadd",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "360ab085fb80127b89c7b63500a671f3cc5cc36c81c15c1ddc245cd2b2543ddd",
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": "d7f3c0fb93f2589d7e839643b132b344f5f0812205ef4618cf0284dbf87e831b",
+    "docs/helix/02-design/architecture.md": "d0cf75f682263ff28be8d8f65c92e4ff7905ed50e462a42d855bc0263c29f5a8",
+    "tests/current-query-refinement/order-limit-oracle.py": "bd454c9bc302769f88d457eae0aa932cde95e50b287a893fde4a3dbf528a2c0b"
+  },
+  "pinsMatchAfterReview": true,
+  "resolvedFindings": [
+    "Exact per-occurrence(scan,path) effective domains/columns/comparison/mode/action/exposure; hidden ORDER keys retain own inputs",
+    "Direct invocation+full-frame digest and held-cut/result custody; no cross-operation reuse or imported reports",
+    "All actual lowerer/parser/evaluator failures normalize privately; outcomes/timing/digests remain host-private",
+    "Equality/Boolean predicates only; lexicographic ordering does not expand inequality support",
+    "Consistently forged population/count/result is explicit non-authority countermodel"
+  ],
+  "finiteDesignReplay": {
+    "comparisons": 51690,
+    "worlds": 15,
+    "mutantWitnesses": 3,
+    "sourceSha256": "bd454c9bc302769f88d457eae0aa932cde95e50b287a893fde4a3dbf528a2c0b",
+    "receiptSha256": "0baaab3acb7717ee5fbd757cd0a03ace233f8fac74a74b72ef4e70794e299e33"
+  },
+  "scope": "Frozen contract/schema/design/test-plan review plus finite ordering design replay; API remains reserved/unimplemented. No Rust/native SQL refinement or factual completeness, permission, diagnostic-isolation or native acceptance proof.",
+  "nativeAcceptanceChanged": false,
+  "casesPromoted": []
+}

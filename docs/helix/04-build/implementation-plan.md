@@ -2482,3 +2482,23 @@ consumer correspondence, not another warehouse run or source/caller/current-poli
 permission. Native providers still need independently derived held-source bags,
 actual source/publication admission and closing custody. All original132 gates
 remain required; no native case promotion follows from these controls.
+
+
+### Conditional result-refinement contract and bounded design review - 2026-10-15
+
+CONTRACT-010/two closed structural schemas define the optional actual-CQP and
+validated-binding result checker needed by the missing held-source provider.
+TD-009/STP-009 and architecture retain the pure-core/native-factual boundary.
+Exact per-use mappings, complete captured eligibility/count/cut premises, private
+whole-frame correlation, no report reuse, exact bags/aggregates, SQL tie/LIMIT
+nondeterminism and atomic resource refusals are explicit. Consistent forged
+population/count/result maymatchconditionally and is never native completeness.
+UMFroot/existingAstra reviewed the exact frozen7files with no residual design
+blocker after3clarifications; original reviewarchives/digests are retained at
+evidence/current-query-refinement-design-20261015/. An independent finite
+permutation oracle checks51,690comparisons/15worlds/3mutantwitnesses; rootreplays
+that source, Astra inspects its report. This is bounded design evidence only.
+Actualspecscheck69artifacts/83schemas passes. API remainsreserved/unimplemented;
+next implement pure evaluator, validated backend bridge and explicit runtime/
+Python feature, then genuine held-source/capture/closing integration. Existing
+SQLbindings/cohorts/publicsecurityrefusal and all original132 obligations remain.

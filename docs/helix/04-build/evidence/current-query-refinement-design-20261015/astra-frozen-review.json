@@ -1,0 +1,174 @@
+{
+  "status": "cleared-for-implementation-against-frozen-design; no-residual-findings-in-targeted-scope",
+  "date": "2026-10-15",
+  "snapshotRoot": "/private/tmp/weft-refinement-contract-review-20261015",
+  "priorReview": {
+    "path": "/private/tmp/weft-current-query-refinement-design-astra-20261015/review.json",
+    "sha256": "654fdbf8670f8f572f72b15f62daa4ca0063c8629050a4841ff343fa161d1ebe",
+    "preserved": true
+  },
+  "scope": "Targeted frozen-document recheck only. Seven supplied files read/pinned; neither live working files nor new implementation/native tests used. The oracle script is pinned only, not executed or qualified.",
+  "resolvedFindings": [
+    {
+      "id": "F1",
+      "status": "resolved",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            106,
+            114
+          ]
+        },
+        {
+          "file": "docs/helix/03-test/test-plans/STP-009-security-compilation.md",
+          "lines": [
+            631,
+            634
+          ]
+        }
+      ],
+      "resolution": "Exact (scan,path), original Field/effective domain/column/scope/mode/action/exposure retained for each occurrence. No original-Field collapse; hidden ORDER keys use their own captured per-use values."
+    },
+    {
+      "id": "F2",
+      "status": "resolved",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            207,
+            217
+          ]
+        },
+        {
+          "file": "docs/helix/03-test/test-plans/STP-009-security-compilation.md",
+          "lines": [
+            633,
+            634
+          ]
+        }
+      ],
+      "resolution": "Actual lowerer, frame/private-carrier parsing, typed evaluation and comparison failures normalize to one private coarse diagnostic. Match/failure, timing and report digests stay trusted-host private; native privacy/B10 remains separate."
+    },
+    {
+      "id": "F3",
+      "status": "resolved",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            156,
+            162
+          ]
+        },
+        {
+          "file": "docs/helix/03-test/test-plans/STP-009-security-compilation.md",
+          "lines": [
+            612,
+            612
+          ]
+        },
+        {
+          "file": "docs/helix/03-test/test-plans/STP-009-security-compilation.md",
+          "lines": [
+            634,
+            634
+          ]
+        }
+      ],
+      "resolution": "Equality/Boolean predicates distinguished from lexicographic ORDER BY; unsupported inequalities remain refused under unchanged lowerers."
+    }
+  ],
+  "additionalChecks": [
+    {
+      "id": "full-frame-correlation",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            137,
+            147
+          ]
+        },
+        {
+          "file": "docs/helix/02-design/contracts/current-query-refinement-result-v0.1-candidate.schema.json",
+          "lines": [
+            7,
+            17
+          ]
+        }
+      ],
+      "result": "Closed result schema requires refinementInputSha256; contract hashes exact original populations/result frame bytes. Source/query/binding/artifact alone cannot correlate different data."
+    },
+    {
+      "id": "same-invocation-no-reuse",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            48,
+            51
+          ]
+        }
+      ],
+      "result": "Direct invocation, held operation, captured input/result and cut required; no cached/reused admission even for matching digests."
+    },
+    {
+      "id": "counts-not-completeness",
+      "locations": [
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            95,
+            102
+          ]
+        },
+        {
+          "file": "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md",
+          "lines": [
+            234,
+            242
+          ]
+        },
+        {
+          "file": "docs/helix/03-test/test-plans/STP-009-security-compilation.md",
+          "lines": [
+            627,
+            630
+          ]
+        }
+      ],
+      "result": "Independent pre-query occurrence/source/eligibility/cut count remains a host premise. Consistently forged population/count/result may match conditionally; that is explicit non-authority countermodel, distinct from count mismatch refusal."
+    },
+    {
+      "id": "schema-contract-consistency",
+      "result": "Input remains closed seven-field frame; success schema is closed ten-field result with required digest and false authority/securityReady. Semantic byte/type/count/cardinality checks remain beyond JSON Schema, as specified."
+    },
+    {
+      "id": "appendices",
+      "result": "TD009 retains original CQP and actual backend validation, no generated-SQL oracle; architecture preserves pure-core/host ownership. STP keeps planned implementation/native gates and does not promote original acceptance."
+    }
+  ],
+  "residualFindings": [],
+  "sourcePins": {
+    "docs/helix/02-design/contracts/CONTRACT-010-current-query-refinement.md": "7856a18cff480741bfa8c8a5bf3f62d8c2c38e0303f49adbc4f744f1c833b6fb",
+    "docs/helix/02-design/contracts/current-query-refinement-input-v0.1-candidate.schema.json": "f26a8286be0d4ab5cb9189ff87eed8478b2014c235822e3158c981523a0a4aa5",
+    "docs/helix/02-design/contracts/current-query-refinement-result-v0.1-candidate.schema.json": "112c7f8054610705d6a5ae2d0457817acc98758e890464f986bee4b14c1cdadd",
+    "docs/helix/02-design/technical-designs/TD-009-security-compilation.md": "360ab085fb80127b89c7b63500a671f3cc5cc36c81c15c1ddc245cd2b2543ddd",
+    "docs/helix/03-test/test-plans/STP-009-security-compilation.md": "d7f3c0fb93f2589d7e839643b132b344f5f0812205ef4618cf0284dbf87e831b",
+    "docs/helix/02-design/architecture.md": "d0cf75f682263ff28be8d8f65c92e4ff7905ed50e462a42d855bc0263c29f5a8",
+    "tests/current-query-refinement/order-limit-oracle.py": "bd454c9bc302769f88d457eae0aa932cde95e50b287a893fde4a3dbf528a2c0b"
+  },
+  "sourcePinManifestSha256": "e7bf409c5c744241a2ab4d60edd7a84432404a8380d2c6eaedc4e9dbc20f69ba",
+  "beforeAfterAllSevenMatch": true,
+  "newTestsExecuted": 0,
+  "nativeCalls": 0,
+  "sharedFilesEdited": false,
+  "acceptancePromotion": false,
+  "limitations": [
+    "Design clearance only; no implemented evaluator, source/SQL refinement, complete native population or host authority proof.",
+    "Declared input/cardinality bounds do not establish whole-process memory or timing limits.",
+    "Prior draft report/archive remain unchanged; this addendum qualifies only the supplied frozen snapshot."
+  ]
+}
