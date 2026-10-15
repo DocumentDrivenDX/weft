@@ -1,0 +1,129 @@
+{
+  "status": "passed",
+  "scope": "ordinary catalog/query integration; no current protected-policy authority",
+  "trussSource": "50307788",
+  "committedSdkMetadata": "99f9a129",
+  "weftVersion": "0.4.30",
+  "checks": [
+    {
+      "sql": "SELECT r.token FROM Resource r",
+      "result": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjczYTQzZDhiLTk3MmItNDE1OC05OWJiLTBmMDZlMzhmN2Y3MCIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE0OjUzOjMwLjYzMDIyNiswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 14:53:30.630226+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      }
+    },
+    {
+      "sql": "SELECT COUNT(*) FROM Resource r",
+      "result": {
+        "columns": [
+          "count"
+        ],
+        "rows": [
+          [
+            1
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjczYTQzZDhiLTk3MmItNDE1OC05OWJiLTBmMDZlMzhmN2Y3MCIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE0OjUzOjMwLjk4Mjk3MCswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 14:53:30.982970+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      }
+    },
+    {
+      "sql": "SELECT r.resourceId FROM Resource r WHERE r.token='opaque-token'",
+      "result": {
+        "columns": [
+          "resourceId"
+        ],
+        "rows": [
+          [
+            "r1"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjczYTQzZDhiLTk3MmItNDE1OC05OWJiLTBmMDZlMzhmN2Y3MCIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE0OjUzOjMxLjMyNDA5NyswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 14:53:31.324097+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      }
+    },
+    {
+      "sql": "SELECT r.token FROM Resource r GROUP BY r.token",
+      "result": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjczYTQzZDhiLTk3MmItNDE1OC05OWJiLTBmMDZlMzhmN2Y3MCIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE0OjUzOjMxLjYwNjc1NCswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 14:53:31.606754+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      }
+    },
+    {
+      "sql": "SELECT r.token FROM Resource r JOIN Resource s ON r.resourceId=s.resourceId",
+      "result": {
+        "columns": [
+          "token"
+        ],
+        "rows": [
+          [
+            "opaque-token"
+          ]
+        ],
+        "catalog_revision": 1,
+        "as_of": {
+          "value": "truss-read-position-v1:eyJwcm9maWxlIjoidHJ1c3MtcXVlcnktcmVhZC1wb3NpdGlvbi8wLjEiLCJpbnN0YWxsYXRpb25JZCI6IjczYTQzZDhiLTk3MmItNDE1OC05OWJiLTBmMDZlMzhmN2Y3MCIsInJlbGVhc2VTaGEyNTYiOiI5OWFlNzIxOGUwZTNlNjhlMGEzNjgyZTQzOTQ5MDg5MTg1ZDk2N2ViMjFiYmYzMWRlYjBiOGY4ZjZmYzJkZTlhIiwiY2F0YWxvZ1JldmlzaW9uIjoxLCJhY3Rvck9pZCI6IjE4NTE1IiwiZG9jdW1lbnRzIjpbeyJzaGEyNTYiOiJhY2VjMTA0ZjkzYmQ5Zjc4ZWJlMWI3ODcyYzA0YWU3Nzc4Mjc0MTVjMzZkN2M4NTMyZDFlOTE3N2FhZmQ0NDZhIiwicmV2aXNpb24iOiJuYW1lZC1xdWVyeS1jb3JlLXIxIiwiZG9jdW1lbnRJZCI6ImRvbWFpbiJ9XSwiY29tcGxldGVkQmVmb3JlWGlkIjoiNzcxIiwiYXQiOiIyMDI2LTEwLTE1VDE0OjUzOjMxLjg4NjIwMyswMDowMCIsImNhbGxlclhpZEFzc2lnbmVkIjpmYWxzZX0",
+          "at": "2026-10-15 14:53:31.886203+00:00",
+          "caller_xid_assigned": false,
+          "semantics": "committed-lower-bound"
+        },
+        "outcome": "rows"
+      }
+    },
+    {
+      "declarativeOnlyFieldRefused": {
+        "code": "invalid_query",
+        "diagnostics": [
+          {
+            "code": "WFT-NAME-MISSING",
+            "message": "Selected member name missing or ambiguous"
+          }
+        ],
+        "outcome": "refused"
+      }
+    },
+    {
+      "ordinaryCallerHasRawObjectSelect": false
+    }
+  ]
+}

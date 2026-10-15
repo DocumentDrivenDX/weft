@@ -1853,3 +1853,15 @@ without SQL; both new native-cohort tests pass after this tightening. Earlier
 77639ba wheel/replay receipts remain historical before-hardening evidence.
 A rebuilt wheel and matching native replay are pending; no released asset is
 qualified by the earlier build-only run. Older registrations are unchanged.
+
+Final50464e0 source passed the seven native checks with committed SDK99f9a129
+using a freshly installed development-profile wheel (SHA6878b8ca). Full85
+PostgreSQL unit regression tests passed on the pre-hash-guard source; the final
+manifest-guard source separately passed both focused tests. Exact logs and
+final-build.json retain this composition rather than claiming a fresh full run
+after the guard. The release-profile wheel96b0fa8d fails macOS import with
+mis-aligned LINKEDIT string pool and is explicitly unqualified. The final-source
+five-platform build-only run38754989288 remains pending; no package release
+is published. Truss received source, replacement wheel pins and this limitation.
+Ordinary query integration passed; current-policy/native protection and B-008
+completion remain open.

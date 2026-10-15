@@ -1,0 +1,24 @@
+{
+  "compilerCommit": "50464e03edc9db6dd1ea566f2e110b2aa4e6164f",
+  "distribution": "weft-sql0.4.30",
+  "backend": "0.4.36",
+  "verifiedWheel": {
+    "profile": "dev",
+    "sha256": "6878b8ca8b24e8a57f79a22d70f3c8561ca67a7a159faecd693115f41ffbe006",
+    "nativeChecks": 7
+  },
+  "unqualifiedWheel": {
+    "profile": "release",
+    "sha256": "96b0fa8dc2aabe7823860ffa4bf23670b32263909f6ed53ea38620400b32db5b",
+    "failure": "macOS import: mis-aligned LINKEDIT string pool"
+  },
+  "regression": {
+    "preHashGuardSource": "77639ba663934a0731daeae2b05b022e66ff0361",
+    "postgresqlTestsPassed": 85,
+    "finalSourceManifestTestsPassed": 2,
+    "moduleBoundaryControlsPassed": 16
+  },
+  "buildOnlyWorkflow": "https://github.com/DocumentDrivenDX/weft/actions/runs/38754989288",
+  "published": false,
+  "protectedCurrentAuthority": false
+}
