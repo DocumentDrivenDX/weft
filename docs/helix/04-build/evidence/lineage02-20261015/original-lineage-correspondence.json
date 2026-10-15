@@ -1,0 +1,10 @@
+{
+  "scope": "compiler derivation and unresolved current source custody only; conditional stored properties/effective disposition/native authority remain separate",
+  "checks": [
+    "token-equality: exact current source/hash/AST correspondence; no mode/action; opaque expectation and caller overrides cannot supply dependencies",
+    "token-self-join: exact current source/hash/AST correspondence; no mode/action; opaque expectation and caller overrides cannot supply dependencies",
+    "token-order-refusal: exact current source/hash/AST correspondence; no mode/action; opaque expectation and caller overrides cannot supply dependencies",
+    "numeric-sum-unsupported: exact current source/hash/AST correspondence; no mode/action; opaque expectation and caller overrides cannot supply dependencies",
+    "field-free-count: exact current source/hash/AST correspondence; no mode/action; opaque expectation and caller overrides cannot supply dependencies"
+  ]
+}

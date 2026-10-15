@@ -20,6 +20,7 @@ fn values(lower: &mut Lower<'_>, v: &app::Value) {
 }
 fn collect_predicate(lower: &mut Lower<'_>, p: &app::Predicate) -> Result<()> {
     match p {
+        app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
         app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => {
             field(lower, left);
@@ -74,6 +75,7 @@ fn predicate(
     p: &app::Predicate,
 ) -> Result<String> {
     match p {
+        app::Predicate::Boolean{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
         app::Predicate::ExactEqual { .. } => return Err(weft_core::error::Diagnostic::new("WFT-PROFILE", "lower", "This backend profile does not admit exact binary equality")),
         app::Predicate::Equal { left, right } => Ok(format!(
             "({} = {})",
@@ -154,6 +156,7 @@ pub(super) fn lower(
     }
     for output in &plan.outputs {
         match &output.expression {
+            app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => {
                 let d = descriptor(plan, identity)?;
@@ -253,6 +256,7 @@ pub(super) fn lower(
             continue;
         }
         let (sql, ty, ids) = match &output.expression {
+            app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => {
                 let Shape::Scalar { logical_type } = &descriptor(plan, identity)?.shape else {
@@ -294,6 +298,7 @@ pub(super) fn lower(
             app::Expression::RelatedKeys { .. } => unreachable!(),
         };
         let optional = match &output.expression {
+            app::Expression::CountDistinct{..}=>return Err(weft_core::error::Diagnostic::new("WFT-PROFILE","lower","Lineage candidate operations require separately qualified native lowering")),
             app::Expression::CompleteRelatedKeys { .. } | app::Expression::NativeMetadata { .. } => return Err(fail("WFT-UNSUPPORTED", "Truss native entity metadata is not supported by this backend")),
             app::Expression::Field { scan, identity } => lower
                 .presence

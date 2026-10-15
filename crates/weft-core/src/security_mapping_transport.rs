@@ -33,8 +33,11 @@ fn fail() -> Diagnostic {
 // AST occurrence. Bound that selected payload before it can be replicated.
 // Conservative JSON control-character charges avoid allocating escaped copies.
 pub(crate) fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usize)->Result<()> {
+    parameter_payload_budget_selected(sql,parameters,limit,false)
+}
+pub(crate) fn parameter_payload_budget_selected(sql:&str,parameters:&Parameters,limit:usize,extended:bool)->Result<()> {
     use crate::application_syntax::{Predicate,Value};
-    let (syntax,_)=crate::application_syntax::parse_security(sql)?;
+    let (syntax,_)=if extended{crate::application_syntax::parse_lineage_candidate(sql)?}else{crate::application_syntax::parse_security(sql)?};
     let mut sizes=std::collections::BTreeMap::new();
     for (name,parameter) in parameters {
         let mut size=2usize; // JSON string quotes.
@@ -46,7 +49,7 @@ pub(crate) fn parameter_payload_budget(sql:&str,parameters:&Parameters,limit:usi
     }
     let mut used=0usize;
     for predicate in syntax.predicates.iter().chain(syntax.joins.iter().flat_map(|(_,predicates)|predicates)) {
-        let values=match predicate {Predicate::Compare{values,..}=>values,Predicate::HasRelated{key,..}=>key};
+        let values=match predicate {Predicate::Compare{values,..}=>values,Predicate::HasRelated{key,..}=>key,Predicate::Boolean{..}=>continue};
         for value in values {
             if let Value::Parameter(name)=value {
                 if name.quoted{return Err(fail());}

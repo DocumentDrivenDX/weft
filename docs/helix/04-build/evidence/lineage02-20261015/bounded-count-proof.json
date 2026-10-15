@@ -1,0 +1,228 @@
+{
+  "scope": "Bounded0..4 paired rows over mathematical equality classes and explicit null/presence. Conditional encoding/nullity/population correspondence only; no pre-storage plaintext equality, native codec, current authority, compiler/SQL refinement or nullable/absent source admission proof.",
+  "z3": "4.15.4.0",
+  "checks": [
+    {
+      "id": "nullable_correspondence_0",
+      "rows": 0,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      }
+    },
+    {
+      "id": "nullable_correspondence_1",
+      "rows": 1,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      }
+    },
+    {
+      "id": "nullable_correspondence_2",
+      "rows": 2,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      }
+    },
+    {
+      "id": "nullable_correspondence_3",
+      "rows": 3,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      }
+    },
+    {
+      "id": "nullable_correspondence_4",
+      "rows": 4,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      }
+    },
+    {
+      "id": "missing_equality_counterexample",
+      "rows": 2,
+      "expected": "sat",
+      "actual": "sat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": false,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      },
+      "counterexample": {
+        "logicalCount": "1",
+        "nativeCount": "2",
+        "logical": [
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          },
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          }
+        ],
+        "native": [
+          {
+            "present": "True",
+            "null": "False",
+            "value": "1"
+          },
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing_nullity_counterexample",
+      "rows": 1,
+      "expected": "sat",
+      "actual": "sat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": false,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      },
+      "counterexample": {
+        "logicalCount": "0",
+        "nativeCount": "1",
+        "logical": [
+          {
+            "present": "True",
+            "null": "True",
+            "value": "0"
+          }
+        ],
+        "native": [
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing_population_counterexample",
+      "rows": 2,
+      "expected": "sat",
+      "actual": "sat",
+      "premises": {
+        "pairedCompletePopulation": false,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": true,
+        "actualIdealNonnull": false,
+        "nativeNonnullGuard": null
+      },
+      "counterexample": {
+        "logicalCount": "1",
+        "nativeCount": "2",
+        "logical": [
+          {
+            "present": "False",
+            "null": "False",
+            "value": "0"
+          },
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          }
+        ],
+        "native": [
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          },
+          {
+            "present": "True",
+            "null": "False",
+            "value": "-1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "required_nonnull_specialization",
+      "rows": 4,
+      "expected": "unsat",
+      "actual": "unsat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": false,
+        "actualIdealNonnull": true,
+        "nativeNonnullGuard": true
+      }
+    },
+    {
+      "id": "missing_native_nonnull_guard",
+      "rows": 1,
+      "expected": "sat",
+      "actual": "sat",
+      "premises": {
+        "pairedCompletePopulation": true,
+        "equalityAgreementBothDirections": true,
+        "nullityAgreement": false,
+        "actualIdealNonnull": true,
+        "nativeNonnullGuard": false
+      },
+      "counterexample": {
+        "logicalCount": "1",
+        "nativeCount": "0",
+        "logical": [
+          {
+            "present": "True",
+            "null": "False",
+            "value": "0"
+          }
+        ],
+        "native": [
+          {
+            "present": "True",
+            "null": "True",
+            "value": "0"
+          }
+        ]
+      }
+    }
+  ]
+}

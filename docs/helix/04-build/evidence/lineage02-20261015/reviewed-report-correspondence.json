@@ -1,0 +1,95 @@
+{
+  "scope": "Exact report bytes match the independent owner-reviewed candidate; no native claim",
+  "reports": [
+    {
+      "path": "r1-undisclosed-distinct-required.report.json",
+      "sha256": "a6532e39d9a6ed4999db296fbd3d50e0f54aaf8dda91f2d76697058b2bcbe9b2",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r1-undisclosed-distinct-selfjoin-false-zero.report.json",
+      "sha256": "25f453175a17ff6fe274f9bf5cf17c8eff19d0d5eac9f907bb473059bbf8debb",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r1-undisclosed-field-free-false-zero.report.json",
+      "sha256": "c13ab7a342ed3b128229bce5df7eae0365c3363a0e14a3893dba4335a5daab91",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r1-undisclosed-hidden-read-false-zero.report.json",
+      "sha256": "52791d1fc3f416392cca4c00c5326b5c25a55d70bb6bf0c475dfe1de71448a8d",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r1-undisclosed-projection-read.report.json",
+      "sha256": "ade5220437a07d2b0cc8591ec7ed8575d437500fc4de95c815a062999d221a0b",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r1-undisclosed-sum-unsupported.report.json",
+      "sha256": "1502fbec7f7bb3926533cd16985d5363157bb04c2489f7d3397888b20a9aa6b7",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-distinct-required.report.json",
+      "sha256": "55bb2c748cf95792f7a7e313fdad19575e6f2716887ed61acb5bc40cf076ac9e",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-distinct-selfjoin-false-zero.report.json",
+      "sha256": "2dbeae9199f6e39e598390a16a58080f3733e56af0f3f0b7af88f0d9165f06dc",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-field-free-false-zero.report.json",
+      "sha256": "8cba912fdda3594e742ee32267b67649c7aa170535d2136f009c8ccd366e4ddb",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-hidden-read-false-zero.report.json",
+      "sha256": "e368884b3089898fe85bc19f7fb14a21d95ea096426702b31beb6c4a1f3ed2ed",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-projection-read.report.json",
+      "sha256": "8dbd6ba8f7d941e39da34c8bc996dac3b0d24a54bfb9264809da6f9047b49d75",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-allowed-sum-unsupported.report.json",
+      "sha256": "f91768e37ee4a40c770d202e9be2b1f9a6047c88952e0073f8b88fc9f7c930e7",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-distinct-required.report.json",
+      "sha256": "3ffa007ce93669e5d51a97b8da7a35d08dff72d6c610ab3d814d0a4ddd4e8b26",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-distinct-selfjoin-false-zero.report.json",
+      "sha256": "36a1cf896c306f7b3c15f0e581d9aa09b8dabdc31eebac02bd65d7f94ed93abf",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-field-free-false-zero.report.json",
+      "sha256": "5930315136334e57b34e7eeffd9ef99a78677e7e7cbc35b00c63210da06d9964",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-hidden-read-false-zero.report.json",
+      "sha256": "b4427ee4fe681b4cb19fb54f8ce6c8ab99059cf1e6473ce4ca6df4db8c7b6ff3",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-projection-read.report.json",
+      "sha256": "d1724a8ac609bfca62746c979a24fa6b36f6c36a2c7ec339dd42d2fea44b16cf",
+      "exactReviewedCandidateReport": true
+    },
+    {
+      "path": "r2-revoked-sum-unsupported.report.json",
+      "sha256": "7f89c8f7614580155cc1495e08263afef7eabe7ff17b2b6d47aeb12e255bad4b",
+      "exactReviewedCandidateReport": true
+    }
+  ]
+}

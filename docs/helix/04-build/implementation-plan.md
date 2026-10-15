@@ -1865,3 +1865,35 @@ five-platform build-only run38754989288 remains pending; no package release
 is published. Truss received source, replacement wheel pins and this limitation.
 Ordinary query integration passed; current-policy/native protection and B-008
 completion remain open.
+
+## B-008 source-owned read requirements and COUNT candidate — 2026-10-15
+
+The separate application-lineage0.2 candidate now extends the original application
+parser/resolver with COUNT DISTINCT, flat WHERE Boolean conjuncts and LIMIT0,
+retaining original row/Field/relationship dependencies through false/zero output.
+CONTRACT-006 defines the closed request/report/IR and readRequirements contract;
+TD-009 and STP-009 retain the implementation and verification scope. No alternate
+policy compiler, caller AST/action/mode authority or backend fallback is admitted.
+Old0.1/property/mapping bytes and availability refusals are unchanged; existing
+registrations refuse the new IR before backend binding/lowering callbacks.
+
+Fresh current-main integration passes300 core tests, workspace all-target check,
+16 boundary controls, both retained native066 cohort tests, six candidate paired
+reports and all current/legacy/availability host controls. Original owner schemas
+pass68 artifacts/77 schemas/52 allocated criteria/636 fixture scenarios (document
+checks only). The actual UMF consumer independently passes262 controls over18
+fresh original compiler reports; all18 report bytes match its reviewed candidate.
+Evidence and exact source/binary pins are under evidence/lineage02-20261015/.
+
+The bounded count model passes six UNSAT/four SAT sensitivity checks. Eleven
+previously retained PostgreSQL18.6 VALUES primitives remain byte-corresponding
+source evidence, not a fresh compiled protected-query execution. Required source
+Fields stay required; absent/null ambiguity, unsupported SUM properties and
+unsupported shapes retain refusals/explicit unsupported status. Native original
+scalar access and historical mutation pins stay unchanged.
+
+Next connect these exact issued read requirements to the owner's current read/
+capability program and original authenticated native admission. Actual caller/
+Subject/current source and eligible-population custody, compiler-to-native/result
+lineage, guarded release and every original132-case shared/native gate remain
+mandatory. This increment promotes no acceptance case and does not complete B-008.

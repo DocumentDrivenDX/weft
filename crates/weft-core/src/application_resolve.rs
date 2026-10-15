@@ -137,7 +137,7 @@ fn resolve_inner(
     let aggregate = q
         .outputs
         .iter()
-        .any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_)))
+        .any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_)))
         || !groups.is_empty();
     if aggregate {
         s.caps.insert("aggregate".into());
@@ -236,6 +236,13 @@ fn resolve_inner(
                         },
                     )],
                 )
+            }
+            ast::Output::CountDistinct(c)=>{
+                let argument=s.field(c)?;
+                let (record,_)=s.record_for_column(c)?;let (_,graph)=catalog.member_descriptor_by_identity(record,&argument.identity)?;
+                if graph.iter().find(|d|d.identity==argument.identity).and_then(|d|d.availability.as_deref())!=Some("required"){return Err(fail("WFT-TYPE","COUNT DISTINCT requires established present scalar operands; absence is not NULL"));}
+                s.caps.insert("aggregate.countDistinct".into());
+                ("count".into(),vec![("count".into(),ir::Expression::CountDistinct{argument,logical_type:LogicalType{family:Family::Integer,facets:json!({}),nullable:false}})])
             }
             ast::Output::Count => {
                 s.caps.insert("aggregate.count".into());
@@ -461,8 +468,9 @@ fn resolve_inner(
         return Err(fail("WFT-PARAMETER", "Surplus source parameter binding"));
     }
     s.caps.insert("project".into());
+    let extended=q.limit==Some(0)||q.predicates.iter().any(|p|matches!(p,ast::Predicate::Boolean{..}))||q.outputs.iter().any(|o|matches!(o.output,ast::Output::CountDistinct(_)));
     Ok(ir::Plan {
-        ir_version: if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
+        ir_version: if extended {"weft-ir/application-lineage/0.2-candidate"}else if timestamp_equality { "weft-ir/0.2.6" } else if binary_equality { "weft-ir/0.2.5" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.3.0") { "weft-ir/0.2.4" } else if profile.as_ref().is_some_and(|p|p.version=="weft-truss-entity-read/0.2.0") { "weft-ir/0.2.3" } else if complete_entity { "weft-ir/0.2.2" } else { "weft-ir/0.2.0" }.into(),
         module_pins: catalog.pins(),
         read_profile: profile,
         required_capabilities: s.caps.into_iter().collect(),
@@ -514,7 +522,7 @@ pub(crate) fn resolve_page_with_exact(catalog:&Catalog,query:ast::Query,paramete
 fn resolve_page_inner(catalog:&Catalog,mut query:ast::Query,parameters:Parameters,page_size:u16,after:Option<&[String]>,typed_keys:bool,exact_parameters:ExactParameters,binary_equality:bool,timestamp_equality:bool) -> Result<PagePlan> {
     if !(1..=999).contains(&page_size) || !query.order.is_empty() || query.limit.is_some()
         || !query.joins.is_empty() || !query.groups.is_empty()
-        || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::Sum(_) | ast::Output::Related { .. }))
+        || query.outputs.iter().any(|p| matches!(p.output, ast::Output::Count | ast::Output::CountDistinct(_) | ast::Output::Sum(_) | ast::Output::Related { .. }))
     {
         return Err(fail("WFT-PROFILE", "SQL page requires a single nonaggregated source without caller ORDER BY or LIMIT"));
     }

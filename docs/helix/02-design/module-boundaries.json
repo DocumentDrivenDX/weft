@@ -531,6 +531,11 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/application_read_requirements.rs",
+          "publicDeclarations": [],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/application_resolve.rs",
           "publicDeclarations": [
             "struct:Parameter",
