@@ -156,6 +156,11 @@ impl CurrentQueryPreparation{
   self.inner.with_context(|_,designation,_|Ok(designation.json().to_owned())).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
  }
  fn operand_count(&self,py:Python<'_>)->PyResult<usize>{self.check_original(py)?;Ok(self.inner.operand_count())}
+ #[cfg(feature="current-postgresql-scalar-candidate")]
+ fn lower_postgresql_scalar_candidate_json(&self,py:Python<'_>,binding:&str)->PyResult<String>{
+  self.check_original(py)?;self.inner.lower_postgresql_scalar_candidate_json(binding).map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
+
 }
 
 #[cfg(feature="application-lineage-candidate")]

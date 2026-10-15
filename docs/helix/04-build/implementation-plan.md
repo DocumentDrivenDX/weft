@@ -2102,3 +2102,33 @@ bypass. UMF owns actual read-rule/route activation; exact separate original-acti
 permission, per-use/cross-row runtime scopes, original native source/caller/Subject
 cut, SQL/result lineage and guarded release remain unmet. The new source object
 is not evidence that any of those gates passed.
+
+
+### Conditional typed PostgreSQL scalar compiler — 2026-10-15
+
+B-008 remains open under all original132 native/shared obligations and the
+expanded45 accepted/113 unimplemented/158 required gate. The opt-in
+current-postgresql-scalar-candidate now lowers actual same-original typed
+operands to PostgreSQL SQL over private declared scalar columns, including
+separate masked read DTO and raw predicate columns. The closed binding and result
+metadata are defined in CONTRACT-006. Arbitrary materialization declarations are
+conditional premises; SQL emission does not admit source policy or native access.
+
+Seven targeted Rust controls and nine actual PostgreSQL18.6 SQL/result cases pass,
+including bags, grouping/order/count, bound parameters and FALSE/LIMIT0. The
+Python parent/current-child custody regression passes46 controls. Native fixture
+execution uses a privileged local connection and synthetic eligibility/mode/scope
+declarations, including counterfactual source modes. It is SQL refinement only;
+no original protected backend case is promoted. The disposable server is stopped.
+Evidence is recorded under evidence/current-scalar-sql-20261015/.
+
+The unpublished0.4.32 development wheel enables the separate candidate feature;
+it does not replace the released0.4.32 artifact. Truss's actual database-derived
+capture/currentSubject issuer ABI and guarded execution/release remain pending.
+The UMF computation driver stays on hold until that native boundary is concrete.
+The user authorizes isolated Databricks tests under client_dev and cleanup;
+the approved second caller connection is still unresolved.
+
+An independent ordinary-role PG18.6 oracle also passes17 positive and4 pre-execution refusal controls over UTF8 C-collation and signed64 edges. Removing eligibility filtering changes the expected bag and is detected. Its owned container is removed. These checks share the conditional premise qualification above and confer no native policy admission.
+
+The full core/PostgreSQL/runtime test invocation passes, including the exhaustive existing decimal storage-home matrix and Rust API doctests. Workspace all-target checking, module boundaries and governed-spec checks also pass; see the exact logs and test-result ledger in the receipt.

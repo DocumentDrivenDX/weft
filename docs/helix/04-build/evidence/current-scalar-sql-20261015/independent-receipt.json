@@ -1,0 +1,1261 @@
+{
+  "status": "conditional-native-edge-checks-passed",
+  "runId": "9158a990-f888-4016-8b36-0ec74783481b",
+  "scope": "Actual same-original typed CQP compiler to PG18 over synthetic declared stage values; no UMF/native eligibility, action permission, runtime-scope proof, source issuer, guarded release or backend acceptance",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "psycopg": "3.3.6",
+  "weft": "0.4.32",
+  "wheelSha256": "5c3ec17bad0fb8ea12c66d0b027fef6ef4be1ca0b05343ed00df96b26f90bbcf",
+  "moduleSha256": "991f8e5d8c203e8c084f14aa4e5ce0e4b1d31de814b480b17ca4120658b5e95a",
+  "loadedNativeOrigin": "/private/tmp/weft-current-scalar-installed/weft/weft.abi3.so",
+  "importShimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+  "shimMatchesWheel": true,
+  "sourceManifestSha256": "6a901c4bdb5c9a5b1e6c2b2dd40c9a19df374584250e65c8d1290263722670d8",
+  "sourceFilesVerifiedBeforeAfter": 978,
+  "oracleSha256": "bd29c8ff64e2d6d7511c0e23ccf864ff9a9d2b7299243edd4c19fdaa0f20aeec",
+  "engine": [
+    "180006",
+    "PostgreSQL 18.6 (Debian 18.6-1.pgdg13+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit",
+    "UTF8"
+  ],
+  "ordinaryFixtureActor": [
+    "umf_edge_reader",
+    "umf_edge_reader",
+    "off",
+    false
+  ],
+  "nativeStageInventory": [
+    [
+      "eligible",
+      "16",
+      ""
+    ],
+    [
+      "resourceId",
+      "25",
+      "C"
+    ],
+    [
+      "salary",
+      "20",
+      ""
+    ],
+    [
+      "salary_public",
+      "25",
+      "C"
+    ],
+    [
+      "token",
+      "25",
+      "C"
+    ]
+  ],
+  "checks": [
+    {
+      "id": "utf8-c-order-asc",
+      "expectedRows": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          "\t"
+        ],
+        [
+          "\n"
+        ],
+        [
+          "\r"
+        ],
+        [
+          " "
+        ],
+        [
+          "  "
+        ],
+        [
+          "!"
+        ],
+        [
+          "\""
+        ],
+        [
+          "%_"
+        ],
+        [
+          "'"
+        ],
+        [
+          "' OR TRUE --"
+        ],
+        [
+          "0"
+        ],
+        [
+          "00"
+        ],
+        [
+          "A"
+        ],
+        [
+          "A\u030a"
+        ],
+        [
+          "Z"
+        ],
+        [
+          "\\"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a\n"
+        ],
+        [
+          "a "
+        ],
+        [
+          "a  "
+        ],
+        [
+          "aa"
+        ],
+        [
+          "e\u0301"
+        ],
+        [
+          "z"
+        ],
+        [
+          "\u00c5"
+        ],
+        [
+          "\u00e9"
+        ],
+        [
+          "\u65e5\u672c\u8a9e"
+        ],
+        [
+          "\ud800\udc00"
+        ],
+        [
+          "\ud83d\ude42"
+        ],
+        [
+          "\udbff\udfff"
+        ]
+      ],
+      "observedRows": [
+        [
+          ""
+        ],
+        [
+          ""
+        ],
+        [
+          "\t"
+        ],
+        [
+          "\n"
+        ],
+        [
+          "\r"
+        ],
+        [
+          " "
+        ],
+        [
+          "  "
+        ],
+        [
+          "!"
+        ],
+        [
+          "\""
+        ],
+        [
+          "%_"
+        ],
+        [
+          "'"
+        ],
+        [
+          "' OR TRUE --"
+        ],
+        [
+          "0"
+        ],
+        [
+          "00"
+        ],
+        [
+          "A"
+        ],
+        [
+          "A\u030a"
+        ],
+        [
+          "Z"
+        ],
+        [
+          "\\"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a\n"
+        ],
+        [
+          "a "
+        ],
+        [
+          "a  "
+        ],
+        [
+          "aa"
+        ],
+        [
+          "e\u0301"
+        ],
+        [
+          "z"
+        ],
+        [
+          "\u00c5"
+        ],
+        [
+          "\u00e9"
+        ],
+        [
+          "\u65e5\u672c\u8a9e"
+        ],
+        [
+          "\ud800\udc00"
+        ],
+        [
+          "\ud83d\ude42"
+        ],
+        [
+          "\udbff\udfff"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "utf8-c-order-desc",
+      "expectedRows": [
+        [
+          "\udbff\udfff"
+        ],
+        [
+          "\ud83d\ude42"
+        ],
+        [
+          "\ud800\udc00"
+        ],
+        [
+          "\u65e5\u672c\u8a9e"
+        ],
+        [
+          "\u00e9"
+        ],
+        [
+          "\u00c5"
+        ],
+        [
+          "z"
+        ],
+        [
+          "e\u0301"
+        ],
+        [
+          "aa"
+        ],
+        [
+          "a  "
+        ],
+        [
+          "a "
+        ],
+        [
+          "a\n"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "\\"
+        ],
+        [
+          "Z"
+        ],
+        [
+          "A\u030a"
+        ],
+        [
+          "A"
+        ],
+        [
+          "00"
+        ],
+        [
+          "0"
+        ],
+        [
+          "' OR TRUE --"
+        ],
+        [
+          "'"
+        ],
+        [
+          "%_"
+        ],
+        [
+          "\""
+        ],
+        [
+          "!"
+        ],
+        [
+          "  "
+        ],
+        [
+          " "
+        ],
+        [
+          "\r"
+        ],
+        [
+          "\n"
+        ],
+        [
+          "\t"
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "observedRows": [
+        [
+          "\udbff\udfff"
+        ],
+        [
+          "\ud83d\ude42"
+        ],
+        [
+          "\ud800\udc00"
+        ],
+        [
+          "\u65e5\u672c\u8a9e"
+        ],
+        [
+          "\u00e9"
+        ],
+        [
+          "\u00c5"
+        ],
+        [
+          "z"
+        ],
+        [
+          "e\u0301"
+        ],
+        [
+          "aa"
+        ],
+        [
+          "a  "
+        ],
+        [
+          "a "
+        ],
+        [
+          "a\n"
+        ],
+        [
+          "a"
+        ],
+        [
+          "a"
+        ],
+        [
+          "\\"
+        ],
+        [
+          "Z"
+        ],
+        [
+          "A\u030a"
+        ],
+        [
+          "A"
+        ],
+        [
+          "00"
+        ],
+        [
+          "0"
+        ],
+        [
+          "' OR TRUE --"
+        ],
+        [
+          "'"
+        ],
+        [
+          "%_"
+        ],
+        [
+          "\""
+        ],
+        [
+          "!"
+        ],
+        [
+          "  "
+        ],
+        [
+          " "
+        ],
+        [
+          "\r"
+        ],
+        [
+          "\n"
+        ],
+        [
+          "\t"
+        ],
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "utf8-c-group",
+      "expectedRows": [
+        [
+          "",
+          "2"
+        ],
+        [
+          "\t",
+          "1"
+        ],
+        [
+          "\n",
+          "1"
+        ],
+        [
+          "\r",
+          "1"
+        ],
+        [
+          " ",
+          "1"
+        ],
+        [
+          "  ",
+          "1"
+        ],
+        [
+          "!",
+          "1"
+        ],
+        [
+          "\"",
+          "1"
+        ],
+        [
+          "%_",
+          "1"
+        ],
+        [
+          "'",
+          "1"
+        ],
+        [
+          "' OR TRUE --",
+          "1"
+        ],
+        [
+          "0",
+          "1"
+        ],
+        [
+          "00",
+          "1"
+        ],
+        [
+          "A",
+          "1"
+        ],
+        [
+          "A\u030a",
+          "1"
+        ],
+        [
+          "Z",
+          "1"
+        ],
+        [
+          "\\",
+          "1"
+        ],
+        [
+          "a",
+          "2"
+        ],
+        [
+          "a\n",
+          "1"
+        ],
+        [
+          "a ",
+          "1"
+        ],
+        [
+          "a  ",
+          "1"
+        ],
+        [
+          "aa",
+          "1"
+        ],
+        [
+          "e\u0301",
+          "1"
+        ],
+        [
+          "z",
+          "1"
+        ],
+        [
+          "\u00c5",
+          "1"
+        ],
+        [
+          "\u00e9",
+          "1"
+        ],
+        [
+          "\u65e5\u672c\u8a9e",
+          "1"
+        ],
+        [
+          "\ud800\udc00",
+          "1"
+        ],
+        [
+          "\ud83d\ude42",
+          "1"
+        ],
+        [
+          "\udbff\udfff",
+          "1"
+        ]
+      ],
+      "observedRows": [
+        [
+          "",
+          "2"
+        ],
+        [
+          "\t",
+          "1"
+        ],
+        [
+          "\n",
+          "1"
+        ],
+        [
+          "\r",
+          "1"
+        ],
+        [
+          " ",
+          "1"
+        ],
+        [
+          "  ",
+          "1"
+        ],
+        [
+          "!",
+          "1"
+        ],
+        [
+          "\"",
+          "1"
+        ],
+        [
+          "%_",
+          "1"
+        ],
+        [
+          "'",
+          "1"
+        ],
+        [
+          "' OR TRUE --",
+          "1"
+        ],
+        [
+          "0",
+          "1"
+        ],
+        [
+          "00",
+          "1"
+        ],
+        [
+          "A",
+          "1"
+        ],
+        [
+          "A\u030a",
+          "1"
+        ],
+        [
+          "Z",
+          "1"
+        ],
+        [
+          "\\",
+          "1"
+        ],
+        [
+          "a",
+          "2"
+        ],
+        [
+          "a\n",
+          "1"
+        ],
+        [
+          "a ",
+          "1"
+        ],
+        [
+          "a  ",
+          "1"
+        ],
+        [
+          "aa",
+          "1"
+        ],
+        [
+          "e\u0301",
+          "1"
+        ],
+        [
+          "z",
+          "1"
+        ],
+        [
+          "\u00c5",
+          "1"
+        ],
+        [
+          "\u00e9",
+          "1"
+        ],
+        [
+          "\u65e5\u672c\u8a9e",
+          "1"
+        ],
+        [
+          "\ud800\udc00",
+          "1"
+        ],
+        [
+          "\ud83d\ude42",
+          "1"
+        ],
+        [
+          "\udbff\udfff",
+          "1"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "utf8-distinct-exact",
+      "expectedRows": [
+        [
+          "30"
+        ]
+      ],
+      "observedRows": [
+        [
+          "30"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "eligible-bag-count",
+      "expectedRows": [
+        [
+          "32"
+        ]
+      ],
+      "observedRows": [
+        [
+          "32"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "utf8-inner-selfjoin-bag",
+      "expectedRows": [
+        [
+          "36"
+        ]
+      ],
+      "observedRows": [
+        [
+          "36"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-min-parameter",
+      "expectedRows": [
+        [
+          "r000",
+          "[private]"
+        ],
+        [
+          "r007",
+          "[private]"
+        ],
+        [
+          "r014",
+          "[private]"
+        ],
+        [
+          "r021",
+          "[private]"
+        ],
+        [
+          "r028",
+          "[private]"
+        ],
+        [
+          "repeat-empty",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r000",
+          "[private]"
+        ],
+        [
+          "r007",
+          "[private]"
+        ],
+        [
+          "r014",
+          "[private]"
+        ],
+        [
+          "r021",
+          "[private]"
+        ],
+        [
+          "r028",
+          "[private]"
+        ],
+        [
+          "repeat-empty",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-min-literal",
+      "expectedRows": [
+        [
+          "r000",
+          "[private]"
+        ],
+        [
+          "r007",
+          "[private]"
+        ],
+        [
+          "r014",
+          "[private]"
+        ],
+        [
+          "r021",
+          "[private]"
+        ],
+        [
+          "r028",
+          "[private]"
+        ],
+        [
+          "repeat-empty",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r000",
+          "[private]"
+        ],
+        [
+          "r007",
+          "[private]"
+        ],
+        [
+          "r014",
+          "[private]"
+        ],
+        [
+          "r021",
+          "[private]"
+        ],
+        [
+          "r028",
+          "[private]"
+        ],
+        [
+          "repeat-empty",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-max-parameter",
+      "expectedRows": [
+        [
+          "r006",
+          "[private]"
+        ],
+        [
+          "r013",
+          "[private]"
+        ],
+        [
+          "r020",
+          "[private]"
+        ],
+        [
+          "r027",
+          "[private]"
+        ],
+        [
+          "repeat-a",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r006",
+          "[private]"
+        ],
+        [
+          "r013",
+          "[private]"
+        ],
+        [
+          "r020",
+          "[private]"
+        ],
+        [
+          "r027",
+          "[private]"
+        ],
+        [
+          "repeat-a",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-max-literal",
+      "expectedRows": [
+        [
+          "r006",
+          "[private]"
+        ],
+        [
+          "r013",
+          "[private]"
+        ],
+        [
+          "r020",
+          "[private]"
+        ],
+        [
+          "r027",
+          "[private]"
+        ],
+        [
+          "repeat-a",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r006",
+          "[private]"
+        ],
+        [
+          "r013",
+          "[private]"
+        ],
+        [
+          "r020",
+          "[private]"
+        ],
+        [
+          "r027",
+          "[private]"
+        ],
+        [
+          "repeat-a",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-beyond-js-safe-parameter",
+      "expectedRows": [
+        [
+          "r005",
+          "[private]"
+        ],
+        [
+          "r012",
+          "[private]"
+        ],
+        [
+          "r019",
+          "[private]"
+        ],
+        [
+          "r026",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r005",
+          "[private]"
+        ],
+        [
+          "r012",
+          "[private]"
+        ],
+        [
+          "r019",
+          "[private]"
+        ],
+        [
+          "r026",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "int64-beyond-js-safe-literal",
+      "expectedRows": [
+        [
+          "r005",
+          "[private]"
+        ],
+        [
+          "r012",
+          "[private]"
+        ],
+        [
+          "r019",
+          "[private]"
+        ],
+        [
+          "r026",
+          "[private]"
+        ]
+      ],
+      "observedRows": [
+        [
+          "r005",
+          "[private]"
+        ],
+        [
+          "r012",
+          "[private]"
+        ],
+        [
+          "r019",
+          "[private]"
+        ],
+        [
+          "r026",
+          "[private]"
+        ]
+      ],
+      "unordered": true,
+      "nativeTypeOids": [
+        25,
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "text-parameter-empty",
+      "expectedRows": [
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "observedRows": [
+        [
+          ""
+        ],
+        [
+          ""
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "text-parameter-quote",
+      "expectedRows": [
+        [
+          "' OR TRUE --"
+        ]
+      ],
+      "observedRows": [
+        [
+          "' OR TRUE --"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "text-parameter-non-normalized",
+      "expectedRows": [
+        [
+          "e\u0301"
+        ]
+      ],
+      "observedRows": [
+        [
+          "e\u0301"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "text-parameter-linefeed",
+      "expectedRows": [
+        [
+          "\n"
+        ]
+      ],
+      "observedRows": [
+        [
+          "\n"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    },
+    {
+      "id": "text-parameter-max-codepoint",
+      "expectedRows": [
+        [
+          "\udbff\udfff"
+        ]
+      ],
+      "observedRows": [
+        [
+          "\udbff\udfff"
+        ]
+      ],
+      "unordered": false,
+      "nativeTypeOids": [
+        25
+      ],
+      "passed": true
+    }
+  ],
+  "refusals": [
+    {
+      "id": "int64-positive-overflow",
+      "refused": true,
+      "expectedDiagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "diagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "originalBoundary": "prepare-application-lineage",
+      "sqlNotDispatched": true
+    },
+    {
+      "id": "int64-negative-overflow",
+      "refused": true,
+      "expectedDiagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "diagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "originalBoundary": "prepare-application-lineage",
+      "sqlNotDispatched": true
+    },
+    {
+      "id": "integer-fractional",
+      "refused": true,
+      "expectedDiagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "diagnosticCode": "WFT-NUMERIC-DOMAIN",
+      "originalBoundary": "prepare-application-lineage",
+      "sqlNotDispatched": true
+    },
+    {
+      "id": "text-nul-even-empty",
+      "refused": true,
+      "expectedDiagnosticCode": "WFT-PARAMETER",
+      "diagnosticCode": "WFT-PARAMETER",
+      "originalBoundary": "prepare-application-lineage",
+      "sqlNotDispatched": true
+    }
+  ],
+  "negativeControl": {
+    "id": "removed-eligibility-filter",
+    "actualWeakenedSql": "WITH \"s0\" AS MATERIALIZED (SELECT 1 AS \"__wft_row\" FROM \"private_stage\".\"current_values\" WHERE TRUE) SELECT (pg_catalog.count(*))::pg_catalog.text AS \"output_0\" FROM \"s0\"",
+    "observedRows": [
+      [
+        "33"
+      ]
+    ],
+    "expectedOriginalRows": [
+      [
+        "32"
+      ]
+    ],
+    "oracleMismatchObserved": true,
+    "scope": "SQL mutation only; authored eligibility is a premise, not proved authorization"
+  },
+  "backendAcceptancePromoted": false,
+  "cleanup": {
+    "ownedContainer": "d45f6a4a5ccb6fc3744634ce2386418b68aff50c2be6ea02b318503ab36a4129",
+    "runId": "9158a990-f888-4016-8b36-0ec74783481b",
+    "initialMounts": [
+      {
+        "Type": "volume",
+        "Name": "44e42419f140c7b545fa08daee0fc0bae78fad03ebe9b60cbf866fbfee025840",
+        "Source": "/var/lib/docker/volumes/44e42419f140c7b545fa08daee0fc0bae78fad03ebe9b60cbf866fbfee025840/_data",
+        "Destination": "/var/lib/postgresql",
+        "Driver": "local",
+        "Mode": "",
+        "RW": true,
+        "Propagation": ""
+      }
+    ],
+    "sharedVolumeUsersBeforeRemoval": [],
+    "removalExitCode": 0,
+    "containerAbsent": true,
+    "ownedVolumesAbsent": true
+  },
+  "harnessSourcesUnchangedThroughCleanup": {
+    "/private/tmp/umf-current-scalar-edge-20261015/run.py": "076821d2093aa3c1261750a501fff881d5ccbc8e398e857f32dfaf49cd2d1644",
+    "/private/tmp/prepare-current-scalar-edge-oracle.py": "0bcef650ac0ae91af04b35765b1171ea286d3d4429b56651ae5df0cdddc7c373",
+    "/private/tmp/umf-current-scalar-edge-20261015/oracle.json": "bd29c8ff64e2d6d7511c0e23ccf864ff9a9d2b7299243edd4c19fdaa0f20aeec"
+  }
+}

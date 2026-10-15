@@ -7,6 +7,7 @@ publish.workspace=true
 [features]
 truss-browser-local=["dep:weft-postgresql"]
 application-lineage-candidate=[]
+current-postgresql-scalar-candidate=["application-lineage-candidate","dep:weft-postgresql"]
 truss-security-relationship-candidate=["dep:weft-postgresql"]
 ashlar-databricks-compatible-revisions-candidate=["dep:weft-databricks"]
 truss-postgresql-pg18=["dep:weft-postgresql"]

@@ -484,3 +484,17 @@ claimed. Module-boundary/spec checks and source/wheel/module correspondence are
 recorded in `../../04-build/evidence/current-query-object-20261015/receipt.json`.
 The development wheel retains version0.4.32 and does not replace that published
 release. No original132 acceptance case is promoted.
+
+
+### Current scalar SQL refinement — 2026-10-15
+
+Exercise actual issued context -> typed lowering -> Python native extension ->
+PostgreSQL18.6, with declared private fixture values. Cover independent masked
+projection/raw predicate, self-join bags, COUNT DISTINCT, grouping/order, COUNT,
+FALSE/LIMIT0, named parameters and injection-shaped parameter data. Assert actual
+text OIDs and exact result bags, mathematical COUNT metadata, and cleanup. Rust
+controls additionally require exact pins, closed objects, complete occurrences,
+paired scopes, original actions, type mismatch and unsupported/prohibited refusal.
+These conditional stage premises do not qualify policy correctness, authenticated
+caller/current authority, Truss issuer, paired transform runtime or protected
+publication. Keep all original132 backend obligations and expanded158 gate open.

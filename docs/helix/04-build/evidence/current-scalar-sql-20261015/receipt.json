@@ -1,0 +1,266 @@
+{
+  "scope": "Conditional typed current scalar SQL refinement only; no original security/native acceptance promotion. Native declarations are premises, not UMF policy decisions.",
+  "baseMain": "a6168847c22717b012ee394e304bf536d5268645",
+  "sourceSha256": {
+    "crates/weft-core/src/application_model.rs": "e016531a40ef4a38d0010211e672f46e183ba8651ba6a743ae2d8c029cb0183c",
+    "crates/weft-postgresql/src/current_scalar.rs": "3b6cfc6fc32f95c7975b183b7a88cd24775ad93f5db11b959390b8cb608eca69",
+    "crates/weft-postgresql/src/lib.rs": "512a3cac81cc01744fb4204445f383d0cf045f524747f94909d5499ace6815ca",
+    "crates/weft-runtime/src/lib.rs": "38b3307e8d2dece9fe38684b1a10693f100625cd3f09d69a1260c2ddcfba0c72",
+    "crates/weft-runtime/Cargo.toml": "4a3ecd718fabe07ce95e04ecefcd16452856bf372cd6057f3077dd6bc6a98628",
+    "crates/weft-python/src/lib.rs": "5062a2cb5e7772c43fab0a7ff1622461c82c26a598b5386904d9ebe59f19aea6",
+    "crates/weft-python/Cargo.toml": "233c59ab076fc4d3dbcf82011e12710564f58e45cda7f1e2cf0e7e0deecf6a29",
+    "tests/current-scalar-postgresql/native.py": "fae8e7e16ee2cf3a0ac4123a57677d13383771c12b01140f3175a70cb0fca954"
+  },
+  "features": [
+    "current-postgresql-scalar-candidate"
+  ],
+  "candidateWheelVersion": "0.4.32",
+  "candidateWheelSha256": "5c3ec17bad0fb8ea12c66d0b027fef6ef4be1ca0b05343ed00df96b26f90bbcf",
+  "installedNativeModuleSha256": "991f8e5d8c203e8c084f14aa4e5ce0e4b1d31de814b480b17ca4120658b5e95a",
+  "buildProfile": "dev",
+  "published": false,
+  "wheelProductionSourceMatchesFrozen": true,
+  "postBuildSourceChange": "one additional cfg(test) identity lookup test only; no production code change",
+  "checks": {
+    "targetedRust": 7,
+    "pythonOriginalCustody": 46,
+    "actualPostgresqlSql": 9,
+    "postgresVersionNum": 180006,
+    "moduleBoundaryTests": 16,
+    "workspaceAllTargets": "passed",
+    "governedSpecs": "passed",
+    "independentConditionalNativePositive": 17,
+    "independentPreExecutionRefusals": 4,
+    "independentNegativeEligibilityControl": "caught changed 33-vs-32 bag",
+    "fullCorePostgresqlRuntime": "passed",
+    "fullRegressionTestResults": [
+      {
+        "passed": 313,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 10,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 75,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 94,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 28,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 12,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      }
+    ],
+    "runtimeUnit": 5
+  },
+  "nativeFixtureCleanup": "server stopped and lease released",
+  "nativeAdmission": false,
+  "securityReady": false,
+  "original132Required": true,
+  "expandedGate": {
+    "accepted": 45,
+    "unimplemented": 113,
+    "required": 158
+  },
+  "remaining": [
+    "actual authenticated native caller/Subject/source/current-cut issuer and DB-derived stage capture",
+    "actual complete read/route/action population and paired scalar runtime evidence",
+    "statement budgets, result/cell lineage, guarded decoding/publication",
+    "Databricks approved second caller and original Ashlar/native qualification"
+  ],
+  "evidenceSha256": {
+    "targeted-rust.log": "7824fa5ce756cfc5fe4e862ce954459b4e4b57452af8dc81c6d056a27edf2f4a",
+    "python-custody.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+    "native-sql.json": "9cf6973d99206b76755268264a5cc5c46a9849e6713e4134cb6b96c451b4c8d0",
+    "modules.log": "cce216d0689d0452d3dc7e8f657cb9177e5afd8e9caf7b5140926c97647c7fb3",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "workspace.log": "527cb8eb08e89b4320384aa7509843df47b187659ca3cbe209cd5eb3710ec454",
+    "python-feature.log": "e52da2ffc42a2c9cb8f011fa2a5a5fec2e21f69b5a2258c3d12a2d6073b1e5b9",
+    "wheel-build.log": "b54c6c8fc0895d0676d979de7c07a5ea1c9d2c6a80938c5ea1fddb8e85e7935b",
+    "independent-oracle.json": "bd29c8ff64e2d6d7511c0e23ccf864ff9a9d2b7299243edd4c19fdaa0f20aeec",
+    "independent-run.py": "076821d2093aa3c1261750a501fff881d5ccbc8e398e857f32dfaf49cd2d1644",
+    "independent-receipt.json": "62dbdcb5f3ee6d9a43c7e881ccbb2372f931d96f0e55dd003836a1e57211a529",
+    "full-core-postgresql-runtime.log": "63a83f5e14be34c02e1091af388f399d3c94bf5886fbcbf345c05c6782fb9f44",
+    "runtime-tests.log": "a7cca3bb5fa0fe94148ca97a99fb05040e8c05cc00bf3e150d36ce2dfc00d2c0",
+    "independent-review.json": "af772242afabd082ca3c48504135050c7360792d935b41a9b17d3f4e82483d9d",
+    "independent-historical-cleanup.json": "b2dd6cf19ba106023373b3e018097f513aefef3b38bff93066f1133aab235db3"
+  },
+  "independentOracleQualification": "Synthetic declared stage, ordinary local fixture reader. No actual source-policy/caller/current-authority acceptance.",
+  "independentFinalAttempt": "9158a990-f888-4016-8b36-0ec74783481b",
+  "independentOracleCorrection": "Final reviewed rerun replaces initial packet. Initial runner had custody/cleanup defects; historical owned volume cleanup and correction review retained. No native security qualification.",
+  "integrationParent": "d6dd3fc9eb524bf73958568ca9086c5de494b339",
+  "concurrentChangesPreserved": [
+    ".github/workflows/fresh-hosts.yml",
+    "tests/compile/browser-check.mjs"
+  ],
+  "integrationQualification": "Concurrent workflow/browser-test changes only; tested Rust production and candidate fixture sources unchanged."
+}

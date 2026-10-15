@@ -1,0 +1,8 @@
+{
+  "originalRunId": "8a982bd7-8aa1-445a-b186-f174c56e87cd",
+  "container": "83c3b7ead5887fe3dae8a9de4446e023ca0935990cff9b3899219fff04a6207f",
+  "ownedVolumeFromExactContainerUnmountEvent": "1dfc5e205f7c9d7244b4a548d7d9ebbede0eff17f2edab15b12e77a1fd5f2ca1",
+  "sharedContainerUsersBeforeRemoval": [],
+  "removalExitCode": 0,
+  "volumeAbsentAfter": true
+}

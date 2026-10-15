@@ -8,6 +8,7 @@ name="weft"
 crate-type=["cdylib"]
 [features]
 application-lineage-candidate=["weft-runtime/application-lineage-candidate"]
+current-postgresql-scalar-candidate=["application-lineage-candidate","weft-runtime/current-postgresql-scalar-candidate"]
 truss-security-relationship-candidate=["weft-runtime/truss-security-relationship-candidate"]
 ashlar-databricks-compatible-revisions-candidate=["weft-runtime/ashlar-databricks-compatible-revisions-candidate"]
 truss-postgresql-pg18=["weft-runtime/truss-postgresql-pg18"]

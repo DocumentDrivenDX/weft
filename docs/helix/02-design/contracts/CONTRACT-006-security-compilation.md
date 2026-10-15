@@ -2307,3 +2307,67 @@ permission. The native caller/Subject/source/current-cut issuer, source admissio
 actual route activation and separate action decisions, scalar/domain/runtime
 scope checks, SQL/result lowering and guarded release remain mandatory. No
 registered backend accepts the child as a native permit or legacy request.
+
+
+#### Conditional PostgreSQL current scalar lowering
+
+The opt-in `current-postgresql-scalar-candidate` feature adds
+`CurrentQueryPreparation.lower_postgresql_scalar_candidate_json(binding)` through
+that same original typed callback. The pure PostgreSQL consumer accepts no
+imported plan, designation or operand report. It emits conditional SQL and typed
+parameters, never a native permission, registration or protected compiled artifact.
+All existing registered profiles remain separate. The output is
+`weft.postgresql.current-scalar/0.1-candidate`, always `authority:false`,
+`securityReady:false`, `nativeAdmission:"required"`.
+
+The closed materialization declaration is
+`weft.postgresql.current-values/0.1-candidate`. Its exact top-level members are
+version, sourceRequestSha256, designationSha256, sourceBindingSha256, scans, values.
+Each scan contains scan, target (full original Record identity), relation
+(schema, table, eligibleColumn). Every original Field occurrence and direct
+projection has exactly one value containing path, scan, field (full original
+identity), column, domain (full effective scalar identity), comparisonScope,
+mode, originalAction, exposure. Every member is required, including explicit nulls.
+Unknown members, duplicate JSON keys, repeated/missing/extra uses, wrong original
+pins and unselected identities refuse. Hashes describe byte correspondence only.
+
+An operand mode is disclosed or original-authorized; prohibited and unresolved
+refuse the whole query, including FALSE and LIMIT 0. Original-authorized requires
+the exact independently issued original action and unchanged original domain.
+Disclosed has null originalAction. Projection has null mode/action and original
+or transformed exposure; original exposure requires the original domain. The
+actual Catalog resolves effective domains, including standalone read DTO Fields;
+this grants no Record membership or read permission. Only required singular
+String without facets and signed64 Integer are currently supported. Field pairs
+need equal effective types and comparisonScope; literals/parameters retain their
+original exact type. A scope tag is not evidence of paired runtime/key semantics.
+
+The bounded subset is equality joins/filters, Boolean filters, grouping, ordering,
+COUNT and COUNT DISTINCT, direct projections and existing limits. Unsupported
+operators, SUM, nullable/structured values and unsupported domains refuse.
+Grouped scalar projections and aggregate ordering require the exact grouped
+effective column/domain/scope. Parameters bind original strings as PostgreSQL
+text/int8, with no interpolation. Identifiers are quoted and bounded; text
+comparison/order uses pg_catalog C collation and equality/operators/count are
+schema qualified. Each scan selects only needed columns from a MATERIALIZED CTE
+whose eligibleColumn IS TRUE before relational operations. This shape does not
+prove population completeness or eligibility. The original native issuer must
+validate complete per-resource decisions before execution, even for empty results.
+
+Every SQL result is text with declared original/effective domain and encoding.
+COUNT retains its original mathematical Integer type with empty facets; its
+native int8 nonnegative text encoding requires checked budgets/overflow refusal,
+never an implicit signed64 redefinition. No actual row-contributor/result-cell
+proof is issued here. Bounds are 4MB binding JSON, 4096 value occurrences, 16 scans,
+8 joins, 1024 parameter slots, 1MB SQL and 16MB serialized output; these are
+component limits, not a whole-host heap or statement guarantee.
+
+The native host MUST derive this declaration from genuine held source/caller/
+Subject/current authority; verify exact original policy/ontology/model/profile/
+static binding, private producer/relation OIDs, ACLs, builtin types, presence,
+collation, complete primary population, actual read/route/action decisions,
+uniform effective domains and cross-row runtime scope; and hold/revalidate that
+cut through execution, decoding and guarded result/cell release. Arbitrary
+caller-authored declarations can produce conditional SQL and are not admitted
+security requests. No current native issuer or protected backend support is
+claimed by this component. Original B-008 acceptance obligations remain open.

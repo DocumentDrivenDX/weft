@@ -561,3 +561,26 @@ impl Catalog {
         })
     }
 }
+
+impl Catalog {
+    /// Inspect a declared scalar domain, including a standalone read DTO. This
+    /// does not establish Record membership, a physical source or read permission.
+    pub fn scalar_descriptor_by_identity(&self, identity: &Identity) -> Result<Descriptor> {
+        let mut found = Vec::new();
+        for (index,input) in self.inputs().iter().enumerate() {
+            if input.pin.document_id!=identity.document_id || input.pin.revision!=identity.revision {continue}
+            for module in self.documents[index]["modules"].as_array().ok_or_else(||fail("Original modules required"))? {
+                if module["id"]!=identity.module || !input.selected_module_ids.contains(&identity.module) {continue}
+                for element in module["elements"].as_array().ok_or_else(||fail("Original elements required"))? {
+                    if element["id"]!=identity.element {continue}
+                    crate::model::selected08(&input.pin,element)?;
+                    let name=Name{value:identity.element.clone(),quoted:true,span:crate::ir::Span{start:0,end:0}};
+                    let logical_type=scalar_type(element,&name,self.exact_numbers,self.exact_numbers)?;
+                    found.push(Descriptor{identity:identity.clone(),availability:Some("required".into()),shape:Shape::Scalar{logical_type}});
+                }
+            }
+        }
+        if found.len()!=1 {return Err(fail("Original scalar domain is missing or ambiguous"))}
+        Ok(found.remove(0))
+    }
+}

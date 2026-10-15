@@ -494,3 +494,15 @@ Python class methods may be replaceable by trusted host code; native consumers
 must extract the actual native type/private fields, not call overridable Python
 methods or trust their JSON output. The source object and its diagnostics remain
 host-private and are not credentials.
+
+
+### Typed conditional PostgreSQL consumer — 2026-10-15
+
+The current scalar candidate consumes actual CurrentQueryOperands from the
+same-original runtime callback. It resolves effective DTO/domain identities using
+the retained Catalog and uses original Plan joins, grouping and order directions;
+no diagnostic-plan import or SQL reparse is a lowering input. CONTRACT-006 defines
+the closed conditional materialization declaration, subset and native duties.
+Private materialized columns support non-JSONB values and separate masked reads
+from hidden original uses. This does not commit Truss's pending capture/current
+Subject ABI; the native owner must supply and validate that boundary first.

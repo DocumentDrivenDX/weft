@@ -517,7 +517,8 @@
             "field:source_multiplicity",
             "field:target_multiplicity",
             "field:target_lifecycle",
-            "fn:relationship_read"
+            "fn:relationship_read",
+            "fn:scalar_descriptor_by_identity"
           ],
           "pathReferences": []
         },
@@ -2311,6 +2312,35 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-postgresql/src/current_scalar.rs",
+          "publicDeclarations": [
+            "struct:Parameter",
+            "field:ordinal",
+            "field:source_path",
+            "field:name",
+            "field:value",
+            "field:logical_type",
+            "field:native_type",
+            "struct:ResultColumn",
+            "field:position",
+            "field:name",
+            "field:path",
+            "field:source_field",
+            "field:effective_domain",
+            "field:logical_type",
+            "field:exposure",
+            "field:encoding",
+            "struct:CurrentScalarSql",
+            "fn:sql",
+            "fn:parameters",
+            "fn:columns",
+            "fn:json_string",
+            "fn:json",
+            "fn:lower"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-postgresql/src/expression.rs",
           "publicDeclarations": [
             "fn:render"
@@ -2350,6 +2380,7 @@
         {
           "path": "crates/weft-postgresql/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_scalar",
             "mod:truss_mutation",
             "mod:mutation",
             "mod:truss_runtime",
@@ -3369,6 +3400,7 @@
             "fn:designation_json",
             "fn:operand_count",
             "fn:is_from",
+            "fn:lower_postgresql_scalar_candidate_json",
             "fn:with_context",
             "fn:prepare_current_query_designations_json",
             "fn:install_browser_mutation_backend"
