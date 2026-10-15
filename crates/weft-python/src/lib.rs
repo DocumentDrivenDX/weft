@@ -125,6 +125,9 @@ struct ApplicationLineagePreparation {inner:weft_runtime::ApplicationLineagePrep
 impl ApplicationLineagePreparation {
  fn json(&self)->&str{self.inner.json()}
  fn source_request_json(&self)->&str{self.inner.source_request_json()}
+ fn current_query_designations_json(&self)->PyResult<String>{
+  self.inner.current_query_designations_json().map_err(|d|pyo3::exceptions::PyValueError::new_err(format!("{}: {}",d.code,d.message)))
+ }
 }
 #[cfg(feature="application-lineage-candidate")]
 #[pyfunction]

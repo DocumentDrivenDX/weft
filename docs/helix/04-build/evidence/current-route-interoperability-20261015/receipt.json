@@ -1,0 +1,50 @@
+{
+  "scope": "Pinned original compiler-to-UMF conditional source-route interoperability only; no branch activation, current permission, protected SQL, native qualification or acceptance promotion",
+  "baseMain": "c7431eb7801354630be7a6135f832ff2ab45d4c7",
+  "ownerSourceCommit": "c57d283ece30326bcb06607ca5d2384fc69ddef4",
+  "ownerSourceManifestSha256": "3e7851b0b24afe50981b1f89103fe6595a8d29a44b2a769c1541477549963897",
+  "ownerSourceFilesVerifiedBeforeAndAfter": 1683,
+  "sourceSha256": {
+    "tests/current-query-designation/value-route-conformance.ts": "279e8fdfcd671d3ef4998a19c36c390ba9e1e32a7d9db4b4ce717834ee9fe80c",
+    "tests/current-query-designation/provenance-refusals.py": "8db62517d40b4fdc9c163bef65d8e977b496e304bf3359145becd67140f59f4e",
+    "tests/current-query-designation/umf-source-manifest.json": "3e7851b0b24afe50981b1f89103fe6595a8d29a44b2a769c1541477549963897"
+  },
+  "evidenceSha256": {
+    "correspondence.json": "81e16e9477c609ae9ddbb185d4709096712642036f58323ad9690925e302c023",
+    "module-boundaries.log": "14defabd49ef2f778d5d5ec6c9331d9e97bb275fdf144969bf0fa8978019b67e",
+    "provenance-refusals.json": "32aae5f65859daba8160cd3d326f02003d855a36d50e4b0bdc73ab4301a0db03",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "specs-composed.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98"
+  },
+  "checks": {
+    "correspondenceControls": 51,
+    "preImportProvenanceRefusals": 4,
+    "originalOccurrences": 10,
+    "unsupportedSumRetained": true,
+    "actualOriginalCompilerImagesPinned": true,
+    "originalMembershipReadConditionsRetained": true,
+    "moduleBoundaries": "passed",
+    "governedSpecs": "passed"
+  },
+  "embedding": {
+    "bun": "1.4.2",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "dependencies": "Original archived package.json/bun.lock; separately available trusted installed dependencies"
+  },
+  "limitations": [
+    "Route inspection does not activate conditions or establish actual policy decisions",
+    "Counterfactual mode mutations are not native-admitted policy revisions",
+    "Domain/type/literal and paired runtime scope admission remain separate",
+    "Native source/caller/Subject/current-cut issuer/consumer and guarded release unavailable",
+    "No protected SQL or native backend cases run or promoted",
+    "Full original132 scope preserved; owner expanded158 gate unchanged"
+  ],
+  "validationCodeBase": "4f5b73df8b751b4291b84af3b59169c1a1b63ed0",
+  "composition": {
+    "change": "Preserved concurrent discovery update; compiler/workspace sources unchanged",
+    "files": {
+      "docs/helix/00-discover/umf-typed-access-requirements-input.md": "d703c5229f10dd9a3ee0aff28d3ba0f5337fac8bdc1ef2cccdd379aa4915e7d3"
+    }
+  }
+}

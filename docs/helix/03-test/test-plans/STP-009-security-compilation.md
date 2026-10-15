@@ -361,3 +361,100 @@ not lowering the new typed0.2 Plan. A future current-native lowerer must consume
 that exact issued context and per-use effective descriptors directly. Native source
 preparations may contain private host inputs; releasing those reports is outside
 the guarded result contract and must remain prohibited in the actual adapter.
+
+## Current-query designation verification
+
+New core current_query_designation tests and tests/current-query-designation
+cite US-009-AC1/2/3. Seven original committed UMF query-value source requests must
+issue exact action paths: salary predicate and token order designate their own
+actions; other operators retain null designation. Original integer salary model/
+plan descriptors remain unchanged despite its separate masked String DTO.
+
+Reject unrelated read/update/reverse/vault/unknown actions, missing/duplicate/
+unknown/incompatible purpose declarations, mixed legacy profile versions, wrong
+source/model/binding pins, missing/duplicate selected source roles, duplicate
+bindings, nonmember standalone DTO references and caller mode/action/AST additions.
+False/zero output retains hidden requirements; empty bindings never grant a mode.
+The original UMF purpose checker independently compares known-subset role outcomes,
+including an action whose spelling is unrelated to its declared purpose. Record
+original owner/binary/source pins and distinguish purpose compatibility from whole
+policy admission. Native Python and actual Chromium compare exact issued bytes and
+refusal behavior, while all prior lineage/property/mapping/availability outputs
+stay exact. Native P03/B08, current authority and all132 backend cases remain open.
+
+### Real Databricks platform prerequisites — 2026-10-15
+
+`tests/lineage-v02/databricks-security-primitives.py` uses one genuinely
+SQL-authenticated configured caller against an already running Unity Catalog SQL
+warehouse. It creates a unique schema in the user-approved test catalog, a managed
+Delta table with two synthetic resources, a current-user row filter and a constant
+BIGINT column mask. It checks filtered projection/count/SUM/distinct/self-join/
+predicate and masked projection/predicate/group/SUM results. A `finally` cleanup
+drops only the fresh owned schema and verifies its absence. The fresh-namespace
+check precedes creation; failed creation still enters cleanup. It refuses truncated
+results, unexpected rows, failed statements and an endpoint that is not already
+running. The runner never starts compute or changes caller grants.
+
+Seventeen statements pass, including fresh-namespace and cleanup controls. SQL
+version2026.39 is observed afterward on the same configured endpoint. The receipt
+contains no caller identity, endpoint ID or catalog/schema name; namespace and SQL
+text are represented by digests. Original private identity output remains outside
+the repository. This is one-caller platform evidence, not compiled Weft security,
+Ashlar layout, second-caller isolation or physical-retention qualification. No
+original132-case status changes. The second configured connection still fails
+authentication; an approved scoped caller connection remains required.
+
+Eleven Rust public API doctests also pass, including three designation custody
+controls: report deserialization, replacement of original context and detachment
+from its lifetime cannot compile. These are Rust API boundaries inside the trusted
+host, not protection against unsafe host code or proof of native authority.
+Evidence: `../../04-build/evidence/current-security-primitives-20261015/receipt.json`.
+
+### Current-query operand correspondence — 2026-10-15
+
+Eight actual-source Rust controls cover self-join pairing and DISTINCT input,
+hidden Integer salary versus separate read DTO, original literal/parameter
+payloads and types, FALSE/LIMIT0 preflight with field-free COUNT, atomic unsupported
+SUM refusal, opposite direction vectors with byte-identical serialized plans, and
+separate group/order/distinct occurrences of one Field, and ordered tuple column/parameter pairing. Public API compile-fail
+coverage refuses importing a serialized operand ledger. Tests consume actual
+ApplicationLineage and CurrentQueryDesignations factories rather than authored
+replacement ASTs. The original shared visitor must match every Field occurrence.
+
+The composed main base includes the separate local mutation cohort unchanged.
+All313 core tests and12 public API doctests pass, with workspace all-target,
+module-boundary and governed-spec verification recorded separately. These checks
+prove original operand custody only; they execute no current protected SQL and
+promote none of the original132 shared/native cases. Per-use effective domains,
+paired/cross-row runtime scopes and genuine native admission/release remain open.
+
+### Pinned UMF route interoperability — 2026-10-15
+
+`tests/current-query-designation/value-route-conformance.ts` executes the exact
+committed Weft lineage/designation producer images against UMF's reviewed source-
+route inspector at commitc57d283ece30326bcb06607ca5d2384fc69ddef4. The test pins both
+producer hashes and the complete1683-file src/spec/package/lock source inventory,
+rejects extra source files and checks all source bytes before and after execution.
+Use an exported original source tree matching `umf-source-manifest.json`, with
+locked dependencies available separately. The observed embedding is Bun1.4.2 on
+macOSarm64; the pinned CLI images are platform-specific evidence, not a universal
+binary-build claim.
+
+Fifty-one controls pass:10 original occurrences (including explicit unsupported
+SUM),36 closed-shape mode/action/authority override refusals, and5 joint-constraint/
+missing-designation/direction-context controls. Each inspected route retains its
+exact compiler path, scan, target, Field identity, operator, operation and required
+properties. Original policy read/membership conditions and full core domain
+identities/declarations must match. The salary read DTO remains String while its
+hidden predicate retains original Integer meaning; token queries retain the live
+stored opaque Field and nonselectable pre-storage input. Conflicting/prohibited
+modes and missing per-use actions cannot become permission defaults.
+
+`provenance-refusals.py` adds4 actual pre-import refusals: unqualified producer,
+modified source bytes, extra source file and changed source manifest. No partial
+report is written. Temporary counterfactual source copies are removed. Mode-source
+mutations are diagnostic counterfactuals, not accepted policy revisions. Neither
+inspection nor these tests activate a branch, evaluate current permissions, emit
+protected SQL or qualify native admission. The original132-case completion gate remains
+open; individual statuses do not change. Evidence:
+`../../04-build/evidence/current-route-interoperability-20261015/receipt.json`.

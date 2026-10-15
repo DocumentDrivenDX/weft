@@ -1,0 +1,102 @@
+{
+  "scope": "One real caller, disposable Unity Catalog/Delta platform primitives only; not Weft compiler/native admission, second-caller security, Ashlar layout or retention qualification",
+  "checks": [
+    {
+      "id": "verify-fresh-namespace",
+      "statementSha256": "6dd1cc6fcd871c9f89bf46e97dc13edb8655e79400ed1dc2b9f9d8f0fe608a8e",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "create-disposable-schema",
+      "statementSha256": "7450c3be1ba0add89e7ca64d19249d1318ea8178e8522e7b773d372510a38dc2",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "create-managed-delta-table",
+      "statementSha256": "c44a8a4970568d043556c807e503fcee1f152dede103d3cbe7635f5267fdc4ef",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "insert-two-synthetic-resources",
+      "statementSha256": "6ab84e4138013da2d59c9f2b2f7facf737a615cf1c9403908ca4e12eac004358",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "create-row-filter",
+      "statementSha256": "8b14e94064e52fdc05c17d0080f3774ee4f8033a82790774b0ca77784eb525d4",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "install-row-filter",
+      "statementSha256": "ba99688863b1735e2d7730f50c48ab57dd9671463566e512dbb04030766ca4c6",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "authenticated-row-filter",
+      "statementSha256": "b1c68afa61a9939400564e56e45e4b94ac2c091bddb555e56a2a50e7dabbd078",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "filtered-count-sum-distinct",
+      "statementSha256": "23aef4dc7581a22577757242dae2081143d971afcb05ebd0fa44ce4af61e5905",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "filtered-self-join",
+      "statementSha256": "946c7d96b004ab0858eb8d14da5f17a1586273b2efa6ed232161c6761a314c17",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "hidden-row-predicate",
+      "statementSha256": "2ee0b718bd42e7a33182a054a216e6a39ba5ba6cb88390473c3b79a859dadf7d",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "create-constant-mask",
+      "statementSha256": "f908af9c11050d7973853786175b80d8104691ebc9730cd23700250009207be1",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "install-column-mask",
+      "statementSha256": "e857116f40b9af63ffc0511a5c83155ed43c78c2716b6262f7dfdd9112e044ef",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "masked-projection",
+      "statementSha256": "6bbcc9902363d965a895550a4106311549fec154918818794e742e149eaabeb5",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "masked-predicate",
+      "statementSha256": "e96f85c0282c7fff112c5d5ad8bfb74cfbb8cd617b57029a8cd197660676e5ae",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "masked-group-sum",
+      "statementSha256": "a7bea04b9277e68588f27b3e110379edf2f21c51e259f1c0a761ac53be67b5f2",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    },
+    {
+      "id": "drop-owned-test-schema",
+      "statementSha256": "52b5daa93933b7ebd7e18c1a5df779019fa69267f8c2cbd60884b2db8bf06599",
+      "state": "SUCCEEDED"
+    },
+    {
+      "id": "verify-namespace-removed",
+      "statementSha256": "6dd1cc6fcd871c9f89bf46e97dc13edb8655e79400ed1dc2b9f9d8f0fe608a8e",
+      "state": "SUCCEEDED",
+      "resultMatched": true
+    }
+  ],
+  "cleanup": "namespace-removed-managed-object-physical-retention-not-qualified",
+  "status": "passed",
+  "namespaceSha256": "e941b0c98c9b6bce758ad582a424d853a4ecf200069f218cfb0bdfbfc0cfe3ef"
+}

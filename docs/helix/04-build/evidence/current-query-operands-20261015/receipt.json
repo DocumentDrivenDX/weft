@@ -1,0 +1,49 @@
+{
+  "scope": "Original typed operand custody/pairing component only; not mode/domain admission, SQL/native enforcement or acceptance-case completion",
+  "baseMain": "bfe0b88dab4efd9a2b4a8672e4044a0e065718a2",
+  "sourceSha256": {
+    "crates/weft-core/src/current_query_operands.rs": "cb634bcf631eb0c3a25ed94dde4b9d38eaec74325d215cae0daa31f11558c2a2",
+    "crates/weft-core/src/lib.rs": "50a09357a08ea2772c9da3a51c89dbe8dd9bb40cf249c9a61ab94c6fbcf0e4dc"
+  },
+  "evidenceSha256": {
+    "core-tests.log": "9c78398d11644d2beb4a4aae60ce0fd63e1824360a74efbe6450329b079216d2",
+    "module-boundaries.log": "1a4a26343c9af2d66a1777e55a3a4ccbd9ec359a4d26d55241a2fb2777a53738",
+    "public-api.log": "92e6b480c90ae43f958d42febeaa969154ef64c99eacc1c9bbdbb52bdfd1b761",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "workspace.log": "835e74ed10ab2770f26427ea7df7a7e84224d1c0c9ff37c0284afb1720b34883",
+    "specs-composed.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98"
+  },
+  "checks": {
+    "actualSourceOperandControls": 8,
+    "allCoreTests": 313,
+    "publicApiDoctests": 12,
+    "workspaceAllTargets": "passed",
+    "moduleBoundaries": "passed",
+    "governedSpecs": "passed",
+    "sourceDigestsUnchangedAcrossFinalChecks": true
+  },
+  "semantics": [
+    "Actual typed preparation/designation lifetime retained",
+    "Ordered field/literal/parameter pairs and scan/path identities preserved",
+    "Each original order direction preserved even with equal plan digests",
+    "Complete Field occurrence-set correspondence; no global Field replacement",
+    "FALSE/LIMIT0 retain Boolean, protected-use and COUNT duties",
+    "Unsupported SUM refuses atomically",
+    "Operation ledger is not execution order or a complete Plan"
+  ],
+  "limitations": [
+    "No UMF route branch is selected or activated",
+    "Effective operand domains and paired/cross-row transform/key/runtime scope remain unqualified",
+    "No native current caller/Subject/source/cut admission or guarded result release",
+    "No protected SQL or new registered backend",
+    "Existing candidate report/protocol bytes and published versions unchanged",
+    "All original132 shared/native cases remain required with no promotion"
+  ],
+  "validationCodeBase": "535b5c7a45a50ad4a744f0e7dacc6bdedc56d87d",
+  "composition": {
+    "change": "Preserved concurrent discovery document; compiler/workspace sources unchanged",
+    "files": {
+      "docs/helix/00-discover/umf-typed-access-requirements-input.md": "f13ffa324a10edd27be05ca7ed8ecee28c687427f17d4656c4aa14fe08739e89"
+    }
+  }
+}

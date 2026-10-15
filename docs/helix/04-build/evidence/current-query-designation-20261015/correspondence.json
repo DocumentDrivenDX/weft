@@ -1,0 +1,61 @@
+{
+  "scope": "Bounded original source/purpose designation; joint modes/effective values/native authority unresolved",
+  "binarySha256": "418a5f3b33231fd000eaec1d8bfdde1fba8f85385cb4f937c76a5c9c1722b41e",
+  "checks": [
+    {
+      "case": "disclosed-token-equality",
+      "reportSha256": "559db129327d22d5f1c8e6d89fa648d6ee2ed9d9185e478bdc3800efa0c52b80",
+      "passed": true
+    },
+    {
+      "case": "disclosed-token-selfjoin",
+      "reportSha256": "d297bdd5caba6d22ab3591de848f37547e897f674a6cfd5d49149d055178fd86",
+      "passed": true
+    },
+    {
+      "case": "original-token-order",
+      "reportSha256": "80e3083960d7792d8bb669d4aa986913e3317e4ff95eb129e982057a2190248c",
+      "passed": true
+    },
+    {
+      "case": "read-dto-hidden-original",
+      "reportSha256": "109bffdfa6439c8b16502c3a05d4ef81e73fbb3b9603377ee67b6e83dae1a9d8",
+      "passed": true
+    },
+    {
+      "case": "mixed-original-uses",
+      "reportSha256": "a6a07ef51fd547dddd5884d7b43a2fe703058d3ba2bb199018eb3c989c61dfdc",
+      "passed": true
+    },
+    {
+      "case": "prohibited-salary-order-empty",
+      "reportSha256": "9791b4d14ded0d45f55a1b841250c6347369fce70d4fdd917f0fbfb6b9831dfb",
+      "passed": true
+    },
+    {
+      "case": "unsupported-salary-sum",
+      "reportSha256": "4763373f4f9a3e38032ca91ca0ab22ecf6ca943501f67100bdfcd3ddadc476b7",
+      "passed": true
+    },
+    {
+      "unrelatedAction": "read",
+      "refused": true
+    },
+    {
+      "unrelatedAction": "reverse",
+      "refused": true
+    },
+    {
+      "unrelatedAction": "update",
+      "refused": true
+    },
+    {
+      "unrelatedAction": "vault-write",
+      "refused": true
+    },
+    {
+      "unrelatedAction": "missing",
+      "refused": true
+    }
+  ]
+}

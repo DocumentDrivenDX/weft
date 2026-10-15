@@ -1,0 +1,12 @@
+{
+  "scope": "Self-identity SQL only; no business data, DDL, grants or explicit compute start",
+  "precheckPassed": true,
+  "requestExit": 0,
+  "state": "SUCCEEDED",
+  "resultRowCount": 1,
+  "columns": [
+    "caller_identity",
+    "selected_catalog",
+    "selected_schema"
+  ]
+}

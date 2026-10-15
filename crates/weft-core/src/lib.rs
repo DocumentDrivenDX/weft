@@ -1,3 +1,5 @@
+pub mod current_query_operands;
+pub mod current_query_designation;
 mod application_read_requirements;
 pub mod application_lineage;
 mod application_property_uses;

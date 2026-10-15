@@ -558,6 +558,7 @@ pub struct ApplicationLineagePreparation{inner:weft_core::application_lineage::A
 impl ApplicationLineagePreparation{
  pub fn json(&self)->&str{self.inner.json()}
  pub fn source_request_json(&self)->&str{self.inner.source_request_json()}
+ pub fn current_query_designations_json(&self)->weft_core::error::Result<String>{weft_core::current_query_designation::derive(&self.inner).map(|d|d.json().to_owned())}
 }
 #[cfg(all(test,feature="application-lineage-candidate"))]
 mod application_lineage_bridge_tests{
@@ -571,4 +572,23 @@ mod application_lineage_bridge_tests{
   }
   for bad in ["{}".to_owned()," ".repeat(4_000_001)]{assert!(super::prepare_application_lineage_json(&bad).is_err());}
  }
+}
+
+/// Source-bound original-action designation only; no query mode or native permit.
+#[cfg(feature="application-lineage-candidate")]
+pub fn prepare_current_query_designations_json(request:&str)->weft_core::error::Result<String>{
+ prepare_application_lineage(request)?.current_query_designations_json()
+}
+
+/// Pure browser-local catalog mapping; no store capability is accepted from JSON.
+#[cfg(feature="truss-browser-local")]
+pub fn install_browser_mutation_backend(registry:&mut MutationRegistry,configuration:&str)->weft_core::mutation::MResult<usize>{
+ #[derive(serde::Deserialize)]
+ #[serde(rename_all="camelCase",deny_unknown_fields)]
+ struct Configuration{model:weft_core::mutation::Artifact,model_pin:weft_core::ir::ModelPin,binding:weft_core::mutation::Artifact}
+ let fail=||weft_core::mutation::MutationDiagnostic{code:"WFT-MUTATION-BROWSER-REGISTRATION".into(),phase:"input".into(),path:String::new(),message:"Bounded original browser mapping required".into()};
+ if configuration.len()>4194304{return Err(fail());}
+ let value=weft_core::json::checked_json(configuration).map_err(|_|fail())?;
+ let c:Configuration=serde_json::from_value(value).map_err(|_|fail())?;
+ registry.install_selection_backend(Box::new(weft_postgresql::truss_mutation::CurrentTrussMutationBackend::new_browser(c.model,c.binding,c.model_pin)?))
 }

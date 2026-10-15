@@ -1,0 +1,14 @@
+{
+  "scope": "SQL version observed after platform primitive tests on the same configured endpoint",
+  "state": "SUCCEEDED",
+  "columns": [
+    "dbsql_version",
+    "dbr_version"
+  ],
+  "rows": [
+    [
+      "2026.39",
+      null
+    ]
+  ]
+}

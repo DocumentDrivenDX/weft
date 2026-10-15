@@ -1,0 +1,15 @@
+{
+  "scope": "Original Rust WASM local UPDATE plan compilation only",
+  "chromium": "153.0.8010.12",
+  "status": "compiled",
+  "planSha256": "bdb85e7964878ea94041aa738ffa6aa3cdc07280b92dd971c03860143ec1e57f",
+  "invocation": {
+    "id": "umf.actions.local-tx",
+    "version": "1"
+  },
+  "nodeGlobalsAbsent": true,
+  "wasmSha256": "5d4769e8931f8dd2ded978d6e8093553d5c906ce4897d162eeecafa11ca567ec",
+  "physicalLowering": false,
+  "executionAuthority": false,
+  "effects": false
+}

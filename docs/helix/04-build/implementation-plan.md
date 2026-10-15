@@ -1976,3 +1976,101 @@ JSON controls after composing those exact peer sources; workspace all-target
 checking is retained separately. The8 ordinary-native controls remain qualified
 to the earlier0.4.30 image and its frozen SDK, rather than being relabeled as a
 fresh0.4.31 SDK qualification. No current/native protection claim follows.
+
+### Current-source original-action designation — 2026-10-15
+
+B-008 remains open. The separate `weft.current-query.designation-profile/0.1-candidate`
+now binds the original typed preparation, source/model/binding bytes and exact
+per-occurrence original-authorized actions. Read, update, reverse and undeclared
+actions cannot substitute. Missing designation remains unresolved rather than a
+permission default. The source fixture is UMF92f228e's unchanged current query-value
+source. Weft authors the designation independently of owner authoring-intent fields.
+The profile/report are separate from every existing backend registration and the
+legacy relationship profile; HasRelated designation currently refuses.
+
+Evidence: `evidence/current-query-designation-20261015/receipt.json`. All305 core
+tests,17 original UMF-purpose correspondence controls,12 CLI correspondence/refusal
+controls,18 installed Python-wheel designation controls and12 actual Chromium/WASM
+controls pass. The existing31 immutable-object and16 Python JSON controls pass.
+Workspace all-targets, module boundaries and governed-spec checks pass. The local
+wheel is an unpublished development build with the unchanged0.4.31 version; it does
+not replace the published release. No native/security execution claim follows.
+
+Next integrate UMF's original-source joint mode/effective-value route semantics
+with this issued designation and retained original typed context, then implement
+the separately registered native lowering/consumer path. Read disclosure, hidden
+original use and primary row eligibility must remain distinct. Actual authenticated
+caller/source/Subject/current-authority admission, paired runtime scopes and guarded
+result release remain required. All original132 shared/native backend cases remain
+in scope; the expanded UMF gate stays45 accepted/113 unimplemented/158 required.
+
+### Native environment and issued-object custody — 2026-10-15
+
+B-008 remains open under every original132-case obligation. The user-approved
+Databricks test catalog now has actual one-caller UC/Delta row-filter and column-
+mask evidence:17 statements pass and the disposable namespace is removed. SQL
+version2026.39 is observed after the run. This resolves the earlier untested
+managed-table/filter/mask platform prerequisite for that endpoint, not source/
+caller isolation, compiler/native integration, retention or Ashlar qualification.
+The second configured caller still fails authentication. See
+`evidence/current-security-primitives-20261015/receipt.json` for sanitized source
+pins, actual checks and their precise limits.
+
+The same increment verifies11 Rust public API doctests. Current query designation
+JSON cannot be imported as an issued object; its original preparation cannot be
+replaced or outlived. No executable semantics or published wheel version changes.
+
+Truss confirms native66 has no current-policy0.2 held issuer/consumer API. The
+Truss owner has queued a separate host-issued opaque query context plus private
+PostgreSQL admission/release guard, using only qualified portions of existing
+caller/Subject/source/role/table/DDL cut helpers. It must span complete per-resource
+original-action preflight, application SQL, decoding and guarded release. This is
+an assigned implementation boundary, not an available API or acceptance evidence.
+Weft retains ownership of original use/action designation, mode/domain consumption,
+SQL and result lineage. UMF's route inspector and Weft's draft correspondence test
+remain outside this committed increment until the upstream interface is pinned.
+
+### Original operand pairing for current-query lowering — 2026-10-15
+
+B-008 remains open. The new immutable core operand ledger is issued only from the
+actual current-query designation and original typed preparation. It preserves
+ordered comparison pairs, self-join scan identities, literal/named-parameter
+payloads/types, per-use action bindings, grouping/distinct occurrences and complete
+ASC/DESC vectors. It retains Boolean predicates and COUNT duties under FALSE and
+LIMIT0; unsupported SUM refuses without returning a partial ledger. The complete
+Field occurrence set must match the original shared AST visitor.
+
+Eight new source-backed controls pass. Composed with main535b5c7, the full core
+suite passes313 tests and public API custody passes12 doctests. Workspace,
+module-boundary and governed-spec evidence is retained in
+`evidence/current-query-operands-20261015/receipt.json`. The separate local mutation
+cohort is preserved. No executable protocol/report, published wheel or registered
+backend changes, and no original132-case promotion follows.
+
+Next use this actual typed operand context to check UMF's conditional effective
+value routes per occurrence, preserve projection disclosure independently, and
+lower through the separately admitted native consumer. Logical family equality
+alone is insufficient for protected comparison/group/distinct across rows. Exact
+runtime key/transform scope, real current source/caller/Subject cut, complete
+resource-dependent action preflight and guarded result release remain mandatory.
+
+### Pinned current-source route interoperability — 2026-10-15
+
+B-008 remains open under all original132 shared/native obligations. The actual
+Weft issued lineage/designation images now interoperate with UMF's committed
+c57d283 source-route inspector under exact source/producer pins. The full1683-file
+src/spec/package/lock inventory is checked before/after; source overlays and earlier
+unqualified producers refuse. Fifty-one correspondence/constraint controls and4
+additional provenance refusals pass. Conditions, use identities, domains and
+read-versus-hidden-original meanings are retained. Unsupported SUM remains
+unsupported. See `evidence/current-route-interoperability-20261015/receipt.json`.
+
+This is source/conditional-route interoperability only. It does not select runtime
+branches, authorize an original action or produce native protected SQL. Next add
+Python `prepare_current_query()` on the actual immutable original preparation,
+retaining that same object and shared Rust context while deriving designation and
+typed operand ledger together. Native consumers must use the issued object's
+actual context, not import report/plan JSON as authority. UMF's next runtime route
+activation and Truss's held caller/Subject/source/current-cut issuer remain separate
+unmet implementation gates. The concurrent local mutation/binding cohort is
+preserved and cannot substitute for this native security path.
