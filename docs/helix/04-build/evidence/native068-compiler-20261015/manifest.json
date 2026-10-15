@@ -1,0 +1,12 @@
+{
+  "current-databricks-smoke.json": "dbf823ffb7f05c7f7bb289e2c4ecd44b565fc008435c3e219a7e866bb2fafa59",
+  "source-pins.json": "cf4b66ffacb0a73c9686b9394392f6dcece1678f7b49294e86d200da18fcc5f2",
+  "truss-source-pins.json": "2f3319a34b7f6316fb654ea38398a0297d8f5a9618dff77296e3d332ba36e466",
+  "public-query.json": "f7fd068ad00835800dc158a4fa31ae42e1d238c970ab0453569a2fa4fc8482b9",
+  "README.md": "9a6982846ec70a24323a5f661c350409fa8df30afef6a8efa3b22e853b9cca65",
+  "native-mutation.json": "7c876dcb799ab8697733c326c332df3cbf8fb320fbfd4fa090d365cce20dfef3",
+  "wheel-smoke.json": "3ce5fffde5dfc43f293af4676454e62bb1658319a7a7b041d339368deb14e424",
+  "databricks-parity.json": "f315f2d667a093cf92359e13d1924b16f8b29e64f88fcd17d3b14d2c06390b29",
+  "current-pg-smoke.json": "0f92f5c639f57d8c349cd81f80192eb346d124cbc69939a0834a5544343f2177",
+  "receipt.json": "fb66cbaa8ea18ddc5d549e89464cb1e619342f04019ccbfb8e028c1f923e5cec"
+}

@@ -2363,3 +2363,28 @@ smoke receipts. Historical0.4.33 artifacts need no Databricks report. A local
 no-extra-feature standard build has all five wheel member payloads identical to
 the explicitly enabled, managed-tested development wheel. This is archive/member
 correspondence, not another native database run or security qualification.
+
+
+### Native68 exact compiler namespace and public API correspondence — 2026-10-15
+
+The owner-supplied native68 manifest3588cf03 has ordinary rootless/query layout
+compatibility; backend0.4.37 selects that exact source while historical0.4.36
+continues native66/67 and rejects68. New37 rejects67 and unknown hashes. Native
+mutation selection admits the exact68 binding with original Core08 model/action
+preparation and complete population preflights; no ownership/security capability
+is added. Three targeted Rust tests and ten actual wheel controls pass.
+
+Fresh actual public Truss acceptance/create/read/query over unchanged named
+products bytes passes two basic outcomes, including ordinary count and no direct
+object SELECT. The original compiler selection/native preflight/public update
+flow passes six controls, including overflow, malformed filtered-out key and source
+pin refusal. Both disposable PostgreSQL exporters close normally. The Truss input
+is a frozen unpublished native68 snapshot, with explicit SDK34/backend37 constants;
+no released Truss68 or protected source/caller/current authority claim follows.
+
+The same wheel passes old native65/66/67 compatibility smoke, four current-PG
+compile checks and32 Databricks bridge controls. All22 Databricks conditional
+compiled artifacts match the already-managed-tested corpus exactly; this is
+compiler correspondence, not a new managed database run. Evidence is under
+evidence/native068-compiler-20261015/. Keep original132 acceptance obligations,
+full native security gates and separate protected consumer pin qualification open.

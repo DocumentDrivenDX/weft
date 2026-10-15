@@ -1,0 +1,10 @@
+"""Whole conditional artifacts match already-managed-tested DBX corpus; no DB IO."""
+import argparse,ast,hashlib,json,pathlib,sys,weft
+p=argparse.ArgumentParser();p.add_argument('--receipt',type=pathlib.Path,required=True);a=p.parse_args();root=pathlib.Path(__file__).resolve().parents[1]
+source=root/'current-scalar-databricks/native.py';tree=ast.parse(source.read_text());case=next(n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='cases' for t in n.targets));items=ast.List(elts=[ast.Tuple(elts=t.elts[:4],ctx=ast.Load()) for t in case.value.elts],ctx=ast.Load());expression=ast.fix_missing_locations(ast.Expression(body=items));cases=eval(compile(expression,str(source),'eval'),{'__builtins__':{'str':str}},{'maximum':9223372036854775807,'minimum':-9223372036854775808})
+sources={False:json.loads((root/'current-query-designation/fixtures/mixed-original-uses.request.json').read_text()),True:json.loads((root/'current-query-designation/fixtures/live-original-integer-sum.request.json').read_text())};old=json.loads(a.receipt.read_text());expected={x['id']:x for x in old['checks'] if 'compiled' in x};assert len(expected)==22
+for name,context,query,parameters in cases:
+ parent=weft.prepare_application_lineage(json.dumps(dict(sources[context],sql=query,parameters=parameters),separators=(',',':')));child=parent.prepare_current_query();assert child.source_preparation() is parent
+ method=child.lower_databricks_current_sum_candidate_json if context else child.lower_databricks_current_contributors_candidate_json
+ actual=json.loads(method(json.dumps(expected[name]['materializationBinding'],separators=(',',':'))));assert actual==expected[name]['compiled'],name
+native=next(pathlib.Path(weft.__file__).parent.glob('*.so'));print(json.dumps({'scope':'Recompiled exact same original input/binding corpus; full conditional artifacts match retained managed executions, not a new database or authority test','identicalArtifacts':22,'moduleSha256':hashlib.sha256(native.read_bytes()).hexdigest(),'priorNativeReceiptSha256':hashlib.sha256(a.receipt.read_bytes()).hexdigest()},indent=2))

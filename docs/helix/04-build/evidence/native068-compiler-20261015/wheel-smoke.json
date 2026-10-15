@@ -1,0 +1,46 @@
+{
+  "scope": "Original native68 owner-exported Core07/Core08 bindings through actual wheel compiler; no native query/action execution or caller authority",
+  "checks": [
+    {
+      "id": "truss068:no-invented-record-name",
+      "status": "blocked"
+    },
+    {
+      "id": "core08:no-invented-record-name",
+      "status": "blocked"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT p.name FROM products p:0.4.37",
+      "status": "compiled"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT p.name FROM products p:0.4.36",
+      "status": "blocked"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT p.name FROM products p:0.4.35",
+      "status": "blocked"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT COUNT(*) FROM products p:0.4.37",
+      "status": "compiled"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT COUNT(*) FROM products p:0.4.36",
+      "status": "blocked"
+    },
+    {
+      "id": "actual-public-products-binding:SELECT COUNT(*) FROM products p:0.4.35",
+      "status": "blocked"
+    },
+    {
+      "id": "native68-mutation:lowered",
+      "status": "lowered"
+    },
+    {
+      "id": "native68-mutation:blocked",
+      "status": "blocked"
+    }
+  ],
+  "controls": 10
+}

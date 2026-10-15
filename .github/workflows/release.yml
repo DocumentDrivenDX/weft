@@ -80,6 +80,10 @@ jobs:
           PYTHON
           python tests/mutation/native066-wheel-smoke.py
           python tests/current-query-designation/wheel-smoke.py --wheel dist/*.whl --output dist/current-query-smoke-${{ matrix.target }}.json
+      - name: Smoke native68 namespace and mutation bindings
+        if: hashFiles('tests/truss068/wheel-smoke.py') != ''
+        shell: bash
+        run: python tests/truss068/wheel-smoke.py
       - name: Smoke Databricks APIs from the exact standard wheel
         if: hashFiles('tests/current-scalar-databricks/wheel-smoke.py') != ''
         shell: bash
@@ -156,8 +160,17 @@ jobs:
           else:
               assert databricks==[]
 
+          runtimes=[{'releaseId':'truss-catalog-runtime/0.66-candidate','sha256':'99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a'},{'releaseId':'truss-catalog-runtime/0.67-candidate','sha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee'}]
+          native68=pathlib.Path('tests/truss068/native-runtime-manifest.json')
+          if native68.exists():
+              raw=native68.read_bytes();manifest=json.loads(raw)
+              assert manifest['releaseId']=='truss-catalog-runtime/0.68-candidate'
+              assert hashlib.sha256(raw).hexdigest()=='3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc'
+              runtimes.append({'releaseId':manifest['releaseId'],'sha256':hashlib.sha256(raw).hexdigest()})
+          latest=runtimes[-1]
+
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'trussBackend':'0.4.36','trussRuntime':'truss-catalog-runtime/0.67-candidate','trussRuntimeSha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee','supportedTrussRuntimes':[{'releaseId':'truss-catalog-runtime/0.66-candidate','sha256':'99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a'},{'releaseId':'truss-catalog-runtime/0.67-candidate','sha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee'}],'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':features,'currentQuerySmoke':smoke,'currentDatabricksSmoke':databricks,'trussBackend':'0.4.37' if native68.exists() else '0.4.36','trussRuntime':latest['releaseId'],'trussRuntimeSha256':latest['sha256'],'supportedTrussRuntimes':runtimes,'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft; then
             test "$(cat /tmp/release-draft)" = true

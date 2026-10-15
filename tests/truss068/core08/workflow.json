@@ -1,0 +1,9 @@
+{
+  "scope": "Actual public accepted catalog/create and ordinary native binding, not owned support or compiler qualification",
+  "runtime": "truss-catalog-runtime/0.68-candidate",
+  "manifestSha256": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+  "artifacts": {
+    "native-runtime-manifest.json": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+    "native-query-bundle.json": "76e3c3501bf5f281c052d1fba8ef1a28f7d06e192148c5dd4e41c23ce1b3782b"
+  }
+}

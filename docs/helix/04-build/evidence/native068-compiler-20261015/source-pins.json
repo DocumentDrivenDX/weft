@@ -1,0 +1,21 @@
+{
+  "baseCommit": "cb6b09af7462215ac9fefc9b0fa28615b1c5bf35",
+  "files": {
+    ".github/workflows/release.yml": "5945a96a104932086b726ac8ecb1fd5969070c0683a17f6603ea40323f8de679",
+    "crates/weft-postgresql/src/truss_runtime.rs": "4f4f282a9e2a0efc043f6e95bde3410cf2316dcf104586a84b2ab10abe9ca67d",
+    "crates/weft-postgresql/src/truss_mutation.rs": "b0ea261ed1731bad1a247ac1ce2c13870a3ad2a6dde23db1d5155b8f51b14074",
+    "docs/helix/02-design/module-boundaries.json": "881250f2e95b2638c5cac0dd96f53083a6aed734c8ac0cd6ab95af81cd5ea26e",
+    "docs/helix/02-design/technical-designs/TD-003-truss-postgresql.md": "e059b7ff1a1fd9c9521a24deb722e8b76d4673cc01a1b8b19a6dc4d83857cd6a",
+    "docs/helix/04-build/implementation-plan.md": "83691052ae9fbcfcf82898a01ac7457b5da3f54c907cec4bdab028a2b4b4e9c7",
+    "tests/truss068/public-native.py": "6a0d332b73bb61b81443dbff91ff08c081ad788bcf40b14058d87b7b8427c5cd",
+    "tests/truss068/workflow.json": "c019f42dcfb7c8499f84ced5ce7ff96910054d280cb1aa5c3fe212f46377befb",
+    "tests/truss068/native-runtime-manifest.json": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+    "tests/truss068/databricks-parity.py": "a5ad308ac6cf77f9cc10df62af65e2dda7a6a34a72cb7244e39efdd0e2cce2aa",
+    "tests/truss068/native-query-bundle.json": "aef42b7fd76aeb75af8e1f7083ddacbcc7325cecdf142683da48f2a7b57f6fa7",
+    "tests/truss068/wheel-smoke.py": "3f4c507e9a9d426cf3442c5584c4ccd0d5a8a66ce2aca223a4601a35626163f5",
+    "tests/truss068/products-native-query-bundle.json": "38b87428db72af32e698b8a1be730521b39a76715d5da7b675e7f4878ef38b19",
+    "tests/truss068/core08/workflow.json": "e732f86c439f081aba3e6c70e24a48ac20ee8f57da86b709513fdb149e7ef498",
+    "tests/truss068/core08/native-runtime-manifest.json": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+    "tests/truss068/core08/native-query-bundle.json": "76e3c3501bf5f281c052d1fba8ef1a28f7d06e192148c5dd4e41c23ce1b3782b"
+  }
+}

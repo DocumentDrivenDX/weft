@@ -126,3 +126,30 @@ candidate or unsupported, never silently advertise the draft as production.
 UMF supplies schema meaning. The Truss backend consumes the documented UMF physical layout and logical-to-physical mapping, including catalog identifiers, property homes, value encodings, presence and join paths. Weft derives logical result descriptors and emits SQL/parameters/decoding instructions. Execution and authorization remain host responsibilities. Truss's runtime or decoder implementation is not a dependency for Weft's compiler; exact draft layout pins and native fixtures suffice for candidate implementation. Production claims require separate evidence.
 
 For required non-null native scalar roots, lower string to text_value, boolean to boolean_value text, and integer/decimal result carriers to original numeric_token. Do not substitute numeric_value's rendered spelling for exact token custody. Retain owner-wide structural/payload checks and exact original codec-byte correspondence separately from logical query filters. Full source/domain correctness is a stored-data/host obligation; compiler tests independently arrange conforming and corrupt storage. Optional/null/recursive roots require their documented representation paths and remain required work, not JSONB fallback. Current physical source pins are recorded in tests/truss-postgresql/upstream/storage-realization-pins.json.
+
+
+## Exact native0.68 namespace — 2026-10-15
+
+The separate runtime backend0.4.37 accepts only truss-catalog-runtime/0.68-candidate
+with original manifest SHA3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc.
+It inherits the existing rootless ordinary read/scalar/source declaration subset;
+no ownership, protected aggregate or policy capability is inferred. Backend0.4.36
+retains native66/67 and rejects68. New37 rejects67, preventing automatic source
+migration. The mutation selection adapter admits exact68 bindings through the
+same complete original model/binding validation and explicit native68 obligations.
+
+Owner exports preserve unnamed A/B Records. IDs are not invented SQL names and
+ordinary SQL over those names remains WFT-NAME-MISSING. ID-based mutation still
+requires the actual configured owner-prepared model/action target. A genuine
+named products model, unchanged from its original Core08 bytes, is accepted through
+the real native68 public API for read/query and selection/update checks.
+
+The native68 runtime is an owner-supplied frozen draft, not a published package.
+The observed public query uses a frozen Truss snapshot with only the explicit
+SDK34/backend37 adapter constants changed. Installed wheel controls preserve old
+registrations and exact manifest refusal; public native acceptance/create/query
+and same-store preflight/selection/public update pass. Excluded administrative
+selection is not protected caller/action authority. B-008 and all original132
+security cases remain open. New compiler package34 and protected consumer cohorts
+require their own explicit publication/adoption pins; package availability never
+selects a new result ABI or grants authority.

@@ -1,0 +1,6 @@
+{
+  "scope": "Recompiled exact same original input/binding corpus; full conditional artifacts match retained managed executions, not a new database or authority test",
+  "identicalArtifacts": 22,
+  "moduleSha256": "19010ec2bacae8effcdd77df5c6777118a689dcd6fef9a0c817f6a180a511d64",
+  "priorNativeReceiptSha256": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f"
+}

@@ -1,0 +1,36 @@
+{
+  "baseCommit": "cb6b09af7462215ac9fefc9b0fa28615b1c5bf35",
+  "wheelPath": "/private/tmp/weft-native68-wheels-20261015/weft_sql-0.4.34-cp39-abi3-macosx_11_0_arm64.whl",
+  "wheelSha256": "8d22c78c29b32bef3fcffb6063c2eea55946e3eb2b10e4ed251bee4ca90df00f",
+  "moduleSha256": "19010ec2bacae8effcdd77df5c6777118a689dcd6fef9a0c817f6a180a511d64",
+  "newBackendVersion": "0.4.37",
+  "nativeRelease": "truss-catalog-runtime/0.68-candidate",
+  "nativeManifestSha256": "3588cf030cb46c7d12368557e351bd767c10b4dd2e1644f7f100cec54602a2fc",
+  "targetedRustTests": 3,
+  "wheelControls": 10,
+  "publicQueryChecks": 2,
+  "nativeSelectionAndPublicUpdateControls": 6,
+  "legacyNative65Through67Smoke": "passed",
+  "currentPgSmoke": 4,
+  "currentDatabricksSmoke": 32,
+  "identicalDatabricksArtifacts": 22,
+  "broaderPgLibraryTests": {
+    "state": "passed",
+    "tests": 105,
+    "failed": 0,
+    "ignored": 0,
+    "filtered": 0,
+    "seconds": 514.72
+  },
+  "published": false,
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": [],
+  "limitations": [
+    "Owner native68 runtime source is a frozen draft, not a release",
+    "Ordinary public queries and excluded-admin native selection are not protected policy/owned/aggregate/RR/action authority qualification",
+    "Truss protected-current consumer must explicitly adopt and qualify this distinct native module cohort",
+    "All original132 shared/native B-008 cases remain required"
+  ],
+  "moduleBoundaryTests": 16,
+  "governedSchemas": 81
+}

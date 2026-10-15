@@ -1,0 +1,18 @@
+{
+  "pythonVersion": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "pythonModuleSha256": "19010ec2bacae8effcdd77df5c6777118a689dcd6fef9a0c817f6a180a511d64",
+  "scope": "PG18.6 same-store original Python lowering/native preflight/selection and public SDK effect correspondence; excluded administrative selector; no RR/bulk seal/action authority qualification",
+  "checks": [
+    "exact original Python action plan and same-store native identity/version/key selection",
+    "ordinary module reader has no raw object SELECT; excluded assessor remains explicit",
+    "maxItems+1 overflow refuses before effects",
+    "stale revision and changed binding pins refused",
+    "malformed filtered-out property refuses before native selection",
+    "public typed Truss update applies compiled assignment only to selected version; other product unchanged"
+  ],
+  "exporterSha256": "b7b42396ef792980c0d836f6a07100930b54af7aca27c515ca234f4e06a54815",
+  "postgres": "18.6",
+  "bindingSha256": "0e66b1ba8e5d6a52fa1fe5de4a6c795dd0c7439687eddebcd371aabb79905455",
+  "modelSha256": "b7f8ad91d22eeae35d9c7a966090d9120a2f436c84e29a6ba56d5979a6b712b5",
+  "installationId": "e9ae5a71-5d4e-44bd-aba9-aa83a1034fd6"
+}
