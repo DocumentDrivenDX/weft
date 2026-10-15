@@ -1101,6 +1101,27 @@
           "pathReferences": []
         },
         {
+          "path": "crates/weft-core/src/current_query_operands.rs",
+          "publicDeclarations": [
+            "enum:Input",
+            "struct:Operand",
+            "fn:path",
+            "fn:input",
+            "enum:Kind",
+            "struct:Operation",
+            "fn:path",
+            "fn:operator",
+            "fn:kind",
+            "fn:operands",
+            "fn:output_type",
+            "struct:CurrentQueryOperands",
+            "fn:designation",
+            "fn:operations",
+            "fn:derive"
+          ],
+          "pathReferences": []
+        },
+        {
           "path": "crates/weft-core/src/error.rs",
           "publicDeclarations": [
             "struct:Diagnostic",
@@ -1176,6 +1197,7 @@
         {
           "path": "crates/weft-core/src/lib.rs",
           "publicDeclarations": [
+            "mod:current_query_operands",
             "mod:current_query_designation",
             "mod:application_lineage",
             "mod:security_query_properties",
@@ -3528,7 +3550,10 @@
             "fn:compile_paths_keys_json",
             "fn:compile_implicit_arithmetic_json",
             "fn:prepare_application_lineage_json",
-            "fn:prepare_current_query_designations_json"
+            "fn:prepare_current_query_designations_json",
+            "struct:MutationCompiler",
+            "fn:new",
+            "fn:compile_json"
           ],
           "pathReferences": []
         }

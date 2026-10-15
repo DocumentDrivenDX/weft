@@ -409,3 +409,21 @@ controls: report deserialization, replacement of original context and detachment
 from its lifetime cannot compile. These are Rust API boundaries inside the trusted
 host, not protection against unsafe host code or proof of native authority.
 Evidence: `../../04-build/evidence/current-security-primitives-20261015/receipt.json`.
+
+### Current-query operand correspondence — 2026-10-15
+
+Eight actual-source Rust controls cover self-join pairing and DISTINCT input,
+hidden Integer salary versus separate read DTO, original literal/parameter
+payloads and types, FALSE/LIMIT0 preflight with field-free COUNT, atomic unsupported
+SUM refusal, opposite direction vectors with byte-identical serialized plans, and
+separate group/order/distinct occurrences of one Field, and ordered tuple column/parameter pairing. Public API compile-fail
+coverage refuses importing a serialized operand ledger. Tests consume actual
+ApplicationLineage and CurrentQueryDesignations factories rather than authored
+replacement ASTs. The original shared visitor must match every Field occurrence.
+
+The composed main base includes the separate local mutation cohort unchanged.
+All313 core tests and12 public API doctests pass, with workspace all-target,
+module-boundary and governed-spec verification recorded separately. These checks
+prove original operand custody only; they execute no current protected SQL and
+promote none of the original132 shared/native cases. Per-use effective domains,
+paired/cross-row runtime scopes and genuine native admission/release remain open.

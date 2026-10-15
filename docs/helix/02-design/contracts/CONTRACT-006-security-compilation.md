@@ -2242,3 +2242,31 @@ registration. Native caller/Subject/current authority, complete preflight, effec
 value domains, exact paired key/runtime scope and guarded release remain required.
 No SQL is emitted and no original132-case entry is promoted by this candidate.
 The source/report may retain private host metadata and must remain host-private.
+
+#### Original operand correspondence for current queries
+
+`current_query_operands::derive(&CurrentQueryDesignations)` issues a borrowed,
+non-importable Rust operand ledger over the same original typed preparation. Each
+comparison retains its ordered operands and exact occurrence paths; self-join
+operands remain distinct even when their Field identities agree. Field operands
+retain their original logical types and exact per-use original-action designation.
+Literal and parameter operands borrow the original resolved payload/type; named
+parameters retain their name. No effective read DTO replaces an original Field.
+Every Field-use occurrence must correspond exactly to the original shared visitor;
+missing, duplicate or unmatched occurrences refuse without a partial ledger.
+
+The ledger also retains grouping, each original ASC/DESC direction, COUNT(*) and
+COUNT(DISTINCT) output types, and Boolean predicate nodes. FALSE and LIMIT0 do not
+elide original uses. Unsupported SUM or an unrepresented expression refuses. The
+ledger is not an execution schedule or a complete query plan: the original Plan
+owns relational stage ordering, and read requirements own projection disclosure.
+
+This factory performs no query-mode selection, effective-domain admission,
+coercion, literal rebinding, runtime key-scope comparison, SQL lowering or native
+permission check. Matching logical families alone cannot establish compatible
+protected values. Native lowering must inspect each source-derived effective
+operand domain, including both comparison operands and cross-row group/distinct
+value scopes. It must preserve original parameter meaning and refuse unqualified
+transform/key/runtime combinations. Issuance on caller-selected source bytes is
+possible and is not native source/current-authority admission. Existing report
+bytes, protocol versions and registered SQL backends remain unchanged.

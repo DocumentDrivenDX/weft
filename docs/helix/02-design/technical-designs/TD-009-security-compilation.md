@@ -444,3 +444,27 @@ or relational algebra theorem; existing conditional source/value and native proo
 obligations remain open. Do not substitute this structural evidence for SQL/native
 refinement. Rollback disables the new profile/issuer, preserving original0.1/0.2
 lineage bytes and old registrations' refusals.
+
+#### Typed original operand ledger — 2026-10-15
+
+The core current-query operand factory borrows the actual issued designation and
+its original Plan. Its private owner exposes read-only operations/operands, with
+no deserialization or replacement API. Equality retains two ordered operands;
+lexicographic inputs retain alternating column/value pairs in original component
+order. Group/order/distinct uses stay distinct by occurrence path. Order directions
+come from the complete original preparation, not the older Plan representation or
+its digest. Fields, parameter names/payloads and logical types remain borrowed
+from the original resolved context; the factory does not synthesize descriptors.
+
+The factory checks its complete Field-occurrence set against the shared original
+visitor and caps operations/Field occurrences at4096. Original request and
+resolved-parameter budgets still apply; literal payloads are not cloned. It
+refuses unsupported aggregates/expressions before returning any ledger. This is
+finite additional bookkeeping, not a total heap/CPU bound for the full pipeline.
+
+This is the next typed input for effective-domain/native lowering. The operation
+vector is an occurrence ledger, not execution order; original Plan stages and
+separate read-disclosure requirements remain governing. UMF must supply original
+source-derived conditional routes. Native source/caller/Subject/current-cut
+admission and guarded release remain separate mandatory gates. No backend is
+registered or activated by this increment.

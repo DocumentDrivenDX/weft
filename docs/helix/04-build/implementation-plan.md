@@ -2029,3 +2029,27 @@ an assigned implementation boundary, not an available API or acceptance evidence
 Weft retains ownership of original use/action designation, mode/domain consumption,
 SQL and result lineage. UMF's route inspector and Weft's draft correspondence test
 remain outside this committed increment until the upstream interface is pinned.
+
+### Original operand pairing for current-query lowering — 2026-10-15
+
+B-008 remains open. The new immutable core operand ledger is issued only from the
+actual current-query designation and original typed preparation. It preserves
+ordered comparison pairs, self-join scan identities, literal/named-parameter
+payloads/types, per-use action bindings, grouping/distinct occurrences and complete
+ASC/DESC vectors. It retains Boolean predicates and COUNT duties under FALSE and
+LIMIT0; unsupported SUM refuses without returning a partial ledger. The complete
+Field occurrence set must match the original shared AST visitor.
+
+Eight new source-backed controls pass. Composed with main535b5c7, the full core
+suite passes313 tests and public API custody passes12 doctests. Workspace,
+module-boundary and governed-spec evidence is retained in
+`evidence/current-query-operands-20261015/receipt.json`. The separate local mutation
+cohort is preserved. No executable protocol/report, published wheel or registered
+backend changes, and no original132-case promotion follows.
+
+Next use this actual typed operand context to check UMF's conditional effective
+value routes per occurrence, preserve projection disclosure independently, and
+lower through the separately admitted native consumer. Logical family equality
+alone is insufficient for protected comparison/group/distinct across rows. Exact
+runtime key/transform scope, real current source/caller/Subject cut, complete
+resource-dependent action preflight and guarded result release remain mandatory.
