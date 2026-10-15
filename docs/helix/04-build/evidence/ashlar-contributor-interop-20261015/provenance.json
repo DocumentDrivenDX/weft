@@ -1,0 +1,10 @@
+{
+  "ashlarSourceCommit": "4d19087618831b9892f5143fb3051ac47c7125e5",
+  "decoderPath": "src/ashlar/current_contributors.py",
+  "decoderSha256": "142909b377239b6f40f9ddc45a918c0d2cf2d5ec1688279e5b3ccefbb9bffee9",
+  "managedReceiptSha256": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f",
+  "managedStatementsSha256": "10279a59a67bb52410aab00eab793661ce6ec5e73f65349d80b6a4465eef4684",
+  "compilerProducerSource": "tests/current-scalar-databricks/native.py",
+  "freshNativeExecution": false,
+  "nativeSecurityAcceptance": false
+}

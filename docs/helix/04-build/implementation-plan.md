@@ -2464,3 +2464,21 @@ Prior missingfixture import and four-test input-export-order attempt are retaine
 unqualified; only the final fresh stable-input run is credited here. This is not
 a Trussreleasewheel test, nativeB10 diagnostic closure, full action/owned/aggregate/
 history/revocation qualification or original132 case promotion. B-008 stays open.
+
+
+### Original Ashlar contributor decoder and managed-wire correspondence - 2026-10-15
+
+Actual publicWeft034 original CQP producer recompiles all22 retained managed
+Databricks artifacts identically. Original Ashlar4d190876 decoder consumes24
+actual retained wire result rows, matching original independently predeclared
+complete-bag oracles. Twenty-three controls pass, including rejection of the
+actual deliberately wrong contributor statement with unchanged public count.
+Whole public-row/bag matching preserves group occurrence identity and multiplicity.
+Successful statement SQL/parameters and complete STRING manifests are verified;
+input source/receipt/raw-wire hashes and original decoder Git bytes are pinned.
+Reproducible test: tests/current-scalar-databricks/ashlar-contributor-interop.py;
+evidence: evidence/ashlar-contributor-interop-20261015/. This is offline original
+consumer correspondence, not another warehouse run or source/caller/current-policy
+permission. Native providers still need independently derived held-source bags,
+actual source/publication admission and closing custody. All original132 gates
+remain required; no native case promotion follows from these controls.

@@ -1,0 +1,179 @@
+{
+  "scope": "Offline original Ashlar decoder consumes retained actual managed SQL JSON carriers; actual public Weft34 recompiles all22 complete artifacts identically. Expected bags come from original predeclared independent fixture oracles, not actual returned bags. No fresh database run, genuine publication/native admission, caller/current-policy authority or guarded release.",
+  "weftVersion": "0.4.34",
+  "wheelSha256": "fb0d79679c158208418199df144cfc21917b3955c382ef933980bb89645eed37",
+  "moduleSha256": "877bfafd51a7f50478be954c0cbabd0cba0a705f004a5b5e99d317fd087f19d9",
+  "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d",
+  "inputPins": {
+    "/private/tmp/ashlar-contributors-4d190876-20261015/src/ashlar/current_contributors.py": "142909b377239b6f40f9ddc45a918c0d2cf2d5ec1688279e5b3ccefbb9bffee9",
+    "/private/tmp/weft-current-databricks-native-20261015/receipt.json": "0c0928d10e3ccab9ebbab46159aaa9964d2fb3f3c5c88c4203488b7601dfce0f",
+    "/private/tmp/weft-current-databricks-native-20261015/statements.json": "10279a59a67bb52410aab00eab793661ce6ec5e73f65349d80b6a4465eef4684",
+    "/private/tmp/weft-native68-20261015/tests/current-scalar-databricks/native.py": "1969c1cda8bc9b46430cf4ea2960122e32e5404e1392cdd0af2e0ae28043df95",
+    "/private/tmp/weft-native68-20261015/tests/current-query-designation/fixtures/mixed-original-uses.request.json": "192614d9e7b0dee56364299a9d7cfee0d72b0a7c8778b91640da818cb8ef8ad4",
+    "/private/tmp/weft-native68-20261015/tests/current-query-designation/fixtures/live-original-integer-sum.request.json": "fc8ed1aaa049f16a3accc983b09118711bd70aead974f247d72a02df6f2e6855"
+  },
+  "decodedManagedRows": 24,
+  "checks": [
+    {
+      "id": "count",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8a9a-17c5-a2e2-edb2a6d8e8d6",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "distinct",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8bdd-118c-b0c8-9f3a1868742e",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "integer-distinct",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8cc9-1523-bab7-8f5b373d6b35",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "group",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8d84-1cef-a92e-ea6c01928b64",
+      "rows": 2,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "hidden-group",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8e54-181f-8ff0-e8abe5a5f1c4",
+      "rows": 2,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "joined-count",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8ef1-1399-9cc8-ecebc3c6a62d",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "joined-distinct",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-8fd6-1f3f-becf-764daa93aafd",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "actual-managed-same-count-wrong-contributor-refused",
+      "samePublicResult": true,
+      "refused": true
+    },
+    {
+      "id": "empty-count",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-917f-1501-9461-e95328686e80",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "empty-distinct",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9219-1ced-9f44-0bcd72617ed9",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "empty-group",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-92b7-18a3-a898-e1426eb99205",
+      "rows": 0,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "limit-zero",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9326-1399-9058-f5f5a7f8fd3c",
+      "rows": 0,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "masked-raw-parameter",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9397-1a4f-8a3f-ceb0f48364d0",
+      "rows": 2,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "parameter-is-data",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-942b-1e58-938f-7562ad5fa981",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-total",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-94cd-1d75-b7d7-50bd31ff0dbc",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-beyond-positive-int64",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9592-1e15-bf0c-cb180b8a7927",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-beyond-negative-int64",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9622-16e6-88b1-94ec7437dda4",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-empty-null",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-96b7-1ba7-af6a-ccad77803874",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-empty-group",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-974f-1e4f-9165-d915a0159797",
+      "rows": 0,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-group",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-97b7-1881-8506-cbcd50e0a329",
+      "rows": 2,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-join",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9870-168f-a622-a799936380d7",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-same-public-distinct-bags",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-99da-190e-a4a1-8c568e204cae",
+      "rows": 2,
+      "matchedOriginalCompleteOracle": true
+    },
+    {
+      "id": "sum-with-distinct",
+      "identicalCompiledArtifact": true,
+      "managedStatementId": "01f1c8df-9a7f-1b22-8638-30e08dfe8728",
+      "rows": 1,
+      "matchedOriginalCompleteOracle": true
+    }
+  ],
+  "nativeSecurityAcceptance": false,
+  "casesPromoted": []
+}
