@@ -514,3 +514,19 @@ remains pending grouped-bag work. Stop the disposable server on every exit.
 The finite fixture proves conditional SQL and source contribution only; no
 source-policy correctness, authenticated caller/current authority or guarded
 public result release is qualified by it.
+
+
+### Grouped and count contribution bags — 2026-10-15
+
+Exercise actual same-original Python child -> typed0.3 SQL -> PostgreSQL18.6
+against exact fixture bags: COUNT, COUNT DISTINCT (String/Integer), self-join
+multiplicity, grouped projection/count, grouped joined distinct, hidden grouping,
+multiple group fields, empty global/grouped input, FALSE/LIMIT0, raw predicates,
+named parameters and singleton nonaggregate bags. Verify each cell from declared
+staged values, every grouping source and mathematical COUNT metadata. A deliberate
+wrong right-hand source key must change the expected joined bag even while the
+public distinct count stays equal. This is a counterfactual oracle control, not
+an implemented native-guard rejection. Require cross-version refusal and both
+predecessor native corpora unchanged, exact text OIDs and disposable-server cleanup.
+Synthetic declarations/counterfactual salary modes do not qualify UMF/native
+source permission, authenticated caller/current authority or final publication.

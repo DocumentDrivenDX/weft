@@ -2437,3 +2437,57 @@ until complete grouped bags of joined contributor tuples and aggregate cell
 checks are implemented. They remain required original scope. The0.1 path and
 registration behavior are unchanged;0.1 refuses the extra row key,0.2 refuses a
 0.1 binding. Neither path is a currently installed protected backend or permission.
+
+
+#### Complete contributor bags for grouped and COUNT results
+
+The separate `lower_postgresql_current_contributors_candidate_json(binding)`
+accepts only `weft.postgresql.current-values/0.3-candidate`, with the same closed
+native TEXT-key relation/value declaration as0.2. It emits
+`weft.postgresql.current-scalar/0.3-candidate`; neither predecessor path accepts
+this version, and it does not activate a native registration. Hosts must explicitly
+register/pin the consumer/result ABI and implementation alongside the original
+static binding/profile. A static backendVersion or source hash alone does not
+select a newer consumer, and unsupported versions cannot downgrade.
+
+The private appended TEXT column __weft_contributors contains exactly
+`{version:"weft.stage-contributor-bag/0.1-candidate",tuples:[[{scan,key},...],...]}`.
+Each inner tuple has one actual staged source-row TEXT key for every original scan
+in typed source/join order. The outer array is a bag of all joined contributors
+to that particular output row/group, preserving multiplicity, with unspecified
+outer order. No DISTINCT or truncation is applied to the lineage aggregate.
+A nonaggregate output has a singleton tuple bag. An empty global COUNT/COUNT
+DISTINCT has one result row, zero and an empty tuple array; an empty grouped query
+has no result rows. FALSE and LIMIT0 retain original source/use admission duties.
+
+SQL uses qualified jsonb_build_array/jsonb_build_object/jsonb_agg and casts the
+private carrier to text. Empty aggregate input uses an explicit empty JSONB array.
+Properties remain ordinary declared scalar columns; JSONB here is solely the
+private contribution carrier. Existing supported domains and exact type/scope/
+group-projection checks remain in force; SUM and unsupported domains still refuse.
+COUNT retains its original mathematical Integer domain, with separately declared
+bounded native int8 nonnegative text encoding and whole-query overflow refusal.
+
+privateResultColumns declares position after the public outputs, name
+__weft_contributors, purpose source-row-contributor-bag, encoding
+jsonb-text:weft.stage-contributor-bag/0.1-candidate, exact scans, maxKeyUtf8Bytes:256
+and multiplicity:bag. publicCellSources has one closed entry per public output:
+position, kind, sourcePath and sources. kind is field, group-field, count or
+count-distinct. A field/group-field has the original expression path and one
+source {path,scan,field}; COUNT has the original outputs/i path and no Field
+source; COUNT DISTINCT has outputs/i and the exact outputs/i/argument Field use.
+privateGroupSources lists every original {path:groups/i,scan,field}. Field is the
+full original identity; the exact per-use materialization declaration separately
+retains the effective domain/column/scope and native route/action correspondence.
+No private grouping value is added to public results.
+
+Native hosts must hold the actual statement/result custody and complete source
+cut, validate closed widths/OIDs/carrier members/scan order/key mappings, preserve
+tuple multiplicity and verify actual contribution, group-domain equality and
+public-cell/COUNT/DISTINCT meaning before guarded release. Checking only public
+values or individual authorized key membership cannot prove a complete or correct
+joined bag. Native statement/result limits and deadlines must refuse rather than
+truncate or publish a partial group. The component's16MB serialized compiler
+artifact bound is not a native result-data or whole-host memory guarantee.
+The original source/caller/current authority, actual UMF decisions, transform
+runtime scope and final native release gates remain mandatory and unfinished.

@@ -1,0 +1,9 @@
+{
+  "observation": "Loaded after completed fixture runs with the same PYTHONPATH; not a through-run custody claim",
+  "wheelSha256": "8b637ca5a1532fef25cbaf3e15a9040c7a6c432a988dd9e62b066db16f55f795",
+  "loadedNativeModule": "/private/tmp/weft-current-aggregate-installed/weft/weft.abi3.so",
+  "loadedNativeModuleSha256": "8161b26488ea7a2b40886f83d803cb2bf790cc5d8765d151ba2f470b50376a7c",
+  "matchesWheel": true,
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "weftVersion": "0.4.32"
+}

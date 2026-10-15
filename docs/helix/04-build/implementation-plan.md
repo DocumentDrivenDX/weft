@@ -2160,3 +2160,43 @@ installation, authenticated capture/Subject/current-cut issuer and guarded final
 release remain incomplete. Grouped contributor bags, COUNT/DISTINCT and remaining
 scalar/aggregate domains are next required compiler work, currently refused by
 this0.2 path. They are not removed from B-008 scope.
+
+
+### Complete grouped contributor bags and counts — 2026-10-15
+
+B-008 remains open under all132 original shared/native obligations and expanded
+45 accepted/113 unimplemented/158 required coverage. The separate0.3 current
+compiler now emits complete private bags of joined source-key tuples for grouped
+queries, COUNT and COUNT DISTINCT, including singleton nonaggregate and explicit
+empty-global-aggregate bags. Separate cell/group metadata retains original paths
+and Field identities; native hosts must hold exact statement/result custody and
+validate complete contribution and disclosure before release. Properties remain
+ordinary scalar columns; JSONB is used only for the private lineage carrier.
+
+Thirteen targeted Rust controls and20 actual same-original Python -> Rust ->
+PostgreSQL18.6 controls pass (17 positive queries,2 version refusals,1 deliberately
+incorrect contribution oracle). The incorrect sideband keeps a public distinct
+count equal while changing the expected joined bag; this proves the finite oracle
+can detect it, not that an unimplemented native guard rejected it. The privileged
+fixtures use synthetic mode/scope/value declarations, including counterfactual
+salary group/distinct modes. No original protected backend case is promoted.
+All completed disposable servers stop and release their leases.
+
+The previous scalar9 and row-lineage13 check records/SQL hashes/result bags are
+identical under the new unpublished0.4.32 development wheel;46 Python custody
+controls pass. Evidence is under evidence/current-aggregate-lineage-20261015/.
+Truss agreed the closed contributor bag/cell/group ABI and explicit native
+consumer registration boundary. Actual source/Subject/current-cut admission,
+complete native facts, transform/runtime proof and guarded final release remain
+Truss/native work; Ashlar/Databricks qualification and the second caller are open.
+
+Next retain native current-query integration and implement remaining SUM/exact
+scalar semantics. UMF owner agrees a separate positive live-original signed64 SUM
+source revision with an independent original-authorized action, and necessary
+nullity/presence dependency only. Nullity is not additive transform preservation.
+A separately versioned capability must preserve old SUM-prohibited source and
+unsupported-factory negatives; nullable mathematical output requires exact native
+arbitrary-precision accumulation. Disclosed/transformed SUM and remaining domains
+stay required and unsupported until their actual semantics are established.
+
+UMF main9d0e8758 retains five actual prior0.2 Weft packet -> original Bun child supplied-cut cases and26 focused verifier controls. The retained README/root verification were inspected; that external evidence qualifies the prior wheel/source pins only and grants no native SQL/caller/current-authority or backend acceptance.

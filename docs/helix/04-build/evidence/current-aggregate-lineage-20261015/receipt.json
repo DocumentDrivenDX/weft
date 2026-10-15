@@ -1,0 +1,71 @@
+{
+  "scope": "Actual same-original typed compiler and conditional PG18 contributor-bag/group/cell SQL refinement over declared stages only; no genuine native source/caller/current authority, policy/transform-runtime admission or guarded release",
+  "baseMain": "718a9649413baa4e3ede5c0c3b7ed24f4ae48d46",
+  "sourceSha256": {
+    "crates/weft-postgresql/src/current_scalar.rs": "6859ec29111d8ea69f522a2499cd3394cc244d885509327dbbb682d26a94c9a2",
+    "crates/weft-runtime/src/lib.rs": "406d5ea5b0de876eadda9f4c9ccac491035265d2cb60bec1c5dd421d6f842c45",
+    "crates/weft-python/src/lib.rs": "5bcb2956a328d485c1b2d5d49178a742551942bc734650ea7bdbfc2401e56f8c",
+    "tests/current-scalar-postgresql/contributors.py": "96617476fe0b06242d596ed7d3dd1b47d1cfb80aa314320b9793ad1a2d77b6d0"
+  },
+  "frozenSourceManifestSha256": "8fb55cae5bd2835c3176ce999f4a8ed8fbe76eeb641e81bb00adc422117c4846",
+  "frozenFileCount": 3811,
+  "features": [
+    "current-postgresql-scalar-candidate"
+  ],
+  "candidateVersion": "0.4.32",
+  "candidateWheelSha256": "8b637ca5a1532fef25cbaf3e15a9040c7a6c432a988dd9e62b066db16f55f795",
+  "nativeModuleSha256": "8161b26488ea7a2b40886f83d803cb2bf790cc5d8765d151ba2f470b50376a7c",
+  "loadedModuleObservation": "After completed corpus runs with same PYTHONPATH, verified against wheel; not a through-run custody claim",
+  "postBuildChanges": "Harness and governed documentation only; production Rust unchanged.",
+  "published": false,
+  "buildProfile": "dev",
+  "checks": {
+    "targetedScalarRust": 13,
+    "actualPgContributors": 20,
+    "positiveQueries": 17,
+    "versionRefusals": 2,
+    "counterfactualWrongContributionDetected": 1,
+    "pythonOriginalCustody": 46,
+    "previousScalarNativeUnchanged": 9,
+    "previousRowNativeUnchanged": 13,
+    "workspaceAllTargets": "passed",
+    "modules": 16,
+    "governedSpecs": "passed"
+  },
+  "nativeFixtureQualification": "Privileged local fixture connections and synthetic mode/scope/eligibility/value declarations; salary grouping/distinct includes counterfactual source modes. Wrong-contribution oracle is not an implemented native guard.",
+  "cleanup": "All three completed native corpus servers stopped and leases released",
+  "nativeAdmission": false,
+  "securityReady": false,
+  "original132Required": true,
+  "expandedGate": {
+    "accepted": 45,
+    "unimplemented": 113,
+    "required": 158
+  },
+  "remaining": [
+    "genuine installed source/Subject/current-cut issuer and actual complete facts",
+    "original UMF route/action/read decisions and verified paired transform/runtime scope",
+    "held statement/result custody, complete contribution/public-cell guard and final release",
+    "remaining SUM/exact-domain compiler semantics preserving unsupported-source negatives",
+    "original shared/Truss/Ashlar native acceptance; Databricks second caller"
+  ],
+  "upstreamInterop": {
+    "repository": "DocumentDrivenDX/umf",
+    "commit": "9d0e8758d8a8e52b28ce753f78aec8cf942e45f1",
+    "evidence": "docs/helix/04-build/evidence/security/weft-current-child-20261015",
+    "qualification": "Five actual prior0.2 wheel3e9bd6f6 supplied-cut child cases,26 verifier controls; not current0.3 native/backend acceptance"
+  },
+  "evidenceSha256": {
+    "scalar-tests.log": "3e5f8b1f95b8777372a06ebddf4741857a8e698b49ac13368fd97ccd2818d761",
+    "native-contributors.json": "a0aa1b87bf891b4d57e84d8eabc217f8bf1a33f28744963444c67835c00d0e22",
+    "python-custody.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+    "native-v1-regression.json": "9cf6973d99206b76755268264a5cc5c46a9849e6713e4134cb6b96c451b4c8d0",
+    "native-v2-regression.json": "879aa231f6b29f71ed109b30578b3d07e0d23da4ce484f71f820917996ea9f06",
+    "predecessor-identity.json": "9c85d435dc8667eeee1af0173d0fc547a30f89319b0e00a82dc68ded7dc49b51",
+    "loaded-module.json": "a0a0c5c3bcc37c3bd34ac5ef673e23fd154dd8e370a3427d80d3c9b264b06625",
+    "modules.log": "2fe5d4c6e6ab8a93eb730670728ac60d74057eb68ab193e7d059f60a38f1dbb0",
+    "workspace.log": "1827251e4f4e54eb483de097a884dadd8ee677af9ad2b5e116287909dff30e70",
+    "specs.log": "bd53b60af016e727d3fb74ab3e32294d3119570f7e9741f02b98fd0676af8c98",
+    "wheel-build.log": "9d61205a99a953bd265a65ffc6107c1ad7aeeb73c367e76630f92e3e4b342566"
+  }
+}

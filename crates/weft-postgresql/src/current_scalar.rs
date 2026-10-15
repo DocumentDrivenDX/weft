@@ -109,7 +109,17 @@ pub struct CurrentScalarSql<'a> {
     sql: String,
     parameters: Vec<Parameter>,
     columns: Vec<ResultColumn>,
-    private: Option<(Value, Value)>,
+    private: Option<PrivateLineage>,
+}
+struct PrivateLineage {
+    version: &'static str,
+    columns: Value,
+    cells: Value,
+    groups: Option<Value>,
+}
+struct Lineage {
+    keys: BTreeMap<String, String>,
+    contributor_bag: bool,
 }
 impl CurrentScalarSql<'_> {
     pub fn sql(&self) -> &str {
@@ -148,10 +158,13 @@ impl CurrentScalarSql<'_> {
     }
     pub fn json(&self) -> Value {
         let mut value = json!({"version":"weft.postgresql.current-scalar/0.1-candidate","authority":false,"securityReady":false,"nativeAdmission":"required","sourceRequestSha256":sha256(self.context.designation().preparation().source_request_json().as_bytes()),"designationSha256":sha256(self.context.designation().json().as_bytes()),"materializationBindingSha256":self.binding_sha256,"sql":self.sql,"parameters":self.parameters,"resultColumns":self.columns,"nativeRequirements":["genuine authenticated held source/caller/Subject/current cut","exact original static binding/profile/model/source correspondence","private relation producer/OID/ACL/type/encoding/collation correspondence","complete primary-eligible population before relational operations even when empty","actual per-use read/route/disclosure and exact separate action decisions","present uniform per-use domains and paired/cross-row key/transform/runtime scopes","native statement/result budgets and no partial public release","source/caller/current-cut revalidation, result/cell lineage and guarded decoding/release"]});
-        if let Some((columns, cells)) = &self.private {
-            value["version"] = json!("weft.postgresql.current-scalar/0.2-candidate");
-            value["privateResultColumns"] = columns.clone();
-            value["publicCellSources"] = cells.clone();
+        if let Some(private) = &self.private {
+            value["version"] = json!(private.version);
+            value["privateResultColumns"] = private.columns.clone();
+            value["publicCellSources"] = private.cells.clone();
+            if let Some(groups) = &private.groups {
+                value["privateGroupSources"] = groups.clone();
+            }
         }
         value
     }
@@ -295,7 +308,7 @@ fn lower_binding<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding: Binding,
     binding_sha256: String,
-    row_keys: Option<BTreeMap<String, String>>,
+    lineage: Option<Lineage>,
 ) -> Result<CurrentScalarSql<'a>> {
     let designation = context.designation();
     let original = designation.preparation();
@@ -310,7 +323,9 @@ fn lower_binding<'a>(
     {
         return Err(fail());
     }
-    if row_keys.is_some() && plan.aggregate {
+    let row_keys = lineage.as_ref().map(|value| &value.keys);
+    let contributor_bag = lineage.as_ref().is_some_and(|value| value.contributor_bag);
+    if row_keys.is_some() && plan.aggregate && !contributor_bag {
         return Err(fail());
     }
     let mut scans = BTreeMap::new();
@@ -652,18 +667,66 @@ fn lower_binding<'a>(
             ));
             scan_ids.push(scan.clone());
         }
-        output_sql.push(format!("pg_catalog.jsonb_build_object('version','weft.stage-row-tuple/0.1-candidate','rows',pg_catalog.jsonb_build_array({}))::pg_catalog.text AS \"__weft_source_rows\"",row_sql.join(",")));
-        let mut cells = Vec::new();
-        for (position, output) in plan.outputs.iter().enumerate() {
-            let app::Expression::Field { scan, identity } = &output.expression else {
-                return Err(fail());
+        if contributor_bag {
+            let tuple = format!("pg_catalog.jsonb_build_array({})", row_sql.join(","));
+            let tuples = if plan.aggregate {
+                format!("COALESCE(pg_catalog.jsonb_agg({tuple}),'[]'::pg_catalog.jsonb)")
+            } else {
+                format!("pg_catalog.jsonb_build_array({tuple})")
             };
-            cells.push(json!({"position":position,"sourcePath":format!("outputs/{position}/expression"),"scan":scan,"field":identity}));
+            output_sql.push(format!("pg_catalog.jsonb_build_object('version','weft.stage-contributor-bag/0.1-candidate','tuples',{tuples})::pg_catalog.text AS \"__weft_contributors\""));
+            let mut cells = Vec::new();
+            for (position, output) in plan.outputs.iter().enumerate() {
+                let (kind, path, sources) = match &output.expression {
+                    app::Expression::Field { scan, identity } => {
+                        let path = format!("outputs/{position}/expression");
+                        (
+                            if plan.aggregate {
+                                "group-field"
+                            } else {
+                                "field"
+                            },
+                            path.clone(),
+                            json!([{"path":path,"scan":scan,"field":identity}]),
+                        )
+                    }
+                    app::Expression::Count { .. } => {
+                        ("count", format!("outputs/{position}"), json!([]))
+                    }
+                    app::Expression::CountDistinct { argument, .. } => (
+                        "count-distinct",
+                        format!("outputs/{position}"),
+                        json!([{"path":format!("outputs/{position}/argument"),"scan":argument.scan,"field":argument.identity}]),
+                    ),
+                    _ => return Err(fail()),
+                };
+                cells.push(
+                    json!({"position":position,"kind":kind,"sourcePath":path,"sources":sources}),
+                );
+            }
+            let groups=plan.groups.iter().enumerate().map(|(index,field)|json!({"path":format!("groups/{index}"),"scan":field.scan,"field":field.identity})).collect::<Vec<_>>();
+            Some(PrivateLineage {
+                version: "weft.postgresql.current-scalar/0.3-candidate",
+                columns: json!([{"position":columns.len(),"name":"__weft_contributors","purpose":"source-row-contributor-bag","encoding":"jsonb-text:weft.stage-contributor-bag/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256,"multiplicity":"bag"}]),
+                cells: json!(cells),
+                groups: Some(json!(groups)),
+            })
+        } else {
+            output_sql.push(format!("pg_catalog.jsonb_build_object('version','weft.stage-row-tuple/0.1-candidate','rows',pg_catalog.jsonb_build_array({}))::pg_catalog.text AS \"__weft_source_rows\"",row_sql.join(",")));
+            let mut cells = Vec::new();
+            for (position, output) in plan.outputs.iter().enumerate() {
+                let app::Expression::Field { scan, identity } = &output.expression else {
+                    return Err(fail());
+                };
+                cells.push(json!({"position":position,"sourcePath":format!("outputs/{position}/expression"),"scan":scan,"field":identity}));
+            }
+            Some(PrivateLineage {
+                version: "weft.postgresql.current-scalar/0.2-candidate",
+                columns: json!([{"position":columns.len(),"name":"__weft_source_rows","purpose":"source-row-contribution","encoding":"jsonb-text:weft.stage-row-tuple/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256}]),
+                cells: json!(cells),
+                groups: None,
+            })
         }
-        Some((
-            json!([{"position":columns.len(),"name":"__weft_source_rows","purpose":"source-row-contribution","encoding":"jsonb-text:weft.stage-row-tuple/0.1-candidate","scans":scan_ids,"maxKeyUtf8Bytes":256}]),
-            json!(cells),
-        ))
     } else {
         None
     };
@@ -736,14 +799,38 @@ pub fn lower_rows<'a>(
     context: &'a CurrentQueryOperands<'a>,
     binding_json: &str,
 ) -> Result<CurrentScalarSql<'a>> {
+    lower_keyed(
+        context,
+        binding_json,
+        "weft.postgresql.current-values/0.2-candidate",
+        false,
+    )
+}
+/// Complete joined contributor bags for supported direct/grouped COUNT operations.
+/// Native source/mapping/domain admission and guarded decoding/release are mandatory.
+pub fn lower_contributors<'a>(
+    context: &'a CurrentQueryOperands<'a>,
+    binding_json: &str,
+) -> Result<CurrentScalarSql<'a>> {
+    lower_keyed(
+        context,
+        binding_json,
+        "weft.postgresql.current-values/0.3-candidate",
+        true,
+    )
+}
+fn lower_keyed<'a>(
+    context: &'a CurrentQueryOperands<'a>,
+    binding_json: &str,
+    version: &str,
+    contributor_bag: bool,
+) -> Result<CurrentScalarSql<'a>> {
     if binding_json.len() > 4_000_000 {
         return Err(fail());
     }
     let raw = checked_json(binding_json).map_err(|_| fail())?;
     let binding: RowBinding = serde_json::from_value(raw.clone()).map_err(|_| fail())?;
-    if binding.version != "weft.postgresql.current-values/0.2-candidate"
-        || serde_json::to_value(&binding).map_err(|_| fail())? != raw
-    {
+    if binding.version != version || serde_json::to_value(&binding).map_err(|_| fail())? != raw {
         return Err(fail());
     }
     let mut keys = BTreeMap::new();
@@ -777,7 +864,10 @@ pub fn lower_rows<'a>(
             values: binding.values,
         },
         sha256(binding_json.as_bytes()),
-        Some(keys),
+        Some(Lineage {
+            keys,
+            contributor_bag,
+        }),
     )
 }
 
@@ -836,7 +926,10 @@ mod tests {
             out["version"],
             "weft.postgresql.current-scalar/0.2-candidate"
         );
-        assert_eq!(out["privateResultColumns"][0]["position"], old["resultColumns"].as_array().unwrap().len());
+        assert_eq!(
+            out["privateResultColumns"][0]["position"],
+            old["resultColumns"].as_array().unwrap().len()
+        );
         assert_eq!(out["privateResultColumns"][0]["scans"], json!(["s0"]));
         assert_eq!(
             out["publicCellSources"][0]["sourcePath"],
@@ -867,10 +960,14 @@ mod tests {
     }
     // @covers US-009-AC2
     #[test]
-    fn row_versions_and_legacy_unknown_keys_refuse(){
-        let r=request("mixed");
-        assert!(rows(&r,|b|b["version"]=json!("weft.postgresql.current-values/0.1-candidate")).is_err());
-        assert!(run(&r,|b|b["scans"][0]["relation"]["rowKeyColumn"]=json!("__native_row_key")).is_err());
+    fn row_versions_and_legacy_unknown_keys_refuse() {
+        let r = request("mixed");
+        assert!(rows(&r, |b| b["version"] =
+            json!("weft.postgresql.current-values/0.1-candidate"))
+        .is_err());
+        assert!(run(&r, |b| b["scans"][0]["relation"]["rowKeyColumn"] =
+            json!("__native_row_key"))
+        .is_err());
     }
     // @covers US-009-AC1 @covers US-009-AC2
     #[test]
@@ -890,6 +987,92 @@ mod tests {
             .as_str()
             .unwrap()
             .ends_with(" LIMIT 0"));
+    }
+    fn contributors(r: &Value, edit: impl FnOnce(&mut Value)) -> Result<Value> {
+        let p = application_lineage::prepare(&r.to_string())?;
+        let d = current_query_designation::derive(&p)?;
+        let g = current_query_operands::derive(&d)?;
+        let mut b = binding(&g);
+        b["version"] = json!("weft.postgresql.current-values/0.3-candidate");
+        for scan in b["scans"].as_array_mut().unwrap() {
+            scan["relation"]["rowKeyColumn"] = json!("__native_row_key")
+        }
+        edit(&mut b);
+        lower_contributors(&g, &b.to_string()).map(|sql| sql.json())
+    }
+    // @covers US-009-AC1 @covers US-009-AC2 @covers US-009-AC3
+    #[test]
+    fn contributor_bags_keep_count_and_distinct_input_rows_with_empty_aggregate_carrier() {
+        let mut r = request("join");
+        let out = contributors(&r, |_| {}).unwrap();
+        let sql = out["sql"].as_str().unwrap();
+        assert!(sql.contains("pg_catalog.count(DISTINCT"));
+        assert!(sql.contains("pg_catalog.jsonb_agg(pg_catalog.jsonb_build_array("));
+        assert!(!sql.contains("jsonb_agg(DISTINCT"));
+        assert!(sql.contains("'[]'::pg_catalog.jsonb"));
+        assert_eq!(
+            out["version"],
+            "weft.postgresql.current-scalar/0.3-candidate"
+        );
+        assert_eq!(out["privateResultColumns"][0]["scans"], json!(["s0", "s1"]));
+        assert_eq!(out["privateResultColumns"][0]["multiplicity"], "bag");
+        assert_eq!(out["publicCellSources"][0]["kind"], "count-distinct");
+        assert_eq!(
+            out["publicCellSources"][0]["sources"][0]["path"],
+            "outputs/0/argument"
+        );
+        assert_eq!(out["resultColumns"][0]["logicalType"]["facets"], json!({}));
+        r["sql"] = json!("SELECT COUNT(*) AS n FROM Resource a WHERE FALSE LIMIT 0");
+        let out = contributors(&r, |_| {}).unwrap();
+        assert_eq!(out["publicCellSources"][0]["kind"], "count");
+        assert_eq!(out["publicCellSources"][0]["sources"], json!([]));
+        assert_eq!(out["privateGroupSources"], json!([]));
+        assert!(out["sql"].as_str().unwrap().ends_with(" LIMIT 0"));
+    }
+    // @covers US-009-AC1 @covers US-009-AC2
+    #[test]
+    fn grouped_field_count_and_private_group_paths_preserve_effective_domain_checks() {
+        let mut r = request("mixed");
+        r["sql"] = json!(
+            "SELECT r.token,COUNT(*) AS n FROM Resource r GROUP BY r.token ORDER BY r.token DESC"
+        );
+        let out = contributors(&r, |_| {}).unwrap();
+        assert_eq!(out["privateGroupSources"][0]["path"], "groups/0");
+        assert_eq!(
+            out["privateGroupSources"][0]["field"],
+            json!(identity("token"))
+        );
+        assert_eq!(out["publicCellSources"][0]["kind"], "group-field");
+        assert_eq!(out["publicCellSources"][1]["kind"], "count");
+        r["sql"] = json!("SELECT r.salary,COUNT(*) AS n FROM Resource r GROUP BY r.salary");
+        assert!(contributors(&r, |_| {}).is_err());
+        r["sql"] = json!("SELECT r.salary FROM Resource r WHERE r.salary=100");
+        let out = contributors(&r, |_| {}).unwrap();
+        assert_eq!(out["publicCellSources"][0]["kind"], "field");
+        assert_eq!(out["privateGroupSources"], json!([]));
+        assert!(!out["sql"].as_str().unwrap().contains("jsonb_agg("));
+    }
+    // @covers US-009-AC2 @covers US-009-AC3
+    #[test]
+    fn contributor_versions_missing_keys_and_prohibited_uses_refuse_without_downgrade() {
+        let r = request("mixed");
+        assert!(contributors(&r, |b| b["version"] =
+            json!("weft.postgresql.current-values/0.2-candidate"))
+        .is_err());
+        assert!(rows(&r, |b| b["version"] =
+            json!("weft.postgresql.current-values/0.3-candidate"))
+        .is_err());
+        assert!(contributors(&r, |b| {
+            b["scans"][0]["relation"]
+                .as_object_mut()
+                .unwrap()
+                .remove("rowKeyColumn");
+        })
+        .is_err());
+        assert!(contributors(&r, |b| b["contributorBag"] = json!(true)).is_err());
+        let mut r = r;
+        r["sql"] = json!("SELECT COUNT(DISTINCT r.token) AS n FROM Resource r WHERE FALSE LIMIT 0");
+        assert!(contributors(&r, |b| b["values"][0]["mode"] = json!("prohibited")).is_err());
     }
     fn request(name: &str) -> Value {
         serde_json::from_str(match name{

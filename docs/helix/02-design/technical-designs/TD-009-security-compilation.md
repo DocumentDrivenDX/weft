@@ -519,3 +519,15 @@ and joined row occurrences. CONTRACT-006 defines exact shapes and native checks.
 This is compiler lineage over declared stages; Truss owns genuine captured source,
 authenticated Subject, actual mappings, current cut and final disclosure/release.
 Grouped contributor bags and aggregates stay explicit unfinished requirements.
+
+
+### Complete aggregate contributor bags — 2026-10-15
+
+The separate0.3 pure SQL consumer extends actual typed lowering with complete
+bags of joined source-key tuples for grouping, COUNT and COUNT DISTINCT. It uses
+native TEXT keys, explicit empty-global-aggregate bags and separate per-public-cell
+and grouping-source metadata. Existing0.1 and0.2 outputs are preserved. Count's
+logical mathematical Integer remains distinct from its bounded native encoding.
+The native host must retain actual statement/result custody and validate complete
+contribution/cell meaning; a correct public count alone cannot establish lineage.
+CONTRACT-006 specifies the exact closed carrier and explicit ABI registration.

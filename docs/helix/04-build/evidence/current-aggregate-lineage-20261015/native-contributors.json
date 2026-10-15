@@ -1,0 +1,437 @@
+{
+  "scope": "Actual same-original typed compiler and PG18 contributor-bag/cell refinement over synthetic declared stages. Privileged fixture role. Includes counterfactual source modes for salary grouping/distinct; not actual UMF policy/native authority/admission or guarded release.",
+  "postgresVersionNum": "180006",
+  "checks": [
+    {
+      "id": "count",
+      "rows": [
+        [
+          [
+            "3"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "20235e37736c6ea84dd49b1a6613221ff69d0fa292e491b5341ad00e928b7541",
+      "compiledSha256": "eccce4c031e4de9ee1fb1a081a9e438f4b6937f5be3757ead4a60c49cdd9e47d",
+      "passed": true
+    },
+    {
+      "id": "distinct",
+      "rows": [
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "a90ec515577c7f5adc97655c9b076b350e85c71d3415a93c6faa0c15fca0d4ff",
+      "compiledSha256": "fe8ca712267b41055529e39105fd73bf5f7f1cb82e44220a575b5a1ae5cdf148",
+      "passed": true
+    },
+    {
+      "id": "joined-count",
+      "rows": [
+        [
+          [
+            "5"
+          ],
+          [
+            [
+              "k1",
+              "k1"
+            ],
+            [
+              "k1",
+              "k4"
+            ],
+            [
+              "k3",
+              "k3"
+            ],
+            [
+              "k4",
+              "k1"
+            ],
+            [
+              "k4",
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "c756739ae40c2060b67f5358797537607151ddbf9ef1ed08ccc924601c64f8bf",
+      "compiledSha256": "e5763bb6334d18ccae8fbbfbf48fc2c0027c7301511d318c8949a676a28e3ea3",
+      "passed": true
+    },
+    {
+      "id": "counterfactual-public-count-same-contributors-wrong",
+      "detected": true
+    },
+    {
+      "id": "joined-distinct",
+      "rows": [
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1",
+              "k1"
+            ],
+            [
+              "k1",
+              "k4"
+            ],
+            [
+              "k3",
+              "k3"
+            ],
+            [
+              "k4",
+              "k1"
+            ],
+            [
+              "k4",
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "ea082350f1c5c787d7e46e5a82d5ec69bae9c7ab594352cbd68ccb9e04229828",
+      "compiledSha256": "fbee6e17671c64642743c17625e169f98998bad71753abdf87143a782727b52b",
+      "passed": true
+    },
+    {
+      "id": "group",
+      "rows": [
+        [
+          [
+            "opaque-z",
+            "1"
+          ],
+          [
+            [
+              "k3"
+            ]
+          ]
+        ],
+        [
+          [
+            "opaque-a",
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "f99c02d6589cb8ddbf294c8a4ade786a455618572b619b0abee3d82047ad7819",
+      "compiledSha256": "f1de4baf71d6de5368759415b0cd7c6e4d34a3f1379e03be75082f4677080608",
+      "passed": true
+    },
+    {
+      "id": "joined-group",
+      "rows": [
+        [
+          [
+            "opaque-z",
+            "1",
+            "1"
+          ],
+          [
+            [
+              "k3",
+              "k3"
+            ]
+          ]
+        ],
+        [
+          [
+            "opaque-a",
+            "4",
+            "1"
+          ],
+          [
+            [
+              "k1",
+              "k1"
+            ],
+            [
+              "k1",
+              "k4"
+            ],
+            [
+              "k4",
+              "k1"
+            ],
+            [
+              "k4",
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "376633ab8200220b9342d6cff84615f1fb2488b583a6c82fc9a096495e61dff0",
+      "compiledSha256": "240736459df3e595c7253b1ec7be0db6136c4c4b0c30b59f978a9d993f41be85",
+      "passed": true
+    },
+    {
+      "id": "hidden-group",
+      "rows": [
+        [
+          [
+            "1"
+          ],
+          [
+            [
+              "k4"
+            ]
+          ]
+        ],
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "bd6574c6587021e93b225c6649ed989252d93095c3d8e06740e45450b8186ecc",
+      "compiledSha256": "8865a9d73e9a48d441b8582455439cd4e9c1271edd4dda37d15e13563b712152",
+      "passed": true
+    },
+    {
+      "id": "empty-global-count",
+      "rows": [
+        [
+          [
+            "0"
+          ],
+          []
+        ]
+      ],
+      "sqlSha256": "682d8e3004696363c9911f4d8927b71828045c83f3225ad5b133c0e4dad51db3",
+      "compiledSha256": "88a435f90dee12fb4a13b9f362c40ee1f461495b675d291d3fa57b61c5b946c8",
+      "passed": true
+    },
+    {
+      "id": "empty-global-distinct",
+      "rows": [
+        [
+          [
+            "0"
+          ],
+          []
+        ]
+      ],
+      "sqlSha256": "69b0a9805b86b892cd9c8cb95c5224c3f2c7d47394a8f4a8d25311c647ebbf50",
+      "compiledSha256": "998f2ae17351cd4e5bcbf6091702e07119849bd84223094a443e60e425d85b6d",
+      "passed": true
+    },
+    {
+      "id": "empty-group",
+      "rows": [],
+      "sqlSha256": "bb9e8e4047583b4382593e25f35c4e70db8fccdb546e30be7c59f90811a3c4c7",
+      "compiledSha256": "518c3acf3334402716ad0f04929be3b4a8e62bc71fa2f9ddc277f741094ec3fa",
+      "passed": true
+    },
+    {
+      "id": "original-predicate",
+      "rows": [
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "f6fa20898a1284c00274d4368d8265fcae5a2e5819bcd7975a7a8e87cfa522df",
+      "compiledSha256": "beda446c42638b92c60ce4e4a511379c693fb06dd0ba9a9fee13959c364f8014",
+      "passed": true
+    },
+    {
+      "id": "zero-limit",
+      "rows": [],
+      "sqlSha256": "052603ce266059799010f89287d0025da0034a6a3277edd57527bb669db4a379",
+      "compiledSha256": "08affffb7d1e6b81d395f9d56d26059145670e2a745141b8542b247fe663139c",
+      "passed": true
+    },
+    {
+      "id": "direct-singletons",
+      "rows": [
+        [
+          [
+            "[private]"
+          ],
+          [
+            [
+              "k1"
+            ]
+          ]
+        ],
+        [
+          [
+            "[private]"
+          ],
+          [
+            [
+              "k3"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "283f203c5c1b41201d87e4eb0fefbcf7e5926cf1dfbfcb01f882d809aebaee17",
+      "compiledSha256": "bb7059649a6c04d02777fb3134d63bf42f8908907bf0905361f633ff5b4df8ff",
+      "passed": true
+    },
+    {
+      "id": "named-count",
+      "rows": [
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "f6fa20898a1284c00274d4368d8265fcae5a2e5819bcd7975a7a8e87cfa522df",
+      "compiledSha256": "7d6dcfe87c5773f9b921ba0759715f0cda1cb00a9d3890581d85987c37fb5820",
+      "passed": true
+    },
+    {
+      "id": "parameter-data",
+      "rows": [
+        [
+          [
+            "0"
+          ],
+          []
+        ]
+      ],
+      "sqlSha256": "c581f9bd17e8bfeabec8d1166a138b43c986daa0c9b8f67cc721d2e74059a18c",
+      "compiledSha256": "995410a941c9e8dc2c0bc30b38ca5f35c1c905dbc818412d5ee9e8d817c19e37",
+      "passed": true
+    },
+    {
+      "id": "two-hidden-group-fields",
+      "rows": [
+        [
+          [
+            "1"
+          ],
+          [
+            [
+              "k1"
+            ]
+          ]
+        ],
+        [
+          [
+            "1"
+          ],
+          [
+            [
+              "k3"
+            ]
+          ]
+        ],
+        [
+          [
+            "1"
+          ],
+          [
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "d0ed175991128b1d6e5a649f2b48226cf609ff7f10bfeca60307132e8db4bcd1",
+      "compiledSha256": "002843ba22fd74e55c6682772ba800f436677b0d38de97e43d00f0fb2296c341",
+      "passed": true
+    },
+    {
+      "id": "integer-distinct",
+      "rows": [
+        [
+          [
+            "2"
+          ],
+          [
+            [
+              "k1"
+            ],
+            [
+              "k3"
+            ],
+            [
+              "k4"
+            ]
+          ]
+        ]
+      ],
+      "sqlSha256": "2d7c5569c0d4015a3abecd8dce340c0590f7c4299fc8e27ef47ea2724ceca1f8",
+      "compiledSha256": "0bd9fec603578fdc92bc4fedb82a42aaa4f9cb8acaf2689b9202935e5d61e74d",
+      "passed": true
+    },
+    {
+      "id": "old-path-rejects-v3",
+      "refused": true
+    },
+    {
+      "id": "new-path-rejects-v2",
+      "refused": true
+    }
+  ],
+  "serverStopped": true,
+  "nativeAdmission": false,
+  "securityReady": false
+}
