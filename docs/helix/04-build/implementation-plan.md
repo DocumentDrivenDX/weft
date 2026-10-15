@@ -2241,3 +2241,29 @@ original cases. Published Weft0.4.32 lacks the optional current-query feature;
 prepare0.4.33 standard platform wheels with explicit current-query and ordinary
 PG18 features plus exact-wheel API/ABI2 smoke gates. Do not overwrite32 or infer
 native security support from compiler method availability.
+
+
+### Standard wheel current-query feature selection — 2026-10-15
+
+Prepare0.4.33 with both ordinary PG18 and current-postgresql-scalar-candidate
+features. Published0.4.32 omitted the actual CQP class; no existing release/tag
+is overwritten. Every standard platform must install its exact wheel and smoke
+actual original-context custody plus conditional ABI2/3/4 and no-downgrade; retain
+source/wheel/module/shim pins. Pin all build checkouts to the event SHA, not a
+moving branch. Publication must require five matching source/version/wheel proof
+records. Build-only workflow dispatch does not publish a release.
+
+This repairs the package dependency for Truss's first guarded scalar query.
+It does not qualify native security. Independent UMF00e5c912 replay confirms the
+same ordinary caller can still receive raw protected r1/r2 through granted native
+query_objects/query_binding. Truss owns the all-path activation fix; original
+pg-raw.B10/AC5 and all132 backend obligations stay open. Final paired release and
+exact-wheel/native qualification remain pending this preparation.
+
+Local optimized0.4.33 standard-feature wheel passes actual ABI2/3/4/no-downgrade
+smoke,46 Python custody controls and original native65/66/67 mutation smoke.
+The first local optimized artifact failed Mach-O load validation; retaining final
+extension line tables with strip:none fixes the observed pinned-toolchain case
+without changing release optimization. The failed artifact is not qualified.
+Module/spec checks pass. Exact five-platform/source-pinned build-only CI and
+paired native33 workflow qualification remain pending; nothing is published.

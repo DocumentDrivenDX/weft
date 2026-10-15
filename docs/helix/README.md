@@ -1,12 +1,19 @@
 # Weft specification index
 
-Proposed Python 0.4.32 extends the existing Truss backend 0.4.36 guard to
+Proposed Python0.4.33 includes the current-query source-context and conditional
+SQL APIs in standard wheels, with exact-wheel ABI2/3/4 smoke checks across all
+five platform targets. These are compiler candidates, not native permissions or
+completed B-008 security. Actual host enforcement and alternate-read activation
+remain required. See [release scope](04-build/releases/v0.4.33.md).
+
+Python 0.4.32 extends the existing Truss backend 0.4.36 guard to
 native runtime 0.66 and 0.67 (0.65 retains backend 0.4.35), preserving the original binding release ID and
 digest. Query/layout semantics are unchanged. The same allowlist applies to
 mutation selection registration. Native 0.68 and older-backend mismatches remain
 refused. This compatibility change adds no key encoder; Truss 0.67 derives keys
 in PostgreSQL. Public compiler guard tests and actual Truss 0.66 backfill/query
-execution pass locally on PostgreSQL 18.6; release CI remains unrun.
+execution pass locally on PostgreSQL 18.6. The standard0.4.32 wheels omit the
+optional current-query API;0.4.33 preparation adds it explicitly.
 
 
 The active flow is `helix` under `docs/helix/`. Current catalog binding: installed HELIX **0.15.4**, full plugin `workflows/graph.yml`; templates and methodology are resolved from that plugin and are not vendored here.

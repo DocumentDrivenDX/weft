@@ -13,3 +13,10 @@ sqlparser = { version = "=0.63.0", default-features = false, features = ["std"] 
 
 [patch.crates-io]
 ahash = { path = "vendor/ahash" }
+
+# Preserve native extension loadability on macOS27 with the pinned Rust toolchain.
+# rust-lang/rust#157750: stripping debuginfo can misalign the Mach-O string pool.
+# Optimization stays at the normal release level; only final-crate line tables stay.
+[profile.release.package.weft-python]
+debug = 1
+strip = "none"

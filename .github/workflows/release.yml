@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.ref }}
+          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -59,7 +59,7 @@ jobs:
           rust-toolchain: '1.90.0'
           target: ${{ matrix.target }}
           manylinux: ${{ matrix.manylinux }}
-          args: --manifest-path crates/weft-python/Cargo.toml --release --locked --features truss-postgresql-pg18 --out dist
+          args: --manifest-path crates/weft-python/Cargo.toml --release --locked --features truss-postgresql-pg18,current-postgresql-scalar-candidate --out dist
       - name: Smoke the exact wheel to be published
         shell: bash
         run: |
@@ -73,10 +73,13 @@ jobs:
           assert callable(weft.compile_truss_runtime_page_json)
           PYTHON
           python tests/mutation/native066-wheel-smoke.py
+          python tests/current-query-designation/wheel-smoke.py --wheel dist/*.whl --output dist/current-query-smoke-${{ matrix.target }}.json
       - uses: actions/upload-artifact@v4
         with:
           name: wheels-${{ matrix.target }}
-          path: dist/*.whl
+          path: |
+            dist/*.whl
+            dist/current-query-smoke-*.json
           if-no-files-found: error
   publish:
     if: github.ref_type == 'tag' || inputs.tag != ''
@@ -88,7 +91,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.ref }}
+          ref: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.sha }}
       - uses: actions/download-artifact@v4
         with:
           pattern: wheels-*
@@ -104,8 +107,16 @@ jobs:
           version=tomllib.load(open('crates/weft-python/pyproject.toml','rb'))['project']['version']
           root=pathlib.Path('dist');wheels=sorted(root.glob('*.whl'))
           assert len(wheels)==5
+          smoke=[json.loads(p.read_text()) for p in sorted(root.glob('current-query-smoke-*.json'))]
+          commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+          assert len(smoke)==5 and {r['wheel'] for r in smoke}=={p.name for p in wheels}
+          for report in smoke:
+              assert report['sourceCommit']==commit and report['version']==version
+              assert len(report['checks'])==4 and report['nativeAdmission'] is False and report['securityReady'] is False
+              assert report['pinsBeforeAfter']['wheelSha256']==hashlib.sha256((root/report['wheel']).read_bytes()).hexdigest()
+
           (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n' for p in wheels))
-          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':['truss-postgresql-pg18'],'trussBackend':'0.4.36','trussRuntime':'truss-catalog-runtime/0.67-candidate','trussRuntimeSha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee','supportedTrussRuntimes':[{'releaseId':'truss-catalog-runtime/0.66-candidate','sha256':'99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a'},{'releaseId':'truss-catalog-runtime/0.67-candidate','sha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee'}],'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
+          (root/'release-pins.json').write_text(json.dumps({'tag':os.environ['RELEASE_TAG'],'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'workflowCommit':os.environ['GITHUB_SHA'],'distribution':'weft-sql','version':version,'features':['truss-postgresql-pg18','current-postgresql-scalar-candidate'],'currentQuerySmoke':smoke,'trussBackend':'0.4.36','trussRuntime':'truss-catalog-runtime/0.67-candidate','trussRuntimeSha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee','supportedTrussRuntimes':[{'releaseId':'truss-catalog-runtime/0.66-candidate','sha256':'99ae7218e0e3e68e0a3682e43949089185d967eb21bbf31deb0b8f8f6fc2de9a'},{'releaseId':'truss-catalog-runtime/0.67-candidate','sha256':'8c553480e1bcb95ccaebb9aa04150a0253217838c8df6ad09acd5ecece2402ee'}],'trussSupportProfile':'0.17','timestampComparisonProfile':'umf-rfc3339-exact-instant/1.0.0','umfExactInstantCommit':'cbb6fb87','rust':'1.90.0','maturin':'1.9.6'},indent=2)+'\n')
           PYTHON
           if gh release view "$RELEASE_TAG" --json isDraft --jq .isDraft > /tmp/release-draft; then
             test "$(cat /tmp/release-draft)" = true

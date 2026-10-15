@@ -1,0 +1,55 @@
+{
+  "scope": "Standard release-feature packaging and exact local installed wheel API/compatibility only; no native security qualification or publication",
+  "baseMain": "11453eb943ada6a599f0738a017f51fbc5dc9d79",
+  "version": "0.4.33",
+  "features": [
+    "truss-postgresql-pg18",
+    "current-postgresql-scalar-candidate"
+  ],
+  "profile": "release, package weft-python debug=1 strip=none, normal release optimization",
+  "sourceSha256": {
+    "Cargo.toml": "d38cbc326b84963e1db3a3cb307f42493cf1ce879269d878162fc5f36557079e",
+    "Cargo.lock": "52f1e9d24afc67437981cf535f3237a791c128663e5b73f5c6d56239885ff52a",
+    "crates/weft-python/Cargo.toml": "be312849824fc8c776f97c3cec41d5d30d86fb2ace67eb13e825e91c4993e500",
+    "crates/weft-python/pyproject.toml": "cc5b3a37232567365e91982a0f11bfd87fea7450d6eb60f804222319b140582e",
+    ".github/workflows/release.yml": "36827f5de966a966fffb07e93ef89505f641d162efd1376916715cf654b01186",
+    "tests/current-query-designation/wheel-smoke.py": "bbdb9c1d47ec4a0a3780e484f28b4fa1d4aaa86de4bc8adff6a68011a8c17a5c"
+  },
+  "localCandidate": {
+    "wheelSha256": "896a1250dd8d3b20dabc8650824fa22b9c939e4b37590a29bf32af77e52cc522",
+    "nativeModuleSha256": "0b2f69e838dc4d83d24ac0596c7aa8380893391125bd80d809eb54234c2b8701",
+    "shimSha256": "cd0fa27c9580742333d14e24d5ebfd74babb47d31720bb4c577278d05486f11d"
+  },
+  "localSourceCommit": null,
+  "localSourceQualification": "Uncommitted exported snapshot over baseMain; actual CI source commits remain pending",
+  "checks": {
+    "currentQueryAbiCohorts": 4,
+    "pythonCustody": 46,
+    "native65_66_67MutationSmoke": "passed",
+    "modules": 16,
+    "governedSpecs": "passed"
+  },
+  "calibration": {
+    "firstOptimizedArtifact": "Import refused by dyld: mis-aligned LINKEDIT string pool, no qualified smoke receipt",
+    "mitigation": "Retain final-crate line tables/strip none; fresh optimized artifact imports and passes",
+    "primaryUpstreamIssue": "https://github.com/rust-lang/rust/issues/157750"
+  },
+  "published": false,
+  "platformMatrix": "pending build-only CI",
+  "nativeAdmission": false,
+  "securityReady": false,
+  "original132Required": true,
+  "knownNativeGap": {
+    "repository": "DocumentDrivenDX/umf",
+    "commit": "00e5c912",
+    "evidence": "docs/helix/04-build/evidence/security/truss-current-query-replay-20261015",
+    "scope": "Alternate native query_objects/query_binding returns raw protected rows; Truss all-path activation fix required"
+  },
+  "evidenceSha256": {
+    "current-query-smoke.json": "7b7f268ffa96ab276edc81caf84a174f88eade163595a4855b2b8fdc04678f32",
+    "modules.log": "6b96ced56eed4d8509dd251d5582423d3daf2c12bfc5f0da72e1dabb65fb0cae",
+    "custody.json": "6def782fdf62e9ef780e784181bcee3bff45d2a00a0f80bab7c31b50621dbd0b",
+    "specs.log": "e1be5b5bc001dc8fa1e6743a31577d947b3a817f145b4f1b930f8064df04b51a",
+    "build.log": "2d798b75fb98b30f48aed2f789e997b4146c8f06bee39b2127a816fae0159e0c"
+  }
+}
