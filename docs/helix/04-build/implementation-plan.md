@@ -1816,3 +1816,24 @@ binary/source pins and current/legacy correspondence evidence are retained under
 counterexample evidence, not qualification of selected absence. Full P03/B08 and
 all native backend acceptance duties remain open. The in-progress0.2 grammar is
 kept separate from this repair.
+
+## Native Truss0.66 query compatibility — 2026-10-15
+
+Backend truss.postgresql.runtime0.4.36 separately admits the exact native0.66
+manifest99ae7218 and UMF0.8/support0.17 binding. Native0.65/backend0.4.35
+remains unchanged and refuses the new cohort; the new cohort refuses old bindings.
+The original named-query-core-r1 logical revision is preserved. Standalone scalar
+declarations have no invented Record membership or property/storage identity; a
+query selecting declaration-only clear refuses. The additive manifest capability
+schema.declarativeScalarFields describes catalog compatibility only. Historical
+mutation/security profiles retain their original runtime pins.
+
+The local weft-sql0.4.30 arm64 wheel passed five actual public-SDK native queries
+(projection, COUNT, predicate, group and selfjoin), declaration-only refusal and
+ordinary caller raw-object privilege denial. The frozen Truss50307788 SDK used
+an explicit candidate BACKEND0.4.36 metadata override; this is not qualification
+of an unmodified committed SDK. Exact receipts and local wheel hash are under
+evidence/truss066-20261015/. The native setup applies the original five owner
+Records through public APIs and preserves original source/readback hashes.
+This is ordinary catalog/query integration, not installed protection/Subject/
+current-query authority. B-008 remains open. Distribution publication is separate.
